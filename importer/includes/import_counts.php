@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/helpers.php';
+require_once __DIR__ . '/helpers.php';
 
 /**
  * imports quant.*.results file. supported types: genes|isoforms
@@ -8,7 +8,7 @@ require_once __DIR__.'/helpers.php';
  * @param string $filename filename
  * @param int $quantification_id DB primary key
  * @return null
- * @throws ErrorException nothing, is catched. dies on error.
+ * @throws ErrorException
  */
 function import_quantification_results($filename, $quantification_id) {
     global $db;
@@ -20,7 +20,7 @@ function import_quantification_results($filename, $quantification_id) {
 
     try {
         $db->beginTransaction();
-        #shared parameters
+#shared parameters
         $param_uniquename = null;
         $param_length = null;
         $param_effective_length = null;
@@ -30,7 +30,7 @@ function import_quantification_results($filename, $quantification_id) {
         $param_IsoPct = null;
         $trash = null;
 
-        #quant.*_*.genes.results
+#quant.*_*.genes.results
         if ($header == "gene_id\ttranscript_id(s)\tlength\teffective_length\texpected_count\tTPM\tFPKM") {
             $statement_insert_gene_quant = $db->prepare(
                     sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, length, effective_length, expected_count, "TPM", "FPKM") '
@@ -50,7 +50,7 @@ function import_quantification_results($filename, $quantification_id) {
                 $statement_insert_gene_quant->execute();
             }
         }
-        #quant.*_*.isoforms.results
+#quant.*_*.isoforms.results
         else if ($header == "transcript_id\tgene_id\tlength\teffective_length\texpected_count\tTPM\tFPKM\tIsoPct") {
             $statement_insert_isoform_quant = $db->prepare(
                     sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, length, effective_length, expected_count, "TPM", "FPKM", "IsoPct") '
@@ -77,8 +77,7 @@ function import_quantification_results($filename, $quantification_id) {
         }
     } catch (Exception $error) {
         $db->rollback();
-        print "Error!: " . $error->getMessage();
-        die();
+        throw $error;
     }
 }
 ?>

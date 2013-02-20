@@ -5,7 +5,7 @@ require_once __DIR__ . '/helpers.php';
 /**
  * @global PDO $db
  * @param string $filename
- * @throws ErrorException nothing, is catched. dies on error.
+ * @throws ErrorException
  */
 function import_annot_blast2go($filename) {
 
@@ -54,8 +54,7 @@ function import_annot_blast2go($filename) {
         }
     } catch (Exception $error) {
         $db->rollback();
-        print "Error!: " . $error->getMessage();
-        die();
+        throw $error;
     }
 }
 
@@ -64,7 +63,7 @@ function import_annot_blast2go($filename) {
  * @global array $dbrefx_versions array mapping databases to their versions, e.g. array('HMMPFam'=>'1.0')
  * @global PDO $db Database
  * @param string $filename
- * @throws ErrorException nothing, is catched. dies on error.
+ * @throws ErrorException
  */
 function import_annot_interpro($filename) {
 #SEQNAME    ?   ?   ?   CRC LENGTH  EVIDENCE    MATCHID MATCHNAME   START   END SCORE   STATUS  DATE    INTERPROID  INTERPRONAME
@@ -224,8 +223,7 @@ function import_annot_interpro($filename) {
         }
     } catch (Exception $error) {
         $db->rollback();
-        print "Error!: " . $error->getMessage();
-        die();
+        throw $error;
     }
 }
 
@@ -254,6 +252,8 @@ function import_annot_repeats($filename) {
      * 21 75.00 0.00 0.00 comp231081_c0_seq1 416 443 (1671) AT_rich#Low_complexity 121 148 (152) 5
      * 198 19.23 0.00 0.00 comp231081_c0_seq1 1780 1831 (283) C (A)n#Simple_repeat (0) 180 129 5
      * 245 23.19 2.33 4.76 comp231081_c0_seq1 229 314 (1800) (GGAGA)n#Simple_repeat 5 88 (92) 5
+     * this is parsed weirdly. "AT_rich#Low_complexity"  should be "AT_rich Low_complexity"
+
 
       1306    = Smith-Waterman score of the match, usually complexity adjusted The SW scores are not always directly comparable. Sometimes the complexity adjustment has been turned off, and a variety of scoring-matrices are used.
       15.6    = % substitutions in matching region compared to the consensus
@@ -281,8 +281,9 @@ function import_annot_repeats($filename) {
      */
     global $db;
 
-    $query = '{ ^(?<waterman>\d*) [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ]  (?<name>\w+) [ ] (?<start>\d+) [ ] (?<end>\d+) [ ] \(\d+\) (?:[ ] [C+])? [ ] (?<stuff>[\w\/()_\-\#]+(?:[ ] \d* [ ] \d*)?) [ ] \(\d+\) [ ] (?<stuff2>(?:\d+ [ ]){0,2}\d+) $}x';
-    
+    $regex = '{ ^\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] (?<name>\w+) [ ] (?<start>\d+) [ ] (?<end>\d+) [ ] \(\d+\) (?:[ ] [C+])? [ ] 
+        (?<stuff>[\w\/()_\-\#]+(?:[ ] \d* [ ] \d*)?) [ ] \(\d+\) [ ] (?<stuff2>(?:\d+ [ ]){0,2}\d+) $}x';
+
     try {
         $db->beginTransaction();
         #shared parameters
@@ -299,15 +300,8 @@ function import_annot_repeats($filename) {
         }
     } catch (Exception $error) {
         $db->rollback();
-        print "Error!: " . $error->getMessage();
-        die();
+        throw $error;
     }
-
-    //TODO
-    function get_or_creatre_quantifiaction_id() {
-        
-    }
-
 }
 
 ?>

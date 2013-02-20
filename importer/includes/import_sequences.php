@@ -8,7 +8,7 @@ require_once __DIR__.'/helpers.php';
  * predicted peptide entries will be inserted & located on isoform
  * @global DBO $db
  * @param string $fasta_file filename
- * @throws ErrorException nothing, is catched. dies on error.
+ * @throws ErrorException
  */
 function import_sequences($fasta_file) {
     global $db;
@@ -109,8 +109,7 @@ function import_sequences($fasta_file) {
         }
     } catch (Exception $error) {
         $db->rollback();
-        print "Error!: " . $error->getMessage();
-        die();
+        throw $error;
     }
 }
 ?>

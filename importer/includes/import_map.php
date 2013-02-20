@@ -4,7 +4,7 @@
  * THIS FILE HAS TO BE SORTED!
  * @global DBO $db
  * @param string $mapfile filename
- * @throws ErrorException nothing, is catched. dies on error.
+ * @throws ErrorException
  */
 function import_map($mapfile) {
     global $db;
@@ -70,8 +70,7 @@ function import_map($mapfile) {
         }
     } catch (Exception $error) {
         $db->rollback();
-        print "Error!: " . $error->getMessage();
-        die();
+        throw $error;
     }
 }
 ?>
