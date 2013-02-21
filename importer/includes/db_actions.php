@@ -1,132 +1,94 @@
 <?php
 
-function help_quantification_actions() {
-    echo <<<EOF
-biomaterial
-    requires
-        --action 
-            can be one of:
-            create
-                same parameters as 'edit'
-                requires
-                     --name <string>
-            edit
-                requires
-                     --name <string>
-                optional
-                    --description <string>
-                        sets biomaterial description
-                    --dbxref <string:'DBNAME:ACCESSION'>
-            list
-            show
-                requires
-                     --name <string>
-            delete
-                requires
-                     --name <string>
-analysis
-   requires
-        --action 
-            can be one of:
-            create
-                requires
-                    --program <string>
-                    --programversion <string>
-                returns
-                    id
-            edit
-                requires
-                    --id <int>
-                optional
-                    --program <string>
-                    --programversion <string>
-                    --algorithm <string>
-                    --sourcename <string>
-                    --name <string>
-                    --timeexecuted <timestamp>
-            list
-                optional
-                    --program <string>
-            show
-            delete
-            
-assay
-   requires
-        --action 
-            can be one of:
-            create
-                same parameters as 'edit'
-                requires
-                    --operator_id <int:contact_id>
-                     --name <string>
-            edit
-                requires
-                    --name <string>
-                optional
-                    --operator_id <int:contact_id>
-                    --description <string>
-                    --assaydate <timestamp>
-                    --dbxref <string:'DBNAME:ACCESSION'>
-                    --add-biomaterial <string:biomaterial_name>
-                    --delete-biomaterial <string:biomaterial_name>
-            list
-            show
-                requires
-                    --name <string>
-            delete
-                requires
-                    --name <string>
-aqcuisition
-    requires
-        --action 
-            can be one of:
-            create
-                same parameters as 'edit'
-                requires 
-                    --assay_id <int:assay_id>
-                    --name <string>
-            edit
-                requires
-                    --name <string>
-                optional
-                    --assay_id <int:assay_id>
-                    --acquisitiondate <timestamp>
-                    --uri <string>
-            list
-            show
-                requires
-                     --name <string>
-            delete
-                requires
-                     --name <string>
-                     
-quantification
-    requires
-        --action
-            can be one of
-            create
-                same parameters as 'edit'
-                requires
-                    --name <string>
-                    --acquisition_id <int:acquisition_id>
-                    --analsysis_id <int:analysis_id>
-            edit
-                requires
-                    --name <string>
-                optional
-                    --acquisition_id <int:acquisition_id>
-                    --analsysis_id <int:analysis_id>
-                    --quantificationdate <timestamp>
-                    --uri <string>
-            list
-            show
-                requires
-                     --name <string>
-            delete
-                requires
-                     --name <string>
-                     
-EOF;
+define('S', 'string');
+global $mappings;
+$mappings = array(
+    'biomaterial' => array(
+        'list' => array('name' => S),
+        'show' => array('name' => S, 'description' => S, 'dbxref_id' => 'dbxref')
+    ),
+    'analysis' => array(
+        'list' => array('analysis_id' => S, 'program' => S, 'programversion' => S, 'sourcename' => S),
+        'show' => array('analysis_id' => S, 'program' => S, 'programversion' => S, 'sourcename' => S, 'algorithm' => S, 'name' => S, 'timeexecuted' => S)
+    ),
+    'assay' => array(
+        'list' => array('assay_id' => S, 'name' => S),
+        'show' => array('assay_id' => S, 'name' => S, 'operator_id' => S, 'description' => S, 'assaydate' => S, 'dbxref_id' => 'dbxref')
+    ),
+    'acquisition' => array(
+        'list' => array('acquisition_id' => S, 'name' => S),
+        'show' => array('acquisition_id' => S, 'name' => S, 'assay_id' => S, 'acquisitiondate' => S, 'uri' => S)
+    ),
+    'quantification' => array(
+        'list' => array('quantification_id' => S, 'name' => S),
+        'show' => array('quantification_id' => S, 'name' => S, 'acquisition_id' => S, 'analysis_id' => S, 'quantificationdate' => S, 'uri' => S)
+    ),
+    'contact' => array(
+        'list' => array('contact_id' => S, 'name' => S),
+        'show' => array('contact_id' => S, 'name' => S, 'description' => S)
+    ),
+);
+
+function quick_list($table, $filters = array()) {
+    global $mappings;
+    global $db;
+    $select = '';
+    foreach ($mappings[$table]['list'] as $key => $key_type) {
+        switch ($key_type) {
+            case S:
+                $select .= (empty($select) ? '' : ', ') . $key;
+                break;
+        }
+    }
+    $filter = '';
+    foreach ($filters as $key => $value) {
+        $filter .= "AND $key LIKE :$key ";
+    }
+    $statement_select = $db->prepare(
+            sprintf('SELECT %s FROM %s WHERE TRUE %s', $select, $table, $filter), array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL)
+    );
+    foreach ($filters as $key => $value) {
+        $statement_select->bindValue($key, $value, PDO::PARAM_STR);
+    }
+
+    $statement_select->execute();
+    $header_shown = false;
+    while ($row = $statement_select->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+        if (!$header_shown) {
+            echo implode("\t", array_keys($row)) . "\n";
+            $header_shown = true;
+        }
+        echo implode("\t", $row) . "\n";
+    }
+}
+
+function quick_show($table, $uniquekey, $uniquevalue, &$header_shown = false) {
+    global $mappings;
+    global $db;
+    $select = '';
+    foreach ($mappings[$table]['show'] as $key => $key_type) {
+        switch ($key_type) {
+            case S:
+                $select .= (empty($select) ? '' : ', ') . $key;
+                break;
+            case 'dbxref':
+                $select .= (empty($select) ? '' : ', ') . "(SELECT concat((SELECT db.name FROM db WHERE db.db_id = dbxref.db_id),':',dbxref.accession,'(',dbxref.description,')') FROM dbxref WHERE dbxref.dbxref_id=$table.$key ) AS $key ";
+                break;
+        }
+    }
+    $statement_select = $db->prepare(
+            sprintf('SELECT %s FROM %s WHERE %s=:unique', $select, $table, $uniquekey), array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL)
+    );
+    $statement_select->bindValue('unique', $uniquevalue, PDO::PARAM_STR);
+
+    $statement_select->execute();
+    while ($row = $statement_select->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+        if (!$header_shown) {
+            echo implode("\t", array_keys($row)) . "\n";
+            $header_shown = true;
+        }
+        echo implode("\t", $row) . "\n";
+    }
 }
 
 /**
@@ -202,13 +164,17 @@ function biomaterial_create($name, $options) {
     biomaterial_edit($name, $options);
 }
 
-function biomaterial_show() {
-    
-}
-
 function biomaterial_edit($name, $options) {
     quickedit_query('UPDATE biomaterial SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
     quickedit_dbxref('UPDATE biomaterial SET %s WHERE name=:unique', $name, $options);
+}
+
+function biomaterial_show($name) {
+    quick_show('biomaterial', 'name', $name);
+}
+
+function biomaterial_list() {
+    quick_list('biomaterial');
 }
 
 function biomaterial_delete() {
@@ -237,10 +203,11 @@ function analysis_create($options) {
     global $db;
 
     $statement_create_analysis = $db->prepare(
-            sprintf('INSERT INTO analysis (program, programversion) VALUES (:program, :programversion) RETURNING analysis_id')
+            sprintf('INSERT INTO analysis (program, programversion, sourcename) VALUES (:program, :programversion, :sourcename) RETURNING analysis_id')
     );
     $statement_create_analysis->bindValue('program', $options['--program'], PDO::PARAM_STR);
     $statement_create_analysis->bindValue('programversion', $options['--programversion'], PDO::PARAM_STR);
+    $statement_create_analysis->bindValue('sourcename', $options['--sourcename'], PDO::PARAM_STR);
     $statement_create_analysis->execute();
 
 
@@ -253,6 +220,8 @@ function analysis_create($options) {
     unset($options['--programversion']);
     #set the rest of the variables
     analysis_edit($id, $options);
+
+    return $id;
 }
 
 function analysis_edit($id, $options) {
@@ -262,6 +231,14 @@ function analysis_edit($id, $options) {
             , $id
             , $options
     );
+}
+
+function analysis_show($id) {
+    quick_show('analysis', 'analysis_id', $id);
+}
+
+function analysis_list() {
+    quick_list('analysis');
 }
 
 /*
@@ -341,15 +318,38 @@ function assay_edit_biomaterial($name, $options) {
             $statement = $db->prepare(
                     sprintf('INSERT INTO assay_biomaterial (assay_id, biomaterial_id) VALUES ((%s),(%s))', 'SELECT assay_id FROM assay WHERE name=:assay_name LIMIT 1', 'SELECT biomaterial_id FROM biomaterial WHERE name=:biomaterial_name LIMIT 1')
             );
-        } {
+        } else {
             $statement = $db->prepare(
-                    sprintf('DELETE FROM assay_biomaterial WHERE assay_id=(%s) AND biomaterial_id=(%s) LIMIT 1', 'SELECT assay_id FROM assay WHERE name=:assay_name LIMIT 1', 'SELECT biomaterial_id FROM biomaterial WHERE name=:biomaterial_name LIMIT 1')
+                    sprintf('DELETE FROM assay_biomaterial WHERE assay_id=(%s) AND biomaterial_id=(%s)', 'SELECT assay_id FROM assay WHERE name=:assay_name LIMIT 1', 'SELECT biomaterial_id FROM biomaterial WHERE name=:biomaterial_name LIMIT 1')
             );
         }
         $statement->bindValue('assay_name', $name, PDO::PARAM_STR);
         $statement->bindValue('biomaterial_name', $value, PDO::PARAM_STR);
         $statement->execute();
     }
+}
+
+function assay_show($name) {
+    global $db;
+
+    quick_show('assay', 'name', $name);
+
+
+
+    echo "\nassociated biomaterials:\n";
+    $statement = $db->prepare(
+            sprintf('SELECT (%s) FROM assay_biomaterial WHERE assay_id=(%s)', 'SELECT name FROM biomaterial WHERE biomaterial.biomaterial_id = assay_biomaterial.biomaterial_id', 'SELECT assay_id FROM assay WHERE name=:assay_name LIMIT 1')
+    );
+    $statement->bindValue('assay_name', $name, PDO::PARAM_STR);
+    $statement->execute();
+    $header_shown = false;
+    while (($bioname = $statement->fetchColumn()) != false) {
+        quick_show('biomaterial', 'name', $bioname, &$header_shown);
+    }
+}
+
+function assay_list() {
+    quick_list('assay');
 }
 
 /*
@@ -392,6 +392,14 @@ function acquisition_create($name, $options) {
 
 function acquisition_edit($name, $options) {
     quickedit_query('UPDATE acquisition SET %1$s=:%1$s WHERE name=:unique', array('assay_id', 'acquisitiondate', 'uri'), $name, $options);
+}
+
+function acquisition_show($name) {
+    quick_show('acquisition', 'name', $name);
+}
+
+function acquisition_list() {
+    quick_list('acquisition');
 }
 
 /*
@@ -437,7 +445,58 @@ function quantification_create($name, $options) {
 }
 
 function quantification_edit($name, $options) {
-    quickedit_query('UPDATE acquisition SET %1$s=:%1$s WHERE name=:unique', array('acquisition_id', 'analysis_id', 'quantificationdate', 'uri'), $name, $options);
+    quickedit_query('UPDATE quantification SET %1$s=:%1$s WHERE name=:unique', array('acquisition_id', 'analysis_id', 'quantificationdate', 'uri'), $name, $options);
+}
+
+function quantification_show($name) {
+    quick_show('quantification', 'name', $name);
+}
+
+function quantification_list() {
+    quick_list('quantification');
+}
+
+/*
+  CREATE TABLE contact
+  (
+  contact_id serial NOT NULL,
+  type_id integer, -- What type of contact is this?  E.g. "person", "lab".
+ * name character varying(255) NOT NULL,
+ * description character varying(255),
+  CONSTRAINT contact_pkey PRIMARY KEY (contact_id ),
+  CONSTRAINT contact_type_id_fkey FOREIGN KEY (type_id)
+  REFERENCES cvterm (cvterm_id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT contact_c1 UNIQUE (name )
+  )
+ * 
+ * flybase has only contact_id, description, name: no type_id o_O
+ * => using CVTERM 1 (equals "null") as type_id here
+ */
+
+function contact_create($name, $options) {
+    global $db;
+
+    $statement_create_biomaterial = $db->prepare(
+            sprintf('INSERT INTO contact (name, type_id) VALUES (:name, :type_id)')
+    );
+    $statement_create_biomaterial->bindValue('name', $name, PDO::PARAM_STR);
+    $statement_create_biomaterial->bindValue('type_id', 1, PDO::PARAM_INT);
+    $statement_create_biomaterial->execute();
+
+    biomaterial_edit($name, $options);
+}
+
+function contact_edit($name, $options) {
+    quickedit_query('UPDATE contact SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
+}
+
+function contact_show($name) {
+    quick_show('contact', 'name', $name);
+}
+
+function contact_list() {
+    quick_list('contact');
 }
 
 ?>

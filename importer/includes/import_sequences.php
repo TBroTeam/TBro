@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/helpers.php';
+require_once __DIR__ . '/helpers.php';
 
 /**
  * imports FASTA file. 
@@ -112,4 +112,5 @@ function import_sequences($fasta_file) {
         throw $error;
     }
 }
+
 ?>

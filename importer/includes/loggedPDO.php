@@ -134,17 +134,18 @@ class LoggedPDOStatement {
      * @param array $parameters arguments
      */
     public function __call($function_name, $parameters) {
-        if ($function_name == 'bindParam') {
+        if ($function_name == 'bindParam' || $function_name == 'bindValue') {
             $parname = $parameters[0];
             if (is_string($parname) && strpos($parname, ':') === FALSE) {
                 $parname = ':' . $parameters[0];
             }
-            $this->boundParams[$parname] = &$parameters[1];
+            if ($function_name == 'bindParam'){
+                $this->boundParams[$parname] = &$parameters[1];
+            } else {
+                $this->boundParams[$parname] = $parameters[1];
+            }
         }
-        if ($function_name == 'bindValue') {
-            $this->boundParams[$parameters[0]] = $parameters[1];
-        }
-
+        
         return call_user_func_array(array($this->statement, $function_name), $parameters);
     }
 
