@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('VERBOSE')) define('VERBOSE', false);
+if (!defined('DEBUG')) define('DEBUG', false);
+
 try {
     global $db;
     if (VERBOSE || DEBUG) {

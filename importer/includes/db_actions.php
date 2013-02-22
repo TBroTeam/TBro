@@ -31,7 +31,7 @@ $mappings = array(
     ),
 );
 
-function quick_list($table, $filters = array()) {
+function quick_list($table, $filters = array(), &$header_shown = false, $silent = false) {
     global $mappings;
     global $db;
     $select = '';
@@ -54,17 +54,20 @@ function quick_list($table, $filters = array()) {
     }
 
     $statement_select->execute();
-    $header_shown = false;
+    $ret = array();
     while ($row = $statement_select->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-        if (!$header_shown) {
+        if (!$header_shown && !$silent) {
             echo implode("\t", array_keys($row)) . "\n";
             $header_shown = true;
         }
-        echo implode("\t", $row) . "\n";
+        if (!$silent)
+            echo implode("\t", $row) . "\n";
+        $ret[] = $row;
     }
+    return $ret;
 }
 
-function quick_show($table, $uniquekey, $uniquevalue, &$header_shown = false) {
+function quick_show($table, $uniquekey, $uniquevalue, &$header_shown = false, $silent = false) {
     global $mappings;
     global $db;
     $select = '';
@@ -84,13 +87,14 @@ function quick_show($table, $uniquekey, $uniquevalue, &$header_shown = false) {
     $statement_select->bindValue('unique', $uniquevalue, PDO::PARAM_STR);
 
     $statement_select->execute();
-    while ($row = $statement_select->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-        if (!$header_shown) {
-            echo implode("\t", array_keys($row)) . "\n";
-            $header_shown = true;
-        }
-        echo implode("\t", $row) . "\n";
+    $row = $statement_select->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    if (!$header_shown && !$silent) {
+        echo implode("\t", array_keys($row)) . "\n";
+        $header_shown = true;
     }
+    if (!$silent)
+        echo implode("\t", $row) . "\n";
+    return $row;
 }
 
 /**
@@ -126,6 +130,7 @@ function quick_edit_dbxref($query_sprintf, $unique_value, $options) {
 
     if (isset($options["--dbxref"])) {
         list($dbname, $accession) = explode(':', $options["--dbxref"]);
+        var_dump($dbname, $accession);
         $statement_update_dbxref = $db->prepare(sprintf($query_sprintf, 'dbxref_id=get_or_insert_dbxref(:dbname, :accession)'));
         $statement_update_dbxref->bindValue('unique', $unique_value, PDO::PARAM_STR);
         $statement_update_dbxref->bindValue('dbname', $dbname, PDO::PARAM_STR);
@@ -150,6 +155,7 @@ function quick_delete($table, $unique_key, $unique_value) {
     } else {
         printf("something went wrong:\n %s", print_r($statement_delete_key->errorInfo(), true));
     }
+    return $statement_delete_key->rowCount();
 }
 
 /*
@@ -190,15 +196,15 @@ function biomaterial_edit($name, $options) {
 }
 
 function biomaterial_show($name) {
-    quick_show('biomaterial', 'name', $name);
+    return quick_show('biomaterial', 'name', $name);
 }
 
 function biomaterial_list() {
-    quick_list('biomaterial');
+    return quick_list('biomaterial');
 }
 
 function biomaterial_delete($name) {
-    quick_delete('biomaterial', 'name', $name);
+    return quick_delete('biomaterial', 'name', $name);
 }
 
 /*
@@ -254,15 +260,15 @@ function analysis_edit($id, $options) {
 }
 
 function analysis_show($id) {
-    quick_show('analysis', 'analysis_id', $id);
+    return quick_show('analysis', 'analysis_id', $id);
 }
 
 function analysis_list() {
-    quick_list('analysis');
+    return quick_list('analysis');
 }
 
 function analysis_delete($id) {
-    quick_delete('analysis', 'analysis_id', $id);
+    return quick_delete('analysis', 'analysis_id', $id);
 }
 
 /*
@@ -356,7 +362,9 @@ function assay_edit_biomaterial($name, $options) {
 function assay_show($name) {
     global $db;
 
-    quick_show('assay', 'name', $name);
+    $ret = array('biomaterial' => array());
+
+    $ret['assay'] = quick_show('assay', 'name', $name);
 
 
 
@@ -368,17 +376,17 @@ function assay_show($name) {
     $statement->execute();
     $header_shown = false;
     while (($bioname = $statement->fetchColumn()) != false) {
-        quick_show('biomaterial', 'name', $bioname, &$header_shown);
+        $ret['biomaterial'][] = quick_show('biomaterial', 'name', $bioname, &$header_shown);
     }
+    return $ret;
 }
 
 function assay_list() {
-    quick_list('assay');
+    return quick_list('assay');
 }
 
-
 function assay_delete($name) {
-    quick_delete('assay', 'name', $name);
+    return quick_delete('assay', 'name', $name);
 }
 
 /*
@@ -424,16 +432,15 @@ function acquisition_edit($name, $options) {
 }
 
 function acquisition_show($name) {
-    quick_show('acquisition', 'name', $name);
+    return quick_show('acquisition', 'name', $name);
 }
 
 function acquisition_list() {
-    quick_list('acquisition');
+    return quick_list('acquisition');
 }
 
-
 function acquisition_delete($name) {
-    quick_delete('acquisition', 'name', $name);
+    return quick_delete('acquisition', 'name', $name);
 }
 
 /*
@@ -483,15 +490,15 @@ function quantification_edit($name, $options) {
 }
 
 function quantification_show($name) {
-    quick_show('quantification', 'name', $name);
+    return quick_show('quantification', 'name', $name);
 }
 
 function quantification_list() {
-    quick_list('quantification');
+    return quick_list('quantification');
 }
 
 function quantification_delete($name) {
-    quick_delete('quantification', 'name', $name);
+    return quick_delete('quantification', 'name', $name);
 }
 
 /*
@@ -530,16 +537,15 @@ function contact_edit($name, $options) {
 }
 
 function contact_show($name) {
-    quick_show('contact', 'name', $name);
+    return quick_show('contact', 'name', $name);
 }
 
 function contact_list() {
-    quick_list('contact');
+    return quick_list('contact');
 }
 
 function contact_delete($name) {
-    quick_delete('contact', 'name', $name);
+    return quick_delete('contact', 'name', $name);
 }
-
 
 ?>
