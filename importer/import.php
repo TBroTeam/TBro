@@ -77,8 +77,6 @@ if (isset($parms['--verbose']))
 else
     define('VERBOSE', false);
 
-include __DIR__.'/includes/db.php';
-
 foreach ($parms['--file'] as $file) {
     try {
         switch ($parms['--type']) {

@@ -168,7 +168,6 @@ if (isset($parms['--verbose']))
 else
     define('VERBOSE', false);
 
-include __DIR__ . '/includes/db.php';
 include __DIR__ . '/includes/db_actions.php';
 
 $tables = array('biomaterial', 'analysis', 'assay', 'acquisition', 'quantification', 'contact');

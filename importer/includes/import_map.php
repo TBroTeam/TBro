@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/db.php';
+
 /**
  * loads a file containing "unigene\tisoform" lines into feature table
  * THIS FILE HAS TO BE SORTED!

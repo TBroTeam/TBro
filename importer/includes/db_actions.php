@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/db.php';
+
 define('S', 'string');
 global $mappings;
 $mappings = array(
