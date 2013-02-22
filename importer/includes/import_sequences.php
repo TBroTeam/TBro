@@ -40,15 +40,16 @@ function import_sequences($fasta_file) {
         $statement_update_isoform->bindParam('seqlen', &$param_isoform_seqlen, PDO::PARAM_INT);
         $statement_update_isoform->bindParam('residues', &$param_isoform_residues, PDO::PARAM_STR);
 
-        $statement_insert_isoform_path = $db->prepare(sprintf('INSERT INTO featureprop (feature_id, type_id, value) VALUES (:feature_id, %d, :value)', 775));
-        #CVTERM 775: golden_path
+        $statement_insert_isoform_path = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (:feature_id, :type_id, :value)');
+        $statement_insert_isoform_path->bindValue('type_id', CV_ISOFORM_PATH, PDO::PARAM_INT);
         $statement_insert_isoform_path->bindParam('feature_id', &$param_isoform_feature_id, PDO::PARAM_INT);
         $statement_insert_isoform_path->bindParam('value', &$param_isoform_path, PDO::PARAM_STR);
 
         #predicted peptide
-        $statement_insert_predpep = $db->prepare(sprintf('INSERT INTO feature  (type_id, organism_id, name, uniquename, seqlen, residues) '
-                        . 'VALUES (%d, %d, :name, :uniquename, :seqlen, :residues) RETURNING feature_id', 13, DB_ORGANISM_ID));
-        #CVTERM 192: polypeptide
+        $statement_insert_predpep = $db->prepare('INSERT INTO feature  (type_id, organism_id, name, uniquename, seqlen, residues) '
+                . 'VALUES (:type_id, :organism_id, :name, :uniquename, :seqlen, :residues) RETURNING feature_id');
+        $statement_insert_predpep->bindValue('type_id', CV_PREDPEP, PDO::PARAM_INT);
+        $statement_insert_predpep->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
         $statement_insert_predpep->bindParam('name', &$param_predpep_name, PDO::PARAM_STR);
         $statement_insert_predpep->bindParam('uniquename', &$param_predpep_uniq, PDO::PARAM_STR);
         $statement_insert_predpep->bindParam('seqlen', &$param_predpep_seqlen, PDO::PARAM_INT);

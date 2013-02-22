@@ -28,9 +28,9 @@ function import_annot_blast2go($filename) {
         $statement_insert_feature_dbxref->bindParam('uniquename', &$param_feature_uniq, PDO::PARAM_STR);
 
         $statement_insert_featureprop = $db->prepare(
-                sprintf('INSERT INTO featureprop (feature_id, type_id, rank, value) VALUES ((%s), %d, 0, :description)', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename', 123)
+                sprintf('INSERT INTO featureprop (feature_id, type_id, rank, value) VALUES ((%s), :type_id, 0, :description)', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename')
         );
-        #TODO 123 is some random number, felix will give me this
+        $statement_insert_featureprop->bindValue('type_id', CV_ANNOTATION_BLAST2GO, PDO::PARAM_INT);
         $statement_insert_featureprop->bindParam('uniquename', &$param_feature_uniq, PDO::PARAM_STR);
         $statement_insert_featureprop->bindParam('description', &$description, PDO::PARAM_STR);
 
@@ -138,8 +138,10 @@ function import_annot_interpro($filename) {
         $param_dbname = null;
         $trash = null;
 
-        $statement_insert_feature_domain = $db->prepare(sprintf('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:feature_domain_name, :feature_domain_unique, %d, %d)', 123, DB_ORGANISM_ID));
-        #TODO 123 is placeholder
+        $statement_insert_feature_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:feature_domain_name, :feature_domain_unique, :type_id, :organism_id)');
+        $statement_insert_feature_domain->bindValue('type_id', CV_ANNOTATION_INTERPRO, PDO::PARAM_INT);
+        $statement_insert_feature_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+
         $statement_insert_feature_domain->bindParam('feature_domain_name', &$param_feature_domain_name, PDO::PARAM_STR);
         $statement_insert_feature_domain->bindParam('feature_domain_unique', &$param_feature_domain_uniq, PDO::PARAM_STR);
 
@@ -156,11 +158,8 @@ function import_annot_interpro($filename) {
         $statement_insert_analysisfeature->bindParam('timeexecuted', &$param_timeexecuted, PDO::PARAM_STR);
         $statement_insert_analysisfeature->bindParam('significance', &$param_evalue, PDO::PARAM_STR);
 
-        $statement_insert_interproID = $db->prepare(sprintf(
-                        'INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), %d, :interproID)'
-                        , 123
-                ));
-        #TODO 123 CVTERM for interpro ID
+        $statement_insert_interproID = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :type_interproID, :interproID)');
+        $statement_insert_interproID > bindValue('type_interproID', CV_INTERPRO_ID, PDO::PARAM_INT);
         $statement_insert_interproID->bindParam('interproID', &$param_interproID, PDO::PARAM_STR);
 
 
@@ -296,13 +295,13 @@ function import_annot_repeatmasker($filename) {
       (?<stuff>[\w\/()_\-\#]+(?:[ ] \d* [ ] \d*)?) [ ] \(\d+\) [ ] (?<stuff2>(?:\d+ [ ]){0,2}\d+) $}x'; */
     $regex = <<<EOF
 {^ 
-(?<SmiWa>\d+)[ ]
+\d+[ ]
 # 1320     = Smith-Waterman score of the match, usually complexity adjusted
-(?<divergence>\d+\.\d+)[ ]
+\d+\.\d+[ ]
 # 15.6     = % divergence = mismatches/(matches+mismatches) **
-(?<deleted_bp>\d+\.\d+)[ ]
+\d+\.\d+[ ]
 # 6.2      = % of bases opposite a gap in the query sequence (deleted bp)
-(?<inserted_bp>\d+\.\d+)[ ]
+\d+\.\d+[ ]
 # 0.0      = % of bases opposite a gap in the repeat consensus (inserted bp)
 (?<name>\w+)[ ]
 # HSU08988 = name of query sequence
@@ -310,22 +309,22 @@ function import_annot_repeatmasker($filename) {
 # 6563     = starting position of match in query sequence
 (?<end>\d+)[ ]
 # 6781     = ending position of match in query sequence
-(?<followup_bases>\(\d+\))[ ]
+\(\d+\)[ ]
 # (22462)  = no. of bases in query sequence past the ending position of match
-(?<complement>(?:[C+][ ])?)
+(?:[C+][ ])?
 # C        = match is with the Complement of the repeat consensus sequence
 (?<repeat_name>[\w()-]+)\#
 # MER7A    = name of the matching interspersed repeat
 (?<repeat_class>[\w()-]+)
 (?:/(?<repeat_family>[\w()-]+))?[ ]
 # DNA/MER2_type = the class of the repeat, in this case a DNA transposon fossil of the MER2 group (see below for list and references)
-(\(?\d+\)?)[ ]
+\(?\d+\)?[ ]
 # (0)      = no. of bases in (complement of) the repeat consensus sequence prior to beginning of the match (0 means that the match extended all the way to the end of the repeat consensus sequence)
-(\(?\d+\)?)[ ]
+\(?\d+\)?[ ]
 # 337      = starting position of match in repeat consensus sequence
-(\(?\d+\)?)[ ]
+\(?\d+\)?[ ]
 # 104      = ending position of match in repeat consensus sequence
-(?<id>\d+)
+\d+
 # 20       = unique identifier for individual insertions    
 $}x
 EOF;
@@ -333,16 +332,29 @@ EOF;
     /*
      * fields to DB: name, start, end, repeat_name, repeat_class, repeat_family
      */
-    
+
     try {
         $db->beginTransaction();
         #shared parameters
-        $param_accession = null;
+        $param_name = null;
+        $param_uniquename = null;
 
-        $statement_insert_feature_dbxref = $db->prepare(
-                sprintf('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES ((%s), get_or_insert_dbxref(:dbname, :accession))')
-        );
-        $statement_insert_feature_dbxref->bindParam('accession', &$param_accession, PDO::PARAM_STR);
+        $statement_insert_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id)');
+        $statement_insert_domain->bindValue('type_id', CV_ANNOTATION_REPEATMASKER, PDO::PARAM_INT);
+        $statement_insert_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+        $statement_insert_domain->bindParam('name', &$param_name, PDO::PARAM_STR);
+        $statement_insert_domain->bindParam('uniquename', &$param_uniquename, PDO::PARAM_STR);
+
+
+        $file = fopen($filename);
+        while (($line = trim(fgets($file))) != false) {
+            $matches = null;
+            if (preg_match($regex, $line, &$matches)) {
+                
+            } else {
+                echo "WARNING: Line does not match:\n\t$line\n";
+            }
+        }
 
         if (!$db->commit()) {
             $err = $db->errorInfo();

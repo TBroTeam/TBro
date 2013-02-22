@@ -1,11 +1,6 @@
 #!env php
 <?
-## config
-define('ASSEMBLY_PREFIX', '1.01_');
-define('DB_ORGANISM_ID', '13');
-global $dbrefx_versions;
-#versions of databases for interpro import
-$dbrefx_versions = array('HMMPIR' => '1.0');
+require __DIR__.'/includes/constants.php';
 
 
 ## don't touch anything below!
