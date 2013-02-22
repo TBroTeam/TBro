@@ -178,16 +178,9 @@ if (!isset($parms['--table']) || !isset($parms['--action']) || !in_array($parms[
     die();
 }
 
-define('ERR_MISSING_PARAMTER', 'missing parameter: %s');
+
 define('ERR_NOT_YET_IMPLEMENTED', 'not yet implemented, try again later' . "\n");
 
-function require_parameter($param_names) {
-    global $parms;
-    foreach ($param_names as $param_name)
-        if (!isset($parms[$param_name])) {
-            die(sprintf(ERR_MISSING_PARAMTER, $param_name));
-        }
-}
 
 function confirm() {
     echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";

@@ -227,22 +227,49 @@ function import_annot_interpro($filename) {
     }
 }
 
-function import_annot_repeats($filename) {
+function import_annot_repeatmasker($filename) {
     /*
       How to read the results
 
       The annotation file contains the cross_match output lines. It lists all best matches (above a set minimum score) between the query sequence and any of the sequences in the repeat database or with low complexity DNA. The term "best matches" reflects that a match is not shown if its domain is over 80% contained within the domain of a higher scoring match, where the "domain" of a match is the region in the query sequence that is defined by the alignment start and stop. These domains have been masked in the returned masked sequence file. In the output, matches are ordered by query name, and for each query by position of the start of the alignment.
 
-      Example:
-      1306 15.6  6.2  0.0 HSU08988  6563  6781  (22462) C  MER7A    DNA/MER2_type    (0)   336   103
-      12204 10.0  2.4  1.8 HSU08988  6782  7714  (21529) C  TIGGER1  DNA/MER2_type    (0)  2418  1493
-      279  3.0  0.0  0.0 HSU08988  7719  7751  (21492) +  (TTTTA)n Simple_repeat      1    33   (0)
-      1765 13.4  6.5  1.8 HSU08988  7752  8022  (21221) C  AluSx    SINE/Alu        (23)   289     1
-      12204 10.0  2.4  1.8 HSU08988  8023  8694  (20549) C  TIGGER1  DNA/MER2_type  (925)  1493   827
-      1984 11.1  0.3  0.7 HSU08988  8695  9000  (20243) C  AluSg    SINE/Alu         (5)   305     1
-      12204 10.0  2.4  1.8 HSU08988  9001  9695  (19548) C  TIGGER1  DNA/MER2_type (1591)   827     2
-      711 21.2  1.4  0.0 HSU08988  9696  9816  (19427) C  MER7A    DNA/MER2_type  (224)   122     2
-      This is a sequence in which a Tigger1 DNA transposon has integrated into a MER7 DNA transposon copy. Subsequently two Alus integrated in the Tigger1 sequence. The simple repeat is derived from the poly A of the Alu element. The first line is interpreted like this:
+
+      SW  perc perc perc  query    position in query     matching repeat      position in  repeat
+      score div. del. ins.  sequence begin  end  (left)    repeat  class/family   begin end (left) ID
+      ...
+      1320 15.6  6.2  0.0  HSU08988  6563 6781 (22462) C  MER7A   DNA/MER2_type    (0)  337  104  20
+      12279 10.5  2.1  1.7  HSU08988  6782 7718 (21525) C  Tigger1 DNA/MER2_type    (0) 2418 1486  19
+      1769 12.9  6.6  1.9  HSU08988  7719 8022 (21221) C  AluSx   SINE/Alu         (0)  317    1  17
+      12279 10.5  2.1  1.7  HSU08988  8023 8694 (20549) C  Tigger1 DNA/MER2_type  (932) 1486  818  19
+      2335 11.1  0.3  0.7  HSU08988  8695 9000 (20243) C  AluSg   SINE/Alu         (5)  305    1  18
+      12279 10.5  2.1  1.7  HSU08988  9001 9695 (19548) C  Tigger1 DNA/MER2_type (1600)  818    2  19
+      721 21.2  1.4  0.0  HSU08988  9696 9816 (19427) C  MER7A   DNA/MER2_type  (224)  122    2  20
+
+      This is a sequence in which a Tigger1 DNA transposon has integrated into a MER7 DNA transposon copy. Subsequently two Alus integrated in the Tigger1 sequence. The first line is interpreted as such:
+
+      1320     = Smith-Waterman score of the match, usually complexity adjusted
+      The SW scores are not always directly comparable. Sometimes
+      the complexity adjustment has been turned off, and a variety of
+      scoring-matrices are used dependent on repeat age and GC level.
+
+      15.6     = % divergence = mismatches/(matches+mismatches) **
+      6.2      = % of bases opposite a gap in the query sequence (deleted bp)
+      0.0      = % of bases opposite a gap in the repeat consensus (inserted bp)
+      HSU08988 = name of query sequence
+      6563     = starting position of match in query sequence
+      6781     = ending position of match in query sequence
+      (22462)  = no. of bases in query sequence past the ending position of match
+      C        = match is with the Complement of the repeat consensus sequence
+      MER7A    = name of the matching interspersed repeat
+      DNA/MER2_type = the class of the repeat, in this case a DNA transposon
+      fossil of the MER2 group (see below for list and references)
+      (0)      = no. of bases in (complement of) the repeat consensus sequence
+      prior to beginning of the match (0 means that the match extended
+      all the way to the end of the repeat consensus sequence)
+      337      = starting position of match in repeat consensus sequence
+      104      = ending position of match in repeat consensus sequence
+      20       = unique identifier for individual insertions
+
      * OWN RESULT: 
      * 1286 31.30 3.62 3.32 comp214244_c0_seq2 2820 3840 (0) C Copia-64_VV-I#LTR/Copia (150) 3893 2870 5
      * 195 4.17 0.00 0.00 comp218496_c0_seq4 1520 1543 (0) (TAG)n#Simple_repeat 2 25 (155) 0
@@ -253,22 +280,6 @@ function import_annot_repeats($filename) {
      * 198 19.23 0.00 0.00 comp231081_c0_seq1 1780 1831 (283) C (A)n#Simple_repeat (0) 180 129 5
      * 245 23.19 2.33 4.76 comp231081_c0_seq1 229 314 (1800) (GGAGA)n#Simple_repeat 5 88 (92) 5
      * this is parsed weirdly. "AT_rich#Low_complexity"  should be "AT_rich Low_complexity"
-
-
-      1306    = Smith-Waterman score of the match, usually complexity adjusted The SW scores are not always directly comparable. Sometimes the complexity adjustment has been turned off, and a variety of scoring-matrices are used.
-      15.6    = % substitutions in matching region compared to the consensus
-      6.2     = % of bases opposite a gap in the query sequence (deleted bp)
-      0.0     = % of bases opposite a gap in the repeat consensus (inserted bp)
-      HSU08988= name of query sequence
-      6563    = starting position of match in query sequence
-      7714    = ending position of match in query sequence
-      (22462) = no. of bases in query sequence past the ending position of match
-      C       = match is with the Complement of the consensus sequence in the database
-      MER7A   = name of the matching interspersed repeat
-      DNA/MER2_type = the class of the repeat, in this case a DNA transposon fossil of the MER2 group (see below for list and references)
-      (0)     = no. of bases in (complement of) the repeat consensus sequence prior to beginning of the match (so 0 means that the match extended all the way to the end of the repeat consensus sequence)
-      2418    = starting position of match in database sequence (using top-strand numbering)
-      1465    = ending position of match in database sequence
 
      * feature:
      *  name: comp214244_c0_seq2_???
@@ -281,8 +292,42 @@ function import_annot_repeats($filename) {
      */
     global $db;
 
-    $regex = '{ ^\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] (?<name>\w+) [ ] (?<start>\d+) [ ] (?<end>\d+) [ ] \(\d+\) (?:[ ] [C+])? [ ] 
-        (?<stuff>[\w\/()_\-\#]+(?:[ ] \d* [ ] \d*)?) [ ] \(\d+\) [ ] (?<stuff2>(?:\d+ [ ]){0,2}\d+) $}x';
+    /* $regex = '{ ^\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] \d+\.\d+ [ ] (?<name>\w+) [ ] (?<start>\d+) [ ] (?<end>\d+) [ ] \(\d+\) (?:[ ] [C+])? [ ] 
+      (?<stuff>[\w\/()_\-\#]+(?:[ ] \d* [ ] \d*)?) [ ] \(\d+\) [ ] (?<stuff2>(?:\d+ [ ]){0,2}\d+) $}x'; */
+    $regex = <<<EOF
+{^ 
+(?<SmiWa>\d+)[ ]
+# 1320     = Smith-Waterman score of the match, usually complexity adjusted
+(?<divergence>\d+\.\d+)[ ]
+# 15.6     = % divergence = mismatches/(matches+mismatches) **
+(?<deleted_bp>\d+\.\d+)[ ]
+# 6.2      = % of bases opposite a gap in the query sequence (deleted bp)
+(?<inserted_bp>\d+\.\d+)[ ]
+# 0.0      = % of bases opposite a gap in the repeat consensus (inserted bp)
+(?<name>\w+)[ ]
+# HSU08988 = name of query sequence
+(?<start>\d+)[ ]
+# 6563     = starting position of match in query sequence
+(?<end>\d+)[ ]
+# 6781     = ending position of match in query sequence
+(?<followup_bases>\(\d+\))[ ]
+# (22462)  = no. of bases in query sequence past the ending position of match
+(?<complement>(?:[C+][ ])?)
+# C        = match is with the Complement of the repeat consensus sequence
+(?<repeat_name>[\w/()-]+)\#
+# MER7A    = name of the matching interspersed repeat
+(?<repeat_class>[\w/()-]+)[ ]
+# DNA/MER2_type = the class of the repeat, in this case a DNA transposon fossil of the MER2 group (see below for list and references)
+(\(?\d+\)?)[ ]
+# (0)      = no. of bases in (complement of) the repeat consensus sequence prior to beginning of the match (0 means that the match extended all the way to the end of the repeat consensus sequence)
+(\(?\d+\)?)[ ]
+# 337      = starting position of match in repeat consensus sequence
+(\(?\d+\)?)[ ]
+# 104      = ending position of match in repeat consensus sequence
+(?<id>\(?\d+\)?)
+# 20       = unique identifier for individual insertions    
+$}x
+EOF;
 
     try {
         $db->beginTransaction();

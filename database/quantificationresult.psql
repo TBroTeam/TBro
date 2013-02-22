@@ -31,6 +31,7 @@ ALTER TABLE quantificationresult_quantificationresult_id_seq
 CREATE TABLE quantificationresult (
     quantificationresult_id integer DEFAULT nextval('quantificationresult_quantificationresult_id_seq'::regclass) NOT NULL,
     feature_id integer NOT NULL,
+    biomaterial_id integer NOT NULL,
     quantification_id integer NOT NULL,
     length double precision,
     effective_length double precision,
@@ -54,5 +55,8 @@ ALTER TABLE ONLY quantificationresult
 
 ALTER TABLE ONLY quantificationresult
     ADD CONSTRAINT quantificationresult_quantification_fkey FOREIGN KEY (quantification_id) REFERENCES quantification(quantification_id) ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE ONLY quantificationresult
+    ADD CONSTRAINT quantificationresult_biomaterial_fkey FOREIGN KEY (biomaterial_id) REFERENCES biomaterial(biomaterial_id) ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE quantificationresult ADD UNIQUE (quantification_id, feature_id);

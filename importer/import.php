@@ -24,7 +24,8 @@ types:
     quantification
         requires full import of: sequence
         requires
-            TODO : quantification_id, atm.: 1 fixed
+            --quantification_id <int>
+            --biomaterial_name <string>
     annotation
         requires full import of: sequence
         requires
@@ -95,8 +96,9 @@ foreach ($parms['--file'] as $file) {
                 import_sequences($file);
                 break;
             case 'quantification':
+                require_parameter(array('--quantification_id', '--biomaterial_name'));
                 require_once __DIR__ . '/includes/import_counts.php';
-                import_quantification_results($file, 1);
+                import_quantification_results($file, $parms['--quantification_id'], $parms['--biomaterial_name']);
                 break;
             case 'annotation':
                 if (!in_array($parms['--subtype'], $valid_annotation_types)) {
