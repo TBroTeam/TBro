@@ -314,9 +314,9 @@ function import_annot_repeatmasker($filename) {
 # (22462)  = no. of bases in query sequence past the ending position of match
 (?<complement>(?:[C+][ ])?)
 # C        = match is with the Complement of the repeat consensus sequence
-(?<repeat_name>[\w/()-]+)\#
+(?<repeat_name>[\w()-]+)\#
 # MER7A    = name of the matching interspersed repeat
-(?<repeat_class>[\w/()-]+)[ ]
+(?<repeat_class>[\w()-]+)(?:/(?<repeat_family>[\w()-]+))?[ ]
 # DNA/MER2_type = the class of the repeat, in this case a DNA transposon fossil of the MER2 group (see below for list and references)
 (\(?\d+\)?)[ ]
 # (0)      = no. of bases in (complement of) the repeat consensus sequence prior to beginning of the match (0 means that the match extended all the way to the end of the repeat consensus sequence)
@@ -324,7 +324,7 @@ function import_annot_repeatmasker($filename) {
 # 337      = starting position of match in repeat consensus sequence
 (\(?\d+\)?)[ ]
 # 104      = ending position of match in repeat consensus sequence
-(?<id>\(?\d+\)?)
+(?<id>\d+)
 # 20       = unique identifier for individual insertions    
 $}x
 EOF;
