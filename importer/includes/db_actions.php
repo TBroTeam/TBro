@@ -99,7 +99,7 @@ function quick_show($table, $uniquekey, $uniquevalue, &$header_shown = false) {
  * @param string $unique_value value for ':unique' PDO parameter in query
  * @param array $options like array('--description'=>'my description', '--timeedited'=>'2013-12-31 00:05'[, ...])
  */
-function quickedit_query($query_sprintf, $keys, $unique_value, $options) {
+function quick_edit_query($query_sprintf, $keys, $unique_value, $options) {
     global $db;
 
     foreach ($keys as $key) {
@@ -119,7 +119,7 @@ function quickedit_query($query_sprintf, $keys, $unique_value, $options) {
  * @param string $unique_value value for ':unique' PDO parameter in query
  * @param array $options like array('--dbxref'=>'GO:123'[, ...])
  */
-function quickedit_dbxref($query_sprintf, $unique_value, $options) {
+function quick_edit_dbxref($query_sprintf, $unique_value, $options) {
     global $db;
 
     if (isset($options["--dbxref"])) {
@@ -129,6 +129,24 @@ function quickedit_dbxref($query_sprintf, $unique_value, $options) {
         $statement_update_dbxref->bindValue('dbname', $dbname, PDO::PARAM_STR);
         $statement_update_dbxref->bindValue('accession', $accession, PDO::PARAM_STR);
         $statement_update_dbxref->execute();
+    }
+}
+
+/**
+ * 
+ * @global PDO $db DB
+ * @param string $table table to delete from
+ * @param string $unique_key name of unique column
+ * @param string $unique_value value of unique column
+ */
+function quick_delete($table, $unique_key, $unique_value) {
+    global $db;
+    $statement_delete_key = $db->prepare(sprintf('DELETE FROM %s WHERE %s=:unique', $table, $unique_key));
+    $statement_delete_key->bindValue('unique', $unique_value, PDO::PARAM_STR);
+    if ($statement_delete_key->execute()) {
+        printf("%d line(s) affected\n", $statement_delete_key->rowCount());
+    } else {
+        printf("something went wrong:\n %s", print_r($statement_delete_key->errorInfo(), true));
     }
 }
 
@@ -165,8 +183,8 @@ function biomaterial_create($name, $options) {
 }
 
 function biomaterial_edit($name, $options) {
-    quickedit_query('UPDATE biomaterial SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
-    quickedit_dbxref('UPDATE biomaterial SET %s WHERE name=:unique', $name, $options);
+    quick_edit_query('UPDATE biomaterial SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
+    quick_edit_dbxref('UPDATE biomaterial SET %s WHERE name=:unique', $name, $options);
 }
 
 function biomaterial_show($name) {
@@ -177,8 +195,8 @@ function biomaterial_list() {
     quick_list('biomaterial');
 }
 
-function biomaterial_delete() {
-    
+function biomaterial_delete($name) {
+    quick_delete('biomaterial', 'name', $name);
 }
 
 /*
@@ -225,7 +243,7 @@ function analysis_create($options) {
 }
 
 function analysis_edit($id, $options) {
-    quickedit_query(
+    quick_edit_query(
             'UPDATE analysis SET %1$s=:%1$s WHERE analysis_id=:unique'
             , array('name', 'program', 'programversion', 'algorithm', 'sourcename', 'timeexecuted')
             , $id
@@ -239,6 +257,10 @@ function analysis_show($id) {
 
 function analysis_list() {
     quick_list('analysis');
+}
+
+function analysis_delete($id) {
+    quick_delete('analysis', 'analysis_id', $id);
 }
 
 /*
@@ -304,8 +326,8 @@ function assay_create($name, $options) {
 }
 
 function assay_edit($name, $options) {
-    quickedit_query('UPDATE assay SET %1$s=:%1$s WHERE name=:unique', array('operator_id', 'description', 'assaydate'), $name, $options);
-    quickedit_dbxref('UPDATE assay SET %s WHERE name=:unique', $name, $options);
+    quick_edit_query('UPDATE assay SET %1$s=:%1$s WHERE name=:unique', array('operator_id', 'description', 'assaydate'), $name, $options);
+    quick_edit_dbxref('UPDATE assay SET %s WHERE name=:unique', $name, $options);
     assay_edit_biomaterial($name, $options);
 }
 
@@ -352,6 +374,11 @@ function assay_list() {
     quick_list('assay');
 }
 
+
+function assay_delete($name) {
+    quick_delete('assay', 'name', $name);
+}
+
 /*
   CREATE TABLE acquisition
   (
@@ -391,7 +418,7 @@ function acquisition_create($name, $options) {
 }
 
 function acquisition_edit($name, $options) {
-    quickedit_query('UPDATE acquisition SET %1$s=:%1$s WHERE name=:unique', array('assay_id', 'acquisitiondate', 'uri'), $name, $options);
+    quick_edit_query('UPDATE acquisition SET %1$s=:%1$s WHERE name=:unique', array('assay_id', 'acquisitiondate', 'uri'), $name, $options);
 }
 
 function acquisition_show($name) {
@@ -400,6 +427,11 @@ function acquisition_show($name) {
 
 function acquisition_list() {
     quick_list('acquisition');
+}
+
+
+function acquisition_delete($name) {
+    quick_delete('acquisition', 'name', $name);
 }
 
 /*
@@ -445,7 +477,7 @@ function quantification_create($name, $options) {
 }
 
 function quantification_edit($name, $options) {
-    quickedit_query('UPDATE quantification SET %1$s=:%1$s WHERE name=:unique', array('acquisition_id', 'analysis_id', 'quantificationdate', 'uri'), $name, $options);
+    quick_edit_query('UPDATE quantification SET %1$s=:%1$s WHERE name=:unique', array('acquisition_id', 'analysis_id', 'quantificationdate', 'uri'), $name, $options);
 }
 
 function quantification_show($name) {
@@ -454,6 +486,10 @@ function quantification_show($name) {
 
 function quantification_list() {
     quick_list('quantification');
+}
+
+function quantification_delete($name) {
+    quick_delete('quantification', 'name', $name);
 }
 
 /*
@@ -488,7 +524,7 @@ function contact_create($name, $options) {
 }
 
 function contact_edit($name, $options) {
-    quickedit_query('UPDATE contact SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
+    quick_edit_query('UPDATE contact SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
 }
 
 function contact_show($name) {
@@ -498,5 +534,10 @@ function contact_show($name) {
 function contact_list() {
     quick_list('contact');
 }
+
+function contact_delete($name) {
+    quick_delete('contact', 'name', $name);
+}
+
 
 ?>

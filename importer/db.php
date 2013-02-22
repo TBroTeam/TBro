@@ -179,7 +179,7 @@ if (!isset($parms['--table']) || !isset($parms['--action']) || !in_array($parms[
 }
 
 define('ERR_MISSING_PARAMTER', 'missing parameter: %s');
-define('ERR_NOT_YET_IMPLEMENTED', 'not yet implemented, try again later');
+define('ERR_NOT_YET_IMPLEMENTED', 'not yet implemented, try again later' . "\n");
 
 function require_parameter($param_names) {
     global $parms;
@@ -187,6 +187,15 @@ function require_parameter($param_names) {
         if (!isset($parms[$param_name])) {
             die(sprintf(ERR_MISSING_PARAMTER, $param_name));
         }
+}
+
+function confirm() {
+    echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";
+    while (!in_array($line = trim(fgets(STDIN)), array('yes', 'no'))) {
+
+        echo "enter one of (yes/no):\n> ";
+    }
+    return $line == 'yes';
 }
 
 switch ($parms['--table']) {
@@ -210,7 +219,10 @@ switch ($parms['--table']) {
                 biomaterial_show($parms['--name']);
                 break;
             case 'delete':
-                die(ERR_NOT_YET_IMPLEMENTED);
+                require_parameter(array('--name'));
+                biomaterial_show($parms['--name']);
+                if (confirm())
+                    biomaterial_delete($parms['--name']);
                 break;
         }
         break;
@@ -233,7 +245,10 @@ switch ($parms['--table']) {
                 analysis_show($parms['--id']);
                 break;
             case 'delete':
-                die(ERR_NOT_YET_IMPLEMENTED);
+                require_parameter(array('--id'));
+                analysis_show($parms['--id']);
+                if (confirm())
+                    analysis_delete($parms['--id']);
                 break;
         }
         break;
@@ -257,7 +272,10 @@ switch ($parms['--table']) {
                 assay_show($parms['--name']);
                 break;
             case 'delete':
-                die(ERR_NOT_YET_IMPLEMENTED);
+                require_parameter(array('--name'));
+                assay_show($parms['--name']);
+                if (confirm())
+                    assay_delete($parms['--name']);
                 break;
         }
         break;
@@ -281,7 +299,10 @@ switch ($parms['--table']) {
                 acquisition_show($parms['--name']);
                 break;
             case 'delete':
-                die(ERR_NOT_YET_IMPLEMENTED);
+                require_parameter(array('--name'));
+                acquisition_show($parms['--name']);
+                if (confirm())
+                    acquisition_delete($parms['--name']);
                 break;
         }
         break;
@@ -305,7 +326,10 @@ switch ($parms['--table']) {
                 quantification_show($parms['--name']);
                 break;
             case 'delete':
-                die(ERR_NOT_YET_IMPLEMENTED);
+                require_parameter(array('--name'));
+                quantification_show($parms['--name']);
+                if (confirm())
+                    quantification_delete($parms['--name']);
                 break;
         }
         break;
@@ -329,7 +353,10 @@ switch ($parms['--table']) {
                 contact_show($parms['--name']);
                 break;
             case 'delete':
-                die(ERR_NOT_YET_IMPLEMENTED);
+                require_parameter(array('--name'));
+                contact_show($parms['--name']);
+                if (confirm())
+                    contact_delete($parms['--name']);
                 break;
         }
         break;
