@@ -1,17 +1,20 @@
 <?php
 
-#define('DEBUG', true);
-require '../importer/includes/db_actions.php';
-
-
 /**
  * @backupGlobals disabled
  * @backupStaticAttributes disabled
  */
 class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
 
-    private $data;
-    
+    static $file = "../importer/db.php";
+
+    public function cliExecute($args) {
+        global $argc, $argv;
+        $argv = $args;
+        $argc = count($args);
+        require $argv[0];
+    }
+
     public function provider_biomaterial() {
         return array(
             array('phpUnitTestName1', 'phpUnitDescription1', 'GO:PhpUnitTest1')
@@ -21,74 +24,63 @@ class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider provider_biomaterial
      */
-    public function test_biomaterial_init($name, $description, $dbxref) {
-        $this->data = array('name' => $name, 'description' => $description, 'dbxref' => $dbxref);
-        $this->assertNotContains(array('name' => $name), biomaterial_list(), 'database not clean for testing!');
+    public function testInit($name, $description, $dbxref)  {
+        ob_start();
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'list'));
+        $this->assertEquals(0, preg_match("/$name/", ob_get_clean()));
     }
 
     /**
-     * @depends test_biomaterial_init
+     * @depends testInit
      * @dataProvider provider_biomaterial
      */
-    public function test_biomaterial_create($name, $description, $dbxref){
-        biomaterial_create($name, array('--description' => $description, '--dbxref' => $dbxref));
-                var_dump(biomaterial_show($name));
-        $this->assertEquals(
-                array('name' => $name, 'description' => $description, 'dbxref_id' => $dbxref.'()')
-                , biomaterial_show($name)
-                , 'value not inserted');
-    }
-
-    /**
-     * @depends test_biomaterial_create
-     * @dataProvider provider_biomaterial
-     */
-    public function test_biomaterial_show($name, $description, $dbxref){
-
+    public function testCreate($name, $description, $dbxref)  {
         $this->expectOutputRegex("/$name\t$description\t$dbxref/");
-        biomaterial_show($name);
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'create', '--name', $name, '--description', $description, '--dbxref', $dbxref));
     }
 
     /**
-     * @depends test_biomaterial_create
+     * @depends testCreate
      * @dataProvider provider_biomaterial
      */
-    public function test_biomaterial_list($name, $description, $dbxref){
+    public function testShow($name, $description, $dbxref)  {
+        $this->expectOutputRegex("/$name\t$description\t$dbxref/");
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'show', '--name', $name));
+    }
+
+    /**
+     * @depends testCreate
+     * @dataProvider provider_biomaterial
+     */
+    public function testList($name, $description, $dbxref)  {
         $this->expectOutputRegex("/$name/");
-        biomaterial_list();
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'list'));
     }
 
     /**
-     * @depends test_biomaterial_create
-     * @dataProvider provider_biomaterial
-     */
-    public function test_biomaterial_edit($name, $description, $dbxref){
-        $description .= '_2';
-        $dbxref .= '_2';
-        biomaterial_edit($name, array('--description' => $description, '--dbxref' => $dbxref));
-        $this->assertEquals(
-                array('name' => $name, 'description' => $description, 'dbxref_id' => $dbxref.'()')
-                , biomaterial_show($name)
-                , 'value not edited');
-    }
-
-    /**
-     * @depends test_biomaterial_create
+     * @depends testCreate
      * @dataProvider provider_biomaterial
      * @expectedException PDOException
      */
-    public function test_biomaterial_duplicateKey($name, $description, $dbxref){
-        biomaterial_create($name, array('--description' => 'foo'));
+    public function testCreateDuplicate($name, $description, $dbxref)  {
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'create', '--name', $name, '--description', $description."_different"));
+    }
+
+    /**
+     * @depends testCreate
+     * @dataProvider provider_biomaterial
+     */
+    public function testEdit($name, $description, $dbxref)  {
+        $this->expectOutputRegex("/$name\t${description}_2/");
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'edit', '--name', $name, '--description', $description . '_2'));
     }
 
     /**
      * @dataProvider provider_biomaterial
      */
-    public function test_biomaterial_delete($name, $description, $dbxref){
-
-        $this->assertEquals(1, biomaterial_delete($name));
-        $this->assertNotContains(array('name' => $name, 'description' => $description), biomaterial_list(), 'value not deleted');
-        $this->assertEquals(0, biomaterial_delete($name));
+    public function testDelete($name, $description, $dbxref)  {
+        $this->expectOutputRegex('/1 line\(s\) affected/');
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'delete', '--name', $name, '--noinput'));
     }
 
 }
