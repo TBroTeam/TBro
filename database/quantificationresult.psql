@@ -53,8 +53,10 @@ ALTER TABLE ONLY quantificationresult
 ALTER TABLE ONLY quantificationresult
     ADD CONSTRAINT quantificationresult_feature_fkey FOREIGN KEY (feature_id) REFERENCES feature(feature_id) ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;
 
-ALTER TABLE ONLY quantificationresult
-    ADD CONSTRAINT quantificationresult_quantification_fkey FOREIGN KEY (quantification_id) REFERENCES quantification(quantification_id) ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE quantificationresult ADD CONSTRAINT quantificationresult_quantifcation_fkey FOREIGN KEY (quantificationresult_id) REFERENCES quantification (quantification_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+--ALTER TABLE ONLY quantificationresult
+--    ADD CONSTRAINT quantificationresult_quantification_fkey FOREIGN KEY (quantification_id) REFERENCES quantification(quantification_id) ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;
 
 ALTER TABLE ONLY quantificationresult
     ADD CONSTRAINT quantificationresult_biomaterial_fkey FOREIGN KEY (biomaterial_id) REFERENCES biomaterial(biomaterial_id) ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED;
