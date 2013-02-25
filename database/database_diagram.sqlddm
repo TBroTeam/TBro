@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dm:diagramModel xmlns:dm="http://sqldeveloper.solyp.com/diagram/diagrammodel" xmlns:ddm="http://sqldeveloper.solyp.com/diagram/diagramdatamodel" xmlns:dgm="http://sqldeveloper.solyp.com/diagram/diagramgraphmodel" version="1.2.0">
+<dm:properties creationDate="2013-02-25T10:46:44Z" creator="s202139" modificationDate="2013-02-25T11:09:30Z" modifier="s202139"/>
+<dm:diagramDataModel>
+<ddm:objects/>
+<ddm:tables>
+<ddm:table id="74" name="acquisition">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('acquisition_acquisition_id_seq'::regclass)" id="75" name="acquisition_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="76" name="assay_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="77" name="protocol_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="78" name="channel_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="now()" id="79" name="acquisitiondate" nullable="true" scale="" size="" typeName="timestamp"/>
+<ddm:tableColumn defaultValue="" id="80" name="name" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="81" name="uri" nullable="true" scale="" size="2147483647" typeName="text"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="82" name="acquisition_pkey">
+<ddm:refIds>
+<ddm:refId value="75"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="157" name="analysis">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('analysis_analysis_id_seq'::regclass)" id="158" name="analysis_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="159" name="name" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="160" name="description" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="161" name="program" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="162" name="programversion" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="163" name="algorithm" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="164" name="sourcename" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="165" name="sourceversion" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="166" name="sourceuri" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="now()" id="167" name="timeexecuted" nullable="false" scale="" size="" typeName="timestamp"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="168" name="analysis_pkey">
+<ddm:refIds>
+<ddm:refId value="158"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="225" name="analysisfeature">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('analysisfeature_analysisfeature_id_seq'::regclass)" id="226" name="analysisfeature_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="227" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="228" name="analysis_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="229" name="rawscore" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="230" name="normscore" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="231" name="significance" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="232" name="identity" nullable="true" scale="17" size="17" typeName="float8"/>
+</ddm:tableColumns>
+</ddm:table>
+<ddm:table id="97" name="assay">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('assay_assay_id_seq'::regclass)" id="98" name="assay_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="99" name="arraydesign_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="100" name="protocol_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="now()" id="101" name="assaydate" nullable="true" scale="" size="" typeName="timestamp"/>
+<ddm:tableColumn defaultValue="" id="102" name="arrayidentifier" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="103" name="arraybatchidentifier" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="104" name="operator_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="105" name="dbxref_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="106" name="name" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="107" name="description" nullable="true" scale="" size="2147483647" typeName="text"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="108" name="assay_pkey">
+<ddm:refIds>
+<ddm:refId value="98"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="1" name="assay_biomaterial">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('assay_biomaterial_assay_biomaterial_id_seq'::regclass)" id="2" name="assay_biomaterial_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="3" name="assay_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="4" name="biomaterial_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="5" name="channel_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="0" id="6" name="rank" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="7" name="assay_biomaterial_pkey">
+<ddm:refIds>
+<ddm:refId value="2"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="66" name="biomaterial">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('biomaterial_biomaterial_id_seq'::regclass)" id="67" name="biomaterial_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="68" name="taxon_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="69" name="biosourceprovider_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="70" name="dbxref_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="71" name="name" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="72" name="description" nullable="true" scale="" size="2147483647" typeName="text"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="73" name="biomaterial_pkey">
+<ddm:refIds>
+<ddm:refId value="67"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="117" name="cvterm">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('cvterm_cvterm_id_seq'::regclass)" id="118" name="cvterm_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="119" name="cv_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="120" name="name" nullable="false" scale="" size="1024" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="121" name="definition" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="122" name="dbxref_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="0" id="123" name="is_obsolete" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="0" id="124" name="is_relationshiptype" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="125" name="cvterm_pkey">
+<ddm:refIds>
+<ddm:refId value="118"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="126" name="db">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('db_db_id_seq'::regclass)" id="127" name="db_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="128" name="name" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="129" name="description" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="130" name="urlprefix" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="131" name="url" nullable="true" scale="" size="255" typeName="varchar"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="132" name="db_pkey">
+<ddm:refIds>
+<ddm:refId value="127"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="59" name="dbxref">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('dbxref_dbxref_id_seq'::regclass)" id="60" name="dbxref_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="61" name="db_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="62" name="accession" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="''::character varying" id="63" name="version" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="64" name="description" nullable="true" scale="" size="2147483647" typeName="text"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="65" name="dbxref_pkey">
+<ddm:refIds>
+<ddm:refId value="60"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="8" name="feature">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('feature_feature_id_seq'::regclass)" id="9" name="feature_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="10" name="dbxref_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="11" name="organism_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="12" name="name" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="13" name="uniquename" nullable="false" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="14" name="residues" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="15" name="seqlen" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="16" name="md5checksum" nullable="true" scale="" size="32" typeName="bpchar"/>
+<ddm:tableColumn defaultValue="" id="17" name="type_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="false" id="18" name="is_analysis" nullable="false" scale="" size="" typeName="bool"/>
+<ddm:tableColumn defaultValue="false" id="19" name="is_obsolete" nullable="false" scale="" size="" typeName="bool"/>
+<ddm:tableColumn defaultValue="now()" id="20" name="timeaccessioned" nullable="false" scale="" size="" typeName="timestamp"/>
+<ddm:tableColumn defaultValue="now()" id="21" name="timelastmodified" nullable="false" scale="" size="" typeName="timestamp"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="22" name="feature_pkey">
+<ddm:refIds>
+<ddm:refId value="9"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="133" name="feature_cvterm">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('feature_cvterm_feature_cvterm_id_seq'::regclass)" id="134" name="feature_cvterm_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="135" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="136" name="cvterm_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="137" name="pub_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="false" id="138" name="is_not" nullable="false" scale="" size="" typeName="bool"/>
+<ddm:tableColumn defaultValue="0" id="139" name="rank" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="140" name="feature_cvterm_pkey">
+<ddm:refIds>
+<ddm:refId value="134"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="46" name="feature_dbxref">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('feature_dbxref_feature_dbxref_id_seq'::regclass)" id="47" name="feature_dbxref_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="48" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="49" name="dbxref_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="true" id="50" name="is_current" nullable="false" scale="" size="" typeName="bool"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="51" name="feature_dbxref_pkey">
+<ddm:refIds>
+<ddm:refId value="47"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="41" name="feature_pub">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('feature_pub_feature_pub_id_seq'::regclass)" id="42" name="feature_pub_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="43" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="44" name="pub_id" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="45" name="feature_pub_pkey">
+<ddm:refIds>
+<ddm:refId value="42"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="33" name="feature_relationship">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('feature_relationship_feature_relationship_id_seq'::regclass)" id="34" name="feature_relationship_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="35" name="subject_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="36" name="object_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="37" name="type_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="38" name="value" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="0" id="39" name="rank" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="40" name="feature_relationship_pkey">
+<ddm:refIds>
+<ddm:refId value="34"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="83" name="featureloc">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('featureloc_featureloc_id_seq'::regclass)" id="84" name="featureloc_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="85" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="86" name="srcfeature_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="87" name="fmin" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="false" id="88" name="is_fmin_partial" nullable="false" scale="" size="" typeName="bool"/>
+<ddm:tableColumn defaultValue="" id="89" name="fmax" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="false" id="90" name="is_fmax_partial" nullable="false" scale="" size="" typeName="bool"/>
+<ddm:tableColumn defaultValue="" id="91" name="strand" nullable="true" scale="" size="5" typeName="int2"/>
+<ddm:tableColumn defaultValue="" id="92" name="phase" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="93" name="residue_info" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="0" id="94" name="locgroup" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="0" id="95" name="rank" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="96" name="featureloc_pkey">
+<ddm:refIds>
+<ddm:refId value="84"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="52" name="featureprop">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('featureprop_featureprop_id_seq'::regclass)" id="53" name="featureprop_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="54" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="55" name="type_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="56" name="value" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="0" id="57" name="rank" nullable="false" scale="" size="10" typeName="int4"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="58" name="featureprop_pkey">
+<ddm:refIds>
+<ddm:refId value="53"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="109" name="organism">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('organism_organism_id_seq'::regclass)" id="110" name="organism_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="111" name="abbreviation" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="112" name="genus" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="113" name="species" nullable="false" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="114" name="common_name" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="115" name="comment" nullable="true" scale="" size="2147483647" typeName="text"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="116" name="organism_pkey">
+<ddm:refIds>
+<ddm:refId value="110"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="141" name="pub">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('pub_pub_id_seq'::regclass)" id="142" name="pub_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="143" name="title" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="144" name="volumetitle" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="145" name="volume" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="146" name="series_name" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="147" name="issue" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="148" name="pyear" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="149" name="pages" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="150" name="miniref" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="151" name="uniquename" nullable="false" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="152" name="type_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="false" id="153" name="is_obsolete" nullable="true" scale="" size="" typeName="bool"/>
+<ddm:tableColumn defaultValue="" id="154" name="publisher" nullable="true" scale="" size="255" typeName="varchar"/>
+<ddm:tableColumn defaultValue="" id="155" name="pubplace" nullable="true" scale="" size="255" typeName="varchar"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="156" name="pub_pkey">
+<ddm:refIds>
+<ddm:refId value="142"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="23" name="quantification">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('quantification_quantification_id_seq'::regclass)" id="24" name="quantification_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="25" name="acquisition_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="26" name="operator_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="27" name="protocol_id" nullable="true" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="28" name="analysis_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="now()" id="29" name="quantificationdate" nullable="true" scale="" size="" typeName="timestamp"/>
+<ddm:tableColumn defaultValue="" id="30" name="name" nullable="true" scale="" size="2147483647" typeName="text"/>
+<ddm:tableColumn defaultValue="" id="31" name="uri" nullable="true" scale="" size="2147483647" typeName="text"/>
+</ddm:tableColumns>
+<ddm:primaryKey id="32" name="quantification_pkey">
+<ddm:refIds>
+<ddm:refId value="24"/>
+</ddm:refIds>
+</ddm:primaryKey>
+</ddm:table>
+<ddm:table id="211" name="quantificationresult">
+<ddm:tableColumns>
+<ddm:tableColumn defaultValue="nextval('quantificationresult_quantificationresult_id_seq'::regclass)" id="212" name="quantificationresult_id" nullable="false" scale="" size="10" typeName="serial"/>
+<ddm:tableColumn defaultValue="" id="213" name="feature_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="214" name="biomaterial_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="215" name="quantification_id" nullable="false" scale="" size="10" typeName="int4"/>
+<ddm:tableColumn defaultValue="" id="216" name="length" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="217" name="effective_length" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="218" name="expected_count" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="219" name="TPM" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="220" name="FPKM" nullable="true" scale="17" size="17" typeName="float8"/>
+<ddm:tableColumn defaultValue="" id="221" name="IsoPct" nullable="true" scale="17" size="17" typeName="float8"/>
+</ddm:tableColumns>
+</ddm:table>
+</ddm:tables>
+<ddm:views/>
+<ddm:references>
+<ddm:reference id="186" name="acquisition_assay_id_fkey" sourceRefId="74" targetRefId="97">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="76" targetColumnRefId="98"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="233" name="analysisfeature_analysis_id_fkey" sourceRefId="225" targetRefId="157">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="228" targetColumnRefId="158"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="234" name="analysisfeature_feature_id_fkey" sourceRefId="225" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="227" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="205" name="assay_biomaterial_assay_id_fkey" sourceRefId="1" targetRefId="97">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="3" targetColumnRefId="98"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="208" name="assay_biomaterial_biomaterial_id_fkey" sourceRefId="1" targetRefId="66">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="4" targetColumnRefId="67"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="192" name="assay_dbxref_id_fkey" sourceRefId="97" targetRefId="59">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="105" targetColumnRefId="60"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="193" name="biomaterial_dbxref_id_fkey" sourceRefId="66" targetRefId="59">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="70" targetColumnRefId="60"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="197" name="biomaterial_taxon_id_fkey" sourceRefId="66" targetRefId="109">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="68" targetColumnRefId="110"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="194" name="cvterm_dbxref_id_fkey" sourceRefId="117" targetRefId="59">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="122" targetColumnRefId="60"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="191" name="dbxref_db_id_fkey" sourceRefId="59" targetRefId="126">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="61" targetColumnRefId="127"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="199" name="feature_cvterm_cvterm_id_fkey" sourceRefId="133" targetRefId="117">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="136" targetColumnRefId="118"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="206" name="feature_cvterm_feature_id_fkey" sourceRefId="133" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="135" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="210" name="feature_cvterm_pub_id_fkey" sourceRefId="133" targetRefId="141">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="137" targetColumnRefId="142"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="195" name="feature_dbxref_dbxref_id_fkey" sourceRefId="46" targetRefId="59">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="49" targetColumnRefId="60"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="203" name="feature_dbxref_feature_id_fkey" sourceRefId="46" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="48" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="196" name="feature_dbxref_id_fkey" sourceRefId="8" targetRefId="59">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="10" targetColumnRefId="60"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="198" name="feature_organism_id_fkey" sourceRefId="8" targetRefId="109">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="11" targetColumnRefId="110"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="184" name="feature_pub_feature_id_fkey" sourceRefId="41" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="43" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="185" name="feature_pub_pub_id_fkey" sourceRefId="41" targetRefId="141">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="44" targetColumnRefId="142"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="188" name="feature_relationship_object_id_fkey" sourceRefId="33" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="36" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="189" name="feature_relationship_subject_id_fkey" sourceRefId="33" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="35" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="190" name="feature_relationship_type_id_fkey" sourceRefId="33" targetRefId="117">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="37" targetColumnRefId="118"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="200" name="feature_type_id_fkey" sourceRefId="8" targetRefId="117">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="17" targetColumnRefId="118"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="181" name="featureloc_feature_id_fkey" sourceRefId="83" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="85" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="182" name="featureloc_srcfeature_id_fkey" sourceRefId="83" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="86" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="204" name="featureprop_feature_id_fkey" sourceRefId="52" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="54" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="201" name="featureprop_type_id_fkey" sourceRefId="52" targetRefId="117">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="55" targetColumnRefId="118"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="202" name="pub_type_id_fkey" sourceRefId="141" targetRefId="117">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="152" targetColumnRefId="118"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="187" name="quantification_acquisition_id_fkey" sourceRefId="23" targetRefId="74">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="25" targetColumnRefId="75"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="183" name="quantification_analysis_id_fkey" sourceRefId="23" targetRefId="157">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="28" targetColumnRefId="158"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="222" name="quantificationresult_biomaterial_fkey" sourceRefId="211" targetRefId="66">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="214" targetColumnRefId="67"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="223" name="quantificationresult_feature_fkey" sourceRefId="211" targetRefId="8">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="213" targetColumnRefId="9"/>
+</ddm:referenceJoins>
+</ddm:reference>
+<ddm:reference id="224" name="quantificationresult_quantifcation_fkey" sourceRefId="211" targetRefId="23">
+<ddm:referenceJoins>
+<ddm:referenceJoin sourceColumnRefId="212" targetColumnRefId="24"/>
+</ddm:referenceJoins>
+</ddm:reference>
+</ddm:references>
+<ddm:dependencies/>
+</dm:diagramDataModel>
+<dm:diagramGraphModel>
+<dgm:tables>
+<dgm:table refId="1">
+<dgm:style backgroundColor="#ffffa0" bounds="637.0 1009.0 262.0 103.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="141">
+<dgm:style backgroundColor="#ffffa0" bounds="1423.0 46.0 241.0 238.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="66">
+<dgm:style backgroundColor="#ffffa0" bounds="602.0 830.0 292.0 118.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="8">
+<dgm:style backgroundColor="#ffffa0" bounds="1686.0 393.0 268.0 223.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="133">
+<dgm:style backgroundColor="#ffffa0" bounds="1695.0 152.0 239.0 118.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="74">
+<dgm:style backgroundColor="#ffffa0" bounds="870.0 1243.0 259.0 133.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="157">
+<dgm:style backgroundColor="#ffffa0" bounds="1313.0 966.0 260.0 178.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="83">
+<dgm:style backgroundColor="#ffffa0" bounds="2191.0 471.0 254.0 208.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="23">
+<dgm:style backgroundColor="#ffffa0" bounds="1200.0 1268.0 280.0 148.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="33">
+<dgm:style backgroundColor="#ffffa0" bounds="2041.0 217.0 326.0 118.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="97">
+<dgm:style backgroundColor="#ffffa0" bounds="471.0 1152.0 285.0 178.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="41">
+<dgm:style backgroundColor="#ffffa0" bounds="1147.0 394.0 219.0 73.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="109">
+<dgm:style backgroundColor="#ffffa0" bounds="65.0 1174.0 256.0 118.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="46">
+<dgm:style backgroundColor="#ffffa0" bounds="1060.0 237.0 237.0 88.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="117">
+<dgm:style backgroundColor="#ffffa0" bounds="597.0 366.0 279.0 133.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="52">
+<dgm:style backgroundColor="#ffffa0" bounds="1208.0 547.0 267.0 103.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="59">
+<dgm:style backgroundColor="#ffffa0" bounds="118.0 365.0 232.0 103.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="126">
+<dgm:style backgroundColor="#ffffa0" bounds="30.0 186.0 199.0 103.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="211">
+<dgm:style backgroundColor="#ffffa0" bounds="1727.0 1079.0 290.0 178.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+<dgm:table refId="225">
+<dgm:style backgroundColor="#ffffa0" bounds="1449.0 729.0 243.0 133.0" color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="false" lineEndShape="0" lineEndSize="10" lineWidth="1.0" opaque="true"/>
+</dgm:table>
+</dgm:tables>
+<dgm:views/>
+<dgm:references>
+<dgm:reference refId="234">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1570.5 795.5 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="233">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1570.5 795.5 1443.0 1055.0"/>
+</dgm:reference>
+<dgm:reference refId="224">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1872.0 1168.0 1340.0 1342.0"/>
+</dgm:reference>
+<dgm:reference refId="223">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1872.0 1168.0 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="222">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1872.0 1168.0 748.0 889.0"/>
+</dgm:reference>
+<dgm:reference refId="210">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1814.5 211.0 1543.5 165.0"/>
+</dgm:reference>
+<dgm:reference refId="208">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="768.0 1060.5 748.0 889.0"/>
+</dgm:reference>
+<dgm:reference refId="206">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1814.5 211.0 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="205">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="768.0 1060.5 613.5 1241.0"/>
+</dgm:reference>
+<dgm:reference refId="204">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1341.5 598.5 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="203">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1178.5 281.0 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="202">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1543.5 165.0 736.5 432.5"/>
+</dgm:reference>
+<dgm:reference refId="201">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1341.5 598.5 736.5 432.5"/>
+</dgm:reference>
+<dgm:reference refId="200">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1820.0 504.5 736.5 432.5"/>
+</dgm:reference>
+<dgm:reference refId="199">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1814.5 211.0 736.5 432.5"/>
+</dgm:reference>
+<dgm:reference refId="198">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1820.0 504.5 193.0 1233.0"/>
+</dgm:reference>
+<dgm:reference refId="197">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="748.0 889.0 193.0 1233.0"/>
+</dgm:reference>
+<dgm:reference refId="196">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1820.0 504.5 234.0 416.5"/>
+</dgm:reference>
+<dgm:reference refId="195">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1178.5 281.0 234.0 416.5"/>
+</dgm:reference>
+<dgm:reference refId="194">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="736.5 432.5 234.0 416.5"/>
+</dgm:reference>
+<dgm:reference refId="193">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="748.0 889.0 234.0 416.5"/>
+</dgm:reference>
+<dgm:reference refId="192">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="613.5 1241.0 234.0 416.5"/>
+</dgm:reference>
+<dgm:reference refId="191">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="234.0 416.5 129.5 237.5"/>
+</dgm:reference>
+<dgm:reference refId="190">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="2204.0 276.0 736.5 432.5"/>
+</dgm:reference>
+<dgm:reference refId="189">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="2204.0 276.0 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="188">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="2204.0 276.0 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="187">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1340.0 1342.0 999.5 1309.5"/>
+</dgm:reference>
+<dgm:reference refId="186">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="999.5 1309.5 613.5 1241.0"/>
+</dgm:reference>
+<dgm:reference refId="185">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1256.5 430.5 1543.5 165.0"/>
+</dgm:reference>
+<dgm:reference refId="184">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1256.5 430.5 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="183">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="1340.0 1342.0 1443.0 1055.0"/>
+</dgm:reference>
+<dgm:reference refId="182">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="2318.0 575.0 1820.0 504.5"/>
+</dgm:reference>
+<dgm:reference refId="181">
+<dgm:style color="#000000" fontFamily="SansSerif" fontSize="12" fontStyle="normal" fontWeight="normal" labelPosition="500.0 0.0" lineBeginFill="false" lineBeginShape="0" lineBeginSize="10" lineEndFill="true" lineEndShape="2" lineEndSize="10" lineWidth="1.0" opaque="false" points="2318.0 575.0 1820.0 504.5"/>
+</dgm:reference>
+</dgm:references>
+<dgm:dependencies/>
+</dm:diagramGraphModel>
+</dm:diagramModel>
