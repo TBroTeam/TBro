@@ -12,7 +12,7 @@ class LoggedPDO extends PDO {
 
     const LOGLEVEL_LONG = 1;
     const LOGLEVEL_SHORT = 2;
-    
+
     public function __construct($dsn, $username = null, $password = null) {
         parent::__construct($dsn, $username, $password);
     }
@@ -136,16 +136,16 @@ class LoggedPDOStatement {
     public function __call($function_name, $parameters) {
         if ($function_name == 'bindParam' || $function_name == 'bindValue') {
             $parname = $parameters[0];
-            if (is_string($parname) && strpos($parname, ':') === FALSE) {
+            if (is_string($parname) && strpos($parname, ':') === false) {
                 $parname = ':' . $parameters[0];
             }
-            if ($function_name == 'bindParam'){
+            if ($function_name == 'bindParam') {
                 $this->boundParams[$parname] = &$parameters[1];
             } else {
                 $this->boundParams[$parname] = $parameters[1];
             }
         }
-        
+
         return call_user_func_array(array($this->statement, $function_name), $parameters);
     }
 

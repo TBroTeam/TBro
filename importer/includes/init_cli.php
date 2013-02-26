@@ -10,6 +10,18 @@ function require_parameter($param_names) {
         }
 }
 
+function confirm() {
+    global $parms;
+    if ($parms['--noinput'])
+        return true;
+    
+    echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";
+    while (!in_array($line = trim(fgets(STDIN)), array('yes', 'no'))) {
+
+        echo "enter one of (yes/no):\n> ";
+    }
+    return $line == 'yes';
+}
 
 function init_cli() {
     global $parms;

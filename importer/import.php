@@ -1,6 +1,6 @@
 #!env php
 <?
-require __DIR__.'/includes/constants.php';
+require __DIR__ . '/includes/constants.php';
 
 
 ## don't touch anything below!
@@ -41,7 +41,7 @@ EOF;
 $valid_types = array('map', 'sequence', 'quantification', 'annotation');
 $valid_annotation_types = array('blast2go', 'interpro');
 
-include __DIR__.'/includes/init_cli.php';
+include __DIR__ . '/includes/init_cli.php';
 global $parms;
 init_cli();
 
@@ -50,11 +50,11 @@ if (isset($parms['--help'])) {
     die();
 }
 
-if (!isset($parms['--type']) || !in_array($parms['--type'], $valid_types) || !isset($parms['--file']) || $parms['--file']===true) {
+if (!isset($parms['--type']) || !in_array($parms['--type'], $valid_types) || !isset($parms['--file']) || $parms['--file'] === true) {
     die("wrong parameter usage, call with --help for more information\n");
 }
 
-if (is_string($parms['--file'])){
+if (is_string($parms['--file'])) {
     $parms['--file'] = array($parms['--file']);
 }
 
@@ -81,30 +81,35 @@ foreach ($parms['--file'] as $file) {
     try {
         switch ($parms['--type']) {
             case 'map':
-                require_once __DIR__ . '/includes/import_map.php';
-                import_map($file);
+                require_once __DIR__ . '/includes/importers/Importer_Map.php';
+                Importer_Map::import($file);
                 break;
             case 'sequence':
-                require_once __DIR__ . '/includes/import_sequences.php';
-                import_sequences($file);
+                require_once __DIR__ . '/includes/importers/Importer_Sequences.php';
+                Importer_Sequences::import($file);
                 break;
             case 'quantification':
                 require_parameter(array('--quantification_id', '--biomaterial_name'));
-                require_once __DIR__ . '/includes/import_counts.php';
-                import_quantification_results($file, $parms['--quantification_id'], $parms['--biomaterial_name']);
+                require_once __DIR__ . '/includes/importers/Importer_Quantifications.php';
+                Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name']);
                 break;
             case 'annotation':
                 if (!in_array($parms['--subtype'], $valid_annotation_types)) {
                     display_help();
                     die();
                 }
-                require_once __DIR__ . '/includes/import_annotations.php';
                 switch ($parms['--subtype']) {
                     case 'blast2go':
-                        import_annot_blast2go($file);
+                        require_once __DIR__ . '/includes/importers/Importer_Annotations_Blast2Go.php';
+                        Importer_Annotations_Blast2Go::import($file);
                         break;
                     case 'interpro':
-                        import_annot_interpro($file);
+                        require_once __DIR__ . '/includes/importers/Importer_Annotations_Interpro.php';
+                        Importer_Annotations_Interpro::import($file);
+                        break;
+                    case 'repeatmasker':
+                        require_once __DIR__ . '/includes/importers/Importer_Annotations_Repeatmasker.php';
+                        Importer_Annotations_Repeatmasker::import($file);
                         break;
                 }
                 break;

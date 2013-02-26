@@ -1,8 +1,6 @@
 #!env php
 <?
-
-function display_help_db() {
-    echo <<<EOF
+$help = <<<EOF
 ### transcript data importer ###
 usage: 
     import.php --table <table> --action <action> [opts}
@@ -152,69 +150,64 @@ contact
                  --name <string>
 
 EOF;
-}
 
-include __DIR__ . '/includes/init_cli.php';
+require_once __DIR__ . '/includes/init_cli.php';
 global $parms;
 init_cli();
 
-if (isset($parms['--debug']))
-    define('DEBUG', true);
-else
-    define('DEBUG', false);
-
-if (isset($parms['--verbose']))
-    define('VERBOSE', true);
-else
-    define('VERBOSE', false);
-
-include __DIR__ . '/includes/db_actions.php';
+if (!defined("DEBUG")) {
+    if (isset($parms['--debug']))
+        define('DEBUG', true);
+    else
+        define('DEBUG', false);
+}
+if (!defined("VERBOSE")) {
+    if (isset($parms['--verbose']))
+        define('VERBOSE', true);
+    else
+        define('VERBOSE', false);
+}
+require_once __DIR__ . '/includes/DB_Actions.php';
 
 $tables = array('biomaterial', 'analysis', 'assay', 'acquisition', 'quantification', 'contact');
 $actions = array('create', 'edit', 'list', 'show', 'delete');
 if (!isset($parms['--table']) || !isset($parms['--action']) || !in_array($parms['--table'], $tables) || !in_array($parms['--action'], $actions)) {
-    display_help_db();
-    die();
+    die($help);
 }
 
 
-define('ERR_NOT_YET_IMPLEMENTED', 'not yet implemented, try again later' . "\n");
-
-
-function confirm() {
-    echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";
-    while (!in_array($line = trim(fgets(STDIN)), array('yes', 'no'))) {
-
-        echo "enter one of (yes/no):\n> ";
-    }
-    return $line == 'yes';
+if (!defined('ERR_NOT_YET_IMPLEMENTED')) {
+    define('ERR_NOT_YET_IMPLEMENTED', 'not yet implemented, try again later' . "\n");
 }
+
+
+
 
 switch ($parms['--table']) {
     case 'biomaterial':
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--name'));
-                biomaterial_create($parms['--name'], $parms);
-                biomaterial_show($parms['--name']);
+                DB_Actions::biomaterial_create($parms['--name'], $parms);
+                DB_Actions::biomaterial_show($parms['--name']);
                 break;
             case 'edit':
                 require_parameter(array('--name'));
-                biomaterial_edit($parms['--name'], $parms);
-                biomaterial_show($parms['--name']);
+                DB_Actions::biomaterial_edit($parms['--name'], $parms);
+                DB_Actions::biomaterial_show($parms['--name']);
                 break;
             case 'list':
-                biomaterial_list();
+                DB_Actions::biomaterial_list();
                 break;
             case 'show':
                 require_parameter(array('--name'));
-                biomaterial_show($parms['--name']);
+                DB_Actions::biomaterial_show($parms['--name']);
                 break;
             case 'delete':
                 require_parameter(array('--name'));
-                biomaterial_show($parms['--name']);
+                DB_Actions::biomaterial_show($parms['--name']);
                 if (confirm())
-                    biomaterial_delete($parms['--name']);
+                    DB_Actions::biomaterial_delete($parms['--name']);
                 break;
         }
         break;
@@ -223,24 +216,24 @@ switch ($parms['--table']) {
             case 'create':
                 require_parameter(array('--program', '--programversion', '--sourcename'));
                 $id = analysis_create($parms);
-                analysis_show($id);
+                DB_Actions::analysis_show($id);
                 break;
             case 'edit':
                 require_parameter(array('--id'));
-                analysis_edit($parms['--id'], $parms);
+                DB_Actions::analysis_edit($parms['--id'], $parms);
                 break;
             case 'list':
-                analysis_list();
+                DB_Actions::analysis_list();
                 break;
             case 'show':
                 require_parameter(array('--id'));
-                analysis_show($parms['--id']);
+                DB_Actions::analysis_show($parms['--id']);
                 break;
             case 'delete':
                 require_parameter(array('--id'));
-                analysis_show($parms['--id']);
+                DB_Actions::analysis_show($parms['--id']);
                 if (confirm())
-                    analysis_delete($parms['--id']);
+                    DB_Actions::analysis_delete($parms['--id']);
                 break;
         }
         break;
@@ -248,24 +241,24 @@ switch ($parms['--table']) {
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--name', '--operator_id'));
-                assay_create($parms['--name'], $parms);
-                assay_show($parms['--name']);
+                DB_Actions::assay_create($parms['--name'], $parms);
+                DB_Actions::assay_show($parms['--name']);
                 break;
             case 'edit':
                 require_parameter(array('--name'));
-                assay_edit($parms['--name'], $parms);
-                assay_show($parms['--name']);
+                DB_Actions::assay_edit($parms['--name'], $parms);
+                DB_Actions::assay_show($parms['--name']);
                 break;
             case 'list':
-                assay_list();
+                DB_Actions::assay_list();
                 break;
             case 'show':
                 require_parameter(array('--name'));
-                assay_show($parms['--name']);
+                DB_Actions::assay_show($parms['--name']);
                 break;
             case 'delete':
                 require_parameter(array('--name'));
-                assay_show($parms['--name']);
+                DB_Actions::assay_show($parms['--name']);
                 if (confirm())
                     assay_delete($parms['--name']);
                 break;
@@ -275,26 +268,26 @@ switch ($parms['--table']) {
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--name', '--assay_id'));
-                acquisition_create($parms['--name'], $parms);
-                acquisition_show($parms['--name']);
+                DB_Actions::acquisition_create($parms['--name'], $parms);
+                DB_Actions::acquisition_show($parms['--name']);
                 break;
             case 'edit':
                 require_parameter(array('--name'));
-                acquisition_edit($parms['--name'], $parms);
-                acquisition_show($parms['--name']);
+                DB_Actions::acquisition_edit($parms['--name'], $parms);
+                DB_Actions::acquisition_show($parms['--name']);
                 break;
             case 'list':
-                acquisition_list();
+                DB_Actions::acquisition_list();
                 break;
             case 'show':
                 require_parameter(array('--name'));
-                acquisition_show($parms['--name']);
+                DB_Actions::acquisition_show($parms['--name']);
                 break;
             case 'delete':
                 require_parameter(array('--name'));
-                acquisition_show($parms['--name']);
+                DB_Actions::acquisition_show($parms['--name']);
                 if (confirm())
-                    acquisition_delete($parms['--name']);
+                    DB_Actions::acquisition_delete($parms['--name']);
                 break;
         }
         break;
@@ -302,26 +295,26 @@ switch ($parms['--table']) {
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--name', '--acquisition_id', '--analysis_id'));
-                quantification_create($parms['--name'], $parms);
-                quantification_show($parms['--name']);
+                DB_Actions::quantification_create($parms['--name'], $parms);
+                DB_Actions::quantification_show($parms['--name']);
                 break;
             case 'edit':
                 require_parameter(array('--name'));
-                quantification_edit($parms['--name'], $parms);
-                quantification_show($parms['--name']);
+                DB_Actions::quantification_edit($parms['--name'], $parms);
+                DB_Actions::quantification_show($parms['--name']);
                 break;
             case 'list':
-                quantification_list();
+                DB_Actions::quantification_list();
                 break;
             case 'show':
                 require_parameter(array('--name'));
-                quantification_show($parms['--name']);
+                DB_Actions::quantification_show($parms['--name']);
                 break;
             case 'delete':
                 require_parameter(array('--name'));
-                quantification_show($parms['--name']);
+                DB_Actions::quantification_show($parms['--name']);
                 if (confirm())
-                    quantification_delete($parms['--name']);
+                    DB_Actions::quantification_delete($parms['--name']);
                 break;
         }
         break;
@@ -329,26 +322,26 @@ switch ($parms['--table']) {
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--name'));
-                contact_create($parms['--name'], $parms);
-                contact_show($parms['--name']);
+                DB_Actions::contact_create($parms['--name'], $parms);
+                DB_Actions::contact_show($parms['--name']);
                 break;
             case 'edit':
                 require_parameter(array('--name'));
-                contact_edit($parms['--name'], $parms);
-                contact_show($parms['--name']);
+                DB_Actions::contact_edit($parms['--name'], $parms);
+                DB_Actions::contact_show($parms['--name']);
                 break;
             case 'list':
-                contact_list();
+                DB_Actions::contact_list();
                 break;
             case 'show':
                 require_parameter(array('--name'));
-                contact_show($parms['--name']);
+                DB_Actions::contact_show($parms['--name']);
                 break;
             case 'delete':
                 require_parameter(array('--name'));
-                contact_show($parms['--name']);
+                DB_Actions::contact_show($parms['--name']);
                 if (confirm())
-                    contact_delete($parms['--name']);
+                    DB_Actions::contact_delete($parms['--name']);
                 break;
         }
         break;
