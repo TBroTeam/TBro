@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/constants.php';
 
 class DB_Actions {
 
@@ -86,12 +87,14 @@ class DB_Actions {
 
         $statement_select->execute();
         $row = $statement_select->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        if (!$header_shown && !$silent) {
-            echo implode("\t", array_keys($row)) . "\n";
-            $header_shown = true;
+        if ($row) {
+            if (!$header_shown && !$silent) {
+                echo implode("\t", array_keys($row)) . "\n";
+                $header_shown = true;
+            }
+            if (!$silent)
+                echo implode("\t", $row) . "\n";
         }
-        if (!$silent)
-            echo implode("\t", $row) . "\n";
         return $row;
     }
 
@@ -178,8 +181,7 @@ class DB_Actions {
     static function biomaterial_create($name, $options) {
         global $db;
 
-        $statement_create_biomaterial = $db->prepare(
-                sprintf('INSERT INTO biomaterial (name) VALUES (:name)')
+        $statement_create_biomaterial = $db->prepare('INSERT INTO biomaterial (name) VALUES (:name)'
         );
         $statement_create_biomaterial->bindValue('name', $name, PDO::PARAM_STR);
         $statement_create_biomaterial->execute();
@@ -187,13 +189,69 @@ class DB_Actions {
         self::biomaterial_edit($name, $options);
     }
 
+    static function biomaterial_setParent($name, $options) {
+        global $db;
+
+        foreach ($options as $key => $value) {
+            if ($key != '--add-parent' && $key != '--remove-parent')
+                continue;
+            if ($key == '--add-parent') {
+                $statement_mod_parent = $db->prepare(
+                        sprintf('INSERT INTO biomaterial_relationship (subject_id, type_id, object_id) VALUES ((%s), :type, (%s))'
+                                , 'SELECT biomaterial_id FROM biomaterial WHERE name=:subject LIMIT 1'
+                                , 'SELECT biomaterial_id FROM biomaterial WHERE name=:object LIMIT 1'
+                        )
+                );
+            } else if ($key == '--remove-parent') {
+                $statement_mod_parent = $db->prepare(
+                        sprintf('DELETE FROM  biomaterial_relationship WHERE subject_id=(%s) AND type_id=:type AND object_id=(%s)'
+                                , 'SELECT biomaterial_id FROM biomaterial WHERE name=:subject LIMIT 1'
+                                , 'SELECT biomaterial_id FROM biomaterial WHERE name=:object LIMIT 1'
+                        )
+                );
+            }
+
+            $statement_mod_parent->bindValue('subject', $name, PDO::PARAM_STR);
+            $statement_mod_parent->bindValue('type', CV_BIOMATERIAL_ISA, PDO::PARAM_STR);
+            $statement_mod_parent->bindValue('object', $value, PDO::PARAM_STR);
+            $statement_mod_parent->execute();
+        }
+    }
+
     static function biomaterial_edit($name, $options) {
         self::quickEdit('UPDATE biomaterial SET %1$s=:%1$s WHERE name=:unique', array('description'), $name, $options);
         self::quickEditDbxref('UPDATE biomaterial SET %s WHERE name=:unique', $name, $options);
+        self::biomaterial_setParent($name, $options);
     }
 
     static function biomaterial_show($name) {
-        return self::quickShow('biomaterial', 'name', $name);
+        global $db;
+        $result = self::quickShow('biomaterial', 'name', $name);
+        $result['parents'] = array();
+
+
+        $statement = $db->prepare(
+                sprintf('SELECT (%s) AS subject, (%s) AS relationship, (%s)  AS object FROM biomaterial_relationship WHERE subject_id = (%s)'
+                        , 'SELECT name FROM biomaterial WHERE biomaterial_id=subject_id'
+                        , 'SELECT name FROM cvterm WHERE cvterm.cvterm_id=type_id'
+                        , 'SELECT name FROM biomaterial WHERE biomaterial_id=object_id'
+                        , 'SELECT biomaterial_id FROM biomaterial WHERE name=:subject_name')
+        );
+        $statement->bindValue('subject_name', $name, PDO::PARAM_STR);
+        $statement->execute();
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT))
+            $result['parents'][] = $row;
+        if (count($result['parents']) > 0) {
+            $header = false;
+            echo "\nassociated biomaterials:\n";
+            foreach ($result['parents'] as $row) {
+                if (!$header) {
+                    echo implode("\t", array_keys($row)) . "\n";
+                }
+                echo implode("\t", $row) . "\n";
+            }
+        }
+        return $result;
     }
 
     static function biomaterial_list() {
@@ -201,7 +259,7 @@ class DB_Actions {
     }
 
     static function biomaterial_delete($name) {
-        return self::quick_delete('biomaterial', 'name', $name);
+        return self::quick_delete('biomaterial', 'name', $name, true);
     }
 
     /*
@@ -315,7 +373,9 @@ class DB_Actions {
       )
      */
 
-    static function assay_create($name, $options) {
+    static
+
+    function assay_create($name, $options) {
         global $db;
 
         $statement_create_assay = $db->prepare(
@@ -339,7 +399,7 @@ class DB_Actions {
     static function assay_edit_biomaterial($name, $options) {
         global $db;
         foreach ($options as $key => $value) {
-            if ($key != '--add-biomaterial' && $key != '--delete-biomaterial')
+            if ($key != '--add-biomaterial' && $key != '--remove-biomaterial')
                 continue;
             if ($key == '--add-biomaterial') {
                 $statement = $db->prepare(
@@ -356,7 +416,9 @@ class DB_Actions {
         }
     }
 
-    static function assay_show($name) {
+    static
+
+    function assay_show($name) {
         global $db;
 
         $ret = array('biomaterial' => array());

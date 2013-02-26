@@ -20,6 +20,8 @@ define('CV_REPEAT_NAME', 128);
 define('CV_REPEAT_CLASS', 129);
 define('CV_REPEAT_FAMILY', 130);
 
+define('CV_BIOMATERIAL_ISA', 32);
+
 #versions of databases for interpro import
 global $dbrefx_versions;
 $dbrefx_versions = array('HMMPIR' => '1.0');

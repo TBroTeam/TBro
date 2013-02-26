@@ -212,10 +212,11 @@ switch ($parms['--table']) {
         }
         break;
     case 'analysis':
+        echo $parms['--action'];
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--program', '--programversion', '--sourcename'));
-                $id = analysis_create($parms);
+                $id = DB_Actions::analysis_create($parms);
                 DB_Actions::analysis_show($id);
                 break;
             case 'edit':

@@ -1,6 +1,8 @@
 #!env php
 <?
 require __DIR__ . '/includes/constants.php';
+//TODO count of lines imported
+
 
 
 ## don't touch anything below!
