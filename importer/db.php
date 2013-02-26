@@ -212,7 +212,6 @@ switch ($parms['--table']) {
         }
         break;
     case 'analysis':
-        echo $parms['--action'];
         switch ($parms['--action']) {
             case 'create':
                 require_parameter(array('--program', '--programversion', '--sourcename'));
