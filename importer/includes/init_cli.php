@@ -12,7 +12,7 @@ function require_parameter($param_names) {
 
 function confirm() {
     global $parms;
-    if ($parms['--noinput'])
+    if (isset($parms['--noinput']) && $parms['--noinput'])
         return true;
     
     echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";

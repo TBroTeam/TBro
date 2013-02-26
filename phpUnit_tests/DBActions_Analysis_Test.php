@@ -1,13 +1,11 @@
 <?php
-
 /**
  * @backupGlobals disabled
- * @qwbasdackupStaticAttributes enabled
  */
 class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
 
     static $file = "../importer/db.php";
-    private static $id;
+    static $id;
 
     public function cliExecute($args) {
         global $argc, $argv;
@@ -26,14 +24,14 @@ class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
      * @dataProvider provider_analysis
      */
     public function testInit($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        self::$id=5;
-        $matches = null;
+        $matches = array();
         ob_start();
         $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'list'));
-        $preg_res = preg_match("/^(?<id>\\d*)\t$program/m", ob_get_clean(), &$matches);
-        //if this test fails, this will allow testDelete to clean up successfully
-        self::$id = $matches['id']; 
-        $this->assertEquals(0, $preg_res);
+        $ret = preg_match_all("/^(?<id>\\d*)\t$program/m", ob_get_clean(), &$matches);
+        foreach ($matches['id'] as $m_id) {
+            $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'delete', '--id', $m_id, '--noinput'));
+        }
+        $this->assertEquals(0, $ret, 'was not clean; cleaned up');
     }
 
     /**
@@ -41,58 +39,21 @@ class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
      * @dataProvider provider_analysis
      */
     public function testCreate($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        $matches = null;
+        $matches = array();
         ob_start();
-        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'create', '--program', $program, '--programversion', $programversion, '--sourcename', $sourcename));
-        $this->assertEquals(1, preg_match("/^(?<id>\\d*)\t$program\t$programversion\t$sourcename\t$name\t$algorithm\t$timeexecuted\$/m", ob_get_flush(), &$matches));
-        self::$id = $matches['id'];
+        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'create', '--program', $program, '--programversion', $programversion, '--sourcename', $sourcename, '--name', $name, '--algorithm', $algorithm, '--timeexecuted', $timeexecuted));
+        $ret = preg_match("/^(?<id>\\d*)\t$program\t$programversion\t$sourcename/m", ob_get_clean(), &$matches);
+        self::$id= $matches['id'];
+        $this->assertEquals(1, $ret);
     }
-
-    /**
+    
+        /**
      * @depends testCreate
-     * @dataProvider provider_analysis
-     */
-    public function testShow($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        $this->expectOutputRegex("/$name\t$description/");
-        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'show', '--name', $name));
-    }
-
-    /**
-     * @depends testCreate
-     * @dataProvider provider_analysis
-     */
-    public function testList($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        $this->expectOutputRegex("/$name/");
-        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'list'));
-    }
-
-    /**
-     * @depends testCreate
-     * @dataProvider provider_analysis
-     * @expectedException PDOException
-     */
-    public function testCreateDuplicate($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'create', '--name', $name, '--description', $description . "_different"));
-    }
-
-    /**
-     * @depends testCreate
-     * @dataProvider provider_analysis
-     */
-    public function testEdit($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        $this->expectOutputRegex("/$name\t${description}_2/");
-        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'edit', '--name', $name, '--description', $description . '_2'));
-    }
-
-    /**
      * @dataProvider provider_analysis
      */
     public function testDelete($program, $programversion, $sourcename, $name, $algorithm, $timeexecuted) {
-        echo "testing Delete".self::$id;
-        
-        
         $this->expectOutputRegex('/1 line\(s\) affected/');
-        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'delete', '--id', $this->id, '--noinput'));
+        $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'delete', '--id', self::$id, '--noinput'));
     }
 
 }

@@ -2,7 +2,6 @@
 
 /**
  * @backupGlobals disabled
- * @backupStaticAttributes disabled
  */
 class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
 
