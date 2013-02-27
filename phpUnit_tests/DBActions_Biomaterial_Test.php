@@ -45,7 +45,7 @@ class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
     public function testLinkParent($name, $description, $dbxref) {
         $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'create', '--name', $name . "_parent", '--description', $description, '--dbxref', $dbxref));
         $this->expectOutputRegex("/$name\tis_a\t${name}_parent/");
-        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'edit', '--name', $name, '--add-parent', $name . "_parent"));
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'edit', '--name', $name, '--link-parent', $name . "_parent"));
     }
 
     /**
@@ -101,7 +101,7 @@ class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
         $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'show', '--name', $name));
         
         ob_start();
-        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'edit', '--name', $name, '--remove-parent', $name . "_parent"));
+        $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'edit', '--name', $name, '--unlink-parent', $name . "_parent"));
         $this->assertEquals(0, preg_match("/$name\tis_a\t${name}_parent/", ob_get_flush()), 'was not deleted');
     }
 
