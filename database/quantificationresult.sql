@@ -16,10 +16,10 @@ CREATE TABLE quantificationresult
    type_id integer NOT NULL, 
    value double precision NOT NULL, 
    CONSTRAINT quantificationresult_pkey PRIMARY KEY (quantificationresult_id), 
-   CONSTRAINT quantificationresult_feature_fkey FOREIGN KEY (feature_id) REFERENCES feature (feature_id) ON UPDATE CASCADE ON DELETE CASCADE, 
-   CONSTRAINT quantificationresult_biomaterial_fkey FOREIGN KEY (biomaterial_id) REFERENCES biomaterial (biomaterial_id) ON UPDATE CASCADE ON DELETE CASCADE, 
-   CONSTRAINT quantificationresult_quantification_fkey FOREIGN KEY (quantification_id) REFERENCES quantification (quantification_id) ON UPDATE CASCADE ON DELETE CASCADE, 
-   CONSTRAINT quantificationresult_cvterm_fkey FOREIGN KEY (type_id) REFERENCES cvterm (cvterm_id) ON UPDATE CASCADE ON DELETE CASCADE, 
+   CONSTRAINT quantificationresult_feature_fkey FOREIGN KEY (feature_id) REFERENCES feature (feature_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
+   CONSTRAINT quantificationresult_biomaterial_fkey FOREIGN KEY (biomaterial_id) REFERENCES biomaterial (biomaterial_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
+   CONSTRAINT quantificationresult_quantification_fkey FOREIGN KEY (quantification_id) REFERENCES quantification (quantification_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
+   CONSTRAINT quantificationresult_cvterm_fkey FOREIGN KEY (type_id) REFERENCES cvterm (cvterm_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
     UNIQUE (feature_id, biomaterial_id, quantification_id, type_id)
 ) 
 WITH (

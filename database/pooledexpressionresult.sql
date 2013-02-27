@@ -18,7 +18,7 @@ CREATE TABLE expressionresult
    "log2foldChange" double precision, 
    pval double precision, 
    pvaladj double precision, 
-   CONSTRAINT expressionresult_analysis_fkey FOREIGN KEY (analysis_id) REFERENCES analysis (analysis_id) ON UPDATE CASCADE ON DELETE CASCADE,
+   CONSTRAINT expressionresult_analysis_fkey FOREIGN KEY (analysis_id) REFERENCES analysis (analysis_id) ON UPDATE CASCADE ON DELETE NO ACTION,
    CONSTRAINT expressionresult_pkey PRIMARY KEY (expressionresult_id)
 ) 
 WITH (
@@ -34,8 +34,8 @@ CREATE TABLE expressionresult_quantificationresult
    quantificationresult_id integer, 
    samplegroup expressionresult_samplegroup, 
    CONSTRAINT expressionresult_quantificationresult_id PRIMARY KEY (id), 
-   CONSTRAINT expressionresult_quantificationresult_expressionresult_fkey FOREIGN KEY (expressionresult_id) REFERENCES expressionresult (expressionresult_id)ON UPDATE CASCADE ON DELETE CASCADE, 
-   CONSTRAINT expressionresult_quantificationresult_quantificationresult_fkey FOREIGN KEY (quantificationresult_id) REFERENCES quantificationresult (quantificationresult_id)ON UPDATE CASCADE ON DELETE CASCADE
+   CONSTRAINT expressionresult_quantificationresult_expressionresult_fkey FOREIGN KEY (expressionresult_id) REFERENCES expressionresult (expressionresult_id)ON UPDATE CASCADE ON DELETE NO ACTION, 
+   CONSTRAINT expressionresult_quantificationresult_quantificationresult_fkey FOREIGN KEY (quantificationresult_id) REFERENCES quantificationresult (quantificationresult_id)ON UPDATE CASCADE ON DELETE NO ACTION
 ) 
 WITH (
   OIDS = FALSE
