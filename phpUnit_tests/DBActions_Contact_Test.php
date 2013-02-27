@@ -6,7 +6,9 @@
 class DBActions_Contact_Test extends PHPUnit_Framework_TestCase {
 
     static $file = "../importer/db.php";
-
+    static $id;
+    
+    
     public function cliExecute($args) {
         global $argc, $argv;
         $argv = $args;
@@ -16,7 +18,7 @@ class DBActions_Contact_Test extends PHPUnit_Framework_TestCase {
 
     public function provider_contact() {
         return array(
-            array('phpUnitTestName1', 'phpUnitDescription1')
+            array(__CLASS__.'Name1', __CLASS__.'Description1')
         );
     }
 
@@ -34,8 +36,13 @@ class DBActions_Contact_Test extends PHPUnit_Framework_TestCase {
      * @dataProvider provider_contact
      */
     public function testCreate($name, $description) {
-        $this->expectOutputRegex("/$name\t$description/");
+        $matches = array();
+        ob_start();
         $this->cliExecute(array(self::$file, '--table', 'contact', '--action', 'create', '--name', $name, '--description', $description));
+        $ret = preg_match("/^(?<id>\\d*)\t$name\t$description/m", ob_get_clean(), &$matches);
+        self::$id= $matches['id'];
+        $this->assertEquals(1, $ret);
+        
     }
 
     /**

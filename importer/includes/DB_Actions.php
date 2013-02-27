@@ -193,16 +193,16 @@ class DB_Actions {
         global $db;
 
         foreach ($options as $key => $value) {
-            if ($key != '--add-parent' && $key != '--remove-parent')
+            if ($key != '--link-parent' && $key != '--unlink-parent')
                 continue;
-            if ($key == '--add-parent') {
+            if ($key == '--link-parent') {
                 $statement_mod_parent = $db->prepare(
                         sprintf('INSERT INTO biomaterial_relationship (subject_id, type_id, object_id) VALUES ((%s), :type, (%s))'
                                 , 'SELECT biomaterial_id FROM biomaterial WHERE name=:subject LIMIT 1'
                                 , 'SELECT biomaterial_id FROM biomaterial WHERE name=:object LIMIT 1'
                         )
                 );
-            } else if ($key == '--remove-parent') {
+            } else if ($key == '--unlink-parent') {
                 $statement_mod_parent = $db->prepare(
                         sprintf('DELETE FROM  biomaterial_relationship WHERE subject_id=(%s) AND type_id=:type AND object_id=(%s)'
                                 , 'SELECT biomaterial_id FROM biomaterial WHERE name=:subject LIMIT 1'
@@ -391,17 +391,17 @@ class DB_Actions {
     }
 
     static function assay_edit($name, $options) {
-        quickEdit('UPDATE assay SET %1$s=:%1$s WHERE name=:unique', array('operator_id', 'description', 'assaydate'), $name, $options);
-        quickEditDbxref('UPDATE assay SET %s WHERE name=:unique', $name, $options);
+        self::quickEdit('UPDATE assay SET %1$s=:%1$s WHERE name=:unique', array('operator_id', 'description', 'assaydate'), $name, $options);
+        self::quickEditDbxref('UPDATE assay SET %s WHERE name=:unique', $name, $options);
         self::assay_edit_biomaterial($name, $options);
     }
 
     static function assay_edit_biomaterial($name, $options) {
         global $db;
         foreach ($options as $key => $value) {
-            if ($key != '--add-biomaterial' && $key != '--remove-biomaterial')
+            if ($key != '--link-biomaterial' && $key != '--unlink-biomaterial')
                 continue;
-            if ($key == '--add-biomaterial') {
+            if ($key == '--link-biomaterial') {
                 $statement = $db->prepare(
                         sprintf('INSERT INTO assay_biomaterial (assay_id, biomaterial_id) VALUES ((%s),(%s))', 'SELECT assay_id FROM assay WHERE name=:assay_name LIMIT 1', 'SELECT biomaterial_id FROM biomaterial WHERE name=:biomaterial_name LIMIT 1')
                 );
@@ -435,7 +435,7 @@ class DB_Actions {
         $statement->execute();
         $header_shown = false;
         while (($bioname = $statement->fetchColumn()) != false) {
-            $ret['biomaterial'][] = quickShow('biomaterial', 'name', $bioname, &$header_shown);
+            $ret['biomaterial'][] = self::quickShow('biomaterial', 'name', $bioname, &$header_shown);
         }
         return $ret;
     }

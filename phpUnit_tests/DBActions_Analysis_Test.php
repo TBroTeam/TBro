@@ -16,7 +16,7 @@ class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
 
     public function provider_analysis() {
         return array(
-            array('phpUnitTest1Program', 'phpUnitTest1Programversion', 'phpUnitTest1Sourcename', 'phpUnitTest1Name', 'phpUnitTest1Algorithm', '2030-12-31')
+            array(__CLASS__.'Program1', __CLASS__.'Programversion1', __CLASS__.'Sourcename1', __CLASS__.'Name1', __CLASS__.'Algorithm1', '2030-12-31')
         );
     }
 

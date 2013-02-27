@@ -1,5 +1,6 @@
 #!env php
 <?
+echo implode(' ',$argv)."\n";
 $help = <<<EOF
 ### transcript data importer ###
 usage: 
@@ -24,6 +25,8 @@ biomaterial
                     --description <string>
                         sets biomaterial description
                     --dbxref <string:'DBNAME:ACCESSION'>
+                    --link-parent <string:biomaterial_name>
+                    --unlink-parent <string:biomaterial_name>
             list
             show
                 requires
@@ -71,8 +74,8 @@ assay
                 --description <string>
                 --assaydate <timestamp>
                 --dbxref <string:'DBNAME:ACCESSION'>
-                --add-biomaterial <string:biomaterial_name>
-                --delete-biomaterial <string:biomaterial_name>
+                --link-biomaterial <string:biomaterial_name>
+                --unlink-biomaterial <string:biomaterial_name>
         list
         show
             requires
@@ -260,7 +263,7 @@ switch ($parms['--table']) {
                 require_parameter(array('--name'));
                 DB_Actions::assay_show($parms['--name']);
                 if (confirm())
-                    assay_delete($parms['--name']);
+                    DB_Actions::assay_delete($parms['--name']);
                 break;
         }
         break;

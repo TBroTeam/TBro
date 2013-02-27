@@ -16,7 +16,7 @@ class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
 
     public function provider_biomaterial() {
         return array(
-            array('phpUnitTestName1', 'phpUnitDescription1', 'GO:PhpUnitTest1')
+            array(__CLASS__.'Name1', __CLASS__.'Description1', 'GO:'.__CLASS__.'1')
         );
     }
 
@@ -42,7 +42,7 @@ class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
      * @depends testCreate
      * @dataProvider provider_biomaterial
      */
-    public function testAddParent($name, $description, $dbxref) {
+    public function testLinkParent($name, $description, $dbxref) {
         $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'create', '--name', $name . "_parent", '--description', $description, '--dbxref', $dbxref));
         $this->expectOutputRegex("/$name\tis_a\t${name}_parent/");
         $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'edit', '--name', $name, '--add-parent', $name . "_parent"));
@@ -95,7 +95,7 @@ class DBActions_Biomaterial_Test extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider provider_biomaterial
      */
-    public function testRemoveParent($name, $description, $dbxref) {
+    public function testUnlinkParent($name, $description, $dbxref) {
         
         $this->expectOutputRegex("/$name\tis_a\t${name}_parent/", 'was never parent in the first place');
         $this->cliExecute(array(self::$file, '--table', 'biomaterial', '--action', 'show', '--name', $name));
