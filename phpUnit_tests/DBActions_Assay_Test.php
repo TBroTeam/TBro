@@ -18,14 +18,14 @@ class DBActions_Assay_Test extends PHPUnit_Framework_TestCase {
 
     public function provider_assay() {
         return array(
-            array(__CLASS__.'Name1', __CLASS__.'Description1', 'GO:'.__CLASS__.'1', '2015-12-31')
+            array(__CLASS__ . 'Name1', __CLASS__ . 'Description1', 'GO:' . __CLASS__ . '1', '2015-12-31')
         );
     }
 
     public static function initDependencies() {
         $ex = null;
+        self::$data = array();
         try {
-            self::$data = array();
             require_once('DBActions_Biomaterial_Test.php');
             self::$data['biotest'] = new DBActions_Biomaterial_Test();
             $pb = self::$data['biotest']->provider_biomaterial();
@@ -73,7 +73,7 @@ class DBActions_Assay_Test extends PHPUnit_Framework_TestCase {
         ob_start();
         $this->cliExecute(array(self::$file, '--table', 'assay', '--action', 'create', '--name', $name, '--operator_id', DBActions_Contact_Test::$id, '--description', $description, '--dbxref', $dbxref, '--assaydate', $assaydate));
         $ret = preg_match("/^(?<id>\\d*)\t$name\t" . DBActions_Contact_Test::$id . "\t$description\t$assaydate [^\t]*\t$dbxref/m", ob_get_clean(), &$matches);
-        self::$id= $matches['id'];
+        self::$id = $matches['id'];
         $this->assertEquals(1, $ret);
     }
 
@@ -85,7 +85,7 @@ class DBActions_Assay_Test extends PHPUnit_Framework_TestCase {
         $this->expectOutputRegex("/" . self::$data['biotest_data'][0] . "/");
         $this->cliExecute(array(self::$file, '--table', 'assay', '--action', 'edit', '--name', $name, '--link-biomaterial', self::$data['biotest_data'][0]));
     }
-    
+
     /**
      * @dataProvider provider_assay
      */

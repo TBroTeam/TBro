@@ -53,8 +53,6 @@ analysis
                 --name <string>
                 --timeexecuted <timestamp>
         list
-            optional
-                --program <string>
         show
         delete
 

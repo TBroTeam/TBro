@@ -7,6 +7,7 @@ class DBActions_Acquisition_Test extends PHPUnit_Framework_TestCase {
 
     static $file = "../importer/db.php";
     static $data;
+    static $id;
 
     public function cliExecute($args) {
         global $argc, $argv;
@@ -23,8 +24,8 @@ class DBActions_Acquisition_Test extends PHPUnit_Framework_TestCase {
 
     public static function initDependencies() {
         $ex = null;
+        self::$data = array();
         try {
-            self::$data = array();
             require_once('DBActions_Assay_Test.php');
             self::$data['assaytest'] = new DBActions_Assay_Test();
             $pb = self::$data['assaytest']->provider_assay();
@@ -57,8 +58,12 @@ class DBActions_Acquisition_Test extends PHPUnit_Framework_TestCase {
      * @dataProvider provider_acquisition
      */
     public function testCreate($name, $acquisitiondate, $uri) {
-        $this->expectOutputRegex("/$name\t" . DBActions_Assay_Test::$id . "\t$acquisitiondate [^\t]*/");
-        $this->cliExecute(array(self::$file, '--table', 'acquisition', '--action', 'create', '--name', $name, '--assay_id', DBActions_Assay_Test::$id, '--acquisitiondate', $acquisitiondate));
+        $matches = array();
+        ob_start();
+        $this->cliExecute(array(self::$file, '--table', 'acquisition', '--action', 'create', '--name', $name, '--assay_id', DBActions_Assay_Test::$id, '--acquisitiondate', $acquisitiondate, '--uri', $uri));
+        $ret = preg_match("/^(?<id>\\d*)\t$name\t" . DBActions_Assay_Test::$id . "\t$acquisitiondate [^\t]*\t$uri/m", ob_get_clean(), &$matches);
+        self::$id = $matches['id'];
+        $this->assertEquals(1, $ret);
     }
 
     /**

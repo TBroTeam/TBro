@@ -32,7 +32,7 @@ class DB_Actions {
         ),
     );
 
-    static function quickList($table, $filters = array(), &$header_shown = false, $silent = false) {
+    static function quickList($table, &$header_shown = false, $silent = false) {
         global $db;
         $select = '';
         foreach (self::$mappings[$table]['list'] as $key => $key_type) {
@@ -42,16 +42,10 @@ class DB_Actions {
                     break;
             }
         }
-        $filter = '';
-        foreach ($filters as $key => $value) {
-            $filter .= "AND $key LIKE :$key ";
-        }
         $statement_select = $db->prepare(
-                sprintf('SELECT %s FROM %s WHERE TRUE %s', $select, $table, $filter), array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL)
+                sprintf('SELECT %s FROM %s', $select, $table), array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL)
         );
-        foreach ($filters as $key => $value) {
-            $statement_select->bindValue($key, $value, PDO::PARAM_STR);
-        }
+
 
         $statement_select->execute();
         $ret = array();

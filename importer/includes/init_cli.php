@@ -1,12 +1,12 @@
 <?
 
-define('ERR_MISSING_PARAMTER', 'missing parameter: %s\n');
+define('ERR_MISSING_PARAMTER', "missing parameter: %s\n");
 
 function require_parameter($param_names) {
     global $parms;
     foreach ($param_names as $param_name)
         if (!isset($parms[$param_name])) {
-            die(sprintf(ERR_MISSING_PARAMTER, $param_name));
+            throw new ErrorException(sprintf(ERR_MISSING_PARAMTER, $param_name));
         }
 }
 
