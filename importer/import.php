@@ -19,17 +19,16 @@ types:
     sequence
         requires import of: map
     quantification
-        requires full import of: sequence
+        requires full import of: sequences
         requires
             --quantification_id <int>
             --biomaterial_name <string>
+            --type_name <string>
+            --column <int>
     annotation
-        requires full import of: sequence
+        requires full import of: sequences
         requires
-            --subtype <string>
-            one of
-                blast2go
-                interpro
+            --subtype (blast2go|interpro|repeatmasker)
 
 options:
     --verbose
@@ -91,9 +90,9 @@ foreach ($parms['--file'] as $file) {
                 Importer_Sequences::import($file);
                 break;
             case 'quantification':
-                require_parameter(array('--quantification_id', '--biomaterial_name'));
+                require_parameter(array('--quantification_id', '--biomaterial_name', '--type_name', '--column'));
                 require_once __DIR__ . '/includes/importers/Importer_Quantifications.php';
-                Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name']);
+                Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name'], $parms['--type_name'], $parms['--column']);
                 break;
             case 'annotation':
                 if (!in_array($parms['--subtype'], $valid_annotation_types)) {

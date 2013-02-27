@@ -7,86 +7,75 @@ require_once __DIR__ . '/../constants.php';
 class Importer_Quantifications {
 
     /**
-     * imports quant.*.results file. supported types: genes|isoforms
-     * @global PDO $db
-     * @param string $filename filename
-     * @param int $quantification_id DB primary key
-     * @return null
+     * This function will import Quantification data from a tab-separated file.
+     * First line will be skiped ad header.
+     * Which column will be used for value is specified with $value_column
+     * @global PDO $db database
+     * @param string $filename file name
+     * @param int $quantification_id quantification id
+     * @param string $biomaterial_name biomaterial name
+     * @param string $type_name type name (=>cvterm)
+     * @param int $value_column csv column with "value". this numbering starts at 1!
+     * @return count of imported lines
+     * @throws Exception
      * @throws ErrorException
      */
-    static function import($filename, $quantification_id, $biomaterial_name) {
+    static function import($filename, $quantification_id, $biomaterial_name, $type_name, $value_column) {
         global $db;
-        $file = fopen($filename, 'r');
-        if (feof($file))
-            return;
-        $header = trim(fgets($file));
 
+        $count = 0;
 
         try {
-            $db->beginTransaction();
+            $statement_get_type_id = $db->prepare('SELECT cvterm_id FROM cvterm WHERE name=:type_name LIMIT 1');
+            $statement_get_type_id->bindValue('type_name', $type_name, PDO::PARAM_STR);
+            $statement_get_type_id->execute();
+            $type_id = $statement_get_type_id->fetchColumn();
+            if ($type_id) {
+                throw new ErrorException('Type with this name not defined in table cvterm');
+            }
 
             $statement_get_biomaterial_id = $db->prepare('SELECT biomaterial_id FROM biomaterial WHERE name=:biomaterial_name LIMIT 1');
             $statement_get_biomaterial_id->bindValue('biomaterial_name', $biomaterial_name, PDO::PARAM_STR);
             $statement_get_biomaterial_id->execute();
             $biomaterial_id = $statement_get_biomaterial_id->fetchColumn();
+            if ($type_id) {
+                throw new ErrorException('Biomaterial with this name not defined');
+            }
 
-#shared parameters
+            $db->beginTransaction();
+
+            #shared parameters
             $param_uniquename = null;
-            $param_length = null;
-            $param_effective_length = null;
-            $param_expected_count = null;
-            $param_TPM = null;
-            $param_FPKM = null;
-            $param_IsoPct = null;
-            $trash = null;
+            $param_value = null;
 
-#quant.*_*.genes.results
-            if ($header == "gene_id\ttranscript_id(s)\tlength\teffective_length\texpected_count\tTPM\tFPKM") {
-                $statement_insert_gene_quant = $db->prepare(
-                        sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, biomaterial_id, length, effective_length, expected_count, "TPM", "FPKM") '
-                                . 'VALUES ((%s), :quantification_id, :biomaterial_id, :length, :effective_length, :expected_count, :TPM, :FPKM)'
-                                , 'SELECT feature_id FROM feature WHERE uniquename=:gene_uniquename LIMIT 1'));
-                $statement_insert_gene_quant->bindParam('gene_uniquename', &$param_uniquename, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindParam('length', &$param_length, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindParam('effective_length', &$param_effective_length, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindParam('expected_count', &$param_expected_count, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindParam('TPM', &$param_TPM, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindParam('FPKM', &$param_FPKM, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindValue('quantification_id', $quantification_id, PDO::PARAM_STR);
-                $statement_insert_gene_quant->bindValue('biomaterial_id', $biomaterial_id, PDO::PARAM_STR);
 
-                while (($line = fgetcsv($file, 0, "\t")) !== false) {
-                    if (count($line) == 0)
-                        continue;
-                    list($gene, $trash, $param_length, $param_effective_length, $param_expected_count, $param_TPM, $param_FPKM) = $line;
-                    $param_uniquename = ASSEMBLY_PREFIX . $gene;
-                    $statement_insert_gene_quant->execute();
-                }
+            $statement_insert_quant = $db->prepare(
+                    sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, biomaterial_id, type_id, value) '
+                            . 'VALUES ((%s), :quantification_id, :biomaterial_id, :type_id, :value)'
+                            , 'SELECT feature_id FROM feature WHERE uniquename=:gene_uniquename LIMIT 1'));
+            $statement_insert_quant->bindParam('gene_uniquename', &$param_uniquename, PDO::PARAM_STR);
+            $statement_insert_quant->bindParam('value', &$param_value, PDO::PARAM_STR);
+            $statement_insert_quant->bindValue('quantification_id', $quantification_id, PDO::PARAM_INT);
+            $statement_insert_quant->bindValue('biomaterial_id', $biomaterial_id, PDO::PARAM_INT);
+            $statement_insert_quant->bindValue('type_id', $type_id, PDO::PARAM_INT);
+
+
+            $file = fopen($filename, 'r');
+            if (feof($file))
+                return;
+            #just skipping header
+            fgets($file);
+
+            while (($line = fgetcsv($file, 0, "\t")) !== false) {
+                if (count($line) == 0)
+                    continue;
+                $param_uniquename = ASSEMBLY_PREFIX . $line[0];
+                $param_value = $line[$value_column - 1];
+                $statement_insert_quant->execute();
+                $count++;
             }
-#quant.*_*.isoforms.results
-            else if ($header == "transcript_id\tgene_id\tlength\teffective_length\texpected_count\tTPM\tFPKM\tIsoPct") {
-                $statement_insert_isoform_quant = $db->prepare(
-                        sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, biomaterial_id, length, effective_length, expected_count, "TPM", "FPKM", "IsoPct") '
-                                . 'VALUES ((%s), :quantification_id, :biomaterial_id, :length, :effective_length, :expected_count, :TPM, :FPKM, :IsoPct)'
-                                , 'SELECT feature_id FROM feature WHERE uniquename=:gene_uniquename LIMIT 1'));
-                $statement_insert_isoform_quant->bindParam('gene_uniquename', &$param_uniquename, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindParam('length', &$param_length, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindParam('effective_length', &$param_effective_length, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindParam('expected_count', &$param_expected_count, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindParam('TPM', &$param_TPM, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindParam('FPKM', &$param_FPKM, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindParam('IsoPct', &$param_IsoPct, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindValue('quantification_id', $quantification_id, PDO::PARAM_STR);
-                $statement_insert_isoform_quant->bindValue('biomaterial_id', $biomaterial_id, PDO::PARAM_STR);
 
-                while (($line = fgetcsv($file, 0, "\t")) !== false) {
-                    if (count($line) == 0)
-                        continue;
-                    list($gene, $trash, $param_length, $param_effective_length, $param_expected_count, $param_TPM, $param_FPKM, $param_IsoPct) = $line;
-                    $param_uniquename = ASSEMBLY_PREFIX . $gene;
-                    $statement_insert_isoform_quant->execute();
-                }
-            }
+
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
@@ -95,6 +84,7 @@ class Importer_Quantifications {
             $db->rollback();
             throw $error;
         }
+        return $count;
     }
 
 }
