@@ -30,7 +30,7 @@ class Importer_Quantifications {
             $statement_get_type_id->bindValue('type_name', $type_name, PDO::PARAM_STR);
             $statement_get_type_id->execute();
             $type_id = $statement_get_type_id->fetchColumn();
-            if ($type_id) {
+            if (!$type_id) {
                 throw new ErrorException('Type with this name not defined in table cvterm');
             }
 
@@ -38,7 +38,7 @@ class Importer_Quantifications {
             $statement_get_biomaterial_id->bindValue('biomaterial_name', $biomaterial_name, PDO::PARAM_STR);
             $statement_get_biomaterial_id->execute();
             $biomaterial_id = $statement_get_biomaterial_id->fetchColumn();
-            if ($type_id) {
+            if (!$biomaterial_id) {
                 throw new ErrorException('Biomaterial with this name not defined');
             }
 
