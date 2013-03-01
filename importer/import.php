@@ -1,10 +1,8 @@
 #!env php
 <?
 require __DIR__ . '/includes/constants.php';
+
 //TODO count of lines imported
-
-
-
 ## don't touch anything below!
 
 function display_help() {
@@ -29,6 +27,13 @@ types:
         requires full import of: sequences
         requires
             --subtype (blast2go|interpro|repeatmasker)
+    expressions
+        requires full import of: sequences, quantifications
+        requires 
+            --analysis_id <int>
+            --biomaterial_A_name <string, name of parent biomaterial>
+            --biomaterial_B_name <string, name of parent biomaterial>
+            
 
 options:
     --verbose
@@ -40,7 +45,6 @@ EOF;
 }
 
 $valid_types = array('map', 'sequence', 'quantification', 'annotation');
-$valid_annotation_types = array('blast2go', 'interpro');
 
 include __DIR__ . '/includes/init_cli.php';
 global $parms;
@@ -65,9 +69,6 @@ foreach ($parms['--file'] as $file) {
     }
 }
 
-define('ERRCODE_ILLEGAL_FILE_FORMAT', -1);
-define('ERRCODE_TRANSACTION_NOT_COMPLETED', -1);
-
 if (isset($parms['--debug']))
     define('DEBUG', true);
 else
@@ -79,45 +80,58 @@ else
     define('VERBOSE', false);
 
 foreach ($parms['--file'] as $file) {
+    $file_result = null;
     try {
         switch ($parms['--type']) {
             case 'map':
                 require_once __DIR__ . '/includes/importers/Importer_Map.php';
-                Importer_Map::import($file);
+                $file_result = Importer_Map::import($file);
                 break;
             case 'sequence':
                 require_once __DIR__ . '/includes/importers/Importer_Sequences.php';
-                Importer_Sequences::import($file);
+                $file_result = Importer_Sequences::import($file);
                 break;
             case 'quantification':
                 require_parameter(array('--quantification_id', '--biomaterial_name', '--type_name', '--column'));
                 require_once __DIR__ . '/includes/importers/Importer_Quantifications.php';
-                Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name'], $parms['--type_name'], $parms['--column']);
+                $file_result = Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name'], $parms['--type_name'], $parms['--column']);
                 break;
             case 'annotation':
-                if (!in_array($parms['--subtype'], $valid_annotation_types)) {
-                    display_help();
-                    die();
-                }
+                require_parameter(array('----subtype'));
                 switch ($parms['--subtype']) {
                     case 'blast2go':
                         require_once __DIR__ . '/includes/importers/Importer_Annotations_Blast2Go.php';
-                        Importer_Annotations_Blast2Go::import($file);
+                        $file_result = Importer_Annotations_Blast2Go::import($file);
                         break;
                     case 'interpro':
                         require_once __DIR__ . '/includes/importers/Importer_Annotations_Interpro.php';
-                        Importer_Annotations_Interpro::import($file);
+                        $file_result = Importer_Annotations_Interpro::import($file);
                         break;
                     case 'repeatmasker':
                         require_once __DIR__ . '/includes/importers/Importer_Annotations_Repeatmasker.php';
-                        Importer_Annotations_Repeatmasker::import($file);
+                        $file_result = Importer_Annotations_Repeatmasker::import($file);
+                        break;
+                    default:
+                        display_help();
+                        die();
                         break;
                 }
+                break;
+            case 'expressions':
+                require_once __DIR__ . '/includes/importers/Importer_Expressions.php';
+                require_parameter(array('--analysis_id', '--biomaterial_A_name', '--biomaterial_B_name'));
+                $file_result = Importer_Expressions::import($file, $parms['--analysis_id'], $parms['--biomaterial_A_name'], $parms['--biomaterial_B_name']);
+                break;
+            default:
+                display_help();
+                die();
                 break;
         }
     } catch (PDOException $e) {
         print "Error processing file $file: " . $e->getMessage() . "<br/>";
     }
+
+    var_dump(array("File $file successfully processed.", $file_result));
 }
 
 die();

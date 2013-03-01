@@ -54,6 +54,9 @@ class Importer_Sequences {
      */
     static function import($filename) {
         global $db;
+        $lines_imported = 0;
+        $isoforms_updated = 0;
+        $predpeps_added = 0;
 
         #pre-initialize variables to bind statement parameters
         $param_isoform_uniq = null;
@@ -127,6 +130,7 @@ class Importer_Sequences {
                     $param_isoform_path = $matches['path'];
 
                     $statement_insert_isoform_path->execute();
+                    $isoforms_updated++;
                 }
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
@@ -144,7 +148,9 @@ class Importer_Sequences {
                     $param_predpep_fmax = max($matches['from'], $matches['to']);
                     $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;
                     $statement_insert_predpep_location->execute();
+                    $predpeps_added++;
                 }
+                $lines_imported++;
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -154,6 +160,7 @@ class Importer_Sequences {
             $db->rollback();
             throw $error;
         }
+        return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated, 'predpeps_added' => $predpeps_added);
     }
 
 }

@@ -23,7 +23,7 @@ class Importer_Quantifications {
     static function import($filename, $quantification_id, $biomaterial_name, $type_name, $value_column) {
         global $db;
 
-        $count = 0;
+        $lines_imported = 0;
 
         try {
             $statement_get_type_id = $db->prepare('SELECT cvterm_id FROM cvterm WHERE name=:type_name LIMIT 1');
@@ -72,7 +72,7 @@ class Importer_Quantifications {
                 $param_uniquename = ASSEMBLY_PREFIX . $line[0];
                 $param_value = $line[$value_column - 1];
                 $statement_insert_quant->execute();
-                $count++;
+                $lines_imported++;
             }
 
 
@@ -84,7 +84,7 @@ class Importer_Quantifications {
             $db->rollback();
             throw $error;
         }
-        return $count;
+        return array(LINES_IMPORTED => $lines_imported);
     }
 
 }

@@ -51,6 +51,9 @@ class Importer_Annotations_Repeatmasker {
 $}x
 EOF;
 
+        $lines_imported = 0;
+        $families_added = 0;
+
         try {
             $db->beginTransaction();
             #shared parameters
@@ -95,6 +98,8 @@ EOF;
 
                         $statement_insert_domain->execute();
 
+                        $lines_imported++;
+
                         $param_srcfeature_uniq = ASSEMBLY_PREFIX . $matches['name'][$i];
                         $param_fmin = $matches['start'];
                         $param_fmax = $matches['end'];
@@ -108,10 +113,12 @@ EOF;
                         $param_value = $matches['repeat_class'][$i];
                         $statement_annotate_domain->execute();
 
+
                         if (!empty($matches['repeat_family'][$i])) {
                             $param_cvterm = CV_REPEAT_FAMILY;
                             $param_value = $matches['repeat_family'][$i];
                             $statement_annotate_domain->execute();
+                            $families_added++;
                         }
                     }
                 } else {
@@ -127,6 +134,7 @@ EOF;
             $db->rollback();
             throw $error;
         }
+        return array(LINES_IMPORTED => $lines_imported, 'families_added' => $families_added);
     }
 
 }

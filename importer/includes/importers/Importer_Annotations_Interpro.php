@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../Importer_Sequences.php';
@@ -67,6 +68,9 @@ class Importer_Annotations_Interpro {
 
         global $dbrefx_versions;
         global $db;
+        $lines_imported = 0;
+        $interpro_ids_added = 0;
+        $dbxrefs_added = 0;
 
         try {
             $db->beginTransaction();
@@ -150,6 +154,7 @@ class Importer_Annotations_Interpro {
 
                 if ($param_interproID != "NULL") {
                     $statement_insert_interproID->execute();
+                    $interpro_ids_added++;
                 }
 
                 if ($interproGOs != "NULL") {
@@ -159,6 +164,7 @@ class Importer_Annotations_Interpro {
                         $param_dbname = $matches['dbname'][$i];
                         $param_accession = $matches['accession'][$i];
                         $statement_insert_feature_dbxref->execute();
+                        $dbxrefs_added++;
                     }
                 }
             }
@@ -171,6 +177,7 @@ class Importer_Annotations_Interpro {
             $db->rollback();
             throw $error;
         }
+        return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added'=>$dbxrefs_added);
     }
 
 }

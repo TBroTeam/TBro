@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
 
@@ -12,7 +13,8 @@ class Importer_Annotations_Blast2Go {
     static function import($filename) {
 
         global $db;
-
+        $lines_imported = 0;
+        $descriptions_added = 0;
         try {
             $db->beginTransaction();
             #shared parameters
@@ -45,10 +47,13 @@ class Importer_Annotations_Blast2Go {
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
                 $param_feature_uniq = ASSEMBLY_PREFIX . $feature;
                 $statement_insert_feature_dbxref->execute();
+                $lines_imported++;
 
                 $description = isset($line[2]) ? $line[2] : null;
-                if ($description != null)
+                if ($description != null) {
                     $statement_insert_featureprop->execute();
+                    $descriptions_added++;
+                }
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -58,6 +63,7 @@ class Importer_Annotations_Blast2Go {
             $db->rollback();
             throw $error;
         }
+        return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
     }
 
 }

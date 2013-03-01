@@ -22,6 +22,8 @@ define('CV_REPEAT_FAMILY', 130);
 
 define('CV_BIOMATERIAL_ISA', 32);
 
+define('LINES_IMPORTED', 'datasets_imported');
+
 #versions of databases for interpro import
 global $dbrefx_versions;
 $dbrefx_versions = array('HMMPIR' => '1.0');

@@ -15,6 +15,9 @@ class Importer_Map {
     static function import($filename) {
         global $db;
 
+        $lines_imported = 0;
+        $unigenes_added = 0;
+
         #pre-initialize variables to bind statement parameters
         $param_unigene_name = null;
         $param_unigene_uniq = null;
@@ -56,6 +59,7 @@ class Importer_Map {
                     $param_unigene_uniq = ASSEMBLY_PREFIX . $param_unigene_name;
 
                     $statement_insert_unigene->execute();
+                    $unigenes_added++;
 
                     # get last insert id (see query: 'RETURNING feature_id'), set id for feature_relationship insert
                     $param_unigene_lastid = $statement_insert_unigene->fetchColumn();
@@ -68,6 +72,7 @@ class Importer_Map {
                 # set last value, execute insert
                 $param_isoform_uniq = ASSEMBLY_PREFIX . $param_isoform_name;
                 $statement_insert_isoform->execute();
+                $lines_imported++;
 
                 # insert feature_relationship
                 $statement_insert_feature_rel->execute();
@@ -80,6 +85,7 @@ class Importer_Map {
             $db->rollback();
             throw $error;
         }
+        return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added);
     }
 
 }
