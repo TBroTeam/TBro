@@ -9,7 +9,7 @@ try {
         require_once __DIR__.'/LoggedPDO.php';
         $db = new LoggedPDO('pgsql:host=wbbi155;dbname=dionaea_transcript_db_dev;user=s202139;password=s202139');
         DEBUG && $db->logLevel = LoggedPDO::LOGLEVEL_LONG;
-        VERBOSE && $db->logLevel = LoggedPDO::LOGLEVEL_SHORT;
+        VERBOSE && $db->logLevel = LoggedPDO::LOGLEVEL_LONG;
     } else {
         $db = new PDO('pgsql:host=wbbi155;dbname=dionaea_transcript_db_dev;user=s202139;password=s202139');
     }

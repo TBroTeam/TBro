@@ -150,7 +150,12 @@ class Importer_Sequences {
                     $statement_insert_predpep_location->execute();
                     $predpeps_added++;
                 }
+
                 $lines_imported++;
+                if ($lines_imported % 1000 == 0)
+                    echo '*';
+                else if ($lines_imported % 100 == 0)
+                    echo '.';
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();

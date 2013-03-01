@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../helpers.php';
 require_once __DIR__ . '/../constants.php';
 
 class Importer_Quantifications {
@@ -72,7 +71,12 @@ class Importer_Quantifications {
                 $param_uniquename = ASSEMBLY_PREFIX . $line[0];
                 $param_value = $line[$value_column - 1];
                 $statement_insert_quant->execute();
+
                 $lines_imported++;
+                if ($lines_imported % 1000 == 0)
+                    echo '*';
+                else if ($lines_imported % 100 == 0)
+                    echo '.';
             }
 
 

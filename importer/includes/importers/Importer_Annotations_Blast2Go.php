@@ -47,13 +47,19 @@ class Importer_Annotations_Blast2Go {
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
                 $param_feature_uniq = ASSEMBLY_PREFIX . $feature;
                 $statement_insert_feature_dbxref->execute();
-                $lines_imported++;
 
                 $description = isset($line[2]) ? $line[2] : null;
                 if ($description != null) {
                     $statement_insert_featureprop->execute();
                     $descriptions_added++;
                 }
+
+
+                $lines_imported++;
+                if ($lines_imported % 1000 == 0)
+                    echo '*';
+                else if ($lines_imported % 100 == 0)
+                    echo '.';
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();

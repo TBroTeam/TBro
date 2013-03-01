@@ -1,4 +1,4 @@
-#!env php
+#!/usr/bin/php
 <?
 require __DIR__ . '/includes/constants.php';
 
@@ -44,8 +44,6 @@ options:
 EOF;
 }
 
-$valid_types = array('map', 'sequence', 'quantification', 'annotation');
-
 include __DIR__ . '/includes/init_cli.php';
 global $parms;
 init_cli();
@@ -55,7 +53,7 @@ if (isset($parms['--help'])) {
     die();
 }
 
-if (!isset($parms['--type']) || !in_array($parms['--type'], $valid_types) || !isset($parms['--file']) || $parms['--file'] === true) {
+if (!isset($parms['--type'])|| !isset($parms['--file']) || $parms['--file'] === true) {
     die("wrong parameter usage, call with --help for more information\n");
 }
 

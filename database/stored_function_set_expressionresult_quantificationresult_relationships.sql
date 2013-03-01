@@ -1,4 +1,6 @@
-CREATE FUNCTION set_expressionresult_quantificationresult_relationships (integer, integer, integer, character varying(255), expressionresult_samplegroup) RETURNS integer AS '
+DROP FUNCTION IF EXISTS set_expressionresult_quantificationresult_relationships (bigint, integer, integer, character varying(255), character varying(255));
+CREATE FUNCTION set_expressionresult_quantificationresult_relationships (bigint, integer, integer, character varying(255), character varying(255))
+RETURNS integer AS '
 DECLARE
     _expressionresult_id ALIAS FOR $1;
     _parent_id ALIAS FOR $2;

@@ -98,7 +98,6 @@ EOF;
 
                         $statement_insert_domain->execute();
 
-                        $lines_imported++;
 
                         $param_srcfeature_uniq = ASSEMBLY_PREFIX . $matches['name'][$i];
                         $param_fmin = $matches['start'];
@@ -120,6 +119,13 @@ EOF;
                             $statement_annotate_domain->execute();
                             $families_added++;
                         }
+
+
+                        $lines_imported++;
+                        if ($lines_imported % 1000 == 0)
+                            echo '*';
+                        else if ($lines_imported % 100 == 0)
+                            echo '.';
                     }
                 } else {
                     echo "WARNING: Line does not match:\n\t$line\n";

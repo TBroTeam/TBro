@@ -167,6 +167,13 @@ class Importer_Annotations_Interpro {
                         $dbxrefs_added++;
                     }
                 }
+                
+                
+                $lines_imported++;                
+                if ($lines_imported % 1000 == 0)
+                    echo '*';
+                else if ($lines_imported % 100 == 0)
+                    echo '.';
             }
 
             if (!$db->commit()) {
