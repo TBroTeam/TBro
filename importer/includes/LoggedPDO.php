@@ -55,7 +55,7 @@ class LoggedPDO extends PDO {
         self::$logFullTime+=$time;
         self::$logCount++;
         if (self::$logImmediately)
-            showLogLine($query, $time, $type);
+            self::showLogLine($query, $time, $type);
         if (self::$logTail == 0)
             return;
         if (self::$logTail > 0 && count(self::$log) < self::$logTail)
@@ -71,7 +71,7 @@ class LoggedPDO extends PDO {
         $totalTime = 0;
         echo "\ntime\ttype\tquery\n";
         foreach (self::$log as $entry) {
-            showLogLine($entry['query'], $entry['time'], $entry['type']);
+            self::showLogLine($entry['query'], $entry['time'], $entry['type']);
         }
         echo self::$totalTime . "\t\tfor " . self::$logCount . " queries\n";
     }
