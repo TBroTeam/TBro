@@ -8,8 +8,6 @@
  */
 class LoggedPDO extends PDO {
 
-    public static $log = array();
-
     const LOGLEVEL_LONG = 1;
     const LOGLEVEL_SHORT = 2;
 
@@ -17,7 +15,12 @@ class LoggedPDO extends PDO {
         parent::__construct($dsn, $username, $password);
     }
 
-    public $logLevel = self::LOGLEVEL_SHORT;
+    public static $logLevel = self::LOGLEVEL_SHORT;
+    public static $logTail = 100; #-1 for full log
+    public static $logImmediately = false;
+    private static $log = array();
+    private static $logFullTime = 0;
+    private static $logCount = 0;
 
     /**
      * Print out the log when we're destructed. I'm assuming this will
@@ -27,7 +30,8 @@ class LoggedPDO extends PDO {
     public function __destruct() {
         if ($this->logLevel == self::LOGLEVEL_SHORT) {
             self::printShortLog();
-        } else {
+        }
+        else {
             self::printFullLog();
         }
     }
@@ -36,8 +40,7 @@ class LoggedPDO extends PDO {
         $start = microtime(true);
         $result = parent::query($query);
         $time = microtime(true) - $start;
-        LoggedPDO::$log[] = array('query' => $query,
-            'time' => round($time * 1000, 3), 'type' => 'Q');
+        LoggedPDO::log($query, round($time * 1000, 3), 'Q');
         return $result;
     }
 
@@ -48,23 +51,35 @@ class LoggedPDO extends PDO {
         return new LoggedPDOStatement(parent::prepare($query));
     }
 
+    public static function log($query, $time, $type) {
+        self::$logFullTime+=$time;
+        self::$logCount++;
+        if (self::$logImmediately)
+            showLogLine($query, $time, $type);
+        if (self::$logTail == 0)
+            return;
+        if (self::$logTail > 0 && count(self::$log) < self::$logTail)
+            array_shift(self::$log);
+        self::$log[] = array('query' => $query, 'time' => $time, 'type' => $type);
+    }
+
+    public static function showLogLine($query, $time, $type) {
+        echo $time . "\t" . $type . "\t" . $query . "\n";
+    }
+
     public static function printFullLog() {
         $totalTime = 0;
         echo "\ntime\ttype\tquery\n";
         foreach (self::$log as $entry) {
-            $totalTime += $entry['time'];
-            echo $entry['time'] . "\t" . $entry['type'] . "\t" . $entry['query'] . "\n";
+            showLogLine($entry['query'], $entry['time'], $entry['type']);
         }
-        echo $totalTime . "\t\tfor " . count(self::$log) . " queries\n";
+        echo self::$totalTime . "\t\tfor " . self::$logCount . " queries\n";
     }
 
     public static function printShortLog() {
         $totalTime = 0;
         echo "\ntime\ttquery\n";
-        foreach (self::$log as $entry) {
-            $totalTime += $entry['time'];
-        }
-        echo $totalTime . "\tfor " . count(self::$log) . " queries\n";
+        echo self::$totalTime . "\tfor " . self::$logCount . " queries\n";
     }
 
 }
@@ -96,10 +111,11 @@ class LoggedPDOStatement {
         ksort($this->boundParams);
         $last_paramid = 0;
         foreach ($this->boundParams as $pname => $pvalue) {
-            if (is_string($pname)) {
+            if (preg_match('^[^0-9]*$', $pname)) {
 #replace named query parameter with $pvalue
-                $query = str_replace($pname, '"' . $pvalue . '"', $query);
-            } else if (is_int($pname)) {
+                $query = str_replace($pname, "'" . $pvalue . "'", $query);
+            }
+            else {
 #replace $pname'th questionmark with $pvalue
 #as boundParams are sorted, this is always the first questionmark
 #but we have to watch for skipped numbers
@@ -107,7 +123,7 @@ class LoggedPDOStatement {
                     throw new ErrorException("parameter " . ($last_paramid + 1) . " has been skipped!" . $pname);
                 } else
                     $last_paramid++;
-                $pos = strpos($query, '?');
+                $query = str_replace("?", "'" . $pvalue . "'", $query);
             }
         }
 
@@ -120,8 +136,7 @@ class LoggedPDOStatement {
             $ex = $e;
         }
         $time = microtime(true) - $start;
-        LoggedPDO::$log[] = array('query' => $query,
-            'time' => round($time * 1000, 3), 'type' => 'PS');
+        LoggedPDO::log($query, round($time * 1000, 3), 'PS');
 
         if ($ex != null)
             throw $ex;
@@ -141,12 +156,14 @@ class LoggedPDOStatement {
             }
             if ($function_name == 'bindParam') {
                 $this->boundParams[$parname] = &$parameters[1];
-            } else {
+            }
+            else {
                 $this->boundParams[$parname] = $parameters[1];
             }
         }
 
-        return call_user_func_array(array($this->statement, $function_name), $parameters);
+        return call_user_func_array(array($this->statement, $function_name),
+                        $parameters);
     }
 
 }
