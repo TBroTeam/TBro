@@ -143,7 +143,6 @@ class Importer_Expressions {
                     echo '.';
             }
 
-            $db->commit();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
