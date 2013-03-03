@@ -112,7 +112,7 @@ class LoggedPDOStatement {
         foreach ($this->boundParams as $pname => $pvalue) {
             if (!is_int($pname)) {
 #replace named query parameter with $pvalue
-                $query = str_replace($pname, "'" . $pvalue . "'", $query);
+                $query = str_replace($pname, "'" . $pvalue . "'", $query, 1);
             }
             else {
 #replace $pname'th questionmark with $pvalue
