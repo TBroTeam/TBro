@@ -111,7 +111,7 @@ class LoggedPDOStatement {
         ksort($this->boundParams);
         $last_paramid = 0;
         foreach ($this->boundParams as $pname => $pvalue) {
-            if (preg_match('^[^0-9]*$', $pname)) {
+            if (!is_int($pname)) {
 #replace named query parameter with $pvalue
                 $query = str_replace($pname, "'" . $pvalue . "'", $query);
             }
