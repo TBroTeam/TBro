@@ -1,5 +1,10 @@
 <?php
 
+define('DB_SERVER', 'wbbi155');
+define('DB_USERNAME', 's202139');
+define('DB_PASSWORD', 's202139');
+define('DB_DB', 'dionaea_transcript_db_dev_test1');
+
 define('ASSEMBLY_PREFIX', '1.01_');
 define('DB_ORGANISM_ID', '13');
 define('DUMMY', 123);

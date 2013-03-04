@@ -1,17 +1,18 @@
 <?php
-
+require_once __DIR__.'/constants.php';
 if (!defined('VERBOSE')) define('VERBOSE', false);
 if (!defined('DEBUG')) define('DEBUG', false);
 
 try {
     global $db;
+    $connstr = sprintf('pgsql:host=%s;dbname=%s;user=%s;password=%s', DB_SERVER, DB_DB, DB_USERNAME, DB_PASSWORD);
     if (VERBOSE || DEBUG) {
         require_once __DIR__.'/LoggedPDO.php';
-        $db = new LoggedPDO('pgsql:host=wbbi155;dbname=dionaea_transcript_db_dev;user=s202139;password=s202139');
+        $db = new LoggedPDO($connstr);
         DEBUG && $db->logLevel = LoggedPDO::LOGLEVEL_LONG;
         VERBOSE && $db->logLevel = LoggedPDO::LOGLEVEL_LONG;
     } else {
-        $db = new PDO('pgsql:host=wbbi155;dbname=dionaea_transcript_db_dev;user=s202139;password=s202139');
+        $db = new PDO($connstr);
     }
     #usually stop execution on DB error
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
