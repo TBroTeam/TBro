@@ -1,3 +1,4 @@
+DROP FUNCTION IF EXISTS get_or_insert_analysis (character varying(255), character varying(255), character varying(255), timestamp);
 CREATE FUNCTION get_or_insert_analysis (character varying(255), character varying(255), character varying(255), timestamp) RETURNS integer AS '
 DECLARE
     _name ALIAS FOR $1;

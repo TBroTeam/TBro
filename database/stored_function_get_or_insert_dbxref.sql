@@ -1,3 +1,4 @@
+DROP FUNCTION IF EXISTS get_or_insert_dbxref (character varying(255), character varying(255));
 CREATE FUNCTION get_or_insert_dbxref (character varying(255), character varying(255)) RETURNS integer AS '
 DECLARE
     _dbname ALIAS FOR $1;
