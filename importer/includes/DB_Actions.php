@@ -429,7 +429,7 @@ class DB_Actions {
         $statement->execute();
         $header_shown = false;
         while (($bioname = $statement->fetchColumn()) != false) {
-            $ret['biomaterial'][] = self::quickShow('biomaterial', 'name', $bioname, &$header_shown);
+            $ret['biomaterial'][] = self::quickShow('biomaterial', 'name', $bioname, $header_shown);
         }
         return $ret;
     }

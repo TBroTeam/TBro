@@ -39,7 +39,7 @@ class DBActions_Contact_Test extends PHPUnit_Framework_TestCase {
         $matches = array();
         ob_start();
         $this->cliExecute(array(self::$file, '--table', 'contact', '--action', 'create', '--name', $name, '--description', $description));
-        $ret = preg_match("/^(?<id>\\d*)\t$name\t$description/m", ob_get_clean(), &$matches);
+        $ret = preg_match("/^(?<id>\\d*)\t$name\t$description/m", ob_get_clean(), $matches);
         self::$id= $matches['id'];
         $this->assertEquals(1, $ret);
         

@@ -80,13 +80,13 @@ class Importer_Expressions {
                     . 'VALUES (:analysis_id, :baseMean, :baseMeanA, :baseMeanB,'
                     .' :foldChange, :log2foldChange, :pval, :pvaladj);');
             $statement_insert_expressiondata->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
-            $statement_insert_expressiondata->bindParam('baseMean', &$param_baseMean, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('baseMeanA', &$param_baseMeanA, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('baseMeanB', &$param_baseMeanB, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('foldChange', &$param_foldChange, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('log2foldChange', &$param_log2foldChange, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('pval', &$param_pval, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('pvaladj', &$param_pvaladj, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('baseMean', $param_baseMean, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('baseMeanA', $param_baseMeanA, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('baseMeanB', $param_baseMeanB, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('foldChange', $param_foldChange, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('log2foldChange', $param_log2foldChange, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('pval', $param_pval, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('pvaladj', $param_pvaladj, PDO::PARAM_STR);
 
 
             $relationship_call = 'SELECT * FROM set_expressionresult_quantificationresult_relationships('
@@ -100,13 +100,13 @@ class Importer_Expressions {
             $statement_set_relationshipA->bindValue('cvterm_isa', CV_BIOMATERIAL_ISA);
             $statement_set_relationshipA->bindValue('parent_biomaterial_id', $biomaterial_parentA_id, PDO::PARAM_INT);
             $statement_set_relationshipA->bindValue('samplegroup', 'A', PDO::PARAM_STR);
-            $statement_set_relationshipA->bindParam('feature_uniquename', &$param_feature_uniquename, PDO::PARAM_STR);
+            $statement_set_relationshipA->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
 
             $statement_set_relationshipB = $db->prepare($relationship_call);
             $statement_set_relationshipB->bindValue('cvterm_isa', CV_BIOMATERIAL_ISA);
             $statement_set_relationshipB->bindValue('parent_biomaterial_id', $biomaterial_parentB_id, PDO::PARAM_INT);
             $statement_set_relationshipB->bindValue('samplegroup', 'B', PDO::PARAM_STR);
-            $statement_set_relationshipB->bindParam('feature_uniquename', &$param_feature_uniquename, PDO::PARAM_STR);
+            $statement_set_relationshipB->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
 
 
             $file = fopen($filename, 'r');

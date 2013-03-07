@@ -1,4 +1,4 @@
-<?
+<?php
 
 define('ERR_MISSING_PARAMTER', "missing parameter: %s\n");
 

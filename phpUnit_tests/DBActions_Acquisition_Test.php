@@ -61,7 +61,7 @@ class DBActions_Acquisition_Test extends PHPUnit_Framework_TestCase {
         $matches = array();
         ob_start();
         $this->cliExecute(array(self::$file, '--table', 'acquisition', '--action', 'create', '--name', $name, '--assay_id', DBActions_Assay_Test::$id, '--acquisitiondate', $acquisitiondate, '--uri', $uri));
-        $ret = preg_match("/^(?<id>\\d*)\t$name\t" . DBActions_Assay_Test::$id . "\t$acquisitiondate [^\t]*\t$uri/m", ob_get_clean(), &$matches);
+        $ret = preg_match("/^(?<id>\\d*)\t$name\t" . DBActions_Assay_Test::$id . "\t$acquisitiondate [^\t]*\t$uri/m", ob_get_clean(), $matches);
         self::$id = $matches['id'];
         $this->assertEquals(1, $ret);
     }

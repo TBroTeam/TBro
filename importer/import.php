@@ -1,5 +1,5 @@
 #!/usr/bin/php
-<?
+<?php
 require __DIR__ . '/includes/constants.php';
 
 //TODO count of lines imported
@@ -95,7 +95,7 @@ foreach ($parms['--file'] as $file) {
                 $file_result = Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name'], $parms['--type_name'], $parms['--column']);
                 break;
             case 'annotation':
-                require_parameter(array('----subtype'));
+                require_parameter(array('--subtype'));
                 switch ($parms['--subtype']) {
                     case 'blast2go':
                         require_once __DIR__ . '/includes/importers/Importer_Annotations_Blast2Go.php';

@@ -31,20 +31,20 @@ class Importer_Map {
             $statement_insert_unigene = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id) RETURNING feature_id');
             $statement_insert_unigene->bindValue('type_id', CV_UNIGENE, PDO::PARAM_INT);
             $statement_insert_unigene->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
-            $statement_insert_unigene->bindParam('name', &$param_unigene_name, PDO::PARAM_STR);
-            $statement_insert_unigene->bindParam('uniquename', &$param_unigene_uniq);
+            $statement_insert_unigene->bindParam('name', $param_unigene_name, PDO::PARAM_STR);
+            $statement_insert_unigene->bindParam('uniquename', $param_unigene_uniq);
 
 
             $statement_insert_isoform = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id)');
             $statement_insert_isoform->bindValue('type_id', CV_ISOFORM, PDO::PARAM_INT);
             $statement_insert_isoform->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
-            $statement_insert_isoform->bindParam('name', &$param_isoform_name, PDO::PARAM_STR);
-            $statement_insert_isoform->bindParam('uniquename', &$param_isoform_uniq, PDO::PARAM_STR);
+            $statement_insert_isoform->bindParam('name', $param_isoform_name, PDO::PARAM_STR);
+            $statement_insert_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
 
 
             $statement_insert_feature_rel = $db->prepare('INSERT INTO feature_relationship (type_id, subject_id, object_id) VALUES (:type_id, :parent, currval(\'feature_feature_id_seq\'))');
             $statement_insert_feature_rel->bindValue('type_id', CV_RELATIONSHIP_UNIGENE_ISOFORM, PDO::PARAM_INT);
-            $statement_insert_feature_rel->bindParam('parent', &$param_unigene_lastid, PDO::PARAM_INT);
+            $statement_insert_feature_rel->bindParam('parent', $param_unigene_lastid, PDO::PARAM_INT);
 
 
             $file = fopen($filename, 'r');

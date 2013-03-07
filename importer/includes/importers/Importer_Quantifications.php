@@ -52,8 +52,8 @@ class Importer_Quantifications {
                     sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, biomaterial_id, type_id, value) '
                             . 'VALUES ((%s), :quantification_id, :biomaterial_id, :type_id, :value)'
                             , 'SELECT feature_id FROM feature WHERE uniquename=:gene_uniquename LIMIT 1'));
-            $statement_insert_quant->bindParam('gene_uniquename', &$param_uniquename, PDO::PARAM_STR);
-            $statement_insert_quant->bindParam('value', &$param_value, PDO::PARAM_STR);
+            $statement_insert_quant->bindParam('gene_uniquename', $param_uniquename, PDO::PARAM_STR);
+            $statement_insert_quant->bindParam('value', $param_value, PDO::PARAM_STR);
             $statement_insert_quant->bindValue('quantification_id', $quantification_id, PDO::PARAM_INT);
             $statement_insert_quant->bindValue('biomaterial_id', $biomaterial_id, PDO::PARAM_INT);
             $statement_insert_quant->bindValue('type_id', $type_id, PDO::PARAM_INT);

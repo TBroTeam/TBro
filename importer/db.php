@@ -1,5 +1,5 @@
-#!env php
-<?
+#!/usr/bin/php
+<?php
 echo implode(' ',$argv)."\n";
 $help = <<<EOF
 ### transcript data importer ###

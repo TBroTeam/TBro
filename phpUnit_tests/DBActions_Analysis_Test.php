@@ -27,7 +27,7 @@ class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
         $matches = array();
         ob_start();
         $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'list'));
-        $ret = preg_match_all("/^(?<id>\\d*)\t$program/m", ob_get_clean(), &$matches);
+        $ret = preg_match_all("/^(?<id>\\d*)\t$program/m", ob_get_clean(), $matches);
         foreach ($matches['id'] as $m_id) {
             $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'delete', '--id', $m_id, '--noinput'));
         }
@@ -42,7 +42,7 @@ class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
         $matches = array();
         ob_start();
         $this->cliExecute(array(self::$file, '--table', 'analysis', '--action', 'create', '--program', $program, '--programversion', $programversion, '--sourcename', $sourcename, '--name', $name, '--algorithm', $algorithm, '--timeexecuted', $timeexecuted));
-        $ret = preg_match("/^(?<id>\\d*)\t$program\t$programversion\t$sourcename/m", ob_get_clean(), &$matches);
+        $ret = preg_match("/^(?<id>\\d*)\t$program\t$programversion\t$sourcename/m", ob_get_clean(), $matches);
         self::$id= $matches['id'];
         $this->assertEquals(1, $ret);
     }
