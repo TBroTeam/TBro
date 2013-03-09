@@ -1,0 +1,358 @@
+<html>
+
+  <head>
+
+    <title>Venn diagram</title>
+
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta http-equiv="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="canvasxpress, canvas, html5, graph, chart, plot, javascript, javascript library, genomic, scientific, android, animation, bar graph, line graph, dotplot, boxplot, heatmap, newick, scatter, 3d, pie, correlation, venn, network, market, candlestick, genome browser, isaac neuhaus"/>
+    <meta name="description" content=""/>
+    <meta http-equiv="Content-Language" content="en-us" />
+    <meta name="Rating" content="general" />
+    <meta name="googlebot" content="index,follow" />
+    <meta name="robots" content="index,follow" />
+    <meta name="author" content="Isaac Neuhaus" />
+    <meta name="google-site-verification" content="UmQp3wIY7r9cDwr5LRdUDeDkpxAxg0Lv5tUc3tW9-90" />
+
+    <link rel="stylesheet" href="./css/global.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/canvasXpress.css" type="text/css"/>
+    <style type="text/css">
+      table.example {margin: 10px; border-collapse: collapse;}
+      td.example {vertical-align: top;}
+      div br {clear: both;}
+      div.code, div.json, div.pre {font-size: small; clear: both;}
+      div.desc {font-size: small;}
+      div.h3 {font-size: 150%}
+      div.h4 {font-size: 120%}
+      table.config {font-size: small; border-collapse: collapse; margin: 10px; width: 800px;}
+      td.first-col {border: 1px solid #000000; padding: 4px; width: 35%; vertical-align: top;}
+      td.sec-col {border: 1px solid #1D222B; padding: 4px; width: 65%; vertical-align: top;}
+      tr.private {background-color: #EEEEEE;}
+      tr.public {background-color: #FFFFFF;}
+      span.light {font-size: small; color: #777777; font-style: italic;}
+      caption {background-color:  #DDDDDD; border-top: 1px solid #1D222B;  border-right: 1px solid #1D222B;  border-left: 1px solid #1D222B; color: #FFFFFF: font-size: 150%; padding: 2px 6px; text-align: left;}
+      div.canvas {margin: 10px;}
+    </style>
+
+    <!--[if lt IE 9]><script type="text/javascript" src="./js/flashcanvas.js"></script><![endif]-->
+
+    <script type="text/javascript" src="./js/canvasXpress.min.js"></script>
+
+    <script>
+
+      var showDemo = function () {
+        new CanvasXpress("canvas1", {
+          "venn": {
+            "data": {
+              "A": 340,
+              "B": 562,
+              "C": 620,
+              "D": 592,
+              "AB": 639,
+              "AC": 456,
+              "AD": 257,
+              "BC": 915,
+              "BD": 354,
+              "CD": 143,
+              "ABC": 552,
+              "ABD": 578,
+              "ACD": 298,
+              "BCD": 613,
+              "ABCD": 148
+            },
+            "legend": {
+              "A": "List 1",
+              "B": "List 2",
+              "C": "List 3",
+              "D": "List 4"
+            }
+          }
+        }, {
+          "graphType": "Venn",
+          "useFlashIE": true,
+          "background": "rgb(245,245,245)",
+          "vennGroups": 4
+        })
+        new CanvasXpress("canvas2", {
+          "venn": {
+            "data": {
+              "A": 340,
+              "B": 562,
+              "C": 620,
+              "AB": 639,
+              "AC": 456,
+              "BC": 915,
+              "ABC": 552
+            },
+            "legend": {
+              "A": "List 1",
+              "B": "List 2",
+              "C": "List 3"
+            }
+          }
+        }, {
+          "graphType": "Venn",
+          "useFlashIE": true,
+          "background": "rgb(245,245,245)",
+          "vennGroups": 3
+        })
+      }
+
+      var jumpTo = function(url) {
+        parent.location=url
+      }
+
+      var showSourceCode = function(id) {
+        var c = document.getElementById(id)
+        if (c) {
+          var d = c.style.display
+          if (d == 'none') {
+            c.style.display = 'block';
+          } else {
+            c.style.display = 'none';
+          }
+        }
+      }
+
+      var showCode = function(cb, t) {
+        var cx = CanvasXpress.references
+          for (var i = 0; i < CanvasXpress.references.length; i++) {
+            if (CanvasXpress.references[i].target == t) {
+              var c = CanvasXpress.references[i];
+              if(cb.checked) {
+                c.showCode = true;
+                c.draw()
+              } else {
+                c.showCode = false;
+                c.hideCodeDiv()
+              }
+            }
+          }
+      }
+
+      var showData = function(cb, t) {
+        var cx = CanvasXpress.references
+          for (var i = 0; i < CanvasXpress.references.length; i++) {
+            if (CanvasXpress.references[i].target == t) {
+              var c = CanvasXpress.references[i];
+              if(cb.checked) {
+                c.showDataTable = true;
+              } else {
+                c.showDataTable = false;
+              }
+              c.draw()
+            }
+          }
+      }
+
+    </script>
+
+  </head>
+
+  <body onload="showDemo();">
+
+    <div class="page">
+
+      <div class="header">
+
+        <a href="./" class="logo">canvasXpress | Javascript Canvas Graphing Library</a>
+
+        <div class="share">
+          <a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=xa-4c58a3ba2ff9a164">
+            <img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/>
+          </a>
+          <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c58a3ba2ff9a164"></script>
+        </div>
+
+        <div class="donate">
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="EVP6CWVNJN7SY">
+            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </div>
+
+        <div class="tweet">
+          <a href="https://twitter.com/CanvasXpress" class="twitter-follow-button" data-show-count="false">Follow @CanvasXpress</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+
+        <ul class="nav">
+          <li ><a href="./">Home</a></li>
+          <li ><a href="./about.html">About</a></li>
+          <li ><a href="./documentation.html">Documentation</a></li>
+          <li class="current"><a href="./bar.html">Examples</a></li>
+          <li ><a href="./download.html">Download</a></li>
+          <li ><a href="./contact.html">Contact</a></li>
+        </ul>
+
+      </div>
+
+      <div class="wrap">
+
+        <div class="content">
+
+          <div id="examples">
+
+            <div class="chooseGraph">
+              <select onchange="jumpTo(this.value)">
+                <option selected="selected">Select a Graph...</option>
+                <option value="./bar.html">Bar graphs</option>
+                <option value="./line.html">Line graphs</option>
+                <option value="./barline.html">Bar-line combination</option>
+                <option value="./boxplot.html">Boxplots</option>
+                <option value="./dotplot.html">Dotplots</option>
+                <option value="./area.html">Area graphs</option>
+                <option value="./stacked.html">Stacked graphs</option>
+                <option value="./correlation.html">Correlation plots</option>
+                <option value="./venn.html">Venn diagrams</option>
+                <option value="./heatmap.html">Heatmaps</option>
+                <option value="./scatter2d.html">2D-scatter plots</option>
+                <option value="./scatter3d.html">3D-scatter plots</option>
+                <option value="./pie.html">Pie charts</option>
+                <option value="./candlestick.html">Stock Market charts</option>
+                <option value="./network.html">Networks (or pathways)</option>
+                <option value="./genome.html">Genome browser</option>
+                <option value="./circular.html">Circular plots</option>
+                <option value="./layout.html">Complex plot layouts</option>
+                <option value="./video.html">Video</option>
+                <option value="./extjs.html">Ext-JS Panel</option>
+                <option value="./test.html">Test Page</option>
+              </select>
+            </div>
+            <br>
+
+          </div>
+
+          <h1>Venn diagram</h1>
+
+          <div class='desc'>
+            <p>
+            </p>
+          </div>
+
+            <div>
+              <br /><br />
+              <form>
+                <div style="width: 613px;">
+                  <input alt="Code included in the HTML page" title="Code included in the HTML page" type="checkbox" value="ch1-canvas1" onclick="showSourceCode('code-canvas1')"/>Show Source Code&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input alt="Code transformed after initialized CanvasXpress" title="Code transformed after initialized CanvasXpress" type="checkbox" value="ch2-canvas1" onclick="showCode(this, 'canvas1')"/>Show Transformed Code&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input alt="Show data in HTML table" title="Show data in HTML table" type="checkbox" value="ch3-canvas1" onclick="showData(this, 'canvas1')"/>Show Data
+                </div>
+              </form>
+              <canvas id="canvas1" width="613" height="500"></canvas>
+            </div>
+            <div class="code" id="code-canvas1" style="display: none;">
+              <pre>
+                new CanvasXpress("canvas1", {
+                  "venn": {
+                    "data": {
+                      "A": 340,
+                      "B": 562,
+                      "C": 620,
+                      "D": 592,
+                      "AB": 639,
+                      "AC": 456,
+                      "AD": 257,
+                      "BC": 915,
+                      "BD": 354,
+                      "CD": 143,
+                      "ABC": 552,
+                      "ABD": 578,
+                      "ACD": 298,
+                      "BCD": 613,
+                      "ABCD": 148
+                    },
+                    "legend": {
+                      "A": "List 1",
+                      "B": "List 2",
+                      "C": "List 3",
+                      "D": "List 4"
+                    }
+                  }
+                }, {
+                  "graphType": "Venn",
+                  "useFlashIE": true,
+                  "background": "rgb(245,245,245)",
+                  "vennGroups": 4
+                })
+              </pre>
+            </div>
+
+            <div>
+              <br /><br />
+              <form>
+                <div style="width: 613px;">
+                  <input alt="Code included in the HTML page" title="Code included in the HTML page" type="checkbox" value="ch1-canvas2" onclick="showSourceCode('code-canvas2')"/>Show Source Code&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input alt="Code transformed after initialized CanvasXpress" title="Code transformed after initialized CanvasXpress" type="checkbox" value="ch2-canvas2" onclick="showCode(this, 'canvas2')"/>Show Transformed Code&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input alt="Show data in HTML table" title="Show data in HTML table" type="checkbox" value="ch3-canvas2" onclick="showData(this, 'canvas2')"/>Show Data
+                </div>
+              </form>
+              <canvas id="canvas2" width="613" height="500"></canvas>
+            </div>
+            <div class="code" id="code-canvas2" style="display: none;">
+              <pre>
+                new CanvasXpress("canvas2", {
+                  "venn": {
+                    "data": {
+                      "A": 340,
+                      "B": 562,
+                      "C": 620,
+                      "AB": 639,
+                      "AC": 456,
+                      "BC": 915,
+                      "ABC": 552
+                    },
+                    "legend": {
+                      "A": "List 1",
+                      "B": "List 2",
+                      "C": "List 3"
+                    }
+                  }
+                }, {
+                  "graphType": "Venn",
+                  "useFlashIE": true,
+                  "background": "rgb(245,245,245)",
+                  "vennGroups": 3
+                })
+              </pre>
+            </div>
+
+        </div>
+
+        <br /><br /><br />
+        <div class="clear">&nbsp;</div>
+
+      </div>
+
+      <div class="footer">
+
+        Copyright &copy; 2010 canvasXpress.org |
+        <a href="mailto:imnphd@gmail.com">Isaac&nbsp;Neuhaus</a> |
+        Site Powered by <a href="http://www.artician.net">Artician</a>
+
+      </div>
+
+    </div>
+
+    <div style="text-indent:-9999px;">
+      &nbsp;
+    </div>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-601687-37']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+
+  </body>
+
+</html>

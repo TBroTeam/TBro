@@ -1,0 +1,8 @@
+#Below are URLs for System Level Files. Should never be indexed by bots.
+User-agent: *
+Disallow: /old/
+Disallow: /build/
+Disallow: /css/
+Disallow: /images/
+Disallow: /js/
+Disallow: /user/
