@@ -42,7 +42,7 @@ class Importer_Map {
             $statement_insert_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
 
 
-            $statement_insert_feature_rel = $db->prepare('INSERT INTO feature_relationship (type_id, subject_id, object_id) VALUES (:type_id, :parent, currval(\'feature_feature_id_seq\'))');
+            $statement_insert_feature_rel = $db->prepare('INSERT INTO feature_relationship (subject_id, type_id, object_id) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :parent)');
             $statement_insert_feature_rel->bindValue('type_id', CV_RELATIONSHIP_UNIGENE_ISOFORM, PDO::PARAM_INT);
             $statement_insert_feature_rel->bindParam('parent', $param_unigene_lastid, PDO::PARAM_INT);
 

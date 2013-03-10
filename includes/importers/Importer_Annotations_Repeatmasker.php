@@ -95,7 +95,6 @@ EOF;
             while (($line = trim(fgets($file))) != false) {
                 $matches = null;
                 if (preg_match($regex, $line, $matches)) {
-                    var_dump($matches);
                     $param_name = sprintf("%s(%d-%d):%s#%s(%s)"
                             , $matches['name']
                             ,

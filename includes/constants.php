@@ -1,11 +1,10 @@
 <?php
 
-if ($_SERVER['HOSTNAME'] == 'SadrithMora') {
+if ((isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'localhost') || (isset($_SERVER['HOSTNAME']) && $_SERVER['HOSTNAME'] == 'SadrithMora')) {
     define('DB_SERVER', 'localhost');
     define('DB_USERNAME', 's202139');
     define('DB_PASSWORD', 's202139');
     define('DB_DB', 'dionaea_transcript_db_dev');
-   
 }
 else {
     define('DB_SERVER', 'wbbi155');

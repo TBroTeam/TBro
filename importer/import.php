@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
-require __DIR__ . '/includes/constants.php';
+define('INC', __DIR__ . '/../includes/');
+
+require_once INC . '/constants.php';
 
 //TODO count of lines imported
 ## don't touch anything below!
@@ -44,7 +46,7 @@ options:
 EOF;
 }
 
-include __DIR__ . '/includes/init_cli.php';
+include 'init_cli.php';
 global $parms;
 init_cli();
 
@@ -53,7 +55,7 @@ if (isset($parms['--help'])) {
     die();
 }
 
-if (!isset($parms['--type'])|| !isset($parms['--file']) || $parms['--file'] === true) {
+if (!isset($parms['--type']) || !isset($parms['--file']) || $parms['--file'] === true) {
     die("wrong parameter usage, call with --help for more information\n");
 }
 
@@ -82,31 +84,34 @@ foreach ($parms['--file'] as $file) {
     try {
         switch ($parms['--type']) {
             case 'map':
-                require_once __DIR__ . '/includes/importers/Importer_Map.php';
+                require_once INC . '/importers/Importer_Map.php';
                 $file_result = Importer_Map::import($file);
                 break;
             case 'sequence':
-                require_once __DIR__ . '/includes/importers/Importer_Sequences.php';
+                require_once INC . '/importers/Importer_Sequences.php';
                 $file_result = Importer_Sequences::import($file);
                 break;
             case 'quantification':
                 require_parameter(array('--quantification_id', '--biomaterial_name', '--type_name', '--column'));
-                require_once __DIR__ . '/includes/importers/Importer_Quantifications.php';
-                $file_result = Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name'], $parms['--type_name'], $parms['--column']);
+                require_once INC . '/importers/Importer_Quantifications.php';
+                $file_result = Importer_Quantifications::import($file,
+                                $parms['--quantification_id'],
+                                $parms['--biomaterial_name'],
+                                $parms['--type_name'], $parms['--column']);
                 break;
             case 'annotation':
                 require_parameter(array('--subtype'));
                 switch ($parms['--subtype']) {
                     case 'blast2go':
-                        require_once __DIR__ . '/includes/importers/Importer_Annotations_Blast2Go.php';
+                        require_once INC . '/importers/Importer_Annotations_Blast2Go.php';
                         $file_result = Importer_Annotations_Blast2Go::import($file);
                         break;
                     case 'interpro':
-                        require_once __DIR__ . '/includes/importers/Importer_Annotations_Interpro.php';
+                        require_once INC . '/importers/Importer_Annotations_Interpro.php';
                         $file_result = Importer_Annotations_Interpro::import($file);
                         break;
                     case 'repeatmasker':
-                        require_once __DIR__ . '/includes/importers/Importer_Annotations_Repeatmasker.php';
+                        require_once INC . '/importers/Importer_Annotations_Repeatmasker.php';
                         $file_result = Importer_Annotations_Repeatmasker::import($file);
                         break;
                     default:
@@ -116,9 +121,12 @@ foreach ($parms['--file'] as $file) {
                 }
                 break;
             case 'expressions':
-                require_once __DIR__ . '/includes/importers/Importer_Expressions.php';
+                require_once INC . '/importers/Importer_Expressions.php';
                 require_parameter(array('--analysis_id', '--biomaterial_A_name', '--biomaterial_B_name'));
-                $file_result = Importer_Expressions::import($file, $parms['--analysis_id'], $parms['--biomaterial_A_name'], $parms['--biomaterial_B_name']);
+                $file_result = Importer_Expressions::import($file,
+                                $parms['--analysis_id'],
+                                $parms['--biomaterial_A_name'],
+                                $parms['--biomaterial_B_name']);
                 break;
             default:
                 display_help();

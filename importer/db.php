@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
-echo implode(' ',$argv)."\n";
+define('INC', __DIR__ . '/../includes/');
+
+echo implode(' ', $argv) . "\n";
 $help = <<<EOF
 ### transcript data importer ###
 usage: 
@@ -152,7 +154,7 @@ contact
 
 EOF;
 
-require_once __DIR__ . '/includes/init_cli.php';
+require_once INC . '/init_cli.php';
 global $parms;
 init_cli();
 
@@ -168,17 +170,19 @@ if (!defined("VERBOSE")) {
     else
         define('VERBOSE', false);
 }
-require_once __DIR__ . '/includes/DB_Actions.php';
+require_once INC . '/DB_Actions.php';
 
 $tables = array('biomaterial', 'analysis', 'assay', 'acquisition', 'quantification', 'contact');
 $actions = array('create', 'edit', 'list', 'show', 'delete');
-if (!isset($parms['--table']) || !isset($parms['--action']) || !in_array($parms['--table'], $tables) || !in_array($parms['--action'], $actions)) {
+if (!isset($parms['--table']) || !isset($parms['--action']) || !in_array($parms['--table'],
+                $tables) || !in_array($parms['--action'], $actions)) {
     die($help);
 }
 
 
 if (!defined('ERR_NOT_YET_IMPLEMENTED')) {
-    define('ERR_NOT_YET_IMPLEMENTED', 'not yet implemented, try again later' . "\n");
+    define('ERR_NOT_YET_IMPLEMENTED',
+            'not yet implemented, try again later' . "\n");
 }
 
 
