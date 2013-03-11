@@ -113,8 +113,8 @@ if (($isoform = $stm_get_isoforms->fetch(PDO::FETCH_ASSOC)) !== false) {
 
     $stm_get_repeatmasker->execute();
     while ($repeatmasker = $stm_get_repeatmasker->fetch(PDO::FETCH_ASSOC)) {
-        $left = ($repeatmasker['fmin'] - 1) * 3;
-        $right = $left + ($repeatmasker['fmax'] - $repeatmasker['fmin'] + 1) * 3;
+        $left = $repeatmasker['fmin'];
+        $right = $repeatmasker['fmax'];
         $json[] = array(
             #'name' => 'Interpro Domain',
             'type' => 'box',
