@@ -46,7 +46,7 @@ options:
 EOF;
 }
 
-include 'init_cli.php';
+include INC. '/init_cli.php';
 global $parms;
 init_cli();
 

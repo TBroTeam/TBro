@@ -21,7 +21,7 @@ class Importer_Expressions {
             $value = 'Infinity';
         else if ($value == 'NA')
             $value = 'NaN';
-         else if ($value>0 && $value<1e307){
+         else if (floatval($value)>0 && floatval($value)<1e-307){
              $value=0;
          }
     }
@@ -118,13 +118,11 @@ class Importer_Expressions {
             while (($line = fgetcsv($file, 0, ",")) !== false) {
                 array_walk($line, array('Importer_Expressions', 'convertDbl'));
                 list($dummy, $feature_name, $param_baseMean, $param_baseMeanA, $param_baseMeanB, $param_foldChange, $param_log2foldChange, $param_pval, $param_pvaladj) = $line;
-                if ($feature_name == 'NA') {
+                if ($feature_name == 'NaN') {
                     $lines_skipped++;
                     continue;
                 }
                 
-
-
                 $statement_insert_expressiondata->execute();
 
                 $param_feature_uniquename = ASSEMBLY_PREFIX . $feature_name;

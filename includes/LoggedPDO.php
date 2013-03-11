@@ -112,7 +112,7 @@ class LoggedPDOStatement {
         foreach ($this->boundParams as $pname => $pvalue) {
             if (!is_int($pname)) {
 #replace named query parameter with $pvalue
-                $query = str_replace($pname, "'" . $pvalue . "'", $query, 1);
+                $query = str_replace($pname, $x="'" . $pvalue . "'", $query);
             }
             else {
 #replace $pname'th questionmark with $pvalue
@@ -122,7 +122,7 @@ class LoggedPDOStatement {
                     throw new ErrorException("parameter " . ($last_paramid + 1) . " has been skipped!" . $pname);
                 } else
                     $last_paramid++;
-                $query = str_replace("?", "'" . $pvalue . "'", $query);
+                $query = preg_replace("/\?/", "'" . $pvalue . "'", $query, 1);
             }
         }
 
