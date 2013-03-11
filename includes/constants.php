@@ -5,8 +5,7 @@ if ((isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'localhost') |
     define('DB_USERNAME', 's202139');
     define('DB_PASSWORD', 's202139');
     define('DB_DB', 'dionaea_transcript_db_dev');
-}
-else {
+} else {
     define('DB_SERVER', 'wbbi155');
     define('DB_USERNAME', 's202139');
     define('DB_PASSWORD', 's202139');
@@ -40,4 +39,11 @@ define('LINES_IMPORTED', 'datasets_imported');
 #versions of databases for interpro import
 global $dbrefx_versions;
 $dbrefx_versions = array('HMMPIR' => '1.0');
+
+global $_CONST;
+$_CONST = 'constant';
+
+
+
+
 ?>

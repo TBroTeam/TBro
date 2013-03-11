@@ -30,8 +30,7 @@ class LoggedPDO extends PDO {
     public function __destruct() {
         if ($this->logLevel == self::LOGLEVEL_SHORT) {
             self::printShortLog();
-        }
-        else {
+        } else {
             self::printFullLog();
         }
     }
@@ -112,9 +111,8 @@ class LoggedPDOStatement {
         foreach ($this->boundParams as $pname => $pvalue) {
             if (!is_int($pname)) {
 #replace named query parameter with $pvalue
-                $query = str_replace($pname, $x="'" . $pvalue . "'", $query);
-            }
-            else {
+                $query = str_replace($pname, $x = "'" . $pvalue . "'", $query);
+            } else {
 #replace $pname'th questionmark with $pvalue
 #as boundParams are sorted, this is always the first questionmark
 #but we have to watch for skipped numbers
@@ -142,27 +140,32 @@ class LoggedPDOStatement {
         return $result;
     }
 
+    public function bindParam($parameter, &$variable, $data_type = PDO::PARAM_STR, $length = null, $driver_options = null) {
+
+        if (is_string($parameter) && strpos($parameter, ':') === false)
+            $this->boundParams[':' . $parameter] = &$variable;
+        else
+            $this->boundParams[$parameter] = &$variable;
+
+        $this->statement->bindParam($parameter, $variable, $data_type, $length, $driver_options);
+    }
+
+    public function bindValue($parameter, $value, $data_type = PDO::PARAM_STR) {
+        if (is_string($parameter) && strpos($parameter, ':') === false)
+            $this->boundParams[':' . $parameter] = $value;
+        else
+            $this->boundParams[$parameter] = $value;
+
+        $this->statement->bindValue($parameter, $value, $data_type);
+    }
+
     /**
      * Other than execute pass all other calls to the PDOStatement object
      * @param string $function_name
      * @param array $parameters arguments
      */
     public function __call($function_name, $parameters) {
-        if ($function_name == 'bindParam' || $function_name == 'bindValue') {
-            $parname = $parameters[0];
-            if (is_string($parname) && strpos($parname, ':') === false) {
-                $parname = ':' . $parameters[0];
-            }
-            if ($function_name == 'bindParam') {
-                $this->boundParams[$parname] = &$parameters[1];
-            }
-            else {
-                $this->boundParams[$parname] = $parameters[1];
-            }
-        }
-
-        return call_user_func_array(array($this->statement, $function_name),
-                        $parameters);
+        return call_user_func_array(array($this->statement, $function_name), $parameters);
     }
 
 }
