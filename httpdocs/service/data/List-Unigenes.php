@@ -10,19 +10,21 @@ if (false)
 
 
 
-$param_unigene_uniquename = $_REQUEST['query'] . '%';
+$param_unigene_namequery = $_REQUEST['query'] . '%';
 
 $query_get_unigenes = <<<EOF
 SELECT unigene.uniquename,
         count(*) OVER() AS full_count
     FROM feature AS unigene
-    WHERE unigene.uniquename LIKE :unigene_uniquename
+    WHERE unigene.name LIKE :unigene_namequery
+    OR unigene.uniquename LIKE :unigene_namequery2
     AND unigene.type_id = {$_CONST('CV_UNIGENE')}
     LIMIT 20
 EOF;
 
 $stm_get_unigenes = $db->prepare($query_get_unigenes);
-$stm_get_unigenes->bindValue('unigene_uniquename', $param_unigene_uniquename);
+$stm_get_unigenes->bindValue('unigene_namequery', $param_unigene_namequery);
+$stm_get_unigenes->bindValue('unigene_namequery2', $param_unigene_namequery);
 
 $data = array('full_count' => 0, 'results' => array());
 
