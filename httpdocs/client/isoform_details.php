@@ -14,12 +14,12 @@ $isoform = preg_match('/^[a-z0-9._]+$/i', $_REQUEST['isoform']) ? $_REQUEST['iso
         <?php /* use chrome frame if installed and user is using IE */ ?>
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <script type="text/javascript">
-            var isoform='<?php echo $isoform ?>';/*'1.01_comp234339_c0_seq1'*/
+            var isoform='<?php echo $isoform ?>';
             
             $(document).ready(function() {
                 $.ajax('../service/graphs/genome/isoform/'+isoform, {
                     success: function(val){
-                        new CanvasXpress(
+                            new CanvasXpress(
                         "canvas1", 
                         {
                             "tracks": val.tracks
