@@ -7,32 +7,16 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Transcript Browser - dionaea muscipula</title>
-        <link rel="stylesheet" href="{$AppPath}/css/normalize.css" />
-        <link rel="stylesheet" href="{$AppPath}/css/foundation.css" />
+        <link rel="stylesheet" href="{#$AppPath#}/css/normalize.css" />
+        <link rel="stylesheet" href="{#$AppPath#}/css/foundation.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
         <link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" />    
-        <script type="text/javascript" src="{$AppPath}/js/vendor/custom.modernizr.js"></script>
-        <script type="text/javascript" src="{$AppPath}/js/foundation.min.js"></script>
-        {block name=head}{/block}
-        {*
-        <script src="js/foundation/foundation.js"></script>
-        <script src="js/foundation/foundation.dropdown.js"></script>
-        <script src="js/foundation/foundation.alerts.js"></script>
-        <script src="js/foundation/foundation.clearing.js"></script>
-        <script src="js/foundation/foundation.placeholder.js"></script>
-        <script src="js/foundation/foundation.forms.js"></script>
-        <script src="js/foundation/foundation.cookie.js"></script>
-        <script src="js/foundation/foundation.joyride.js"></script>
-        <script src="js/foundation/foundation.magellan.js"></script>
-        <script src="js/foundation/foundation.orbit.js"></script>
-        <script src="js/foundation/foundation.reveal.js"></script>
-        <script src="js/foundation/foundation.section.js"></script>
-        <script src="js/foundation/foundation.tooltips.js"></script>
-        <script src="js/foundation/foundation.topbar.js"></script>
-        *}
+        <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
+        <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>
+        {#block name=head#}{#/block#}
+
         <script type="text/javascript">
-            {literal} 
             $(document).ready(function() {
                 $(document).foundation();
                 $( "#search_unigene" ).autocomplete({
@@ -41,10 +25,10 @@
                     },
                     source: function( request, response ) {
                         $.ajax({
-                            url: "../service/list/unigenes",
+                            url: "{#$ServicePath#}/list/unigenes",
                             dataType: "json",
                             data: {
-                                query: request.term
+                                query1: request.term
                             },
                             success: function( data ) {
                                 response( data.results );
@@ -53,11 +37,10 @@
                     },
                     minLength: 2,
                     select: function( event, ui ) {
-                        window.location.href = 'unigene-details/'+ui.item.value;
+                        window.location.href = '{#$AppPath#}/unigene-details/'+ui.item.value;
                     }
                 });
             });
-            {/literal} 
         </script>
 
     </head>
@@ -79,6 +62,6 @@
             </section>
         </nav>
 
-        {block name=body}{/block}
+        {#block name=body#}{#/block#}
     </body>
 </html>

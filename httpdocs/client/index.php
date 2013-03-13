@@ -1,6 +1,7 @@
 <?php
 
 define('APPPATH', '/httpdocs/client/');
+define('SERVICEPATH', '/httpdocs/service/');
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -15,6 +16,9 @@ $smarty->setCacheDir(__DIR__ . '/../smarty/cache');
 $smarty->setConfigDir(__DIR__ . '/../smarty/configs');
 
 $smarty->assign('AppPath', APPPATH);
+$smarty->assign('ServicePath', SERVICEPATH);
+$smarty->left_delimiter = '{#';
+$smarty->right_delimiter = '#}';
 
 function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
     if (!isset($_REQUEST[$key]) || !preg_match($regexp, $_REQUEST[$key]))

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-13 17:07:43
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-13 18:03:27
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '8769c2c0ac713dc3c311b1d45ceb9324386ee356' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl',
-      1 => 1363190811,
+      1 => 1363194122,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363190862,
+      1 => 1363194165,
       2 => 'file',
     ),
   ),
@@ -26,6 +26,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'variables' => 
   array (
     'AppPath' => 0,
+    'ServicePath' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -55,9 +56,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <<?php ?>?php /* use chrome frame if installed and user is using IE */ ?<?php ?>>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-        
+
         <script type="text/javascript">
-             
             $(document).ready(function() {
                 $(document).foundation();
                 $( "#search_unigene" ).autocomplete({
@@ -66,10 +66,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     },
                     source: function( request, response ) {
                         $.ajax({
-                            url: "../service/list/unigenes",
+                            url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/list/unigenes",
                             dataType: "json",
                             data: {
-                                query: request.term
+                                query1: request.term
                             },
                             success: function( data ) {
                                 response( data.results );
@@ -78,11 +79,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     },
                     minLength: 2,
                     select: function( event, ui ) {
-                        window.location.href = 'unigene-details/'+ui.item.value;
+                        window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/unigene-details/'+ui.item.value;
                     }
                 });
             });
-             
         </script>
 
     </head>

@@ -1,5 +1,5 @@
-{extends file='layout.tpl'}
-{block name='body'}
+{#extends file='layout.tpl'#}
+{#block name='body'#}
 <div class="row">
     <div class="large-12 columns">
         <h2>Welcome to Foundation</h2>
@@ -79,4 +79,4 @@
         </ul>
     </div>
 </div>
-{/block}
+{#/block#}

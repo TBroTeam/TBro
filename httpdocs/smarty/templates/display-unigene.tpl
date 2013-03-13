@@ -1,11 +1,11 @@
-{extends file='layout.tpl'}
-{block name='head'}
+{#extends file='layout.tpl'#}
+{#block name='head'#}
 <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
 <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
 <?php /* use chrome frame if installed and user is using IE */ ?>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-{/block}
-{block name='body'}
+{#/block#}
+{#block name='body'#}
 <div class="row">
     <div class="large-12 columns">
         <h1 class="docs header"><a href="http://foundation.zurb.com/docs/">Foundation 4 Documentation</a></h1>
@@ -34,4 +34,4 @@
         &nbsp;asd
     </div>
 </div>
-{/block}
+{#/block#}

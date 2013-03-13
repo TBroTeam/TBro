@@ -1,6 +1,3 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^graphs/heatmap/counts$  graphs/Heatmap-Quantifications.php [L,NC,QSA]
-RewriteRule ^graphs/genome/isoform/(.*)$  graphs/Genome-Isoform.php?isoform=$1 [L,NC,QSA]
-RewriteRule ^list/unigenes(?:/(.*))?$  data/List-Unigenes.php?query=$1 [L,NC,QSA]
-RewriteRule ^list/isoforms(?:/(.*))?$  data/List-Isoforms.php?query=$1 [L,NC,QSA]
+RewriteRule ^(.*)$  index.php?path=$1 [L,NC,QSA]
