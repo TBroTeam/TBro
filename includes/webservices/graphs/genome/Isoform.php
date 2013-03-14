@@ -12,7 +12,7 @@ class Isoform extends \WebService {
         $ret = "";
         for ($i = 0; $i < strlen($sequence); $i++)
             $ret .= $sequence{$i} . '  ';
-        return substr($ret, 0, -2);
+        return $ret;
     }
 
     private static function rewinds($sequence, $strand) {
@@ -40,6 +40,7 @@ class Isoform extends \WebService {
                 'data' => array(array(
                         'id' => $isoform['uniquename'],
                         'sequence' => $isoform['residues'],
+                        'translate' => array(-1, 3),
                         'dir' => 'right',
                         'offset' => 1
                 ))
@@ -79,7 +80,7 @@ class Isoform extends \WebService {
                         'outline' => 'rgb(0,0,0)',
                         'data' => array(array(
                                 'id' => $predpep['uniquename'],
-                                'sequence' => self::space(self::rewinds($predpep['residues'], $predpep['strand'])),
+                                'sequence' => self::rewinds(self::space($predpep['residues']), $predpep['strand']),
                                 'offset' => $predpep['fmin'],
                                 'dir' => 'right'#strand2dir($predpep['strand'])
                         ))
