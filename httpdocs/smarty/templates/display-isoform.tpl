@@ -128,8 +128,8 @@
                                             <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
                                             <input type="hidden" name='SHOW_DEFAULTS' value='on' />
                                             <input type="hidden" name='LINK' value='blasthome' />
-                                            <input type="hidden" class="query" name="QUERY" value="" />
-                                            <input type="submit" class="small button" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" value="send to blastp">
+                                            <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
+                                            <input type="submit" class="small button"  value="send to blastp">
                                         </form>
                                         <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank">
                                             <input type="hidden" name='CMD' value='Web' />
@@ -138,8 +138,8 @@
                                             <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
                                             <input type="hidden" name='SHOW_DEFAULTS' value='on' />
                                             <input type="hidden" name='LINK' value='blasthome' />
-                                            <input type="hidden" class="query" name="QUERY" value="" />
-                                            <input type="submit" class="small button" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" value="send to tblastn">
+                                            <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
+                                            <input type="submit" class="small button"  value="send to tblastn">
                                         </form>
                                     </div>
                                 </div>

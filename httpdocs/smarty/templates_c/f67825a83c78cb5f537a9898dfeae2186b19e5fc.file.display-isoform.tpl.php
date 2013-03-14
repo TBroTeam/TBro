@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 17:33:35
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 17:37:31
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1363278389,
+      1 => 1363279049,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
@@ -138,6 +138,7 @@ if (!is_callable('smarty_modifier_clean_id')) include '/home/s202139/git/httpdoc
             queryInput = $(this).find('.query');
             query=$(queryInput.data('ref')).html();
             queryInput.val(query);
+            alert(query);
         });
     });
             
@@ -268,9 +269,9 @@ $_smarty_tpl->tpl_vars['predpep']->_loop = true;
                                             <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
                                             <input type="hidden" name='SHOW_DEFAULTS' value='on' />
                                             <input type="hidden" name='LINK' value='blasthome' />
-                                            <input type="hidden" class="query" name="QUERY" value="" />
-                                            <input type="submit" class="small button" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
-" value="send to blastp">
+                                            <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+" name="QUERY" value="" />
+                                            <input type="submit" class="small button"  value="send to blastp">
                                         </form>
                                         <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank">
                                             <input type="hidden" name='CMD' value='Web' />
@@ -279,9 +280,9 @@ $_smarty_tpl->tpl_vars['predpep']->_loop = true;
                                             <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
                                             <input type="hidden" name='SHOW_DEFAULTS' value='on' />
                                             <input type="hidden" name='LINK' value='blasthome' />
-                                            <input type="hidden" class="query" name="QUERY" value="" />
-                                            <input type="submit" class="small button" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
-" value="send to tblastn">
+                                            <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+" name="QUERY" value="" />
+                                            <input type="submit" class="small button"  value="send to tblastn">
                                         </form>
                                     </div>
                                 </div>
