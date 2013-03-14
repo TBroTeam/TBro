@@ -4,7 +4,7 @@
  */
 class DBActions_Analysis_Test extends PHPUnit_Framework_TestCase {
 
-    static $file = "../importer/db.php";
+    static $file = "../../importer/db.php";
     static $id;
 
     public function cliExecute($args) {

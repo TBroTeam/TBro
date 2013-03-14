@@ -17,7 +17,7 @@ $isoform = preg_match('/^[a-z0-9._]+$/i', $_REQUEST['isoform']) ? $_REQUEST['iso
             var isoform='<?php echo $isoform ?>';
             
             $(document).ready(function() {
-                $.ajax('../service/graphs/genome/isoform/'+isoform, {
+                $.ajax('../../service/graphs/genome/isoform/'+isoform, {
                     success: function(val){
                             new CanvasXpress(
                         "canvas1", 

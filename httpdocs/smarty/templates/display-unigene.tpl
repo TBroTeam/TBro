@@ -1,37 +1,28 @@
 {#extends file='layout.tpl'#}
 {#block name='head'#}
-<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
-<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
-<?php /* use chrome frame if installed and user is using IE */ ?>
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
+{#call_webservice path="details/unigene" data=["query1"=>$unigene_uniquename] assign='data'#}
 {#/block#}
 {#block name='body'#}
-<div class="row">
-    <div class="large-12 columns">
-        <h1 class="docs header"><a href="http://foundation.zurb.com/docs/">Foundation 4 Documentation</a></h1>
-        <h6 class="docs subheader"><a href="http://foundation.zurb.com/old-docs/f3">Want F3 Docs?</a></h6>
-        <hr>
-    </div>
-</div>
 
 <div class="row">
     <div class="large-12 columns">
-        <div class="section-container tabs" data-section>
-            <section class="section">
-                <p class="title"><a href="#">Section 1</a></p>
-                <div class="content">
-                    <p>Content of section 1.</p>
-                </div>
-            </section>
-            <section class="section">
-                <p class="title"><a href="#">Section 2</a></p>
-                <div class="content">
-                    <p>Content of section 2.</p>
-                </div>
-            </section>
+        <div class="panel">
+            <h1>{#$data.unigene.uniquename#}</h1>
+            <h5>last modified: {#$data.unigene.timelastmodified#}</h5>
         </div>
-
-        &nbsp;asd
+        <div class="panel">
+            <p>known isoforms:</p>
+            <table>
+                <tbody>
+                    {#foreach $data.unigene.isoforms as $isoform_uniquename#}
+                        <tr>
+                            <td><a href='{#$AppPath#}/isoform-details/{#$isoform_uniquename#}'>{#$isoform_uniquename#}</a></td>
+                        </tr>
+                    {#/foreach#}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
 {#/block#}

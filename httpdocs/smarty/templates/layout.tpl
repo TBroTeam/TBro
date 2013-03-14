@@ -14,7 +14,7 @@
         <link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" />    
         <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>
-        {#block name=head#}{#/block#}
+
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -25,7 +25,7 @@
                     },
                     source: function( request, response ) {
                         $.ajax({
-                            url: "{#$ServicePath#}/list/unigenes",
+                            url: "{#$ServicePath#}/listing/unigenes",
                             dataType: "json",
                             data: {
                                 query1: request.term
@@ -42,6 +42,8 @@
                 });
             });
         </script>
+
+        {#block name=head#}{#/block#}
 
     </head>
     <body>

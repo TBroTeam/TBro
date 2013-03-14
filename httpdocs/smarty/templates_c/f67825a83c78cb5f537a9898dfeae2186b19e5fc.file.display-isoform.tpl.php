@@ -1,13 +1,13 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 14:44:57
-         compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 15:02:02
+         compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '8769c2c0ac713dc3c311b1d45ceb9324386ee356' => 
+    'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
-      0 => '/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl',
-      1 => 1363268357,
+      0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
+      1 => 1363269721,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
@@ -17,12 +17,12 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3222948515140a1c3e86c70-52544708',
+  'nocache_hash' => '5782586735141cf1549bd41-83030641',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_5140a1c4030793_66894477',
+  'unifunc' => 'content_5141cf155eb379_32188531',
   'variables' => 
   array (
     'AppPath' => 0,
@@ -30,7 +30,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5140a1c4030793_66894477')) {function content_5140a1c4030793_66894477($_smarty_tpl) {?><?php if (!is_callable('smarty_function_call_webservice')) include '/home/s202139/git/httpdocs/client/../smarty/plugins/function.call_webservice.php';
+<?php if ($_valid && !is_callable('content_5141cf155eb379_32188531')) {function content_5141cf155eb379_32188531($_smarty_tpl) {?><?php if (!is_callable('smarty_function_call_webservice')) include '/home/s202139/git/httpdocs/client/../smarty/plugins/function.call_webservice.php';
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -83,8 +83,50 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         </script>
 
         
-<?php echo smarty_function_call_webservice(array('path'=>"details/unigene",'data'=>array("query1"=>$_smarty_tpl->tpl_vars['unigene_uniquename']->value),'assign'=>'data'),$_smarty_tpl);?>
+<?php echo smarty_function_call_webservice(array('path'=>"details/isoform",'data'=>array("query1"=>$_smarty_tpl->tpl_vars['isoform_uniquename']->value),'assign'=>'data'),$_smarty_tpl);?>
 
+
+<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
+<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+<!-- use chrome frame if installed and user is using IE -->
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<script type="text/javascript">
+    var isoform='<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
+';
+            
+    $(document).ready(function() {
+        $.ajax('<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/graphs/genome/isoform/'+isoform, {
+            success: function(val){
+                console.log(val);
+                console.log(val.tracks);
+                new CanvasXpress(
+                "canvas-<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
+",
+                {
+                    "tracks": val.tracks
+                },
+                {
+                    graphType: 'Genome',
+                    useFlashIE: true,
+                    backgroundType: 'gradient',
+                    backgroundGradient1Color: 'rgb(0,183,217)',
+                    backgroundGradient2Color: 'rgb(4,112,174)',
+                    oddColor: 'rgb(220,220,220)',
+                    evenColor: 'rgb(250,250,250)',
+                    missingDataColor: 'rgb(220,220,220)',
+                    setMin: val.min,
+                    setMax: val.max
+                }
+            );
+            }
+        });
+            
+    });
+            
+            
+            
+</script>
 
 
     </head>
@@ -107,36 +149,40 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         </nav>
 
         
-
 <div class="row">
     <div class="large-12 columns">
         <div class="panel">
-            <h1><?php echo $_smarty_tpl->tpl_vars['data']->value['unigene']['uniquename'];?>
+            <h1><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
 </h1>
-            <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['unigene']['timelastmodified'];?>
+            <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
 </h5>
-        </div>
-        <div class="panel">
-            <p>known isoforms:</p>
-            <table>
-                <tbody>
-                    <?php  $_smarty_tpl->tpl_vars['isoform_uniquename'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['isoform_uniquename']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['data']->value['unigene']['isoforms']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['isoform_uniquename']->key => $_smarty_tpl->tpl_vars['isoform_uniquename']->value){
-$_smarty_tpl->tpl_vars['isoform_uniquename']->_loop = true;
-?>
-                        <tr>
-                            <td><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/isoform-details/<?php echo $_smarty_tpl->tpl_vars['isoform_uniquename']->value;?>
-'><?php echo $_smarty_tpl->tpl_vars['isoform_uniquename']->value;?>
-</a></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+            <h5>corresponding unigene: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
+</h5>
         </div>
     </div>
 </div>
+<div class="row">        
+    <div class="large-12 columns">
+        <div class="panel">
+        <canvas id="canvas-<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
+" width="910"></canvas>
+           <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+        </div>
+    </div>
+</div>
+<div class="row">        
+    <div class="large-12 columns">
+        <div class="panel" style="word-wrap: break-word;">
+            <h2>Sequence</h2>
+            <p>
+                <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['residues'];?>
+
+            </p>
+        </div>
+    </div>
+</div>
+
+<?php echo var_dump($_smarty_tpl->tpl_vars['data']->value);?>
 
 
     </body>

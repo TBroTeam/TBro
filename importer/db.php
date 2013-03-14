@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-define('INC', __DIR__ . '/../includes/');
+if (!defined('INC')) define('INC', __DIR__ . '/../includes/');
 
 echo implode(' ', $argv) . "\n";
 $help = <<<EOF

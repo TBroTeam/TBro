@@ -1,14 +1,17 @@
 <?php
-class Isoforms extends WebService {
+namespace webservices\listing;
+use \PDO as PDO;
 
-    public function execute($data) {
+class Isoforms extends \WebService {
+
+    public static function execute($querydata) {
 
         global $_CONST, $db;
         #UI hint
         if (false)
             $db = new PDO();
 
-        $param_unigene_uniquename = $data['query1']; #1.01_comp214244_c0
+        $param_unigene_uniquename = $querydata['query1']; #1.01_comp214244_c0
 
         $query_get_isoforms = <<<EOF
 SELECT isoform.uniquename 
@@ -27,7 +30,7 @@ EOF;
 
         $stm_get_isoforms->execute();
         while ($isoform = $stm_get_isoforms->fetch(PDO::FETCH_ASSOC)) {
-            $data['results'][] = $isoform['uniquename'];
+            $data['isoforms'][] = $isoform['uniquename'];
         }
 
 

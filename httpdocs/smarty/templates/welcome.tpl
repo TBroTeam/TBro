@@ -2,8 +2,8 @@
 {#block name='body'#}
 <div class="row">
     <div class="large-12 columns">
-        <h2>Welcome to Foundation</h2>
-        <p>This is version 4.0.5.</p>
+        <h2>Welcome to the dionaea muscipula transcript browser</h2>
+        <p>Try searching for 1.01_comp231081_c0 or 1.01_comp214244_c0.</p>
         <hr />
     </div>
 </div>

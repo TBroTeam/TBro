@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 11:26:51
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 14:44:46
          compiled from "/home/s202139/git/httpdocs/smarty/templates/welcome.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17300283651409c3b02f598-98116107%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '04aa08fe2d6ee8d1e4a64208dcdbf2a230b0d773' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/welcome.tpl',
-      1 => 1363193990,
+      1 => 1363260361,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363255887,
+      1 => 1363268670,
       2 => 'file',
     ),
   ),
@@ -50,7 +50,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 /js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /js/foundation.min.js"></script>
-        
+
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -62,7 +62,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     source: function( request, response ) {
                         $.ajax({
                             url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/list/unigenes",
+/listing/unigenes",
                             dataType: "json",
                             data: {
                                 query1: request.term
@@ -80,6 +80,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 });
             });
         </script>
+
+        
 
     </head>
     <body>
@@ -103,8 +105,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         
 <div class="row">
     <div class="large-12 columns">
-        <h2>Welcome to Foundation</h2>
-        <p>This is version 4.0.5.</p>
+        <h2>Welcome to the dionaea muscipula transcript browser</h2>
+        <p>Try searching for 1.01_comp231081_c0 or 1.01_comp214244_c0.</p>
         <hr />
     </div>
 </div>

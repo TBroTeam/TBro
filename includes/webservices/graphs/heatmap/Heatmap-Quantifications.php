@@ -1,8 +1,10 @@
 <?php
+namespace webservices\graphs\heatmap;
+use \PDO as PDO;
 
-class Quantifications extends WebService {
+class Quantifications extends \WebService {
 
-    public function execute($data) {
+    public static function execute($querydata) {
         global $_CONST, $db;
 
 #UI hint
@@ -10,7 +12,7 @@ class Quantifications extends WebService {
             $db = new PDO();
 
 
-        $parents = $data['parents'];
+        $parents = $querydata['parents'];
 
 
         $query = <<<EOF

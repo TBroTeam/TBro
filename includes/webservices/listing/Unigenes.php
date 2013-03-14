@@ -1,17 +1,17 @@
 <?php
+namespace webservices\listing;
+use \PDO as PDO;
 
-class Unigenes extends WebService {
+class Unigenes extends \WebService {
 
-    public function execute($data) {
+    public static function execute($querydata) {
         global $_CONST, $db;
 
 #UI hint
         if (false)
             $db = new PDO();
 
-
-
-        $param_unigene_namequery = $data['query1'] . '%';
+        $param_unigene_namequery = $querydata['query1'] . '%';
 
         $query_get_unigenes = <<<EOF
 SELECT unigene.uniquename,

@@ -8,7 +8,7 @@ require_once INC . '/constants.php';
 
 abstract class WebService {
 
-    abstract public function execute($data);
+    abstract public static function execute($data);
 
     public static function output($dataArray) {
         echo self::json_indent(json_encode($dataArray));
@@ -16,9 +16,11 @@ abstract class WebService {
 
     public static function factory($servicePath) {
         $serviceBasePath = INC . DIRECTORY_SEPARATOR . 'webservices';
+        
 
         $path = explode('/', $servicePath);
         $filepath = $serviceBasePath . DIRECTORY_SEPARATOR . $path[0];
+        $serviceNamespace = '\\webservices\\'.$path[0];
         $args = array();
         for ($i = 1; $i < count($path); $i++) {
             $classname = ucfirst($path[$i]);
@@ -30,6 +32,7 @@ abstract class WebService {
                 break;
             }
             $filepath .= DIRECTORY_SEPARATOR . strtolower($path[$i]);
+            $serviceNamespace .= '\\' . strtolower($path[$i]);
         }
         //case: no service file found
         if (!file_exists($filename)) {
@@ -41,10 +44,12 @@ abstract class WebService {
         }
         require_once $filename;
         //case: file does not contain web service class        
-        if (!class_exists($classname)) {
+        $class = $serviceNamespace . '\\' . $classname;
+        if (!class_exists($class)) {
             return array(null, null);
         }
-        return array(new $classname, $args);
+
+        return array(new $class, $args);
     }
 
     /**

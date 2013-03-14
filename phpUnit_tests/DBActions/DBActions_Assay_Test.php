@@ -5,7 +5,7 @@
  */
 class DBActions_Assay_Test extends PHPUnit_Framework_TestCase {
 
-    static $file = "../importer/db.php";
+    static $file = "../../importer/db.php";
     static $data;
     static $id;
 
