@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 17:26:30
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 17:33:35
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -13,7 +13,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363268670,
+      1 => 1363278814,
       2 => 'file',
     ),
   ),
@@ -64,11 +64,8 @@ if (!is_callable('smarty_modifier_clean_id')) include '/home/s202139/git/httpdoc
                     source: function( request, response ) {
                         $.ajax({
                             url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/unigenes",
+/listing/unigenes/"+request.term,
                             dataType: "json",
-                            data: {
-                                query1: request.term
-                            },
                             success: function( data ) {
                                 response( data.results );
                             }
@@ -78,6 +75,23 @@ if (!is_callable('smarty_modifier_clean_id')) include '/home/s202139/git/httpdoc
                     select: function( event, ui ) {
                         window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /unigene-details/'+ui.item.value;
+                    }
+                });
+                $('#search_unigene').keydown(function(event) {
+                    //Enter
+                    if (event.which == 13) {
+                        event.preventDefault();
+                        $.ajax({
+                            url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/listing/unigenes/"+$(this).val(),
+                            dataType: "json",
+                            success: function( data ) {
+                                if (data.results.length==1){
+                                    window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/unigene-details/'+data.results[0];
+                                }
+                            }
+                        });
                     }
                 });
             });

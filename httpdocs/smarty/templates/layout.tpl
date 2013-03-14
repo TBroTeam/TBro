@@ -25,11 +25,8 @@
                     },
                     source: function( request, response ) {
                         $.ajax({
-                            url: "{#$ServicePath#}/listing/unigenes",
+                            url: "{#$ServicePath#}/listing/unigenes/"+request.term,
                             dataType: "json",
-                            data: {
-                                query1: request.term
-                            },
                             success: function( data ) {
                                 response( data.results );
                             }
@@ -38,6 +35,21 @@
                     minLength: 2,
                     select: function( event, ui ) {
                         window.location.href = '{#$AppPath#}/unigene-details/'+ui.item.value;
+                    }
+                });
+                $('#search_unigene').keydown(function(event) {
+                    //Enter
+                    if (event.which == 13) {
+                        event.preventDefault();
+                        $.ajax({
+                            url: "{#$ServicePath#}/listing/unigenes/"+$(this).val(),
+                            dataType: "json",
+                            success: function( data ) {
+                                if (data.results.length==1){
+                                    window.location.href = '{#$AppPath#}/unigene-details/'+data.results[0];
+                                }
+                            }
+                        });
                     }
                 });
             });
