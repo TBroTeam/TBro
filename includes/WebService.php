@@ -1,14 +1,24 @@
 <?php
 
-define('INC', __DIR__ . '/../../../includes/');
+if (!defined('INC')) {
+    define('INC', __DIR__);
+}
 require_once INC . '/db.php';
 require_once INC . '/constants.php';
 
-class WebServiceFactory {
+abstract class WebService {
 
-    public static function getServiceAndArgs($servicePath) {
+    abstract public function execute($data);
+
+    public static function output($dataArray) {
+        echo self::json_indent(json_encode($dataArray));
+    }
+
+    public static function factory($servicePath) {
+        $serviceBasePath = INC . DIRECTORY_SEPARATOR . 'webservices';
+
         $path = explode('/', $servicePath);
-        $filepath = __DIR__ . DIRECTORY_SEPARATOR . $path[0];
+        $filepath = $serviceBasePath . DIRECTORY_SEPARATOR . $path[0];
         $args = array();
         for ($i = 1; $i < count($path); $i++) {
             $classname = ucfirst($path[$i]);
@@ -21,24 +31,20 @@ class WebServiceFactory {
             }
             $filepath .= DIRECTORY_SEPARATOR . strtolower($path[$i]);
         }
-        if (!file_exists($filename) || strpos(realpath($filename), realpath(__DIR__ . DIRECTORY_SEPARATOR . '..')) !== 0) {
+        //case: no service file found
+        if (!file_exists($filename)) {
+            return array(null, null);
+        }
+        //case: service path tries to escape from basePath
+        if (!(strpos(realpath($filename), realpath($serviceBasePath)) === 0)) {
             return array(null, null);
         }
         require_once $filename;
+        //case: file does not contain web service class        
         if (!class_exists($classname)) {
             return array(null, null);
         }
-        return array(new $classname, array_merge($args, $_REQUEST));
-    }
-
-}
-
-abstract class WebService {
-
-    abstract public function execute($data);
-
-    public static function output($dataArray) {
-        echo self::json_indent(json_encode($dataArray));
+        return array(new $classname, $args);
     }
 
     /**

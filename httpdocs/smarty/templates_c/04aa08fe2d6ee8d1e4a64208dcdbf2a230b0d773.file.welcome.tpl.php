@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-13 16:55:12
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 11:26:51
          compiled from "/home/s202139/git/httpdocs/smarty/templates/welcome.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17300283651409c3b02f598-98116107%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '04aa08fe2d6ee8d1e4a64208dcdbf2a230b0d773' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/welcome.tpl',
-      1 => 1363188794,
+      1 => 1363193990,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363190111,
+      1 => 1363255887,
       2 => 'file',
     ),
   ),
@@ -26,6 +26,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'variables' => 
   array (
     'AppPath' => 0,
+    'ServicePath' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -50,24 +51,21 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /js/foundation.min.js"></script>
         
-        
-            <script type="text/javascript">
-             
+
+        <script type="text/javascript">
             $(document).ready(function() {
-                console.log('initializing foundation');
-                //$(document).foundation();
-                console.log('initialized foundation');
-                console.log($("#search_unigene"));
+                $(document).foundation();
                 $( "#search_unigene" ).autocomplete({
                     position: {
                         my: "right top", at: "right bottom"
                     },
                     source: function( request, response ) {
                         $.ajax({
-                            url: "../service/list/unigenes",
+                            url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/list/unigenes",
                             dataType: "json",
                             data: {
-                                query: request.term
+                                query1: request.term
                             },
                             success: function( data ) {
                                 response( data.results );
@@ -76,13 +74,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     },
                     minLength: 2,
                     select: function( event, ui ) {
-                        window.location.href = 'unigene-details/'+ui.item.value;
+                        window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/unigene-details/'+ui.item.value;
                     }
                 });
-                
-                console.log($("#search_unigene"));
             });
-             
         </script>
 
     </head>
@@ -95,13 +91,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 </li>
             </ul>
             <section class="top-bar-section">
-                <!-- Left Nav Section -->
                 <ul class="right">
                     <li class="divider"></li>
                     <li><a>search for unigene:</a></li>
-                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try for 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
+                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
                     <li>&nbsp;</li> 
-                    <li class="divider"></li>
                 </ul>
             </section>
         </nav>

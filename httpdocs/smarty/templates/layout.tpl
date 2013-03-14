@@ -56,7 +56,7 @@
                 <ul class="right">
                     <li class="divider"></li>
                     <li><a>search for unigene:</a></li>
-                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try for 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
+                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
                     <li>&nbsp;</li> 
                 </ul>
             </section>

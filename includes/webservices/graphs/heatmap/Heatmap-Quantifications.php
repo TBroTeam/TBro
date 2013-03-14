@@ -10,7 +10,7 @@ class Quantifications extends WebService {
             $db = new PDO();
 
 
-        $parents = $_REQUEST['parents'];
+        $parents = $data['parents'];
 
 
         $query = <<<EOF

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-13 18:03:27
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 11:21:41
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -13,7 +13,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363194165,
+      1 => 1363255887,
       2 => 'file',
     ),
   ),
@@ -99,7 +99,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 <ul class="right">
                     <li class="divider"></li>
                     <li><a>search for unigene:</a></li>
-                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try for 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
+                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
                     <li>&nbsp;</li> 
                 </ul>
             </section>
