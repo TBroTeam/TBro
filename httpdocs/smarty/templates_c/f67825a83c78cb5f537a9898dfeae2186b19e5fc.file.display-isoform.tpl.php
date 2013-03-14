@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 15:02:02
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 17:26:30
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1363269721,
+      1 => 1363278389,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
@@ -31,6 +31,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5141cf155eb379_32188531')) {function content_5141cf155eb379_32188531($_smarty_tpl) {?><?php if (!is_callable('smarty_function_call_webservice')) include '/home/s202139/git/httpdocs/client/../smarty/plugins/function.call_webservice.php';
+if (!is_callable('smarty_modifier_clean_id')) include '/home/s202139/git/httpdocs/client/../smarty/plugins/modifier.clean_id.php';
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -98,8 +99,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         $.ajax('<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
 /graphs/genome/isoform/'+isoform, {
             success: function(val){
-                console.log(val);
-                console.log(val.tracks);
                 new CanvasXpress(
                 "canvas-<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
 ",
@@ -121,7 +120,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             );
             }
         });
-            
+        $('form.blast').submit(function(event){
+            queryInput = $(this).find('.query');
+            query=$(queryInput.data('ref')).html();
+            queryInput.val(query);
+        });
     });
             
             
@@ -150,37 +153,143 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
         
 <div class="row">
-    <div class="large-12 columns">
-        <div class="panel">
-            <h1><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
+    <div class="large-12 columns panel">
+        <h1><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
 </h1>
-            <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
+        <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
 </h5>
-            <h5>corresponding unigene: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
-</h5>
-        </div>
+        <h5>corresponding unigene: <a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/unigene-details/<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
+"><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
+</a></h5>
     </div>
 </div>
 <div class="row">        
-    <div class="large-12 columns">
-        <div class="panel">
+    <div class="large-12 columns panel">
         <canvas id="canvas-<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
 " width="910"></canvas>
-           <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-        </div>
+        <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
     </div>
 </div>
-<div class="row">        
-    <div class="large-12 columns">
-        <div class="panel" style="word-wrap: break-word;">
-            <h2>Sequence</h2>
-            <p>
-                <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['residues'];?>
+<div class="row">
+    <div class="large-12 columns panel">
 
-            </p>
+        <div class="row">
+            <div class="large-6 columns">
+                <h2>Sequence</h2>
+            </div>
+            <div class="large-6 columns" style="text-align: right">
+                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                    <input type="hidden" name='CMD' value='Web' />
+                    <input type="hidden" name='PROGRAM' value='blastx' />
+                    <input type="hidden" name='BLAST_PROGRAMS' value='blastx' />
+                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                    <input type="hidden" name='LINK' value='blasthome' />
+                    <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
+" name="QUERY" value="" />
+                    <input type="submit" class="small button" value="send to blastx">
+                </form>
+
+                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                    <input type="hidden" name='CMD' value='Web' />
+                    <input type="hidden" name='PROGRAM' value='blastn' />
+                    <input type="hidden" name='BLAST_PROGRAMS' value='megaBlast' />
+                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                    <input type="hidden" name='LINK' value='blasthome' />
+                    <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
+" name="QUERY" value="" />
+                    <input type="submit" class="small button" value="send to blastn">
+                </form>
+            </div>
         </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <textarea style="height:100px;" id="sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
+"><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['residues'];?>
+</textarea>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
+<?php if (count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2>Predicted Peptides:</h2>
+
+            <div class="row">
+                <div class="large-1 columns">&nbsp;</div>
+                <div class="large-10 columns">
+                    <?php  $_smarty_tpl->tpl_vars['predpep'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['predpep']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['predpep']->key => $_smarty_tpl->tpl_vars['predpep']->value){
+$_smarty_tpl->tpl_vars['predpep']->_loop = true;
+?>
+                        <div class="row panel">
+                            <div class="large-12 columns">
+
+                                <div class="row">
+                                    <div class="large-9 columns">
+                                        <table style="width:100%">
+                                            <tr><td>uniquename</td><td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['uniquename'];?>
+</td></tr>
+                                            <tr><td>min</td><td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['fmin'];?>
+</td></tr>
+                                            <tr><td>max</td><td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['fmax'];?>
+</td></tr>
+                                            <tr><td>strand</td><td><?php if ($_smarty_tpl->tpl_vars['predpep']->value['strand']>0){?>right<?php }else{ ?>left<?php }?></td></tr>
+                                            <tr><td>length</td><td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['seqlen'];?>
+</td></tr>
+                                        </table>
+                                    </div>
+                                    <div class="large-3 columns" style="text-align: right">
+                                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank">
+                                            <input type="hidden" name='CMD' value='Web' />
+                                            <input type="hidden" name='PROGRAM' value='blastp' />
+                                            <input type="hidden" name='BLAST_PROGRAMS' value='blastp' />
+                                            <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                                            <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                                            <input type="hidden" name='LINK' value='blasthome' />
+                                            <input type="hidden" class="query" name="QUERY" value="" />
+                                            <input type="submit" class="small button" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+" value="send to blastp">
+                                        </form>
+                                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank">
+                                            <input type="hidden" name='CMD' value='Web' />
+                                            <input type="hidden" name='PROGRAM' value='tblastn' />
+                                            <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
+                                            <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                                            <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                                            <input type="hidden" name='LINK' value='blasthome' />
+                                            <input type="hidden" class="query" name="QUERY" value="" />
+                                            <input type="submit" class="small button" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+" value="send to tblastn">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-12">
+                                        <textarea style="height:100px;" id="sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+"><?php echo $_smarty_tpl->tpl_vars['predpep']->value['residues'];?>
+</textarea>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                    <?php } ?>
+                </div>
+                <div class="large-1 columns">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+<?php }?>
 
 <?php echo var_dump($_smarty_tpl->tpl_vars['data']->value);?>
 

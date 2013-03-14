@@ -1,7 +1,7 @@
 <?php
 
-define('APPPATH', '/httpdocs/client/');
-define('SERVICEPATH', '/httpdocs/service/');
+define('APPPATH', '/httpdocs/client');
+define('SERVICEPATH', '/httpdocs/service');
 define('INC', __DIR__.'/../../includes/');
 
 error_reporting(E_ALL);

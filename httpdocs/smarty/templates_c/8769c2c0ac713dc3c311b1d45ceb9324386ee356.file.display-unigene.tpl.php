@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 14:44:57
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-14 16:19:49
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '8769c2c0ac713dc3c311b1d45ceb9324386ee356' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl',
-      1 => 1363268357,
+      1 => 1363274328,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
@@ -109,32 +109,33 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         
 
 <div class="row">
-    <div class="large-12 columns">
-        <div class="panel">
-            <h1><?php echo $_smarty_tpl->tpl_vars['data']->value['unigene']['uniquename'];?>
+    <div class="large-12 columns panel">
+        <h1><?php echo $_smarty_tpl->tpl_vars['data']->value['unigene']['uniquename'];?>
 </h1>
-            <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['unigene']['timelastmodified'];?>
+        <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['unigene']['timelastmodified'];?>
 </h5>
-        </div>
-        <div class="panel">
-            <p>known isoforms:</p>
-            <table>
-                <tbody>
-                    <?php  $_smarty_tpl->tpl_vars['isoform_uniquename'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['isoform_uniquename']->_loop = false;
+    </div>
+</div>
+
+<div class="row">        
+    <div class="large-12 columns panel">
+        <p>known isoforms:</p>
+        <table>
+            <tbody>
+                <?php  $_smarty_tpl->tpl_vars['isoform_uniquename'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['isoform_uniquename']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data']->value['unigene']['isoforms']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['isoform_uniquename']->key => $_smarty_tpl->tpl_vars['isoform_uniquename']->value){
 $_smarty_tpl->tpl_vars['isoform_uniquename']->_loop = true;
 ?>
-                        <tr>
-                            <td><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+                    <tr>
+                        <td><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /isoform-details/<?php echo $_smarty_tpl->tpl_vars['isoform_uniquename']->value;?>
 '><?php echo $_smarty_tpl->tpl_vars['isoform_uniquename']->value;?>
 </a></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
     </div>
 </div>
 
