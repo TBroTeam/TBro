@@ -27,6 +27,35 @@ EOF;
         $stm_get_isoforms = $db->prepare($query_get_isoforms);
         $stm_get_isoforms->bindValue('isoform_uniquename', $param_isoform_uniquename);
 
+        $query_get_isoform_dbxrefs = <<<EOF
+SELECT
+  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description
+FROM
+  feature_dbxref, dbxref, db
+WHERE
+  feature_dbxref.feature_id = :isoform_id AND
+  dbxref.dbxref_id = feature_dbxref.dbxref_id AND
+  db.db_id = dbxref.db_id
+EOF;
+
+        $stm_get_isoform_dbxrefs = $db->prepare($query_get_isoform_dbxrefs);
+        $stm_get_isoform_dbxrefs->bindParam('isoform_id', $param_isoform_id);
+        
+        
+        $query_get_blast2go = <<<EOF
+SELECT
+  *
+FROM
+  featureprop
+WHERE
+  featureprop.feature_id = :isoform_id AND
+  featureprop.type_id = {$_CONST('CV_ANNOTATION_BLAST2GO')}
+EOF;
+
+        $stm_get_blast2go = $db->prepare($query_get_blast2go);
+        $stm_get_blast2go->bindParam('isoform_id', $param_isoform_id);
+
+
         $query_get_unigene = <<<EOF
 SELECT unigene.*
     FROM feature AS isoform, feature_relationship, feature AS unigene
@@ -111,6 +140,16 @@ EOF;
                 $isoform['unigene'] = $unigene;
             }
 
+            $stm_get_isoform_dbxrefs->execute();
+            while ($isoform_dbxref = $stm_get_isoform_dbxrefs->fetch(PDO::FETCH_ASSOC)) {
+                $isoform['dbxref'][] = $isoform_dbxref;
+            }
+            
+            $stm_get_blast2go->execute();
+            while ($blast2go = $stm_get_blast2go->fetch(PDO::FETCH_ASSOC)) {
+                $isoform['blast2go'][] = $blast2go;
+            }
+
             $stm_get_repeatmasker->execute();
             while ($repeatmasker = $stm_get_repeatmasker->fetch(PDO::FETCH_ASSOC)) {
                 $isoform['repeatmasker'][] = $repeatmasker;
@@ -125,7 +164,7 @@ EOF;
                 $stm_get_interpro->execute();
                 while ($interpro = $stm_get_interpro->fetch(PDO::FETCH_ASSOC)) {
                     $current['interpro'][] = $interpro;
-                    $curr_interpro = &$current['interpro'][count($current['interpro'])-1];
+                    $curr_interpro = &$current['interpro'][count($current['interpro']) - 1];
                     $param_interpro_feature_id = $interpro['feature_id'];
                     $stm_get_interpro_dbxref->execute();
                     while ($interpro_dbxref = $stm_get_interpro_dbxref->fetch(PDO::FETCH_ASSOC)) {

@@ -59,25 +59,23 @@
             </dl>
     </div>
 </div>
+
 <div class="row">
     <div class="large-12 columns panel" id="description">
         <h1>{#$data.isoform.uniquename#}</h1>
         <h5>last modified: {#$data.isoform.timelastmodified#}</h5>
         <h5>corresponding unigene: <a href="{#$AppPath#}/unigene-details/{#$data.isoform.unigene.uniquename#}">{#$data.isoform.unigene.uniquename#}</a></h5>
-    </div>
-</div>
-<div class="row">        
-    <div class="large-12 columns panel">
-        <canvas id="canvas-{#$data.isoform.uniquename#}" width="910"></canvas>
-        <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-    </div>
-</div>
-<div class="row">
-    <div class="large-12 columns panel">
+
+        <div class="row">
+            <div class="large-12 columns">
+                <canvas id="canvas-{#$data.isoform.uniquename#}" width="962"></canvas>
+                <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="large-6 columns">
-                <h2>Sequence</h2>
+                <h4>Sequence</h4>
             </div>
             <div class="large-6 columns" style="text-align: right">
                 <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
@@ -107,6 +105,34 @@
             <div class="large-12 columns">
                 <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
             </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row" id="repeatmasker">
+    <div class="large-12 columns">
+        <h2>Blast2Go Annotations:</h2>
+
+        <div class="row">
+            <div class="large-12 columns panel">
+
+                <h4>{#if isset($data.isoform.blast2go) && count($data.isoform.blast2go)>0#}
+                    {#foreach $data.isoform.blast2go as $blast2go#}
+                    {#$blast2go.value#}
+                    {#/foreach#}
+                    {#/if#}
+                </h4>
+                <p>
+                    {#if isset($data.isoform.dbxref) && count($data.isoform.dbxref)>0#}
+                    {#foreach $data.isoform.dbxref as $dbxref#}
+                    {#dbxreflink dbxref=$dbxref#}
+                    {#/foreach#}
+                    {#/if#}
+                </p>
+            </div>
+
         </div>
     </div>
 </div>
@@ -197,9 +223,9 @@
                             <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
                             <input type="submit" class="small button"  value="send to blastp">
                         </form>
-                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline>
-                              <input type="hidden" name='CMD' value='Web' />
-                              <input type="hidden" name='PROGRAM' value='tblastn' />
+                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                            <input type="hidden" name='CMD' value='Web' />
+                            <input type="hidden" name='PROGRAM' value='tblastn' />
                             <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
                             <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
                             <input type="hidden" name='SHOW_DEFAULTS' value='on' />
