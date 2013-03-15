@@ -1,3 +1,4 @@
 *~
 /nbproject/private/
-/httpdocs/smarty/templates_c/
+/httpdocs/smarty/templates_c/*
+/httpdocs/smarty/cache/*
