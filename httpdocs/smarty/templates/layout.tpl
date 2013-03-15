@@ -19,22 +19,22 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $(document).foundation();
-                $( "#search_unigene" ).autocomplete({
+                $("#search_unigene").autocomplete({
                     position: {
                         my: "right top", at: "right bottom"
                     },
-                    source: function( request, response ) {
+                    source: function(request, response) {
                         $.ajax({
-                            url: "{#$ServicePath#}/listing/unigenes/"+request.term,
+                            url: "{#$ServicePath#}/listing/unigenes/" + request.term,
                             dataType: "json",
-                            success: function( data ) {
-                                response( data.results );
+                            success: function(data) {
+                                response(data.results);
                             }
                         });
                     },
                     minLength: 2,
-                    select: function( event, ui ) {
-                        window.location.href = '{#$AppPath#}/unigene-details/'+ui.item.value;
+                    select: function(event, ui) {
+                        window.location.href = '{#$AppPath#}/unigene-details/' + ui.item.value;
                     }
                 });
                 $('#search_unigene').keydown(function(event) {
@@ -42,11 +42,11 @@
                     if (event.which == 13) {
                         event.preventDefault();
                         $.ajax({
-                            url: "{#$ServicePath#}/listing/unigenes/"+$(this).val(),
+                            url: "{#$ServicePath#}/listing/unigenes/" + $(this).val(),
                             dataType: "json",
-                            success: function( data ) {
-                                if (data.results.length==1){
-                                    window.location.href = '{#$AppPath#}/unigene-details/'+data.results[0];
+                            success: function(data) {
+                                if (data.results.length == 1) {
+                                    window.location.href = '{#$AppPath#}/unigene-details/' + data.results[0];
                                 }
                             }
                         });
@@ -55,12 +55,11 @@
             });
         </script>
 
-        {#block name=head#}{#/block#}
+        {#block name='head'#}{#/block#}
 
     </head>
     <body>
-
-        <nav class="top-bar">
+        <nav class="top-bar" id="top">
             <ul class="title-area">
                 <li class="name">
                     <h1><a>Transcript Browser: dionaea muscipula</a></h1>
@@ -75,7 +74,6 @@
                 </ul>
             </section>
         </nav>
-
-        {#block name=body#}{#/block#}
+        {#block name='body'#}{#/block#}
     </body>
 </html>

@@ -4,7 +4,7 @@ if ((isset($_SERVER['SERVER_NAME']) && in_array(strtolower($_SERVER['SERVER_NAME
     define('DB_SERVER', 'localhost');
     define('DB_USERNAME', 's202139');
     define('DB_PASSWORD', 's202139');
-    define('DB_DB', 'dionaea_transcript_db_dev');
+    define('DB_DB', 'dionaea_transcript_db_dev_test1');
 } else {
     define('DB_SERVER', 'wbbi155');
     define('DB_USERNAME', 's202139');

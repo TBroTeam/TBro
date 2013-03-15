@@ -15,7 +15,7 @@ class Isoform extends \WebService {
 
         $param_isoform_uniquename = $querydata['query1'];
         $param_isoform_id = null;
-        $param_predpep_uniquename = null;
+        $param_predpep_id = null;
 
         $query_get_isoforms = <<<EOF
 SELECT isoform.* 
@@ -52,18 +52,15 @@ EOF;
 SELECT 
   interpro.* , featureloc.* 
 FROM 
-  feature predpep, 
   feature interpro, 
   featureloc
 WHERE 
   interpro.feature_id = featureloc.feature_id AND
-  featureloc.srcfeature_id = predpep.feature_id AND
-  interpro.type_id = {$_CONST('CV_ANNOTATION_INTERPRO')} AND 
-  predpep.uniquename = :predpep_uniquename
-        
+  featureloc.srcfeature_id = :predpep_id AND
+  interpro.type_id = {$_CONST('CV_ANNOTATION_INTERPRO')}        
 EOF;
         $stm_get_interpro = $db->prepare($query_get_interpro);
-        $stm_get_interpro->bindParam('predpep_uniquename', $param_predpep_uniquename);
+        $stm_get_interpro->bindParam('predpep_id', $param_predpep_id);
 
         $query_get_repeatmasker = <<<EOF
 SELECT 
@@ -105,7 +102,7 @@ EOF;
                 $isoform['predpeps'][] = $predpep;
                 $current = &$isoform['predpeps'][count($isoform['predpeps']) - 1];
 
-                $param_predpep_uniquename = $predpep['uniquename'];
+                $param_predpep_id = $predpep['feature_id'];
                 $stm_get_interpro->execute();
                 while ($interpro = $stm_get_interpro->fetch(PDO::FETCH_ASSOC)) {
                     $current['interpro'][] = $interpro;
