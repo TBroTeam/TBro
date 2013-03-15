@@ -6,7 +6,7 @@ use \PDO as PDO;
 
 class Unigene extends \WebService {
 
-    public static function execute($querydata) {
+    public function execute($querydata) {
         global $_CONST, $db;
 
 #UI hint
@@ -32,7 +32,8 @@ EOF;
         if (($unigene = $stm_get_unigenes->fetch(PDO::FETCH_ASSOC)) != false) {
             $return['unigene'] = $unigene;
             require_once INC . 'webservices/listing/Isoforms.php';
-            $isoforms = \webservices\listing\Isoforms::execute($querydata);
+            $service = new \webservices\listing\Isoforms();
+            $isoforms = $service->execute($querydata);
             $return['unigene']['isoforms'] = $isoforms['isoforms'];
         }
 

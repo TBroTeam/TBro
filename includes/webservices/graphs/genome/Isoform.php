@@ -21,9 +21,10 @@ class Isoform extends \WebService {
         return $sequence;
     }
 
-    public static function execute($querydata) {
+    public function execute($querydata) {
         require_once INC . '/webservices/details/Isoform.php';
-        $isoform_data = \webservices\details\Isoform::execute($querydata);
+        $service = new \webservices\details\Isoform();
+        $isoform_data = $service->execute($querydata);
 
         $return = array();
 

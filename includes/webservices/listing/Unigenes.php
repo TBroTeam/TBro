@@ -4,7 +4,7 @@ use \PDO as PDO;
 
 class Unigenes extends \WebService {
 
-    public static function execute($querydata) {
+    public function execute($querydata) {
         global $_CONST, $db;
 
 #UI hint

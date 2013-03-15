@@ -8,7 +8,7 @@ require_once INC . '/constants.php';
 
 abstract class WebService {
 
-    abstract public static function execute($data);
+    abstract public function execute($data);
 
     public static function output($dataArray) {
         echo self::json_indent(json_encode($dataArray));

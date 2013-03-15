@@ -1,6 +1,6 @@
 <?php
-
-if ((isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'localhost') || (isset($_SERVER['HOSTNAME']) && $_SERVER['HOSTNAME'] == 'SadrithMora')) {
+if ((isset($_SERVER['SERVER_NAME']) && in_array(strtolower($_SERVER['SERVER_NAME']), array('localhost', 'sadrithmora'))) 
+        || (isset($_SERVER['HOSTNAME']) && strtolower($_SERVER['HOSTNAME']) == 'sadrithmora')) {
     define('DB_SERVER', 'localhost');
     define('DB_USERNAME', 's202139');
     define('DB_PASSWORD', 's202139');
