@@ -16,6 +16,7 @@ class Isoform extends \WebService {
         $param_isoform_uniquename = $querydata['query1'];
         $param_isoform_id = null;
         $param_predpep_id = null;
+        $param_interpro_feature_id = null;
 
         $query_get_isoforms = <<<EOF
 SELECT isoform.* 
@@ -50,29 +51,45 @@ EOF;
 
         $query_get_interpro = <<<EOF
 SELECT 
-  interpro.* , featureloc.* 
+  interpro.* , featureloc.*, interpro_ID.value AS interpro_ID
 FROM 
-  feature interpro, 
-  featureloc
+  feature interpro
+  INNER JOIN featureloc ON (interpro.feature_id = featureloc.feature_id)
+  LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id   = interpro.feature_id AND interpro_ID.type_id = {$_CONST('CV_INTERPRO_ID')}) 
 WHERE 
-  interpro.feature_id = featureloc.feature_id AND
   featureloc.srcfeature_id = :predpep_id AND
   interpro.type_id = {$_CONST('CV_ANNOTATION_INTERPRO')}        
 EOF;
         $stm_get_interpro = $db->prepare($query_get_interpro);
         $stm_get_interpro->bindParam('predpep_id', $param_predpep_id);
 
+        $query_get_interpro_dbxrefs = <<<EOF
+SELECT
+  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description
+FROM
+  feature_dbxref, dbxref, db
+WHERE
+  feature_dbxref.feature_id = :interpro_feature_id AND
+  dbxref.dbxref_id = feature_dbxref.dbxref_id AND
+  db.db_id = dbxref.db_id
+EOF;
+
+        $stm_get_interpro_dbxref = $db->prepare($query_get_interpro_dbxrefs);
+        $stm_get_interpro_dbxref->bindParam('interpro_feature_id', $param_interpro_feature_id);
+
         $query_get_repeatmasker = <<<EOF
 SELECT 
   repeatmasker.*, featureloc.*, repeat_name.value AS repeat_name, repeat_family.value AS repeat_family, repeat_class.value AS repeat_class
 FROM 
-  public.feature AS repeatmasker 
- INNER JOIN public.featureloc ON (repeatmasker.feature_id = featureloc.feature_id AND featureloc.srcfeature_id = :isoform_id)
- LEFT OUTER JOIN public.featureprop AS repeat_name   ON (repeat_name.feature_id   = repeatmasker.feature_id AND repeat_name.type_id = {$_CONST('CV_REPEAT_NAME')}) 
- LEFT OUTER JOIN public.featureprop AS repeat_family ON (repeat_family.feature_id = repeatmasker.feature_id AND repeat_family.type_id = {$_CONST('CV_REPEAT_FAMILY')}) 
- LEFT OUTER JOIN public.featureprop AS repeat_class  ON (repeat_class.feature_id  = repeatmasker.feature_id AND repeat_class.type_id = {$_CONST('CV_REPEAT_CLASS')}) 
+  feature AS repeatmasker 
+ INNER JOIN featureloc ON (repeatmasker.feature_id = featureloc.feature_id)
+ LEFT OUTER JOIN featureprop AS repeat_name   ON (repeat_name.feature_id   = repeatmasker.feature_id AND repeat_name.type_id = {$_CONST('CV_REPEAT_NAME')}) 
+ LEFT OUTER JOIN featureprop AS repeat_family ON (repeat_family.feature_id = repeatmasker.feature_id AND repeat_family.type_id = {$_CONST('CV_REPEAT_FAMILY')}) 
+ LEFT OUTER JOIN featureprop AS repeat_class  ON (repeat_class.feature_id  = repeatmasker.feature_id AND repeat_class.type_id = {$_CONST('CV_REPEAT_CLASS')}) 
 WHERE 
+  featureloc.srcfeature_id = :isoform_id AND 
   repeatmasker.type_id = {$_CONST('CV_ANNOTATION_REPEATMASKER')}
+      
 EOF;
 
         $stm_get_repeatmasker = $db->prepare($query_get_repeatmasker);
@@ -84,10 +101,10 @@ EOF;
         $stm_get_isoforms->execute();
         if (($isoform = $stm_get_isoforms->fetch(PDO::FETCH_ASSOC)) !== false) {
             $param_isoform_id = $isoform['feature_id'];
-            
-            
+
+
             $stm_get_unigene->execute();
-            
+
             if (($unigene = $stm_get_unigene->fetch(PDO::FETCH_ASSOC)) !== false) {
                 $isoform['unigene'] = $unigene;
             }
@@ -106,6 +123,12 @@ EOF;
                 $stm_get_interpro->execute();
                 while ($interpro = $stm_get_interpro->fetch(PDO::FETCH_ASSOC)) {
                     $current['interpro'][] = $interpro;
+                    $curr_interpro = &$current['interpro'][count($current['interpro'])-1];
+                    $param_interpro_feature_id = $interpro['feature_id'];
+                    $stm_get_interpro_dbxref->execute();
+                    while ($interpro_dbxref = $stm_get_interpro_dbxref->fetch(PDO::FETCH_ASSOC)) {
+                        $curr_interpro['dbxref'][] = $interpro_dbxref;
+                    }
                 }
             }
             $return['isoform'] = &$isoform;

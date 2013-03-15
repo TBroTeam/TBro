@@ -199,11 +199,19 @@
 
                         <table>
                             <thead>
-                            <tr><td>name</td><td>fmin</td><td>fmax</td></tr>
+                                <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>dbxref</td></tr>
                             </thead>
                             <tbody>
                                 {#foreach $predpep.interpro as $interpro#}
-                                <tr><td>{#$interpro.uniquename#}</td><td>{#$interpro.fmin#}</td><td>{#$interpro.fmax#}</td></tr>
+                                <tr><td>{#interprolink id=$interpro.interpro_id#}</td><td>{#$interpro.fmin#}</td><td>{#$interpro.fmax#}</td>
+                                    <td>
+                                        {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
+                                        {#foreach $interpro.dbxref as $dbxref#}
+                                        {#dbxreflink dbxref=$dbxref#} 
+                                        {#/foreach#}
+                                        {#/if#}
+                                    </td>
+                                </tr>
                                 {#/foreach#}
                             </tbody>
                         </table>
