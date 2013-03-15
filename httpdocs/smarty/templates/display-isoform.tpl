@@ -118,24 +118,28 @@
     <div class="large-12 columns">
         <h2>Repeatmasker Annotations:</h2>
 
-        {#foreach $data.isoform.repeatmasker as $repeatmasker#}
-        <div class="row panel">
-            <div class="large-12 columns">
+        <div class="row">
+            <div class="large-12 columns panel">
                 <table style="width:100%">
-                    <tr><td>name</td><td>{#$repeatmasker.repeat_name#}</td></tr>
-                    <tr><td>class</td><td>{#$repeatmasker.repeat_class#}</td></tr>
-                    {#if $repeatmasker.repeat_family != "" #}
-                    <tr><td>family</td><td>{#$repeatmasker.repeat_family#}</td></tr>
-                    {#/if#}
-                    <tr><td>min</td><td>{#$repeatmasker.fmin#}</td></tr>
-                    <tr><td>max</td><td>{#$repeatmasker.fmax#}</td></tr>
-                    <tr><td>strand</td><td>{#if $repeatmasker.strand gt 0#}right{#else#}left{#/if#}</td></tr>
-                    <tr><td>length</td><td>{#$repeatmasker.fmax-$repeatmasker.fmin+1#}</td></tr>
+                    <thead>
+                        <tr><td>name</td><td>class</td><td>family</td><td>min</td><td>max</td><td>strand</td><td>length</td></tr>
+                    </thead>
+                    <tbody>
+                        {#foreach $data.isoform.repeatmasker as $repeatmasker#}
+                        <tr>
+                            <td>{#$repeatmasker.repeat_name#}</td>
+                            <td>{#$repeatmasker.repeat_class#}</td>
+                            <td>{#$repeatmasker.repeat_family#}</td>
+                            <td>{#$repeatmasker.fmin#}</td>
+                            <td>{#$repeatmasker.fmax#}</td>
+                            <td>{#if $repeatmasker.strand gt 0#}right{#else#}left{#/if#}</td>
+                            <td>{#$repeatmasker.fmax-$repeatmasker.fmin+1#}</td>
+                        </tr>
+                        {#/foreach#}
+                    </tbody>
                 </table>
             </div>
         </div>
-        <div class="row">&nbsp;</div>
-        {#/foreach#}
     </div>
 
 </div>
@@ -150,21 +154,40 @@
         <h2>Predicted Peptides:</h2>
 
         {#foreach $data.isoform.predpeps as $predpep#}
-        <div class="row panel">
-            <div class="large-12 columns">
+        <div class="row">
+            <div class="large-12 columns panel">
 
                 <div class="row">
-                    <div class="large-9 columns">
+                    <div class="large-12 columns">
                         <table style="width:100%">
-                            <tr><td>uniquename</td><td>{#$predpep.uniquename#}</td></tr>
-                            <tr><td>min</td><td>{#$predpep.fmin#}</td></tr>
-                            <tr><td>max</td><td>{#$predpep.fmax#}</td></tr>
-                            <tr><td>strand</td><td>{#if $predpep.strand gt 0#}right{#else#}left{#/if#}</td></tr>
-                            <tr><td>length</td><td>{#$predpep.seqlen#}</td></tr>
+                            <thead>
+                                <tr>
+                                    <td>uniquename</td>
+                                    <td>min</td>
+                                    <td>max</td>
+                                    <td>strand</td>
+                                    <td>length</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{#$predpep.uniquename#}</td>
+                                    <td>{#$predpep.fmin#}</td>
+                                    <td>{#$predpep.fmax#}</td>
+                                    <td>{#if $predpep.strand gt 0#}right{#else#}left{#/if#}</td>
+                                    <td>{#$predpep.seqlen#}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
+
+                </div>
+                <div class="row">
+                    <div class="large-9 columns">
+                        <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">{#$predpep.residues#}</textarea>
+                    </div>
                     <div class="large-3 columns" style="text-align: right">
-                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank">
+                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
                             <input type="hidden" name='CMD' value='Web' />
                             <input type="hidden" name='PROGRAM' value='blastp' />
                             <input type="hidden" name='BLAST_PROGRAMS' value='blastp' />
@@ -174,9 +197,9 @@
                             <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
                             <input type="submit" class="small button"  value="send to blastp">
                         </form>
-                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank">
-                            <input type="hidden" name='CMD' value='Web' />
-                            <input type="hidden" name='PROGRAM' value='tblastn' />
+                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline>
+                              <input type="hidden" name='CMD' value='Web' />
+                              <input type="hidden" name='PROGRAM' value='tblastn' />
                             <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
                             <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
                             <input type="hidden" name='SHOW_DEFAULTS' value='on' />
@@ -186,24 +209,23 @@
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="large-12">
-                        <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">{#$predpep.residues#}</textarea>
-                    </div>
-                </div>
 
                 {#if isset($predpep.interpro) && count($predpep.interpro) > 0 #}
                 <div class="row" id="repeatmasker">
                     <div class="large-12 columns">
                         <h4>Interpro Annotations:</h4>
 
-                        <table>
+                        <table style="width:100%">
                             <thead>
-                                <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>dbxref</td></tr>
+                                <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>evalue</td><td>database</td><td>database version</td><td>time executed</td><td>dbxref</td></tr>
                             </thead>
                             <tbody>
                                 {#foreach $predpep.interpro as $interpro#}
                                 <tr><td>{#interprolink id=$interpro.interpro_id#}</td><td>{#$interpro.fmin#}</td><td>{#$interpro.fmax#}</td>
+                                    <td>{#$interpro.evalue#}</td>
+                                    <td>{#$interpro.program#}</td>
+                                    <td>{#$interpro.programversion#}</td>
+                                    <td>{#$interpro.timeexecuted#}</td>
                                     <td>
                                         {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
                                         {#foreach $interpro.dbxref as $dbxref#}
@@ -216,11 +238,8 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
-                <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
                 {#/if#}
-
             </div>
         </div>
         <div class="row">&nbsp;</div>
@@ -229,7 +248,4 @@
 </div>
 <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
 {#/if#}
-<pre>
-{#$data|var_dump#}
-</pre>
 {#/block#}
