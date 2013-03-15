@@ -14,6 +14,7 @@ class Isoform extends \WebService {
             $db = new PDO();
 
         $param_isoform_uniquename = $querydata['query1'];
+        $param_isoform_id = null;
         $param_predpep_uniquename = null;
 
         $query_get_isoforms = <<<EOF
@@ -28,26 +29,24 @@ EOF;
         $query_get_unigene = <<<EOF
 SELECT unigene.*
     FROM feature AS isoform, feature_relationship, feature AS unigene
-    WHERE isoform.uniquename = :isoform_uniquename
-    AND unigene.feature_id = feature_relationship.object_id
-    AND isoform.feature_id = feature_relationship.subject_id    
+    WHERE unigene.feature_id = feature_relationship.object_id
+    AND :isoform_id = feature_relationship.subject_id    
     AND unigene.type_id = {$_CONST('CV_UNIGENE')}
     AND isoform.type_id = {$_CONST('CV_ISOFORM')}
 EOF;
 
         $stm_get_unigene = $db->prepare($query_get_unigene);
-        $stm_get_unigene->bindValue('isoform_uniquename', $param_isoform_uniquename);
-        
+        $stm_get_unigene->bindParam('isoform_id', $param_isoform_id);
+
         $query_get_predpeps = <<<EOF
 SELECT predpep.*, featureloc.* 
-    FROM feature AS predpep, featureloc, feature AS isoform 
+    FROM feature AS predpep, featureloc 
     WHERE featureloc.feature_id=predpep.feature_id 
-        AND featureloc.srcfeature_id=isoform.feature_id
+        AND featureloc.srcfeature_id=:isoform_id
         AND predpep.type_id = {$_CONST('CV_PREDPEP')}
-        AND isoform.uniquename = :isoform_uniquename
 EOF;
         $stm_get_predpeps = $db->prepare($query_get_predpeps);
-        $stm_get_predpeps->bindValue('isoform_uniquename', $param_isoform_uniquename);
+        $stm_get_predpeps->bindParam('isoform_id', $param_isoform_id);
 
         $query_get_interpro = <<<EOF
 SELECT 
@@ -68,30 +67,34 @@ EOF;
 
         $query_get_repeatmasker = <<<EOF
 SELECT 
-  repeatmasker.* , featureloc.* 
+  repeatmasker.*, featureloc.*, repeat_name.value AS repeat_name, repeat_family.value AS repeat_family, repeat_class.value AS repeat_class
 FROM 
-  feature isoform, 
-  feature repeatmasker, 
-  featureloc
+  public.feature AS repeatmasker 
+ INNER JOIN public.featureloc ON (repeatmasker.feature_id = featureloc.feature_id AND featureloc.srcfeature_id = :isoform_id)
+ LEFT OUTER JOIN public.featureprop AS repeat_name   ON (repeat_name.feature_id   = repeatmasker.feature_id AND repeat_name.type_id = {$_CONST('CV_REPEAT_NAME')}) 
+ LEFT OUTER JOIN public.featureprop AS repeat_family ON (repeat_family.feature_id = repeatmasker.feature_id AND repeat_family.type_id = {$_CONST('CV_REPEAT_FAMILY')}) 
+ LEFT OUTER JOIN public.featureprop AS repeat_class  ON (repeat_class.feature_id  = repeatmasker.feature_id AND repeat_class.type_id = {$_CONST('CV_REPEAT_CLASS')}) 
 WHERE 
-  repeatmasker.feature_id = featureloc.feature_id AND
-  featureloc.srcfeature_id = isoform.feature_id AND
-  repeatmasker.type_id = {$_CONST('CV_ANNOTATION_REPEATMASKER')} AND 
-  isoform.uniquename = :isoform_uniquename
-        
+  repeatmasker.type_id = {$_CONST('CV_ANNOTATION_REPEATMASKER')}
 EOF;
+
         $stm_get_repeatmasker = $db->prepare($query_get_repeatmasker);
-        $stm_get_repeatmasker->bindValue('isoform_uniquename', $param_isoform_uniquename);
+        $stm_get_repeatmasker->bindParam('isoform_id', $param_isoform_id);
+
 
         $return = array();
 
         $stm_get_isoforms->execute();
         if (($isoform = $stm_get_isoforms->fetch(PDO::FETCH_ASSOC)) !== false) {
+            $param_isoform_id = $isoform['feature_id'];
+            
+            
             $stm_get_unigene->execute();
+            
             if (($unigene = $stm_get_unigene->fetch(PDO::FETCH_ASSOC)) !== false) {
                 $isoform['unigene'] = $unigene;
             }
-            
+
             $stm_get_repeatmasker->execute();
             while ($repeatmasker = $stm_get_repeatmasker->fetch(PDO::FETCH_ASSOC)) {
                 $isoform['repeatmasker'][] = $repeatmasker;
