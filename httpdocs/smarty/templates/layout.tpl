@@ -7,13 +7,15 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Transcript Browser - dionaea muscipula</title>
+
         <link rel="stylesheet" href="{#$AppPath#}/css/normalize.css" />
         <link rel="stylesheet" href="{#$AppPath#}/css/foundation.css" />
+        <link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" />    
+
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
-        <link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" />    
         <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
-        <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>
+        <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
 
 
         <script type="text/javascript">
@@ -52,8 +54,17 @@
                         });
                     }
                 });
+                $("#catalog-all").accordion({
+                    collapsible: true,
+                    heightStyle: "content"
+                });
             });
         </script>
+        <style>
+            .ui-accordion .ui-accordion-header {
+                margin-bottom:0px;
+            }
+        </style>
 
         {#block name='head'#}{#/block#}
 
@@ -81,9 +92,72 @@
                 {#block name='body'#}{#/block#}
             </div>
             <div class="large-3 columns" >
-                <div class="row large-3 columns" style="position:fixed;top:75px;bottom:0;overflow-x:hidden;overflow-y:auto;">
+                <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            /*$("#catalog-all li").draggable({
+                             appendTo: "body",
+                             helper: "clone"
+                             });*/
+                            $('#catalog-all li').draggable({
+                                appendTo: "body",
+                                helper: "clone"
+                            });
+
+
+                            var i = 0;
+
+
+                            $('#catalog-add-group').click(function() {
+                                newEl = $('#cart-dummy').html();
+                                newEl = newEl.replace('#number#', ++i);
+                                newEl = $('#catalog-groups').append(newEl).children().last()
+                                newEl.find('.cart-target').droppable({
+                                    accept: ":not(.ui-sortable-helper)",
+                                    drop: function(event, ui) {
+                                        $(this).find(".placeholder").remove();
+                                        $("<li></li>").text(ui.draggable.text()).appendTo(this);
+                                    }
+                                }).sortable({
+                                    items: "li:not(.placeholder)",
+                                    sort: function() {
+                                        // gets added unintentionally by droppable interacting with sortable
+                                        // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+                                        $(this).removeClass("ui-state-default");
+                                    }
+                                });
+                                newEl.accordion({
+                                    collapsible: true,
+                                    heightStyle: "content"
+                                });
+                            });
+                        });
+                    </script>
+                    <div id="cart-dummy" style="display: none"> 
+                        <div class='ui_accordion ui_collapsible'>
+                            <div>cart #number#</div>
+                            <ul class="cart-target">
+                                <li class="placeholder">drag your items here</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class=" panel large-12 columns">
                         <h4>Cart</h4>
+                        <div id="catalog-all" class='ui_accordion ui_collapsible'>
+                            <div>all<div class="right"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
+                            <ul>
+                                <li>1.01_comp231081_c0_seq1</li>
+                                <li>1.01_comp214244_c0_seq1</li>
+                                <li>1.01_comp214244_c0_seq2</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <a id="catalog-add-group" class="button secondary right">add new cart</a>
+                            <div style="clear:both">&nbsp;</div>
+                        </div>
+                        <div id="catalog-groups">
+
+                        </div>
                     </div>
 
                 </div>
