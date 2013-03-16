@@ -92,18 +92,15 @@ class Importer_Expressions {
             $relationship_call = 'SELECT * FROM set_expressionresult_quantificationresult_relationships('
                     . 'currval(\'expressionresult_expressionresult_id_seq\'),'
                     . ':parent_biomaterial_id,'
-                    . ':cvterm_isa,'
                     . ':feature_uniquename,'
                     . ':samplegroup)';
 
             $statement_set_relationshipA = $db->prepare($relationship_call);
-            $statement_set_relationshipA->bindValue('cvterm_isa', CV_BIOMATERIAL_ISA);
             $statement_set_relationshipA->bindValue('parent_biomaterial_id', $biomaterial_parentA_id, PDO::PARAM_INT);
             $statement_set_relationshipA->bindValue('samplegroup', 'A', PDO::PARAM_STR);
             $statement_set_relationshipA->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
 
             $statement_set_relationshipB = $db->prepare($relationship_call);
-            $statement_set_relationshipB->bindValue('cvterm_isa', CV_BIOMATERIAL_ISA);
             $statement_set_relationshipB->bindValue('parent_biomaterial_id', $biomaterial_parentB_id, PDO::PARAM_INT);
             $statement_set_relationshipB->bindValue('samplegroup', 'B', PDO::PARAM_STR);
             $statement_set_relationshipB->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
