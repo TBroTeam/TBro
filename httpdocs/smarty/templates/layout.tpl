@@ -59,21 +59,36 @@
 
     </head>
     <body>
-        <nav class="top-bar" id="top">
-            <ul class="title-area">
-                <li class="name">
-                    <h1><a>Transcript Browser: dionaea muscipula</a></h1>
-                </li>
-            </ul>
-            <section class="top-bar-section">
-                <ul class="right">
-                    <li class="divider"></li>
-                    <li><a>search for unigene:</a></li>
-                    <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
-                    <li>&nbsp;</li> 
+        <div class="fixed">
+            <nav class="top-bar" id="top">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a>Transcript Browser: dionaea muscipula</a></h1>
+                    </li>
                 </ul>
-            </section>
-        </nav>
-        {#block name='body'#}{#/block#}
+                <section class="top-bar-section">
+                    <ul class="right">
+                        <li class="divider"></li>
+                        <li><a>search for unigene:</a></li>
+                        <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
+                        <li>&nbsp;</li> 
+                    </ul>
+                </section>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="large-9 columns">
+                {#block name='body'#}{#/block#}
+            </div>
+            <div class="large-3 columns" >
+                <div class="row large-3 columns" style="position:fixed;top:75px;bottom:0;overflow-x:hidden;overflow-y:auto;">
+                    <div class=" panel large-12 columns">
+                        <h4>Cart</h4>
+                    </div>
+
+                </div>
+                <div>&nbsp;</div>
+            </div>
+        </div>
     </body>
 </html>

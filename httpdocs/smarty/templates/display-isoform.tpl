@@ -12,8 +12,10 @@
     $(document).ready(function() {
         $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + isoform, {
             success: function(val) {
+                canvas = $('#canvas_{#$data.isoform.uniquename|clean_id#}');
+                canvas.attr('width', canvas.parent().width()-8);
                 new CanvasXpress(
-                        "canvas-{#$data.isoform.uniquename#}",
+                        "canvas_{#$data.isoform.uniquename|clean_id#}",
                         {
                             "tracks": val.tracks
                         },
@@ -56,7 +58,7 @@
             {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}
             <li><a href="#predpep">Predicted Peptides</a></li>
             {#/if#}
-            </dl>
+        </ul>
     </div>
 </div>
 
@@ -68,7 +70,7 @@
 
         <div class="row">
             <div class="large-12 columns">
-                <canvas id="canvas-{#$data.isoform.uniquename#}" width="962"></canvas>
+                <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
                 <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
             </div>
         </div>
@@ -78,7 +80,7 @@
                 <h4>Sequence</h4>
             </div>
             <div class="large-6 columns" style="text-align: right">
-                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
                     <input type="hidden" name='CMD' value='Web' />
                     <input type="hidden" name='PROGRAM' value='blastx' />
                     <input type="hidden" name='BLAST_PROGRAMS' value='blastx' />
@@ -89,7 +91,7 @@
                     <input type="submit" class="small button" value="send to blastx">
                 </form>
 
-                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
                     <input type="hidden" name='CMD' value='Web' />
                     <input type="hidden" name='PROGRAM' value='blastn' />
                     <input type="hidden" name='BLAST_PROGRAMS' value='megaBlast' />
@@ -111,7 +113,7 @@
 </div>
 
 
-<div class="row" id="repeatmasker">
+<div class="row" id="blast2go">
     <div class="large-12 columns">
         <h2>Blast2Go Annotations:</h2>
 
@@ -217,7 +219,7 @@
                                     <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">{#$predpep.residues#}</textarea>
                                 </div>
                                 <div class="large-3 columns" style="text-align: right">
-                                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
                                         <input type="hidden" name='CMD' value='Web' />
                                         <input type="hidden" name='PROGRAM' value='blastp' />
                                         <input type="hidden" name='BLAST_PROGRAMS' value='blastp' />
@@ -227,7 +229,7 @@
                                         <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
                                         <input type="submit" class="small button"  value="send to blastp">
                                     </form>
-                                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" type="POST" target="_blank" style="display:inline">
+                                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
                                         <input type="hidden" name='CMD' value='Web' />
                                         <input type="hidden" name='PROGRAM' value='tblastn' />
                                         <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
@@ -241,7 +243,7 @@
                             </div>
 
                             {#if isset($predpep.interpro) && count($predpep.interpro) > 0 #}
-                            <div class="row" id="repeatmasker">
+                            <div class="row" id="interpro">
                                 <div class="large-12 columns">
                                     <h4>Interpro Annotations:</h4>
 
