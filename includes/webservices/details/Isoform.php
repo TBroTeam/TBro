@@ -58,16 +58,18 @@ EOF;
 
         $query_get_unigene = <<<EOF
 SELECT unigene.*
-    FROM feature AS isoform, feature_relationship, feature AS unigene
+    FROM feature_relationship, feature AS unigene
     WHERE unigene.feature_id = feature_relationship.object_id
     AND :isoform_id = feature_relationship.subject_id    
     AND unigene.type_id = {$_CONST('CV_UNIGENE')}
-    AND isoform.type_id = {$_CONST('CV_ISOFORM')}
 EOF;
 
         $stm_get_unigene = $db->prepare($query_get_unigene);
         $stm_get_unigene->bindParam('isoform_id', $param_isoform_id);
 
+        $stm_get_repeatmasker = $db->prepare('SELECT * FROM get_isoform_annotations_repeatmasker(ARRAY[:isoform_id::int])');
+        $stm_get_repeatmasker->bindParam('isoform_id', $param_isoform_id, PDO::PARAM_INT);
+        
         $query_get_predpeps = <<<EOF
 SELECT predpep.*, featureloc.* 
     FROM feature AS predpep, featureloc 
@@ -78,20 +80,7 @@ EOF;
         $stm_get_predpeps = $db->prepare($query_get_predpeps);
         $stm_get_predpeps->bindParam('isoform_id', $param_isoform_id);
 
-        $query_get_interpro = <<<EOF
-SELECT 
-  interpro.* , featureloc.*, interpro_ID.value AS interpro_ID, analysisfeature.significance AS evalue, analysis.name AS analysis_name, analysis.program, analysis.programversion, analysis.timeexecuted
-FROM 
-  feature interpro
-  INNER JOIN featureloc ON (interpro.feature_id = featureloc.feature_id)
-  LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id   = interpro.feature_id AND interpro_ID.type_id = {$_CONST('CV_INTERPRO_ID')}) 
-  LEFT OUTER JOIN analysisfeature ON (interpro.feature_id = analysisfeature.feature_id)
-  LEFT OUTER JOIN analysis ON (analysisfeature.analysis_id = analysis.analysis_id)
-WHERE 
-  featureloc.srcfeature_id = :predpep_id AND
-  interpro.type_id = {$_CONST('CV_ANNOTATION_INTERPRO')}        
-EOF;
-        $stm_get_interpro = $db->prepare($query_get_interpro);
+        $stm_get_interpro = $db->prepare('SELECT * FROM get_predpep_annotations_interpro(ARRAY[:predpep_id::int])');
         $stm_get_interpro->bindParam('predpep_id', $param_predpep_id);
 
         $query_get_interpro_dbxrefs = <<<EOF
@@ -108,23 +97,7 @@ EOF;
         $stm_get_interpro_dbxref = $db->prepare($query_get_interpro_dbxrefs);
         $stm_get_interpro_dbxref->bindParam('interpro_feature_id', $param_interpro_feature_id);
 
-        $query_get_repeatmasker = <<<EOF
-SELECT 
-  repeatmasker.*, featureloc.*, repeat_name.value AS repeat_name, repeat_family.value AS repeat_family, repeat_class.value AS repeat_class
-FROM 
-  feature AS repeatmasker 
- INNER JOIN featureloc ON (repeatmasker.feature_id = featureloc.feature_id)
- LEFT OUTER JOIN featureprop AS repeat_name   ON (repeat_name.feature_id   = repeatmasker.feature_id AND repeat_name.type_id = {$_CONST('CV_REPEAT_NAME')}) 
- LEFT OUTER JOIN featureprop AS repeat_family ON (repeat_family.feature_id = repeatmasker.feature_id AND repeat_family.type_id = {$_CONST('CV_REPEAT_FAMILY')}) 
- LEFT OUTER JOIN featureprop AS repeat_class  ON (repeat_class.feature_id  = repeatmasker.feature_id AND repeat_class.type_id = {$_CONST('CV_REPEAT_CLASS')}) 
-WHERE 
-  featureloc.srcfeature_id = :isoform_id AND 
-  repeatmasker.type_id = {$_CONST('CV_ANNOTATION_REPEATMASKER')}
-      
-EOF;
 
-        $stm_get_repeatmasker = $db->prepare($query_get_repeatmasker);
-        $stm_get_repeatmasker->bindParam('isoform_id', $param_isoform_id);
 
 
         $return = array();
