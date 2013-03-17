@@ -101,29 +101,28 @@
                              });*/
                             $('#catalog-all li').draggable({
                                 appendTo: "body",
-                                helper: "clone"
+                                helper: function() {
+                                    return $(this).clone().addClass('beingDragged');
+                                },
+                                connectToSortable: ".cart-target"
                             });
 
 
                             var i = 0;
-
-
                             $('#catalog-add-group').click(function() {
                                 newEl = $('#cart-dummy').html();
                                 newEl = newEl.replace('#number#', ++i);
                                 newEl = $('#catalog-groups').append(newEl).children().last()
-                                newEl.find('.cart-target').droppable({
-                                    accept: ":not(.ui-sortable-helper)",
-                                    drop: function(event, ui) {
-                                        $(this).find(".placeholder").remove();
-                                        $("<li></li>").text(ui.draggable.text()).appendTo(this);
-                                    }
-                                }).sortable({
+                                newEl.find('.cart-target').sortable({
                                     items: "li:not(.placeholder)",
-                                    sort: function() {
-                                        // gets added unintentionally by droppable interacting with sortable
-                                        // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
-                                        $(this).removeClass("ui-state-default");
+                                    accept: ":not(.ui-sortable-helper)",
+                                    receive: function(event, ui) {
+                                        //remove placeholder
+                                        $(this).find(".placeholder").remove();
+                                        //do not allow duplicate items
+                                        copies = $(this).find("[data-uniquename='" + ui.item.data('uniquename') + "']");
+                                        if (copies.length > 1)
+                                            copies[1].remove();
                                     }
                                 });
                                 newEl.accordion({
@@ -146,9 +145,9 @@
                         <div id="catalog-all" class='ui_accordion ui_collapsible'>
                             <div>all<div class="right"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
                             <ul>
-                                <li>1.01_comp231081_c0_seq1</li>
-                                <li>1.01_comp214244_c0_seq1</li>
-                                <li>1.01_comp214244_c0_seq2</li>
+                                <li data-uniquename="1.01_comp231081_c0_seq1">1.01_comp231081_c0_seq1</li>
+                                <li data-uniquename="1.01_comp214244_c0_seq1">1.01_comp214244_c0_seq1</li>
+                                <li data-uniquename="1.01_comp214244_c0_seq2">1.01_comp214244_c0_seq2</li>
                             </ul>
                         </div>
                         <div>
@@ -166,3 +165,4 @@
         </div>
     </body>
 </html>
+
