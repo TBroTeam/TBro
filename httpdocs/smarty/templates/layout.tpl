@@ -16,6 +16,7 @@
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
+        <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>        
 
 
         <script type="text/javascript">
@@ -90,86 +91,22 @@
             <div class="large-9 columns">
                 {#block name='body'#}{#/block#}
             </div>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
+                    addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
+                    addItemToAll({uniquename: '1.01_comp231123_c0_seq1', id: 124});
+                    addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+                    addGroup();
+                    renameGroup('group 1', 'myGroup!');
+                });
+            </script>
             <div class="large-3 columns" >
                 <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
-                    <script type="text/javascript">
-                        var lastGroupNumber = 0;
-                        var cart_groups = null;
-                        var cart_group_all = null;
-                        $(document).ready(function() {
-                            cart_groups = $('#cart-groups');
-                            cart_group_all = $('#cart-group-all');
-                        });
 
-                        function addGroup() {
-                            groupname = "group " + (++lastGroupNumber);
-                            // DOM manupulation
-                            newElStr = $('#cart-group-dummy').html();
-                            newElStr = newElStr.replace(/#groupname#/g, groupname);
-                            cart_groups.append(newElStr);
-                            newEl = cart_groups.find("[data-group='" + groupname + "']");
-                            newEl.find('.cart-target').sortable({
-                                items: "li:not(.placeholder)",
-                                accept: ":not(.ui-sortable-helper)",
-                                receive: function(event, ui) {
-                                    //remove placeholder
-                                    $(this).find(".placeholder").remove();
-                                    //do not allow duplicate items
-                                    copies = $(this).find("[data-uniquename='" + ui.item.data('uniquename') + "']");
-                                    if (copies.length > 1)
-                                        copies[1].remove();
-                                }
-                            });
-                            newEl.accordion({
-                                collapsible: true,
-                                heightStyle: "content"
-                            });
-                            return groupname;
-                        }
-                        function renameGroup(oldname, newname) {
-                        }
-                        function addObjectToAll(object) {
-
-                            // DOM manupulation
-                            newElStr = $('#cart-item-dummy').html();
-                            newElStr = newElStr.replace(/#uniquename#/g, object.uniquename);
-                            newElStr = newElStr.replace(/#id#/g, object.id);
-                            console.log(cart_group_all);
-                            cart_group_all.find('ul').append(newElStr);
-                            refresh_cart_group_all();
-                        }
-                        
-                        function addObjectToGroup(object, groupname) {
-                        }
-                        
-                        function removeObjectFromAll(object) {
-                        }
-                        
-                        function removeObjectFromGroup(object, groupname) {
-                        }
-                        
-                        function getObjectByName(objectname) {
-                        }
-                        
-                        function refresh_cart_group_all(){
-                            cart_group_all.find('li').draggable({
-                                appendTo: "body",
-                                helper: function() {
-                                    return $(this).clone().addClass('beingDragged');
-                                },
-                                connectToSortable: ".cart-target"
-                            });
-                        }
-
-                        $(document).ready(function() {
-                            refresh_cart_group_all();
-                            $('#cart-add-group').click(addGroup);
-                            addObjectToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                        });
-                    </script>
                     <div id="cart-group-dummy" style="display: none"> 
                         <div class='cart-group' data-group="#groupname#">
-                            <div>#groupname#</div>
+                            <div class="groupname">#groupname#</div>
                             <ul class="cart-target">
                                 <li class="placeholder">drag your items here</li>
                             </ul>
