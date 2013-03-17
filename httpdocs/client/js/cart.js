@@ -1,6 +1,37 @@
 var lastGroupNumber = 0;
+/**
+ *&lt;div id="cart-groups"&gt;<br/>
+ *&emsp;&lt;div class='cart-group' data-group="#groupname#"&gt;<br/>
+ *&emsp;&emsp;&lt;div class="groupname"&gt;#groupname#&lt;/div&gt;<br/>
+ *&emsp;&emsp;&emsp;&lt;ul class="cart-target"&gt;<br/>
+ *&emsp;&emsp;&emsp;&emsp;&lt;li class="placeholder"&gt;drag your items here&lt;/li&gt;<br/>
+ *&emsp;&emsp;&emsp;&lt;/ul&gt;<br/>
+ *&emsp;&emsp;&lt;/div&gt;<br/>
+ *&emsp;&lt;/div&gt;<br/>
+ *&lt;/div&gt;<br/>
+ * @type JQuery
+ */
 var cart_groups = null;
+/**
+ *&lt;div id="cart-group-all" class='ui_accordion ui_collapsible'&gt;<br/>
+ *&emsp;&lt;div&gt;all&lt;div class="right"&gt;&lt;img src="/img/mimiGlyphs/23.png"/>&lt;/div&gt;&lt;/div&gt;<br/>
+ *&emsp;&lt;ul&gt;<br/>
+ *&emsp;*&emsp;&lt;li data-uniquename="#uniquename#"&gt;#uniquename#&lt;/li&gt;<br/>
+ *&emsp;&lt;/ul&gt;<br/>
+ *&lt;/div&gt;<br/>
+ * @type JQuery
+ */
 var cart_group_all = null;
+/**
+ *{<br/>
+ *&emsp;all:[&lt;item&gt;&#42;],<br/>
+ *&emsp;groups:[&lt;group&gt;&#42;]<br/>
+ *}<br/>
+ *with<br/>
+ *&lt;item&gt;={id:&lt;int&gt;, uniquename:&lt;string&gt;}<br/>
+ *&lt;group&gt;={name:&lt;string&gt;, items:[&lt;item&gt;&#42;]}<br/>
+ * @type Object
+ */
 var cart = {all: [], groups: []};
 $(document).ready(function() {
     cart_groups = $('#cart-groups');
@@ -37,14 +68,36 @@ function getItemByUniquename(name) {
     return item;
 }
 
+/**
+ *&nbsp;this function syncs all cart actions to the server.
+ *&nbsp;action will be mirrored on server and new dataset will be returned.
+ *&nbsp;if server data differs, local data will be overwritten and DOM will be rebuilt from server data
+ *&nbsp;@param {object} action action with parameters to be synced
+ *&nbsp;@param {object} options used internally
+ *&nbsp;@returns nothing
+ *&nbsp;*/
+function syncAction(action, options) {
+    if (options !== undefined && options.sync === false)
+        return;
+    console.log(action);
+}
 
-function addGroup() {
+/**
+ *&nbsp;adds a new group to the cart
+ *&nbsp;@param {object} options used internally
+ *&nbsp;@returns new group name
+ */
+function addGroup(options) {
     do {
         groupname = "group " + (++lastGroupNumber);
     }
     while (getGroupByName(groupname) !== null);
+
     var group = {name: groupname, items: []};
     cart.groups.push(group);
+
+    //sync
+    syncAction({action: 'addGroup', name: groupname}, options);
 
     // DOM manupulation
     var newElStr = $('#cart-group-dummy').html();
@@ -69,7 +122,7 @@ function addGroup() {
     return groupname;
 }
 
-function renameGroup(oldname, newname) {
+function renameGroup(oldname, newname, options) {
     if (newname === oldname)
         return;
     var _group;
@@ -84,6 +137,9 @@ function renameGroup(oldname, newname) {
     }
     _group.name = newname;
 
+    // sync
+    syncAction({action: 'renameGroup', oldname: oldname, newname: newname}, options);
+
     // DOM manupulation
     var group = $.getGroupByName(oldname);
     group.attr('data-group', newname);
@@ -93,12 +149,15 @@ function renameGroup(oldname, newname) {
 }
 
 
-function addItemToAll(item) {
+function addItemToAll(item, options) {
     if (getItemByUniquename(item.uniquename) !== null) {
         console.log('can\'t add item to "All":', item, 'already exists');
         return false;
     }
     cart.all.push(item);
+
+    //sync
+    syncAction({action: 'addItemToAll', item: item}, options);
 
     // DOM manupulation
     var newElStr = $('#cart-item-dummy').html();
@@ -108,7 +167,7 @@ function addItemToAll(item) {
     refresh_cart_group_all();
 }
 
-function addItemToGroup(item, groupname, modifyDOM) {
+function addItemToGroup(item, groupname, options) {
     if (getItemByUniquename(item.uniquename) === null) {
         console.log('can\'t add item to "' + groupname + '":', item, 'is not in "All"');
         return false;
@@ -129,8 +188,11 @@ function addItemToGroup(item, groupname, modifyDOM) {
     }
     _group.items.push(item);
 
+    //sync
+    syncAction({action: 'addItemToGroup', item: item, groupname: groupname}, options);
+
     // DOM manupulation
-    if (!modifyDOM)
+    if (options !== undefined && options.modifyDOM === false)
         return true;
     var newElStr = $('#cart-item-dummy').html();
     newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
@@ -139,7 +201,7 @@ function addItemToGroup(item, groupname, modifyDOM) {
     cleanUpGroup(item, group);
 }
 
-function removeItemFromAll(item) {
+function removeItemFromAll(item, options) {
     $.each(cart.groups, function() {
         var _group = this;
         var groupContainsItem = false;
@@ -160,12 +222,14 @@ function removeItemFromAll(item) {
         }
     }
 
+    //sync
+    syncAction({action: 'removeItemFromAll', item: item}, options);
 
     //DOM manipulation
     cart_group_all.find('[data-uniquename="' + item.uniquename + '"]').remove();
 }
 
-function removeItemFromGroup(item, groupname) {
+function removeItemFromGroup(item, groupname, options) {
     var _group = getGroupByName(groupname);
     for (var i = 0; i < _group.items.length; i++) {
         if (_group.items[i].uniquename === item.uniquename) {
@@ -173,6 +237,9 @@ function removeItemFromGroup(item, groupname) {
             i--;
         }
     }
+
+    //sync
+    syncAction({action: 'removeItemFromGroup', item: item, groupname: groupname}, options);
 
     //DOM manipulation
     var group = $.getGroupByName(groupname);
