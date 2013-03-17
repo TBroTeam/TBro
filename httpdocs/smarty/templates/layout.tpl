@@ -54,12 +54,11 @@
                         });
                     }
                 });
-                $("#catalog-all").accordion({
+                $("#cart-group-all").accordion({
                     collapsible: true,
                     heightStyle: "content"
                 });
-            });
-        </script>
+            });</script>
         <style>
             .ui-accordion .ui-accordion-header {
                 margin-bottom:0px;
@@ -94,67 +93,105 @@
             <div class="large-3 columns" >
                 <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
                     <script type="text/javascript">
+                        var lastGroupNumber = 0;
+                        var cart_groups = null;
+                        var cart_group_all = null;
                         $(document).ready(function() {
-                            /*$("#catalog-all li").draggable({
-                             appendTo: "body",
-                             helper: "clone"
-                             });*/
-                            $('#catalog-all li').draggable({
+                            cart_groups = $('#cart-groups');
+                            cart_group_all = $('#cart-group-all');
+                        });
+
+                        function addGroup() {
+                            groupname = "group " + (++lastGroupNumber);
+                            // DOM manupulation
+                            newElStr = $('#cart-group-dummy').html();
+                            newElStr = newElStr.replace(/#groupname#/g, groupname);
+                            cart_groups.append(newElStr);
+                            newEl = cart_groups.find("[data-group='" + groupname + "']");
+                            newEl.find('.cart-target').sortable({
+                                items: "li:not(.placeholder)",
+                                accept: ":not(.ui-sortable-helper)",
+                                receive: function(event, ui) {
+                                    //remove placeholder
+                                    $(this).find(".placeholder").remove();
+                                    //do not allow duplicate items
+                                    copies = $(this).find("[data-uniquename='" + ui.item.data('uniquename') + "']");
+                                    if (copies.length > 1)
+                                        copies[1].remove();
+                                }
+                            });
+                            newEl.accordion({
+                                collapsible: true,
+                                heightStyle: "content"
+                            });
+                            return groupname;
+                        }
+                        function renameGroup(oldname, newname) {
+                        }
+                        function addObjectToAll(object) {
+
+                            // DOM manupulation
+                            newElStr = $('#cart-item-dummy').html();
+                            newElStr = newElStr.replace(/#uniquename#/g, object.uniquename);
+                            newElStr = newElStr.replace(/#id#/g, object.id);
+                            console.log(cart_group_all);
+                            cart_group_all.find('ul').append(newElStr);
+                            refresh_cart_group_all();
+                        }
+                        
+                        function addObjectToGroup(object, groupname) {
+                        }
+                        
+                        function removeObjectFromAll(object) {
+                        }
+                        
+                        function removeObjectFromGroup(object, groupname) {
+                        }
+                        
+                        function getObjectByName(objectname) {
+                        }
+                        
+                        function refresh_cart_group_all(){
+                            cart_group_all.find('li').draggable({
                                 appendTo: "body",
                                 helper: function() {
                                     return $(this).clone().addClass('beingDragged');
                                 },
                                 connectToSortable: ".cart-target"
                             });
+                        }
 
-
-                            var i = 0;
-                            $('#catalog-add-group').click(function() {
-                                newEl = $('#cart-dummy').html();
-                                newEl = newEl.replace('#number#', ++i);
-                                newEl = $('#catalog-groups').append(newEl).children().last()
-                                newEl.find('.cart-target').sortable({
-                                    items: "li:not(.placeholder)",
-                                    accept: ":not(.ui-sortable-helper)",
-                                    receive: function(event, ui) {
-                                        //remove placeholder
-                                        $(this).find(".placeholder").remove();
-                                        //do not allow duplicate items
-                                        copies = $(this).find("[data-uniquename='" + ui.item.data('uniquename') + "']");
-                                        if (copies.length > 1)
-                                            copies[1].remove();
-                                    }
-                                });
-                                newEl.accordion({
-                                    collapsible: true,
-                                    heightStyle: "content"
-                                });
-                            });
+                        $(document).ready(function() {
+                            refresh_cart_group_all();
+                            $('#cart-add-group').click(addGroup);
+                            addObjectToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
                         });
                     </script>
-                    <div id="cart-dummy" style="display: none"> 
-                        <div class='ui_accordion ui_collapsible'>
-                            <div>cart #number#</div>
+                    <div id="cart-group-dummy" style="display: none"> 
+                        <div class='cart-group' data-group="#groupname#">
+                            <div>#groupname#</div>
                             <ul class="cart-target">
                                 <li class="placeholder">drag your items here</li>
                             </ul>
                         </div>
                     </div>
+                    <div style="display: none">
+                        <ul id="cart-item-dummy" style="display: none"> 
+                            <li data-uniquename="#uniquename#" data-id="#id#">#uniquename#</li>
+                        </ul>
+                    </div>
                     <div class=" panel large-12 columns">
                         <h4>Cart</h4>
-                        <div id="catalog-all" class='ui_accordion ui_collapsible'>
+                        <div id="cart-group-all" class='ui_accordion ui_collapsible'>
                             <div>all<div class="right"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
                             <ul>
-                                <li data-uniquename="1.01_comp231081_c0_seq1">1.01_comp231081_c0_seq1</li>
-                                <li data-uniquename="1.01_comp214244_c0_seq1">1.01_comp214244_c0_seq1</li>
-                                <li data-uniquename="1.01_comp214244_c0_seq2">1.01_comp214244_c0_seq2</li>
                             </ul>
                         </div>
                         <div>
-                            <a id="catalog-add-group" class="button secondary right">add new cart</a>
+                            <a id="cart-add-group" class="button secondary right">add new cart</a>
                             <div style="clear:both">&nbsp;</div>
                         </div>
-                        <div id="catalog-groups">
+                        <div id="cart-groups">
 
                         </div>
                     </div>
