@@ -9,47 +9,6 @@ $(document).ready(function() {
 RegExp.quote = function(str) {
     return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 };
-function receiveItemAtGroup(event, ui) {
-    var item = {uniquename: ui.item.attr('data-uniquename'), id: ui.item.attr('data-id')};
-    //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
-    addItemToGroup(item, $(this).parent().attr('data-group'), false);
-    //DOM cleanup
-    //remove placeholder
-    $(this).find(".placeholder").remove();
-    //do not allow duplicate items
-    var copies = $(this).find("[data-uniquename='" + ui.item.attr('data-uniquename') + "']");
-    if (copies.length > 1)
-        copies[1].remove();
-}
-
-
-function addGroup() {
-    do {
-        groupname = "group " + (++lastGroupNumber);
-    }
-    while (getGroupByName(groupname) !== null);
-
-    var group = {name: groupname, items: []};
-    cart.groups.push(group);
-
-    // DOM manupulation
-    var newElStr = $('#cart-group-dummy').html();
-    newElStr = newElStr.replace(/#groupname#/g, groupname);
-    cart_groups.append(newElStr);
-    var newEl = cart_groups.find("[data-group='" + groupname + "']");
-    newEl.find('.cart-target').sortable({
-        items: "li:not(.placeholder)",
-        accept: ":not(.ui-sortable-helper)",
-        receive: receiveItemAtGroup
-    });
-    newEl.accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
-
-
-    return groupname;
-}
 
 function getGroupByName(name) {
     var group = null;
@@ -61,28 +20,12 @@ function getGroupByName(name) {
     return group;
 }
 
-function renameGroup(oldname, newname) {
-    if (newname === oldname)
-        return;
-    var _group;
-
-    if (!(getGroupByName(newname) === null)) {
-        console.log("can't rename" + oldname + " to " + newname + ": group with that name already exists.");
-        return false;
+$.extend({
+    getGroupByName: function(name) {
+        return cart_groups.find("[data-group='" + name + "']");
     }
+});
 
-    _group = getGroupByName(oldname);
-    if (_group === null) {
-        console.log("can't rename" + oldname + " to " + newname + ": group " + oldname + "not found!");
-        return false;
-    }
-
-    _group.name = newname;
-    // DOM manupulation
-    var group = cart_groups.find("[data-group='" + oldname + "'] .ui-accordion-header");
-    var re = new RegExp(RegExp.quote(oldname), "g");
-    group.html(group.html().replace(re, newname));
-}
 
 function getItemByUniquename(name) {
     var item = null;
@@ -94,41 +37,146 @@ function getItemByUniquename(name) {
     return item;
 }
 
-function addItemToAll(object) {
-    if (getItemByUniquename(object.uniquename) !== null) {
-        console.log('can\'t add object to "All":', object, 'already exists');
+
+function addGroup() {
+    do {
+        groupname = "group " + (++lastGroupNumber);
+    }
+    while (getGroupByName(groupname) !== null);
+    var group = {name: groupname, items: []};
+    cart.groups.push(group);
+
+    // DOM manupulation
+    var newElStr = $('#cart-group-dummy').html();
+    newElStr = newElStr.replace(/#groupname#/g, groupname);
+    cart_groups.append(newElStr);
+    var newEl = cart_groups.find("[data-group='" + groupname + "']");
+    newEl.find('.cart-target').sortable({
+        items: "li:not(.placeholder)",
+        accept: ":not(.ui-sortable-helper)",
+        receive: function(event, ui) {
+            var item = {uniquename: ui.item.attr('data-uniquename'), id: ui.item.attr('data-id')};
+            //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
+            addItemToGroup(item, $(this).parent().attr('data-group'), false);
+            //clean up placeholder and duplicate items
+            cleanUpGroup(item, this);
+        }
+    });
+    newEl.accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+    return groupname;
+}
+
+function renameGroup(oldname, newname) {
+    if (newname === oldname)
+        return;
+    var _group;
+    if (!(getGroupByName(newname) === null)) {
+        console.log("can't rename" + oldname + " to " + newname + ": group with that name already exists.");
         return false;
     }
-    cart.all.push(object);
+    _group = getGroupByName(oldname);
+    if (_group === null) {
+        console.log("can't rename" + oldname + " to " + newname + ": group " + oldname + "not found!");
+        return false;
+    }
+    _group.name = newname;
+
+    // DOM manupulation
+    var group = $.getGroupByName(oldname);
+    group.attr('data-group', newname);
+    var header = group.find('.ui-accordion-header');
+    var re = new RegExp(RegExp.quote(oldname), "g");
+    header.html(header.html().replace(re, newname));
+}
+
+
+function addItemToAll(item) {
+    if (getItemByUniquename(item.uniquename) !== null) {
+        console.log('can\'t add item to "All":', item, 'already exists');
+        return false;
+    }
+    cart.all.push(item);
+
     // DOM manupulation
     var newElStr = $('#cart-item-dummy').html();
-    newElStr = newElStr.replace(/#uniquename#/g, object.uniquename);
-    newElStr = newElStr.replace(/#id#/g, object.id);
+    newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+    newElStr = newElStr.replace(/#id#/g, item.id);
     cart_group_all.find('ul').append(newElStr);
     refresh_cart_group_all();
 }
 
 function addItemToGroup(item, groupname, modifyDOM) {
-    if (getItemByUniquename(object.uniquename) === null) {
-        console.log('can\'t add object to "'+groupname+'":', object, 'is not in "All"');
+    if (getItemByUniquename(item.uniquename) === null) {
+        console.log('can\'t add item to "' + groupname + '":', item, 'is not in "All"');
         return false;
     }
-    var group = getGroupByName(groupname);
-    if (group === null) {
-        console.log('can\'t add object to "'+groupname+'": group doesn\'t exist!');
+    var _group = getGroupByName(groupname);
+    if (_group === null) {
+        console.log('can\'t add item to "' + groupname + '": group doesn\'t exist!');
         return false;
     }
-    group.items.push(item);
-    
+    var groupContainsItem = false;
+    $.each(_group.items, function() {
+        if (this.uniquename === item.uniquename)
+            groupContainsItem = true;
+    });
+    if (groupContainsItem) {
+        console.log('can\'t add item to "' + groupname + '": group already contains item!');
+        return false;
+    }
+    _group.items.push(item);
+
     // DOM manupulation
     if (!modifyDOM)
         return true;
+    var newElStr = $('#cart-item-dummy').html();
+    newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+    var group = $.getGroupByName(groupname).find('ul');
+    group.append(newElStr);
+    cleanUpGroup(item, group);
 }
 
 function removeItemFromAll(item) {
+    $.each(cart.groups, function() {
+        var _group = this;
+        var groupContainsItem = false;
+        $.each(_group.items, function() {
+            _item = this;
+            if (_item.uniquename === item.uniquename)
+                groupContainsItem = true;
+        });
+        if (groupContainsItem) {
+            removeItemFromGroup(item, _group.name);
+        }
+    });
+
+    for (var i = 0; i < cart.all.length; i++) {
+        if (cart.all[i].uniquename === item.uniquename) {
+            cart.all.splice(i, 1);
+            i--;
+        }
+    }
+
+
+    //DOM manipulation
+    cart_group_all.find('[data-uniquename="' + item.uniquename + '"]').remove();
 }
 
 function removeItemFromGroup(item, groupname) {
+    var _group = getGroupByName(groupname);
+    for (var i = 0; i < _group.items.length; i++) {
+        if (_group.items[i].uniquename === item.uniquename) {
+            _group.items.splice(i, 1);
+            i--;
+        }
+    }
+
+    //DOM manipulation
+    var group = $.getGroupByName(groupname);
+    group.find('[data-uniquename="' + item.uniquename + '"]').remove();
 }
 
 function refresh_cart_group_all() {
@@ -140,6 +188,17 @@ function refresh_cart_group_all() {
         connectToSortable: ".cart-target"
     });
 }
+
+function cleanUpGroup(newItem, group) {
+    //DOM cleanup
+    //remove placeholder
+    $(group).find(".placeholder").remove();
+    //do not allow duplicate items
+    var copies = $(group).find("[data-uniquename='" + newItem.uniquename + "']");
+    if (copies.length > 1)
+        copies[1].remove();
+}
+
 
 $(document).ready(function() {
     refresh_cart_group_all();

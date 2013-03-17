@@ -10,10 +10,13 @@
 
         <link rel="stylesheet" href="{#$AppPath#}/css/normalize.css" />
         <link rel="stylesheet" href="{#$AppPath#}/css/foundation.css" />
-        <link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" />    
+        <!--link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" /-->    
+        <link type="text/css" href="{#$AppPath#}/css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="Stylesheet" />    
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+        <!--script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script-->
+        <script type="text/javascript" src="{#$AppPath#}/js/jquery-1.9.1.min.js"></script>
+        <!--script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script-->
+        <script type="text/javascript" src="{#$AppPath#}/js/jquery-ui-1.10.2.custom.min.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
         <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>        
@@ -99,6 +102,8 @@
                     addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
                     addGroup();
                     renameGroup('group 1', 'myGroup!');
+                    addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!',true);
+                    removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
                 });
             </script>
             <div class="large-3 columns" >
@@ -114,7 +119,7 @@
                     </div>
                     <div style="display: none">
                         <ul id="cart-item-dummy" style="display: none"> 
-                            <li data-uniquename="#uniquename#" data-id="#id#">#uniquename#</li>
+                            <li data-uniquename="#uniquename#">#uniquename#</li>
                         </ul>
                     </div>
                     <div class=" panel large-12 columns">
