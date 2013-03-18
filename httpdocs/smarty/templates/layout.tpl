@@ -96,28 +96,28 @@
                 {#block name='body'#}{#/block#}
             </div>
             <script type="text/javascript">
+                function buildTestCart() {
+                    cart.resetCart({sync: true});
+                    cart.addGroup();
+                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
+                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
+                    cart.addItemToAll({uniquename: '1.01_comp231123_c0_seq1', id: 124});
+                    cart.addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+                    cart.addGroup();
+                    cart.renameGroup('group 1', 'myGroup!');
+                    cart.addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!');
+                    cart.addItemToGroup({uniquename: '1.01_comp231123_c0_seq1', id: 124}, 'myGroup!');
+                    cart.removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+                }
+
                 $(document).ready(function() {
-
-                    $.ajax({
-                        url: "{#$ServicePath#}/cart/reset"
+                    $(document).ready(function() {
+                        cart.syncFromServer();
+                        setInterval(cart.checkRegularly, 15000);
                     });
-                    $.webStorage.session().setItem('syncedCart', {all: [], groups: []});
-                    $.webStorage.session().setItem('syncTime', -1);
-                    
-                    setTimeout(function() {
-                        addGroup();
-                        addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                        addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                        addItemToAll({uniquename: '1.01_comp231123_c0_seq1', id: 124});
-                        addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
-                        addGroup();
-                        renameGroup('group 1', 'myGroup!');
-                        addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!');
-                        removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
-                        resetCart({sync:false});
 
 
-                    }, 200);
+                    /*setTimeout(buildTestCart, 200);*/
                 });
             </script>
             <div class="large-3 columns" >

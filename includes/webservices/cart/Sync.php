@@ -29,7 +29,7 @@ class Sync extends \WebService {
             $db = new PDO();
 
 
-        if (isset($querydata['action']))
+        if (isset($querydata['action']) && isset($querydata['action']['action']))
             switch ($querydata['action']['action']) {
                 case 'addGroup':
                     $newname = $querydata['action']['name'];
@@ -87,8 +87,7 @@ class Sync extends \WebService {
                     break;
             }
 
-        return array_merge($querydata,
-                array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']));
+        return array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']);
     }
 
     private static function array_diff_rec($first, $second) {
