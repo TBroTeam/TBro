@@ -267,6 +267,10 @@ cart.addGroup = function(options) {
         collapsible: true,
         heightStyle: "content"
     });
+    newEl.find('.cart-button-delete').click(function() {
+        var group = $(this).parents('.cart-group').first();
+        cart.removeGroup(group.attr('data-group'));
+    });
     newEl.appendTo(cart.cart_groups).hide(0).fadeIn(500);
     return groupname;
 };
@@ -308,6 +312,22 @@ cart.renameGroup = function(oldname, newname, options) {
     header.html(header.html().replace(re, newname));
 };
 
+cart.removeGroup = function(groupname, options) {
+    for (var i = 0; i < cart.groups.length; i++) {
+        if (cart.groups[i].name === item.groupname) {
+            cart.groups.splice(i, 1);
+            i--;
+        }
+    }
+
+    // sync
+    cart.syncAction({action: 'removeGroup', groupname: groupname}, options);
+
+    // DOM manupulation
+    var group = $.getGroupByName(groupname);
+    group.remove();
+};
+
 
 cart.addItemToAll = function(item, options) {
     if (cart.getItemByUniquename(item.uniquename) !== null) {
@@ -322,7 +342,12 @@ cart.addItemToAll = function(item, options) {
     // DOM manupulation
     var newElStr = $('#cart-item-dummy').html();
     newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
-    cart.cart_group_all.find('ul').append(newElStr);
+    newEl = $('<div/>').html(newElStr).children();
+    newEl.find('.cart-button-delete').click(function() {
+        var item = $(this).parents('.cart-item').first();
+        cart.removeItemFromAll({uniquename: item.attr('data-uniquename')});
+    });
+    newEl.appendTo(cart.cart_group_all.find('ul'));
     cart.refresh_cart_group_all();
 };
 
@@ -357,6 +382,12 @@ cart.addItemToGroup = function(item, groupname, options) {
     newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
     var group = $.getGroupByName(groupname).find('ul');
     newEl = $('<div/>').html(newElStr).children();
+    newEl.find('.cart-button-delete').click(function() {
+        var item = $(this).parents('.cart-item').first();
+        var group = $(this).parents('.cart-group').first();
+        cart.removeItemFromGroup({uniquename: item.attr('data-uniquename')}, group.attr('data-group'));
+    });
+
     newEl.appendTo(group).hide(0).fadeIn(500);
     cart.cleanUpGroup(item, group);
 };
@@ -391,6 +422,11 @@ cart.removeItemFromAll = function(item, options) {
 
 cart.removeItemFromGroup = function(item, groupname, options) {
     var _group = cart.getGroupByName(groupname);
+    if (_group === null) {
+        console.log('group ', groupname, ' not found');
+        return false;
+    }
+
     for (var i = 0; i < _group.items.length; i++) {
         if (_group.items[i].uniquename === item.uniquename) {
             _group.items.splice(i, 1);
@@ -414,8 +450,9 @@ cart.refresh_cart_group_all = function() {
         appendTo: "body",
         helper: function() {
             return $(this).clone().addClass('beingDragged');
-        },
-        connectToSortable: ".cart-target"
+        }/*,
+         snap: ".cart-target",
+         snapMode: 'inner'*/
     });
 };
 

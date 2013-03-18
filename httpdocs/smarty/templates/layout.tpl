@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{#$AppPath#}/css/normalize.css" />
         <link rel="stylesheet" href="{#$AppPath#}/css/foundation.css" />
         <!--link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" /-->    
-        <link type="text/css" href="{#$AppPath#}/css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="Stylesheet" />    
+        <link type="text/css" href="{#$AppPath#}/css/custom-theme/jquery-ui-1.10.2.custom.css" rel="Stylesheet" />    
 
         <!--script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script-->
         <script type="text/javascript" src="{#$AppPath#}/js/jquery-1.9.1.min.js"></script>
@@ -71,6 +71,9 @@
             .ui-accordion .ui-accordion-content {
                 padding: 0.5em 1em;
             }
+            .beingDragged {
+                list-style: none;
+            }
         </style>
 
         {#block name='head'#}{#/block#}
@@ -125,31 +128,6 @@
             <div class="large-3 columns" >
                 <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
 
-                    <div id="cart-group-dummy" style="display: none"> 
-                        <div class='cart-group' data-group="#groupname#">
-                            <div class="large-12 columns">
-                                <div class="groupname left">#groupname#</div>
-                                <div class="right">
-                                    <img src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
-                                    <img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                                    <img src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
-                                </div>
-                            </div>
-                            <ul class="cart-target large-12 columns">
-                                <li class="placeholder">drag your items here</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div style="display: none">
-                        <ul id="cart-item-dummy" style="display: none"> 
-                            <li data-uniquename="#uniquename#"  class="large-12">
-                                <div class="left">#uniquename#</div>
-                                <div class="right">
-                                    <img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                     <div class=" panel large-12 columns">
                         <h4>Cart</h4>
                         <div id="cart-group-all" class='ui_accordion ui_collapsible'>
@@ -165,7 +143,32 @@
 
                         </div>
                     </div>
+                    <div style="display: none">
+                        <div id="cart-group-dummy"> 
+                            <div class='cart-group' data-group="#groupname#">
+                                <div class="large-12 columns">
+                                    <div class="groupname left">#groupname#</div>
+                                    <div class="right">
+                                        <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
+                                        <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                                        <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
+                                    </div>
+                                </div>
+                                <ul class="cart-target large-12 columns">
+                                    <li class="placeholder">drag your items here</li>
+                                </ul>
+                            </div>
+                        </div>
 
+                        <ul id="cart-item-dummy"> 
+                            <li data-uniquename="#uniquename#" style="clear:both" class="large-12 cart-item">
+                                <div class="left">#uniquename#</div>
+                                <div class="right">
+                                    <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div>&nbsp;</div>
             </div>

@@ -38,7 +38,7 @@ class Sync extends \WebService {
                     break;
                 case 'addItemToAll':
                     $item = $querydata['action']['item'];
-                    if (in_array($item, $_SESSION['cart']['all'], true))
+                    if (self::array_in_array($item, $_SESSION['cart']['all']))
                         break;
                     $_SESSION['cart']['all'][] = $item;
                     break;
@@ -46,9 +46,9 @@ class Sync extends \WebService {
                     $item = $querydata['action']['item'];
                     $groupname = $querydata['action']['groupname'];
                     $group = &self::get_group($groupname);
-                    if (!in_array($item, $_SESSION['cart']['all'], true))
+                    if (!self::array_in_array($item, $_SESSION['cart']['all']))
                         break;
-                    if (in_array($item, $group, true))
+                    if (self::array_in_array($item, $group))
                         break;
                     $group['items'][] = $item;
                     break;
@@ -56,19 +56,18 @@ class Sync extends \WebService {
                     $item = $querydata['action']['item'];
                     $groupname = $querydata['action']['groupname'];
                     $group = &self::get_group($groupname);
-                    if (!in_array($item, $group, true))
+                    if (!self::array_in_array($item, $group['items']))
                         break;
                     $group['items'] = self::array_diff_rec($group['items'], array($item));
                     break;
                 case 'removeItemFromAll':
                     $item = $querydata['action']['item'];
-                    #var_dump(array($item, $_SESSION['cart']['all']));
-                    if (!in_array($item, $_SESSION['cart']['all'], true))
+                    if (!self::array_in_array($item, $_SESSION['cart']['all']))
                         break;
                     $_SESSION['cart']['all'] = self::array_diff_rec($_SESSION['cart']['all'], array($item));
 
                     foreach ($_SESSION['cart']['groups'] as &$group) {
-                        if (!in_array($item, $group['items'], true))
+                        if (!self::array_in_array($item, $group['items']))
                             continue;
                         $group['items'] = self::array_diff_rec($group['items'], array($item));
                     }
@@ -81,10 +80,24 @@ class Sync extends \WebService {
         return array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']);
     }
 
+    /*
+     * in_array either checks string representation or exact match (which wants exact key order). 
+     * this function allows for different key order in $needle and $straw
+     */
+
+    private static function array_in_array($needle, $haystack) {
+        foreach ($haystack as $straw) {
+            // see array equality http://php.net/manual/en/language.operators.array.php
+            if ($straw == $needle)
+                return true;
+        }
+        return false;
+    }
+
     private static function array_diff_rec($first, $second) {
         $ret = array();
         foreach ($first as $f) {
-            if (!in_array($f, $second, true))
+            if (!self::array_in_array($f, $second))
                 $ret[] = $f;
         }
         return $ret;
