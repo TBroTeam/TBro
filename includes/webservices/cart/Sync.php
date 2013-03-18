@@ -82,6 +82,9 @@ class Sync extends \WebService {
                         $group['items'] = self::array_diff_rec($group['items'], array($item));
                     }
                     break;
+                case 'resetCart':
+                    $_SESSION['cart'] = array('all' => array(), 'groups' => array());
+                    break;
             }
 
         return array_merge($querydata,

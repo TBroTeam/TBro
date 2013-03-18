@@ -125,9 +125,14 @@ function syncAction(action, options) {
 }
 
 function resetCart(options) {
+    cart = {all: [], groups: []};
 
     //sync
     syncAction({action: 'resetCart'}, options);
+    
+    //DOM manipulation
+    cart_group_all.find('ul li').remove();
+    cart_groups.find('div').remove();
 }
 
 function compareCarts(first, second) {
@@ -184,8 +189,19 @@ function compareCarts(first, second) {
 }
 
 
-function rebuildDOM(cart) {
-    console.log('rebuild DOM for ', cart);
+function rebuildDOM(newCart) {
+    resetCart({sync: false});
+    $.each(newCart.all, function(){
+        addItemToAll(this, {sync: false});
+    });
+    $.each(newCart.groups, function(){
+        var groupname = this.name;
+        addGroup({name: groupname, sync: false});
+        $.each(this.items, function(){
+            addItemToGroup(this, groupname, {sync: false});
+        });
+    });
+    
 }
 
 /**
@@ -198,6 +214,9 @@ function addGroup(options) {
         groupname = "group " + (++lastGroupNumber);
     }
     while (getGroupByName(groupname) !== null);
+
+    if (options!==undefined && options.name!==undefined)
+        groupname = options.name;
 
     var group = {name: groupname, items: []};
     cart.groups.push(group);
@@ -350,6 +369,9 @@ function removeItemFromGroup(item, groupname, options) {
     //DOM manipulation
     var group = $.getGroupByName(groupname);
     group.find('[data-uniquename="' + item.uniquename + '"]').remove();
+    if (group.find('li:visible').length===0){
+        group.find('.placeholder').show(0);
+    }
 }
 
 function refresh_cart_group_all() {
@@ -365,7 +387,7 @@ function refresh_cart_group_all() {
 function cleanUpGroup(newItem, group) {
     //DOM cleanup
     //remove placeholder
-    $(group).find(".placeholder").remove();
+    $(group).find(".placeholder").hide(0);
     //do not allow duplicate items
     var copies = $(group).find("[data-uniquename='" + newItem.uniquename + "']");
     if (copies.length > 1)
