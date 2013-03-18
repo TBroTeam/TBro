@@ -2,8 +2,6 @@
 
 namespace webservices\cart;
 
-use \PDO as PDO;
-
 class Sync extends \WebService {
 
     private static function &get_group($groupname) {
@@ -21,13 +19,6 @@ class Sync extends \WebService {
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array('all' => array(), 'groups' => array());
         }
-
-        global $_CONST, $db;
-
-#UI hint
-        if (false)
-            $db = new PDO();
-
 
         if (isset($querydata['action']) && isset($querydata['action']['action']))
             switch ($querydata['action']['action']) {

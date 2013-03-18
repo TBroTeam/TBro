@@ -68,6 +68,9 @@
             .ui-accordion .ui-accordion-header {
                 margin-bottom:0px;
             }
+            .ui-accordion .ui-accordion-content {
+                padding: 0.5em 1em;
+            }
         </style>
 
         {#block name='head'#}{#/block#}
@@ -99,22 +102,21 @@
                 function buildTestCart() {
                     cart.resetCart({sync: true});
                     cart.addGroup();
-                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                    cart.addItemToAll({uniquename: '1.01_comp231123_c0_seq1', id: 124});
-                    cart.addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
+                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
+                    cart.addItemToAll({uniquename: '1.01_comp231123_c0_seq1'});
+                    cart.addItemToAll({uniquename: '1.01_comp2381_c0_seq1'});
                     cart.addGroup();
                     cart.renameGroup('group 1', 'myGroup!');
-                    cart.addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!');
-                    cart.addItemToGroup({uniquename: '1.01_comp231123_c0_seq1', id: 124}, 'myGroup!');
-                    cart.removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+                    cart.addItemToGroup({uniquename: '1.01_comp2381_c0_seq1'}, 'myGroup!');
+                    cart.addItemToGroup({uniquename: '1.01_comp231123_c0_seq1'}, 'myGroup!');
+                    cart.removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1'});
                 }
 
                 $(document).ready(function() {
-                    $(document).ready(function() {
-                        cart.syncFromServer();
-                        setInterval(cart.checkRegularly, 15000);
-                    });
+                    //buildTestCart();
+                    cart.syncFromServer();
+                    setInterval(cart.checkRegularly, 15000);
 
 
                     /*setTimeout(buildTestCart, 200);*/
@@ -125,22 +127,34 @@
 
                     <div id="cart-group-dummy" style="display: none"> 
                         <div class='cart-group' data-group="#groupname#">
-                            <div class="groupname">#groupname#</div>
-                            <ul class="cart-target">
+                            <div class="large-12 columns">
+                                <div class="groupname left">#groupname#</div>
+                                <div class="right">
+                                    <img src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
+                                    <img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                                    <img src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
+                                </div>
+                            </div>
+                            <ul class="cart-target large-12 columns">
                                 <li class="placeholder">drag your items here</li>
                             </ul>
                         </div>
                     </div>
                     <div style="display: none">
                         <ul id="cart-item-dummy" style="display: none"> 
-                            <li data-uniquename="#uniquename#">#uniquename#</li>
+                            <li data-uniquename="#uniquename#"  class="large-12">
+                                <div class="left">#uniquename#</div>
+                                <div class="right">
+                                    <img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <div class=" panel large-12 columns">
                         <h4>Cart</h4>
                         <div id="cart-group-all" class='ui_accordion ui_collapsible'>
-                            <div>all<div class="right"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
-                            <ul>
+                            <div class="large-12 columns"><div class="left">all</div><div class="right"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
+                            <ul class="large-12 columns">
                             </ul>
                         </div>
                         <div>
