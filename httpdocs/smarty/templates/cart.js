@@ -110,10 +110,10 @@ function syncAction(action, options) {
                     $.webStorage.session().setItem('syncedCart', data.cart);
 
                     if (!compareCarts(cart, data.cart)) {
-                        console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', syncedCart);
+                        console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', data.cart);
                         rebuildDOM($.webStorage.session().getItem('syncedCart'));
                     } else {
-                        console.log('carts match!');
+                        console.log('carts match:', cart, data.cart);
                     }
                 }
             }, 500);
@@ -124,7 +124,18 @@ function syncAction(action, options) {
     //$.webStorage.session().setItem();
 }
 
+function resetCart(options) {
+
+    //sync
+    syncAction({action: 'resetCart'}, options);
+}
+
 function compareCarts(first, second) {
+    if (first.all.length !== second.all.length) {
+        console.log(first.all, ' group "All" count differs: ', second.all);
+        return false;
+    }
+
     $.each(first.all, function() {
         if (!$.inArray(this, second.all)) {
             console.log(this, 'not found in all: ', second.all);
@@ -138,19 +149,32 @@ function compareCarts(first, second) {
     }
 
     var groupsFound = 0;
+    var cancel = false;
     $.each(first.groups, function() {
         for (var i = 0; i < second.groups.length; i++) {
             if (this.name !== second.groups[i].name)
                 continue;
             groupsFound++;
+
+            if (this.items.length !== second.groups[i].items.length) {
+                console.log(first.groups, ' group ', this.name, ' item count differs: ', second.groups);
+                cancel = true;
+                return false;
+            }
+
             $.each(this.items, function() {
                 if (!$.inArray(this, second.groups[i].items)) {
                     console.log(this, 'not found in group ', second.groups[i].name, ':', second.groups.name);
+                    cancel = true;
                     return false;
                 }
             });
+            if (cancel)
+                return false;
         }
     });
+    if (cancel)
+        return false;
     if (groupsFound !== first.groups.length) {
         console.log(first.groups, ' group names do not match up ', second.groups);
         return false;

@@ -112,7 +112,7 @@
                         addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
                         addGroup();
                         renameGroup('group 1', 'myGroup!');
-                        addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!', true);
+                        addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!');
                         removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
 
 

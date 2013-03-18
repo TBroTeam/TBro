@@ -77,7 +77,7 @@ class Sync extends \WebService {
                     $_SESSION['cart']['all'] = self::array_diff_rec($_SESSION['cart']['all'], array($item));
 
                     foreach ($_SESSION['cart']['groups'] as &$group) {
-                        if (!in_array($item, $group, true))
+                        if (!in_array($item, $group['items'], true))
                             continue;
                         $group['items'] = self::array_diff_rec($group['items'], array($item));
                     }
