@@ -29,9 +29,12 @@ function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
         return $_REQUEST[$key];
 }
 
-$page = requestVal('page', '/^[a-z-]*$/', '');
-
+$page = requestVal('page', '/^[a-z-\.]*$/', '');
 switch ($page) {
+    case 'cart.js':
+        header('Content-type: application/javascript');
+        $smarty->display('cart.js');
+        break;
     case 'unigene-details':
         $smarty->assign('unigene_uniquename', requestVal('query', '/^[a-z0-9._]+$/i', '1.01_comp231081_c0'));
         $smarty->display('display-unigene.tpl');

@@ -19,6 +19,7 @@
         <script type="text/javascript" src="{#$AppPath#}/js/jquery-ui-1.10.2.custom.min.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
+        <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>        
         <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>        
 
 
@@ -96,14 +97,27 @@
             </div>
             <script type="text/javascript">
                 $(document).ready(function() {
-                    addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                    addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
-                    addItemToAll({uniquename: '1.01_comp231123_c0_seq1', id: 124});
-                    addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
-                    addGroup();
-                    renameGroup('group 1', 'myGroup!');
-                    addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!',true);
-                    removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+
+                    $.ajax({
+                        url: "{#$ServicePath#}/cart/reset"
+                    });
+                    $.webStorage.session().setItem('syncedCart', {all: [], groups: []});
+                    $.webStorage.session().setItem('syncTime', -1);
+                    
+                    setTimeout(function() {
+                        addGroup();
+                        addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
+                        addItemToAll({uniquename: '1.01_comp231081_c0_seq1', id: 123});
+                        addItemToAll({uniquename: '1.01_comp231123_c0_seq1', id: 124});
+                        addItemToAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+                        addGroup();
+                        renameGroup('group 1', 'myGroup!');
+                        addItemToGroup({uniquename: '1.01_comp2381_c0_seq1', id: 125}, 'myGroup!', true);
+                        removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1', id: 125});
+
+
+
+                    }, 200);
                 });
             </script>
             <div class="large-3 columns" >

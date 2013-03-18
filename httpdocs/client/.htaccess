@@ -1,4 +1,5 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^js/cart.js$    index.php?page=cart.js [L,NC]
 RewriteRule ^unigene-details(?:/(.*))?$  index.php?page=unigene-details&query=$1 [L,NC,QSA]
 RewriteRule ^isoform-details(?:/(.*))?$  index.php?page=isoform-details&query=$1 [L,NC,QSA]

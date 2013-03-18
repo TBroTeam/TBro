@@ -1,3 +1,7 @@
+/**
+ * last auto-assigned group number. used by addGroup()
+ * @type int
+ */
 var lastGroupNumber = 0;
 /**
  *&lt;div id="cart-groups"&gt;<br/>
@@ -68,6 +72,8 @@ function getItemByUniquename(name) {
     return item;
 }
 
+
+var lastSyncRequest;
 /**
  *&nbsp;this function syncs all cart actions to the server.
  *&nbsp;action will be mirrored on server and new dataset will be returned.
@@ -80,6 +86,82 @@ function syncAction(action, options) {
     if (options !== undefined && options.sync === false)
         return;
     console.log(action);
+
+    var thisSyncRequest = new Date().getTime();
+    lastSyncRequest = new Date().getTime();
+    $.ajax({
+        url: '{#$ServicePath#}/cart/sync',
+        type: 'post',
+        dataType: "json",
+        data: {action: action, syncRequestTime: lastSyncRequest},
+        success: function(data) {
+            //wait half a second for all the actions to finish, or DOM rebuilds too often
+            setTimeout(function() {
+                if (thisSyncRequest < lastSyncRequest) {
+                    console.log('there has been a newer request, skipping ', thisSyncRequest, 'in favor of ', lastSyncRequest);
+                    return;
+                }
+                var storageSyncTime = $.webStorage.session().getItem('syncTime');
+                // if we are receiving an answer that is outdated (a new request has already been 
+                // sent and answer has been received, maybe on another tab), quit
+                if (data.syncTime >= storageSyncTime) {
+                    console.log('checking ', data.syncTime);
+                    $.webStorage.session().setItem('syncTime', data.syncTime);
+                    $.webStorage.session().setItem('syncedCart', data.cart);
+
+                    if (!compareCarts(cart, data.cart)) {
+                        console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', syncedCart);
+                        rebuildDOM($.webStorage.session().getItem('syncedCart'));
+                    } else {
+                        console.log('carts match!');
+                    }
+                }
+            }, 500);
+        }
+    });
+
+    //$.webStorage.session().getItem();
+    //$.webStorage.session().setItem();
+}
+
+function compareCarts(first, second) {
+    $.each(first.all, function() {
+        if (!$.inArray(this, second.all)) {
+            console.log(this, 'not found in all: ', second.all);
+            return false;
+        }
+    });
+
+    if (first.groups.length !== second.groups.length) {
+        console.log(first.groups, ' group count differs: ', second.groups);
+        return false;
+    }
+
+    var groupsFound = 0;
+    $.each(first.groups, function() {
+        for (var i = 0; i < second.groups.length; i++) {
+            if (this.name !== second.groups[i].name)
+                continue;
+            groupsFound++;
+            $.each(this.items, function() {
+                if (!$.inArray(this, second.groups[i].items)) {
+                    console.log(this, 'not found in group ', second.groups[i].name, ':', second.groups.name);
+                    return false;
+                }
+            });
+        }
+    });
+    if (groupsFound !== first.groups.length) {
+        console.log(first.groups, ' group names do not match up ', second.groups);
+        return false;
+    }
+
+    return true;
+}
+
+
+function rebuildDOM(cart) {
+    console.log('rebuild DOM for ', cart);
 }
 
 /**
@@ -154,7 +236,7 @@ function addItemToAll(item, options) {
         console.log('can\'t add item to "All":', item, 'already exists');
         return false;
     }
-    cart.all.push(item);
+    cart.all.unshift(item);
 
     //sync
     syncAction({action: 'addItemToAll', item: item}, options);
