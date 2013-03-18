@@ -252,24 +252,34 @@ cart.addGroup = function(options) {
     // DOM manupulation
     var newElStr = $('#cart-group-dummy').html();
     newElStr = newElStr.replace(/#groupname#/g, groupname);
-    cart.cart_groups.append(newElStr);
-    var newEl = $.getGroupByName(groupname);
-    newEl.find('.cart-target').sortable({
+    newEl = $('<div/>').html(newElStr).children();
+
+    newEl.find('.cart-target').droppable({
         items: "li:not(.placeholder)",
         accept: ":not(.ui-sortable-helper)",
-        receive: function(event, ui) {
-            var item = {uniquename: ui.item.attr('data-uniquename')};
+        drop: function(event, ui) {
+            var item = {uniquename: ui.draggable.attr('data-uniquename')};
             //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
-            cart.addItemToGroup(item, $(this).parent().attr('data-group'), false);
-            //clean up placeholder and duplicate items
-            cart.cleanUpGroup(item, this);
+            cart.addItemToGroup(item, $(this).parent().attr('data-group'));
         }
     });
     newEl.accordion({
         collapsible: true,
         heightStyle: "content"
     });
+    newEl.appendTo(cart.cart_groups).hide(0).fadeIn(500);
     return groupname;
+};
+
+
+cart.cleanUpGroup = function(newItem, group) {
+    //DOM cleanup
+    //remove placeholder
+    $(group).find(".placeholder").hide(0);
+    //do not allow duplicate items
+    var copies = $(group).find("[data-uniquename='" + newItem.uniquename + "']");
+    if (copies.length > 1)
+        copies[1].remove();
 };
 
 cart.renameGroup = function(oldname, newname, options) {
@@ -346,7 +356,8 @@ cart.addItemToGroup = function(item, groupname, options) {
     var newElStr = $('#cart-item-dummy').html();
     newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
     var group = $.getGroupByName(groupname).find('ul');
-    group.append(newElStr);
+    newEl = $('<div/>').html(newElStr).children();
+    newEl.appendTo(group).hide(0).fadeIn(500);
     cart.cleanUpGroup(item, group);
 };
 
@@ -408,15 +419,6 @@ cart.refresh_cart_group_all = function() {
     });
 };
 
-cart.cleanUpGroup = function(newItem, group) {
-    //DOM cleanup
-    //remove placeholder
-    $(group).find(".placeholder").hide(0);
-    //do not allow duplicate items
-    var copies = $(group).find("[data-uniquename='" + newItem.uniquename + "']");
-    if (copies.length > 1)
-        copies[1].remove();
-};
 
 
 $(document).ready(function() {

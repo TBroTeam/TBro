@@ -114,8 +114,8 @@
                 }
 
                 $(document).ready(function() {
-                    //buildTestCart();
-                    cart.syncFromServer();
+                    buildTestCart();
+                    //cart.syncFromServer();
                     setInterval(cart.checkRegularly, 15000);
 
 
