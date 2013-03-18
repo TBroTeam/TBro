@@ -13,7 +13,9 @@
         $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + isoform, {
             success: function(val) {
                 canvas = $('#canvas_{#$data.isoform.uniquename|clean_id#}');
-                canvas.attr('width', canvas.parent().width()-8);
+                canvas.attr('width', canvas.parent().width() - 8);
+                if (val.tracks.length == 0)
+                    return;
                 new CanvasXpress(
                         "canvas_{#$data.isoform.uniquename|clean_id#}",
                         {
@@ -64,7 +66,13 @@
 
 <div class="row">
     <div class="large-12 columns panel" id="description">
-        <h1>{#$data.isoform.uniquename#}</h1>
+
+        <div class="row">
+            <div class="large-12 columns">
+                <h1 class="left">{#$data.isoform.uniquename#}</h1>
+                <div class="right"><span class="button" onclick="cart.addItemToAll({uniquename: '{#$data.isoform.uniquename#}'});"> add to cart -> </span></div>
+            </div>
+        </div>
         <h5>last modified: {#$data.isoform.timelastmodified#}</h5>
         <h5>corresponding unigene: <a href="{#$AppPath#}/unigene-details/{#$data.isoform.unigene.uniquename#}">{#$data.isoform.unigene.uniquename#}</a></h5>
 
@@ -112,7 +120,7 @@
     </div>
 </div>
 
-
+{#if isset($data.isoform.blast2go) && count($data.isoform.blast2go)>0#}
 <div class="row" id="blast2go">
     <div class="large-12 columns">
         <h2>Blast2Go Annotations:</h2>
@@ -120,7 +128,7 @@
         <div class="row">
             <div class="large-12 columns panel">
 
-                <h4>{#if isset($data.isoform.blast2go) && count($data.isoform.blast2go)>0#}
+                <h4>
                     {#foreach $data.isoform.blast2go as $blast2go#}
                     {#$blast2go.value#}
                     {#/foreach#}
@@ -131,7 +139,7 @@
                     {#foreach $data.isoform.dbxref as $dbxref#}
                     {#dbxreflink dbxref=$dbxref#}
                     {#/foreach#}
-                    {#/if#}
+
                 </p>
             </div>
 
@@ -140,6 +148,7 @@
 </div>
 
 <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
+{#/if#}
 {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}
 <div class="row" id="repeatmasker">
     <div class="large-12 columns">

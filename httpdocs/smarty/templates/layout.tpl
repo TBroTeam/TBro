@@ -63,7 +63,31 @@
                     collapsible: true,
                     heightStyle: "content"
                 });
+                {#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}
+
+                cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#});
+                setInterval(cart.checkRegularly, 15000);
             });</script>
+
+        <script type="text/javascript">
+            function buildTestCart() {
+                cart.resetCart({sync: true});
+                cart.addGroup();
+                cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
+                cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
+                cart.addItemToAll({uniquename: '1.01_comp231123_c0_seq1'});
+                cart.addItemToAll({uniquename: '1.01_comp2381_c0_seq1'});
+                cart.addGroup();
+                cart.renameGroup('group 1', 'myGroup!');
+                cart.addItemToGroup({uniquename: '1.01_comp2381_c0_seq1'}, 'myGroup!');
+                cart.addItemToGroup({uniquename: '1.01_comp231123_c0_seq1'}, 'myGroup!');
+                cart.removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1'});
+            }
+
+            $(document).ready(function() {
+                //buildTestCart();
+            });
+        </script>
         <style>
             .ui-accordion .ui-accordion-header {
                 margin-bottom:0px;
@@ -101,30 +125,6 @@
             <div class="large-9 columns">
                 {#block name='body'#}{#/block#}
             </div>
-            <script type="text/javascript">
-                function buildTestCart() {
-                    cart.resetCart({sync: true});
-                    cart.addGroup();
-                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
-                    cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
-                    cart.addItemToAll({uniquename: '1.01_comp231123_c0_seq1'});
-                    cart.addItemToAll({uniquename: '1.01_comp2381_c0_seq1'});
-                    cart.addGroup();
-                    cart.renameGroup('group 1', 'myGroup!');
-                    cart.addItemToGroup({uniquename: '1.01_comp2381_c0_seq1'}, 'myGroup!');
-                    cart.addItemToGroup({uniquename: '1.01_comp231123_c0_seq1'}, 'myGroup!');
-                    cart.removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1'});
-                }
-
-                $(document).ready(function() {
-                    buildTestCart();
-                    //cart.syncFromServer();
-                    setInterval(cart.checkRegularly, 15000);
-
-
-                    /*setTimeout(buildTestCart, 200);*/
-                });
-            </script>
             <div class="large-3 columns" >
                 <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
 

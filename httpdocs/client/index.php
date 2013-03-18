@@ -2,7 +2,7 @@
 
 define('APPPATH', '/httpdocs/client');
 define('SERVICEPATH', '/httpdocs/service');
-define('INC', __DIR__.'/../../includes/');
+define('INC', __DIR__ . '/../../includes/');
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -36,13 +36,15 @@ switch ($page) {
         $smarty->display('cart.js');
         break;
     case 'unigene-details':
+        //TODO check if exists
         $smarty->assign('unigene_uniquename', requestVal('query', '/^[a-z0-9._]+$/i', '1.01_comp231081_c0'));
         $smarty->display('display-unigene.tpl');
         break;
     case 'isoform-details':
+        //TODO check if exists
         $smarty->assign('isoform_uniquename', requestVal('query', '/^[a-z0-9._]+$/i', '1.01_comp231081_c0'));
         $smarty->display('display-isoform.tpl');
-        break;    
+        break;
     default:
         $smarty->display('welcome.tpl');
         break;
