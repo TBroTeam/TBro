@@ -108,15 +108,15 @@ cart.syncAction = function(action, options) {
                     console.log('there has been a newer request, skipping ', thisSyncRequest, 'in favor of ', cart.lastSyncRequest);
                     return;
                 }
-                var storageSyncTime = $.webStorage.session().getItem('syncTime');
+                var storageSyncTime = $.webStorage.local().getItem('syncTime');
                 // if we are receiving an answer that is outdated (a new request has already been 
                 // sent and answer has been received, maybe on another tab), skip writing back
                 if (data.syncTime > storageSyncTime) {
                     console.log('checking ', data.syncTime);
-                    $.webStorage.session().setItem('syncTime', data.syncTime);
-                    $.webStorage.session().setItem('syncedCart', data.cart);
+                    $.webStorage.local().setItem('syncTime', data.syncTime);
+                    $.webStorage.local().setItem('syncedCart', data.cart);
                 }
-                var sessionCart = $.webStorage.session().getItem('syncedCart');
+                var sessionCart = $.webStorage.local().getItem('syncedCart');
                 if (!cart.compareCarts(cart, sessionCart)) {
                     console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', sessionCart);
                     cart.rebuildDOM(sessionCart);
@@ -125,19 +125,22 @@ cart.syncAction = function(action, options) {
         }
     });
 
-    //$.webStorage.session().getItem();
-    //$.webStorage.session().setItem();
+    //$.webStorage.local().getItem();
+    //$.webStorage.local().setItem();
 };
 
 cart.checkRegularly = function() {
-    var storageSyncTime = $.webStorage.session().getItem('syncTime');
+    var storageSyncTime = $.webStorage.local().getItem('syncTime');
     console.log('performing regular cart check, lastSyncRequest is', cart.lastSyncRequest, 'storageSyncTime is', storageSyncTime);
     if (cart.lastSyncRequest < storageSyncTime) {
-        var sessionCart = $.webStorage.session().getItem('syncedCart');
+        var sessionCart = $.webStorage.local().getItem('syncedCart');
         if (!cart.compareCarts(cart, sessionCart)) {
             console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', sessionCart);
             cart.rebuildDOM(sessionCart);
+        } else {
+            console.log('local and remote cart identical, everything okay');
         }
+        cart.lastSyncRequest = storageSyncTime;
     }
 };
 

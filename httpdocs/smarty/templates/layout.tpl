@@ -66,7 +66,7 @@
                 {#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}
 
                 cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#});
-                setInterval(cart.checkRegularly, 15000);
+                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
             });</script>
 
         <script type="text/javascript">
