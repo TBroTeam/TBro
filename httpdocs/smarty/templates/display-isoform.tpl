@@ -269,9 +269,11 @@
                                                                     <td>{#$interpro.timeexecuted#}</td>
                                                                     <td>
                                                                         {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
+                                                                            <ul style="list-style: none">
                                                                             {#foreach $interpro.dbxref as $dbxref#}
-                                                                                {#dbxreflink dbxref=$dbxref#} 
+                                                                                <li>{#dbxreflink dbxref=$dbxref#} </li>
                                                                             {#/foreach#}
+                                                                            </ul>
                                                                         {#/if#}
                                                                     </td>
                                                                 </tr>
