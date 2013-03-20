@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-19 13:51:07
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-20 16:52:57
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1363697440,
+      1 => 1363794776,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363697440,
+      1 => 1363700145,
       2 => 'file',
     ),
   ),
@@ -118,7 +118,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 
                 cart.rebuildDOM(<?php echo json_encode($_smarty_tpl->tpl_vars['kickoff_cart']->value['cart']);?>
 );
-                setInterval(cart.checkRegularly, 15000);
+                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
             });</script>
 
         <script type="text/javascript">
@@ -174,11 +174,11 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                 if (val.tracks.length == 0)
                     return;
                 new CanvasXpress(
-                        "canvas_<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
+                "canvas_<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
 ",
-                        {
-                            "tracks": val.tracks
-                        },
+                {
+                    "tracks": val.tracks
+                },
                 {
                     graphType: 'Genome',
                     useFlashIE: true,
@@ -191,7 +191,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     setMin: val.min,
                     setMax: val.max
                 }
-                );
+            );
             }
         });
         $('form.blast').submit(function(event) {
@@ -234,10 +234,10 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
             <li>Quick Navigation:</li>
             <li><a href="#description">Isoform Description</a></li>
             <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?>
-            <li><a href="#repeatmasker">Repeatmasker Annotations</a></li>
+                <li><a href="#repeatmasker">Repeatmasker Annotations</a></li>
             <?php }?>
             <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?>
-            <li><a href="#predpep">Predicted Peptides</a></li>
+                <li><a href="#predpep">Predicted Peptides</a></li>
             <?php }?>
         </ul>
     </div>
@@ -311,228 +311,227 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 </div>
 
 <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['blast2go'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['blast2go'])>0){?>
-<div class="row" id="blast2go">
-    <div class="large-12 columns">
-        <h2>Blast2Go Annotations:</h2>
+    <div class="row" id="blast2go">
+        <div class="large-12 columns">
+            <h2>Blast2Go Annotations:</h2>
 
-        <div class="row">
-            <div class="large-12 columns panel">
+            <div class="row">
+                <div class="large-12 columns panel">
 
-                <h4>
-                    <?php  $_smarty_tpl->tpl_vars['blast2go'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['blast2go']->_loop = false;
+                    <h4>
+                        <?php  $_smarty_tpl->tpl_vars['blast2go'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['blast2go']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data']->value['isoform']['blast2go']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['blast2go']->key => $_smarty_tpl->tpl_vars['blast2go']->value){
 $_smarty_tpl->tpl_vars['blast2go']->_loop = true;
 ?>
-                    <?php echo $_smarty_tpl->tpl_vars['blast2go']->value['value'];?>
+                            <?php echo $_smarty_tpl->tpl_vars['blast2go']->value['value'];?>
 
-                    <?php } ?>
-                    <?php }?>
+                        <?php } ?>
                 </h4>
-                <p>
-                    <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['dbxref'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['dbxref'])>0){?>
-                    <?php  $_smarty_tpl->tpl_vars['dbxref'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['dbxref']->_loop = false;
+
+                <?php if ((isset($_smarty_tpl->tpl_vars['data']->value['isoform']['dbxref'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['dbxref'])>0)){?>
+                    <table style="width:100%">
+                        <tbody>
+                            <?php  $_smarty_tpl->tpl_vars['dbxref'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['dbxref']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data']->value['isoform']['dbxref']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['dbxref']->key => $_smarty_tpl->tpl_vars['dbxref']->value){
 $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 ?>
-                    <?php echo smarty_function_dbxreflink(array('dbxref'=>$_smarty_tpl->tpl_vars['dbxref']->value),$_smarty_tpl);?>
-
-                    <?php } ?>
-
-                </p>
+                                <tr><td><?php echo smarty_function_dbxreflink(array('dbxref'=>$_smarty_tpl->tpl_vars['dbxref']->value),$_smarty_tpl);?>
+<br/></td></tr>
+                                    <?php } ?>
+                        </tbody>
+                    </table>
+                <?php }?>
             </div>
-
         </div>
     </div>
 </div>
 
 <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
 <?php }?>
-<?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?>
-<div class="row" id="repeatmasker">
-    <div class="large-12 columns">
-        <h2>Repeatmasker Annotations:</h2>
+    <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?>
+        <div class="row" id="repeatmasker">
+            <div class="large-12 columns">
+                <h2>Repeatmasker Annotations:</h2>
 
-        <div class="row">
-            <div class="large-12 columns panel">
-                <table style="width:100%">
-                    <thead>
-                        <tr><td>name</td><td>class</td><td>family</td><td>min</td><td>max</td><td>strand</td><td>length</td></tr>
-                    </thead>
-                    <tbody>
-                        <?php  $_smarty_tpl->tpl_vars['repeatmasker'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['repeatmasker']->_loop = false;
+                <div class="row">
+                    <div class="large-12 columns panel">
+                        <table style="width:100%">
+                            <thead>
+                                <tr><td>name</td><td>class</td><td>family</td><td>min</td><td>max</td><td>strand</td><td>length</td></tr>
+                            </thead>
+                            <tbody>
+                                <?php  $_smarty_tpl->tpl_vars['repeatmasker'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['repeatmasker']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['repeatmasker']->key => $_smarty_tpl->tpl_vars['repeatmasker']->value){
 $_smarty_tpl->tpl_vars['repeatmasker']->_loop = true;
 ?>
-                        <tr>
-                            <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['repeat_name'];?>
+                                    <tr>
+                                        <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['repeat_name'];?>
 </td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['repeat_class'];?>
+                                        <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['repeat_class'];?>
 </td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['repeat_family'];?>
+                                        <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['repeat_family'];?>
 </td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['fmin'];?>
+                                        <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['fmin'];?>
 </td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['fmax'];?>
+                                        <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['fmax'];?>
 </td>
-                            <td><?php if ($_smarty_tpl->tpl_vars['repeatmasker']->value['strand']>0){?>right<?php }else{ ?>left<?php }?></td>
-                            <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['fmax']-$_smarty_tpl->tpl_vars['repeatmasker']->value['fmin']+1;?>
+                                        <td><?php if ($_smarty_tpl->tpl_vars['repeatmasker']->value['strand']>0){?>right<?php }else{ ?>left<?php }?></td>
+                                        <td><?php echo $_smarty_tpl->tpl_vars['repeatmasker']->value['fmax']-$_smarty_tpl->tpl_vars['repeatmasker']->value['fmin']+1;?>
 </td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
-<div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
-<?php }?>
-
-
-<?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?>
-<div class="row" id="predpep">
-    <div class="large-12 columns">
-        <h2>Predicted Peptides:</h2>
-
-
-        <div class="row">
-            <div class="large-12 columns panel">
-                <div class=" section-container tabs" data-section>
-
-                    <?php  $_smarty_tpl->tpl_vars['predpep'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['predpep']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['predpep']->key => $_smarty_tpl->tpl_vars['predpep']->value){
-$_smarty_tpl->tpl_vars['predpep']->_loop = true;
-?>
-                    <section class="section">
-                        <p class="title"><a href="#"><?php echo $_smarty_tpl->tpl_vars['predpep']->value['uniquename'];?>
-</a></p>
-                        <div class="content">
-
-                            <div class="row">
-                                <div class="large-12 columns">
-                                    <table style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <td>uniquename</td>
-                                                <td>min</td>
-                                                <td>max</td>
-                                                <td>strand</td>
-                                                <td>length</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['uniquename'];?>
-</td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['fmin'];?>
-</td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['fmax'];?>
-</td>
-                                                <td><?php if ($_smarty_tpl->tpl_vars['predpep']->value['strand']>0){?>right<?php }else{ ?>left<?php }?></td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['seqlen'];?>
-</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="large-9 columns">
-                                    <textarea style="height:100px;" id="sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
-"><?php echo $_smarty_tpl->tpl_vars['predpep']->value['residues'];?>
-</textarea>
-                                </div>
-                                <div class="large-3 columns" style="text-align: right">
-                                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                                        <input type="hidden" name='CMD' value='Web' />
-                                        <input type="hidden" name='PROGRAM' value='blastp' />
-                                        <input type="hidden" name='BLAST_PROGRAMS' value='blastp' />
-                                        <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                                        <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                                        <input type="hidden" name='LINK' value='blasthome' />
-                                        <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
-" name="QUERY" value="" />
-                                        <input type="submit" class="small button"  value="send to blastp">
-                                    </form>
-                                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                                        <input type="hidden" name='CMD' value='Web' />
-                                        <input type="hidden" name='PROGRAM' value='tblastn' />
-                                        <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
-                                        <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                                        <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                                        <input type="hidden" name='LINK' value='blasthome' />
-                                        <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
-" name="QUERY" value="" />
-                                        <input type="submit" class="small button"  value="send to tblastn">
-                                    </form>
-                                </div>
-                            </div>
-
-                            <?php if (isset($_smarty_tpl->tpl_vars['predpep']->value['interpro'])&&count($_smarty_tpl->tpl_vars['predpep']->value['interpro'])>0){?>
-                            <div class="row" id="interpro">
-                                <div class="large-12 columns">
-                                    <h4>Interpro Annotations:</h4>
-
-                                    <table style="width:100%">
-                                        <thead>
-                                            <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>evalue</td><td>database</td><td>database version</td><td>time executed</td><td>dbxref</td></tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php  $_smarty_tpl->tpl_vars['interpro'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['interpro']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['predpep']->value['interpro']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['interpro']->key => $_smarty_tpl->tpl_vars['interpro']->value){
-$_smarty_tpl->tpl_vars['interpro']->_loop = true;
-?>
-                                            <tr><td><?php echo smarty_function_interprolink(array('id'=>$_smarty_tpl->tpl_vars['interpro']->value['interpro_id']),$_smarty_tpl);?>
-</td><td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['fmin'];?>
-</td><td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['fmax'];?>
-</td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['evalue'];?>
-</td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['program'];?>
-</td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['programversion'];?>
-</td>
-                                                <td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['timeexecuted'];?>
-</td>
-                                                <td>
-                                                    <?php if (isset($_smarty_tpl->tpl_vars['interpro']->value['dbxref'])&&count($_smarty_tpl->tpl_vars['interpro']->value['dbxref'])>0){?>
-                                                    <?php  $_smarty_tpl->tpl_vars['dbxref'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['dbxref']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['interpro']->value['dbxref']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['dbxref']->key => $_smarty_tpl->tpl_vars['dbxref']->value){
-$_smarty_tpl->tpl_vars['dbxref']->_loop = true;
-?>
-                                                    <?php echo smarty_function_dbxreflink(array('dbxref'=>$_smarty_tpl->tpl_vars['dbxref']->value),$_smarty_tpl);?>
- 
-                                                    <?php } ?>
-                                                    <?php }?>
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <?php }?>
-                        </div>
-                        <div class="row">&nbsp;</div>
-                    </section>
-                    <?php } ?>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
         </div>
-    </div>
-</div>
-<div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
-<?php }?>
+        <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
+    <?php }?>
 
+
+    <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?>
+        <div class="row" id="predpep">
+            <div class="large-12 columns">
+                <h2>Predicted Peptides:</h2>
+
+
+                <div class="row">
+                    <div class="large-12 columns panel">
+                        <div class=" section-container tabs" data-section>
+
+                            <?php  $_smarty_tpl->tpl_vars['predpep'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['predpep']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['predpep']->key => $_smarty_tpl->tpl_vars['predpep']->value){
+$_smarty_tpl->tpl_vars['predpep']->_loop = true;
+?>
+                                <section class="section">
+                                    <p class="title"><a href="#"><?php echo $_smarty_tpl->tpl_vars['predpep']->value['uniquename'];?>
+</a></p>
+                                    <div class="content">
+
+                                        <div class="row">
+                                            <div class="large-12 columns">
+                                                <table style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>uniquename</td>
+                                                            <td>min</td>
+                                                            <td>max</td>
+                                                            <td>strand</td>
+                                                            <td>length</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['uniquename'];?>
+</td>
+                                                            <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['fmin'];?>
+</td>
+                                                            <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['fmax'];?>
+</td>
+                                                            <td><?php if ($_smarty_tpl->tpl_vars['predpep']->value['strand']>0){?>right<?php }else{ ?>left<?php }?></td>
+                                                            <td><?php echo $_smarty_tpl->tpl_vars['predpep']->value['seqlen'];?>
+</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="large-9 columns">
+                                                <textarea style="height:100px;" id="sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+"><?php echo $_smarty_tpl->tpl_vars['predpep']->value['residues'];?>
+</textarea>
+                                            </div>
+                                            <div class="large-3 columns" style="text-align: right">
+                                                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
+                                                    <input type="hidden" name='CMD' value='Web' />
+                                                    <input type="hidden" name='PROGRAM' value='blastp' />
+                                                    <input type="hidden" name='BLAST_PROGRAMS' value='blastp' />
+                                                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                                                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                                                    <input type="hidden" name='LINK' value='blasthome' />
+                                                    <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+" name="QUERY" value="" />
+                                                    <input type="submit" class="small button"  value="send to blastp">
+                                                </form>
+                                                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
+                                                    <input type="hidden" name='CMD' value='Web' />
+                                                    <input type="hidden" name='PROGRAM' value='tblastn' />
+                                                    <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
+                                                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                                                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                                                    <input type="hidden" name='LINK' value='blasthome' />
+                                                    <input type="hidden" class="query" data-ref="#sequence-<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['predpep']->value['uniquename']);?>
+" name="QUERY" value="" />
+                                                    <input type="submit" class="small button"  value="send to tblastn">
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <?php if (isset($_smarty_tpl->tpl_vars['predpep']->value['interpro'])&&count($_smarty_tpl->tpl_vars['predpep']->value['interpro'])>0){?>
+                                            <div class="row" id="interpro">
+                                                <div class="large-12 columns">
+                                                    <h4>Interpro Annotations:</h4>
+
+                                                    <table style="width:100%">
+                                                        <thead>
+                                                            <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>evalue</td><td>database match</td><td>time executed</td><td>dbxref</td></tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php  $_smarty_tpl->tpl_vars['interpro'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['interpro']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['predpep']->value['interpro']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['interpro']->key => $_smarty_tpl->tpl_vars['interpro']->value){
+$_smarty_tpl->tpl_vars['interpro']->_loop = true;
+?>
+                                                                <tr><td><?php echo smarty_function_interprolink(array('id'=>$_smarty_tpl->tpl_vars['interpro']->value['interpro_id']),$_smarty_tpl);?>
+</td><td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['fmin'];?>
+</td><td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['fmax'];?>
+</td>
+                                                                    <td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['evalue'];?>
+</td>
+                                                                    <td><?php echo smarty_function_dbxreflink(array('dbxref'=>array('dbname'=>$_smarty_tpl->tpl_vars['interpro']->value['program'],'accession'=>$_smarty_tpl->tpl_vars['interpro']->value['analysis_match_id'],'description'=>$_smarty_tpl->tpl_vars['interpro']->value['analysis_match_description'],'dbversion'=>$_smarty_tpl->tpl_vars['interpro']->value['programversion'])),$_smarty_tpl);?>
+</td>
+                                                                    <td><?php echo $_smarty_tpl->tpl_vars['interpro']->value['timeexecuted'];?>
+</td>
+                                                                    <td>
+                                                                        <?php if (isset($_smarty_tpl->tpl_vars['interpro']->value['dbxref'])&&count($_smarty_tpl->tpl_vars['interpro']->value['dbxref'])>0){?>
+                                                                            <?php  $_smarty_tpl->tpl_vars['dbxref'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['dbxref']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['interpro']->value['dbxref']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['dbxref']->key => $_smarty_tpl->tpl_vars['dbxref']->value){
+$_smarty_tpl->tpl_vars['dbxref']->_loop = true;
+?>
+                                                                                <?php echo smarty_function_dbxreflink(array('dbxref'=>$_smarty_tpl->tpl_vars['dbxref']->value),$_smarty_tpl);?>
+ 
+                                                                            <?php } ?>
+                                                                        <?php }?>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        <?php }?>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                </section>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
+    <?php }?>
+    
             </div>
             <div class="large-3 columns" >
                 <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">

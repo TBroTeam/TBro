@@ -46,9 +46,33 @@ BEGIN
 END;
 EOF
     ),
+          array('func_header' => 'get_or_insert_dbxref (_dbname character varying(255), _accession character varying(255), _description character varying(255))',
+          'func_returns' => 'integer',
+'func_body' => <<<EOF
+DECLARE
+    _db_id integer;
+    _dbxref_id integer;
+    _db_description  character varying(255);
+BEGIN
+    SELECT INTO _db_id db_id FROM db WHERE name = _dbname;
+    SELECT INTO _dbxref_id, _db_description dbxref_id, description FROM dbxref WHERE db_id = _db_id AND accession = _accession;
+
+    IF _dbxref_id IS NULL THEN
+        INSERT INTO dbxref (db_id, accession, description) VALUES (_db_id, _accession, _description);
+        _dbxref_id := currval(''dbxref_dbxref_id_seq'');
+    ELSIF _db_description IS NULL OR _db_description != _description THEN
+	UPDATE dbxref SET description=_description WHERE dbxref_id = _dbxref_id;	
+    END IF;
+
+    
+    RETURN _dbxref_id;
+
+END;   
+EOF
+    ),
     array('func_header' => 'set_expressionresult_quantificationresult_relationships (_expressionresult_id bigint, _parent_id integer, _feature_uniq character varying(255), _samplegroup character varying(255))',
-        'func_returns' => 'integer',
-        'func_body' => <<<EOF
+ 'func_returns' => 'integer',
+ 'func_body' => <<<EOF
 DECLARE
     _line RECORD;
     _count integer;
@@ -96,18 +120,20 @@ END;
 EOF
     ),
     array('func_header' => 'get_predpep_annotations_interpro(_predpep_ids integer[])',
-        'func_returns' => 'TABLE (predpep_id int, feature_id int, uniquename text, fmin int, fmax int, strand smallint, interpro_ID text, evalue double precision, analysis_name character varying(255), program  character varying(255), programversion  character varying(255), timeexecuted timestamp)',
+        'func_returns' => 'TABLE (predpep_id int, feature_id int, uniquename text, fmin int, fmax int, strand smallint, interpro_ID text, evalue double precision, analysis_name character varying(255), program  character varying(255), programversion  character varying(255), timeexecuted timestamp, analysis_match_id text, analysis_match_description text)',
         'func_body' => <<<EOF
 BEGIN
     RETURN QUERY
     SELECT 
-        featureloc.srcfeature_id AS predpep_id, interpro.feature_id, interpro.uniquename, featureloc.fmin, featureloc.fmax, featureloc.strand, interpro_ID.value AS interpro_ID, analysisfeature.significance AS evalue, analysis.name AS analysis_name, analysis.program, analysis.programversion, analysis.timeexecuted
+        featureloc.srcfeature_id AS predpep_id, interpro.feature_id, interpro.uniquename, featureloc.fmin, featureloc.fmax, featureloc.strand, interpro_ID.value AS interpro_ID, analysisfeature.significance AS evalue, analysis.name AS analysis_name, analysis.program, analysis.programversion, analysis.timeexecuted, analysis_match_id.value, analysis_match_description.value
     FROM 
         feature interpro
         INNER JOIN featureloc ON (interpro.feature_id = featureloc.feature_id)
         LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id   = interpro.feature_id AND interpro_ID.type_id = {$_CONST('CV_INTERPRO_ID')}) 
         LEFT OUTER JOIN analysisfeature ON (interpro.feature_id = analysisfeature.feature_id)
         LEFT OUTER JOIN analysis ON (analysisfeature.analysis_id = analysis.analysis_id)
+        LEFT OUTER JOIN featureprop AS analysis_match_id ON (analysis_match_id.feature_id = interpro.feature_id AND analysis_match_id.type_id = {$_CONST('CV_INTERPRO_ANALYSIS_MATCH_ID')})
+        LEFT OUTER JOIN featureprop AS analysis_match_description ON (analysis_match_description.feature_id = interpro.feature_id AND analysis_match_description.type_id = {$_CONST('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION')})
     WHERE 
         featureloc.srcfeature_id = any(_predpep_ids) AND
         interpro.type_id = {$_CONST('CV_ANNOTATION_INTERPRO')};
@@ -131,19 +157,19 @@ $fquery = <<<EOF
 %3\$s
 ' LANGUAGE 'plpgsql';
 EOF;
-echo"\n";
-foreach ($stored_functions as $fun) {
-    if ($fun['func_header'] == '')
-        continue;
+    echo"\n";
+    foreach($stored_functions as  $fun) {
+    if($fun['func_header'] == '')
+    continue;
 
-    echo 'updating ' . $fun['func_header'] . "\n";
-    $query = sprintf($fquery
-            , $fun['func_header']
-            , $fun['func_returns'] == null ? '' : 'RETURNS ' . $fun['func_returns']
-            , $fun['func_body']
-    );
-    echo $query . "\n";
-    $db->query(sprintf('DROP FUNCTION IF EXISTS %1$s;', $fun['func_header']));
-    $db->query($query);
+echo 'updating ' . $fun['func_header'] . "\n";
+$query = sprintf($fquery
+        , $fun['func_header']
+        , $fun['func_returns'] == null ? '' : 'RETURNS ' . $fun['func_returns']
+        , $fun['func_body']
+);
+echo $query . "\n";
+$db->query(sprintf('DROP FUNCTION IF EXISTS %1$s;', $fun['func_header']));
+$db->query($query);
 }
 ?>

@@ -11,7 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <script type="text/javascript">
             $(document).ready(function() {
-                $.ajax('../service/graphs/heatmap/counts', {
+                $.ajax('/httpdocs/service/graphs/heatmap/quantifications', {
                     data: { parents: ['1.01_comp103625_c0', '1.01_comp100136_c0','1.01_comp10031_c0'] },
                     success: function(val){
                         new CanvasXpress(

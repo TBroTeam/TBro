@@ -36,6 +36,9 @@ define('CV_BIOMATERIAL_ISA', 32);
 
 define('LINES_IMPORTED', 'datasets_imported');
 
+define('CV_INTERPRO_ANALYSIS_MATCH_ID', 131);
+define('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION', 132);
+
 #versions of databases for interpro import
 global $dbrefx_versions;
 $dbrefx_versions = array('HMMPIR' => '1.0');

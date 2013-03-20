@@ -7,6 +7,32 @@ require_once __DIR__ . '/Importer_Sequences.php';
 class Importer_Annotations_Interpro {
 
     /**
+     * Interpro Line RegeX
+     * @var RegEx-String
+     */
+    private static $regex = <<<EOF
+{^
+   (?<feature>\w+)
+[\t]   (?<pepStart>\d+)
+[\t]   (?<pepEnd>\d+)
+[\t]   (?<pepStrand>[+-])
+[\t]   (?<checksum>\w+)
+[\t]   (?<length>\d+)
+[\t]   (?<analysisMethod>\w+)
+[\t]   (?<analysisMatchID>.*?)
+(?:[\t]   (?<analysisMatchDescription>.*))?
+[\t]   (?<domStart>\d+)
+[\t]   (?<domEnd>\d+)
+[\t]   (?<eValue>(?:NA|\d+(?:\.\d+)?(?:e[+-]\d+)?))
+[\t]   (?<status>[T?])
+[\t]   (?<timeexecuted>[\w-]*)
+[\t]   (?<interproID>\w*)
+[\t]   (?<interproDesc>.*?)
+(?:[\t]   (?<interproGOs>.*))?
+$}x
+EOF;
+
+    /**
      * 
      * @global array $dbrefx_versions array mapping databases to their versions, e.g. array('HMMPFam'=>'1.0')
      * @global PDO $db Database
@@ -66,6 +92,8 @@ class Importer_Annotations_Interpro {
          */
 
 
+
+
         global $dbrefx_versions;
         global $db;
         $lines_imported = 0;
@@ -84,10 +112,11 @@ class Importer_Annotations_Interpro {
             $param_db_name = null;
             $param_evalue = null;
             $param_timeexecuted = null;
-            $param_interproID = null;
+            $param_featureprop_type = null;
+            $param_featureprop_value = null;
             $param_accession = null;
             $param_dbname = null;
-            $trash = null;
+            $param_dbxref_description = null;
 
             $statement_insert_feature_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:feature_domain_name, :feature_domain_unique, :type_id, :organism_id)');
             $statement_insert_feature_domain->bindValue('type_id', CV_ANNOTATION_INTERPRO, PDO::PARAM_INT);
@@ -109,39 +138,36 @@ class Importer_Annotations_Interpro {
             $statement_insert_analysisfeature->bindParam('timeexecuted', $param_timeexecuted, PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('significance', $param_evalue, PDO::PARAM_STR);
 
-            $statement_insert_interproID = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :type_interproID, :interproID)');
-            $statement_insert_interproID->bindValue('type_interproID', CV_INTERPRO_ID, PDO::PARAM_INT);
-            $statement_insert_interproID->bindParam('interproID', $param_interproID, PDO::PARAM_STR);
+            $statement_insert_featureprop = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :value)');
+            $statement_insert_featureprop->bindParam(':type_id', $param_featureprop_type, PDO::PARAM_INT);
+            $statement_insert_featureprop->bindParam(':value', $param_featureprop_value, PDO::PARAM_STR);
 
 
-            $statement_insert_feature_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), get_or_insert_dbxref(:dbname, :accession))');
+            $statement_insert_feature_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), get_or_insert_dbxref(:dbname, :accession, :description))');
             $statement_insert_feature_dbxref->bindParam('accession', $param_accession, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindParam('dbname', $param_dbname, PDO::PARAM_STR);
+            $statement_insert_feature_dbxref->bindParam('description', $param_dbxref_description, PDO::PARAM_STR);
 
             $file = fopen($filename, 'r');
-            while (($line = fgetcsv($file, 0, "\t")) !== false) {
-                if (count($line) == 0)
-                    continue;
-                if (count($line) < 16 || count($line) > 18) {
-                    error_log("wrong line parameter count on line:\n\t" . implode("\t", $line));
-                    continue;
-                }
-                //fill it up so we have 17 parameters even if there are no GOs
-                if (count($line) == 16) {
-                    $line[16] = "NULL";
-                }
+            while (($line = trim(fgets($file))) != false) {
+                $match = array();
+                preg_match(self::$regex, $line, $match);
+                if (count($match) == 0)
+                    error_log("line does not match, skipping:\n\t" . $line);
 
 
-                #list($feature, $pepStart, $pepEnd, $pepStrand, $checksum, $length, $analysisMethod, $analysisMatchID, $analysisMatchDesc, $domStart, $domEnd, $eValue, $status, $timeexecuted, $interproID, $interproDesc, $interproGOs);
-                list($feature, $pepStart, $pepEnd, $pepStrand,
-                        $trash, $trash,
-                        $param_db_name, $analysisMatchID, $trash,
-                        $param_domain_fmin, $param_domain_fmax, $param_evalue, $trash, $param_timeexecuted,
-                        $param_interproID, $trash, $interproGOs) = $line;
+                // set params for statements
+                // available matches, see RegEx
+                $param_db_name = $match['analysisMethod'];
+                $param_domain_fmin = $match['domStart'];
+                $param_domain_fmax = $match['domEnd'];
+                $param_evalue = $match['eValue'];
+                $param_timeexecuted = $match['timeexecuted'];
 
-                $param_feature = Importer_Sequences::prepare_predpep_name($feature, $pepStart, $pepEnd, $pepStrand);
+                //more complex parameters
+                $param_feature = Importer_Sequences::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
                 $param_feature_uniq = ASSEMBLY_PREFIX . $param_feature;
-                $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $analysisMatchID, $param_domain_fmin, $param_domain_fmax);
+                $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
                 $param_feature_domain_uniq = ASSEMBLY_PREFIX . $param_feature_domain_name;
 
                 $statement_insert_feature_domain->execute();
@@ -152,24 +178,39 @@ class Importer_Annotations_Interpro {
                 $param_db_ver = isset($dbrefx_versions[$param_db_name]) ? $dbrefx_versions[$param_db_name] : 'unknown';
                 $statement_insert_analysisfeature->execute();
 
-                if ($param_interproID != "NULL") {
-                    $statement_insert_interproID->execute();
+                if ($match['interproID'] != "NULL") {
+                    $param_featureprop_type = CV_INTERPRO_ID;
+                    $param_featureprop_value = $match['interproID'];
+
+                    $statement_insert_featureprop->execute();
                     $interpro_ids_added++;
                 }
 
-                if ($interproGOs != "NULL") {
-                    $matches = array();
-                    preg_match_all('/\((?<dbname>\w+):(?<accession>\w+)\)/', $interproGOs, $matches);
-                    for ($i = 0; $i < count($matches[0]); $i++) {
-                        $param_dbname = $matches['dbname'][$i];
-                        $param_accession = $matches['accession'][$i];
+                if ($match['analysisMatchID'] != null) {
+                    $param_featureprop_type = CV_INTERPRO_ANALYSIS_MATCH_ID;
+                    $param_featureprop_value = $match['analysisMatchID'];
+                    $statement_insert_featureprop->execute();
+
+                    if (isset($match['analysisMatchDescription']) && !empty($match['analysisMatchDescription'])) {
+                        $param_featureprop_type = CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION;
+                        $param_featureprop_value = $match['analysisMatchDescription'];
+                        $statement_insert_featureprop->execute();
+                    }
+                }
+
+                if (isset($match['interproGOs']) && $match['interproGOs'] != "NULL") {
+                    $go_matches = array();
+                    preg_match_all('/[\s,]*(?<description>.*?)\((?<dbname>\w+):(?<accession>\w+)\)/', $match['interproGOs'], $go_matches);
+                    for ($i = 0; $i < count($go_matches[0]); $i++) {
+                        $param_dbname = $go_matches['dbname'][$i];
+                        $param_accession = $go_matches['accession'][$i];
+                        $param_dbxref_description = trim($go_matches['description'][$i]);
                         $statement_insert_feature_dbxref->execute();
                         $dbxrefs_added++;
                     }
                 }
-                
-                
-                $lines_imported++;                
+
+                $lines_imported++;
                 if ($lines_imported % 1000 == 0)
                     echo '*';
                 else if ($lines_imported % 100 == 0)
@@ -184,7 +225,7 @@ class Importer_Annotations_Interpro {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added'=>$dbxrefs_added);
+        return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added' => $dbxrefs_added);
     }
 
 }
