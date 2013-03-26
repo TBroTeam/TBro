@@ -130,9 +130,9 @@ cart.syncAction = function(action, options) {
             }
         
             
-            //wait half a second for all the actions to finish, or DOM rebuilds too often
+            //wait half a second for all the actions to finish, or check calls too often
             setTimeout(function() {
-                //if this is still the last request, compare DOM
+                //if this is still the last request, compare actual cart to webstorage (e.g. server) cart
                 if (data.syncTime === $.webStorage.local().getItem('syncTime')) {
                     console.log('checking', data.syncTime);
                     var sessionCart = $.webStorage.local().getItem('syncedCart');
