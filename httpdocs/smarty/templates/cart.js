@@ -114,33 +114,36 @@ cart.syncAction = function(action, options) {
         data: {
             action: action, 
             syncRequestTime: cart.lastSyncRequest
-            },
+        },
         success: function(data) {
+            if (thisSyncRequest < cart.lastSyncRequest) {
+                console.log('there has been a newer request, skipping ', thisSyncRequest, 'in favor of ', cart.lastSyncRequest);
+                return;
+            }
+            // if we are receiving an answer that is outdated (a new request has already been 
+            // sent and answer has been received, maybe on another tab), skip writing back
+            if (data.syncTime > $.webStorage.local().getItem('syncTime')) {
+                console.log('saving ', data.syncTime, 'to webStorage');
+                
+                $.webStorage.local().setItem('syncTime', data.syncTime);
+                $.webStorage.local().setItem('syncedCart', data.cart);
+            }
+        
+            
             //wait half a second for all the actions to finish, or DOM rebuilds too often
             setTimeout(function() {
-                if (thisSyncRequest < cart.lastSyncRequest) {
-                    console.log('there has been a newer request, skipping ', thisSyncRequest, 'in favor of ', cart.lastSyncRequest);
-                    return;
-                }
-                var storageSyncTime = $.webStorage.local().getItem('syncTime');
-                // if we are receiving an answer that is outdated (a new request has already been 
-                // sent and answer has been received, maybe on another tab), skip writing back
-                if (data.syncTime > storageSyncTime) {
-                    console.log('checking ', data.syncTime);
-                    $.webStorage.local().setItem('syncTime', data.syncTime);
-                    $.webStorage.local().setItem('syncedCart', data.cart);
-                }
-                var sessionCart = $.webStorage.local().getItem('syncedCart');
-                if (!cart.compareCarts(cart, sessionCart)) {
-                    console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', sessionCart);
-                    cart.rebuildDOM(sessionCart);
+                //if this is still the last request, compare DOM
+                if (data.syncTime === $.webStorage.local().getItem('syncTime')) {
+                    console.log('checking', data.syncTime);
+                    var sessionCart = $.webStorage.local().getItem('syncedCart');
+                    if (!cart.compareCarts(cart, sessionCart)) {
+                        console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', sessionCart);
+                        cart.rebuildDOM(sessionCart);
+                    }
                 }
             }, 500);
         }
     });
-
-//$.webStorage.local().getItem();
-//$.webStorage.local().setItem();
 };
 
 cart.checkRegularly = function() {
@@ -196,7 +199,7 @@ cart.compareCarts = function(first, second) {
         return false;
 
     if (first.groups.length !== second.groups.length) {
-        console.log(first.groups, ' group count differs: ', second.groups);
+        console.log(first.groups,first.groups.length , ' group count differs: ', second.groups,second.groups.length);
         return false;
     }
 
@@ -260,10 +263,10 @@ cart.rebuildDOM = function(newCart) {
 };
 
 /**
- *&nbsp;adds a new group to the cart
- *&nbsp;@param {object} options used internally
- *&nbsp;@returns new group name
- */
+     *&nbsp;adds a new group to the cart
+     *&nbsp;@param {object} options used internally
+     *&nbsp;@returns new group name
+     */
 cart.addGroup = function(options) {
     do {
         groupname = "group " + (++cart.lastGroupNumber);
@@ -296,7 +299,7 @@ cart.addGroup = function(options) {
         drop: function(event, ui) {
             var item = {
                 uniquename: ui.draggable.attr('data-uniquename')
-                };
+            };
             //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
             cart.addItemToGroup(item, $(this).parent().attr('data-group'));
         }
@@ -305,10 +308,23 @@ cart.addGroup = function(options) {
         collapsible: true,
         heightStyle: "content"
     });
-    newEl.find('.cart-button-delete').click(function() {
+    newEl.find('.cart-button-delete').click(function(event) {
+        event.stopPropagation();
         var group = $(this).parents('.cart-group').first();
         cart.removeGroup(group.attr('data-group'));
     });
+    newEl.find('.cart-button-rename').click(function(event) {
+        event.stopPropagation();
+        var group = $(this).parents('.cart-group').first();
+        var dialog = $('#dialog-rename-cart-group');
+        dialog.data('oldname', group.attr('data-group'));
+        dialog.dialog("open");
+    });
+    newEl.find('.cart-button-execute').click(function(event) {
+        event.stopPropagation();
+        alert('not implemented yet.');
+    });
+    
     newEl.appendTo(cart.cart_groups).hide(0).fadeIn(500);
     return groupname;
 };
@@ -326,16 +342,18 @@ cart.cleanUpGroup = function(newItem, group) {
 
 cart.renameGroup = function(oldname, newname, options) {
     if (newname === oldname)
-        return;
+        return "no rename neccessary. old name matches new name";
     var _group;
     if (!(cart.getGroupByName(newname) === null)) {
-        console.log("can't rename" + oldname + " to " + newname + ": group with that name already exists.");
-        return false;
+        var msg = "can't rename" + oldname + " to " + newname + ": group with that name already exists.";
+        console.log(msg);
+        return msg;
     }
     _group = cart.getGroupByName(oldname);
     if (_group === null) {
-        console.log("can't rename" + oldname + " to " + newname + ": group " + oldname + "not found!");
-        return false;
+        var msg = "can't rename" + oldname + " to " + newname + ": group " + oldname + "not found!";
+        console.log(msg);
+        return msg;
     }
     _group.name = newname;
 
@@ -395,7 +413,7 @@ cart.addItemToAll = function(item, options) {
         var item = $(this).parents('.cart-item').first();
         cart.removeItemFromAll({
             uniquename: item.attr('data-uniquename')
-            });
+        });
     });
     newEl.appendTo(cart.cart_group_all.find('ul'));
     cart.refresh_cart_group_all();
@@ -441,7 +459,7 @@ cart.addItemToGroup = function(item, groupname, options) {
         var group = $(this).parents('.cart-group').first();
         cart.removeItemFromGroup({
             uniquename: item.attr('data-uniquename')
-            }, group.attr('data-group'));
+        }, group.attr('data-group'));
     });
 
     newEl.appendTo(group).hide(0).fadeIn(500);

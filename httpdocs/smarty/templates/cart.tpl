@@ -16,10 +16,38 @@
     }
 
     $(document).ready(function() {
+        
+        $( "#dialog-rename-cart-group" ).dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "rename cart": function() {
+                    var oldname = $(this).data('oldname');
+                    var newname = $('#cartname').val();
+                    var retval = cart.renameGroup(oldname, newname);
+                    if (retval != null) alert(retval);
+                    $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+            open: function() {
+                var oldname = $(this).data('oldname');
+                $('#cartname').val(oldname);
+            }
+        });
+        
+        
         $("#cart-group-all").accordion({
             collapsible: true,
             heightStyle: "content"
-        });
+        }).find('.cart-button-execute').click(function(event) {
+            event.stopPropagation();
+            alert('not implemented yet.');
+        });;
 
         cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#});
         setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
@@ -40,10 +68,20 @@
     }
 </style>
 
+<div id="dialog-rename-cart-group" title="rename cart">
+    <form>
+        <fieldset>
+            <label for="cartname">cart name</label>
+            <input type="text" name="name" id="cartname" class="text ui-widget-content ui-corner-all" />
+        </fieldset>
+    </form>
+</div>
+
+
 <div class=" panel large-12 columns">
     <h4>Cart</h4>
     <div id="cart-group-all" class='ui_accordion ui_collapsible'>
-        <div class="large-12 columns"><div class="left">all</div><div class="right"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
+        <div class="large-12 columns"><div class="left">all</div><div class="right"><img class="cart-button-execute"  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
         <ul class="large-12 columns">
         </ul>
     </div>
@@ -59,12 +97,12 @@
     <div id="cart-group-dummy"> 
         <div class='cart-group' data-group="#groupname#">
             <div class="large-12 columns">
-                           <div class="groupname left">#groupname#</div>
-                           <div class="right">
-                               <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
-                           <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                           <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
-                       </div>
+                <div class="groupname left">#groupname#</div>
+                <div class="right">
+                    <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
+                    <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                    <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
+                </div>
             </div>
             <ul class="cart-target large-12 columns">
                 <li class="placeholder">drag your items here</li>
@@ -81,3 +119,4 @@
         </li>
     </ul>
 </div>
+

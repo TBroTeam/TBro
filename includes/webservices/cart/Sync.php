@@ -42,6 +42,7 @@ class Sync extends \WebService {
                         if ($group['name'] == $groupname)
                             unset($_SESSION['cart']['groups'][$key]);
                     }
+                    $_SESSION['cart']['groups'] = array_values($_SESSION['cart']['groups']);
                     break;
                 case 'addItemToAll':
                     $item = $querydata['action']['item'];
