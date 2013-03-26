@@ -2,7 +2,7 @@
 <?php
 define('DEBUG', false);
 define('INC', __DIR__ . '/../includes/');
-echo INC;
+
 require_once INC . '/db.php';
 require_once INC . '/constants.php';
 global $db, $_CONST;

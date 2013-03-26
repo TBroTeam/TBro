@@ -1,0 +1,97 @@
+<?php
+    //file created with the script database/setup-cvterms.php
+    
+    global $cvterm_data;
+    $cvterm_data = array (
+  'CV_ANNOTATION_REPEATMASKER' => 
+  array (
+    'name' => 'annotation_repeatmasker',
+    'cv' => 'sequence',
+    'id' => 42727,
+  ),
+  'CV_REPEAT_NAME' => 
+  array (
+    'name' => 'annotation_repeatmasker_repeat_name',
+    'cv' => 'feature_property',
+    'id' => 42728,
+  ),
+  'CV_REPEAT_CLASS' => 
+  array (
+    'name' => 'annotation_repeatmasker_repeat_class',
+    'cv' => 'feature_property',
+    'id' => 42729,
+  ),
+  'CV_REPEAT_FAMILY' => 
+  array (
+    'name' => 'annotation_repeatmasker_repeat_family',
+    'cv' => 'feature_property',
+    'id' => 42730,
+  ),
+  'CV_ANNOTATION_INTERPRO' => 
+  array (
+    'name' => 'annotation_interpro',
+    'cv' => 'sequence',
+    'id' => 42731,
+  ),
+  'CV_INTERPRO_ANALYSIS_MATCH_ID' => 
+  array (
+    'name' => 'annotation_interpro_analysis_match_id',
+    'cv' => 'feature_property',
+    'id' => 42732,
+  ),
+  'CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION' => 
+  array (
+    'name' => 'annotation_interpro_analysis_match_description',
+    'cv' => 'feature_property',
+    'id' => 42733,
+  ),
+  'CV_ANNOTATION_BLAST2GO' => 
+  array (
+    'name' => 'annotation_blast2go',
+    'cv' => 'feature_property',
+    'id' => 42734,
+  ),
+  'CV_INTERPRO_ID' => 
+  array (
+    'name' => 'annotation_interpro_id',
+    'cv' => 'feature_property',
+    'id' => 42735,
+  ),
+  'CV_UNIGENE' => 
+  array (
+    'name' => 'predicted gene',
+    'cv' => 'sequence',
+    'id' => 42736,
+  ),
+  'CV_ISOFORM' => 
+  array (
+    'name' => 'alternatively_spliced_transcript',
+    'cv' => 'sequence',
+    'id' => 2218,
+  ),
+  'CV_RELATIONSHIP_UNIGENE_ISOFORM' => 
+  array (
+    'name' => 'alternatively_spliced',
+    'cv' => 'relationship',
+    'id' => 989,
+  ),
+  'CV_ISOFORM_PATH' => 
+  array (
+    'name' => 'isoform_path',
+    'cv' => 'feature_property',
+    'id' => 42737,
+  ),
+  'CV_PREDPEP' => 
+  array (
+    'name' => 'polypeptide',
+    'cv' => 'sequence',
+    'id' => 219,
+  ),
+  'CV_BIOMATERIAL_ISA' => 
+  array (
+    'name' => 'is_a',
+    'cv' => 'relationship',
+    'id' => 32,
+  ),
+);
+?>
