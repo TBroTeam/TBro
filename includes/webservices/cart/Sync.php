@@ -36,6 +36,13 @@ class Sync extends \WebService {
                         break;
                     $group['name'] = $newname;
                     break;
+                case 'removeGroup':
+                    $groupname = $querydata['action']['groupname'];
+                    foreach ($_SESSION['cart']['groups'] as $key => $group){
+                        if ($group['name'] == $groupname)
+                            unset($_SESSION['cart']['groups'][$key]);
+                    }
+                    break;
                 case 'addItemToAll':
                     $item = $querydata['action']['item'];
                     if (self::array_in_array($item, $_SESSION['cart']['all']))

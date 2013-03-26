@@ -2,7 +2,7 @@
 // taken from: http://digitalize.ca/2010/04/javascript-tip-save-me-from-console-log-errors/
 try
 {
-    console.log('test');
+    console.log('');
 }
 catch(err){
     var console = {}
@@ -356,7 +356,7 @@ cart.renameGroup = function(oldname, newname, options) {
 
 cart.removeGroup = function(groupname, options) {
     for (var i = 0; i < cart.groups.length; i++) {
-        if (cart.groups[i].name === item.groupname) {
+        if (cart.groups[i].name === groupname) {
             cart.groups.splice(i, 1);
             i--;
         }
