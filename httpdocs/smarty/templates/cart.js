@@ -1,3 +1,14 @@
+// In case we forget to take out console statements (and we will, because it is just too useful). IE becomes very unhappy when we forget. Let's not make IE unhappy
+// taken from: http://digitalize.ca/2010/04/javascript-tip-save-me-from-console-log-errors/
+try
+{
+    console.log('test');
+}
+catch(err){
+    var console = {}
+    console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
+}
+
 
 /**
  * cart methods & data
@@ -100,7 +111,10 @@ cart.syncAction = function(action, options) {
         url: '{#$ServicePath#}/cart/sync',
         type: 'post',
         dataType: "json",
-        data: {action: action, syncRequestTime: cart.lastSyncRequest},
+        data: {
+            action: action, 
+            syncRequestTime: cart.lastSyncRequest
+            },
         success: function(data) {
             //wait half a second for all the actions to finish, or DOM rebuilds too often
             setTimeout(function() {
@@ -125,8 +139,8 @@ cart.syncAction = function(action, options) {
         }
     });
 
-    //$.webStorage.local().getItem();
-    //$.webStorage.local().setItem();
+//$.webStorage.local().getItem();
+//$.webStorage.local().setItem();
 };
 
 cart.checkRegularly = function() {
@@ -145,7 +159,9 @@ cart.checkRegularly = function() {
 };
 
 cart.syncFromServer = function() {
-    cart.syncAction({action: 'syncFromServer'});
+    cart.syncAction({
+        action: 'syncFromServer'
+    });
 };
 
 cart.resetCart = function(options) {
@@ -153,7 +169,9 @@ cart.resetCart = function(options) {
     cart.groups = [];
 
     //sync
-    cart.syncAction({action: 'resetCart'}, options);
+    cart.syncAction({
+        action: 'resetCart'
+    }, options);
 
     //DOM manipulation
     cart.cart_group_all.find('ul li').remove();
@@ -218,15 +236,24 @@ cart.compareCarts = function(first, second) {
 
 
 cart.rebuildDOM = function(newCart) {
-    cart.resetCart({sync: false});
+    cart.resetCart({
+        sync: false
+    });
     $.each(newCart.all, function() {
-        cart.addItemToAll(this, {sync: false});
+        cart.addItemToAll(this, {
+            sync: false
+        });
     });
     $.each(newCart.groups, function() {
         var groupname = this.name;
-        cart.addGroup({name: groupname, sync: false});
+        cart.addGroup({
+            name: groupname, 
+            sync: false
+        });
         $.each(this.items, function() {
-            cart.addItemToGroup(this, groupname, {sync: false});
+            cart.addItemToGroup(this, groupname, {
+                sync: false
+            });
         });
     });
 
@@ -246,11 +273,17 @@ cart.addGroup = function(options) {
     if (options !== undefined && options.name !== undefined)
         groupname = options.name;
 
-    var group = {name: groupname, items: []};
+    var group = {
+        name: groupname, 
+        items: []
+    };
     cart.groups.push(group);
 
     //sync
-    cart.syncAction({action: 'addGroup', name: groupname}, options);
+    cart.syncAction({
+        action: 'addGroup', 
+        name: groupname
+    }, options);
 
     // DOM manupulation
     var newElStr = $('#cart-group-dummy').html();
@@ -261,7 +294,9 @@ cart.addGroup = function(options) {
         items: "li:not(.placeholder)",
         accept: ":not(.ui-sortable-helper)",
         drop: function(event, ui) {
-            var item = {uniquename: ui.draggable.attr('data-uniquename')};
+            var item = {
+                uniquename: ui.draggable.attr('data-uniquename')
+                };
             //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
             cart.addItemToGroup(item, $(this).parent().attr('data-group'));
         }
@@ -305,7 +340,11 @@ cart.renameGroup = function(oldname, newname, options) {
     _group.name = newname;
 
     // sync
-    cart.syncAction({action: 'renameGroup', oldname: oldname, newname: newname}, options);
+    cart.syncAction({
+        action: 'renameGroup', 
+        oldname: oldname, 
+        newname: newname
+    }, options);
 
     // DOM manupulation
     var group = $.getGroupByName(oldname);
@@ -324,7 +363,10 @@ cart.removeGroup = function(groupname, options) {
     }
 
     // sync
-    cart.syncAction({action: 'removeGroup', groupname: groupname}, options);
+    cart.syncAction({
+        action: 'removeGroup', 
+        groupname: groupname
+    }, options);
 
     // DOM manupulation
     var group = $.getGroupByName(groupname);
@@ -340,7 +382,10 @@ cart.addItemToAll = function(item, options) {
     cart.all.unshift(item);
 
     //sync
-    cart.syncAction({action: 'addItemToAll', item: item}, options);
+    cart.syncAction({
+        action: 'addItemToAll', 
+        item: item
+    }, options);
 
     // DOM manupulation
     var newElStr = $('#cart-item-dummy').html();
@@ -348,7 +393,9 @@ cart.addItemToAll = function(item, options) {
     newEl = $('<div/>').html(newElStr).children();
     newEl.find('.cart-button-delete').click(function() {
         var item = $(this).parents('.cart-item').first();
-        cart.removeItemFromAll({uniquename: item.attr('data-uniquename')});
+        cart.removeItemFromAll({
+            uniquename: item.attr('data-uniquename')
+            });
     });
     newEl.appendTo(cart.cart_group_all.find('ul'));
     cart.refresh_cart_group_all();
@@ -376,7 +423,11 @@ cart.addItemToGroup = function(item, groupname, options) {
     _group.items.push(item);
 
     //sync
-    cart.syncAction({action: 'addItemToGroup', item: item, groupname: groupname}, options);
+    cart.syncAction({
+        action: 'addItemToGroup', 
+        item: item, 
+        groupname: groupname
+    }, options);
 
     // DOM manupulation
     if (options !== undefined && options.modifyDOM === false)
@@ -388,7 +439,9 @@ cart.addItemToGroup = function(item, groupname, options) {
     newEl.find('.cart-button-delete').click(function() {
         var item = $(this).parents('.cart-item').first();
         var group = $(this).parents('.cart-group').first();
-        cart.removeItemFromGroup({uniquename: item.attr('data-uniquename')}, group.attr('data-group'));
+        cart.removeItemFromGroup({
+            uniquename: item.attr('data-uniquename')
+            }, group.attr('data-group'));
     });
 
     newEl.appendTo(group).hide(0).fadeIn(500);
@@ -417,7 +470,10 @@ cart.removeItemFromAll = function(item, options) {
     }
 
     //sync
-    cart.syncAction({action: 'removeItemFromAll', item: item}, options);
+    cart.syncAction({
+        action: 'removeItemFromAll', 
+        item: item
+    }, options);
 
     //DOM manipulation
     cart.cart_group_all.find('[data-uniquename="' + item.uniquename + '"]').remove();
@@ -438,7 +494,11 @@ cart.removeItemFromGroup = function(item, groupname, options) {
     }
 
     //sync
-    cart.syncAction({action: 'removeItemFromGroup', item: item, groupname: groupname}, options);
+    cart.syncAction({
+        action: 'removeItemFromGroup', 
+        item: item, 
+        groupname: groupname
+    }, options);
 
     //DOM manipulation
     var group = $.getGroupByName(groupname);
