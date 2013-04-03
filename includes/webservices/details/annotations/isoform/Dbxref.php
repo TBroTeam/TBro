@@ -16,23 +16,25 @@ class Dbxref extends \WebService {
 
         $query_get_isoform_dbxrefs = <<<EOF
 SELECT
-  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description, cv.name AS namespace
+  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description, dbxrefprop.value AS go_namespace
 FROM
   feature_dbxref
   JOIN dbxref ON (dbxref.dbxref_id = feature_dbxref.dbxref_id)
-  JOIN db ON (db.db_id = dbxref.db_id)  
+  JOIN db ON (db.db_id = dbxref.db_id)
+  LEFT JOIN dbxrefprop ON (dbxref.dbxref_id = dbxrefprop.dbxref_id AND dbxrefprop.type_id=:go_namespace)
 WHERE
   feature_dbxref.feature_id = :isoform_id
 EOF;
 
         $stm_get_isoform_dbxrefs = $db->prepare($query_get_isoform_dbxrefs);
+        $stm_get_isoform_dbxrefs->bindValue('go_namespace', CV_GO_NAMESPACE);
         $stm_get_isoform_dbxrefs->bindParam('isoform_id', $param_isoform_id);
 
         $ret = array();
 
         $stm_get_isoform_dbxrefs->execute();
         while ($isoform_dbxref = $stm_get_isoform_dbxrefs->fetch(PDO::FETCH_ASSOC)) {
-            $ret[] = $isoform_dbxref;
+                $ret[$isoform_dbxref['dbname']][$isoform_dbxref['go_namespace']][] = $isoform_dbxref;
         }
 
         return $ret;
@@ -44,20 +46,21 @@ EOF;
     }
 
 }
+
 /*
  * select count(cvterm_dbxref.cvterm_id) as cnt, cvterm.cvterm_id, name from cvterm_dbxref, cvterm where cvterm.cvterm_id=cvterm_dbxref.cvterm_id group by cvterm.cvterm_id order by cnt desc;
  */
 
 /*
- SELECT 
+  SELECT
   dbxref.db_id,
-  dbxref.accession, 
+  dbxref.accession,
   cvterm.name,
   par1.name,
   par2.name
-FROM 
-  public.dbxref, 
-  public.cvterm_dbxref, 
+  FROM
+  public.dbxref,
+  public.cvterm_dbxref,
   public.cvterm
   RIGHT JOIN cvterm_relationship rel1 ON (cvterm.cvterm_id = rel1.object_id)
   LEFT JOIN public.cvterm par1 ON (rel1.subject_id = par1.cvterm_id)
@@ -65,7 +68,7 @@ FROM
   LEFT JOIN public.cvterm par2 ON (rel2.subject_id = par2.cvterm_id)
   RIGHT JOIN cvterm_relationship rel3 ON (par2.cvterm_id = rel3.object_id)
   LEFT JOIN public.cvterm par3 ON (rel3.subject_id = par3.cvterm_id)
-WHERE 
+  WHERE
   dbxref.dbxref_id = cvterm_dbxref.dbxref_id AND
   cvterm.cvterm_id = cvterm_dbxref.cvterm_id AND
   accession='0048748' AND

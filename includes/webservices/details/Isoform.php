@@ -102,7 +102,6 @@ EOF;
 
             list($dbxref, $trash) = \WebService::factory('details/annotations/isoform/dbxref');
             $isoform['dbxref'] = $dbxref->getById($isoform['feature_id']);
-            die(print_r($isoform['dbxref'] ,true));
             
             $stm_get_blast2go->execute();
             while ($blast2go = $stm_get_blast2go->fetch(PDO::FETCH_ASSOC)) {
