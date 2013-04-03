@@ -137,20 +137,31 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
         print "\n";
     }
 }
+unset ($cvterm);
 $db->commit();
 
 print "\n\n\n";
 print "data file output to $outfilename. copy to includes/cvterms.php\n";
-$export = var_export($cvterms,true);
 
-$cvterms_output =<<<EOF
+$insert = "";
+foreach ($cvterms as $cvterm_const => $cvterm) {
+    $insert .= sprintf("define ('%s', '%s');\n", $cvterm_const, $cvterms[$cvterm_const]['id']);
+}
+
+
+$export = var_export($cvterms, true);
+
+$cvterms_output = <<<EOF
 <?php
-    //file created with the script database/setup-cvterms.php
-    
-    global \$cvterm_data;
-    \$cvterm_data = $export;
+//file created with the script database/setup-cvterms.php
+/*
+\$cvterm_data = $export;
+*/    
+
+$insert
 ?>
 EOF;
+
 
 file_put_contents($outfilename, $cvterms_output);
 ?>

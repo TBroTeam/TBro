@@ -1,8 +1,7 @@
 <?php
-    //file created with the script database/setup-cvterms.php
-    
-    global $cvterm_data;
-    $cvterm_data = array (
+//file created with the script database/setup-cvterms.php
+/*
+$cvterm_data = array (
   'CV_ANNOTATION_REPEATMASKER' => 
   array (
     'name' => 'annotation_repeatmasker',
@@ -94,4 +93,22 @@
     'id' => 32,
   ),
 );
+*/    
+
+define ('CV_ANNOTATION_REPEATMASKER', '42727');
+define ('CV_REPEAT_NAME', '42728');
+define ('CV_REPEAT_CLASS', '42729');
+define ('CV_REPEAT_FAMILY', '42730');
+define ('CV_ANNOTATION_INTERPRO', '42731');
+define ('CV_INTERPRO_ANALYSIS_MATCH_ID', '42732');
+define ('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION', '42733');
+define ('CV_ANNOTATION_BLAST2GO', '42734');
+define ('CV_INTERPRO_ID', '42735');
+define ('CV_UNIGENE', '42736');
+define ('CV_ISOFORM', '2218');
+define ('CV_RELATIONSHIP_UNIGENE_ISOFORM', '989');
+define ('CV_ISOFORM_PATH', '42737');
+define ('CV_PREDPEP', '219');
+define ('CV_BIOMATERIAL_ISA', '32');
+
 ?>

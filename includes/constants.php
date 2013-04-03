@@ -17,11 +17,6 @@ define('DB_ORGANISM_ID', '13');
 define('DUMMY', 123);
 
 require_once (__DIR__.'/cvterms.php');
-global $cvterm_data;
-
-foreach ($cvterm_data as $cvterm_const => $cvterm) {
-    define ($cvterm_const, $cvterm['id']);
-}
 
 define('LINES_IMPORTED', 'datasets_imported');
 

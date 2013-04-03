@@ -16,13 +16,16 @@ class Dbxref extends \WebService {
 
         $query_get_isoform_dbxrefs = <<<EOF
 SELECT
-  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description
+  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description, cv.name AS namespace
 FROM
-  feature_dbxref, dbxref, db
+  feature_dbxref
+  JOIN dbxref ON (dbxref.dbxref_id = feature_dbxref.dbxref_id)
+  JOIN db ON (db.db_id = dbxref.db_id)  
+  LEFT JOIN cvterm_dbxref ON (dbxref.dbxref_id = cvterm_dbxref.dbxref_id)
+  LEFT JOIN cvterm ON (cvterm.cvterm_id = cvterm_dbxref.cvterm_id)
+  LEFT JOIN cv ON (cvterm.cv_id=cv.cv_id)
 WHERE
-  feature_dbxref.feature_id = :isoform_id AND
-  dbxref.dbxref_id = feature_dbxref.dbxref_id AND
-  db.db_id = dbxref.db_id
+  feature_dbxref.feature_id = :isoform_id
 EOF;
 
         $stm_get_isoform_dbxrefs = $db->prepare($query_get_isoform_dbxrefs);
