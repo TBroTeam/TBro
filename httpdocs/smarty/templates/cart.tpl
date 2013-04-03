@@ -76,9 +76,11 @@
         </fieldset>
     </form>
 </div>
+<div class="panel large-12 columns">
+    
+</div>
 
-
-<div class=" panel large-12 columns">
+<div class="panel large-12 columns">
     <h4>Cart</h4>
     <div id="cart-group-all" class='ui_accordion ui_collapsible'>
         <div class="large-12 columns"><div class="left">all</div><div class="right"><img class="cart-button-execute"  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
@@ -93,6 +95,7 @@
 
     </div>
 </div>
+
 <div style="display: none">
     <div id="cart-group-dummy"> 
         <div class='cart-group' data-group="#groupname#">

@@ -4,6 +4,11 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/Importer_Sequences.php';
 
+
+#versions of databases for interpro import
+global $dbrefx_versions;
+$dbrefx_versions = array('HMMPIR' => '1.0');
+
 class Importer_Annotations_Interpro {
 
     /**

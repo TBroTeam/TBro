@@ -2,14 +2,17 @@
 
 define('APPPATH', '/httpdocs/client');
 define('SERVICEPATH', '/httpdocs/service');
+
 define('INC', __DIR__ . '/../../includes/');
+
+require_once INC.'/constants.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 
 
-require(__DIR__ . '/../../lib/smarty/Smarty.class.php');
+require(INC . '/libs/smarty/Smarty.class.php');
 $smarty = new Smarty();
 $smarty->setTemplateDir(__DIR__ . '/../smarty/templates');
 $smarty->setCompileDir(__DIR__ . '/../smarty/templates_c');
@@ -29,6 +32,7 @@ function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
         return $_REQUEST[$key];
 }
 
+// Page display
 $page = requestVal('page', '/^[a-z-\.]*$/', '');
 switch ($page) {
     case 'cart.js':

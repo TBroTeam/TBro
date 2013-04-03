@@ -20,9 +20,7 @@ require_once (__DIR__.'/cvterms.php');
 
 define('LINES_IMPORTED', 'datasets_imported');
 
-#versions of databases for interpro import
-global $dbrefx_versions;
-$dbrefx_versions = array('HMMPIR' => '1.0');
+define('OPENID_DOMAIN', 'localhost');
 
 global $_CONST;
 $_CONST = 'constant';

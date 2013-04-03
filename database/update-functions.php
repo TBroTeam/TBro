@@ -37,7 +37,7 @@ BEGIN
     SELECT INTO _dbxref_id dbxref_id FROM dbxref WHERE db_id = _db_id AND accession = _accession;
 
     IF _dbxref_id IS NULL THEN
-        INSERT INTO dbxref (db_id, accession) VALUES (_db_id, _accession);
+        INSERT INTO dbxref (db_id, accession, version) VALUES (_db_id, _accession, ''by import'');
         _dbxref_id := currval(''dbxref_dbxref_id_seq'');
     END IF;
     
@@ -58,7 +58,7 @@ BEGIN
     SELECT INTO _dbxref_id, _db_description dbxref_id, description FROM dbxref WHERE db_id = _db_id AND accession = _accession;
 
     IF _dbxref_id IS NULL THEN
-        INSERT INTO dbxref (db_id, accession, description) VALUES (_db_id, _accession, _description);
+        INSERT INTO dbxref (db_id, accession, description, version) VALUES (_db_id, _accession, _description, ''by import'');
         _dbxref_id := currval(''dbxref_dbxref_id_seq'');
     ELSIF _db_description IS NULL OR _db_description != _description THEN
 	UPDATE dbxref SET description=_description WHERE dbxref_id = _dbxref_id;	
