@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-20 10:54:17
+<?php /* Smarty version Smarty-3.1.13, created on 2013-03-27 13:26:35
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -13,7 +13,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1363700145,
+      1 => 1364307857,
       2 => 'file',
     ),
   ),
@@ -27,7 +27,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   array (
     'AppPath' => 0,
     'ServicePath' => 0,
-    'kickoff_cart' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -106,48 +105,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                         });
                     }
                 });
-                $("#cart-group-all").accordion({
-                    collapsible: true,
-                    heightStyle: "content"
-                });
-                <?php echo smarty_function_call_webservice(array('path'=>"cart/sync",'data'=>array(),'assign'=>'kickoff_cart'),$_smarty_tpl);?>
 
-
-                cart.rebuildDOM(<?php echo json_encode($_smarty_tpl->tpl_vars['kickoff_cart']->value['cart']);?>
-);
-                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
             });</script>
 
-        <script type="text/javascript">
-            function buildTestCart() {
-                cart.resetCart({sync: true});
-                cart.addGroup();
-                cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
-                cart.addItemToAll({uniquename: '1.01_comp231081_c0_seq1'});
-                cart.addItemToAll({uniquename: '1.01_comp231123_c0_seq1'});
-                cart.addItemToAll({uniquename: '1.01_comp2381_c0_seq1'});
-                cart.addGroup();
-                cart.renameGroup('group 1', 'myGroup!');
-                cart.addItemToGroup({uniquename: '1.01_comp2381_c0_seq1'}, 'myGroup!');
-                cart.addItemToGroup({uniquename: '1.01_comp231123_c0_seq1'}, 'myGroup!');
-                cart.removeItemFromAll({uniquename: '1.01_comp2381_c0_seq1'});
-            }
-
-            $(document).ready(function() {
-                //buildTestCart();
-            });
-        </script>
-        <style>
-            .ui-accordion .ui-accordion-header {
-                margin-bottom:0px;
-            }
-            .ui-accordion .ui-accordion-content {
-                padding: 0.5em 1em;
-            }
-            .beingDragged {
-                list-style: none;
-            }
-        </style>
 
         
 <?php echo smarty_function_call_webservice(array('path'=>"details/unigene",'data'=>array("query1"=>$_smarty_tpl->tpl_vars['unigene_uniquename']->value),'assign'=>'data'),$_smarty_tpl);?>
@@ -213,52 +173,8 @@ $_smarty_tpl->tpl_vars['isoform_uniquename']->_loop = true;
             <div class="large-3 columns" >
                 <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
 
-                    <div class=" panel large-12 columns">
-                        <h4>Cart</h4>
-                        <div id="cart-group-all" class='ui_accordion ui_collapsible'>
-                            <div class="large-12 columns"><div class="left">all</div><div class="right"><img src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/img/mimiGlyphs/23.png"/></div></div>
-                            <ul class="large-12 columns">
-                            </ul>
-                        </div>
-                        <div>
-                            <a id="cart-add-group" class="button secondary right">add new cart</a>
-                            <div style="clear:both">&nbsp;</div>
-                        </div>
-                        <div id="cart-groups">
+                    <?php echo $_smarty_tpl->getSubTemplate ('cart.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 
-                        </div>
-                    </div>
-                    <div style="display: none">
-                        <div id="cart-group-dummy"> 
-                            <div class='cart-group' data-group="#groupname#">
-                                <div class="large-12 columns">
-                                    <div class="groupname left">#groupname#</div>
-                                    <div class="right">
-                                        <img class="cart-button-rename" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/img/mimiGlyphs/39.png"/>
-                                        <img class="cart-button-delete" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/img/mimiGlyphs/51.png"/>
-                                        <img class="cart-button-execute" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/img/mimiGlyphs/23.png"/>
-                                    </div>
-                                </div>
-                                <ul class="cart-target large-12 columns">
-                                    <li class="placeholder">drag your items here</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <ul id="cart-item-dummy"> 
-                            <li data-uniquename="#uniquename#" style="clear:both" class="large-12 cart-item">
-                                <div class="left">#uniquename#</div>
-                                <div class="right">
-                                    <img class="cart-button-delete" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/img/mimiGlyphs/51.png"/>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 <div>&nbsp;</div>
             </div>
