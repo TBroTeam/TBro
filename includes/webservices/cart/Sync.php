@@ -2,6 +2,8 @@
 
 namespace webservices\cart;
 
+require_once INC . '/db.php';
+
 class Sync extends \WebService {
 
     private static function &get_group($groupname) {
@@ -14,7 +16,8 @@ class Sync extends \WebService {
     }
 
     public function execute($querydata) {
-        session_start();
+        if (!isset($_SESSION))
+            session_start();
 
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array('all' => array(), 'groups' => array());
@@ -22,6 +25,9 @@ class Sync extends \WebService {
 
         if (isset($querydata['action']) && isset($querydata['action']['action']))
             switch ($querydata['action']['action']) {
+                case 'loadFromDB':
+                    //TODO issue #153 
+                    break;
                 case 'addGroup':
                     $newname = $querydata['action']['name'];
                     if (self::get_group($newname) != null)
@@ -38,7 +44,7 @@ class Sync extends \WebService {
                     break;
                 case 'removeGroup':
                     $groupname = $querydata['action']['groupname'];
-                    foreach ($_SESSION['cart']['groups'] as $key => $group){
+                    foreach ($_SESSION['cart']['groups'] as $key => $group) {
                         if ($group['name'] == $groupname)
                             unset($_SESSION['cart']['groups'][$key]);
                     }
@@ -84,6 +90,8 @@ class Sync extends \WebService {
                     $_SESSION['cart'] = array('all' => array(), 'groups' => array());
                     break;
             }
+            
+            //TODO issue #153 - save cart to DB if logged in
 
         return array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']);
     }

@@ -1,11 +1,13 @@
 <?php
 
+session_start();
+
 define('APPPATH', '/httpdocs/client');
 define('SERVICEPATH', '/httpdocs/service');
 
 define('INC', __DIR__ . '/../../includes/');
 
-require_once INC.'/constants.php';
+require_once INC . '/constants.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -30,6 +32,37 @@ function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
         return $defaultvalue;
     else
         return $_REQUEST[$key];
+}
+
+// OpenID stuff
+require_once INC . '/libs/lightopenid/openid.php';
+require_once INC . '/WebService.php';
+
+if (isset($_GET['logout'])){
+    session_destroy();
+    header('Location: '.$_SERVER['REDIRECT_URL']);
+    die();
+}
+try {
+    # Change 'localhost' to your domain name.
+    $openid = new LightOpenID('localhost');
+    if (!$openid->mode) {
+        if (isset($_GET['login'])) {
+            $openid->identity = 'https://www.google.com/accounts/o8/id';
+            header('Location: ' . $openid->authUrl());
+            die();
+        }
+    } else {
+        if ($openid->validate()) {
+            $_SESSION['OpenID'] = $openid->identity;
+            list($sync, $trash) = WebService::factory('cart/sync');
+            $sync->execute(array('action' => 'loadFromDB'));
+            header('Location: '.$_SERVER['REDIRECT_URL']);
+            die();
+        }
+    }
+} catch (ErrorException $e) {
+    
 }
 
 // Page display

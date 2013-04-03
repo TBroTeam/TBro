@@ -77,7 +77,15 @@
     </form>
 </div>
 <div class="panel large-12 columns">
-    
+    {#if (isset($smarty.session['OpenID'])) #}
+        <form action="?logout" method="post">
+            <button>Logout</button>
+        </form>
+    {#else#}
+        <form action="?login" method="post">
+            <button>Login with Google</button>
+        </form>
+    {#/if#}
 </div>
 
 <div class="panel large-12 columns">
