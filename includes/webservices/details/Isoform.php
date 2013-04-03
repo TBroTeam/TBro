@@ -27,19 +27,6 @@ EOF;
         $stm_get_isoforms = $db->prepare($query_get_isoforms);
         $stm_get_isoforms->bindValue('isoform_uniquename', $param_isoform_uniquename);
 
-        $query_get_isoform_dbxrefs = <<<EOF
-SELECT
-  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description
-FROM
-  feature_dbxref, dbxref, db
-WHERE
-  feature_dbxref.feature_id = :isoform_id AND
-  dbxref.dbxref_id = feature_dbxref.dbxref_id AND
-  db.db_id = dbxref.db_id
-EOF;
-
-        $stm_get_isoform_dbxrefs = $db->prepare($query_get_isoform_dbxrefs);
-        $stm_get_isoform_dbxrefs->bindParam('isoform_id', $param_isoform_id);
         
         
         $query_get_blast2go = <<<EOF
@@ -113,10 +100,9 @@ EOF;
                 $isoform['unigene'] = $unigene;
             }
 
-            $stm_get_isoform_dbxrefs->execute();
-            while ($isoform_dbxref = $stm_get_isoform_dbxrefs->fetch(PDO::FETCH_ASSOC)) {
-                $isoform['dbxref'][] = $isoform_dbxref;
-            }
+            list($dbxref, $trash) = \WebService::factory('details/annotations/isoform/dbxref');
+            $isoform['dbxref'] = $dbxref->getById($isoform['feature_id']);
+            die(print_r($isoform['dbxref'] ,true));
             
             $stm_get_blast2go->execute();
             while ($blast2go = $stm_get_blast2go->fetch(PDO::FETCH_ASSOC)) {
