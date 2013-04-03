@@ -35,7 +35,9 @@ types:
             --analysis_id <int>
             --biomaterial_A_name <string, name of parent biomaterial>
             --biomaterial_B_name <string, name of parent biomaterial>
-            
+    GO-obo
+        requires full chado import of gene ontology DB
+        --file is chado's imported go.obo file
 
 options:
     --verbose
@@ -128,6 +130,10 @@ foreach ($parms['--file'] as $file) {
                                 $parms['--biomaterial_A_name'],
                                 $parms['--biomaterial_B_name']);
                 break;
+            case 'GO-obo':
+                require_once INC . '/importers/Importer_GO_OBO.php';
+                $file_result = Importer_GO_OBO::import($file);
+                break;            
             default:
                 display_help();
                 die();

@@ -21,9 +21,6 @@ FROM
   feature_dbxref
   JOIN dbxref ON (dbxref.dbxref_id = feature_dbxref.dbxref_id)
   JOIN db ON (db.db_id = dbxref.db_id)  
-  LEFT JOIN cvterm_dbxref ON (dbxref.dbxref_id = cvterm_dbxref.dbxref_id)
-  LEFT JOIN cvterm ON (cvterm.cvterm_id = cvterm_dbxref.cvterm_id)
-  LEFT JOIN cv ON (cvterm.cv_id=cv.cv_id)
 WHERE
   feature_dbxref.feature_id = :isoform_id
 EOF;

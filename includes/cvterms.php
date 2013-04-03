@@ -92,6 +92,12 @@ $cvterm_data = array (
     'cv' => 'relationship',
     'id' => 32,
   ),
+  'CV_GO_NAMESPACE' => 
+  array (
+    'name' => 'go_namespace',
+    'cv' => 'autocreated',
+    'id' => 42738,
+  ),
 );
 */    
 
@@ -110,5 +116,6 @@ define ('CV_RELATIONSHIP_UNIGENE_ISOFORM', '989');
 define ('CV_ISOFORM_PATH', '42737');
 define ('CV_PREDPEP', '219');
 define ('CV_BIOMATERIAL_ISA', '32');
+define ('CV_GO_NAMESPACE', '42738');
 
 ?>
