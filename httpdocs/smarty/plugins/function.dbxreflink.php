@@ -21,10 +21,10 @@ function smarty_function_dbxreflink($params, &$smarty) {
         else
             $db_urls[$params['dbxref']['dbname']] = '';
     }
-    $description = sprintf('<span class="dbxref-tooltip" data-definition="%5$s" data-dbversion="%4$s">%1$s:%2$s%3$s</span>'
+    $description = sprintf('<span class="dbxref-tooltip" data-dbname="%1$s" data-accession="%2$s" data-name="%3$s"  data-dbversion="%4$s" data-definition="%5$s">%1$s:%2$s %3$s</span>'
             , $params['dbxref']['dbname']
             , $params['dbxref']['accession']
-            , !empty($params['dbxref']['name']) ? ' (' . $params['dbxref']['name'] . ')' : ''
+            , $params['dbxref']['name']
             , !empty($params['dbxref']['dbversion']) ? $params['dbxref']['dbversion'] : 'unknown'
             , $params['dbxref']['definition']
         );

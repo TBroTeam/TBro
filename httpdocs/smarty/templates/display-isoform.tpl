@@ -46,10 +46,16 @@
 
 
         $(document).tooltip({
-            items: ".dbxref-tooltip",
+            items: "span.dbxref-tooltip",
+            open: function(event, ui) {
+                ui.tooltip.css("max-width", "600px");
+            },
             content: function() {
                 var element = $(this);
-                var newElStr = $('#dbxref-tooltip').innerHtml();
+                var newElStr = $('#dbxref-tooltip').html();
+                newElStr = newElStr.replace(/#dbname#/g, element.attr('data-dbname'));
+                newElStr = newElStr.replace(/#accession#/g, element.attr('data-accession'));
+                newElStr = newElStr.replace(/#name#/g, element.attr('data-name'));
                 newElStr = newElStr.replace(/#definition#/g, element.attr('data-definition'));
                 newElStr = newElStr.replace(/#dbversion#/g, element.attr('data-dbversion'));
                 return newElStr;
@@ -65,12 +71,13 @@
 {#block name='body'#}
 <div id="dbxref-tooltip" style="display:none">
     <table>
+        <tr><td>DbxRef</td><td>#dbname#:#accession#</td></tr>
+        <tr><td>Name</td><td>#name#</td></tr>
         <tr><td>Definition</td><td>#definition#</td></tr>
         <tr><td>DB-Version</td><td>#dbversion#</td></tr>
     </table>
 </div>
 <div class="row">
-    {#$data.isoform|var_dump#}
     <div class="large-12 columns panel" id="description">
 
         <div class="row">
