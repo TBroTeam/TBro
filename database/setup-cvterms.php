@@ -71,11 +71,7 @@ $cvterms = array(
     'CV_BIOMATERIAL_ISA' => array(
         'name' => 'is_a',
         'cv' => 'relationship'
-    ),
-    'CV_GO_NAMESPACE' => array(
-        'name' => 'go_namespace',
-        'cv' => 'autocreated'
-    ),
+    )
 );
 
 $param_cvterm_name = null;

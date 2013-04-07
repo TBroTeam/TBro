@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
+require_once INC . '/libs/php-progress-bar.php';
 
 class Importer_Quantifications {
 
@@ -20,6 +21,9 @@ class Importer_Quantifications {
      * @throws ErrorException
      */
     static function import($filename, $quantification_id, $biomaterial_name, $type_name, $value_column) {
+
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+
         global $db;
 
         $lines_imported = 0;
@@ -73,10 +77,8 @@ class Importer_Quantifications {
                 $statement_insert_quant->execute();
 
                 $lines_imported++;
-                if ($lines_imported % 1000 == 0)
-                    echo '*';
-                else if ($lines_imported % 100 == 0)
-                    echo '.';
+                if ($lines_imported % 200 == 0)
+                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
             }
 
 

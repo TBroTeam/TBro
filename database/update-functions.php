@@ -129,7 +129,7 @@ BEGIN
     FROM 
         feature interpro
         INNER JOIN featureloc ON (interpro.feature_id = featureloc.feature_id)
-        LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id   = interpro.feature_id AND interpro_ID.type_id = {$_CONST('CV_INTERPRO_ID')}) 
+        LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id = interpro.feature_id AND interpro_ID.type_id = {$_CONST('CV_INTERPRO_ID')}) 
         LEFT OUTER JOIN analysisfeature ON (interpro.feature_id = analysisfeature.feature_id)
         LEFT OUTER JOIN analysis ON (analysisfeature.analysis_id = analysis.analysis_id)
         LEFT OUTER JOIN featureprop AS analysis_match_id ON (analysis_match_id.feature_id = interpro.feature_id AND analysis_match_id.type_id = {$_CONST('CV_INTERPRO_ANALYSIS_MATCH_ID')})

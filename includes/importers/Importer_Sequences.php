@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
+require_once INC . '/libs/php-progress-bar.php';
 
 class Importer_Sequences {
 
@@ -53,6 +54,9 @@ class Importer_Sequences {
      * @throws ErrorException
      */
     static function import($filename) {
+
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+
         global $db;
         $lines_imported = 0;
         $isoforms_updated = 0;
@@ -100,7 +104,8 @@ class Importer_Sequences {
             $statement_insert_predpep->bindParam('seqlen', $param_predpep_seqlen, PDO::PARAM_INT);
             $statement_insert_predpep->bindParam('residues', $param_predpep_residues, PDO::PARAM_STR);
 
-            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))',
+                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_predpep_location->bindParam('fmin', $param_predpep_fmin, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('fmax', $param_predpep_fmax, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('strand', $param_predpep_strand, PDO::PARAM_INT);
@@ -134,7 +139,8 @@ class Importer_Sequences {
                 }
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
+                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/',
+                                $description, $matches)) {
                     $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
                     $param_predpep_uniq = ASSEMBLY_PREFIX . $param_predpep_name;
                     $param_predpep_seqlen = $matches['len'];
@@ -152,10 +158,8 @@ class Importer_Sequences {
                 }
 
                 $lines_imported++;
-                if ($lines_imported % 1000 == 0)
-                    echo '*';
-                else if ($lines_imported % 100 == 0)
-                    echo '.';
+                if ($lines_imported % 200 == 0)
+                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();

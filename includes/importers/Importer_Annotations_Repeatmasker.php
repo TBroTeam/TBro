@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
+require_once INC . '/libs/php-progress-bar.php';
 
 class Importer_Annotations_Repeatmasker {
 
@@ -13,6 +14,9 @@ class Importer_Annotations_Repeatmasker {
      * @throws ErrorException on DB Error
      */
     static function import($filename) {
+        
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        
         global $db;
 
         $regex = <<<EOF
@@ -66,30 +70,21 @@ EOF;
             $param_srcfeature_uniq = null;
 
             $statement_insert_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id)');
-            $statement_insert_domain->bindValue('type_id',
-                    CV_ANNOTATION_REPEATMASKER, PDO::PARAM_INT);
-            $statement_insert_domain->bindValue('organism_id', DB_ORGANISM_ID,
-                    PDO::PARAM_INT);
-            $statement_insert_domain->bindParam('name', $param_name,
-                    PDO::PARAM_STR);
-            $statement_insert_domain->bindParam('uniquename', $param_uniquename,
-                    PDO::PARAM_STR);
+            $statement_insert_domain->bindValue('type_id', CV_ANNOTATION_REPEATMASKER, PDO::PARAM_INT);
+            $statement_insert_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $statement_insert_domain->bindParam('name', $param_name, PDO::PARAM_STR);
+            $statement_insert_domain->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
 
             $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
                             'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
-            $statement_insert_featureloc->bindParam('fmin', $param_fmin,
-                    PDO::PARAM_INT);
-            $statement_insert_featureloc->bindParam('fmax', $param_fmax,
-                    PDO::PARAM_INT);
+            $statement_insert_featureloc->bindParam('fmin', $param_fmin, PDO::PARAM_INT);
+            $statement_insert_featureloc->bindParam('fmax', $param_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
-            $statement_insert_featureloc->bindParam('srcfeature_uniquename',
-                    $param_srcfeature_uniq, PDO::PARAM_STR);
+            $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_srcfeature_uniq, PDO::PARAM_STR);
 
             $statement_annotate_domain = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :cvterm, :value)');
-            $statement_annotate_domain->bindParam('cvterm', $param_cvterm,
-                    PDO::PARAM_INT);
-            $statement_annotate_domain->bindParam('value', $param_value,
-                    PDO::PARAM_STR);
+            $statement_annotate_domain->bindParam('cvterm', $param_cvterm, PDO::PARAM_INT);
+            $statement_annotate_domain->bindParam('value', $param_value, PDO::PARAM_STR);
 
             $file = fopen($filename, 'r');
             while (($line = trim(fgets($file))) != false) {
@@ -97,15 +92,11 @@ EOF;
                 if (preg_match($regex, $line, $matches)) {
                     $param_name = sprintf("%s(%d-%d):%s#%s(%s)"
                             , $matches['name']
-                            ,
-                            $matches['start']
+                            , $matches['start']
                             , $matches['end']
-                            ,
-                            $matches['repeat_name']
-                            ,
-                            $matches['repeat_class']
-                            ,
-                            (isset($matches['repeat_family']) ? $matches['repeat_family'] : '')
+                            , $matches['repeat_name']
+                            , $matches['repeat_class']
+                            , (isset($matches['repeat_family']) ? $matches['repeat_family'] : '')
                     );
                     $param_uniquename = ASSEMBLY_PREFIX . $param_name;
 
@@ -135,10 +126,8 @@ EOF;
 
 
                     $lines_imported++;
-                    if ($lines_imported % 1000 == 0)
-                        echo '*';
-                    else if ($lines_imported % 100 == 0)
-                        echo '.';
+                    if ($lines_imported % 200 == 0)
+                        php_progress_bar_show_status($lines_imported, $lines_total, 60);
                 } else {
                     echo "WARNING: Line does not match:\n\t$line\n";
                 }

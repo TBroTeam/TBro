@@ -26,7 +26,6 @@ class Importer_GO_OBO {
         
         $statement_insert_dbxrefprop->bindParam('accession', $param_accession, PDO::PARAM_STR);
         $statement_insert_dbxrefprop->bindParam('dbname', $param_dbname, PDO::PARAM_STR);
-        $statement_insert_dbxrefprop->bindValue('type', CV_GO_NAMESPACE, PDO::PARAM_STR);
         $statement_insert_dbxrefprop->bindParam('value', $param_namespace, PDO::PARAM_STR);
         $statement_insert_dbxrefprop->bindParam('description', $param_description, PDO::PARAM_STR);
 

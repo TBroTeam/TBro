@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
+require_once INC . '/libs/php-progress-bar.php';
 
 class Importer_Map {
 
@@ -13,6 +14,8 @@ class Importer_Map {
      * @throws ErrorException
      */
     static function import($filename) {
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        
         global $db;
 
         $lines_imported = 0;
@@ -77,10 +80,8 @@ class Importer_Map {
                 $statement_insert_feature_rel->execute();
 
                 $lines_imported++;
-                if ($lines_imported % 1000 == 0)
-                    echo '*';
-                else if ($lines_imported % 100 == 0)
-                    echo '.';
+                if ($lines_imported % 200 == 0)
+                        php_progress_bar_show_status($lines_imported, $lines_total, 60);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();

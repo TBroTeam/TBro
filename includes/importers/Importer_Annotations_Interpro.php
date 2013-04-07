@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/Importer_Sequences.php';
-
+require_once INC . '/libs/php-progress-bar.php';
 
 #versions of databases for interpro import
 global $dbrefx_versions;
@@ -97,7 +97,7 @@ EOF;
          */
 
 
-
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
 
         global $dbrefx_versions;
         global $db;
@@ -121,7 +121,6 @@ EOF;
             $param_featureprop_value = null;
             $param_accession = null;
             $param_dbname = null;
-            $param_dbxref_description = null;
 
             $statement_insert_feature_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:feature_domain_name, :feature_domain_unique, :type_id, :organism_id)');
             $statement_insert_feature_domain->bindValue('type_id', CV_ANNOTATION_INTERPRO, PDO::PARAM_INT);
@@ -130,7 +129,8 @@ EOF;
             $statement_insert_feature_domain->bindParam('feature_domain_name', $param_feature_domain_name, PDO::PARAM_STR);
             $statement_insert_feature_domain->bindParam('feature_domain_unique', $param_feature_domain_uniq, PDO::PARAM_STR);
 
-            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
+                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_domain_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_domain_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
@@ -148,10 +148,9 @@ EOF;
             $statement_insert_featureprop->bindParam(':value', $param_featureprop_value, PDO::PARAM_STR);
 
 
-            $statement_insert_feature_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), get_or_insert_dbxref(:dbname, :accession, :description))');
+            $statement_insert_feature_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), get_or_insert_dbxref(:dbname, :accession))');
             $statement_insert_feature_dbxref->bindParam('accession', $param_accession, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindParam('dbname', $param_dbname, PDO::PARAM_STR);
-            $statement_insert_feature_dbxref->bindParam('description', $param_dbxref_description, PDO::PARAM_STR);
 
             $file = fopen($filename, 'r');
             while (($line = trim(fgets($file))) != false) {
@@ -209,17 +208,13 @@ EOF;
                     for ($i = 0; $i < count($go_matches[0]); $i++) {
                         $param_dbname = $go_matches['dbname'][$i];
                         $param_accession = $go_matches['accession'][$i];
-                        $param_dbxref_description = trim($go_matches['description'][$i]);
                         $statement_insert_feature_dbxref->execute();
                         $dbxrefs_added++;
                     }
                 }
 
                 $lines_imported++;
-                if ($lines_imported % 1000 == 0)
-                    echo '*';
-                else if ($lines_imported % 100 == 0)
-                    echo '.';
+                if ($lines_imported%200==0) php_progress_bar_show_status($lines_imported, $lines_total, 60);
             }
 
             if (!$db->commit()) {

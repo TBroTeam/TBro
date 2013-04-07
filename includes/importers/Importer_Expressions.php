@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../constants.php';
+require_once INC . '/libs/php-progress-bar.php';
 
 class Importer_Expressions {
     /*
@@ -21,12 +22,15 @@ class Importer_Expressions {
             $value = 'Infinity';
         else if ($value == 'NA')
             $value = 'NaN';
-         else if (floatval($value)>0 && floatval($value)<1e-307){
-             $value=0;
-         }
+        else if (floatval($value) > 0 && floatval($value) < 1e-307) {
+            $value = 0;
+        }
     }
 
     static function import($filename, $analysis_id, $biomaterial_parentA_name, $biomaterial_parentB_name) {
+
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+
         global $db;
         $lines_imported = 0;
         $quantifications_linked = 0;
@@ -78,7 +82,7 @@ class Importer_Expressions {
 
             $statement_insert_expressiondata = $db->prepare('INSERT INTO expressionresult(analysis_id, "baseMean", "baseMeanA", "baseMeanB", "foldChange", "log2foldChange", pval, pvaladj)'
                     . 'VALUES (:analysis_id, :baseMean, :baseMeanA, :baseMeanB,'
-                    .' :foldChange, :log2foldChange, :pval, :pvaladj);');
+                    . ' :foldChange, :log2foldChange, :pval, :pvaladj);');
             $statement_insert_expressiondata->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
             $statement_insert_expressiondata->bindParam('baseMean', $param_baseMean, PDO::PARAM_STR);
             $statement_insert_expressiondata->bindParam('baseMeanA', $param_baseMeanA, PDO::PARAM_STR);
@@ -119,23 +123,21 @@ class Importer_Expressions {
                     $lines_skipped++;
                     continue;
                 }
-                
+
                 $statement_insert_expressiondata->execute();
 
                 $param_feature_uniquename = ASSEMBLY_PREFIX . $feature_name;
 
-                
-                
+
+
                 $statement_set_relationshipA->execute();
                 $quantifications_linked +=$statement_set_relationshipA->fetchColumn();
                 $statement_set_relationshipB->execute();
                 $quantifications_linked+= $statement_set_relationshipB->fetchColumn();
 
                 $lines_imported++;
-                if ($lines_imported % 1000 == 0)
-                    echo '*';
-                else if ($lines_imported % 100 == 0)
-                    echo '.';
+                if ($lines_imported % 200 == 0)
+                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
             }
 
             if (!$db->commit()) {

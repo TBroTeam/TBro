@@ -9,25 +9,26 @@ class Dbxref extends \WebService {
     public function getById($param_isoform_id) {
 
 
-        global $_CONST, $db;
+        global $db;
 #UI hint
         if (false)
             $db = new PDO();
 
         $query_get_isoform_dbxrefs = <<<EOF
-SELECT
-  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description, dbxrefprop.value AS go_namespace
-FROM
+SELECT 
+  DISTINCT ON (cvterm.dbxref_id, cv.cv_id)
+  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, cvterm.name AS name, cvterm.definition AS definition, cv.name AS go_namespace 
+FROM 
   feature_dbxref
   JOIN dbxref ON (dbxref.dbxref_id = feature_dbxref.dbxref_id)
   JOIN db ON (db.db_id = dbxref.db_id)
-  LEFT JOIN dbxrefprop ON (dbxref.dbxref_id = dbxrefprop.dbxref_id AND dbxrefprop.type_id=:go_namespace)
-WHERE
+  LEFT JOIN cvterm ON (cvterm.dbxref_id = dbxref.dbxref_id)
+  LEFT JOIN cv ON (cv.cv_id = cvterm.cv_id)
+WHERE 
   feature_dbxref.feature_id = :isoform_id
 EOF;
 
         $stm_get_isoform_dbxrefs = $db->prepare($query_get_isoform_dbxrefs);
-        $stm_get_isoform_dbxrefs->bindValue('go_namespace', CV_GO_NAMESPACE);
         $stm_get_isoform_dbxrefs->bindParam('isoform_id', $param_isoform_id);
 
         $ret = array();

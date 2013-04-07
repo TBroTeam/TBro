@@ -71,14 +71,17 @@ EOF;
         $stm_get_interpro->bindParam('predpep_id', $param_predpep_id);
 
         $query_get_interpro_dbxrefs = <<<EOF
-SELECT
-  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, dbxref.description AS description
-FROM
-  feature_dbxref, dbxref, db
-WHERE
-  feature_dbxref.feature_id = :interpro_feature_id AND
-  dbxref.dbxref_id = feature_dbxref.dbxref_id AND
-  db.db_id = dbxref.db_id
+SELECT 
+  DISTINCT ON (cvterm.dbxref_id, cv.cv_id)
+  db.name AS dbname, dbxref.accession, dbxref.version AS dbversion, cvterm.name AS name, cvterm.definition AS definition, cv.name AS go_namespace 
+FROM 
+  feature_dbxref
+  JOIN dbxref ON (dbxref.dbxref_id = feature_dbxref.dbxref_id)
+  JOIN db ON (db.db_id = dbxref.db_id)
+  LEFT JOIN cvterm ON (cvterm.dbxref_id = dbxref.dbxref_id)
+  LEFT JOIN cv ON (cv.cv_id = cvterm.cv_id)
+WHERE 
+  feature_dbxref.feature_id = :interpro_feature_id                
 EOF;
 
         $stm_get_interpro_dbxref = $db->prepare($query_get_interpro_dbxrefs);
