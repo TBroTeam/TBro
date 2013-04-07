@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS expressionresult_quantificationresult;
 DROP TABLE IF EXISTS expressionresult;
 DROP TABLE IF EXISTS quantificationresult;
-
+DROP TABLE IF EXISTS webuser_data;
 DROP SEQUENCE IF EXISTS expressionresult_quantificationresult;
 DROP SEQUENCE IF EXISTS expressionresult_expressionresult_id_seq;
 DROP SEQUENCE IF EXISTS quantificationresult_quantificationresult_id_seq;
@@ -12,8 +12,6 @@ CREATE SEQUENCE quantificationresult_quantificationresult_id_seq
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE quantificationresult_quantificationresult_id_seq
-  OWNER TO s202139;
 
 CREATE SEQUENCE expressionresult_expressionresult_id_seq
   INCREMENT 1
@@ -21,8 +19,6 @@ CREATE SEQUENCE expressionresult_expressionresult_id_seq
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE expressionresult_expressionresult_id_seq
-  OWNER TO s202139;
 
 
 CREATE TABLE quantificationresult
@@ -79,3 +75,19 @@ WITH (
   OIDS = FALSE
 )
 ;
+
+CREATE TABLE webuser_data
+(
+  identity character varying,
+  type_id integer,
+  value text,
+  webuser_data_id serial NOT NULL,
+  CONSTRAINT webuser_data_pkey PRIMARY KEY (webuser_data_id),
+  CONSTRAINT webuser_data_cvterm_fkey FOREIGN KEY (type_id)
+      REFERENCES cvterm (cvterm_id) MATCH SIMPLE
+      ON UPDATE NO CASCADE ON DELETE NO ACTION,
+  CONSTRAINT webuser_data_identity_type_id_key UNIQUE (identity, type_id)
+)
+WITH (
+  OIDS=FALSE
+);

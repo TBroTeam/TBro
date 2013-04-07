@@ -71,7 +71,11 @@ $cvterms = array(
     'CV_BIOMATERIAL_ISA' => array(
         'name' => 'is_a',
         'cv' => 'relationship'
-    )
+    ),
+    'WEBUSER_CART' => array(
+        'name' => 'webuser_data_cart',
+        'cv' => 'local'
+    ),
 );
 
 $param_cvterm_name = null;
@@ -102,7 +106,8 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
     if (($cvterm_id = $stm_select_id->fetchColumn()) != false) {
         //already exists in DB
         $cvterm['id'] = $cvterm_id;
-    } else {
+    }
+    else {
         echo "insert\n";
         //does not exist in DB, insert
         #param_cvterm_name is already set
@@ -129,7 +134,8 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
             case 'relationship':
                 if (strpos(strtolower($cvterm_const), 'biomaterial') !== false) {
                     printf('UPDATE biomaterial_relationship SET type_id=%2$d WHERE type_id=%1$d;', $_CONST($cvterm_const), $cvterm['id']);
-                } else {
+                }
+                else {
                     printf('UPDATE feature_relationship SET type_id=%2$d WHERE type_id=%1$d;', $_CONST($cvterm_const), $cvterm['id']);
                 }
                 break;
@@ -137,7 +143,7 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
         print "\n";
     }
 }
-unset ($cvterm);
+unset($cvterm);
 $db->commit();
 
 print "\n\n\n";

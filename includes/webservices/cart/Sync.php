@@ -15,6 +15,50 @@ class Sync extends \WebService {
         return $x;
     }
 
+    private function loadCart() {
+        if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
+            return;
+
+        global $db;
+        if (false)
+            $db = new \PDO();
+
+        $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart');
+        $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
+        $stm_retrieve_cart->bindValue('identity', $_SESSION['OpenID']);
+        $stm_retrieve_cart->execute();
+        if ($stm_retrieve_cart->rowCount() == 1) {
+            $row = $stm_retrieve_cart->fetch(\PDO::FETCH_ASSOC);
+            $_SESSION['cart'] = unserialize($row['value']);
+        }
+        else {
+            $this->saveCart();
+        }
+    }
+
+    private function saveCart() {
+        if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
+            return;
+
+        global $db;
+        if (false)
+            $db = new \PDO();
+
+        $stm_save_cart = $db->prepare('UPDATE webuser_data SET value=:value WHERE  identity=:identity AND type_id=:type_cart');
+        $stm_save_cart->bindValue('value', serialize($_SESSION['cart']));
+        $stm_save_cart->bindValue('type_cart', WEBUSER_CART);
+        $stm_save_cart->bindValue('identity', $_SESSION['OpenID']);
+        $stm_save_cart->execute();
+        if ($stm_save_cart->rowCount() == 1)
+            return;
+        
+        $stm_insert_cart = $db->prepare('INSERT INTO webuser_data (identity, type_id, value) VALUES (:identity, :type_cart, :value)');
+        $stm_insert_cart->bindValue('value', serialize($_SESSION['cart']));
+        $stm_insert_cart->bindValue('type_cart', WEBUSER_CART);
+        $stm_insert_cart->bindValue('identity', $_SESSION['OpenID']);
+        $stm_insert_cart->execute();
+    }
+
     public function execute($querydata) {
         if (!isset($_SESSION))
             session_start();
@@ -23,11 +67,13 @@ class Sync extends \WebService {
             $_SESSION['cart'] = array('all' => array(), 'groups' => array());
         }
 
+        
+        //if we are logged in, get our cart from the db. 
+        //if we are logged in but have no cart in the db, BUT a cart in the session, this saves our session cart to the DB.
+        $this->loadCart();
+        
         if (isset($querydata['action']) && isset($querydata['action']['action']))
             switch ($querydata['action']['action']) {
-                case 'loadFromDB':
-                    //TODO issue #153 
-                    break;
                 case 'addGroup':
                     $newname = $querydata['action']['name'];
                     if (self::get_group($newname) != null)
@@ -90,8 +136,9 @@ class Sync extends \WebService {
                     $_SESSION['cart'] = array('all' => array(), 'groups' => array());
                     break;
             }
-            
-            //TODO issue #153 - save cart to DB if logged in
+
+        //if we are logged in: save our cart back to the DB
+        $this->saveCart();
 
         return array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']);
     }

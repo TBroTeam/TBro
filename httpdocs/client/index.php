@@ -45,8 +45,7 @@ if (isset($_GET['logout'])) {
     die();
 }
 try {
-    # Change 'localhost' to your domain name.
-    $openid = new LightOpenID('localhost');
+    $openid = new LightOpenID($_SERVER['HTTP_HOST']);
     if (!$openid->mode) {
         if (isset($_GET['login'])) {
             $openid->identity = 'https://www.google.com/accounts/o8/id';
@@ -57,8 +56,6 @@ try {
     else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
-            list($sync, $trash) = WebService::factory('cart/sync');
-            $sync->execute(array('action' => 'loadFromDB'));
             header('Location: ' . $_SERVER['REDIRECT_URL']);
             die();
         }
