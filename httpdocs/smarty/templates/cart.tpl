@@ -16,8 +16,8 @@
     }
 
     $(document).ready(function() {
-        
-        $( "#dialog-rename-cart-group" ).dialog({
+
+        $("#dialog-rename-cart-group").dialog({
             autoOpen: false,
             height: 300,
             width: 350,
@@ -27,11 +27,12 @@
                     var oldname = $(this).data('oldname');
                     var newname = $('#cartname').val();
                     var retval = cart.renameGroup(oldname, newname);
-                    if (retval != null) alert(retval);
-                    $( this ).dialog( "close" );
+                    if (retval != null)
+                        alert(retval);
+                    $(this).dialog("close");
                 },
                 Cancel: function() {
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 }
             },
             open: function() {
@@ -39,21 +40,49 @@
                 $('#cartname').val(oldname);
             }
         });
-        
-        
+
+
+        $("#dialog-edit-cart-item").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 500,
+            modal: true,
+            buttons: {
+                "save changes": function() {
+                    var oldname = $(this).data('oldname');
+                    var newname = $('#cartname').val();
+                    var retval = cart.renameGroup(oldname, newname);
+                    if (retval != null)
+                        alert(retval);
+                    $(this).dialog("close");
+                },
+                Cancel: function() {
+                    $(this).dialog("close");
+                }
+            },
+            open: function() {
+                var uniquename = $(this).data('uniquename');
+                var alias = $(this).data('alias');
+                var annotations = $(this).data('annotations');
+                $('#item-uniquename').val(uniquename);
+                $('#item-alias').val(alias);
+                $('#item-annotations').val(annotations);
+            }
+        });
+
         $("#cart-group-all").accordion({
             collapsible: true,
             heightStyle: "content"
         }).find('.cart-button-execute').click(function(event) {
             event.stopPropagation();
             alert('not implemented yet.');
-        });;
+        });
 
-        cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#});
-        setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
-        
+        cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#}, true);
+                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
+
         //buildTestCart();
-        
+
     });
 </script>
 <style>
@@ -66,25 +95,53 @@
     .beingDragged {
         list-style: none;
     }
+    *[class*='cart-button-']{
+        cursor: pointer;
+    }
+    
+    fieldset *:last-child{
+        margin-bottom: 0px;
+    }
+    
+    form {
+        margin: 0px;
+    }
 </style>
+<div style="display: none">
+    <div id="dialog-rename-cart-group" title="rename cart">
+        <form>
+            <fieldset>
+                <label for="cartname">cart name</label>
+                <input type="text" name="name" id="cartname" class="text ui-widget-content ui-corner-all" />
+            </fieldset>
+        </form>
+    </div>
 
-<div id="dialog-rename-cart-group" title="rename cart">
-    <form>
-        <fieldset>
-            <label for="cartname">cart name</label>
-            <input type="text" name="name" id="cartname" class="text ui-widget-content ui-corner-all" />
-        </fieldset>
-    </form>
+    <div id="dialog-edit-cart-item" title="edit item">
+        <form>
+            <fieldset>
+                <label for="item-uniquename">uniquename</label>
+                <input type="text" name="uniquename" id="item-uniquename" disabled="disabled" class="text ui-widget-content ui-corner-all" />
+            </fieldset>
+            <fieldset>
+                <label for="item-alias">display alias</label>
+                <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" />
+                <label for="item-annotations">annotations</label>
+                <textarea name="annotations" id="item-annotations" class="text ui-widget-content ui-corner-all"></textarea>
+            </fieldset>
+        </form>
+    </div>
 </div>
+
 <div class="panel large-12 columns">
     {#if (isset($smarty.session['OpenID'])) #}
-        <form action="?logout" method="post">
-            <button>Logout</button>
-        </form>
+    <form action="?logout" method="post">
+        <button>Logout</button>
+    </form>
     {#else#}
-        <form action="?login" method="post">
-            <button>Login with Google</button>
-        </form>
+    <form action="?login" method="post">
+        <button>Login with Google</button>
+    </form>
     {#/if#}
 </div>
 
@@ -122,9 +179,10 @@
     </div>
 
     <ul id="cart-item-dummy"> 
-        <li data-uniquename="#uniquename#" style="clear:both" class="large-12 cart-item">
-            <div class="left">#uniquename#</div>
+        <li style="clear:both" class="large-12 cart-item">
+            <div class="left"><img class="cart-button-goto" src="{#$AppPath#}/img/mimiGlyphs/47.png"/> <span class="displayname"></span></div>
             <div class="right">
+                <img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
                 <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
             </div>
         </li>

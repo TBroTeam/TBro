@@ -4,9 +4,10 @@ try
 {
     console.log('');
 }
-catch(err){
+catch (err) {
     var console = {}
-    console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {};
+    console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {
+    };
 }
 
 
@@ -106,13 +107,13 @@ cart.syncAction = function(action, options) {
     console.log(action);
 
     var thisSyncRequest = new Date().getTime();
-    cart.lastSyncRequest = new Date().getTime();
+    cart.lastSyncRequest = thisSyncRequest;
     $.ajax({
         url: '{#$ServicePath#}/cart/sync',
         type: 'post',
         dataType: "json",
         data: {
-            action: action, 
+            action: action,
             syncRequestTime: cart.lastSyncRequest
         },
         success: function(data) {
@@ -124,12 +125,12 @@ cart.syncAction = function(action, options) {
             // sent and answer has been received, maybe on another tab), skip writing back
             if (data.syncTime > $.webStorage.local().getItem('syncTime')) {
                 console.log('saving ', data.syncTime, 'to webStorage');
-                
+
                 $.webStorage.local().setItem('syncTime', data.syncTime);
                 $.webStorage.local().setItem('syncedCart', data.cart);
             }
-        
-            
+
+
             //wait half a second for all the actions to finish, or check calls too often
             setTimeout(function() {
                 //if this is still the last request, compare actual cart to webstorage (e.g. server) cart
@@ -138,7 +139,7 @@ cart.syncAction = function(action, options) {
                     var sessionCart = $.webStorage.local().getItem('syncedCart');
                     if (!cart.compareCarts(cart, sessionCart)) {
                         console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', sessionCart);
-                        cart.rebuildDOM(sessionCart);
+                        cart.rebuildDOM(sessionCart, false);
                     }
                 }
             }, 500);
@@ -153,7 +154,7 @@ cart.checkRegularly = function() {
         var sessionCart = $.webStorage.local().getItem('syncedCart');
         if (!cart.compareCarts(cart, sessionCart)) {
             console.log('carts not identical, rebuilding DOM; current cart: ', cart, 'synced cart:', sessionCart);
-            cart.rebuildDOM(sessionCart);
+            cart.rebuildDOM(sessionCart, false);
         } else {
             console.log('local and remote cart identical, everything okay');
         }
@@ -199,7 +200,7 @@ cart.compareCarts = function(first, second) {
         return false;
 
     if (first.groups.length !== second.groups.length) {
-        console.log(first.groups,first.groups.length , ' group count differs: ', second.groups,second.groups.length);
+        console.log(first.groups, first.groups.length, ' group count differs: ', second.groups, second.groups.length);
         return false;
     }
 
@@ -238,7 +239,12 @@ cart.compareCarts = function(first, second) {
 };
 
 
-cart.rebuildDOM = function(newCart) {
+cart.rebuildDOM = function(newCart, saveToWebStorage) {
+    if (saveToWebStorage) {
+        $.webStorage.local().setItem('syncTime', new Date().getTime());
+        $.webStorage.local().setItem('syncedCart', newCart);
+    }
+
     cart.resetCart({
         sync: false
     });
@@ -250,7 +256,7 @@ cart.rebuildDOM = function(newCart) {
     $.each(newCart.groups, function() {
         var groupname = this.name;
         cart.addGroup({
-            name: groupname, 
+            name: groupname,
             sync: false
         });
         $.each(this.items, function() {
@@ -263,10 +269,10 @@ cart.rebuildDOM = function(newCart) {
 };
 
 /**
-     *&nbsp;adds a new group to the cart
-     *&nbsp;@param {object} options used internally
-     *&nbsp;@returns new group name
-     */
+ *&nbsp;adds a new group to the cart
+ *&nbsp;@param {object} options used internally
+ *&nbsp;@returns new group name
+ */
 cart.addGroup = function(options) {
     do {
         groupname = "group " + (++cart.lastGroupNumber);
@@ -277,14 +283,14 @@ cart.addGroup = function(options) {
         groupname = options.name;
 
     var group = {
-        name: groupname, 
+        name: groupname,
         items: []
     };
     cart.groups.push(group);
 
     //sync
     cart.syncAction({
-        action: 'addGroup', 
+        action: 'addGroup',
         name: groupname
     }, options);
 
@@ -324,7 +330,7 @@ cart.addGroup = function(options) {
         event.stopPropagation();
         alert('not implemented yet.');
     });
-    
+
     newEl.appendTo(cart.cart_groups).hide(0).fadeIn(500);
     return groupname;
 };
@@ -359,8 +365,8 @@ cart.renameGroup = function(oldname, newname, options) {
 
     // sync
     cart.syncAction({
-        action: 'renameGroup', 
-        oldname: oldname, 
+        action: 'renameGroup',
+        oldname: oldname,
         newname: newname
     }, options);
 
@@ -382,7 +388,7 @@ cart.removeGroup = function(groupname, options) {
 
     // sync
     cart.syncAction({
-        action: 'removeGroup', 
+        action: 'removeGroup',
         groupname: groupname
     }, options);
 
@@ -401,19 +407,27 @@ cart.addItemToAll = function(item, options) {
 
     //sync
     cart.syncAction({
-        action: 'addItemToAll', 
+        action: 'addItemToAll',
         item: item
     }, options);
 
     // DOM manupulation
     var newElStr = $('#cart-item-dummy').html();
-    newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
     newEl = $('<div/>').html(newElStr).children();
+    newEl.attr('data-uniquename', item.uniquename);
+    newEl.find('.displayname').html(item.uniquename);
     newEl.find('.cart-button-delete').click(function() {
         var item = $(this).parents('.cart-item').first();
         cart.removeItemFromAll({
             uniquename: item.attr('data-uniquename')
         });
+    });
+    newEl.find('.cart-button-goto').click(function() {
+        var item = $(this).parents('.cart-item').first();
+        window.location = '{#$AppPath#}/isoform-details/' + item.attr('data-uniquename');
+    });
+    newEl.find('.cart-button-edit').click(function() {
+        cart.opendialog_edit(item.uniquename);
     });
     newEl.appendTo(cart.cart_group_all.find('ul'));
     cart.refresh_cart_group_all();
@@ -442,8 +456,8 @@ cart.addItemToGroup = function(item, groupname, options) {
 
     //sync
     cart.syncAction({
-        action: 'addItemToGroup', 
-        item: item, 
+        action: 'addItemToGroup',
+        item: item,
         groupname: groupname
     }, options);
 
@@ -451,9 +465,11 @@ cart.addItemToGroup = function(item, groupname, options) {
     if (options !== undefined && options.modifyDOM === false)
         return true;
     var newElStr = $('#cart-item-dummy').html();
-    newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+
     var group = $.getGroupByName(groupname).find('ul');
     newEl = $('<div/>').html(newElStr).children();
+    newEl.attr('data-uniquename', item.uniquename);
+    newEl.find('.displayname').html(item.uniquename);
     newEl.find('.cart-button-delete').click(function() {
         var item = $(this).parents('.cart-item').first();
         var group = $(this).parents('.cart-group').first();
@@ -461,7 +477,13 @@ cart.addItemToGroup = function(item, groupname, options) {
             uniquename: item.attr('data-uniquename')
         }, group.attr('data-group'));
     });
-
+    newEl.find('.cart-button-goto').click(function() {
+        var item = $(this).parents('.cart-item').first();
+        window.location = '{#$AppPath#}/isoform-details/' + item.attr('data-uniquename');
+    });
+    newEl.find('.cart-button-edit').click(function() {
+        cart.opendialog_edit(item.uniquename);
+    });
     newEl.appendTo(group).hide(0).fadeIn(500);
     cart.cleanUpGroup(item, group);
 };
@@ -489,7 +511,7 @@ cart.removeItemFromAll = function(item, options) {
 
     //sync
     cart.syncAction({
-        action: 'removeItemFromAll', 
+        action: 'removeItemFromAll',
         item: item
     }, options);
 
@@ -513,8 +535,8 @@ cart.removeItemFromGroup = function(item, groupname, options) {
 
     //sync
     cart.syncAction({
-        action: 'removeItemFromGroup', 
-        item: item, 
+        action: 'removeItemFromGroup',
+        item: item,
         groupname: groupname
     }, options);
 
@@ -537,6 +559,14 @@ cart.refresh_cart_group_all = function() {
     });
 };
 
+cart.opendialog_edit = function(uniquename) {
+    var item = cart.getItemByUniquename(uniquename);
+    var dialog = $('#dialog-edit-cart-item');
+    dialog.data('uniquename', item.uniquename);
+    dialog.data('alias', item.alias);
+    dialog.data('annotations', item.annotations);
+    dialog.dialog("open");
+};
 
 
 $(document).ready(function() {
