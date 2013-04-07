@@ -29,9 +29,6 @@ function smarty_function_dbxreflink($params, &$smarty) {
             , $params['dbxref']['definition']
         );
 
-
-    $ret = null;
-
     if ($db_urls[$params['dbxref']['dbname']] == '')
         return $description;
     else

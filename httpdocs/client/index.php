@@ -8,6 +8,7 @@ define('SERVICEPATH', '/httpdocs/service');
 define('INC', __DIR__ . '/../../includes/');
 
 require_once INC . '/constants.php';
+require_once INC . '/WebService.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -38,9 +39,9 @@ function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
 require_once INC . '/libs/lightopenid/openid.php';
 require_once INC . '/WebService.php';
 
-if (isset($_GET['logout'])){
+if (isset($_GET['logout'])) {
     session_destroy();
-    header('Location: '.$_SERVER['REDIRECT_URL']);
+    header('Location: ' . $_SERVER['REDIRECT_URL']);
     die();
 }
 try {
@@ -52,12 +53,13 @@ try {
             header('Location: ' . $openid->authUrl());
             die();
         }
-    } else {
+    }
+    else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
             list($sync, $trash) = WebService::factory('cart/sync');
             $sync->execute(array('action' => 'loadFromDB'));
-            header('Location: '.$_SERVER['REDIRECT_URL']);
+            header('Location: ' . $_SERVER['REDIRECT_URL']);
             die();
         }
     }
@@ -71,19 +73,27 @@ switch ($page) {
     case 'cart.js':
         header('Content-type: application/javascript');
         $smarty->display('cart.js');
-        break;
+        die();
     case 'unigene-details':
-        //TODO check if exists
-        $smarty->assign('unigene_uniquename', requestVal('query', '/^[a-z0-9._]+$/i', '1.01_comp231081_c0'));
+        $unigene = requestVal('query', '/^[a-z0-9._]+$/i', '');
+        $smarty->assign('unigene_uniquename', $unigene);
+        list($service, $trash) = WebService::factory("details/unigene");
+        $data = $service->execute(array("query1" => $unigene));
+        if ($data == array()) {
+            break;
+        }
         $smarty->display('display-unigene.tpl');
-        break;
+        die();
     case 'isoform-details':
-        //TODO check if exists
-        $smarty->assign('isoform_uniquename', requestVal('query', '/^[a-z0-9._]+$/i', '1.01_comp231081_c0'));
+        $isoform = requestVal('query', '/^[a-z0-9._]+$/i', '');
+        $smarty->assign('isoform_uniquename', $isoform);
+        list($service, $trash) = WebService::factory("details/isoform");
+        $data = $service->execute(array("query1" => $isoform));
+        if ($data == array()) {
+            break;
+        }
         $smarty->display('display-isoform.tpl');
-        break;
-    default:
-        $smarty->display('welcome.tpl');
-        break;
+        die();
 }
+$smarty->display('welcome.tpl');
 ?>
