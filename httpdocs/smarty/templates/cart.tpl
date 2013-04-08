@@ -52,7 +52,7 @@
                     cart.dialog_edit_save({
                         uniquename: $('#item-uniquename').val(),
                         alias: $('#item-alias').val(),
-                        annotations:  $('#item-annotations').val()
+                        annotations: $('#item-annotations').val()
                     });
 
                     $(this).dialog("close");
@@ -84,6 +84,21 @@
 
         //buildTestCart();
 
+        $(document).tooltip({
+            items: ".cart-item",
+            open: function(event, ui) {
+                ui.tooltip.css("max-width", "500px");
+            },
+            content: function() {
+                var item = cart.getItemByUniquename($(this).attr('data-uniquename'));
+                var newElStr = $('#cartitem-tooltip').html();
+                newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+                newElStr = newElStr.replace(/#alias#/g, item.alias);
+                newElStr = newElStr.replace(/#annotations#/g, item.annotations);
+                return newElStr;
+            }
+        });
+
     });
 </script>
 <style>
@@ -109,6 +124,14 @@
     }
 </style>
 <div style="display: none">
+    <div id="cartitem-tooltip">
+        <table>
+            <tr><td>Uniquename</td><td>#uniquename#</td></tr>
+            <tr><td>Alias</td><td>#alias#</td></tr>
+            <tr><td>Annotations</td><td>#annotations#</td></tr>
+        </table>
+    </div>
+
     <div id="dialog-rename-cart-group" title="rename cart">
         <form>
             <fieldset>
