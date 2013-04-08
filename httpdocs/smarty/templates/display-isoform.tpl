@@ -321,4 +321,6 @@
 </div>
 <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
 {#/if#}
+
+{#include file="display-isoform-barplot.tpl"#}
 {#/block#}

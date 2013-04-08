@@ -35,7 +35,7 @@ abstract class WebService {
             $serviceNamespace .= '\\' . strtolower($path[$i]);
         }
         //case: no service file found
-        if (!file_exists($filename)) {
+        if (!isset($filename) || !file_exists($filename)) {
             return array(null, null);
         }
         //case: service path tries to escape from basePath

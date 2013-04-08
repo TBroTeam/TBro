@@ -22,6 +22,7 @@ define('LINES_IMPORTED', 'datasets_imported');
 
 define('OPENID_DOMAIN', 'localhost');
 
+//is used within HEREDOC comments to access constants
 global $_CONST;
 $_CONST = 'constant';
 
