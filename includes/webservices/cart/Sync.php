@@ -15,6 +15,21 @@ class Sync extends \WebService {
         return $x;
     }
 
+    private static function groupContainsItemByUniquename($group, $uniquename) {
+        if (isset($group['items']))
+        //we are a group
+            $walk = $group['items'];
+        else
+        //we are the 'all' cart
+            $walk = $group;
+
+        foreach ($walk as $item) {
+            if ($item['uniquename'] == $uniquename)
+                return true;
+        }
+        return false;
+    }
+
     private function loadCart() {
         if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
             return;
@@ -51,7 +66,7 @@ class Sync extends \WebService {
         $stm_save_cart->execute();
         if ($stm_save_cart->rowCount() == 1)
             return;
-        
+
         $stm_insert_cart = $db->prepare('INSERT INTO webuser_data (identity, type_id, value) VALUES (:identity, :type_cart, :value)');
         $stm_insert_cart->bindValue('value', serialize($_SESSION['cart']));
         $stm_insert_cart->bindValue('type_cart', WEBUSER_CART);
@@ -67,13 +82,24 @@ class Sync extends \WebService {
             $_SESSION['cart'] = array('all' => array(), 'groups' => array());
         }
 
-        
         //if we are logged in, get our cart from the db. 
         //if we are logged in but have no cart in the db, BUT a cart in the session, this saves our session cart to the DB.
         $this->loadCart();
-        
+
         if (isset($querydata['action']) && isset($querydata['action']['action']))
             switch ($querydata['action']['action']) {
+                case 'edit_item':
+                    foreach ($_SESSION['cart']['all'] as &$item) {
+                        if ($item['uniquename'] == $querydata['action']['name']) {
+                            foreach ($querydata['action']['values'] as $key => $value) {
+                                if ($key != 'uniquename')
+                                    $item[$key] = $value;
+                            }
+                            break;
+                        }
+                    }
+                    unset($item);
+                    break;
                 case 'addGroup':
                     $newname = $querydata['action']['name'];
                     if (self::get_group($newname) != null)
@@ -83,7 +109,7 @@ class Sync extends \WebService {
                 case 'renameGroup':
                     $newname = $querydata['action']['newname'];
                     $oldname = $querydata['action']['oldname'];
-                    $group = &self::get_group($oldname);
+                    $group = self::get_group($oldname);
                     if (self::get_group($newname) != null || $group == null)
                         break;
                     $group['name'] = $newname;
@@ -98,38 +124,44 @@ class Sync extends \WebService {
                     break;
                 case 'addItemToAll':
                     $item = $querydata['action']['item'];
-                    if (self::array_in_array($item, $_SESSION['cart']['all']))
+                    if (self::groupContainsItemByUniquename($_SESSION['cart']['all'], $item['uniquename']))
                         break;
                     $_SESSION['cart']['all'][] = $item;
                     break;
                 case 'addItemToGroup':
-                    $item = $querydata['action']['item'];
+                    $uniquename = $querydata['action']['item']['uniquename'];
                     $groupname = $querydata['action']['groupname'];
-                    $group = &self::get_group($groupname);
-                    if (!self::array_in_array($item, $_SESSION['cart']['all']))
+                    $group = self::get_group($groupname);
+                    if (!self::groupContainsItemByUniquename($_SESSION['cart']['all'], $uniquename))
                         break;
-                    if (self::array_in_array($item, $group))
+                    if (self::groupContainsItemByUniquename($group, $uniquename))
                         break;
-                    $group['items'][] = $item;
+                    $group['items'][] = array('uniquename' => $uniquename);
                     break;
                 case 'removeItemFromGroup':
-                    $item = $querydata['action']['item'];
+                    $uniquename = $querydata['action']['item']['uniquename'];
                     $groupname = $querydata['action']['groupname'];
-                    $group = &self::get_group($groupname);
-                    if (!self::array_in_array($item, $group['items']))
-                        break;
-                    $group['items'] = self::array_diff_rec($group['items'], array($item));
+                    $group = self::get_group($groupname);
+                    foreach ($group as $key => $item) {
+                        if ($item['uniquename'] == $uniquename) {
+                            unset($group[$key]);
+                        }
+                    }
                     break;
                 case 'removeItemFromAll':
-                    $item = $querydata['action']['item'];
-                    if (!self::array_in_array($item, $_SESSION['cart']['all']))
-                        break;
-                    $_SESSION['cart']['all'] = self::array_diff_rec($_SESSION['cart']['all'], array($item));
+                    $uniquename = $querydata['action']['item']['uniquename'];
 
+                    foreach ($_SESSION['cart']['all'] as $key => $item) {
+                        if ($item['uniquename'] == $uniquename) {
+                            unset($_SESSION['cart']['all'][$key]);
+                        }
+                    }
                     foreach ($_SESSION['cart']['groups'] as &$group) {
-                        if (!self::array_in_array($item, $group['items']))
-                            continue;
-                        $group['items'] = self::array_diff_rec($group['items'], array($item));
+                        foreach ($group as $key => $item) {
+                            if ($item['uniquename'] == $uniquename) {
+                                unset($group[$key]);
+                            }
+                        }
                     }
                     break;
                 case 'resetCart':
@@ -141,29 +173,6 @@ class Sync extends \WebService {
         $this->saveCart();
 
         return array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']);
-    }
-
-    /*
-     * in_array either checks string representation or exact match (which wants exact key order). 
-     * this function allows for different key order in $needle and $straw
-     */
-
-    private static function array_in_array($needle, $haystack) {
-        foreach ($haystack as $straw) {
-            // see array equality http://php.net/manual/en/language.operators.array.php
-            if ($straw == $needle)
-                return true;
-        }
-        return false;
-    }
-
-    private static function array_diff_rec($first, $second) {
-        $ret = array();
-        foreach ($first as $f) {
-            if (!self::array_in_array($f, $second))
-                $ret[] = $f;
-        }
-        return $ret;
     }
 
 }

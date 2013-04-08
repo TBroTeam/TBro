@@ -34,25 +34,10 @@ var cart = {
      */
     lastGroupNumber: 0,
     /**
-     *&lt;div id="cart-groups"&gt;<br/>
-     *&emsp;&lt;div class='cart-group' data-group="#groupname#"&gt;<br/>
-     *&emsp;&emsp;&lt;div class="groupname"&gt;#groupname#&lt;/div&gt;<br/>
-     *&emsp;&emsp;&emsp;&lt;ul class="cart-target"&gt;<br/>
-     *&emsp;&emsp;&emsp;&emsp;&lt;li class="placeholder"&gt;drag your items here&lt;/li&gt;<br/>
-     *&emsp;&emsp;&emsp;&lt;/ul&gt;<br/>
-     *&emsp;&emsp;&lt;/div&gt;<br/>
-     *&emsp;&lt;/div&gt;<br/>
-     *&lt;/div&gt;<br/>
      * @type JQuery
      */
     cart_groups: null,
     /**
-     *&lt;div id="cart-group-all" class='ui_accordion ui_collapsible'&gt;<br/>
-     *&emsp;&lt;div&gt;all&lt;div class="right"&gt;&lt;img src="/img/mimiGlyphs/23.png"/>&lt;/div&gt;&lt;/div&gt;<br/>
-     *&emsp;&lt;ul&gt;<br/>
-     *&emsp;*&emsp;&lt;li data-uniquename="#uniquename#"&gt;#uniquename#&lt;/li&gt;<br/>
-     *&emsp;&lt;/ul&gt;<br/>
-     *&lt;/div&gt;<br/>
      * @type JQuery
      */
     cart_group_all: null
@@ -397,7 +382,6 @@ cart.removeGroup = function(groupname, options) {
     group.remove();
 };
 
-
 cart.addItemToAll = function(item, options) {
     if (cart.getItemByUniquename(item.uniquename) !== null) {
         console.log('can\'t add item to "All":', item, 'already exists');
@@ -412,22 +396,11 @@ cart.addItemToAll = function(item, options) {
     }, options);
 
     // DOM manupulation
-    var newElStr = $('#cart-item-dummy').html();
-    newEl = $('<div/>').html(newElStr).children();
-    newEl.attr('data-uniquename', item.uniquename);
-    newEl.find('.displayname').html(item.uniquename);
+    newEl = cart.buildCartItemDOM(item);
     newEl.find('.cart-button-delete').click(function() {
-        var item = $(this).parents('.cart-item').first();
         cart.removeItemFromAll({
-            uniquename: item.attr('data-uniquename')
+            uniquename: item.uniquename
         });
-    });
-    newEl.find('.cart-button-goto').click(function() {
-        var item = $(this).parents('.cart-item').first();
-        window.location = '{#$AppPath#}/isoform-details/' + item.attr('data-uniquename');
-    });
-    newEl.find('.cart-button-edit').click(function() {
-        cart.opendialog_edit(item.uniquename);
     });
     newEl.appendTo(cart.cart_group_all.find('ul'));
     cart.refresh_cart_group_all();
@@ -464,25 +437,14 @@ cart.addItemToGroup = function(item, groupname, options) {
     // DOM manupulation
     if (options !== undefined && options.modifyDOM === false)
         return true;
-    var newElStr = $('#cart-item-dummy').html();
 
     var group = $.getGroupByName(groupname).find('ul');
-    newEl = $('<div/>').html(newElStr).children();
-    newEl.attr('data-uniquename', item.uniquename);
-    newEl.find('.displayname').html(item.uniquename);
+    newEl = cart.buildCartItemDOM(cart.getItemByUniquename(item.uniquename));
     newEl.find('.cart-button-delete').click(function() {
-        var item = $(this).parents('.cart-item').first();
         var group = $(this).parents('.cart-group').first();
         cart.removeItemFromGroup({
-            uniquename: item.attr('data-uniquename')
+            uniquename: item.uniquename
         }, group.attr('data-group'));
-    });
-    newEl.find('.cart-button-goto').click(function() {
-        var item = $(this).parents('.cart-item').first();
-        window.location = '{#$AppPath#}/isoform-details/' + item.attr('data-uniquename');
-    });
-    newEl.find('.cart-button-edit').click(function() {
-        cart.opendialog_edit(item.uniquename);
     });
     newEl.appendTo(group).hide(0).fadeIn(500);
     cart.cleanUpGroup(item, group);
@@ -559,7 +521,22 @@ cart.refresh_cart_group_all = function() {
     });
 };
 
-cart.opendialog_edit = function(uniquename) {
+cart.buildCartItemDOM = function(item) {
+    var newElStr = $('#cart-item-dummy').html();
+    console.log(item);
+    newEl = $('<div/>').html(newElStr).children();
+    newEl.attr('data-uniquename', item.uniquename);
+    newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : item.uniquename);
+    newEl.find('.cart-button-goto').click(function() {
+        window.location = '{#$AppPath#}/isoform-details/' + item.uniquename;
+    });
+    newEl.find('.cart-button-edit').click(function() {
+        cart.dialog_edit_open(item.uniquename);
+    });
+    return newEl;
+};
+
+cart.dialog_edit_open = function(uniquename) {
     var item = cart.getItemByUniquename(uniquename);
     var dialog = $('#dialog-edit-cart-item');
     dialog.data('uniquename', item.uniquename);
@@ -567,6 +544,28 @@ cart.opendialog_edit = function(uniquename) {
     dialog.data('annotations', item.annotations);
     dialog.dialog("open");
 };
+
+cart.dialog_edit_save = function(item, options) {
+    var uniquename = item.uniquename;
+    cartitem = cart.getItemByUniquename(uniquename);
+    if (cartitem === null)
+        return "Error saving cart: item not found in cart 'All'";
+    if (cartitem.alias !== item.alias) {
+        $("[data-uniquename='" + item.uniquename + "']").find('.displayname').html(item.alias);
+    }
+    $.each(item, function(key, value) {
+        if (key !== 'uniquename')
+            cartitem[key] = value;
+    });
+    console.log(cart.all);
+    console.log(cart.groups);
+
+    cart.syncAction({
+        action: 'edit_item',
+        name: uniquename,
+        values: item
+    }, options);
+}
 
 
 $(document).ready(function() {

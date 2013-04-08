@@ -49,11 +49,12 @@
             modal: true,
             buttons: {
                 "save changes": function() {
-                    var oldname = $(this).data('oldname');
-                    var newname = $('#cartname').val();
-                    var retval = cart.renameGroup(oldname, newname);
-                    if (retval != null)
-                        alert(retval);
+                    cart.dialog_edit_save({
+                        uniquename: $('#item-uniquename').val(),
+                        alias: $('#item-alias').val(),
+                        annotations:  $('#item-annotations').val()
+                    });
+
                     $(this).dialog("close");
                 },
                 Cancel: function() {
@@ -98,11 +99,11 @@
     *[class*='cart-button-']{
         cursor: pointer;
     }
-    
+
     fieldset *:last-child{
         margin-bottom: 0px;
     }
-    
+
     form {
         margin: 0px;
     }
