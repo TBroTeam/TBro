@@ -11,8 +11,8 @@ class Sync extends \WebService {
             if ($group['name'] == $groupname)
                 return $group;
         }
-        $x = null;
-        return $x;
+        $nullreference = null;
+        return $nullreference;
     }
 
     private static function groupContainsItemByUniquename($group, $uniquename) {

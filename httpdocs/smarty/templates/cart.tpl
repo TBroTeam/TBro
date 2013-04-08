@@ -84,7 +84,7 @@
 
         //buildTestCart();
 
-        $(document).tooltip({
+        $('#cart').tooltip({
             items: ".cart-item",
             open: function(event, ui) {
                 ui.tooltip.css("max-width", "500px");
@@ -169,7 +169,7 @@
     {#/if#}
 </div>
 
-<div class="panel large-12 columns">
+<div class="panel large-12 columns" id="cart">
     <h4>Cart</h4>
     <div id="cart-group-all" class='ui_accordion ui_collapsible'>
         <div class="large-12 columns"><div class="left">all</div><div class="right"><img class="cart-button-execute"  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
