@@ -109,7 +109,7 @@ class Sync extends \WebService {
                 case 'renameGroup':
                     $newname = $querydata['action']['newname'];
                     $oldname = $querydata['action']['oldname'];
-                    $group = self::get_group($oldname);
+                    $group = &self::get_group($oldname);
                     if (self::get_group($newname) != null || $group == null)
                         break;
                     $group['name'] = $newname;
@@ -131,7 +131,7 @@ class Sync extends \WebService {
                 case 'addItemToGroup':
                     $uniquename = $querydata['action']['item']['uniquename'];
                     $groupname = $querydata['action']['groupname'];
-                    $group = self::get_group($groupname);
+                    $group = &self::get_group($groupname);
                     if (!self::groupContainsItemByUniquename($_SESSION['cart']['all'], $uniquename))
                         break;
                     if (self::groupContainsItemByUniquename($group, $uniquename))
@@ -141,10 +141,10 @@ class Sync extends \WebService {
                 case 'removeItemFromGroup':
                     $uniquename = $querydata['action']['item']['uniquename'];
                     $groupname = $querydata['action']['groupname'];
-                    $group = self::get_group($groupname);
-                    foreach ($group as $key => $item) {
+                    $group = &self::get_group($groupname);
+                    foreach ($group['items'] as $key => $item) {
                         if ($item['uniquename'] == $uniquename) {
-                            unset($group[$key]);
+                            unset($group['items'][$key]);
                         }
                     }
                     break;
@@ -157,9 +157,9 @@ class Sync extends \WebService {
                         }
                     }
                     foreach ($_SESSION['cart']['groups'] as &$group) {
-                        foreach ($group as $key => $item) {
+                        foreach ($group['items'] as $key => $item) {
                             if ($item['uniquename'] == $uniquename) {
-                                unset($group[$key]);
+                                unset($group['items'][$key]);
                             }
                         }
                     }
