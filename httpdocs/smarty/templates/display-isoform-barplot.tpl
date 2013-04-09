@@ -36,7 +36,7 @@
             select_tissue.empty();
 
             $.each(filterdata.biomaterial[analysis][select_assay.val()], function() {
-                var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this);
+                var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this).attr('selected','selected');
                 opt.appendTo(select_tissue);
             });
 
@@ -84,23 +84,42 @@
             $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
                 data: data,
                 success: function(val) {
-                    new CanvasXpress(
-                        "isoform-barplot-canvas", 
-                        {
-                            "y": val.y,
-                            "t": val.t
-                        },
-                        {
-                            "graphType": "Bar",
-                            "showDataValues": true,
-                            "indicatorCenter": "rainbow",
-                            "heatmapType": "green-red"
-                        }
-                    );
+
+                    $('#isoform-barplot-panel').show(0);
+                    var canvas = $('#isoform-barplot-canvas');
+                    canvas.attr('width', $("#isoform-barplot-canvas-parent").width() - 8);
+                    canvas.attr('height', 500);
+                    window.location.hash="isoform-barplot-panel";
+                    
+
+                    var cx = new CanvasXpress(
+                    "isoform-barplot-canvas", 
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
+                    {
+                        "graphType": "Bar",
+                        "showDataValues": true,
+                        "graphOrientation": "vertical"
+                    });
+                    canvas.data('canvasxpress', cx);
                 }
             });
             return false;
         });
+
+        $('#isoform-barplot-groupByTissues').click(function(){
+            var checkbox = $(this);
+            var cx=$('#isoform-barplot-canvas').data('canvasxpress');
+            if (checkbox.is(':checked')){
+                cx.groupSamples(["Tissue_Group"]);
+            } else {
+                cx.groupSamples([]);
+            }
+        });
+
+        
     });
 </script>
 <div class="row">
@@ -142,11 +161,13 @@
         </form>
     </div>
 </div>
-<div class="row">
+<div class="row" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">
     <div class="large-12 columns panel">
         <div class="row">
-            <div class="large-12 columns">
+            <div class="large-12 columns" id="isoform-barplot-canvas-parent">
                 <canvas id="isoform-barplot-canvas"></canvas>
+                <input type="checkbox" id="isoform-barplot-groupByTissues"/>
+                <label for = "isoform-barplot-groupByTissues">Pool by Tissue Group</label>
             </div>
         </div>
     </div>

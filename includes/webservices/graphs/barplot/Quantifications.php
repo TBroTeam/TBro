@@ -37,7 +37,10 @@ SELECT
   feature.name AS feature_name, 
   biomaterial.name AS biomaterial_name, 
   quantificationresult.value, 
-  quantificationresult.type_id
+  quantificationresult.type_id,
+  parent_biomaterial.name AS parent_biomaterial_name,
+  assay.name AS assay_name,
+  analysis.analysis_id
 FROM 
   quantificationresult, 
   biomaterial,
@@ -45,7 +48,9 @@ FROM
   feature, 
   quantification,
   acquisition,
-  assay
+  assay,
+  biomaterial_relationship, 
+  biomaterial AS parent_biomaterial
 WHERE 
   quantificationresult.biomaterial_id = biomaterial.biomaterial_id AND
   biomaterial.name IN ({$query_subqueries['biomaterial']}) AND
@@ -59,7 +64,10 @@ WHERE
   
   quantification.acquisition_id = acquisition.acquisition_id AND
   acquisition.assay_id = assay.assay_id AND
-  assay.name IN ({$query_subqueries['assay']})
+  assay.name IN ({$query_subqueries['assay']}) AND
+      
+  biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND
+  biomaterial_relationship.object_id = parent_biomaterial.biomaterial_id
  ORDER BY feature_name, biomaterial_name;
 
 EOF;
@@ -79,8 +87,7 @@ EOF;
         $data = array();
         $vars = array();
         $smps = array();
-        $tree_vars = array();
-        $tree_smps = array();
+        $x = array();
         $row = null;
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
             if ($cell['feature_name'] != $lastcell_name) {
@@ -94,30 +101,21 @@ EOF;
             if (count($data) == 1) {
                 #sample-specific actions, only executed for first var
                 $smps[] = $cell['biomaterial_name'];
+                $x['Tissue_Group'][] = $cell['parent_biomaterial_name'];
+                $x['Assay'][] = $cell['assay_name'];
+                $x['Analysis'][] = $cell['analysis_id'];
             }
 
             $row[] = floatval($cell['value']);
         }
-        $t = array('vars' => '', 'smps' => '');
-
-        foreach (array('vars' => &$tree_vars, 'smps' => &$tree_smps) as $key => $tree) {
-            foreach ($tree as $children) {
-                $substr = "";
-                foreach ($children as $child) {
-                    $substr .= (empty($substr) ? '' : ',') . $child;
-                }
-                $t[$key] .=(empty($t[$key]) ? '' : ',') . "($substr)";
-            }
-            $t[$key] = '(' . $t[$key] . ')';
-        }
 
         return array(
+            'x' => $x,
             'y' => array(
                 'vars' => $vars,
                 'smps' => $smps,
                 'data' => $data
-            ),
-            't' => $t
+            )
         );
     }
 
