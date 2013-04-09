@@ -40,7 +40,8 @@ SELECT
   quantificationresult.type_id,
   parent_biomaterial.name AS parent_biomaterial_name,
   assay.name AS assay_name,
-  analysis.analysis_id
+  analysis.analysis_id,
+  analysis.name AS analysis_name
 FROM 
   quantificationresult, 
   biomaterial,
@@ -103,7 +104,7 @@ EOF;
                 $smps[] = $cell['biomaterial_name'];
                 $x['Tissue_Group'][] = $cell['parent_biomaterial_name'];
                 $x['Assay'][] = $cell['assay_name'];
-                $x['Analysis'][] = $cell['analysis_id'];
+                $x['Analysis'][] = "${cell['analysis_name']} (${cell['analysis_id']})";
             }
 
             $row[] = floatval($cell['value']);

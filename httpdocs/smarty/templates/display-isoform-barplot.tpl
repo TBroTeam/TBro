@@ -84,15 +84,26 @@
             $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
                 data: data,
                 success: function(val) {
-
                     $('#isoform-barplot-panel').show(0);
+                    var parent = $("#isoform-barplot-canvas-parent");
+                   
+                   //if we already have an old canvas, we have to clean that up first
                     var canvas = $('#isoform-barplot-canvas');
-                    canvas.attr('width', $("#isoform-barplot-canvas-parent").width() - 8);
+                    var cx=canvas.data('canvasxpress');
+                    if (cx != null){
+                        cx.destroy();
+                        parent.empty();
+                    }
+                    
+                    canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
+                    parent.append(canvas);
+                    canvas.attr('width', parent.width() - 8);
                     canvas.attr('height', 500);
+                    
                     window.location.hash="isoform-barplot-panel";
                     
 
-                    var cx = new CanvasXpress(
+                    cx = new CanvasXpress(
                     "isoform-barplot-canvas", 
                     {
                         "x": val.x,
@@ -103,6 +114,7 @@
                         "showDataValues": true,
                         "graphOrientation": "vertical"
                     });
+                    
                     canvas.data('canvasxpress', cx);
                 }
             });
@@ -164,10 +176,11 @@
 <div class="row" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">
     <div class="large-12 columns panel">
         <div class="row">
-            <div class="large-12 columns" id="isoform-barplot-canvas-parent">
-                <canvas id="isoform-barplot-canvas"></canvas>
-                <input type="checkbox" id="isoform-barplot-groupByTissues"/>
-                <label for = "isoform-barplot-groupByTissues">Pool by Tissue Group</label>
+            <div class="large-12 columns">
+                <div style="width:100%" id="isoform-barplot-canvas-parent">
+                </div>
+                <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
+                
             </div>
         </div>
     </div>
