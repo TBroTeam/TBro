@@ -17,17 +17,17 @@ class Filters extends \WebService {
 
         $query_get_filters = <<<EOF
 SELECT 
- --DISTINCT ON (quantificationresult.type_id, assay.name, biomaterial.name)
-  cvterm.name AS quantification_type_name, assay.name AS assay_name, assay.description AS assay_description, biomaterial.name AS biomaterial_name, biomaterial.description AS biomaterial_description
+  analysis.analysis_id AS analysis_id, analysis.name AS analysis_name, analysis.description AS analysis_description, analysis.program AS analysis_program, analysis.programversion AS analysis_programversion, analysis.algorithm AS analysis_algorithm,
+  assay.name AS assay_name, assay.description AS assay_description, 
+  biomaterial.name AS biomaterial_name, biomaterial.description AS biomaterial_description
 FROM 
   feature, 
   quantificationresult, 
   quantification, 
-  analysis, 
-  acquisition, 
-  assay, 
-  biomaterial,
-  cvterm
+  analysis,
+  acquisition,
+  assay,
+  biomaterial
 WHERE 
   quantificationresult.feature_id = feature.feature_id AND
   quantificationresult.biomaterial_id = biomaterial.biomaterial_id AND
@@ -35,40 +35,38 @@ WHERE
   quantification.analysis_id = analysis.analysis_id AND
   quantification.acquisition_id = acquisition.acquisition_id AND
   acquisition.assay_id = assay.assay_id AND
-  quantificationresult.type_id = cvterm.cvterm_id AND
   feature.uniquename = :unigene_name;
 EOF;
 
         $stm_get_filters = $db->prepare($query_get_filters);
         $stm_get_filters->bindValue('unigene_name', $param_unigene_name);
 
-        $data = array('assay' => array(), 'quantification_type_name' => array(), 'biomaterial' => array());
+        $data = array('assay' => array(), 'analysis' => array(), 'biomaterial' => array());
 
         $stm_get_filters->execute();
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
-            $ref = &$data['assay'];
-            $item = array('name' => $filter['assay_name'], 'description' => $filter['assay_description']);
-            if (!in_array($item, $ref))
-                $ref[] = $item;
-            unset($ref);
-
-            $ref = &$data['quantification_type_name'][$filter['assay_name']];
-            if ($ref == null)
-                $ref = array();
-            if (!in_array($filter['quantification_type_name'], $ref))
-                $ref[] = $filter['quantification_type_name'];
-            unset($ref);
-
-            $ref = &$data['biomaterial'][$filter['quantification_type_name']][$filter['assay_name']];
-            $item = array('name' => $filter['biomaterial_name'], 'description' => $filter['biomaterial_description']);
-            if ($ref == null)
-                $ref = array();
-            if (!in_array($item, $ref))
-                $ref[] = $item;
-            unset($ref);
+            self::addItem(&$data['assay'], 'assay', $filter);
+            self::addItem(&$data['analysis'][$filter['assay_name']], 'analysis', $filter);
+            self::addItem(&$data['biomaterial'][$filter['analysis_id']][$filter['assay_name']], 'biomaterial', $filter);
         }
 
         return $data;
+    }
+
+    private static function addItem(&$ref, $item_prefix, $row) {
+        $item = array();
+        foreach ($row as $key => $val) {
+            $match = null;
+            if (preg_match("/${item_prefix}_(.*)/", $key, $match)) {
+                $item[$match[1]] = $val;
+            }
+        }
+
+        if ($ref == null)
+            $ref = array();
+        if (!in_array($item, $ref))
+            $ref[] = $item;
+        unset($ref);
     }
 
 }

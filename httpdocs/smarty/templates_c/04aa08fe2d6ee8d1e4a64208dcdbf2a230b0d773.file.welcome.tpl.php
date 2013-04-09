@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-03-27 13:26:17
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-08 13:37:44
          compiled from "/home/s202139/git/httpdocs/smarty/templates/welcome.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17300283651409c3b02f598-98116107%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -13,7 +13,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1364307857,
+      1 => 1365421046,
       2 => 'file',
     ),
   ),
@@ -106,7 +106,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 });
 
             });</script>
-
+        <style>
+            .ui-tooltip-content table{
+                margin-bottom: 0px;
+            }
+        </style>
 
         
 
@@ -123,7 +127,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     <ul class="right">
                         <li class="divider"></li>
                         <li><a>search for unigene:</a></li>
-                        <li><input type="text" id="search_unigene" data-tooltip class="has-tip" title="try 1.01_comp231081_c0 or 1.01_comp214244_c0"/></li>
+                        <li><input type="text" id="search_unigene"/></li>
                         <li>&nbsp;</li> 
                     </ul>
                 </section>
