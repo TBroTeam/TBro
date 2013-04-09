@@ -72,6 +72,35 @@
                 return tooltip;
             }
         });
+        
+        $('#isoform-barplot-filter-form').submit(function(){
+            var data = {parents:[isoform], analysis:[], assay:[], biomaterial:[]};
+            data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
+            data.assay.push($('#isoform-barplot-filter-assay option:selected').val());
+            $('#isoform-barplot-filter-tissue option:selected').each(function(){
+                console.log(this);
+                data.biomaterial.push($(this).val());
+            });
+            $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
+                data: data,
+                success: function(val) {
+                    new CanvasXpress(
+                        "isoform-barplot-canvas", 
+                        {
+                            "y": val.y,
+                            "t": val.t
+                        },
+                        {
+                            "graphType": "Bar",
+                            "showDataValues": true,
+                            "indicatorCenter": "rainbow",
+                            "heatmapType": "green-red"
+                        }
+                    );
+                }
+            });
+            return false;
+        });
     });
 </script>
 <div class="row">
@@ -117,7 +146,7 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">
-                <canvas id="isoform-barplot"></canvas>
+                <canvas id="isoform-barplot-canvas"></canvas>
             </div>
         </div>
     </div>

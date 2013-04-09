@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-09 15:15:28
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-09 16:00:21
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl',
-      1 => 1365513110,
+      1 => 1365516018,
       2 => 'file',
     ),
   ),
@@ -561,7 +561,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_51641471433ad7_59938332($_smarty_tpl);
+content_51641ef5bfc6e2_48056151($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
             </div>
@@ -577,9 +577,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-09 15:15:29
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-09 16:00:21
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_51641471433ad7_59938332')) {function content_51641471433ad7_59938332($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_51641ef5bfc6e2_48056151')) {function content_51641ef5bfc6e2_48056151($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>
@@ -654,6 +654,36 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
                 return tooltip;
             }
         });
+        
+        $('#isoform-barplot-filter-form').submit(function(){
+            var data = {parents:[isoform], analysis:[], assay:[], biomaterial:[]};
+            data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
+            data.assay.push($('#isoform-barplot-filter-assay option:selected').val());
+            $('#isoform-barplot-filter-tissue option:selected').each(function(){
+                console.log(this);
+                data.biomaterial.push($(this).val());
+            });
+            $.ajax('<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/graphs/barplot/quantifications', {
+                data: data,
+                success: function(val) {
+                    new CanvasXpress(
+                        "isoform-barplot-canvas", 
+                        {
+                            "y": val.y,
+                            "t": val.t
+                        },
+                        {
+                            "graphType": "Bar",
+                            "showDataValues": true,
+                            "indicatorCenter": "rainbow",
+                            "heatmapType": "green-red"
+                        }
+                    );
+                }
+            });
+            return false;
+        });
     });
 </script>
 <div class="row">
@@ -699,7 +729,7 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">
-                <canvas id="isoform-barplot"></canvas>
+                <canvas id="isoform-barplot-canvas"></canvas>
             </div>
         </div>
     </div>
