@@ -7,10 +7,9 @@ try {
     global $db;
     $connstr = sprintf('pgsql:host=%s;dbname=%s', DB_SERVER, DB_DB);
     if (VERBOSE || DEBUG) {
-        require_once __DIR__.'/LoggedPDO.php';
-        $db = new LoggedPDO($connstr, DB_USERNAME, DB_PASSWORD);
-        DEBUG && $db->logLevel = LoggedPDO::LOGLEVEL_LONG;
-        VERBOSE && $db->logLevel = LoggedPDO::LOGLEVEL_LONG;
+        require_once __DIR__.'/libs/loggedPDO/LoggedPDO.php';
+        $logger = Log::singleton('firebug', '', 'PDO');
+        $db = new \LoggedPDO\PDO($connstr, DB_USERNAME, DB_PASSWORD, null, $logger);
     } else {
         $db = new PDO($connstr, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true));
     }

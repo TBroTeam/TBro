@@ -7,11 +7,16 @@ define('SERVICEPATH', '/httpdocs/service');
 
 define('INC', __DIR__ . '/../../includes/');
 
+if (isset($_REQUEST['DEBUG']))
+    define('DEBUG', true);
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+
 require_once INC . '/constants.php';
 require_once INC . '/WebService.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+
 
 
 
