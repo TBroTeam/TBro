@@ -10,19 +10,18 @@ class PDO extends \PDO {
     public $log;
     private $logFullTime;
     private $logCount;
-    public static $QUERY_TYPE_QUERY = "PDO->query";
-    public static $QUERY_TYPE_EXEC = "PDO->exec";
-    public static $QUERY_TYPE_STATEMENT_EXECUTE = "PDOStatement->execute";
     public static $LOG_QUERY = "query";
     public static $LOG_TIME = "time";
     public static $LOG_TYPE = "method";
+    public static $LOG_PARAMS = "parameters";
+    public $log_replace_params = true;
 
     public function __construct($dsn, $username = null, $password = null, $options = null, \Log $log = null) {
         if ($log == null) {
             throw new \Exception("We need a PEAR Log object, parameter order has just been kept due to consistency.\n"
-            . "Please call this class as.\n"
-            . "new \LoggedPDO\PDO(\$dsn, null, null, null, \$log);.\n"
-            . "if you have no \$username, \$password or \$options to specify.");
+                    . "Please call this class as.\n"
+                    . "new \LoggedPDO\PDO(\$dsn, null, null, null, \$log);.\n"
+                    . "if you have no \$username, \$password or \$options to specify.");
         }
         parent::__construct($dsn, $username, $password, $options);
         $this->log = $log;
@@ -44,7 +43,7 @@ class PDO extends \PDO {
         $start = microtime(true);
         $pdostatement = parent::query($statement);
         $time = microtime(true) - $start;
-        $this->log($statement, round($time * 1000, 3), self::$QUERY_TYPE_QUERY);
+        $this->log($statement, round($time * 1000, 3));
 
         $pdostatement->pdo = $this;
         return $pdostatement;
@@ -54,15 +53,33 @@ class PDO extends \PDO {
         $start = microtime(true);
         parent::exec($statement);
         $time = microtime(true) - $start;
-        $this->log($statement, round($time * 1000, 3), self::$QUERY_TYPE_EXEC);
+        $this->log($statement, round($time * 1000, 3));
     }
 
-    public function log($query, $time, $type) {
+    public function log($query, $time, $params = null) {
         $this->logFullTime+=$time;
         $this->logCount++;
 
+        $trace = debug_backtrace();
+        $stackdepth = 1;
+        $called_from = sprintf('%1$s->%2$s in %3$s on line %4$d'
+                , $trace[$stackdepth]['class']
+                , $trace[$stackdepth]['function']
+                , $trace[$stackdepth]['file']
+                , $trace[$stackdepth]['line']
+        );
+
+
+        $log = array(
+            self::$LOG_TIME => $time,
+            self::$LOG_QUERY => $query,
+            self::$LOG_TYPE => $called_from);
+        if ($this->log_replace_params == false) {
+            $log[self::$LOG_PARAMS] = $params;
+        }
+
         $this->log->log(
-                array(self::$LOG_QUERY => $query, self::$LOG_TIME => $time, self::$LOG_TYPE => $type)
+                $log
                 , PEAR_LOG_DEBUG);
     }
 
@@ -85,30 +102,45 @@ class PDOStatement extends \PDOStatement {
         
     }
 
+    private static $PDO_PLACEHOLDER_NONE = 0;
+    private static $PDO_PLACEHOLDER_NAMED = 1;
+    private static $PDO_PLACEHOLDER_POSITIONAL = 2;
+
     /**
      * When execute is called record the time it takes and
      * then log the query
+     * parameters will be replaced and logged, but if your query is really weird, this might fail.
+     * hence the second parameter
      * @return PDO result set
      */
     public function execute($bound_input_params = null) {
         $query = $this->queryString;
-        ksort($this->boundParams);
-        $last_paramid = 0;
-        foreach ($this->boundParams as $pname => $pvalue) {
-            if (!is_int($pname)) {
-#replace named query parameter with $pvalue
-                $query = str_replace($pname, $x = "'" . $pvalue . "'", $query);
+
+        if ($bound_input_params == null) {
+            $params = $this->boundParams;
+        } else {
+            $params = $bound_input_params;
+        }
+
+        if ($this->pdo->log_replace_params) {
+            $query_type = self::$PDO_PLACEHOLDER_NONE;
+            if (preg_match('/[^:?][?][^:?]/', $query)) {
+                $query_type |= self::$PDO_PLACEHOLDER_POSITIONAL;
             }
-            else {
-#replace $pname'th questionmark with $pvalue
-#as boundParams are sorted, this is always the first questionmark
-#but we have to watch for skipped numbers
-                if ($pname != $last_paramid + 1) {
-                    throw new ErrorException("parameter " . ($last_paramid + 1) . " has been skipped!" . $pname);
-                }
-                else
-                    $last_paramid++;
-                $query = preg_replace("/\?/", "'" . $pvalue . "'", $query, 1);
+
+            if (preg_match('/[^:?][:]([0-9A-Za-z]+)/', $query)) {
+                $query_type |= self::$PDO_PLACEHOLDER_NAMED;
+            }
+
+            if ($query_type == (self::$PDO_PLACEHOLDER_NAMED | self::$PDO_PLACEHOLDER_POSITIONAL)) {
+                throw new \PDOException('mixed named and positional parameters');
+            }
+
+            foreach ($params as $pname => $pvalue) {
+                if ($query_type == self::$PDO_PLACEHOLDER_POSITIONAL)
+                    $query = preg_replace("/\?/", $this->pdo->quote($pvalue), $query, 1);
+                else if ($query_type == self::$PDO_PLACEHOLDER_NAMED)
+                    $query = preg_replace("/($pname)/", $this->pdo->quote($pvalue), $query, 1);
             }
         }
 
@@ -121,7 +153,9 @@ class PDOStatement extends \PDOStatement {
             $ex = $e;
         }
         $time = microtime(true) - $start;
-        $this->pdo->log($query, round($time * 1000, 3), PDO::$QUERY_TYPE_STATEMENT_EXECUTE);
+
+        $this->pdo->log($query, round($time * 1000, 3), $params);
+
 
         if ($ex != null)
             throw $ex;
@@ -129,7 +163,6 @@ class PDOStatement extends \PDOStatement {
     }
 
     public function bindParam($parameter, &$variable, $data_type = PDO::PARAM_STR, $length = null, $driver_options = null) {
-
         if (is_string($parameter) && strpos($parameter, ':') === false)
             $this->boundParams[':' . $parameter] = &$variable;
         else
@@ -148,5 +181,6 @@ class PDOStatement extends \PDOStatement {
     }
 
 }
+
 
 ?>
