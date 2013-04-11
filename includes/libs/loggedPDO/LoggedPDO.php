@@ -19,7 +19,7 @@ class PDO extends \PDO {
 
     public function __construct($dsn, $username = null, $password = null, $options = null, \Log $log = null) {
         if ($log == null) {
-            throw new \Exception("We need a PEAR Log object, parameter order has just been kept due to consistency.\n"
+            throw new \Exception("We need a PEAR Log object, parameter order has just been kept due to consistency, last element is NOT optional.\n"
             . "Please call this class as.\n"
             . "new \LoggedPDO\PDO(\$dsn, null, null, null, \$log);.\n"
             . "if you have no \$username, \$password or \$options to specify.");
@@ -57,12 +57,16 @@ class PDO extends \PDO {
         $this->log($statement, round($time * 1000, 3), self::$QUERY_TYPE_EXEC);
     }
 
+    public function getLogger() {
+        return $this->log;
+    }
+
     public function log($query, $time, $type) {
         $this->logFullTime+=$time;
         $this->logCount++;
 
         $this->log->log(
-                array(self::$LOG_QUERY => $query, self::$LOG_TIME => $time, self::$LOG_TYPE => $type)
+                array(sprintf('query took %s ms', $time), array(self::$LOG_QUERY => $query, self::$LOG_TIME => $time, self::$LOG_TYPE => $type))
                 , PEAR_LOG_DEBUG);
     }
 
