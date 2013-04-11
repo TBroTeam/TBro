@@ -199,6 +199,11 @@ cart.compareCarts = function(first, second) {
                 throw "";
             }
 
+            if (Object.keys(group_a.items).length !== Object.keys(group_b.items).length){
+                console.error("group item counts differ: ", group_a.items, group_b.items);
+                throw "";
+            }
+
             //check groups for matching items. only compare "uniquename" for match
             $.each(group_a.items, function() {
                 var origin = this;
@@ -219,6 +224,7 @@ cart.compareCarts = function(first, second) {
 
 
     } catch (e) {
+        console.error(e);
         return false;
     }
     return true;
