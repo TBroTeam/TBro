@@ -1,4 +1,4 @@
-{#extends file='layout.tpl'#}
+{#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
 {#call_webservice path="details/isoform" data=["query1"=>$isoform_uniquename] assign='data'#}
 

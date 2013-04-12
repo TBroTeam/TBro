@@ -1,22 +1,32 @@
 <?php
 
-namespace webservices\listing\isoform;
+namespace webservices\listing;
 
 use \PDO as PDO;
 
 class Filters extends \WebService {
 
     public function execute($querydata) {
-        global $_CONST, $db;
+        global $db;
 
 #UI hint
         if (false)
             $db = new PDO();
 
-        $param_unigene_name = $querydata['query1'];
+        $uniquenames = array();
+        if (isset($querydata['query1'])) {
+            $uniquenames[] = $querydata['query1'];
+        }
+        if (isset($querydata['uniquenames'])) {
+            $uniquenames =
+                    array_merge($uniquenames, $querydata['uniquenames']);
+        }
+
+        $place_holders = implode(',', array_fill(0, count($uniquenames), '?'));
 
         $query_get_filters = <<<EOF
 SELECT 
+  feature.uniquename AS feature_uniquename,
   analysis.analysis_id AS analysis_id, analysis.name AS analysis_name, analysis.description AS analysis_description, analysis.program AS analysis_program, analysis.programversion AS analysis_programversion, analysis.algorithm AS analysis_algorithm,
   assay.name AS assay_name, assay.description AS assay_description, 
   biomaterial.name AS biomaterial_name, biomaterial.description AS biomaterial_description
@@ -35,19 +45,20 @@ WHERE
   quantification.analysis_id = analysis.analysis_id AND
   quantification.acquisition_id = acquisition.acquisition_id AND
   acquisition.assay_id = assay.assay_id AND
-  feature.uniquename = :unigene_name;
+  feature.uniquename IN ({$place_holders});
 EOF;
 
         $stm_get_filters = $db->prepare($query_get_filters);
-        $stm_get_filters->bindValue('unigene_name', $param_unigene_name);
 
-        $data = array('assay' => array(), 'analysis' => array(), 'biomaterial' => array());
+        $data = array('feature' => array(),
+            'assay' => array(), 'analysis' => array(), 'biomaterial' => array());
 
-        $stm_get_filters->execute();
+        $stm_get_filters->execute($uniquenames);
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
-            self::addItem(&$data['assay'], 'assay', $filter);
-            self::addItem(&$data['analysis'][$filter['assay_name']], 'analysis', $filter);
-            self::addItem(&$data['biomaterial'][$filter['analysis_id']][$filter['assay_name']], 'biomaterial', $filter);
+            self::addItem(&$data['feature'], 'feature', $filter);
+            self::addItem(&$data['assay'][$filter['feature_uniquename']], 'assay', $filter);
+            self::addItem(&$data['analysis'][$filter['feature_uniquename']][$filter['assay_name']], 'analysis', $filter);
+            self::addItem(&$data['biomaterial'][$filter['feature_uniquename']][$filter['analysis_id']][$filter['assay_name']], 'biomaterial', $filter);
         }
 
         return $data;

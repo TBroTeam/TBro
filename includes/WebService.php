@@ -16,11 +16,10 @@ abstract class WebService {
 
     public static function factory($servicePath) {
         $serviceBasePath = INC . DIRECTORY_SEPARATOR . 'webservices';
-        
 
         $path = explode('/', $servicePath);
         $filepath = $serviceBasePath . DIRECTORY_SEPARATOR . $path[0];
-        $serviceNamespace = '\\webservices\\'.$path[0];
+        $serviceNamespace = '\\webservices\\' . $path[0];
         $args = array();
         for ($i = 1; $i < count($path); $i++) {
             $classname = ucfirst($path[$i]);
@@ -34,6 +33,7 @@ abstract class WebService {
             $filepath .= DIRECTORY_SEPARATOR . strtolower($path[$i]);
             $serviceNamespace .= '\\' . strtolower($path[$i]);
         }
+
         //case: no service file found
         if (!isset($filename) || !file_exists($filename)) {
             return array(null, null);

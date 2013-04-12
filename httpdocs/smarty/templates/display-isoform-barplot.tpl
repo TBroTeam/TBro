@@ -43,9 +43,11 @@
             $(this).attr('data-last-selected', analysis);
         });
 
-        $.ajax('{#$ServicePath#}/listing/isoform/filters/' + isoform, {
+        $.ajax('{#$ServicePath#}/listing/filters/' + isoform, {
             success: function(data) {
-                filterdata = data;
+                filterdata = { assay: data.assay[isoform], 
+                    analysis: data.analysis[isoform],
+                    biomaterial: data.biomaterial[isoform]};
                 select_assay.empty();
                 $.each(filterdata.assay, function() {
                     var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this);
@@ -87,7 +89,7 @@
                     $('#isoform-barplot-panel').show(0);
                     var parent = $("#isoform-barplot-canvas-parent");
                    
-                   //if we already have an old canvas, we have to clean that up first
+                    //if we already have an old canvas, we have to clean that up first
                     var canvas = $('#isoform-barplot-canvas');
                     var cx=canvas.data('canvasxpress');
                     if (cx != null){
@@ -180,7 +182,7 @@
                 <div style="width:100%" id="isoform-barplot-canvas-parent">
                 </div>
                 <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
-                
+
             </div>
         </div>
     </div>

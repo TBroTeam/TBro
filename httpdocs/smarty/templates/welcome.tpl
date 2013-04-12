@@ -1,4 +1,4 @@
-{#extends file='layout.tpl'#}
+{#extends file='layout-with-cart.tpl'#}
 {#block name='body'#}
 <div class="row">
     <div class="large-12 columns panel">

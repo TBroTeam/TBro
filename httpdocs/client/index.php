@@ -57,8 +57,7 @@ try {
             header('Location: ' . $openid->authUrl());
             die();
         }
-    }
-    else {
+    } else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
             header('Location: ' . $_SERVER['REDIRECT_URL']);
@@ -95,6 +94,12 @@ switch ($page) {
             break;
         }
         $smarty->display('display-isoform.tpl');
+        die();
+    case 'graphs':
+        $cartname = requestVal('query', '/^[a-z0-9._]+$/i', '');
+        $smarty->assign('cartname', $cartname);
+        $smarty->display('graphs.tpl');
+        
         die();
 }
 $smarty->display('welcome.tpl');

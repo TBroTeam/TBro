@@ -88,18 +88,10 @@
                 </section>
             </nav>
         </div>
-        <div class="row">
-            <div class="large-9 columns">
+        <div class="row large-12 columns" style="padding: 0px;">
                 {#block name='body'#}{#/block#}
-            </div>
-            <div class="large-3 columns" >
-                <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
-
-                    {#include file='cart.tpl'#}
-                </div>
-                <div>&nbsp;</div>
-            </div>
         </div>
+
     </body>
 </html>
 
