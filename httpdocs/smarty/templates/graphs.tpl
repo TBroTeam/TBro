@@ -1,7 +1,10 @@
 {#extends file='layout.tpl'#}
 {#block name='head'#}
 {#call_webservice path="cart/getitems" data=["query1"=>$cartname] assign='cartitems'#}
-
+<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
+<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+<!-- use chrome frame if installed and user is using IE -->
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <script type="text/javascript">
     var filterdata;
 
@@ -213,20 +216,24 @@
             $(this).data('last-selected', currently_selected);
         });
         
-    });
-</script>
-
-<!--script type="text/javascript">
-        $('#isoform-barplot-filter-form').submit(function(){
-            var data = {parents:[isoform], analysis:[], assay:[], biomaterial:[]};
-            data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
-            data.assay.push($('#isoform-barplot-filter-assay option:selected').val());
-            $('#isoform-barplot-filter-tissue option:selected').each(function(){
-                console.log(this);
+        
+        function getFilterData(){
+            var data = {parents:[], analysis:[], assay:[], biomaterial:[]};
+            select_element.find(':selected').each(function(){
+                data.parents.push($(this).val());
+            });
+            data.analysis.push(select_analysis.find(':selected').val());
+            data.assay.push(select_assay.find(':selected').val());
+            select_tissues.find(':selected').each(function(){
                 data.biomaterial.push($(this).val());
             });
+            return data;
+        }
+        
+        $('#button-barplot').click(function(){
+            
             $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
-                data: data,
+                data: getFilterData(),
                 success: function(val) {
                     $('#isoform-barplot-panel').show(0);
                     var parent = $("#isoform-barplot-canvas-parent");
@@ -264,6 +271,47 @@
             });
             return false;
         });
+        
+        $('#button-heatmap').click(function(){
+            $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
+                data: getFilterData(),
+                success: function(val) {
+                    $('#isoform-barplot-panel').show(0);
+                    var parent = $("#isoform-barplot-canvas-parent");
+                   
+                    //if we already have an old canvas, we have to clean that up first
+                    var canvas = $('#isoform-barplot-canvas');
+                    var cx=canvas.data('canvasxpress');
+                    if (cx != null){
+                        cx.destroy();
+                        parent.empty();
+                    }
+                    
+                    canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
+                    parent.append(canvas);
+                    canvas.attr('width', parent.width() - 8);
+                    canvas.attr('height', 500);
+                    
+                    window.location.hash="isoform-barplot-panel";
+                    
+
+                    cx = new CanvasXpress(
+                    "isoform-barplot-canvas", 
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
+                    {
+                        "graphType": "Heatmap",
+                        "showDataValues": true,
+                        "graphOrientation": "vertical"
+                    });
+                    
+                    canvas.data('canvasxpress', cx);
+                }
+            });
+            return false;
+        });
 
         $('#isoform-barplot-groupByTissues').click(function(){
             var checkbox = $(this);
@@ -277,7 +325,7 @@
 
         
     });
-</script-->
+</script>
 {#/block#}
 {#block name='body'#}
 
@@ -317,47 +365,11 @@
             <select id="select-tissues" size="12" multiple="multiple"></select>
         </div>
     </div>
-</form>
-
-<!--div class="row">
-    <div class="large-12 columns panel">
-        <div class="row">
-            <div class="large-12 columns">
-                <h4>Filters</h4>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="large-3 columns">
-                <h5>Assay</h5>
-            </div>
-            <div class="large-3 columns">
-                <h5>Analysis</h5>
-            </div>
-            <div class="large-3 columns">
-                <h5>Tissues</h5>
-            </div>
-            <div class="large-3 columns">
-            </div>
-        </div>
-        <form id='isoform-barplot-filter-form'>
-            <div class="row">
-                <div class="large-3 columns">
-                    <select id="isoform-barplot-filter-assay" size="6" ></select>
-                </div>
-                <div class="large-3 columns">
-                    <select id="isoform-barplot-filter-analysis" size="6" ></select>
-                </div>
-                <div class="large-3 columns">
-                    <select id="isoform-barplot-filter-tissue" size="6" multiple="multiple"></select>
-                </div>
-                <div class="large-3 columns">
-                    <input type="submit" class="button" />
-                </div>
-            </div>
-        </form>
+    <div class="row large-12 columns panel">
+        <button type="button" id="button-barplot" value="barplot">Barplot</button>
+        <button type="button" id="button-heatmap" value="heatmap">Heatmap</button>
     </div>
-</div>
+</form>
 <div class="row" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">
     <div class="large-12 columns panel">
         <div class="row">

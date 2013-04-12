@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 14:41:43
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 17:27:24
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -25,7 +25,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl',
-      1 => 1365770501,
+      1 => 1365770722,
       2 => 'file',
     ),
   ),
@@ -706,7 +706,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_51680107e8c8e9_30851596($_smarty_tpl);
+content_516827dd208df6_71514931($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -825,9 +825,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 14:41:43
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 17:27:25
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_51680107e8c8e9_30851596')) {function content_51680107e8c8e9_30851596($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516827dd208df6_71514931')) {function content_516827dd208df6_71514931($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>
@@ -873,7 +873,7 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
         });
 
         $.ajax('<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/isoform/filters/' + isoform, {
+/listing/filters/' + isoform, {
             success: function(data) {
                 filterdata = { assay: data.assay[isoform], 
                     analysis: data.analysis[isoform],
