@@ -33,6 +33,9 @@ $smarty->assign('ServicePath', SERVICEPATH);
 $smarty->left_delimiter = '{#';
 $smarty->right_delimiter = '#}';
 
+require_once(INC.'/webservices/cart/Sync.php');
+$smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
+
 function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
     if (!isset($_REQUEST[$key]) || !preg_match($regexp, $_REQUEST[$key]))
         return $defaultvalue;
@@ -96,7 +99,7 @@ switch ($page) {
         $smarty->display('display-isoform.tpl');
         die();
     case 'graphs':
-        $cartname = requestVal('query', '/^[a-z0-9._]+$/i', '');
+        $cartname = requestVal('query',\webservices\cart\Sync::$regexCartName, '');
         $smarty->assign('cartname', $cartname);
         $smarty->display('graphs.tpl');
         

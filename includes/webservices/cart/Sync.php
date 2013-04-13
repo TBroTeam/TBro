@@ -6,6 +6,8 @@ require_once INC . '/db.php';
 
 class Sync extends \WebService {
 
+    public static $regexCartName = '/^[a-z0-9._ ]+$/i';
+
     public static function &get_group($groupname) {
         foreach ($_SESSION['cart']['groups'] as &$group) {
             if ($group['name'] == $groupname)
@@ -45,7 +47,8 @@ class Sync extends \WebService {
         if ($stm_retrieve_cart->rowCount() == 1) {
             $row = $stm_retrieve_cart->fetch(\PDO::FETCH_ASSOC);
             $_SESSION['cart'] = unserialize($row['value']);
-        } else {
+        }
+        else {
             $this->saveCart();
         }
     }
@@ -73,7 +76,7 @@ class Sync extends \WebService {
         $stm_insert_cart->execute();
     }
 
-    public function init(){
+    public function init() {
         if (!isset($_SESSION))
             session_start();
 
@@ -85,7 +88,7 @@ class Sync extends \WebService {
         //if we are logged in but have no cart in the db, BUT a cart in the session, this saves our session cart to the DB.
         $this->loadCart();
     }
-    
+
     public function execute($querydata) {
         $this->init();
 
@@ -113,6 +116,8 @@ class Sync extends \WebService {
                     $newname = $querydata['action']['newname'];
                     $oldname = $querydata['action']['oldname'];
                     if ($newname == 'all')
+                        break;
+                    if (!preg_match(self::$regexCartName, $newname))
                         break;
                     $group = &self::get_group($oldname);
                     if (self::get_group($newname) != null || $group == null)

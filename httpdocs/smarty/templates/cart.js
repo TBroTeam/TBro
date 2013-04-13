@@ -341,9 +341,9 @@ cart.cleanUpGroup = function(newItem, group) {
 cart.renameGroup = function(oldname, newname, options) {
     if (newname === oldname)
         return "no rename neccessary. old name matches new name";
-    if (newname === "all"){
-        return "this name is not valid";
-    }
+    if (newname === "all" || !newname.match({#$regexCartName#})){
+        return "this name is not valid"
+    };
     var _group;
     if (!(cart.getGroupByName(newname) === null)) {
         var msg = "can't rename" + oldname + " to " + newname + ": group with that name already exists.";
