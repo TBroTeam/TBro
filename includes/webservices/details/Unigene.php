@@ -13,18 +13,18 @@ class Unigene extends \WebService {
         if (false)
             $db = new PDO();
 
-        $param_unigene_uniquename = $querydata['query1'];
+        $param_unigene_feature_id = $querydata['query1'];
 
         $query_get_unigenes = <<<EOF
 SELECT *
     FROM feature AS unigene
-    WHERE unigene.uniquename = :uniquename
+    WHERE unigene.feature_id = :feature_id
     AND unigene.type_id = {$_CONST('CV_UNIGENE')}
     LIMIT 20
 EOF;
 
         $stm_get_unigenes = $db->prepare($query_get_unigenes);
-        $stm_get_unigenes->bindValue('uniquename', $param_unigene_uniquename);
+        $stm_get_unigenes->bindValue('feature_id', $param_unigene_feature_id);
 
         $return = array();
 

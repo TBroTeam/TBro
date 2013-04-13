@@ -1,6 +1,6 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
-{#call_webservice path="details/unigene" data=["query1"=>$unigene_uniquename] assign='data'#}
+{#call_webservice path="details/unigene" data=["query1"=>$unigene_feature_id] assign='data'#}
 {#/block#}
 {#block name='body'#}
 
@@ -16,9 +16,9 @@
         <p>known isoforms:</p>
         <table>
             <tbody>
-                {#foreach $data.unigene.isoforms as $isoform_uniquename#}
+                {#foreach $data.unigene.isoforms as $isoform#}
                     <tr>
-                        <td><a href='{#$AppPath#}/isoform-details/{#$isoform_uniquename#}'>{#$isoform_uniquename#}</a></td>
+                        <td><a href='{#$AppPath#}/isoform-details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a></td>
                     </tr>
                 {#/foreach#}
             </tbody>

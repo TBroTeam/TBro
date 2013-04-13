@@ -79,7 +79,7 @@ class Importer_Map {
 
                 if ($last_unigene != $param_unigene_name) {
                     # set last value, execute insert
-                    $param_unigene_uniq = IMPORT_PREFIX . $param_unigene_name;
+                    $param_unigene_uniq = IMPORT_PREFIX . "_" .$param_unigene_name;
 
                     $stm_ins_unigene->execute();
                     $unigenes_added++;
@@ -95,7 +95,7 @@ class Importer_Map {
                 }
 
                 # set last value, execute insert
-                $param_isoform_uniq = IMPORT_PREFIX . $param_isoform_name;
+                $param_isoform_uniq = IMPORT_PREFIX . "_" .$param_isoform_name;
                 $stm_ins_isoform->execute();
 
                 # insert feature_relationship

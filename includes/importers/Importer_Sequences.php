@@ -124,7 +124,7 @@ class Importer_Sequences {
                 #isoform header like this:
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
                 if (preg_match('/^>(?<name>\w+) len=(?<seqlen>\d+) path=(?<path>\[(?:\d+:\d+-\d+ ?)+\])$/', $description, $matches)) {
-                    $param_isoform_uniq = IMPORT_PREFIX . $matches['name'];
+                    $param_isoform_uniq = IMPORT_PREFIX . "_" .$matches['name'];
                     $param_isoform_seqlen = $matches['seqlen'];
                     $param_isoform_residues = $sequence;
 
@@ -142,14 +142,14 @@ class Importer_Sequences {
                 else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/',
                                 $description, $matches)) {
                     $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
-                    $param_predpep_uniq = IMPORT_PREFIX . $param_predpep_name;
+                    $param_predpep_uniq = IMPORT_PREFIX . "_" .$param_predpep_name;
                     $param_predpep_seqlen = $matches['len'];
                     $param_predpep_residues = $sequence;
 
                     $statement_insert_predpep->execute();
 
                     $param_predpep_feature_id = $statement_insert_predpep->fetchColumn();
-                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . $matches['name'];
+                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . "_" .$matches['name'];
                     $param_predpep_fmin = min($matches['from'], $matches['to']);
                     $param_predpep_fmax = max($matches['from'], $matches['to']);
                     $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;

@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="large-12 columns">
                     <h1 class="left">{#$data.isoform.uniquename#}</h1>
-                    <div class="right"><span class="button" onclick="cart.addItemToAll({feature_id: '{#$data.isoform.feature_id#}', name: '{#$data.isoform.name#}', import: '{#$data.isoform.import#}', organism_name: '{#$data.isoform.organism_name#}'});"> add to cart -> </span></div>
+                    <div class="right"><span class="button" onclick="cart.addItemToAll({feature_id: '{#$data.isoform.feature_id#}', name: '{#$data.isoform.name#}', type:'isoform', import: '{#$data.isoform.import#}', organism_name: '{#$data.isoform.organism_name#}'});"> add to cart -> </span></div>
                 </div>
             </div>
             <h5>last modified: {#$data.isoform.timelastmodified#}</h5>

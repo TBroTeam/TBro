@@ -79,10 +79,10 @@ switch ($page) {
         $smarty->display('cart.js');
         die();
     case 'unigene-details':
-        $unigene = requestVal('query', '/^[a-z0-9._-]+$/i', '');
-        $smarty->assign('unigene_uniquename', $unigene);
+        $unigene_feature_id = requestVal('feature_id', '/^[0-9]+$/', '');
+        $smarty->assign('unigene_feature_id', $unigene_feature_id);
         list($service, $trash) = WebService::factory("details/unigene");
-        $data = $service->execute(array("query1" => $unigene));
+        $data = $service->execute(array("query1" => $unigene_feature_id));
         if ($data == array()) {
             break;
         }

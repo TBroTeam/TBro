@@ -72,7 +72,7 @@ class Importer_Quantifications {
             while (($line = fgetcsv($file, 0, "\t")) !== false) {
                 if (count($line) == 0)
                     continue;
-                $param_uniquename = IMPORT_PREFIX . $line[0];
+                $param_uniquename = IMPORT_PREFIX . "_" .$line[0];
                 $param_value = $line[$value_column - 1];
                 $statement_insert_quant->execute();
 
