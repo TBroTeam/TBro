@@ -53,20 +53,22 @@ FROM
   biomaterial_relationship, 
   biomaterial AS parent_biomaterial
 WHERE 
+  quantificationresult.biomaterial_id IN ({$query_subqueries['biomaterial']}) AND
   quantificationresult.biomaterial_id = biomaterial.biomaterial_id AND
-  biomaterial.name IN ({$query_subqueries['biomaterial']}) AND
-      
+  
+  quantificationresult.feature_id IN ({$query_subqueries['parent']}) AND    
   quantificationresult.feature_id = feature.feature_id AND
-  feature.uniquename IN ({$query_subqueries['parent']}) AND
+  
 
   quantificationresult.quantification_id = quantification.quantification_id AND
+  quantification.analysis_id IN ({$query_subqueries['analysis']}) AND
   quantification.analysis_id = analysis.analysis_id AND
-  analysis.analysis_id IN ({$query_subqueries['analysis']}) AND
+  
   
   quantification.acquisition_id = acquisition.acquisition_id AND
+  acquisition.assay_id IN ({$query_subqueries['assay']}) AND
   acquisition.assay_id = assay.assay_id AND
-  assay.name IN ({$query_subqueries['assay']}) AND
-      
+  
   biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND
   biomaterial_relationship.object_id = parent_biomaterial.biomaterial_id
  ORDER BY feature_name, biomaterial_name;

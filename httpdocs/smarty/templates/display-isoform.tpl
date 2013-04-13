@@ -8,6 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 <script type="text/javascript">
     var isoform = '{#$data.isoform.uniquename#}';
+    var isoform_id = '{#$data.isoform.feature_id#}';
 
     $(document).ready(function() {
         $('.tabs').tabs();

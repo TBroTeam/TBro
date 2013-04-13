@@ -41,7 +41,7 @@
             }
         });
         
-        var uniquenames = [];
+        var ids = [];
         
         var select_element = $('#select-elements');
         var select_assay = $('#select-assay');
@@ -53,8 +53,8 @@
         
         $.each(cartitems, function(){
             var item = this;
-            uniquenames.push(item.uniquename);
-            var displayname = (item.alias != undefined) ? item.alias : item.uniquename;
+            ids.push(item.feature_id);
+            var displayname = (item.alias != undefined) ? item.alias : item.name;
             $('<option />').
                 text(displayname).
                 val(item.uniquename).
@@ -65,7 +65,7 @@
         
         $.ajax('{#$ServicePath#}/listing/filters/', {
             method: 'post',
-            data: {uniquenames: uniquenames},
+            data: {uniquenames: ids},
             success: function(data) {
                 filterdata = data;
                 select_element.click();
