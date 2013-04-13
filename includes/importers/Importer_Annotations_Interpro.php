@@ -170,9 +170,9 @@ EOF;
 
                 //more complex parameters
                 $param_feature = Importer_Sequences::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
-                $param_feature_uniq = ASSEMBLY_PREFIX . $param_feature;
+                $param_feature_uniq = IMPORT_PREFIX . $param_feature;
                 $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
-                $param_feature_domain_uniq = ASSEMBLY_PREFIX . $param_feature_domain_name;
+                $param_feature_domain_uniq = IMPORT_PREFIX . $param_feature_domain_name;
 
                 $statement_insert_feature_domain->execute();
                 $statement_insert_featureloc->execute();

@@ -98,12 +98,12 @@ EOF;
                             , $matches['repeat_class']
                             , (isset($matches['repeat_family']) ? $matches['repeat_family'] : '')
                     );
-                    $param_uniquename = ASSEMBLY_PREFIX . $param_name;
+                    $param_uniquename = IMPORT_PREFIX . $param_name;
 
                     $statement_insert_domain->execute();
 
 
-                    $param_srcfeature_uniq = ASSEMBLY_PREFIX . $matches['name'];
+                    $param_srcfeature_uniq = IMPORT_PREFIX . $matches['name'];
                     $param_fmin = $matches['start'];
                     $param_fmax = $matches['end'];
                     $statement_insert_featureloc->execute();

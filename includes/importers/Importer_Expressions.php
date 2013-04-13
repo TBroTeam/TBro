@@ -126,7 +126,7 @@ class Importer_Expressions {
 
                 $statement_insert_expressiondata->execute();
 
-                $param_feature_uniquename = ASSEMBLY_PREFIX . $feature_name;
+                $param_feature_uniquename = IMPORT_PREFIX . $feature_name;
 
 
 

@@ -104,18 +104,18 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
     $stm_select_id->execute();
 
     if (($cvterm_id = $stm_select_id->fetchColumn()) != false) {
-        //already exists in DB
+//already exists in DB
         $cvterm['id'] = $cvterm_id;
     }
     else {
         echo "insert\n";
-        //does not exist in DB, insert
-        #param_cvterm_name is already set
+//does not exist in DB, insert
+#param_cvterm_name is already set
         $stm_insert_dbxref->execute();
 
         $param_dbxref_id = $stm_insert_dbxref->fetchColumn();
         $param_cv_name = $cvterm['cv'];
-        #param_cvterm_name is already set
+#param_cvterm_name is already set
         $stm_insert_cvterm->execute();
         $cvterm_id = $stm_insert_cvterm->fetchColumn();
         $cvterm['id'] = $cvterm_id;
@@ -165,6 +165,21 @@ $cvterms_output = <<<EOF
 */    
 
 $insert
+?>
+EOF;
+
+
+//other
+$const_local_imports = 'local_imports';
+$stm = $db->prepare("SELECT db_id FROM db WHERE name=?");
+$stm->execute(array($const_local_imports));
+if ($stm->rowCount() == 0)
+    $db->prepare("INSERT INTO db (name) VALUES (?)")->execute(array($const_local_imports));
+unset($stm);
+
+$cvterms_output .= <<<EOF
+<?php
+        define('DB_NAME_IMPORTS', '$const_local_imports');
 ?>
 EOF;
 

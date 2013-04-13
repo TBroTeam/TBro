@@ -118,4 +118,6 @@ define ('CV_PREDPEP', '219');
 define ('CV_BIOMATERIAL_ISA', '32');
 define ('WEBUSER_CART', '42827');
 
+?><?php
+        define('DB_NAME_IMPORTS', 'local_imports');
 ?>

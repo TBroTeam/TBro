@@ -12,8 +12,6 @@ if ((isset($_SERVER['SERVER_NAME']) && in_array(strtolower($_SERVER['SERVER_NAME
     define('DB_DB', 'dionaea_transcript_db_dev_test3');
 }
 
-define('ASSEMBLY_PREFIX', '1.01_');
-define('DB_ORGANISM_ID', '13');
 define('DUMMY', 123);
 
 require_once (__DIR__.'/cvterms.php');

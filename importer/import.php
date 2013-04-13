@@ -11,7 +11,7 @@ function display_help() {
     echo <<<EOF
 ### transcript data importer ###
 usage: 
-    import.php --type <type> --file <file> [<file>*] [opts]
+    import.php --organism-id <id> --import-prefix <prefix> --type <type> --file <file> [<file>*] [opts]
     import.php --help
 
 types:
@@ -48,7 +48,7 @@ options:
 EOF;
 }
 
-include INC. '/init_cli.php';
+include INC . '/init_cli.php';
 global $parms;
 init_cli();
 
@@ -81,6 +81,11 @@ if (isset($parms['--verbose']))
 else
     define('VERBOSE', false);
 
+require_parameter(array('--import_prefix', '--organism-id'));
+define('DB_ORGANISM_ID', $parms['--organism-id']);
+define('IMPORT_PREFIX', $parms['--import_prefix']);
+
+
 foreach ($parms['--file'] as $file) {
     $file_result = null;
     try {
@@ -96,10 +101,8 @@ foreach ($parms['--file'] as $file) {
             case 'quantification':
                 require_parameter(array('--quantification_id', '--biomaterial_name', '--type_name', '--column'));
                 require_once INC . '/importers/Importer_Quantifications.php';
-                $file_result = Importer_Quantifications::import($file,
-                                $parms['--quantification_id'],
-                                $parms['--biomaterial_name'],
-                                $parms['--type_name'], $parms['--column']);
+                $file_result = Importer_Quantifications::import($file, $parms['--quantification_id'], $parms['--biomaterial_name'], $parms['--type_name'],
+                                $parms['--column']);
                 break;
             case 'annotation':
                 require_parameter(array('--subtype'));
@@ -125,15 +128,12 @@ foreach ($parms['--file'] as $file) {
             case 'expressions':
                 require_once INC . '/importers/Importer_Expressions.php';
                 require_parameter(array('--analysis_id', '--biomaterial_A_name', '--biomaterial_B_name'));
-                $file_result = Importer_Expressions::import($file,
-                                $parms['--analysis_id'],
-                                $parms['--biomaterial_A_name'],
-                                $parms['--biomaterial_B_name']);
+                $file_result = Importer_Expressions::import($file, $parms['--analysis_id'], $parms['--biomaterial_A_name'], $parms['--biomaterial_B_name']);
                 break;
             case 'GO-obo':
                 require_once INC . '/importers/Importer_GO_OBO.php';
                 $file_result = Importer_GO_OBO::import($file);
-                break;            
+                break;
             default:
                 display_help();
                 die();

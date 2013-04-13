@@ -48,7 +48,7 @@ class Importer_Annotations_Blast2Go {
                 $feature = $line[0];
                 $dbxref = $line[1];
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
-                $param_feature_uniq = ASSEMBLY_PREFIX . $feature;
+                $param_feature_uniq = IMPORT_PREFIX . $feature;
                 $statement_insert_feature_dbxref->execute();
 
                 $description = isset($line[2]) ? $line[2] : null;
