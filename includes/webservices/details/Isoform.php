@@ -13,19 +13,24 @@ class Isoform extends \WebService {
         if (false)
             $db = new PDO();
 
-        $param_isoform_uniquename = $querydata['query1'];
+        $param_isoform_feature_id = $querydata['query1'];
         $param_isoform_id = null;
         $param_predpep_id = null;
         $param_interpro_feature_id = null;
 
         $query_get_isoforms = <<<EOF
-SELECT isoform.* 
+SELECT DISTINCT ON (isoform.feature_id, dbxref.dbxref_id)
+        isoform.*, dbxref.accession AS import, organism.common_name AS organism_name
     FROM feature AS isoform
-    WHERE isoform.uniquename = :isoform_uniquename
-    AND isoform.type_id = {$_CONST('CV_ISOFORM')}
+        JOIN feature_dbxref ON (feature_dbxref.feature_id = isoform.feature_id)
+        JOIN dbxref ON (feature_dbxref.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$_CONST('DB_ID_IMPORTS')})
+        JOIN organism ON (isoform.organism_id = organism.organism_id)
+    WHERE isoform.feature_id = :isoform_id
+        AND isoform.type_id = {$_CONST('CV_ISOFORM')}
+    LIMIT 1;
 EOF;
         $stm_get_isoforms = $db->prepare($query_get_isoforms);
-        $stm_get_isoforms->bindValue('isoform_uniquename', $param_isoform_uniquename);
+        $stm_get_isoforms->bindValue('isoform_id', $param_isoform_feature_id);
 
         
         

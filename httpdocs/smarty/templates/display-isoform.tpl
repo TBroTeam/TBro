@@ -1,6 +1,6 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
-{#call_webservice path="details/isoform" data=["query1"=>$isoform_uniquename] assign='data'#}
+{#call_webservice path="details/isoform" data=["query1"=>$isoform_feature_id] assign='data'#}
 
 <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
 <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
@@ -83,7 +83,7 @@
             <div class="row">
                 <div class="large-12 columns">
                     <h1 class="left">{#$data.isoform.uniquename#}</h1>
-                    <div class="right"><span class="button" onclick="cart.addItemToAll({uniquename: '{#$data.isoform.uniquename#}'});"> add to cart -> </span></div>
+                    <div class="right"><span class="button" onclick="cart.addItemToAll({feature_id: '{#$data.isoform.feature_id#}', name: '{#$data.isoform.name#}', import: '{#$data.isoform.import#}', organism_name: '{#$data.isoform.organism_name#}'});"> add to cart -> </span></div>
                 </div>
             </div>
             <h5>last modified: {#$data.isoform.timelastmodified#}</h5>

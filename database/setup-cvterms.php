@@ -173,13 +173,17 @@ EOF;
 $const_local_imports = 'local_imports';
 $stm = $db->prepare("SELECT db_id FROM db WHERE name=?");
 $stm->execute(array($const_local_imports));
-if ($stm->rowCount() == 0)
-    $db->prepare("INSERT INTO db (name) VALUES (?)")->execute(array($const_local_imports));
+if ($stm->rowCount() == 0) {
+    $stm = $db->prepare("INSERT INTO db (name) VALUES (?) RETURNING db_id");
+    $stm->execute(array($const_local_imports));
+}
+$const_id_imports = $stm->fetchColumn();
 unset($stm);
 
 $cvterms_output .= <<<EOF
 <?php
         define('DB_NAME_IMPORTS', '$const_local_imports');
+        define('DB_ID_IMPORTS', '$const_id_imports');
 ?>
 EOF;
 

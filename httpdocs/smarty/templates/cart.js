@@ -17,12 +17,12 @@ catch (err) {
  */
 var cart = {
     /**
-     * *&lt;item&gt;={uniquename:&lt;string&gt;}<br/>
+     * *&lt;item&gt;={feature_id:&lt;string&gt;}<br/>
      * @type item[]
      */
     all: [],
     /**
-     *&lt;item&gt;={uniquename:&lt;string&gt;}<br/>
+     *&lt;item&gt;={feature_id:&lt;string&gt;}<br/>
      *&lt;group&gt;={name:&lt;string&gt;, items:[&lt;item&gt;&#42;]}<br/>
      * @type group[]
      */
@@ -67,10 +67,10 @@ $.extend({
 });
 
 
-cart.getItemByUniquename = function(name) {
+cart.getItemByFeature_id = function(name) {
     var item = null;
     $.each(cart.all, function() {
-        if (this.uniquename === name) {
+        if (this.feature_id === name) {
             item = this;
         }
     });
@@ -204,12 +204,12 @@ cart.compareCarts = function(first, second) {
                 throw "";
             }
 
-            //check groups for matching items. only compare "uniquename" for match
+            //check groups for matching items. only compare "feature_id" for match
             $.each(group_a.items, function() {
                 var origin = this;
                 var match = null;
                 $.each(group_b.items, function() {
-                    if (origin.uniquename === this.uniquename) {
+                    if (origin.feature_id === this.feature_id) {
                         match = this;
                         return false; //jquery break
                     }
@@ -296,7 +296,7 @@ cart.addGroup = function(options) {
         accept: ":not(.ui-sortable-helper)",
         drop: function(event, ui) {
             var item = {
-                uniquename: ui.draggable.attr('data-uniquename')
+                feature_id: ui.draggable.attr('data-feature_id')
             };
             //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
             cart.addItemToGroup(item, $(this).parent().attr('data-group'));
@@ -333,7 +333,7 @@ cart.cleanUpGroup = function(newItem, group) {
     //remove placeholder
     $(group).find(".placeholder").hide(0);
     //do not allow duplicate items
-    var copies = $(group).find("[data-uniquename='" + newItem.uniquename + "']");
+    var copies = $(group).find("[data-feature_id='" + newItem.feature_id + "']");
     if (copies.length > 1)
         copies[1].remove();
 };
@@ -393,7 +393,7 @@ cart.removeGroup = function(groupname, options) {
 };
 
 cart.addItemToAll = function(item, options) {
-    if (cart.getItemByUniquename(item.uniquename) !== null) {
+    if (cart.getItemByFeature_id(item.feature_id) !== null) {
         console.error('can\'t add item to "All":', item, 'already exists');
         return false;
     }
@@ -409,7 +409,7 @@ cart.addItemToAll = function(item, options) {
     newEl = cart.buildCartItemDOM(item);
     newEl.find('.cart-button-delete').click(function() {
         cart.removeItemFromAll({
-            uniquename: item.uniquename
+            feature_id: item.feature_id
         });
     });
     newEl.appendTo(cart.cart_group_all.find('ul'));
@@ -417,7 +417,7 @@ cart.addItemToAll = function(item, options) {
 };
 
 cart.addItemToGroup = function(item, groupname, options) {
-    if (cart.getItemByUniquename(item.uniquename) === null) {
+    if (cart.getItemByFeature_id(item.feature_id) === null) {
         console.error('can\'t add item to "' + groupname + '":', item, 'is not in "All"');
         return false;
     }
@@ -428,7 +428,7 @@ cart.addItemToGroup = function(item, groupname, options) {
     }
     var groupContainsItem = false;
     $.each(_group.items, function() {
-        if (this.uniquename === item.uniquename)
+        if (this.feature_id === item.feature_id)
             groupContainsItem = true;
     });
     if (groupContainsItem) {
@@ -449,11 +449,11 @@ cart.addItemToGroup = function(item, groupname, options) {
         return true;
 
     var group = $.getGroupByName(groupname).find('ul');
-    newEl = cart.buildCartItemDOM(cart.getItemByUniquename(item.uniquename));
+    newEl = cart.buildCartItemDOM(cart.getItemByFeature_id(item.feature_id));
     newEl.find('.cart-button-delete').click(function() {
         var group = $(this).parents('.cart-group').first();
         cart.removeItemFromGroup({
-            uniquename: item.uniquename
+            feature_id: item.feature_id
         }, group.attr('data-group'));
     });
     newEl.appendTo(group).hide(0).fadeIn(500);
@@ -466,7 +466,7 @@ cart.removeItemFromAll = function(item, options) {
         var groupContainsItem = false;
         $.each(_group.items, function() {
             _item = this;
-            if (_item.uniquename === item.uniquename)
+            if (_item.feature_id === item.feature_id)
                 groupContainsItem = true;
         });
         if (groupContainsItem) {
@@ -475,7 +475,7 @@ cart.removeItemFromAll = function(item, options) {
     });
 
     for (var i = 0; i < cart.all.length; i++) {
-        if (cart.all[i].uniquename === item.uniquename) {
+        if (cart.all[i].feature_id === item.feature_id) {
             cart.all.splice(i, 1);
             i--;
         }
@@ -488,7 +488,7 @@ cart.removeItemFromAll = function(item, options) {
     }, options);
 
     //DOM manipulation
-    cart.cart_group_all.find('[data-uniquename="' + item.uniquename + '"]').remove();
+    cart.cart_group_all.find('[data-feature_id="' + item.feature_id + '"]').remove();
 };
 
 cart.removeItemFromGroup = function(item, groupname, options) {
@@ -499,7 +499,7 @@ cart.removeItemFromGroup = function(item, groupname, options) {
     }
 
     for (var i = 0; i < _group.items.length; i++) {
-        if (_group.items[i].uniquename === item.uniquename) {
+        if (_group.items[i].feature_id === item.feature_id) {
             _group.items.splice(i, 1);
             i--;
         }
@@ -514,7 +514,7 @@ cart.removeItemFromGroup = function(item, groupname, options) {
 
     //DOM manipulation
     var group = $.getGroupByName(groupname);
-    group.find('[data-uniquename="' + item.uniquename + '"]').remove();
+    group.find('[data-feature_id="' + item.feature_id + '"]').remove();
     if (group.find('li:visible').length === 0) {
         group.find('.placeholder').show(0);
     }
@@ -534,42 +534,43 @@ cart.refresh_cart_group_all = function() {
 cart.buildCartItemDOM = function(item) {
     var newElStr = $('#cart-item-dummy').html();
     newEl = $('<div/>').html(newElStr).children();
-    newEl.attr('data-uniquename', item.uniquename);
-    newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : item.uniquename);
+    newEl.attr('data-feature_id', item.feature_id);
+    newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : item.feature_id);
+    newEl.data('metadata', item);
     newEl.find('.cart-button-goto').click(function() {
-        window.location = '{#$AppPath#}/isoform-details/' + item.uniquename;
+        window.location = '{#$AppPath#}/isoform-details/byId/' + item.feature_id;
     });
     newEl.find('.cart-button-edit').click(function() {
-        cart.dialog_edit_open(item.uniquename);
+        cart.dialog_edit_open(item.feature_id);
     });
     return newEl;
 };
 
-cart.dialog_edit_open = function(uniquename) {
-    var item = cart.getItemByUniquename(uniquename);
+cart.dialog_edit_open = function(feature_id) {
+    var item = cart.getItemByFeature_id(feature_id);
     var dialog = $('#dialog-edit-cart-item');
-    dialog.data('uniquename', item.uniquename);
+    dialog.data('feature_id', item.feature_id);
     dialog.data('alias', item.alias);
     dialog.data('annotations', item.annotations);
     dialog.dialog("open");
 };
 
 cart.dialog_edit_save = function(item, options) {
-    var uniquename = item.uniquename;
-    cartitem = cart.getItemByUniquename(uniquename);
+    var feature_id = item.feature_id;
+    cartitem = cart.getItemByFeature_id(feature_id);
     if (cartitem === null)
         return "Error saving cart: item not found in cart 'All'";
     if (cartitem.alias !== item.alias) {
-        $("[data-uniquename='" + item.uniquename + "']").find('.displayname').html(item.alias);
+        $("[data-feature_id='" + item.feature_id + "']").find('.displayname').html(item.alias);
     }
     $.each(item, function(key, value) {
-        if (key !== 'uniquename')
+        if (key !== 'feature_id')
             cartitem[key] = value;
     });
 
     cart.syncAction({
         action: 'edit_item',
-        name: uniquename,
+        name: feature_id,
         values: item
     }, options);
 }

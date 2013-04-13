@@ -38,7 +38,7 @@
             buttons: {
                 "save changes": function() {
                     cart.dialog_edit_save({
-                        uniquename: $('#item-uniquename').val(),
+                        feature_id: $('#item-feature_id').val(),
                         alias: $('#item-alias').val(),
                         annotations: $('#item-annotations').val()
                     });
@@ -50,10 +50,10 @@
                 }
             },
             open: function() {
-                var uniquename = $(this).data('uniquename');
+                var feature_id = $(this).data('feature_id');
                 var alias = $(this).data('alias');
                 var annotations = $(this).data('annotations');
-                $('#item-uniquename').val(uniquename);
+                $('#item-feature_id').val(feature_id);
                 $('#item-alias').val(alias);
                 $('#item-annotations').val(annotations);
             }
@@ -93,21 +93,37 @@
         cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#}, true);
                 setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
 
-
         $('#cart').tooltip({
             items: ".cart-item",
             open: function(event, ui) {
                 ui.tooltip.css("max-width", "500px");
             },
             content: function() {
-                var item = cart.getItemByUniquename($(this).attr('data-uniquename'));
+                var element = $(this);
+                var tooltip = $("<table />");
+                $.each(element.data('metadata'),function(key, val){
+                    $("<tr><td>"+key+"</td><td>"+(val!==null?val:'')+"</td></tr>").appendTo(tooltip);
+                });
+                tooltip.foundation();
+                return tooltip;
+            }
+        });
+
+
+        /*$('#cart').tooltip({
+            items: ".cart-item",
+            open: function(event, ui) {
+                ui.tooltip.css("max-width", "500px");
+            },
+            content: function() {
+                var item = cart.getItemByFeature_id($(this).attr('data-feature_id'));
                 var newElStr = $('#cartitem-tooltip').html();
-                newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+                newElStr = newElStr.replace(/#feature_id#/g, item.feature_id);
                 newElStr = newElStr.replace(/#alias#/g, item.alias);
                 newElStr = newElStr.replace(/#annotations#/g, item.annotations);
                 return newElStr;
             }
-        });
+        });*/
 
     });
 </script>
@@ -147,7 +163,7 @@
             <div style="display: none">
                 <div id="cartitem-tooltip">
                     <table>
-                        <tr><td>Uniquename</td><td>#uniquename#</td></tr>
+                        <tr><td>Feature_id</td><td>#feature_id#</td></tr>
                         <tr><td>Alias</td><td>#alias#</td></tr>
                         <tr><td>Annotations</td><td>#annotations#</td></tr>
                     </table>
@@ -169,8 +185,8 @@
                 <div id="dialog-edit-cart-item" title="edit item">
                     <form>
                         <fieldset>
-                            <label for="item-uniquename">uniquename</label>
-                            <input type="text" name="uniquename" id="item-uniquename" disabled="disabled" class="text ui-widget-content ui-corner-all" />
+                            <label for="item-feature_id">feature_id</label>
+                            <input type="text" name="feature_id" id="item-feature_id" disabled="disabled" class="text ui-widget-content ui-corner-all" />
                         </fieldset>
                         <fieldset>
                             <label for="item-alias">display alias</label>

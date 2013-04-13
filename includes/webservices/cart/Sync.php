@@ -17,7 +17,7 @@ class Sync extends \WebService {
         return $nullreference;
     }
 
-    private static function groupContainsItemByUniquename($group, $uniquename) {
+    private static function groupContainsItemByFeature_id($group, $feature_id) {
         if (isset($group['items']))
         //we are a group
             $walk = $group['items'];
@@ -26,7 +26,7 @@ class Sync extends \WebService {
             $walk = $group;
 
         foreach ($walk as $item) {
-            if ($item['uniquename'] == $uniquename)
+            if ($item['feature_id'] == $feature_id)
                 return true;
         }
         return false;
@@ -96,9 +96,9 @@ class Sync extends \WebService {
             switch ($querydata['action']['action']) {
                 case 'edit_item':
                     foreach ($_SESSION['cart']['all'] as &$item) {
-                        if ($item['uniquename'] == $querydata['action']['name']) {
+                        if ($item['feature_id'] == $querydata['action']['name']) {
                             foreach ($querydata['action']['values'] as $key => $value) {
-                                if ($key != 'uniquename')
+                                if ($key != 'feature_id')
                                     $item[$key] = $value;
                             }
                             break;
@@ -134,41 +134,41 @@ class Sync extends \WebService {
                     break;
                 case 'addItemToAll':
                     $item = $querydata['action']['item'];
-                    if (self::groupContainsItemByUniquename($_SESSION['cart']['all'], $item['uniquename']))
+                    if (self::groupContainsItemByFeature_id($_SESSION['cart']['all'], $item['feature_id']))
                         break;
                     $_SESSION['cart']['all'][] = $item;
                     break;
                 case 'addItemToGroup':
-                    $uniquename = $querydata['action']['item']['uniquename'];
+                    $feature_id = $querydata['action']['item']['feature_id'];
                     $groupname = $querydata['action']['groupname'];
                     $group = &self::get_group($groupname);
-                    if (!self::groupContainsItemByUniquename($_SESSION['cart']['all'], $uniquename))
+                    if (!self::groupContainsItemByFeature_id($_SESSION['cart']['all'], $feature_id))
                         break;
-                    if (self::groupContainsItemByUniquename($group, $uniquename))
+                    if (self::groupContainsItemByFeature_id($group, $feature_id))
                         break;
-                    $group['items'][] = array('uniquename' => $uniquename);
+                    $group['items'][] = array('feature_id' => $feature_id);
                     break;
                 case 'removeItemFromGroup':
-                    $uniquename = $querydata['action']['item']['uniquename'];
+                    $feature_id = $querydata['action']['item']['feature_id'];
                     $groupname = $querydata['action']['groupname'];
                     $group = &self::get_group($groupname);
                     foreach ($group['items'] as $key => $item) {
-                        if ($item['uniquename'] == $uniquename) {
+                        if ($item['feature_id'] == $feature_id) {
                             unset($group['items'][$key]);
                         }
                     }
                     break;
                 case 'removeItemFromAll':
-                    $uniquename = $querydata['action']['item']['uniquename'];
+                    $feature_id = $querydata['action']['item']['feature_id'];
 
                     foreach ($_SESSION['cart']['all'] as $key => $item) {
-                        if ($item['uniquename'] == $uniquename) {
+                        if ($item['feature_id'] == $feature_id) {
                             unset($_SESSION['cart']['all'][$key]);
                         }
                     }
                     foreach ($_SESSION['cart']['groups'] as &$group) {
                         foreach ($group['items'] as $key => $item) {
-                            if ($item['uniquename'] == $uniquename) {
+                            if ($item['feature_id'] == $feature_id) {
                                 unset($group['items'][$key]);
                             }
                         }

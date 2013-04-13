@@ -79,7 +79,7 @@ switch ($page) {
         $smarty->display('cart.js');
         die();
     case 'unigene-details':
-        $unigene = requestVal('query', '/^[a-z0-9._]+$/i', '');
+        $unigene = requestVal('query', '/^[a-z0-9._-]+$/i', '');
         $smarty->assign('unigene_uniquename', $unigene);
         list($service, $trash) = WebService::factory("details/unigene");
         $data = $service->execute(array("query1" => $unigene));
@@ -89,10 +89,10 @@ switch ($page) {
         $smarty->display('display-unigene.tpl');
         die();
     case 'isoform-details':
-        $isoform = requestVal('query', '/^[a-z0-9._]+$/i', '');
-        $smarty->assign('isoform_uniquename', $isoform);
+        $isoform_feature_id = requestVal('feature_id', '/^[0-9]+$/', '');
+        $smarty->assign('isoform_feature_id', $isoform_feature_id);
         list($service, $trash) = WebService::factory("details/isoform");
-        $data = $service->execute(array("query1" => $isoform));
+        $data = $service->execute(array("query1" => $isoform_feature_id));
         if ($data == array()) {
             break;
         }

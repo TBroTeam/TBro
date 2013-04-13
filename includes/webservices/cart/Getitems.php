@@ -20,13 +20,13 @@ class Getitems extends \WebService {
                 //group needs to be filled with items from "all" cart for metadata to be available
                 $all = array();
                 foreach ($_SESSION['cart']['all'] as &$item) {
-                    $all[$item['uniquename']] = $item;
+                    $all[$item['feature_id']] = $item;
                 }
                 unset($item);
 
                 $retgroup = array();
                 foreach ($group['items'] as $item){
-                    $retgroup[] = $all[$item['uniquename']];
+                    $retgroup[] = $all[$item['feature_id']];
                 }
                 
                 return $retgroup;

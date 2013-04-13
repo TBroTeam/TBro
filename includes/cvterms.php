@@ -120,4 +120,5 @@ define ('WEBUSER_CART', '42827');
 
 ?><?php
         define('DB_NAME_IMPORTS', 'local_imports');
+        define('DB_ID_IMPORTS', '177');
 ?>
