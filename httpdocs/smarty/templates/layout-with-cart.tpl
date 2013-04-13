@@ -1,6 +1,7 @@
 {#extends file='layout.tpl'#}
 {#block name='head'#}
 {#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}
+<script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -70,27 +71,27 @@
         $("#dialog-delete-all").dialog({
             resizable: false,
             autoOpen: false,
-            height:200,
+            height: 200,
             modal: true,
             buttons: {
                 "Delete all items": function() {
                     cart.resetCart({sync: true});
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 },
                 Cancel: function() {
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 }
             }
         });
-        
+
         group_all.find('.cart-button-delete').click(function(event) {
             event.stopPropagation();
             $("#dialog-delete-all").dialog('open');
         });
-        
+
 
         cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#}, true);
-        setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
+                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
 
 
         $('#cart').tooltip({
@@ -183,13 +184,13 @@
 
             <div class="panel large-12 columns">
                 {#if (isset($smarty.session['OpenID'])) #}
-                    <form action="?logout" method="post">
-                        <button>Logout</button>
-                    </form>
+                <form action="?logout" method="post">
+                    <button>Logout</button>
+                </form>
                 {#else#}
-                    <form action="?login" method="post">
-                        <button>Login with Google</button>
-                    </form>
+                <form action="?login" method="post">
+                    <button>Login with Google</button>
+                </form>
                 {#/if#}
             </div>
 

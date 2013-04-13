@@ -20,7 +20,8 @@
         <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
         <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>        
-        <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>        
+        <script type="text/javascript" src="{#$AppPath#}/js/underscore-min.js"></script>
+
 
 
         <script type="text/javascript">

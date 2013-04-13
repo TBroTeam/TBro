@@ -8,45 +8,13 @@
 <script type="text/javascript">
     var filterdata;
 
-    function objectsEquals(a,b){
-        if (a == null && b== null)
-            return true;
-        
-        if (a==null || b== null)
-            return false;
-        
-        var p;
-        for(p in a) {
-            if(typeof b[p] == 'undefined') {return false;}
-        }
-
-        for(p in a) {
-            if (a[p]) {
-                if (typeof a[p] == 'object'){
-                    // fun with jquery. this could result in endless looping
-                    if (p=='prevObject' || p=='context') break;
-                    if (!objectsEquals(a[p], b[p])) { return false; }
-                    break;                    
-                } else if (a[p] != b[p]) { return false; }
-            } else {
-                if (b[p])
-                    return false;
-            }
-        }
-
-        for(p in b) {
-            if(typeof a[p] == 'undefined') {return false;}
-        }
-
-        return true;
-    };
     
     function arr_intersect(a1,a2){
         var ret = [];
         $.each(a1, function(){
             var a = this;
             $.each(a2, function(){
-                if (objectsEquals(this,a)){
+                if (_.isEqual(this, a)){
                     ret.push(this);
                     return false; //jquery break;
                 }
@@ -86,7 +54,7 @@
         $.each(cartitems, function(){
             var item = this;
             uniquenames.push(item.uniquename);
-            var displayname = item.alias != undefined ? item.alias : item.uniquename;
+            var displayname = (item.alias != undefined) ? item.alias : item.uniquename;
             $('<option />').
                 text(displayname).
                 val(item.uniquename).
@@ -121,7 +89,7 @@
             };
             
             var last_selected = $(this).data('last-selected');
-            if (objectsEquals(currently_selected, last_selected))
+            if (_.isEqual(currently_selected, last_selected))
                 return;
             
             var intersection = [];
@@ -155,7 +123,7 @@
             };
             
             var last_selected = $(this).data('last-selected');
-            if (objectsEquals(currently_selected, last_selected))
+            if (_.isEqual(currently_selected, last_selected))
                 return;
                 
             var intersection = [];
@@ -192,7 +160,7 @@
             };
             
             var last_selected = $(this).data('last-selected');
-            if (objectsEquals(currently_selected, last_selected))
+            if (_.isEqual(currently_selected, last_selected))
                 return;
             
                

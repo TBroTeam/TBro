@@ -55,10 +55,10 @@ EOF;
 
         $stm_get_filters->execute($uniquenames);
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
-            self::addItem(&$data['feature'], 'feature', $filter);
-            self::addItem(&$data['assay'][$filter['feature_uniquename']], 'assay', $filter);
-            self::addItem(&$data['analysis'][$filter['feature_uniquename']][$filter['assay_name']], 'analysis', $filter);
-            self::addItem(&$data['biomaterial'][$filter['feature_uniquename']][$filter['analysis_id']][$filter['assay_name']], 'biomaterial', $filter);
+            self::addItem($data['feature'], 'feature', $filter);
+            self::addItem($data['assay'][$filter['feature_uniquename']], 'assay', $filter);
+            self::addItem($data['analysis'][$filter['feature_uniquename']][$filter['assay_name']], 'analysis', $filter);
+            self::addItem($data['biomaterial'][$filter['feature_uniquename']][$filter['analysis_id']][$filter['assay_name']], 'biomaterial', $filter);
         }
 
         return $data;
