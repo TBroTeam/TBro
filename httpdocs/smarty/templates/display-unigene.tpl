@@ -14,15 +14,13 @@
 <div class="row">        
     <div class="large-12 columns panel">
         <p>known isoforms:</p>
-        <table>
-            <tbody>
-                {#foreach $data.unigene.isoforms as $isoform#}
-                    <tr>
-                        <td><a href='{#$AppPath#}/isoform-details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a></td>
-                    </tr>
-                {#/foreach#}
-            </tbody>
-        </table>
+        <ul>
+            {#foreach $data.unigene.isoforms as $isoform#}
+            <li>
+                <a href='{#$AppPath#}/isoform-details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a></td>
+            </li>
+            {#/foreach#}
+        </ul>
     </div>
 </div>
 

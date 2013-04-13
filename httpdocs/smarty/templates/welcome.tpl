@@ -7,7 +7,7 @@
 </div>
 <div class="row">
     <div class="large-12 columns panel">
-            <p>Try searching for 1.01_comp231081_c0 or 1.01_comp214244_c0.</p>
+            <p>Try searching for <a href="{#$AppPath#}/isoform-details/byId/882422">comp231081_c0_seq1</a> or <a href="{#$AppPath#}/isoform-details/byId/743931">comp214244_c0_seq2</a>.</p>
     </div>
 </div>
 {#/block#}
