@@ -92,6 +92,12 @@ $cvterm_data = array (
     'cv' => 'relationship',
     'id' => 32,
   ),
+  'WEBUSER_CART' => 
+  array (
+    'name' => 'webuser_data_cart',
+    'cv' => 'local',
+    'id' => 42827,
+  ),
 );
 */    
 
@@ -110,5 +116,8 @@ define ('CV_RELATIONSHIP_UNIGENE_ISOFORM', '989');
 define ('CV_ISOFORM_PATH', '42826');
 define ('CV_PREDPEP', '219');
 define ('CV_BIOMATERIAL_ISA', '32');
+define ('WEBUSER_CART', '42827');
 
+?><?php
+        define('DB_NAME_IMPORTS', 'local_imports');
 ?>

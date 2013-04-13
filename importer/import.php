@@ -81,9 +81,9 @@ if (isset($parms['--verbose']))
 else
     define('VERBOSE', false);
 
-require_parameter(array('--import_prefix', '--organism-id'));
+require_parameter(array('--import-prefix', '--organism-id'));
 define('DB_ORGANISM_ID', $parms['--organism-id']);
-define('IMPORT_PREFIX', $parms['--import_prefix']);
+define('IMPORT_PREFIX', $parms['--import-prefix']);
 
 
 foreach ($parms['--file'] as $file) {
