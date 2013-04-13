@@ -57,7 +57,7 @@
             var displayname = (item.alias != undefined) ? item.alias : item.name;
             $('<option />').
                 text(displayname).
-                val(item.uniquename).
+                val(item.feature_id).
                 data('metadata', item).
                 attr('selected','selected').
                 appendTo(select_element);
@@ -65,8 +65,9 @@
         
         $.ajax('{#$ServicePath#}/listing/filters/', {
             method: 'post',
-            data: {uniquenames: ids},
+            data: {ids: ids},
             success: function(data) {
+                console.log(data);
                 filterdata = data;
                 select_element.click();
             }
@@ -94,7 +95,8 @@
             
             var intersection = [];
             selected.each(function(){
-                var this_assays = filterdata.assay[$(this).data('metadata').uniquename];
+                var feature_id = $(this).data('metadata').feature_id;
+                var this_assays = filterdata.assay[feature_id];
                 if (intersection.length===0){
                     intersection = this_assays;
                 } else {
@@ -104,7 +106,8 @@
         
             select_assay.empty();
             $.each(intersection, function() {
-                var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this);
+                var data = filterdata.data.assay[this];
+                var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data);
                 opt.appendTo(select_assay);
             });
             
@@ -128,7 +131,7 @@
                 
             var intersection = [];
             selected.each(function(){
-                var this_analysises = filterdata.analysis[$(this).data('metadata').uniquename][assay];
+                var this_analysises = filterdata.analysis[$(this).data('metadata').feature_id][assay];
                 if (intersection.length===0){
                     intersection = this_analysises;
                 } else {
@@ -139,7 +142,8 @@
             select_analysis.empty();
 
             $.each(intersection, function() {
-                var opt = $("<option/>").val(this.id).text(this.name).data('metadata', this);
+                var data = filterdata.data.analysis[this];
+                var opt = $("<option/>").val(data.id).text(data.id+"("+data.program+")").data('metadata', data);
                 opt.appendTo(select_analysis);
             });
 
@@ -166,7 +170,7 @@
                
             var intersection = [];
             selected.each(function(){
-                var this_tissues = filterdata.biomaterial[$(this).data('metadata').uniquename][analysis][assay];
+                var this_tissues = filterdata.biomaterial[$(this).data('metadata').feature_id][analysis][assay];
                 if (intersection.length===0){
                     intersection = this_tissues;
                 } else {
@@ -177,7 +181,8 @@
             select_tissues.empty();
 
             $.each(intersection, function() {
-                var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this).attr('selected','selected');
+                var data = filterdata.data.biomaterial[this];
+                var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data).attr('selected','selected');
                 opt.appendTo(select_tissues);
             });
 
@@ -188,6 +193,7 @@
         function getFilterData(){
             var data = {parents:[], analysis:[], assay:[], biomaterial:[]};
             select_element.find(':selected').each(function(){
+                console.log(this);
                 data.parents.push($(this).val());
             });
             data.analysis.push(select_analysis.find(':selected').val());

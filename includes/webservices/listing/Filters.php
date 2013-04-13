@@ -13,13 +13,13 @@ class Filters extends \WebService {
         if (false)
             $db = new PDO();
 
+        
         $ids = array();
-        if (isset($querydata['query1'])) {
+        if (isset($querydata['query1']) && !empty($querydata['query1'])) {
             $ids[] = $querydata['query1'];
         }
         if (isset($querydata['ids'])) {
-            $ids =
-                    array_merge($ids, $querydata['ids']);
+            $ids = array_merge($ids, $querydata['ids']);
         }
 
         $place_holders = implode(',', array_fill(0, count($ids), '?'));

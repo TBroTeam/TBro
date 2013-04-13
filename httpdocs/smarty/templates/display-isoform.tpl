@@ -7,13 +7,12 @@
 <!-- use chrome frame if installed and user is using IE -->
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 <script type="text/javascript">
-    var isoform = '{#$data.isoform.uniquename#}';
     var isoform_id = '{#$data.isoform.feature_id#}';
 
     $(document).ready(function() {
         $('.tabs').tabs();
 
-        $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + isoform, {
+        $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + isoform_id, {
             success: function(val) {
                 canvas = $('#canvas_{#$data.isoform.uniquename|clean_id#}');
                 canvas.attr('width', canvas.parent().width() - 8);
