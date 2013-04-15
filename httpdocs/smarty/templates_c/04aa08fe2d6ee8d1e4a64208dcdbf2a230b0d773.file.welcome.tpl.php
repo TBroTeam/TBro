@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 19:58:42
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 20:06:38
          compiled from "/home/s202139/git/httpdocs/smarty/templates/welcome.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17300283651409c3b02f598-98116107%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366048718,
+      1 => 1366048743,
       2 => 'file',
     ),
   ),
@@ -313,7 +313,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 </ul>
                 <section class="top-bar-section">
                         <ul class="right">
-                            <li><a>multisearch</a></li>
+                            <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/multisearch'>multisearch</a></li>
                             <li class="divider"></li>
                             <li><a>quicksearch:</a></li>
                             <li><a><select id="select_organism" style="display:inline"></select></a></li>

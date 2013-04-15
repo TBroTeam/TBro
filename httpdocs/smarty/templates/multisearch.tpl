@@ -5,7 +5,7 @@
         $('#start-multisearch').click(function(){
             $('.results').hide(500);
             $.ajax({
-                url: "{#$ServicePath#}/listing/searchbox/",
+                url: "{#$ServicePath#}/listing/multisearch/",
                 data: {species: organism.val(), dataset: dataset.val(), longterm: $('#multisearch').val()},
                 dataType: "json",
                 success: function(data) {

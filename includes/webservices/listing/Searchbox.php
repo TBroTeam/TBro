@@ -11,17 +11,9 @@ class Searchbox extends \WebService {
 
         $species = $_REQUEST['species'];
         $import = $_REQUEST['dataset'];
-        if (isset($_REQUEST['term'])) {
-            $term = $_REQUEST['term'] . '%';
-            $termline = '(feature.name LIKE ?)';
-            $values = array($import, $species, $term);
-        } else
-        if (isset($_REQUEST['longterm'])) {
-            $longterm = $_REQUEST['longterm'];
-            $terms = preg_split('/[,\s]+/m', $longterm, -1, PREG_SPLIT_NO_EMPTY);
-            $termline = '(feature.name IN (' . implode(',', array_fill(0, count($terms), '?')) . '))';
-            $values = array_merge(array($import, $species), $terms);
-        }
+
+        $term = $_REQUEST['term'] . '%';
+
 
 #UI hint
         if (false)
@@ -34,7 +26,7 @@ SELECT feature.name, feature.feature_id, feature.type_id
     WHERE 
     feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$_CONST('DB_ID_IMPORTS')} AND accession = ?)
     AND feature.organism_id = ?
-    AND $termline
+    AND feature.name LIKE ?
     AND (feature.type_id = {$_CONST('CV_UNIGENE')} OR feature.type_id = {$_CONST('CV_ISOFORM')})
     LIMIT 20
 EOF;
@@ -43,7 +35,7 @@ EOF;
 
         $data = array('results' => array());
 
-        $stm_get_features->execute($values);
+        $stm_get_features->execute(array($import, $species, $term));
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = array('name' => $feature['name']
                 , 'type' => ($feature['type_id'] == CV_UNIGENE ? 'unigene' : ($feature['type_id'] == CV_ISOFORM ? 'isoform' : 'error'))

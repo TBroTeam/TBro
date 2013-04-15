@@ -9,8 +9,8 @@ try {
     if (VERBOSE || DEBUG) {
         require_once __DIR__.'/libs/loggedPDO/LoggedPDO.php';
         require_once __DIR__.'/libs/loggedPDO/Log_firebugJSON.php';
-        $logger = Log::factory('firebugJSON', '', 'PDO');
-        //$logger = Log::singleton('firebug', '', 'PDO');
+        //$logger = Log::factory('firebugJSON', '', 'PDO');
+        $logger = Log::factory('console', '', 'PDO');
         $db = new \LoggedPDO\PDO($connstr, DB_USERNAME, DB_PASSWORD, null, $logger);
         //$db->log_replace_params = false;
     } else {
