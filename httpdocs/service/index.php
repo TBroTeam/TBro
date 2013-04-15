@@ -12,6 +12,9 @@ require_once INC . '/db.php';
 if (DEBUG) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
+    $logger = Log::factory('console', '', 'PDO');
+    global $db;
+    $db->log = $logger;
 }
 
 
