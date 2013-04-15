@@ -27,8 +27,37 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $(document).foundation();
-                var species = $('#select_species');
+
+                var organism = $('#select_organism');
                 var dataset = $('#select_dataset');
+                var rel_dataset = null;
+
+                $.ajax({
+                    url: "{#$ServicePath#}/listing/organism_dataset",
+                    dataType:"json",
+                    success:function(data){
+                        organism.empty();
+                        $.each(data.results.organism, function(){
+                            $('<option/>').val(this.organism_id).text(this.organism_name).appendTo(organism);
+                        });
+                        rel_dataset = data.results.dataset;
+                        organism.click();   
+                    }
+                });
+                
+                organism.click(function(){
+                    dataset.empty();
+                    dataset.removeAttr('disabled');
+                    if (rel_dataset[organism.val()] == undefined){
+                        dataset.attr('disabled','disabled');
+                        $('<option/>').val('').text('/').appendTo(dataset);
+                    } else {
+                        $.each(rel_dataset[organism.val()], function(){
+                            $('<option/>').val(this.dataset).text(this.dataset).appendTo(dataset);
+                        });
+                    }
+                });
+
                 $("#search_unigene").autocomplete({
                     position: {
                         my: "right top", at: "right bottom"
@@ -36,7 +65,7 @@
                     source: function(request, response) {
                         $.ajax({
                             url: "{#$ServicePath#}/listing/searchbox/",
-                            data: {species: species.val(), dataset: dataset.val(), term: request.term},
+                            data: {species: organism.val(), dataset: dataset.val(), term: request.term},
                             dataType: "json",
                             success: function(data) {
                                 response(data.results);
@@ -50,10 +79,9 @@
                 });
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
                     return $("<li>")
-                            .append("<a href='{#$AppPath#}/"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
-                            .appendTo(ul);
+                    .append("<a href='{#$AppPath#}/"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
+                    .appendTo(ul);
                 };
-                ;
                 /*$('#search_unigene').keydown(function(event) {
                     //Enter
                     if (event.which == 13) {
@@ -85,15 +113,15 @@
             <nav class="top-bar" id="top">
                 <ul class="title-area">
                     <li class="name">
-                        <h1><a>Transcript Browser: dionaea muscipula</a></h1>
+                        <h1><a href="{#$AppPath#}">Transcript Browser</a></h1>
                     </li>
                 </ul>
                 <section class="top-bar-section">
                     <ul class="right">
                         <li class="divider"></li>
                         <li><a>search for unigene:</a></li>
-                        <li><a><select id="select_species" style="display:inline"><option value="13">D. muscipula</option></select></a></li>
-                        <li><a><select id="select_dataset"><option value="2013-04-13">2013-04-13</option></select></a></li>
+                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                        <li><a><select id="select_dataset"></select></select></a></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
                         <li>&nbsp;</li> 
                     </ul>

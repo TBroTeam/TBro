@@ -107,16 +107,18 @@
 
 
                     cx = new CanvasXpress(
-                            "isoform-barplot-canvas",
-                            {
-                                "x": val.x,
-                                "y": val.y
-                            },
+                    "isoform-barplot-canvas",
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
                     {
                         "graphType": "Bar",
                         "showDataValues": true,
                         "graphOrientation": "vertical"
                     });
+
+                    $('#isoform-barplot-groupByTissues').click();
 
                     canvas.data('canvasxpress', cx);
                 }

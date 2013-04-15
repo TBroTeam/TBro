@@ -525,9 +525,7 @@ cart.refresh_cart_group_all = function() {
         appendTo: "body",
         helper: function() {
             return $(this).clone().addClass('beingDragged');
-        }/*,
-         snap: ".cart-target",
-         snapMode: 'inner'*/
+        }
     });
 };
 
@@ -535,7 +533,7 @@ cart.buildCartItemDOM = function(item) {
     var newElStr = $('#cart-item-dummy').html();
     newEl = $('<div/>').html(newElStr).children();
     newEl.attr('data-feature_id', item.feature_id);
-    newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : item.feature_id);
+    newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id));
     newEl.data('metadata', item);
     newEl.find('.cart-button-goto').click(function() {
         window.location = '{#$AppPath#}/isoform-details/byId/' + item.feature_id;

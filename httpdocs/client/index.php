@@ -33,7 +33,7 @@ $smarty->assign('ServicePath', SERVICEPATH);
 $smarty->left_delimiter = '{#';
 $smarty->right_delimiter = '#}';
 
-require_once(INC.'/webservices/cart/Sync.php');
+require_once(INC . '/webservices/cart/Sync.php');
 $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
 
 function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
@@ -63,7 +63,7 @@ try {
     } else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
-            header('Location: ' . $_SERVER['REDIRECT_URL']);
+            header('Location: ' . isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI']);
             die();
         }
     }
@@ -78,32 +78,65 @@ switch ($page) {
         header('Content-type: application/javascript');
         $smarty->display('cart.js');
         die();
-    case 'unigene-details':
-        $unigene_feature_id = requestVal('feature_id', '/^[0-9]+$/', '');
-        $smarty->assign('unigene_feature_id', $unigene_feature_id);
-        list($service, $trash) = WebService::factory("details/unigene");
-        $data = $service->execute(array("query1" => $unigene_feature_id));
-        if ($data == array()) {
-            break;
-        }
-        $smarty->display('display-unigene.tpl');
-        die();
+    case 'unigene-details-byid':
+        if (display_unigene_by_id(requestVal('feature_id', '/^[0-9]+$/', '')))
+            die();
+        break;
     case 'isoform-details':
-        $isoform_feature_id = requestVal('feature_id', '/^[0-9]+$/', '');
-        $smarty->assign('isoform_feature_id', $isoform_feature_id);
-        list($service, $trash) = WebService::factory("details/isoform");
-        $data = $service->execute(array("query1" => $isoform_feature_id));
-        if ($data == array()) {
-            break;
-        }
-        $smarty->display('display-isoform.tpl');
-        die();
+        if (display_isoform(requestVal('organism', '/^[a-z0-9-_.]+$/i', ''), requestVal('uniquename', '/^[a-z0-9-_.]+$/', '')))
+            die();
+        break;
+    case 'isoform-details-byid':
+        if (display_isoform_by_id(requestVal('feature_id', '/^[0-9]+$/', '')))
+            die();
+        break;
     case 'graphs':
-        $cartname = requestVal('query',\webservices\cart\Sync::$regexCartName, '');
+        $cartname = requestVal('query', \webservices\cart\Sync::$regexCartName, '');
         $smarty->assign('cartname', $cartname);
         $smarty->display('graphs.tpl');
-        
+
         die();
 }
 $smarty->display('welcome.tpl');
+
+function display_isoform($organism, $uniquename) {
+    require_once INC . '/db.php';
+    global $db;
+    $stm = $db->prepare(<<<EOF
+SELECT feature_id 
+    FROM feature 
+        JOIN organism ON (feature.organism_id = organism.organism_id) 
+    WHERE feature.uniquename = :uniquename AND organism.common_name = :organism
+EOF
+    );
+    $stm->execute(array($uniquename, $organism));
+    if ($stm->rowCount() == 0)
+        return false;
+    return display_isoform_by_id($stm->fetchColumn());
+}
+
+function display_unigene_by_id($unigene_feature_id) {
+    global $smarty;
+    $smarty->assign('unigene_feature_id', $unigene_feature_id);
+    list($service, $trash) = WebService::factory("details/unigene");
+    $data = $service->execute(array("query1" => $unigene_feature_id));
+    if ($data == array()) {
+        return false;
+    }
+    $smarty->display('display-unigene.tpl');
+    return true;
+}
+
+function display_isoform_by_id($isoform_feature_id) {
+    global $smarty;
+    $smarty->assign('isoform_feature_id', $isoform_feature_id);
+    list($service, $trash) = WebService::factory("details/isoform");
+    $data = $service->execute(array("query1" => $isoform_feature_id));
+    if ($data == array()) {
+        return false;
+    }
+    $smarty->display('display-isoform.tpl');
+    return true;
+}
+
 ?>

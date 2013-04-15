@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 17:27:08
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 13:56:27
          compiled from "/home/s202139/git/httpdocs/smarty/templates/welcome.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17300283651409c3b02f598-98116107%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,19 +7,19 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '04aa08fe2d6ee8d1e4a64208dcdbf2a230b0d773' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/welcome.tpl',
-      1 => 1365766329,
+      1 => 1366026177,
       2 => 'file',
     ),
     '5f954c49e74b64ac04f0d562c20e5168f11931f4' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout-with-cart.tpl',
-      1 => 1365766293,
+      1 => 1366022477,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1365766609,
+      1 => 1366026984,
       2 => 'file',
     ),
   ),
@@ -68,12 +68,45 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /js/jquery.webStorage.min.js"></script>        
         <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/js/cart.js"></script>        
+/js/underscore-min.js"></script>
+
 
 
         <script type="text/javascript">
             $(document).ready(function() {
                 $(document).foundation();
+
+                var organism = $('#select_organism');
+                var dataset = $('#select_dataset');
+                var rel_dataset = null;
+
+                $.ajax({
+                    url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/listing/organism_dataset",
+                    dataType:"json",
+                    success:function(data){
+                        organism.empty();
+                        $.each(data.results.organism, function(){
+                            $('<option/>').val(this.organism_id).text(this.organism_name).appendTo(organism);
+                        });
+                        rel_dataset = data.results.dataset;
+                        organism.click();   
+                    }
+                });
+                
+                organism.click(function(){
+                    dataset.empty();
+                    dataset.removeAttr('disabled');
+                    if (rel_dataset[organism.val()] == undefined){
+                        dataset.attr('disabled','disabled');
+                        $('<option/>').val('').text('/').appendTo(dataset);
+                    } else {
+                        $.each(rel_dataset[organism.val()], function(){
+                            $('<option/>').val(this.dataset).text(this.dataset).appendTo(dataset);
+                        });
+                    }
+                });
+
                 $("#search_unigene").autocomplete({
                     position: {
                         my: "right top", at: "right bottom"
@@ -81,7 +114,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     source: function(request, response) {
                         $.ajax({
                             url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/unigenes/" + request.term,
+/listing/searchbox/",
+                            data: {species: organism.val(), dataset: dataset.val(), term: request.term},
                             dataType: "json",
                             success: function(data) {
                                 response(data.results);
@@ -91,10 +125,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     minLength: 2,
                     select: function(event, ui) {
                         window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/unigene-details/' + ui.item.value;
+/' + ui.item.value;
                     }
                 });
-                $('#search_unigene').keydown(function(event) {
+                $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
+                    return $("<li>")
+                    .append("<a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
+                    .appendTo(ul);
+                };
+                /*$('#search_unigene').keydown(function(event) {
                     //Enter
                     if (event.which == 13) {
                         event.preventDefault();
@@ -110,7 +150,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                             }
                         });
                     }
-                });
+                });*/
 
             });</script>
         <style>
@@ -122,6 +162,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         
 <?php echo smarty_function_call_webservice(array('path'=>"cart/sync",'data'=>array(),'assign'=>'kickoff_cart'),$_smarty_tpl);?>
 
+<script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/js/cart.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -158,7 +200,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             buttons: {
                 "save changes": function() {
                     cart.dialog_edit_save({
-                        uniquename: $('#item-uniquename').val(),
+                        feature_id: $('#item-feature_id').val(),
                         alias: $('#item-alias').val(),
                         annotations: $('#item-annotations').val()
                     });
@@ -170,10 +212,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 }
             },
             open: function() {
-                var uniquename = $(this).data('uniquename');
+                var feature_id = $(this).data('feature_id');
                 var alias = $(this).data('alias');
                 var annotations = $(this).data('annotations');
-                $('#item-uniquename').val(uniquename);
+                $('#item-feature_id').val(feature_id);
                 $('#item-alias').val(alias);
                 $('#item-annotations').val(annotations);
             }
@@ -192,29 +234,28 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         $("#dialog-delete-all").dialog({
             resizable: false,
             autoOpen: false,
-            height:200,
+            height: 200,
             modal: true,
             buttons: {
                 "Delete all items": function() {
                     cart.resetCart({sync: true});
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 },
                 Cancel: function() {
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 }
             }
         });
-        
+
         group_all.find('.cart-button-delete').click(function(event) {
             event.stopPropagation();
             $("#dialog-delete-all").dialog('open');
         });
-        
+
 
         cart.rebuildDOM(<?php echo json_encode($_smarty_tpl->tpl_vars['kickoff_cart']->value['cart']);?>
 , true);
-        setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
-
+                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
 
         $('#cart').tooltip({
             items: ".cart-item",
@@ -222,14 +263,31 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 ui.tooltip.css("max-width", "500px");
             },
             content: function() {
-                var item = cart.getItemByUniquename($(this).attr('data-uniquename'));
+                var element = $(this);
+                var tooltip = $("<table />");
+                $.each(element.data('metadata'),function(key, val){
+                    $("<tr><td>"+key+"</td><td>"+(val!==null?val:'')+"</td></tr>").appendTo(tooltip);
+                });
+                tooltip.foundation();
+                return tooltip;
+            }
+        });
+
+
+        /*$('#cart').tooltip({
+            items: ".cart-item",
+            open: function(event, ui) {
+                ui.tooltip.css("max-width", "500px");
+            },
+            content: function() {
+                var item = cart.getItemByFeature_id($(this).attr('data-feature_id'));
                 var newElStr = $('#cartitem-tooltip').html();
-                newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+                newElStr = newElStr.replace(/#feature_id#/g, item.feature_id);
                 newElStr = newElStr.replace(/#alias#/g, item.alias);
                 newElStr = newElStr.replace(/#annotations#/g, item.annotations);
                 return newElStr;
             }
-        });
+        });*/
 
     });
 </script>
@@ -264,21 +322,24 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <nav class="top-bar" id="top">
                 <ul class="title-area">
                     <li class="name">
-                        <h1><a>Transcript Browser: dionaea muscipula</a></h1>
+                        <h1><a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+">Transcript Browser</a></h1>
                     </li>
                 </ul>
                 <section class="top-bar-section">
                     <ul class="right">
                         <li class="divider"></li>
                         <li><a>search for unigene:</a></li>
-                        <li><input type="text" id="search_unigene"/></li>
+                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                        <li><a><select id="select_dataset"></select></select></a></li>
+                        <li class="has-form"><input type="search" id="search_unigene"/></li>
                         <li>&nbsp;</li> 
                     </ul>
                 </section>
             </nav>
         </div>
         <div class="row large-12 columns" style="padding: 0px;">
-                
+            
 <div class="row">
     <div class="large-9 columns">
         
@@ -289,7 +350,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 </div>
 <div class="row">
     <div class="large-12 columns panel">
-            <p>Try searching for 1.01_comp231081_c0 or 1.01_comp214244_c0.</p>
+            <p>Try searching for <a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/isoform-details/byOrganismAndUniquename/dmuscipula/2013-04-13_comp231081_c0_seq1">comp231081_c0_seq1</a> or <a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/isoform-details/byOrganismAndUniquename/dmuscipula/2013-04-13_comp214244_c0_seq2">comp214244_c0_seq2</a>.</p>
     </div>
 </div>
 
@@ -301,7 +364,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <div style="display: none">
                 <div id="cartitem-tooltip">
                     <table>
-                        <tr><td>Uniquename</td><td>#uniquename#</td></tr>
+                        <tr><td>Feature_id</td><td>#feature_id#</td></tr>
                         <tr><td>Alias</td><td>#alias#</td></tr>
                         <tr><td>Annotations</td><td>#annotations#</td></tr>
                     </table>
@@ -323,8 +386,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 <div id="dialog-edit-cart-item" title="edit item">
                     <form>
                         <fieldset>
-                            <label for="item-uniquename">uniquename</label>
-                            <input type="text" name="uniquename" id="item-uniquename" disabled="disabled" class="text ui-widget-content ui-corner-all" />
+                            <label for="item-feature_id">feature_id</label>
+                            <input type="text" name="feature_id" id="item-feature_id" disabled="disabled" class="text ui-widget-content ui-corner-all" />
                         </fieldset>
                         <fieldset>
                             <label for="item-alias">display alias</label>
@@ -338,13 +401,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
             <div class="panel large-12 columns">
                 <?php if ((isset($_SESSION['OpenID']))){?>
-                    <form action="?logout" method="post">
-                        <button>Logout</button>
-                    </form>
+                <form action="?logout" method="post">
+                    <button>Logout</button>
+                </form>
                 <?php }else{ ?>
-                    <form action="?login" method="post">
-                        <button>Login with Google</button>
-                    </form>
+                <form action="?login" method="post">
+                    <button>Login with Google</button>
+                </form>
                 <?php }?>
             </div>
 

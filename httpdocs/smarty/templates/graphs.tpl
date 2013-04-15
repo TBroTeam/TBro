@@ -240,6 +240,8 @@
                         "graphOrientation": "vertical"
                     });
                     
+                    $('#isoform-barplot-groupByTissues').click();
+                    
                     canvas.data('canvasxpress', cx);
                 }
             });
@@ -280,6 +282,8 @@
                         "showDataValues": true,
                         "graphOrientation": "vertical"
                     });
+                    
+                    $('#isoform-barplot-groupByTissues').click();
                     
                     canvas.data('canvasxpress', cx);
                 }

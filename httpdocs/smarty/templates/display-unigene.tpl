@@ -6,7 +6,12 @@
 
 <div class="row">
     <div class="large-12 columns panel">
-        <h1>{#$data.unigene.uniquename#}</h1>
+        <div class="row">
+            <div class="large-12 columns">
+                <h1 class="left">{#$data.unigene.uniquename#}</h1>
+                <div class="right"><span class="button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$data.unigene.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
+            </div>
+        </div>
         <h5>last modified: {#$data.unigene.timelastmodified#}</h5>
     </div>
 </div>
@@ -14,13 +19,17 @@
 <div class="row">        
     <div class="large-12 columns panel">
         <p>known isoforms:</p>
-        <ul>
+        <table>
             {#foreach $data.unigene.isoforms as $isoform#}
-            <li>
-                <a href='{#$AppPath#}/isoform-details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a></td>
-            </li>
+                <tr>
+                    <td>
+                        <a href='{#$AppPath#}/isoform-details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a>
+                    </td><td>
+                        <div class="right"><span class="small button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
+                    </td>
+                </tr>
             {#/foreach#}
-        </ul>
+        </table>
     </div>
 </div>
 

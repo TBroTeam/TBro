@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 17:27:24
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 14:54:53
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,25 +7,25 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1365766118,
+      1 => 1366030489,
       2 => 'file',
     ),
     '5f954c49e74b64ac04f0d562c20e5168f11931f4' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout-with-cart.tpl',
-      1 => 1365766293,
+      1 => 1366022477,
       2 => 'file',
     ),
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1365766609,
+      1 => 1366026984,
       2 => 'file',
     ),
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl',
-      1 => 1365770722,
+      1 => 1366027080,
       2 => 'file',
     ),
   ),
@@ -77,12 +77,45 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /js/jquery.webStorage.min.js"></script>        
         <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/js/cart.js"></script>        
+/js/underscore-min.js"></script>
+
 
 
         <script type="text/javascript">
             $(document).ready(function() {
                 $(document).foundation();
+
+                var organism = $('#select_organism');
+                var dataset = $('#select_dataset');
+                var rel_dataset = null;
+
+                $.ajax({
+                    url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/listing/organism_dataset",
+                    dataType:"json",
+                    success:function(data){
+                        organism.empty();
+                        $.each(data.results.organism, function(){
+                            $('<option/>').val(this.organism_id).text(this.organism_name).appendTo(organism);
+                        });
+                        rel_dataset = data.results.dataset;
+                        organism.click();   
+                    }
+                });
+                
+                organism.click(function(){
+                    dataset.empty();
+                    dataset.removeAttr('disabled');
+                    if (rel_dataset[organism.val()] == undefined){
+                        dataset.attr('disabled','disabled');
+                        $('<option/>').val('').text('/').appendTo(dataset);
+                    } else {
+                        $.each(rel_dataset[organism.val()], function(){
+                            $('<option/>').val(this.dataset).text(this.dataset).appendTo(dataset);
+                        });
+                    }
+                });
+
                 $("#search_unigene").autocomplete({
                     position: {
                         my: "right top", at: "right bottom"
@@ -90,7 +123,8 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     source: function(request, response) {
                         $.ajax({
                             url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/unigenes/" + request.term,
+/listing/searchbox/",
+                            data: {species: organism.val(), dataset: dataset.val(), term: request.term},
                             dataType: "json",
                             success: function(data) {
                                 response(data.results);
@@ -100,10 +134,16 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     minLength: 2,
                     select: function(event, ui) {
                         window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/unigene-details/' + ui.item.value;
+/' + ui.item.value;
                     }
                 });
-                $('#search_unigene').keydown(function(event) {
+                $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
+                    return $("<li>")
+                    .append("<a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
+                    .appendTo(ul);
+                };
+                /*$('#search_unigene').keydown(function(event) {
                     //Enter
                     if (event.which == 13) {
                         event.preventDefault();
@@ -119,7 +159,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                             }
                         });
                     }
-                });
+                });*/
 
             });</script>
         <style>
@@ -131,6 +171,8 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         
 <?php echo smarty_function_call_webservice(array('path'=>"cart/sync",'data'=>array(),'assign'=>'kickoff_cart'),$_smarty_tpl);?>
 
+<script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/js/cart.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -167,7 +209,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
             buttons: {
                 "save changes": function() {
                     cart.dialog_edit_save({
-                        uniquename: $('#item-uniquename').val(),
+                        feature_id: $('#item-feature_id').val(),
                         alias: $('#item-alias').val(),
                         annotations: $('#item-annotations').val()
                     });
@@ -179,10 +221,10 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                 }
             },
             open: function() {
-                var uniquename = $(this).data('uniquename');
+                var feature_id = $(this).data('feature_id');
                 var alias = $(this).data('alias');
                 var annotations = $(this).data('annotations');
-                $('#item-uniquename').val(uniquename);
+                $('#item-feature_id').val(feature_id);
                 $('#item-alias').val(alias);
                 $('#item-annotations').val(annotations);
             }
@@ -201,29 +243,28 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         $("#dialog-delete-all").dialog({
             resizable: false,
             autoOpen: false,
-            height:200,
+            height: 200,
             modal: true,
             buttons: {
                 "Delete all items": function() {
                     cart.resetCart({sync: true});
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 },
                 Cancel: function() {
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 }
             }
         });
-        
+
         group_all.find('.cart-button-delete').click(function(event) {
             event.stopPropagation();
             $("#dialog-delete-all").dialog('open');
         });
-        
+
 
         cart.rebuildDOM(<?php echo json_encode($_smarty_tpl->tpl_vars['kickoff_cart']->value['cart']);?>
 , true);
-        setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
-
+                setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
 
         $('#cart').tooltip({
             items: ".cart-item",
@@ -231,14 +272,31 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                 ui.tooltip.css("max-width", "500px");
             },
             content: function() {
-                var item = cart.getItemByUniquename($(this).attr('data-uniquename'));
+                var element = $(this);
+                var tooltip = $("<table />");
+                $.each(element.data('metadata'),function(key, val){
+                    $("<tr><td>"+key+"</td><td>"+(val!==null?val:'')+"</td></tr>").appendTo(tooltip);
+                });
+                tooltip.foundation();
+                return tooltip;
+            }
+        });
+
+
+        /*$('#cart').tooltip({
+            items: ".cart-item",
+            open: function(event, ui) {
+                ui.tooltip.css("max-width", "500px");
+            },
+            content: function() {
+                var item = cart.getItemByFeature_id($(this).attr('data-feature_id'));
                 var newElStr = $('#cartitem-tooltip').html();
-                newElStr = newElStr.replace(/#uniquename#/g, item.uniquename);
+                newElStr = newElStr.replace(/#feature_id#/g, item.feature_id);
                 newElStr = newElStr.replace(/#alias#/g, item.alias);
                 newElStr = newElStr.replace(/#annotations#/g, item.annotations);
                 return newElStr;
             }
-        });
+        });*/
 
     });
 </script>
@@ -265,7 +323,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
     }
 </style>
 
-<?php echo smarty_function_call_webservice(array('path'=>"details/isoform",'data'=>array("query1"=>$_smarty_tpl->tpl_vars['isoform_uniquename']->value),'assign'=>'data'),$_smarty_tpl);?>
+<?php echo smarty_function_call_webservice(array('path'=>"details/isoform",'data'=>array("query1"=>$_smarty_tpl->tpl_vars['isoform_feature_id']->value),'assign'=>'data'),$_smarty_tpl);?>
 
 
 <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
@@ -273,14 +331,14 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 <!-- use chrome frame if installed and user is using IE -->
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 <script type="text/javascript">
-    var isoform = '<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
+    var isoform_id = '<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['feature_id'];?>
 ';
 
     $(document).ready(function() {
         $('.tabs').tabs();
 
         $.ajax('<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/graphs/genome/isoform/' + isoform, {
+/graphs/genome/isoform/' + isoform_id, {
             success: function(val) {
                 canvas = $('#canvas_<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
 ');
@@ -345,21 +403,24 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
             <nav class="top-bar" id="top">
                 <ul class="title-area">
                     <li class="name">
-                        <h1><a>Transcript Browser: dionaea muscipula</a></h1>
+                        <h1><a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+">Transcript Browser</a></h1>
                     </li>
                 </ul>
                 <section class="top-bar-section">
                     <ul class="right">
                         <li class="divider"></li>
                         <li><a>search for unigene:</a></li>
-                        <li><input type="text" id="search_unigene"/></li>
+                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                        <li><a><select id="select_dataset"></select></select></a></li>
+                        <li class="has-form"><input type="search" id="search_unigene"/></li>
                         <li>&nbsp;</li> 
                     </ul>
                 </section>
             </nav>
         </div>
         <div class="row large-12 columns" style="padding: 0px;">
-                
+            
 <div class="row">
     <div class="large-9 columns">
         
@@ -376,19 +437,23 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         <div class="large-12 columns panel" id="description">
             <div class="row">
                 <div class="large-12 columns">
-                    <h1 class="left"><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
+                    <h1 class="left"><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['name'];?>
 </h1>
-                    <div class="right"><span class="button" onclick="cart.addItemToAll({uniquename: '<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename'];?>
-'});"> add to cart -> </span></div>
+                    <div class="right"><span class="button" onclick="$.ajax({url:'<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
+/details/cartitem/<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['feature_id'];?>
+', success: cart.addItemToAll});"> add to cart -> </span></div>
                 </div>
             </div>
             <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
 </h5>
             <h5>corresponding unigene: <a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/unigene-details/<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
+/unigene-details/byId/<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['feature_id'];?>
 "><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
 </a></h5>
-
+            <h5>import <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['import'];?>
+</h5>
+            <h5>organism_name <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['organism_name'];?>
+</h5>
             <div class="row">
                 <div class="large-12 columns">
                     <canvas id="canvas_<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
@@ -706,7 +771,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_516827dd208df6_71514931($_smarty_tpl);
+content_516bf89d6c15c9_57934659($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -717,7 +782,7 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
             <div style="display: none">
                 <div id="cartitem-tooltip">
                     <table>
-                        <tr><td>Uniquename</td><td>#uniquename#</td></tr>
+                        <tr><td>Feature_id</td><td>#feature_id#</td></tr>
                         <tr><td>Alias</td><td>#alias#</td></tr>
                         <tr><td>Annotations</td><td>#annotations#</td></tr>
                     </table>
@@ -739,8 +804,8 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
                 <div id="dialog-edit-cart-item" title="edit item">
                     <form>
                         <fieldset>
-                            <label for="item-uniquename">uniquename</label>
-                            <input type="text" name="uniquename" id="item-uniquename" disabled="disabled" class="text ui-widget-content ui-corner-all" />
+                            <label for="item-feature_id">feature_id</label>
+                            <input type="text" name="feature_id" id="item-feature_id" disabled="disabled" class="text ui-widget-content ui-corner-all" />
                         </fieldset>
                         <fieldset>
                             <label for="item-alias">display alias</label>
@@ -754,13 +819,13 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
 
             <div class="panel large-12 columns">
                 <?php if ((isset($_SESSION['OpenID']))){?>
-                    <form action="?logout" method="post">
-                        <button>Logout</button>
-                    </form>
+                <form action="?logout" method="post">
+                    <button>Logout</button>
+                </form>
                 <?php }else{ ?>
-                    <form action="?login" method="post">
-                        <button>Login with Google</button>
-                    </form>
+                <form action="?login" method="post">
+                    <button>Login with Google</button>
+                </form>
                 <?php }?>
             </div>
 
@@ -825,9 +890,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-12 17:27:25
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 14:54:53
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_516827dd208df6_71514931')) {function content_516827dd208df6_71514931($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516bf89d6c15c9_57934659')) {function content_516bf89d6c15c9_57934659($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>
@@ -841,19 +906,20 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
 
         select_assay.click(function() {
             var assay = $(this).val();
+
             var last_selected = $(this).attr('data-last-selected');
             if (assay === last_selected)
                 return;
             select_analysis.empty();
-
-            $.each(filterdata.analysis[assay], function() {
-                var opt = $("<option/>").val(this.id).text(this.name).data('metadata', this);
+            $.each(filterdata.analysis[isoform_id][assay], function() {
+                var data = filterdata.data.analysis[this];
+                var opt = $("<option/>").val(data.id).text(data.id+"("+data.program+")").data('metadata', data);
                 opt.appendTo(select_analysis);
             });
-
-            $(this).attr('data-last-selected', assay);
             
-            select_analysis.find('option').first().attr('selected','selected');
+            $(this).attr('data-last-selected', assay);
+
+            select_analysis.find('option').first().attr('selected', 'selected');
             select_analysis.click();
         });
 
@@ -864,8 +930,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
                 return;
             select_tissue.empty();
 
-            $.each(filterdata.biomaterial[analysis][select_assay.val()], function() {
-                var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this).attr('selected','selected');
+            $.each(filterdata.biomaterial[isoform_id][analysis][select_assay.val()], function() {
+                var data = filterdata.data.biomaterial[this];
+                var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data).attr('selected', 'selected');
                 opt.appendTo(select_tissue);
             });
 
@@ -873,21 +940,20 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
         });
 
         $.ajax('<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/filters/' + isoform, {
+/listing/filters/' + isoform_id, {
             success: function(data) {
-                filterdata = { assay: data.assay[isoform], 
-                    analysis: data.analysis[isoform],
-                    biomaterial: data.biomaterial[isoform]};
+                filterdata = data;
                 select_assay.empty();
-                $.each(filterdata.assay, function() {
-                    var opt = $("<option/>").val(this.name).text(this.name).data('metadata', this);
+                $.each(filterdata.assay[isoform_id], function() {
+                    var data = filterdata.data.assay[this];
+                    var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data);
                     opt.appendTo(select_assay);
                 });
-                select_assay.find('option').first().attr('selected','selected');
+                select_assay.find('option').first().attr('selected', 'selected');
                 select_assay.click();
             }
         });
-        
+
         $('#isoform-barplot-filter-form').tooltip({
             items: "option",
             open: function(event, ui) {
@@ -897,19 +963,19 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
             content: function() {
                 var element = $(this);
                 var tooltip = $("<table/>");
-                $.each(element.data('metadata'),function(key, val){
-                    $("<tr><td>"+key+"</td><td>"+(val!==null?val:'')+"</td></tr>").appendTo(tooltip);
+                $.each(element.data('metadata'), function(key, val) {
+                    $("<tr><td>" + key + "</td><td>" + (val !== null ? val : '') + "</td></tr>").appendTo(tooltip);
                 });
                 tooltip.foundation();
                 return tooltip;
             }
         });
-        
-        $('#isoform-barplot-filter-form').submit(function(){
-            var data = {parents:[isoform], analysis:[], assay:[], biomaterial:[]};
+
+        $('#isoform-barplot-filter-form').submit(function() {
+            var data = {parents: [isoform_id], analysis: [], assay: [], biomaterial: []};
             data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
             data.assay.push($('#isoform-barplot-filter-assay option:selected').val());
-            $('#isoform-barplot-filter-tissue option:selected').each(function(){
+            $('#isoform-barplot-filter-tissue option:selected').each(function() {
                 console.log(this);
                 data.biomaterial.push($(this).val());
             });
@@ -919,25 +985,25 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
                 success: function(val) {
                     $('#isoform-barplot-panel').show(0);
                     var parent = $("#isoform-barplot-canvas-parent");
-                   
+
                     //if we already have an old canvas, we have to clean that up first
                     var canvas = $('#isoform-barplot-canvas');
-                    var cx=canvas.data('canvasxpress');
-                    if (cx != null){
+                    var cx = canvas.data('canvasxpress');
+                    if (cx != null) {
                         cx.destroy();
                         parent.empty();
                     }
-                    
+
                     canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
                     parent.append(canvas);
                     canvas.attr('width', parent.width() - 8);
                     canvas.attr('height', 500);
-                    
-                    window.location.hash="isoform-barplot-panel";
-                    
+
+                    window.location.hash = "isoform-barplot-panel";
+
 
                     cx = new CanvasXpress(
-                    "isoform-barplot-canvas", 
+                    "isoform-barplot-canvas",
                     {
                         "x": val.x,
                         "y": val.y
@@ -947,24 +1013,26 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
                         "showDataValues": true,
                         "graphOrientation": "vertical"
                     });
-                    
+
+                    $('#isoform-barplot-groupByTissues').click();
+
                     canvas.data('canvasxpress', cx);
                 }
             });
             return false;
         });
 
-        $('#isoform-barplot-groupByTissues').click(function(){
+        $('#isoform-barplot-groupByTissues').click(function() {
             var checkbox = $(this);
-            var cx=$('#isoform-barplot-canvas').data('canvasxpress');
-            if (checkbox.is(':checked')){
+            var cx = $('#isoform-barplot-canvas').data('canvasxpress');
+            if (checkbox.is(':checked')) {
                 cx.groupSamples(["Tissue_Group"]);
             } else {
                 cx.groupSamples([]);
             }
         });
 
-        
+
     });
 </script>
 <div class="row">

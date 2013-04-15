@@ -4,7 +4,7 @@ namespace webservices\listing;
 
 use \PDO as PDO;
 
-class Searchbox extends \WebService {
+class Organism_dataset extends \WebService {
 
     public function execute($querydata) {
         global $_CONST, $db;
@@ -18,33 +18,23 @@ class Searchbox extends \WebService {
             $db = new PDO();
 
         $query_get_features = <<<EOF
-SELECT feature.name, feature.feature_id, feature.type_id
-    FROM feature_dbxref
-    JOIN feature ON (feature.feature_id = feature_dbxref.feature_id)
-    WHERE 
-    feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$_CONST('DB_ID_IMPORTS')} AND accession = :import)
-    AND feature.organism_id = :species
-    AND (feature.name LIKE :term1 OR feature.uniquename LIKE :term2)
-    AND (feature.type_id = {$_CONST('CV_UNIGENE')} OR feature.type_id = {$_CONST('CV_ISOFORM')})
-    LIMIT 20
+SELECT organism.common_name AS organism_name, organism.organism_id AS organism_id, dbxref.accession AS dataset_name
+FROM organism
+    JOIN organism_dbxref ON (organism.organism_id = organism_dbxref.organism_id)
+    JOIN dbxref ON (organism_dbxref.dbxref_id = dbxref.dbxref_id)
+WHERE
+   dbxref.db_id = {$_CONST('DB_ID_IMPORTS')}
 EOF;
 
-        $stm_get_features = $db->prepare($query_get_features);
-        $stm_get_features->bindValue('term1', $term);
-        $stm_get_features->bindValue('term2', $term);
-        $stm_get_features->bindValue('import', $import);
-        $stm_get_features->bindValue('species', $species);
+        $stm_get_organism_dataset = $db->prepare($query_get_features);
 
         $data = array('results' => array());
 
-        $stm_get_features->execute();
-        while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
-            $data['results'][] = array('name' => $feature['name']
-                , 'type' => ($feature['type_id'] == CV_UNIGENE ? 'unigene' : ($feature['type_id'] == CV_ISOFORM ? 'isoform' : 'error'))
-                , 'id' => $feature['feature_id']);
+        $stm_get_organism_dataset->execute();
+        while ($row = $stm_get_organism_dataset->fetch(PDO::FETCH_ASSOC)) {
+            $data['results']['organism'][] = array('organism_name'=>$row['organism_name'], 'organism_id'=>$row['organism_id']);
+            $data['results']['dataset'][$row['organism_id']][] = array('dataset'=>$row['dataset_name']);
         }
-
-
 
         return $data;
     }
