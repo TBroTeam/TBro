@@ -78,6 +78,12 @@ switch ($page) {
         header('Content-type: application/javascript');
         $smarty->display('cart.js');
         die();
+    case 'multisearch':
+        $smarty->display('multisearch.tpl');
+        die();
+    case 'advancedsearch':
+        $smarty->display('advanced_search.tpl');
+        die();
     case 'unigene-details-byid':
         if (display_unigene_by_id(requestVal('feature_id', '/^[0-9]+$/', '')))
             die();

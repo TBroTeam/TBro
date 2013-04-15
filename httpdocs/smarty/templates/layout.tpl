@@ -74,30 +74,15 @@
                     },
                     minLength: 2,
                     select: function(event, ui) {
-                        window.location.href = '{#$AppPath#}/' + ui.item.value;
+                        location.href="{#$AppPath#}/"+ui.item.type+"-details/byId/"+ui.item.id;
                     }
                 });
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
-                    return $("<li>")
+                    var li =$("<li>")
                     .append("<a href='{#$AppPath#}/"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
                     .appendTo(ul);
+                    return li;
                 };
-                /*$('#search_unigene').keydown(function(event) {
-                    //Enter
-                    if (event.which == 13) {
-                        event.preventDefault();
-                        $.ajax({
-                            url: "{#$ServicePath#}/listing/unigenes/" + $(this).val(),
-                            dataType: "json",
-                            success: function(data) {
-                                if (data.results.length == 1) {
-                                    window.location.href = '{#$AppPath#}/unigene-details/' + data.results[0];
-                                }
-                            }
-                        });
-                    }
-                });*/
-
             });</script>
         <style>
             .ui-tooltip-content table{
@@ -117,14 +102,13 @@
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                    <ul class="right">
-                        <li class="divider"></li>
-                        <li><a>search for unigene:</a></li>
-                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                        <li><a><select id="select_dataset"></select></select></a></li>
-                        <li class="has-form"><input type="search" id="search_unigene"/></li>
-                        <li>&nbsp;</li> 
-                    </ul>
+                        <ul class="right">
+                            <li class="divider"></li>
+                            <li><a>search for unigene:</a></li>
+                            <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                            <li><a><select id="select_dataset"></select></select></a></li>
+                            <li class="has-form"><input type="search" id="search_unigene"/></li>
+                        </ul>
                 </section>
             </nav>
         </div>

@@ -168,13 +168,17 @@ cart.resetCart = function(options) {
 
 cart.compareCarts = function(first, second) {
     try {
-        if (first.all.length !== second.all.length) {
-            console.error(first.all, ' group "All" count differs: ', second.all);
-            throw "";
-        }
+        
         $.each(first.all, function() {
             if (!$.inArray(this, second.all)) {
                 console.error(this, 'not found in all: ', second.all);
+                throw "";
+            }
+        });
+        
+        $.each(second.all, function() {
+            if (!$.inArray(this, first.all)) {
+                console.error(this, 'not found in all: ', first.all);
                 throw "";
             }
         });

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 15:00:52
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 17:41:11
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366026984,
+      1 => 1366040466,
       2 => 'file',
     ),
   ),
@@ -124,33 +124,29 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     },
                     minLength: 2,
                     select: function(event, ui) {
-                        window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/' + ui.item.value;
+                        location.href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/"+ui.item.type+"-details/byId/"+ui.item.id;
                     }
                 });
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
-                    return $("<li>")
+                    var li =$("<li>")
                     .append("<a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
                     .appendTo(ul);
+                    return li;
                 };
                 /*$('#search_unigene').keydown(function(event) {
                     //Enter
                     if (event.which == 13) {
+                        alert('qwe');
+                        alert($('.ui-autocomplete>.ui-state-focus>a').attr('href'));
+                        window.location.href = $('.ui-autocomplete .ui-state-focus a').attr('href');
                         event.preventDefault();
-                        $.ajax({
-                            url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/unigenes/" + $(this).val(),
-                            dataType: "json",
-                            success: function(data) {
-                                if (data.results.length == 1) {
-                                    window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/unigene-details/' + data.results[0];
-                                }
-                            }
-                        });
+                        event.stopPropagation();
+                        
                     }
                 });*/
+                $('#search').submit(function(){return false;});
 
             });</script>
         <style>
@@ -330,14 +326,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                    <ul class="right">
-                        <li class="divider"></li>
-                        <li><a>search for unigene:</a></li>
-                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                        <li><a><select id="select_dataset"></select></select></a></li>
-                        <li class="has-form"><input type="search" id="search_unigene"/></li>
-                        <li>&nbsp;</li> 
-                    </ul>
+                    <form id="search">
+                        <ul class="right">
+                            <li class="divider"></li>
+                            <li><a>search for unigene:</a></li>
+                            <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                            <li><a><select id="select_dataset"></select></select></a></li>
+                            <li class="has-form"><input type="search" id="search_unigene"/></li>
+                            <li>&nbsp;</li> 
+                        </ul>
+                    </form>
                 </section>
             </nav>
         </div>
