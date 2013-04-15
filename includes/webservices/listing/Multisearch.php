@@ -27,8 +27,17 @@ class Multisearch extends \WebService {
   isoform.name AS isoform_name, isoform.feature_id AS isoform_feature_id,
   unigene.name AS unigene_name, unigene.feature_id AS unigene_feature_id
 FROM 
-  (SELECT * FROM feature WHERE type_id = {$_CONST('CV_ISOFORM')} AND name IN ($qmarks)) AS isoform, 
-  (SELECT * FROM feature WHERE type_id = {$_CONST('CV_UNIGENE')}) AS unigene, 
+  (SELECT feature_id, name FROM feature WHERE type_id = {$_CONST('CV_ISOFORM')}) AS isoform, 
+  (
+    SELECT u.feature_id, u.name, u.organism_id
+    FROM feature AS u, feature_relationship AS fr, feature AS i
+    WHERE 
+        i.name IN ($qmarks)
+        AND u.type_id = {$_CONST('CV_UNIGENE')}
+        AND i.type_id = {$_CONST('CV_ISOFORM')}
+        AND fr.object_id = u.feature_id
+        AND fr.subject_id = i.feature_id
+  ) AS unigene, 
   feature_relationship, 
   feature_dbxref  
 WHERE 
@@ -37,13 +46,15 @@ WHERE
   unigene.organism_id = ? AND      
   feature_relationship.object_id = unigene.feature_id AND
   feature_relationship.subject_id = isoform.feature_id
+  
+
 UNION
 SELECT 
   isoform.name AS isoform_name, isoform.feature_id AS isoform_feature_id,
   unigene.name AS unigene_name, unigene.feature_id AS unigene_feature_id
 FROM 
-  (SELECT * FROM feature WHERE type_id = {$_CONST('CV_ISOFORM')} ) AS isoform, 
-  (SELECT * FROM feature WHERE type_id = {$_CONST('CV_UNIGENE')} AND name IN ($qmarks)) AS unigene, 
+  (SELECT feature_id, name FROM feature WHERE type_id = {$_CONST('CV_ISOFORM')} ) AS isoform, 
+  (SELECT feature_id, name, organism_id FROM feature WHERE type_id = {$_CONST('CV_UNIGENE')} AND name IN ($qmarks)) AS unigene, 
   feature_relationship, 
   feature_dbxref  
 WHERE 
