@@ -1,7 +1,34 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
 <script type="text/javascript">
-
+    $(document).ready(function(){
+        $('#start-multisearch').click(function(){
+            $('.results').hide(500);
+            $.ajax({
+                url: "{#$ServicePath#}/listing/searchbox/",
+                data: {species: organism.val(), dataset: dataset.val(), longterm: $('#multisearch').val()},
+                dataType: "json",
+                success: function(data) {
+                    var res = $('#results');
+                    var btn = $('#btn_addToCart').children().first().clone().removeAttr('id');
+                    res.empty();
+                    var cnt=0;
+                    $.each(data.results, function(){
+                        console.log(this);
+                        var field;
+                        var row = $("<tr/>");
+                        $("<td/>").text(this.type).appendTo(row);
+                        $("<td/>").text(this.name).appendTo(row);
+                        $("<td/>").append(btn.clone().attr('data-id', this.id)).appendTo(row);
+                        row.appendTo(res);
+                        cnt++;
+                    });
+                    if (cnt>0)
+                        $('.results').show(500);
+                }
+            });
+        });
+    });
 </script>
 {#/block#}
 
@@ -14,10 +41,27 @@
 
 <div class="row">
     <div class="large-8 column">
-        <textarea style="max-width: 100%; height: 150px"></textarea>
+        <textarea id="multisearch" style="max-width: 100%; height: 150px"></textarea>
     </div>
     <div class="large-4 column">
-        <input type="button" id="start-multisearch" class="button"/>
+        <a id="start-multisearch" class="button"/>search</a>
     </div>
+</div>
+<div class="row results" style="display:none">
+    <div class="large-12 column">
+        <h2>Results</h2>
+    </div>
+</div>
+<div class="row results" style="display:none">
+    <div class="large-12 column">
+        <table style="width:100%">
+            <tbody id="results">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="display:none" id="btn_addToCart">
+    <span class="small button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/'+$(this).attr('data-id'), success: cart.addItemToAll});"> add to cart -> </span>
 </div>
 {#/block#}

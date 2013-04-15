@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 14:54:53
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 19:58:24
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366026984,
+      1 => 1366048703,
       2 => 'file',
     ),
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
@@ -82,11 +82,13 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 
 
         <script type="text/javascript">
+            var organism;
+            var dataset;
             $(document).ready(function() {
                 $(document).foundation();
 
-                var organism = $('#select_organism');
-                var dataset = $('#select_dataset');
+                organism = $('#select_organism');
+                dataset = $('#select_dataset');
                 var rel_dataset = null;
 
                 $.ajax({
@@ -133,34 +135,17 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     },
                     minLength: 2,
                     select: function(event, ui) {
-                        window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/' + ui.item.value;
+                        location.href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/"+ui.item.type+"-details/byId/"+ui.item.id;
                     }
                 });
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
-                    return $("<li>")
+                    var li =$("<li>")
                     .append("<a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /"+item.type+"-details/byId/"+item.id+"'><span style='display:inline-block; width:100px'>"+item.type+"</span>" + item.name+ "</a>")
                     .appendTo(ul);
+                    return li;
                 };
-                /*$('#search_unigene').keydown(function(event) {
-                    //Enter
-                    if (event.which == 13) {
-                        event.preventDefault();
-                        $.ajax({
-                            url: "<?php echo $_smarty_tpl->tpl_vars['ServicePath']->value;?>
-/listing/unigenes/" + $(this).val(),
-                            dataType: "json",
-                            success: function(data) {
-                                if (data.results.length == 1) {
-                                    window.location.href = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
-/unigene-details/' + data.results[0];
-                                }
-                            }
-                        });
-                    }
-                });*/
-
             });</script>
         <style>
             .ui-tooltip-content table{
@@ -408,14 +393,13 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                    <ul class="right">
-                        <li class="divider"></li>
-                        <li><a>search for unigene:</a></li>
-                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                        <li><a><select id="select_dataset"></select></select></a></li>
-                        <li class="has-form"><input type="search" id="search_unigene"/></li>
-                        <li>&nbsp;</li> 
-                    </ul>
+                        <ul class="right">
+                            <li class="divider"></li>
+                            <li><a>quicksearch:</a></li>
+                            <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                            <li><a><select id="select_dataset"></select></select></a></li>
+                            <li class="has-form"><input type="search" id="search_unigene"/></li>
+                        </ul>
                 </section>
             </nav>
         </div>
@@ -771,7 +755,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_516bf89d6c15c9_57934659($_smarty_tpl);
+content_516c3fc11c1a36_89230789($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -890,9 +874,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 14:54:53
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 19:58:25
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_516bf89d6c15c9_57934659')) {function content_516bf89d6c15c9_57934659($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516c3fc11c1a36_89230789')) {function content_516c3fc11c1a36_89230789($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>

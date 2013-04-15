@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 17:44:01
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 19:58:42
          compiled from "/home/s202139/git/httpdocs/smarty/templates/welcome.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17300283651409c3b02f598-98116107%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366040641,
+      1 => 1366048718,
       2 => 'file',
     ),
   ),
@@ -73,11 +73,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
 
         <script type="text/javascript">
+            var organism;
+            var dataset;
             $(document).ready(function() {
                 $(document).foundation();
 
-                var organism = $('#select_organism');
-                var dataset = $('#select_dataset');
+                organism = $('#select_organism');
+                dataset = $('#select_dataset');
                 var rel_dataset = null;
 
                 $.ajax({
@@ -311,8 +313,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 </ul>
                 <section class="top-bar-section">
                         <ul class="right">
+                            <li><a>multisearch</a></li>
                             <li class="divider"></li>
-                            <li><a>search for unigene:</a></li>
+                            <li><a>quicksearch:</a></li>
                             <li><a><select id="select_organism" style="display:inline"></select></a></li>
                             <li><a><select id="select_dataset"></select></select></a></li>
                             <li class="has-form"><input type="search" id="search_unigene"/></li>

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 17:41:11
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 18:11:56
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366040466,
+      1 => 1366040641,
       2 => 'file',
     ),
   ),
@@ -135,19 +135,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     .appendTo(ul);
                     return li;
                 };
-                /*$('#search_unigene').keydown(function(event) {
-                    //Enter
-                    if (event.which == 13) {
-                        alert('qwe');
-                        alert($('.ui-autocomplete>.ui-state-focus>a').attr('href'));
-                        window.location.href = $('.ui-autocomplete .ui-state-focus a').attr('href');
-                        event.preventDefault();
-                        event.stopPropagation();
-                        
-                    }
-                });*/
-                $('#search').submit(function(){return false;});
-
             });</script>
         <style>
             .ui-tooltip-content table{
@@ -326,16 +313,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                    <form id="search">
                         <ul class="right">
                             <li class="divider"></li>
                             <li><a>search for unigene:</a></li>
                             <li><a><select id="select_organism" style="display:inline"></select></a></li>
                             <li><a><select id="select_dataset"></select></select></a></li>
                             <li class="has-form"><input type="search" id="search_unigene"/></li>
-                            <li>&nbsp;</li> 
                         </ul>
-                    </form>
                 </section>
             </nav>
         </div>

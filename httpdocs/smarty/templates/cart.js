@@ -67,11 +67,12 @@ $.extend({
 });
 
 
-cart.getItemByFeature_id = function(name) {
+cart.getItemByFeature_id = function(feature_id) {
     var item = null;
     $.each(cart.all, function() {
-        if (this.feature_id === name) {
+        if (this.feature_id == feature_id) {
             item = this;
+            return false;
         }
     });
     return item;

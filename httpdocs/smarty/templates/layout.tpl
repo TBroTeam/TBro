@@ -25,11 +25,13 @@
 
 
         <script type="text/javascript">
+            var organism;
+            var dataset;
             $(document).ready(function() {
                 $(document).foundation();
 
-                var organism = $('#select_organism');
-                var dataset = $('#select_dataset');
+                organism = $('#select_organism');
+                dataset = $('#select_dataset');
                 var rel_dataset = null;
 
                 $.ajax({
@@ -103,8 +105,9 @@
                 </ul>
                 <section class="top-bar-section">
                         <ul class="right">
+                            <li><a href='{#$AppPath#}/multisearch'>multisearch</a></li>
                             <li class="divider"></li>
-                            <li><a>search for unigene:</a></li>
+                            <li><a>quicksearch:</a></li>
                             <li><a><select id="select_organism" style="display:inline"></select></a></li>
                             <li><a><select id="select_dataset"></select></select></a></li>
                             <li class="has-form"><input type="search" id="search_unigene"/></li>
