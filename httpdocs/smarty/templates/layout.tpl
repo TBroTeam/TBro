@@ -93,6 +93,12 @@
             textarea {
                 resize:vertical;
             }
+            .top-bar-section li div.has-select{
+                padding: 0 15px;
+                line-height: 45px;
+                background: #111111; 
+                display:block;
+            }
         </style>
 
         {#block name='head'#}{#/block#}
@@ -107,12 +113,13 @@
                     </li>
                 </ul>
                 <section class="top-bar-section">
+                    <ul class="left">{#block name='header-nav'#}{#/block#}</ul>
                     <ul class="right">
                         <li><a href='{#$AppPath#}/multisearch'>multisearch</a></li>
                         <li class="divider"></li>
                         <li><a>quicksearch:</a></li>
-                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                        <li><a><select id="select_dataset"></select></select></a></li>
+                        <li><div class="has-select"><select id="select_organism" style="display:inline"></select></div></li>
+                        <li><div class="has-select"><select id="select_dataset"></select></div></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
                     </ul>
                 </section>

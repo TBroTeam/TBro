@@ -178,7 +178,7 @@
         </form>
     </div>
 </div>
-<div class="row" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">
+<div class="row" id="isoform-barplot-panel" style="display:none">
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">

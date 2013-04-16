@@ -63,12 +63,26 @@
         });
     });
 
-
+    function jumptoanchor(name){
+        $(document.body).scrollTop($('#'+name).offset().top-45);
+        
+    }
 
 </script>
 {#/block#}
-
+{#block name='header-nav'#}
+<li class="has-dropdown"><a href="#">QuickNav</a>
+    <ul class="dropdown">
+        <li><a href="javascript:jumptoanchor('isoform-overview');">Isoform Overview</a></li>
+        <li><a href="javascript:jumptoanchor('isoform-browser');">Isoform Browser</a></li>
+        <li><a href="javascript:jumptoanchor('isoform-annotations');">Isoform Annotations</a></li>
+        {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}<li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li>{#/if#}
+        {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}<li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li>{#/if#}
+    </ul>
+</li>
+{#/block#}
 {#block name='body'#}
+
 <div class="contains-dbxref">
     <div id="dbxref-tooltip" style="display:none">
         <table>
@@ -79,6 +93,7 @@
         </table>
     </div>
     <div class="row">
+        <div id="isoform-overview"> </div>
         <div class="large-12 columns panel" id="description">
             <div class="row">
                 <div class="large-12 columns">
@@ -86,14 +101,15 @@
                     <div class="right"><span class="button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$data.isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
                 </div>
             </div>
-                <table style="width:100%">
-                    <tbody>
-                        <tr><td>last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
-                        <tr><td>corresponding unigene</td><td><a href="{#$AppPath#}/unigene-details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
-                        <tr><td>dataset</td><td>{#$data.isoform.import#}</td></tr>
-                        <tr><td>organism</td><td>{#$data.isoform.organism_name#}</td></tr>
-                    </tbody>
-                </table>
+            <table style="width:100%">
+                <tbody>
+                    <tr><td>last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
+                    <tr><td>corresponding unigene</td><td><a href="{#$AppPath#}/unigene-details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                    <tr><td>dataset</td><td>{#$data.isoform.import#}</td></tr>
+                    <tr><td>organism</td><td>{#$data.isoform.organism_name#}</td></tr>
+                </tbody>
+            </table>
+            <div id="isoform-browser"> </div>
             <div class="row">
                 <div class="large-12 columns">
                     <h4>Isoform Browser</h4>
@@ -137,7 +153,7 @@
                     <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
                 </div>
             </div>
-
+            <div id="isoform-annotations"> </div>
             <div class="row">
                 <div class="large-12 columns">
                     {#if isset($data.isoform.blast2go) #}
@@ -185,6 +201,7 @@
 
 
     {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}
+        <div id="repeatmasker-annotations"> </div>
         <div class="row" id="repeatmasker">
             <div class="large-12 columns">
                 <h2>Repeatmasker Annotations:</h2>
@@ -219,6 +236,7 @@
 
 
     {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}
+        <div id="predpeps"> </div>
         <div class="row" id="predpep">
             <div class="large-12 columns">
                 <h2>Predicted Peptides:</h2>
@@ -289,7 +307,7 @@
                                     </div>
 
                                     {#if isset($predpep.interpro) && count($predpep.interpro) > 0 #}
-                                        <div class="row" id="interpro">
+                                        <div class="row">
                                             <div class="large-12 columns">
                                                 <h4>Interpro Annotations:</h4>
 

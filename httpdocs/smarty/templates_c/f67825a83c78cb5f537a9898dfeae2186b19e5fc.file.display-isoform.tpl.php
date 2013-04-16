@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:31:50
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 14:47:20
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1366111909,
+      1 => 1366116439,
       2 => 'file',
     ),
     '5f954c49e74b64ac04f0d562c20e5168f11931f4' => 
@@ -19,13 +19,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366111689,
+      1 => 1366116368,
       2 => 'file',
     ),
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl',
-      1 => 1366027080,
+      1 => 1366116011,
       2 => 'file',
     ),
   ),
@@ -153,6 +153,12 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
             }
             textarea {
                 resize:vertical;
+            }
+            .top-bar-section li div.has-select{
+                padding: 0 15px;
+                line-height: 45px;
+                background: #111111; 
+                display:block;
             }
         </style>
 
@@ -379,7 +385,10 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         });
     });
 
-
+    function jumptoanchor(name){
+        $(document.body).scrollTop($('#'+name).offset().top-45);
+        
+    }
 
 </script>
 
@@ -396,13 +405,24 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     </li>
                 </ul>
                 <section class="top-bar-section">
+                    <ul class="left">
+<li class="has-dropdown"><a href="#">QuickNav</a>
+    <ul class="dropdown">
+        <li><a href="javascript:jumptoanchor('isoform-overview');">Isoform Overview</a></li>
+        <li><a href="javascript:jumptoanchor('isoform-browser');">Isoform Browser</a></li>
+        <li><a href="javascript:jumptoanchor('isoform-annotations');">Isoform Annotations</a></li>
+        <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?><li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li><?php }?>
+        <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?><li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li><?php }?>
+    </ul>
+</li>
+</ul>
                     <ul class="right">
                         <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /multisearch'>multisearch</a></li>
                         <li class="divider"></li>
                         <li><a>quicksearch:</a></li>
-                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                        <li><a><select id="select_dataset"></select></select></a></li>
+                        <li><div class="has-select"><select id="select_organism" style="display:inline"></select></div></li>
+                        <li><div class="has-select"><select id="select_dataset"></select></div></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
                     </ul>
                 </section>
@@ -413,6 +433,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 <div class="row">
     <div class="large-9 columns">
         
+
 <div class="contains-dbxref">
     <div id="dbxref-tooltip" style="display:none">
         <table>
@@ -423,6 +444,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         </table>
     </div>
     <div class="row">
+        <div id="isoform-overview"> </div>
         <div class="large-12 columns panel" id="description">
             <div class="row">
                 <div class="large-12 columns">
@@ -433,20 +455,21 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 ', success: cart.addItemToAll});"> add to cart -> </span></div>
                 </div>
             </div>
-                <table style="width:100%">
-                    <tbody>
-                        <tr><td>last modified</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
+            <table style="width:100%">
+                <tbody>
+                    <tr><td>last modified</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
 </td></tr>
-                        <tr><td>corresponding unigene</td><td><a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+                    <tr><td>corresponding unigene</td><td><a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /unigene-details/byId/<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['feature_id'];?>
 "><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
 </a></td></tr>
-                        <tr><td>dataset</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['import'];?>
+                    <tr><td>dataset</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['import'];?>
 </td></tr>
-                        <tr><td>organism</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['organism_name'];?>
+                    <tr><td>organism</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['organism_name'];?>
 </td></tr>
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+            <div id="isoform-browser"> </div>
             <div class="row">
                 <div class="large-12 columns">
                     <h4>Isoform Browser</h4>
@@ -495,7 +518,7 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 </textarea>
                 </div>
             </div>
-
+            <div id="isoform-annotations"> </div>
             <div class="row">
                 <div class="large-12 columns">
                     <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['blast2go'])){?>
@@ -571,6 +594,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 
 
     <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?>
+        <div id="repeatmasker-annotations"> </div>
         <div class="row" id="repeatmasker">
             <div class="large-12 columns">
                 <h2>Repeatmasker Annotations:</h2>
@@ -615,6 +639,7 @@ $_smarty_tpl->tpl_vars['repeatmasker']->_loop = true;
 
 
     <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?>
+        <div id="predpeps"> </div>
         <div class="row" id="predpep">
             <div class="large-12 columns">
                 <h2>Predicted Peptides:</h2>
@@ -707,7 +732,7 @@ $_smarty_tpl->tpl_vars['predpep']->_loop = true;
                                     </div>
 
                                     <?php if (isset($_smarty_tpl->tpl_vars['predpep']->value['interpro'])&&count($_smarty_tpl->tpl_vars['predpep']->value['interpro'])>0){?>
-                                        <div class="row" id="interpro">
+                                        <div class="row">
                                             <div class="large-12 columns">
                                                 <h4>Interpro Annotations:</h4>
 
@@ -767,7 +792,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_516d36a709b582_12879466($_smarty_tpl);
+content_516d4859573a97_68005687($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -886,9 +911,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:31:51
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 14:47:21
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_516d36a709b582_12879466')) {function content_516d36a709b582_12879466($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516d4859573a97_68005687')) {function content_516d4859573a97_68005687($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>
@@ -1070,7 +1095,7 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
         </form>
     </div>
 </div>
-<div class="row" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">
+<div class="row" id="isoform-barplot-panel" style="display:none">
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">
