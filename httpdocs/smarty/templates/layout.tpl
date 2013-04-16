@@ -90,6 +90,9 @@
             .ui-tooltip-content table{
                 margin-bottom: 0px;
             }
+            textarea {
+                resize:vertical;
+            }
         </style>
 
         {#block name='head'#}{#/block#}
@@ -104,14 +107,14 @@
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                        <ul class="right">
-                            <li><a href='{#$AppPath#}/multisearch'>multisearch</a></li>
-                            <li class="divider"></li>
-                            <li><a>quicksearch:</a></li>
-                            <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                            <li><a><select id="select_dataset"></select></select></a></li>
-                            <li class="has-form"><input type="search" id="search_unigene"/></li>
-                        </ul>
+                    <ul class="right">
+                        <li><a href='{#$AppPath#}/multisearch'>multisearch</a></li>
+                        <li class="divider"></li>
+                        <li><a>quicksearch:</a></li>
+                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                        <li><a><select id="select_dataset"></select></select></a></li>
+                        <li class="has-form"><input type="search" id="search_unigene"/></li>
+                    </ul>
                 </section>
             </nav>
         </div>

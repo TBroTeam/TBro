@@ -86,11 +86,18 @@
                     <div class="right"><span class="button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$data.isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
                 </div>
             </div>
-            <h5>last modified: {#$data.isoform.timelastmodified#}</h5>
-            <h5>corresponding unigene: <a href="{#$AppPath#}/unigene-details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></h5>
-            <h5>import {#$data.isoform.import#}</h5>
-            <h5>organism_name {#$data.isoform.organism_name#}</h5>
+                <table style="width:100%">
+                    <tbody>
+                        <tr><td>last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
+                        <tr><td>corresponding unigene</td><td><a href="{#$AppPath#}/unigene-details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                        <tr><td>dataset</td><td>{#$data.isoform.import#}</td></tr>
+                        <tr><td>organism</td><td>{#$data.isoform.organism_name#}</td></tr>
+                    </tbody>
+                </table>
             <div class="row">
+                <div class="large-12 columns">
+                    <h4>Isoform Browser</h4>
+                </div>
                 <div class="large-12 columns">
                     <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
                     <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>

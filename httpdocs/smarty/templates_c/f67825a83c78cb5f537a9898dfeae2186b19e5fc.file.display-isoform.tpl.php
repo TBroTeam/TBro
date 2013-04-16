@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:11:22
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:31:50
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1366030489,
+      1 => 1366111909,
       2 => 'file',
     ),
     '5f954c49e74b64ac04f0d562c20e5168f11931f4' => 
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366048743,
+      1 => 1366111689,
       2 => 'file',
     ),
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
@@ -150,6 +150,9 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         <style>
             .ui-tooltip-content table{
                 margin-bottom: 0px;
+            }
+            textarea {
+                resize:vertical;
             }
         </style>
 
@@ -393,15 +396,15 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                        <ul class="right">
-                            <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+                    <ul class="right">
+                        <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /multisearch'>multisearch</a></li>
-                            <li class="divider"></li>
-                            <li><a>quicksearch:</a></li>
-                            <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                            <li><a><select id="select_dataset"></select></select></a></li>
-                            <li class="has-form"><input type="search" id="search_unigene"/></li>
-                        </ul>
+                        <li class="divider"></li>
+                        <li><a>quicksearch:</a></li>
+                        <li><a><select id="select_organism" style="display:inline"></select></a></li>
+                        <li><a><select id="select_dataset"></select></select></a></li>
+                        <li class="has-form"><input type="search" id="search_unigene"/></li>
+                    </ul>
                 </section>
             </nav>
         </div>
@@ -430,17 +433,24 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
 ', success: cart.addItemToAll});"> add to cart -> </span></div>
                 </div>
             </div>
-            <h5>last modified: <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
-</h5>
-            <h5>corresponding unigene: <a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+                <table style="width:100%">
+                    <tbody>
+                        <tr><td>last modified</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['timelastmodified'];?>
+</td></tr>
+                        <tr><td>corresponding unigene</td><td><a href="<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /unigene-details/byId/<?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['feature_id'];?>
 "><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['unigene']['uniquename'];?>
-</a></h5>
-            <h5>import <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['import'];?>
-</h5>
-            <h5>organism_name <?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['organism_name'];?>
-</h5>
+</a></td></tr>
+                        <tr><td>dataset</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['import'];?>
+</td></tr>
+                        <tr><td>organism</td><td><?php echo $_smarty_tpl->tpl_vars['data']->value['isoform']['organism_name'];?>
+</td></tr>
+                    </tbody>
+                </table>
             <div class="row">
+                <div class="large-12 columns">
+                    <h4>Isoform Browser</h4>
+                </div>
                 <div class="large-12 columns">
                     <canvas id="canvas_<?php echo smarty_modifier_clean_id($_smarty_tpl->tpl_vars['data']->value['isoform']['uniquename']);?>
 " width="600"></canvas>
@@ -757,7 +767,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_516d31db08c855_02499990($_smarty_tpl);
+content_516d36a709b582_12879466($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -876,9 +886,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:11:23
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:31:51
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_516d31db08c855_02499990')) {function content_516d31db08c855_02499990($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516d36a709b582_12879466')) {function content_516d36a709b582_12879466($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>
