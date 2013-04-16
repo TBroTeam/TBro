@@ -39,7 +39,7 @@ class Isoform extends \WebService {
                 'type' => 'sequence',
                 'subtype' => 'DNA',
                 'data' => array(array(
-                        'id' => $isoform['uniquename'],
+                        'id' => $isoform['name'],
                         'sequence' => $isoform['residues'],
                         'translate' => array(-1, 3),
                         'dir' => 'right',
@@ -54,7 +54,7 @@ class Isoform extends \WebService {
                     $right = $repeatmasker['fmax'];
 
                     $_data[] = array(
-                        'id' => $repeatmasker['uniquename'],
+                        'id' => sprintf('%s#%s(%s)', $repeatmasker['repeat_name'],$repeatmasker['repeat_class'],$repeatmasker['repeat_family']),
                         'data' => array(array($left, $right)),
                         'dir' => self::strand2dir($repeatmasker['strand'])
                     );
@@ -80,7 +80,8 @@ class Isoform extends \WebService {
                         'fill' => 'rgb(255,255,51)',
                         'outline' => 'rgb(0,0,0)',
                         'data' => array(array(
-                                'id' => $predpep['uniquename'],
+                                'id' => sprintf('predpep %d-%d'
+                                        ,$predpep['fmin'],$predpep['fmax']),
                                 'sequence' => self::rewinds(self::space($predpep['residues']), $predpep['strand']),
                                 'offset' => $predpep['fmin'],
                                 'dir' => 'right'#strand2dir($predpep['strand'])
@@ -93,7 +94,9 @@ class Isoform extends \WebService {
                             $left = $predpep['fmin'] + ($interpro['fmin'] - 1) * 3;
                             $right = $left + ($interpro['fmax'] - $interpro['fmin'] + 1) * 3;
                             $_data[] = array(
-                                'id' => $interpro['uniquename'],
+                                'id' => sprintf('%s %d-%d',
+                                        !empty($interpro['interpro_id'])?$interpro['interpro_id']:'IPR/anon     '
+                                        ,$interpro['fmin'],$interpro['fmax']),
                                 'data' => array(array($left, $right)),
                                 'dir' => self::strand2dir($interpro['strand'])
                             );

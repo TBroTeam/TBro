@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 19:58:24
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:11:22
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366048703,
+      1 => 1366048743,
       2 => 'file',
     ),
     '11c7ef346d54e74dbba43806960c2f33f5da4872' => 
@@ -394,6 +394,8 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
                 </ul>
                 <section class="top-bar-section">
                         <ul class="right">
+                            <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/multisearch'>multisearch</a></li>
                             <li class="divider"></li>
                             <li><a>quicksearch:</a></li>
                             <li><a><select id="select_organism" style="display:inline"></select></a></li>
@@ -755,7 +757,7 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_516c3fc11c1a36_89230789($_smarty_tpl);
+content_516d31db08c855_02499990($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -874,9 +876,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 19:58:25
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 13:11:23
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_516c3fc11c1a36_89230789')) {function content_516c3fc11c1a36_89230789($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516d31db08c855_02499990')) {function content_516d31db08c855_02499990($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>

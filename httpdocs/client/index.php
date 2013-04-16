@@ -47,9 +47,11 @@ function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
 require_once INC . '/libs/lightopenid/openid.php';
 require_once INC . '/WebService.php';
 
+$redir_url = isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI'];
+
 if (isset($_GET['logout'])) {
     session_destroy();
-    header('Location: ' . $_SERVER['REDIRECT_URL']);
+    header('Location: ' .$redir_url);
     die();
 }
 try {
@@ -63,7 +65,7 @@ try {
     } else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
-            header('Location: ' . isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI']);
+            header('Location: ' . $redir_url);
             die();
         }
     }
