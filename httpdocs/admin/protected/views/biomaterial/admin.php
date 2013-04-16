@@ -53,11 +53,6 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 				'value'=>'GxHtml::valueEx($data->biosourceprovider)',
 				'filter'=>GxHtml::listDataEx(Contact::model()->findAllAttributes(null, true)),
 				),
-		array(
-				'name'=>'dbxref_id',
-				'value'=>'GxHtml::valueEx($data->dbxref)',
-				'filter'=>GxHtml::listDataEx(Dbxref::model()->findAllAttributes(null, true)),
-				),
 		'name',
 		'description',
 		array(

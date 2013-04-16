@@ -21,11 +21,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model, 'dbxref_id'); ?>
-		<?php echo $form->dropDownList($model, 'dbxref_id', GxHtml::listDataEx(Dbxref::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model, 'name'); ?>
 		<?php echo $form->textArea($model, 'name'); ?>
 	</div>

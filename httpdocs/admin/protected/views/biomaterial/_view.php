@@ -10,9 +10,6 @@
 	<?php echo GxHtml::encode($data->getAttributeLabel('biosourceprovider_id')); ?>:
 		<?php echo GxHtml::encode(GxHtml::valueEx($data->biosourceprovider)); ?>
 	<br />
-	<?php echo GxHtml::encode($data->getAttributeLabel('dbxref_id')); ?>:
-		<?php echo GxHtml::encode(GxHtml::valueEx($data->dbxref)); ?>
-	<br />
 	<?php echo GxHtml::encode($data->getAttributeLabel('name')); ?>:
 	<?php echo GxHtml::encode($data->name); ?>
 	<br />

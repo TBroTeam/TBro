@@ -58,15 +58,6 @@ array(
 		echo GxHtml::closeTag('li');
 	}
 	echo GxHtml::closeTag('ul');
-?><h2><?php echo GxHtml::encode($model->getRelationLabel('quantificationresults')); ?></h2>
-<?php
-	echo GxHtml::openTag('ul');
-	foreach($model->quantificationresults as $relatedModel) {
-		echo GxHtml::openTag('li');
-		echo GxHtml::link(GxHtml::encode(GxHtml::valueEx($relatedModel)), array('quantificationresult/view', 'id' => GxActiveRecord::extractPkValue($relatedModel, true)));
-		echo GxHtml::closeTag('li');
-	}
-	echo GxHtml::closeTag('ul');
 ?><h2><?php echo GxHtml::encode($model->getRelationLabel('biomaterialTreatments')); ?></h2>
 <?php
 	echo GxHtml::openTag('ul');
@@ -91,15 +82,6 @@ array(
 	foreach($model->biomaterialRelationships1 as $relatedModel) {
 		echo GxHtml::openTag('li');
 		echo GxHtml::link(GxHtml::encode(GxHtml::valueEx($relatedModel)), array('biomaterialRelationship/view', 'id' => GxActiveRecord::extractPkValue($relatedModel, true)));
-		echo GxHtml::closeTag('li');
-	}
-	echo GxHtml::closeTag('ul');
-?><h2><?php echo GxHtml::encode($model->getRelationLabel('biomaterialDbxrefs')); ?></h2>
-<?php
-	echo GxHtml::openTag('ul');
-	foreach($model->biomaterialDbxrefs as $relatedModel) {
-		echo GxHtml::openTag('li');
-		echo GxHtml::link(GxHtml::encode(GxHtml::valueEx($relatedModel)), array('biomaterialDbxref/view', 'id' => GxActiveRecord::extractPkValue($relatedModel, true)));
 		echo GxHtml::closeTag('li');
 	}
 	echo GxHtml::closeTag('ul');

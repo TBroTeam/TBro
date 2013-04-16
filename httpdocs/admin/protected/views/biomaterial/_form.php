@@ -24,16 +24,6 @@
 		<?php echo $form->error($model,'biosourceprovider_id'); ?>
 		</div><!-- row -->
 		<div class="row">
-		<?php echo $form->labelEx($model,'dbxref_id'); ?>
-		<?php echo $form->dropDownList($model, 'dbxref_id', GxHtml::listDataEx(Dbxref::model()->findAllAttributes(null, true))); ?>
-		<?php echo $form->error($model,'dbxref_id'); ?>
-		</div><!-- row -->
-		<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textArea($model, 'name'); ?>
-		<?php echo $form->error($model,'name'); ?>
-		</div><!-- row -->
-		<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
 		<?php echo $form->textArea($model, 'description'); ?>
 		<?php echo $form->error($model,'description'); ?>
@@ -43,8 +33,6 @@
 		<?php echo $form->checkBoxList($model, 'biomaterialprops', GxHtml::encodeEx(GxHtml::listDataEx(Biomaterialprop::model()->findAllAttributes(null, true)), false, true)); ?>
 		<label><?php echo GxHtml::encode($model->getRelationLabel('treatments')); ?></label>
 		<?php echo $form->checkBoxList($model, 'treatments', GxHtml::encodeEx(GxHtml::listDataEx(Treatment::model()->findAllAttributes(null, true)), false, true)); ?>
-		<label><?php echo GxHtml::encode($model->getRelationLabel('quantificationresults')); ?></label>
-		<?php echo $form->checkBoxList($model, 'quantificationresults', GxHtml::encodeEx(GxHtml::listDataEx(Quantificationresult::model()->findAllAttributes(null, true)), false, true)); ?>
 		<label><?php echo GxHtml::encode($model->getRelationLabel('biomaterialTreatments')); ?></label>
 		<?php echo $form->checkBoxList($model, 'biomaterialTreatments', GxHtml::encodeEx(GxHtml::listDataEx(BiomaterialTreatment::model()->findAllAttributes(null, true)), false, true)); ?>
 		<label><?php echo GxHtml::encode($model->getRelationLabel('biomaterialRelationships')); ?></label>
