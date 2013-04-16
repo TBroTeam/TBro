@@ -76,9 +76,9 @@
         <li><a href="javascript:jumptoanchor('isoform-overview');">Isoform Overview</a></li>
         <li><a href="javascript:jumptoanchor('isoform-browser');">Isoform Browser</a></li>
         <li><a href="javascript:jumptoanchor('isoform-annotations');">Isoform Annotations</a></li>
-        {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}<li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li>{#/if#}
-        {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}<li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li>{#/if#}
-    </ul>
+    {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}<li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li>{#/if#}
+{#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}<li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li>{#/if#}
+</ul>
 </li>
 {#/block#}
 {#block name='body'#}
@@ -197,13 +197,12 @@
             </div>
         </div>
     </div>
-    <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
-
 
     {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}
-        <div id="repeatmasker-annotations"> </div>
+
         <div class="row" id="repeatmasker">
             <div class="large-12 columns">
+                <div id="repeatmasker-annotations"> </div>
                 <h2>Repeatmasker Annotations:</h2>
 
                 <div class="row">
@@ -231,14 +230,14 @@
             </div>
 
         </div>
-        <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
     {#/if#}
 
 
     {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}
-        <div id="predpeps"> </div>
+
         <div class="row" id="predpep">
             <div class="large-12 columns">
+                <div id="predpeps"> </div>
                 <h2>Predicted Peptides:</h2>
 
 
@@ -347,7 +346,6 @@
         </div>
     {#/if#}
 </div>
-<div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
 
 {#include file="display-isoform-barplot.tpl"#}
 {#/block#}

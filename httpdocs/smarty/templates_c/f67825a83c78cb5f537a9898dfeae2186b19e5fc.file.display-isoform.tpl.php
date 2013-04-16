@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 14:47:20
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 14:54:27
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:5782586735141cf1549bd41-83030641%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f67825a83c78cb5f537a9898dfeae2186b19e5fc' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/display-isoform.tpl',
-      1 => 1366116439,
+      1 => 1366116864,
       2 => 'file',
     ),
     '5f954c49e74b64ac04f0d562c20e5168f11931f4' => 
@@ -411,9 +411,9 @@ if (!is_callable('smarty_function_interprolink')) include '/home/s202139/git/htt
         <li><a href="javascript:jumptoanchor('isoform-overview');">Isoform Overview</a></li>
         <li><a href="javascript:jumptoanchor('isoform-browser');">Isoform Browser</a></li>
         <li><a href="javascript:jumptoanchor('isoform-annotations');">Isoform Annotations</a></li>
-        <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?><li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li><?php }?>
-        <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?><li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li><?php }?>
-    </ul>
+    <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?><li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li><?php }?>
+<?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?><li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li><?php }?>
+</ul>
 </li>
 </ul>
                     <ul class="right">
@@ -590,13 +590,12 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
             </div>
         </div>
     </div>
-    <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
-
 
     <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['repeatmasker'])>0){?>
-        <div id="repeatmasker-annotations"> </div>
+
         <div class="row" id="repeatmasker">
             <div class="large-12 columns">
+                <div id="repeatmasker-annotations"> </div>
                 <h2>Repeatmasker Annotations:</h2>
 
                 <div class="row">
@@ -634,14 +633,14 @@ $_smarty_tpl->tpl_vars['repeatmasker']->_loop = true;
             </div>
 
         </div>
-        <div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
     <?php }?>
 
 
     <?php if (isset($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])&&count($_smarty_tpl->tpl_vars['data']->value['isoform']['predpeps'])>0){?>
-        <div id="predpeps"> </div>
+
         <div class="row" id="predpep">
             <div class="large-12 columns">
+                <div id="predpeps"> </div>
                 <h2>Predicted Peptides:</h2>
 
 
@@ -787,12 +786,11 @@ $_smarty_tpl->tpl_vars['dbxref']->_loop = true;
         </div>
     <?php }?>
 </div>
-<div class="row large-12 columns"><a href="#top" class="button secondary right">back to top</a></div>
 
 <?php /*  Call merged included template "display-isoform-barplot.tpl" */
 $_tpl_stack[] = $_smarty_tpl;
  $_smarty_tpl = $_smarty_tpl->setupInlineSubTemplate("display-isoform-barplot.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0, '5782586735141cf1549bd41-83030641');
-content_516d4859573a97_68005687($_smarty_tpl);
+content_516d4a0448ec95_25902344($_smarty_tpl);
 $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-isoform-barplot.tpl" */?>
 
     </div>
@@ -911,9 +909,9 @@ $_smarty_tpl = array_pop($_tpl_stack); /*  End of included template "display-iso
     </body>
 </html>
 
-<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 14:47:21
+<?php }} ?><?php /* Smarty version Smarty-3.1.13, created on 2013-04-16 14:54:28
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-isoform-barplot.tpl" */ ?>
-<?php if ($_valid && !is_callable('content_516d4859573a97_68005687')) {function content_516d4859573a97_68005687($_smarty_tpl) {?><div class="row">
+<?php if ($_valid && !is_callable('content_516d4a0448ec95_25902344')) {function content_516d4a0448ec95_25902344($_smarty_tpl) {?><div class="row">
     <div class="large-12 columns">
         <h2>Barplot</h2>
     </div>
