@@ -14,7 +14,8 @@ class Multisearch extends \WebService {
         $longterm = $_REQUEST['longterm'];
         $terms = preg_split('/[,\s]+/m', $longterm, -1, PREG_SPLIT_NO_EMPTY);
         $qmarks = implode(',', array_fill(0, count($terms), '?'));
-        $values = array_merge($terms,$terms,array($species, $import));
+        $values = array_merge($terms, array($import, $species));
+        $values = array_merge($values,$values);
 
         $limit = 20;
         
@@ -24,31 +25,45 @@ class Multisearch extends \WebService {
 
         $query_get_features = <<<EOF
    
+   SELECT 
+  isoform.name AS isoform_name, isoform.feature_id AS isoform_feature_id,
+  unigene.name AS unigene_name, unigene.feature_id AS unigene_feature_id
+FROM 
+  (SELECT feature_id, name FROM feature WHERE type_id = {$_CONST('CV_ISOFORM')}) AS isoform, 
+  (
+    SELECT u.feature_id, u.name, u.organism_id
+    FROM feature AS u, feature_relationship AS fr, feature AS i
+    WHERE 
+        i.name IN ($qmarks)
+        AND u.type_id = {$_CONST('CV_UNIGENE')}
+        AND i.type_id = {$_CONST('CV_ISOFORM')}
+        AND fr.object_id = u.feature_id
+        AND fr.subject_id = i.feature_id
+  ) AS unigene, 
+  feature_relationship, 
+  feature_dbxref  
+WHERE 
+  unigene.feature_id = feature_dbxref.feature_id AND
+  feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$_CONST('DB_ID_IMPORTS')} AND accession = ?) AND
+  unigene.organism_id = ? AND      
+  feature_relationship.object_id = unigene.feature_id AND
+  feature_relationship.subject_id = isoform.feature_id
+
+UNION
 SELECT 
   isoform.name AS isoform_name, isoform.feature_id AS isoform_feature_id,
   unigene.name AS unigene_name, unigene.feature_id AS unigene_feature_id
 FROM 
-  feature AS isoform, 
-  (
-    SELECT u.feature_id, u.name, u.organism_id
-    FROM feature AS u, feature_relationship AS fr, feature AS i, feature_dbxref AS f_dbx
-    WHERE 
-        (i.name IN ($qmarks) OR u.name IN ($qmarks))
-        AND u.type_id = {$_CONST('CV_UNIGENE')}
-        AND i.type_id = {$_CONST('CV_ISOFORM')}
-        AND fr.type_id = {$_CONST('CV_RELATIONSHIP_UNIGENE_ISOFORM')}
-        AND fr.object_id = u.feature_id
-        AND fr.subject_id = i.feature_id
-        AND u.organism_id = ?
-        AND u.feature_id = f_dbx.feature_id
-        AND f_dbx.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$_CONST('DB_ID_IMPORTS')} AND accession = ?)
-    LIMIT $limit
-  ) AS unigene, 
-  feature_relationship
+  (SELECT feature_id, name FROM feature WHERE type_id = {$_CONST('CV_ISOFORM')} ) AS isoform, 
+  (SELECT feature_id, name, organism_id FROM feature WHERE type_id = {$_CONST('CV_UNIGENE')} AND name IN ($qmarks)) AS unigene, 
+  feature_relationship, 
+  feature_dbxref  
 WHERE 
+  unigene.feature_id = feature_dbxref.feature_id AND
+  feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$_CONST('DB_ID_IMPORTS')} AND accession = ?) AND
+  unigene.organism_id = ? AND      
   feature_relationship.object_id = unigene.feature_id AND
   feature_relationship.subject_id = isoform.feature_id
-
 LIMIT $limit
 EOF;
 
@@ -72,7 +87,6 @@ EOF;
         }
 
 
-         ksort($data['results']);
 
         return $data;
     }
