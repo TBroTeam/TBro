@@ -23,11 +23,12 @@
 		<?php echo $form->dropDownList($model, 'biomaterial_id', GxHtml::listDataEx(Biomaterial::model()->findAllAttributes(null, true))); ?>
 		<?php echo $form->error($model,'biomaterial_id'); ?>
 		</div><!-- row -->
-		<div class="row">
+		<?php /** <div class="row">
 		<?php echo $form->labelEx($model,'channel_id'); ?>
 		<?php echo $form->dropDownList($model, 'channel_id', GxHtml::listDataEx(Channel::model()->findAllAttributes(null, true))); ?>
 		<?php echo $form->error($model,'channel_id'); ?>
 		</div><!-- row -->
+                 * */ ?>
 		<div class="row">
 		<?php echo $form->labelEx($model,'rank'); ?>
 		<?php echo $form->textField($model, 'rank'); ?>

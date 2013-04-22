@@ -10,9 +10,10 @@
 	<?php echo GxHtml::encode($data->getAttributeLabel('biomaterial_id')); ?>:
 		<?php echo GxHtml::encode(GxHtml::valueEx($data->biomaterial)); ?>
 	<br />
+        <?php /** 
 	<?php echo GxHtml::encode($data->getAttributeLabel('channel_id')); ?>:
 		<?php echo GxHtml::encode(GxHtml::valueEx($data->channel)); ?>
-	<br />
+	<br />*/?>
 	<?php echo GxHtml::encode($data->getAttributeLabel('rank')); ?>:
 	<?php echo GxHtml::encode($data->rank); ?>
 	<br />

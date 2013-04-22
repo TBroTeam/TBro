@@ -11,8 +11,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model, 'arraydesign_id'); ?>
-		<?php echo $form->dropDownList($model, 'arraydesign_id', GxHtml::listDataEx(Arraydesign::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
+		<?php echo $form->label($model, 'name'); ?>
+		<?php echo $form->textArea($model, 'name'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model, 'description'); ?>
+		<?php echo $form->textArea($model, 'description'); ?>
 	</div>
 
 	<div class="row">
@@ -26,29 +31,10 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model, 'arrayidentifier'); ?>
-		<?php echo $form->textArea($model, 'arrayidentifier'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'arraybatchidentifier'); ?>
-		<?php echo $form->textArea($model, 'arraybatchidentifier'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model, 'operator_id'); ?>
 		<?php echo $form->dropDownList($model, 'operator_id', GxHtml::listDataEx(Contact::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model, 'name'); ?>
-		<?php echo $form->textArea($model, 'name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'description'); ?>
-		<?php echo $form->textArea($model, 'description'); ?>
-	</div>
 
 	<div class="row buttons">
 		<?php echo GxHtml::submitButton(Yii::t('app', 'Search')); ?>

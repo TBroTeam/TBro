@@ -32,6 +32,7 @@
                     'items' => array(
                         array('label' => 'Contact', 'url' => array('/contact')),
                         array('label' => 'Analysis', 'url' => array('/analysis')),
+                        array('label' => 'Protocol', 'url' => array('/protocol')),
                         array('label' => 'Biomaterial', 'url' => array('/biomaterial')),
                         array('label' => 'Assay', 'url' => array('/assay')),
                         array('label' => 'Acquisition', 'url' => array('/acquisition')),                        

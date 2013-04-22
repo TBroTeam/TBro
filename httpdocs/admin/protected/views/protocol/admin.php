@@ -16,7 +16,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('biomaterial-relationship-grid', {
+	$.fn.yiiGridView.update('protocol-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -38,21 +38,33 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 </div><!-- search-form -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id' => 'biomaterial-relationship-grid',
+	'id' => 'protocol-grid',
 	'dataProvider' => $model->search(),
 	'filter' => $model,
 	'columns' => array(
-		'biomaterial_relationship_id',
+		'protocol_id',
 		array(
-				'name'=>'subject_id',
-				'value'=>'GxHtml::valueEx($data->subject)',
-				'filter'=>GxHtml::listDataEx(Biomaterial::model()->findAllAttributes(null, true)),
+				'name'=>'type_id',
+				'value'=>'GxHtml::valueEx($data->type)',
+				'filter'=>GxHtml::listDataEx(Cvterm::model()->findAllAttributes(null, true)),
 				),
 		array(
-				'name'=>'object_id',
-				'value'=>'GxHtml::valueEx($data->object)',
-				'filter'=>GxHtml::listDataEx(Biomaterial::model()->findAllAttributes(null, true)),
+				'name'=>'pub_id',
+				'value'=>'GxHtml::valueEx($data->pub)',
+				'filter'=>GxHtml::listDataEx(Pub::model()->findAllAttributes(null, true)),
 				),
+		array(
+				'name'=>'dbxref_id',
+				'value'=>'GxHtml::valueEx($data->dbxref)',
+				'filter'=>GxHtml::listDataEx(Dbxref::model()->findAllAttributes(null, true)),
+				),
+		'name',
+		'uri',
+		/*
+		'protocoldescription',
+		'hardwaredescription',
+		'softwaredescription',
+		*/
 		array(
 			'class' => 'CButtonColumn',
 		),

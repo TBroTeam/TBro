@@ -12,7 +12,7 @@
 
 	<div class="row">
 		<?php echo $form->label($model, 'type_id'); ?>
-		<?php echo $form->dropDownList($model, 'type_id', GxHtml::listDataEx(Cvterm::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
+		<?php echo $form->textField($model, 'type_id'); ?>
 	</div>
 
 	<div class="row">

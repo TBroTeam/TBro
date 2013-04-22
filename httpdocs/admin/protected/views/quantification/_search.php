@@ -9,6 +9,24 @@
 		<?php echo $form->label($model, 'quantification_id'); ?>
 		<?php echo $form->textField($model, 'quantification_id'); ?>
 	</div>
+    
+    
+	<div class="row">
+		<?php echo $form->label($model, 'name'); ?>
+		<?php echo $form->textField($model, 'name'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model, 'quantificationdate'); ?>
+		<?php echo $form->textField($model, 'quantificationdate'); ?>
+	</div>
+
+
+	<div class="row">
+		<?php echo $form->label($model, 'uri'); ?>
+		<?php echo $form->textField($model, 'uri'); ?>
+	</div>
+
 
 	<div class="row">
 		<?php echo $form->label($model, 'acquisition_id'); ?>
@@ -29,22 +47,6 @@
 		<?php echo $form->label($model, 'analysis_id'); ?>
 		<?php echo $form->dropDownList($model, 'analysis_id', GxHtml::listDataEx(Analysis::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'quantificationdate'); ?>
-		<?php echo $form->textField($model, 'quantificationdate'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'name'); ?>
-		<?php echo $form->textArea($model, 'name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'uri'); ?>
-		<?php echo $form->textArea($model, 'uri'); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo GxHtml::submitButton(Yii::t('app', 'Search')); ?>
 	</div>

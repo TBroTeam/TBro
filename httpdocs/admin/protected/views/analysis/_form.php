@@ -59,15 +59,6 @@
 		<?php echo $form->error($model,'timeexecuted'); ?>
 		</div><!-- row -->
 
-		<label><?php echo GxHtml::encode($model->getRelationLabel('analysisfeatures')); ?></label>
-		<?php echo $form->checkBoxList($model, 'analysisfeatures', GxHtml::encodeEx(GxHtml::listDataEx(Analysisfeature::model()->findAllAttributes(null, true)), false, true)); ?>
-		<label><?php echo GxHtml::encode($model->getRelationLabel('analysisprops')); ?></label>
-		<?php echo $form->checkBoxList($model, 'analysisprops', GxHtml::encodeEx(GxHtml::listDataEx(Analysisprop::model()->findAllAttributes(null, true)), false, true)); ?>
-		<label><?php echo GxHtml::encode($model->getRelationLabel('quantifications')); ?></label>
-		<?php echo $form->checkBoxList($model, 'quantifications', GxHtml::encodeEx(GxHtml::listDataEx(Quantification::model()->findAllAttributes(null, true)), false, true)); ?>
-		<label><?php echo GxHtml::encode($model->getRelationLabel('expressionresults')); ?></label>
-		<?php echo $form->checkBoxList($model, 'expressionresults', GxHtml::encodeEx(GxHtml::listDataEx(Expressionresult::model()->findAllAttributes(null, true)), false, true)); ?>
-
 <?php
 echo GxHtml::submitButton(Yii::t('app', 'Save'));
 $this->endWidget();

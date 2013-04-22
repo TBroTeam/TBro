@@ -20,10 +20,10 @@
 		<?php echo $form->dropDownList($model, 'biomaterial_id', GxHtml::listDataEx(Biomaterial::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
 	</div>
 
-	<div class="row">
+	<?php /** <div class="row">
 		<?php echo $form->label($model, 'channel_id'); ?>
 		<?php echo $form->dropDownList($model, 'channel_id', GxHtml::listDataEx(Channel::model()->findAllAttributes(null, true)), array('prompt' => Yii::t('app', 'All'))); ?>
-	</div>
+	</div> */ ?>
 
 	<div class="row">
 		<?php echo $form->label($model, 'rank'); ?>

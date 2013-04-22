@@ -43,11 +43,7 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 	'filter' => $model,
 	'columns' => array(
 		'contact_id',
-		array(
-				'name'=>'type_id',
-				'value'=>'GxHtml::valueEx($data->type)',
-				'filter'=>GxHtml::listDataEx(Cvterm::model()->findAllAttributes(null, true)),
-				),
+		'type_id',
 		'name',
 		'description',
 		array(

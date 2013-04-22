@@ -30,11 +30,11 @@ array(
 			'type' => 'raw',
 			'value' => $model->biomaterial !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->biomaterial)), array('biomaterial/view', 'id' => GxActiveRecord::extractPkValue($model->biomaterial, true))) : null,
 			),
-array(
+/** array(
 			'name' => 'channel',
 			'type' => 'raw',
 			'value' => $model->channel !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->channel)), array('channel/view', 'id' => GxActiveRecord::extractPkValue($model->channel, true))) : null,
-			),
+			),*/
 'rank',
 	),
 )); ?>

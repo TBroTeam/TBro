@@ -1,13 +1,13 @@
 <?php
-
 $this->breadcrumbs = array(
-	$model->label(2) => array('index'),
-	Yii::t('app', 'Create'),
+    $model->label(2) => array('index'),
+    Yii::t('app', 'Create'),
 );
 
 $this->menu = array(
-	array('label'=>Yii::t('app', 'List') . ' ' . $model->label(2), 'url' => array('index')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . $model->label(2), 'url' => array('admin')),
+    array('label' => Yii::t('app', 'List') . ' ' . $model->label(2), 'url' => array('index')),
+    array('label' => Yii::t('app', 'Manage') . ' ' . $model->label(2), 'url' => array('admin')),
+    array('label' => Yii::t('app', 'Manage') . ' ' . BiomaterialRelationship::label(2), 'url' => array('biomaterialRelationship/admin')),
 );
 ?>
 
@@ -15,6 +15,6 @@ $this->menu = array(
 
 <?php
 $this->renderPartial('_form', array(
-		'model' => $model,
-		'buttons' => 'create'));
+    'model' => $model,
+    'buttons' => 'create'));
 ?>

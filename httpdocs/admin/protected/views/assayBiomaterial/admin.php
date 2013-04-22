@@ -53,11 +53,11 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 				'value'=>'GxHtml::valueEx($data->biomaterial)',
 				'filter'=>GxHtml::listDataEx(Biomaterial::model()->findAllAttributes(null, true)),
 				),
-		array(
+		/*array(
 				'name'=>'channel_id',
 				'value'=>'GxHtml::valueEx($data->channel)',
 				'filter'=>GxHtml::listDataEx(Channel::model()->findAllAttributes(null, true)),
-				),
+				),*/
 		'rank',
 		array(
 			'class' => 'CButtonColumn',

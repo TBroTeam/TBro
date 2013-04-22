@@ -8,6 +8,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
 	array('label'=>Yii::t('app', 'Create') . ' ' . Biomaterial::label(), 'url' => array('create')),
 	array('label'=>Yii::t('app', 'Manage') . ' ' . Biomaterial::label(2), 'url' => array('admin')),
+        array('label'=>Yii::t('app', 'Manage') . ' ' . BiomaterialRelationship::label(2), 'url' => array('biomaterialRelationship/admin')),    
 );
 ?>
 
