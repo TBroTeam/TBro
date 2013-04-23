@@ -185,11 +185,6 @@ EOF;
     protected function getName() {
         return "Sequence File Importer";
     }
-
-    protected function additional_longopts() {
-        return array();
-    }
-
 }
 
 ?>

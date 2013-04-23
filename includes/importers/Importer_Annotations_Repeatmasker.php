@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Annotations_Repeatmasker {
+class Importer_Annotations_Repeatmasker extends AbstractImporter{
 
     /**
      * 
@@ -155,10 +155,6 @@ EOF;
 
     protected function getName() {
         return "Repeatmasker Output Importer";
-    }
-
-    protected function additional_longopts() {
-        return array();
     }
 
 }

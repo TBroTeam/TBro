@@ -28,9 +28,9 @@ class Importer_Expressions extends AbstractImporter {
     function import($options) {
 
         $filename = $options['file'];
-        $analysis_id = $options['analysis_id'];
-        $biomaterial_parentA_name = $options['biomaterial_A_name'];
-        $biomaterial_parentB_name = $options['biomaterial_B_name'];
+        $analysis_id = $options['analysis-id'];
+        $biomaterial_parentA_name = $options['biomaterialA-name'];
+        $biomaterial_parentB_name = $options['biomaterialB-name'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         $this->setLineCount($lines_total);
@@ -155,15 +155,12 @@ class Importer_Expressions extends AbstractImporter {
 
     
     protected function calledFromShell() {
-        $this->require_parameter($this->options, array('analysis_id', 'biomaterial_A_name', 'biomaterial_B_name'));
+        $this->require_parameter($this->options, array('analysis-id', 'biomaterialA-name', 'biomaterialB-name'));
         return $this->import($this->options);
     }
 
     public function help() {
         return $this->sharedHelp() . "\n" . <<<EOF
---analysis_id           analysis id
---biomaterial_A_name    parent biomaterial A name
---biomaterial_B_name    parent biomaterial B name
 
 File Format looks like this (\033[0;31mFirst line will be skipped\033[0m):
 ,id,baseMean,baseMeanA,baseMeanB,foldChange,log2FoldChange,pval,padj
@@ -179,8 +176,11 @@ EOF;
         return "Pooled Expression File Importer";
     }
 
-    protected function additional_longopts() {
-        return array('analysis_id:', 'biomaterial_A_name:', 'biomaterial_B_name:');
+    protected function register_getopt($getopt) {
+        parent::register_getopt($getopt);
+        $getopt->add('a|analysis-id:=i', 'analysis id');
+        $getopt->add('A|biomaterialA-name:=s', 'parent biomaterial A name');
+        $getopt->add('B|biomaterialB-name:=s', 'parent biomaterial B name');
     }
 
     

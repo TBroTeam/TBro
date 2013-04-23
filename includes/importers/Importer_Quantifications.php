@@ -21,10 +21,10 @@ class Importer_Quantifications extends AbstractImporter {
     function import($options) {
 
         $filename = $options['file'];
-        $quantification_id = $options['quantification_id'];
-        $biomaterial_name = $options['biomaterial_name'];
-        $type_name = $options['type_name'];
-        $value_column = $options['value_column'];
+        $quantification_id = $options['quantification-id'];
+        $biomaterial_name = $options['biomaterial-name'];
+        $type_name = $options['type-name'];
+        $value_column = $options['column'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         $this->setLineCount($lines_total);
@@ -97,17 +97,12 @@ class Importer_Quantifications extends AbstractImporter {
     }
 
     protected function calledFromShell() {
-        $this->require_parameter($this->options, array('quantification_id', 'biomaterial_name', 'type_name', 'value_column'));
+        $this->require_parameter($this->options, array('quantification-id', 'biomaterial-name', 'type-name', 'column'));
         return $this->import($this->options);
     }
 
     public function help() {
         return $this->sharedHelp() . "\n" . <<<EOF
---quantification_id      quantification id
---biomaterial_name       biomaterial name
---type_name              type name. this has to be a cvterm.
---value_column           column number that will be read for values (e.g. in the example below: 5 for expected_count)
-   
 File Format has to look like RSEM output.
 \033[0;31mFirst line will be skipped.\033[0m
 e.g. like:
@@ -126,8 +121,12 @@ EOF;
         return "Count File Importer";
     }
 
-    protected function additional_longopts() {
-        return array('quantification_id:', 'biomaterial_name:', 'type_name:', 'value_column:');
+    protected function register_getopt($getopt) {
+        parent::register_getopt($getopt);
+        $getopt->add('q|quantification-id:=i', 'quantification id');
+        $getopt->add('b|biomaterial-name:=s', 'biomaterial name');
+        $getopt->add('t|type-name:=s', 'type name. this has to be a cvterm.');
+        $getopt->add('c|column:=s', 'column number that will be read for values (e.g. in the example below: 5 for expected_count)');
     }
 
 }

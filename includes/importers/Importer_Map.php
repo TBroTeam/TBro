@@ -137,11 +137,6 @@ EOF;
     protected function getName() {
         return "Mapping File Importer";
     }
-
-    protected function additional_longopts() {
-        return array();
-    }
-
 }
 
 ?>

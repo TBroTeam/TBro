@@ -87,10 +87,6 @@ EOF;
         return "Blast2Go Output Importer";
     }
 
-    protected function additional_longopts() {
-        return array();
-    }
-
 }
 
 ?>

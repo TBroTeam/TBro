@@ -7,7 +7,7 @@ require_once __DIR__ . '/Importer_Sequences.php';
 global $dbrefx_versions;
 $dbrefx_versions = array('HMMPIR' => '1.0');
 
-class Importer_Annotations_Interpro {
+class Importer_Annotations_Interpro extends AbstractImporter {
 
     /**
      * Interpro Line RegeX
@@ -241,11 +241,6 @@ EOF;
     protected function getName() {
         return "Interpro Output Importer";
     }
-
-    protected function additional_longopts() {
-        return array();
-    }
-
 }
 
 ?>
