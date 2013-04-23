@@ -1,8 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
-require_once INC . '/libs/php-progress-bar.php';
+require_once __DIR__ . '/AbstractImporter.php';
 
 class Importer_Annotations_Repeatmasker {
 
@@ -13,10 +11,12 @@ class Importer_Annotations_Repeatmasker {
      * @throws Exception on DB Error
      * @throws ErrorException on DB Error
      */
-    static function import($filename) {
-        
+    function import($options) {
+
+        $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        
+        $this->setLineCount($lines_total);
+
         global $db;
 
         $regex = <<<EOF
@@ -75,8 +75,7 @@ EOF;
             $statement_insert_domain->bindParam('name', $param_name, PDO::PARAM_STR);
             $statement_insert_domain->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
 
-            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
@@ -98,12 +97,12 @@ EOF;
                             , $matches['repeat_class']
                             , (isset($matches['repeat_family']) ? $matches['repeat_family'] : '')
                     );
-                    $param_uniquename = IMPORT_PREFIX . "_" .$param_name;
+                    $param_uniquename = IMPORT_PREFIX . "_" . $param_name;
 
                     $statement_insert_domain->execute();
 
 
-                    $param_srcfeature_uniq = IMPORT_PREFIX . "_" .$matches['name'];
+                    $param_srcfeature_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_fmin = $matches['start'];
                     $param_fmax = $matches['end'];
                     $statement_insert_featureloc->execute();
@@ -125,9 +124,7 @@ EOF;
                     }
 
 
-                    $lines_imported++;
-                    if ($lines_imported % 200 == 0)
-                        php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                    $this->updateProgress(++$lines_imported);
                 } else {
                     echo "WARNING: Line does not match:\n\t$line\n";
                 }
@@ -142,6 +139,26 @@ EOF;
             throw $error;
         }
         return array(LINES_IMPORTED => $lines_imported, 'families_added' => $families_added);
+    }
+
+    protected function calledFromShell() {
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+
+\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence File Import!\033[0m
+EOF;
+    }
+
+    protected function getName() {
+        return "Repeatmasker Output Importer";
+    }
+
+    protected function additional_longopts() {
+        return array();
     }
 
 }

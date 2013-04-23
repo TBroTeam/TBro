@@ -1,20 +1,20 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
-require_once INC.'/libs/php-progress-bar.php';
+require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Annotations_Blast2Go {
+class Importer_Annotations_Blast2Go extends AbstractImporter {
 
     /**
      * @global PDO $db
      * @param string $filename
      * @throws ErrorException
      */
-    static function import($filename) {
+    function import($options) {
 
+        $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        
+        $this->setLineCount($lines_total);
+
         global $db;
         $lines_imported = 0;
         $descriptions_added = 0;
@@ -48,7 +48,7 @@ class Importer_Annotations_Blast2Go {
                 $feature = $line[0];
                 $dbxref = $line[1];
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
-                $param_feature_uniq = IMPORT_PREFIX . "_" .$feature;
+                $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
                 $statement_insert_feature_dbxref->execute();
 
                 $description = isset($line[2]) ? $line[2] : null;
@@ -58,8 +58,7 @@ class Importer_Annotations_Blast2Go {
                 }
 
 
-                $lines_imported++;
-                if ($lines_imported%200==0) php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                $this->updateProgress(++$lines_imported);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -70,6 +69,26 @@ class Importer_Annotations_Blast2Go {
             throw $error;
         }
         return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
+    }
+
+    protected function calledFromShell() {
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+
+\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence File Import!\033[0m
+EOF;
+    }
+
+    protected function getName() {
+        return "Blast2Go Output Importer";
+    }
+
+    protected function additional_longopts() {
+        return array();
     }
 
 }

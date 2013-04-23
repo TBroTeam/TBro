@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-04-15 20:08:22
+<?php /* Smarty version Smarty-3.1.13, created on 2013-04-23 13:10:23
          compiled from "/home/s202139/git/httpdocs/smarty/templates/display-unigene.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3222948515140a1c3e86c70-52544708%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -19,7 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1bfb3dec557c7a9258f8cf6f645e611f160e265d' => 
     array (
       0 => '/home/s202139/git/httpdocs/smarty/templates/layout.tpl',
-      1 => 1366048743,
+      1 => 1366116368,
       2 => 'file',
     ),
   ),
@@ -141,6 +141,15 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <style>
             .ui-tooltip-content table{
                 margin-bottom: 0px;
+            }
+            textarea {
+                resize:vertical;
+            }
+            .top-bar-section li div.has-select{
+                padding: 0 15px;
+                line-height: 45px;
+                background: #111111; 
+                display:block;
             }
         </style>
 
@@ -315,15 +324,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                        <ul class="right">
-                            <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+                    <ul class="left"></ul>
+                    <ul class="right">
+                        <li><a href='<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
 /multisearch'>multisearch</a></li>
-                            <li class="divider"></li>
-                            <li><a>quicksearch:</a></li>
-                            <li><a><select id="select_organism" style="display:inline"></select></a></li>
-                            <li><a><select id="select_dataset"></select></select></a></li>
-                            <li class="has-form"><input type="search" id="search_unigene"/></li>
-                        </ul>
+                        <li class="divider"></li>
+                        <li><a>quicksearch:</a></li>
+                        <li><div class="has-select"><select id="select_organism" style="display:inline"></select></div></li>
+                        <li><div class="has-select"><select id="select_dataset"></select></div></li>
+                        <li class="has-form"><input type="search" id="search_unigene"/></li>
+                    </ul>
                 </section>
             </nav>
         </div>

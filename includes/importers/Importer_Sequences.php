@@ -1,10 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
-require_once INC . '/libs/php-progress-bar.php';
+require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Sequences {
+class Importer_Sequences extends AbstractImporter {
 
     /**
      * reads the next fasta sequence from file handle $fasta_handle and returns a list of description and sequence (without whitespace and newlines)
@@ -53,9 +51,10 @@ class Importer_Sequences {
      * @param string $filename filename
      * @throws ErrorException
      */
-    static function import($filename) {
-
+    function import($options) {
+        $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        $this->setLineCount($lines_total);
 
         global $db;
         $lines_imported = 0;
@@ -104,8 +103,7 @@ class Importer_Sequences {
             $statement_insert_predpep->bindParam('seqlen', $param_predpep_seqlen, PDO::PARAM_INT);
             $statement_insert_predpep->bindParam('residues', $param_predpep_residues, PDO::PARAM_STR);
 
-            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_predpep_location->bindParam('fmin', $param_predpep_fmin, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('fmax', $param_predpep_fmax, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('strand', $param_predpep_strand, PDO::PARAM_INT);
@@ -124,7 +122,7 @@ class Importer_Sequences {
                 #isoform header like this:
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
                 if (preg_match('/^>(?<name>\w+) len=(?<seqlen>\d+) path=(?<path>\[(?:\d+:\d+-\d+ ?)+\])$/', $description, $matches)) {
-                    $param_isoform_uniq = IMPORT_PREFIX . "_" .$matches['name'];
+                    $param_isoform_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_isoform_seqlen = $matches['seqlen'];
                     $param_isoform_residues = $sequence;
 
@@ -139,17 +137,16 @@ class Importer_Sequences {
                 }
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/',
-                                $description, $matches)) {
+                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
                     $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
-                    $param_predpep_uniq = IMPORT_PREFIX . "_" .$param_predpep_name;
+                    $param_predpep_uniq = IMPORT_PREFIX . "_" . $param_predpep_name;
                     $param_predpep_seqlen = $matches['len'];
                     $param_predpep_residues = $sequence;
 
                     $statement_insert_predpep->execute();
 
                     $param_predpep_feature_id = $statement_insert_predpep->fetchColumn();
-                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . "_" .$matches['name'];
+                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_predpep_fmin = min($matches['from'], $matches['to']);
                     $param_predpep_fmax = max($matches['from'], $matches['to']);
                     $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;
@@ -157,9 +154,7 @@ class Importer_Sequences {
                     $predpeps_added++;
                 }
 
-                $lines_imported++;
-                if ($lines_imported % 200 == 0)
-                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                $this->updateProgress(++$lines_imported);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -170,6 +165,29 @@ class Importer_Sequences {
             throw $error;
         }
         return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated, 'predpeps_added' => $predpeps_added);
+    }
+
+    protected function calledFromShell() {
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+   
+File Format has to be a typical fasta file.
+Header line has to look like this:
+>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
+   
+\033[0;31mThis import requires a successful Map File Import!\033[0m
+EOF;
+    }
+
+    protected function getName() {
+        return "Sequence File Importer";
+    }
+
+    protected function additional_longopts() {
+        return array();
     }
 
 }

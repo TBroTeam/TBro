@@ -1,10 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
-require_once INC . '/libs/php-progress-bar.php';
+require_once __DIR__.'/AbstractImporter.php';
 
-class Importer_Map {
+class Importer_Map extends AbstractImporter {
 
     /**
      * loads a file containing "unigene\tisoform" lines into feature table
@@ -13,9 +11,13 @@ class Importer_Map {
      * @param string $filename filename
      * @throws ErrorException
      */
-    static function import($filename) {
+    function import($options) {
+        $filename = $options['file'];
+        
+        
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-
+        $this->setLineCount($lines_total);
+        
         global $db;
         if (false)
             $db = new PDO();
@@ -79,7 +81,7 @@ class Importer_Map {
 
                 if ($last_unigene != $param_unigene_name) {
                     # set last value, execute insert
-                    $param_unigene_uniq = IMPORT_PREFIX . "_" .$param_unigene_name;
+                    $param_unigene_uniq = IMPORT_PREFIX . "_" . $param_unigene_name;
 
                     $stm_ins_unigene->execute();
                     $unigenes_added++;
@@ -95,7 +97,7 @@ class Importer_Map {
                 }
 
                 # set last value, execute insert
-                $param_isoform_uniq = IMPORT_PREFIX . "_" .$param_isoform_name;
+                $param_isoform_uniq = IMPORT_PREFIX . "_" . $param_isoform_name;
                 $stm_ins_isoform->execute();
 
                 # insert feature_relationship
@@ -104,9 +106,7 @@ class Importer_Map {
                 #link isoform to import
                 $stm_lnk_feature_import->execute();
 
-                $lines_imported++;
-                if ($lines_imported % 200 == 0)
-                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                $this->updateProgress(++$lines_imported);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -117,6 +117,29 @@ class Importer_Map {
             throw $error;
         }
         return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added);
+    }
+
+    protected function calledFromShell() {
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+   
+   File Format has to be like (tab-separated)
+
+unigene1    isoform1
+unigene1    isoform2
+unigene2    isoform3
+EOF;
+    }
+
+    protected function getName() {
+        return "Mapping File Importer";
+    }
+
+    protected function additional_longopts() {
+        return array();
     }
 
 }

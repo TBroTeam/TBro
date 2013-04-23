@@ -1,9 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
+require_once __DIR__ . '/AbstractImporter.php';
 require_once __DIR__ . '/Importer_Sequences.php';
-require_once INC . '/libs/php-progress-bar.php';
 
 #versions of databases for interpro import
 global $dbrefx_versions;
@@ -44,7 +42,7 @@ EOF;
      * @param string $filename
      * @throws ErrorException
      */
-    static function import($filename) {
+    function import($options) {
 #SEQNAME    ?   ?   ?   CRC LENGTH  EVIDENCE    MATCHID MATCHNAME   START   END SCORE   STATUS  DATE    INTERPROID  INTERPRONAME
         /*
          * http://wiki.bioinformatics.ucdavis.edu/index.php/InterProScan#Iprscan_raw_output_explanation
@@ -97,7 +95,9 @@ EOF;
          */
 
 
+        $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        $this->setLineCount($lines_total);
 
         global $dbrefx_versions;
         global $db;
@@ -129,8 +129,7 @@ EOF;
             $statement_insert_feature_domain->bindParam('feature_domain_name', $param_feature_domain_name, PDO::PARAM_STR);
             $statement_insert_feature_domain->bindParam('feature_domain_unique', $param_feature_domain_uniq, PDO::PARAM_STR);
 
-            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_domain_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_domain_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
@@ -157,7 +156,7 @@ EOF;
                 $match = array();
                 preg_match(self::$regex, $line, $match);
                 if (count($match) == 0)
-                    error_log("line does not match, skipping:\n\t" . $line);
+                    $this->log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
 
 
                 // set params for statements
@@ -170,9 +169,9 @@ EOF;
 
                 //more complex parameters
                 $param_feature = Importer_Sequences::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
-                $param_feature_uniq = IMPORT_PREFIX . "_" .$param_feature;
+                $param_feature_uniq = IMPORT_PREFIX . "_" . $param_feature;
                 $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
-                $param_feature_domain_uniq = IMPORT_PREFIX . "_" .$param_feature_domain_name;
+                $param_feature_domain_uniq = IMPORT_PREFIX . "_" . $param_feature_domain_name;
 
                 $statement_insert_feature_domain->execute();
                 $statement_insert_featureloc->execute();
@@ -213,8 +212,7 @@ EOF;
                     }
                 }
 
-                $lines_imported++;
-                if ($lines_imported%200==0) php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                $this->updateProgress(++$lines_imported);
             }
 
             if (!$db->commit()) {
@@ -226,6 +224,26 @@ EOF;
             throw $error;
         }
         return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added' => $dbxrefs_added);
+    }
+
+    protected function calledFromShell() {
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+
+\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence File Import!\033[0m
+EOF;
+    }
+
+    protected function getName() {
+        return "Interpro Output Importer";
+    }
+
+    protected function additional_longopts() {
+        return array();
     }
 
 }

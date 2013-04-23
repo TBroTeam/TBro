@@ -1,10 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
-require_once INC . '/libs/php-progress-bar.php';
+require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Expressions {
+class Importer_Expressions extends AbstractImporter {
     /*
       /storage/genomics/projects/dmuscipula/transcriptome/diffexpr/testing/quant/res.quant.pooled.sig.csv
 
@@ -27,9 +25,15 @@ class Importer_Expressions {
         }
     }
 
-    static function import($filename, $analysis_id, $biomaterial_parentA_name, $biomaterial_parentB_name) {
+    function import($options) {
+
+        $filename = $options['file'];
+        $analysis_id = $options['analysis_id'];
+        $biomaterial_parentA_name = $options['biomaterial_A_name'];
+        $biomaterial_parentB_name = $options['biomaterial_B_name'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        $this->setLineCount($lines_total);
 
         global $db;
         $lines_imported = 0;
@@ -126,7 +130,7 @@ class Importer_Expressions {
 
                 $statement_insert_expressiondata->execute();
 
-                $param_feature_uniquename = IMPORT_PREFIX . "_" .$feature_name;
+                $param_feature_uniquename = IMPORT_PREFIX . "_" . $feature_name;
 
 
 
@@ -135,9 +139,7 @@ class Importer_Expressions {
                 $statement_set_relationshipB->execute();
                 $quantifications_linked+= $statement_set_relationshipB->fetchColumn();
 
-                $lines_imported++;
-                if ($lines_imported % 200 == 0)
-                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                $this->updateProgress(++$lines_imported);
             }
 
             if (!$db->commit()) {
@@ -151,6 +153,37 @@ class Importer_Expressions {
         return array(LINES_IMPORTED => $lines_imported, 'quantifications_linked' => $quantifications_linked, 'lines_NA_skipped' => $lines_skipped);
     }
 
+    
+    protected function calledFromShell() {
+        $this->require_parameter($this->options, array('analysis_id', 'biomaterial_A_name', 'biomaterial_B_name'));
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+--analysis_id           analysis id
+--biomaterial_A_name    parent biomaterial A name
+--biomaterial_B_name    parent biomaterial B name
+
+File Format looks like this (\033[0;31mFirst line will be skipped\033[0m):
+,id,baseMean,baseMeanA,baseMeanB,foldChange,log2FoldChange,pval,padj
+6,comp230079_c0,249.687338527051,206.660251316251,292.714425737851,1.41640409257952,0.502232917392478,2.32555262831702e-08,9.65409100672613e-08
+9,comp234683_c0,1904.88401956508,1811.60920428892,1998.15883484125,1.10297454335664,0.141399493923902,0.000466092095479145,0.00137346251047776
+   
+\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a set of successful Count File Import!\033[0m
+EOF;
+    }
+
+    protected function getName() {
+        return "Pooled Expression File Importer";
+    }
+
+    protected function additional_longopts() {
+        return array('analysis_id:', 'biomaterial_A_name:', 'biomaterial_B_name:');
+    }
+
+    
 }
 
 ?>

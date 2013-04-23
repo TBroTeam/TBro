@@ -1,4 +1,7 @@
 <?php
+if (!defined('INC'))
+    define('INC', __DIR__.'/');
+
 if ((isset($_SERVER['SERVER_NAME']) && in_array(strtolower($_SERVER['SERVER_NAME']), array('sadrithmora'))) 
         || (isset($_SERVER['HOSTNAME']) && strtolower($_SERVER['HOSTNAME']) == 'sadrithmora')) {
     define('DB_SERVER', '127.0.0.1');
@@ -9,7 +12,7 @@ if ((isset($_SERVER['SERVER_NAME']) && in_array(strtolower($_SERVER['SERVER_NAME
     define('DB_SERVER', '132.187.22.155');
     define('DB_USERNAME', 's202139');
     define('DB_PASSWORD', 's202139');
-    define('DB_DB', 'dionaea_transcript_db_dev');
+    define('DB_DB', 'dionaea_transcript_db_dev_test1');
 }
 
 define('DUMMY', 123);

@@ -1,10 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../constants.php';
-require_once INC . '/libs/php-progress-bar.php';
+require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Quantifications {
+class Importer_Quantifications extends AbstractImporter {
 
     /**
      * This function will import Quantification data from a tab-separated file.
@@ -20,9 +18,16 @@ class Importer_Quantifications {
      * @throws Exception
      * @throws ErrorException
      */
-    static function import($filename, $quantification_id, $biomaterial_name, $type_name, $value_column) {
+    function import($options) {
+
+        $filename = $options['file'];
+        $quantification_id = $options['quantification_id'];
+        $biomaterial_name = $options['biomaterial_name'];
+        $type_name = $options['type_name'];
+        $value_column = $options['value_column'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        $this->setLineCount($lines_total);
 
         global $db;
 
@@ -72,13 +77,11 @@ class Importer_Quantifications {
             while (($line = fgetcsv($file, 0, "\t")) !== false) {
                 if (count($line) == 0)
                     continue;
-                $param_uniquename = IMPORT_PREFIX . "_" .$line[0];
+                $param_uniquename = IMPORT_PREFIX . "_" . $line[0];
                 $param_value = $line[$value_column - 1];
                 $statement_insert_quant->execute();
 
-                $lines_imported++;
-                if ($lines_imported % 200 == 0)
-                    php_progress_bar_show_status($lines_imported, $lines_total, 60);
+                $this->updateProgress(++$lines_imported);
             }
 
 
@@ -91,6 +94,40 @@ class Importer_Quantifications {
             throw $error;
         }
         return array(LINES_IMPORTED => $lines_imported);
+    }
+
+    protected function calledFromShell() {
+        $this->require_parameter($this->options, array('quantification_id', 'biomaterial_name', 'type_name', 'value_column'));
+        return $this->import($this->options);
+    }
+
+    public function help() {
+        return $this->sharedHelp() . "\n" . <<<EOF
+--quantification_id      quantification id
+--biomaterial_name       biomaterial name
+--type_name              type name. this has to be a cvterm.
+--value_column           column number that will be read for values (e.g. in the example below: 5 for expected_count)
+   
+File Format has to look like RSEM output.
+\033[0;31mFirst line will be skipped.\033[0m
+e.g. like:
+gene_id	transcript_id(s)	length	effective_length	expected_count	TPM	FPKM
+comp234852_c1	comp234852_c1_seq1,comp234852_c1_seq2,comp234852_c1_seq3,comp234852_c1_seq4,comp234852_c1_seq5,comp234852_c1_seq6	2081.75	1914.35	93095.99	1243.34	880.55
+or 
+transcript_id	gene_id	length	effective_length	expected_count	TPM	FPKM	IsoPct
+comp234852_c1_seq1	comp234852_c1	2067	1899.59	82704.68	1113.13	788.33	89.53
+   
+\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence File Import!\033[0m
+EOF;
+    }
+
+    protected function getName() {
+        return "Count File Importer";
+    }
+
+    protected function additional_longopts() {
+        return array('quantification_id:', 'biomaterial_name:', 'type_name:', 'value_column:');
     }
 
 }
