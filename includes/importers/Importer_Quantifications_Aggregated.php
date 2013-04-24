@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Quantifications extends AbstractImporter {
+class Importer_Quantifications_Aggregated extends AbstractImporter {
 
     /**
      * This function will import Quantification data from a tab-separated file.
@@ -22,9 +22,7 @@ class Importer_Quantifications extends AbstractImporter {
 
         $filename = $options['file'];
         $quantification_id = $options['quantification-id'];
-        $biomaterial_name = $options['biomaterial-name'];
         $type_name = $options['type-name'];
-        $value_column = $options['column'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         $this->setLineCount($lines_total);
@@ -32,6 +30,7 @@ class Importer_Quantifications extends AbstractImporter {
         global $db;
 
         $lines_imported = 0;
+        $inserts_executed = 0;
 
         try {
             $statement_get_type_id = $db->prepare('SELECT cvterm_id FROM cvterm WHERE name=:type_name LIMIT 1');
@@ -42,44 +41,55 @@ class Importer_Quantifications extends AbstractImporter {
                 throw new ErrorException('Type with this name not defined in table cvterm');
             }
 
-            $statement_get_biomaterial_id = $db->prepare('SELECT biomaterial_id FROM biomaterial WHERE name=:biomaterial_name LIMIT 1');
-            $statement_get_biomaterial_id->bindValue('biomaterial_name', $biomaterial_name, PDO::PARAM_STR);
-            $statement_get_biomaterial_id->execute();
-            $biomaterial_id = $statement_get_biomaterial_id->fetchColumn();
-            if (!$biomaterial_id) {
-                throw new ErrorException('Biomaterial with this name not defined');
-            }
-
             $db->beginTransaction();
 
             #shared parameters
-            $param_uniquename = null;
+            $param_feature_id = null;
             $param_value = null;
+            $param_biomaterial_id = null;
 
 
-            $statement_insert_quant = $db->prepare(
-                    sprintf('INSERT INTO quantificationresult (feature_id, quantification_id, biomaterial_id, type_id, value) '
-                            . 'VALUES ((%s), :quantification_id, :biomaterial_id, :type_id, :value)'
-                            , 'SELECT feature_id FROM feature WHERE uniquename=:gene_uniquename LIMIT 1'));
-            $statement_insert_quant->bindParam('gene_uniquename', $param_uniquename, PDO::PARAM_STR);
+            $statement_insert_quant = $db->prepare('INSERT INTO quantificationresult (feature_id, quantification_id, biomaterial_id, type_id, value) '
+                    . 'VALUES (:feature_id, :quantification_id, :biomaterial_id, :type_id, :value)');
+            $statement_insert_quant->bindParam('feature_id', $param_feature_id, PDO::PARAM_STR);
             $statement_insert_quant->bindParam('value', $param_value, PDO::PARAM_STR);
+            $statement_insert_quant->bindParam('biomaterial_id', $param_biomaterial_id, PDO::PARAM_INT);
             $statement_insert_quant->bindValue('quantification_id', $quantification_id, PDO::PARAM_INT);
-            $statement_insert_quant->bindValue('biomaterial_id', $biomaterial_id, PDO::PARAM_INT);
             $statement_insert_quant->bindValue('type_id', $type_id, PDO::PARAM_INT);
 
+            $statement_get_biomaterial_id = $db->prepare('SELECT biomaterial_id FROM biomaterial WHERE name=? LIMIT 1');
+
+            $statement_get_feature_id = $db->prepare('SELECT feature_id FROM feature WHERE uniquename=? LIMIT 1');
 
             $file = fopen($filename, 'r');
             if (feof($file))
                 return;
-            #just skipping header
-            fgets($file);
+            #process header line, get biomaterial_ids for names
+            $biomaterial_names = fgetcsv($file, 0, "\t");
+            $biomaterial_ids = array();
+            for ($i = 1; $i < count($biomaterial_names); $i++) {
+                $statement_get_biomaterial_id->execute(array($biomaterial_names[$i]));
+                $biomaterial_ids[$i] = $statement_get_biomaterial_id->fetchColumn();
+                if (!$biomaterial_ids[$i]) {
+                    throw new ErrorException('Biomaterial with this name not defined');
+                }
+            }
+
+
 
             while (($line = fgetcsv($file, 0, "\t")) !== false) {
                 if (count($line) == 0)
                     continue;
-                $param_uniquename = IMPORT_PREFIX . "_" . $line[0];
-                $param_value = $line[$value_column - 1];
-                $statement_insert_quant->execute();
+                $feature_uniquename = IMPORT_PREFIX . "_" . $line[0];
+                $statement_get_feature_id->execute(array($feature_uniquename));
+                $param_feature_id = $statement_get_feature_id->fetchColumn();
+
+                for ($i = 1; $i < count($line); $i++) {
+                    $param_value = $line[$i];
+                    $param_biomaterial_id = $biomaterial_ids[$i];
+                    $statement_insert_quant->execute();
+                    $inserts_executed++;
+                }
 
                 $this->updateProgress(++$lines_imported);
             }
@@ -93,39 +103,36 @@ class Importer_Quantifications extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported);
+        return array(LINES_IMPORTED => $lines_imported, 'inserts executed'=>$inserts_executed);
     }
 
     protected function calledFromShell() {
-        $this->require_parameter($this->options, array('quantification-id', 'biomaterial-name', 'type-name', 'column'));
+        $this->require_parameter($this->options, array('quantification-id', 'type-name'));
         return $this->import($this->options);
     }
 
     public function help() {
         return $this->sharedHelp() . "\n" . <<<EOF
-File Format has to look like RSEM output.
-\033[0;31mFirst line will be skipped.\033[0m
-e.g. like:
-gene_id	transcript_id(s)	length	effective_length	expected_count	TPM	FPKM
-comp234852_c1	comp234852_c1_seq1,comp234852_c1_seq2,comp234852_c1_seq3,comp234852_c1_seq4,comp234852_c1_seq5,comp234852_c1_seq6	2081.75	1914.35	93095.99	1243.34	880.55
-or 
-transcript_id	gene_id	length	effective_length	expected_count	TPM	FPKM	IsoPct
-comp234852_c1_seq1	comp234852_c1	2067	1899.59	82704.68	1113.13	788.33	89.53
    
+Imports output files from Anna-Lena Keller's "aggregator_CountMat.pl" script.
+
+File format looks like:
+ID      flower_L1       flower_L2       flower_L3       coronatin_L1    coronatin_L2    coronatin_L3
+comp234711_c0_seq9      21.93   11.26   8.83    2.40    0.00    2.25
+
+The label_RSEM names have to match the biomaterial names.
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 EOF;
     }
 
     protected function getName() {
-        return "Count File Importer";
+        return "Aggregated Count File Importer";
     }
 
     protected function register_getopt($getopt) {
         parent::register_getopt($getopt);
         $getopt->add('q|quantification-id:=i', 'quantification id');
-        $getopt->add('b|biomaterial-name:=s', 'biomaterial name');
         $getopt->add('t|type-name:=s', 'type name. this has to be a cvterm.');
-        $getopt->add('c|column:=s', 'column number that will be read for values (e.g. in the example below: 5 for expected_count)');
     }
 
 }

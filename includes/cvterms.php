@@ -98,6 +98,12 @@ $cvterm_data = array (
     'cv' => 'local',
     'id' => 42827,
   ),
+  'QUANTIFICATION_TYPE_EXPECTED_COUNT' => 
+  array (
+    'name' => 'expected_count',
+    'cv' => 'Statistical Terms',
+    'id' => 42828,
+  ),
 );
 */    
 
@@ -117,6 +123,7 @@ define ('CV_ISOFORM_PATH', '42826');
 define ('CV_PREDPEP', '219');
 define ('CV_BIOMATERIAL_ISA', '32');
 define ('WEBUSER_CART', '42827');
+define ('QUANTIFICATION_TYPE_EXPECTED_COUNT', '42828');
 
 ?><?php
         define('DB_NAME_IMPORTS', 'local_imports');

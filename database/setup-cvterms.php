@@ -76,6 +76,14 @@ $cvterms = array(
         'name' => 'webuser_data_cart',
         'cv' => 'local'
     ),
+    'WEBUSER_CART' => array(
+        'name' => 'webuser_data_cart',
+        'cv' => 'local'
+    ),
+    'QUANTIFICATION_TYPE_EXPECTED_COUNT' => array(
+        'name' => 'expected_count',
+        'cv' => 'Statistical Terms'
+    ),    
 );
 
 $param_cvterm_name = null;
