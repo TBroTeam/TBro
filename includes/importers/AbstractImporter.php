@@ -7,18 +7,7 @@ require_once 'Console/ProgressBar.php';
 
 require_once __DIR__ . '/../constants.php';
 
-interface CLI_Importer {
-
-    static function CLI_commandName();
-
-    static function CLI_commandDescription();
-
-    static function CLI_longHelp();
-
-    static function CLI_getCommand($parser);
-
-    static function CLI_checkRequiredOpts($options);
-}
+require_once INC.'/CLI_Command.php';
 
 interface Importer {
 
@@ -27,9 +16,9 @@ interface Importer {
 
 define('ERR_ILLEGAL_FILE_FORMAT', 'Unsupported file format. Please recheck');
 
-abstract class AbstractImporter implements CLI_Importer, Importer {
+abstract class AbstractImporter implements CLI_Command, Importer {
 
-    public static function CLI_getCommand($parser) {
+    public static function CLI_getCommand(Console_CommandLine $parser) {
         $command = $parser->addCommand(call_user_func(array(get_called_class(), 'CLI_commandName')),
                 array(
             'description' => call_user_func(array(get_called_class(), 'CLI_commandDescription'), $parser)

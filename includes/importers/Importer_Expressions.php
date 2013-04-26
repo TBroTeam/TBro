@@ -153,7 +153,7 @@ class Importer_Expressions extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'quantifications_linked' => $quantifications_linked, 'lines_NA_skipped' => $lines_skipped);
     }
 
-    public static function CLI_getCommand($parser) {
+    public static function CLI_getCommand(Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
 
         $command->addOption('analysis_id',

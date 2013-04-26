@@ -106,7 +106,7 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'inserts executed' => $inserts_executed);
     }
 
-    public static function CLI_getCommand($parser) {
+    public static function CLI_getCommand(Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
         $command->addOption('quantification_id',
                 array(

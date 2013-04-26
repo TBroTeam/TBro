@@ -37,8 +37,8 @@ $command_classes = array();
 foreach ($new_classes as $class) {
     $ref = new ReflectionClass($class);
 
-    if ($ref->implementsInterface('CLI_Importer') && !$ref->isAbstract()) {
-        $cmd = call_user_func(array($class, 'CLI_getCommand'), $parser);
+    if ($ref->implementsInterface('CLI_Command') && !$ref->isAbstract()) {
+        call_user_func(array($class, 'CLI_getCommand'), $parser);
         $command_classes[call_user_func(array($class, 'CLI_commandName'))] = $class;
     }
 }
@@ -60,9 +60,7 @@ try {
 
     $class = $command_classes[$result->command_name];
     $ref = new ReflectionClass($class);
-    if ($ref->implementsInterface('CLI_Importer') && $ref->implementsInterface('Importer') && !$ref->isAbstract()) {
-        if ($result->command->options['help'])
-            die();
+    if ($ref->implementsInterface('CLI_Command') && $ref->implementsInterface('Importer') && !$ref->isAbstract()) {
 
         call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command->options);
 
