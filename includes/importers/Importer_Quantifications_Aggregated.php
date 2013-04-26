@@ -18,14 +18,14 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
      * @throws Exception
      * @throws ErrorException
      */
-    function import($options) {
+    static function import($options) {
 
         $filename = $options['file'];
-        $quantification_id = $options['quantification-id'];
-        $type_name = $options['type-name'];
+        $quantification_id = $options['quantification_id'];
+        $type_name = $options['type_name'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        $this->setLineCount($lines_total);
+        self::setLineCount($lines_total);
 
         global $db;
 
@@ -91,7 +91,7 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
                     $inserts_executed++;
                 }
 
-                $this->updateProgress(++$lines_imported);
+                self::updateProgress(++$lines_imported);
             }
 
 
@@ -103,16 +103,42 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'inserts executed'=>$inserts_executed);
+        return array(LINES_IMPORTED => $lines_imported, 'inserts executed' => $inserts_executed);
     }
 
-    protected function calledFromShell() {
-        $this->require_parameter($this->options, array('quantification-id', 'type-name'));
-        return $this->import($this->options);
+    public static function CLI_getCommand($parser) {
+        $command = parent::CLI_getCommand($parser);
+        $command->addOption('quantification_id',
+                array(
+            'short_name' => '-q',
+            'long_name' => '--quantification_id',
+            'description' => 'quantification id'
+        ));
+        $command->addOption('type_name',
+                array(
+            'short_name' => '-t',
+            'long_name' => '--type_name',
+            'description' => 'type name. this has to be a cvterm.'
+        ));
     }
 
-    public function help() {
-        return $this->sharedHelp() . "\n" . <<<EOF
+    
+    public static function CLI_checkRequiredOpts($options) {
+        parent::CLI_checkRequiredOpts($options);
+        AbstractImporter::dieOnMissingArg($options, 'quantification_id');
+        AbstractImporter::dieOnMissingArg($options, 'type_name');
+    }
+    
+    public static function CLI_commandDescription() {
+        return "Aggregated Count File Importer";
+    }
+
+    public static function CLI_commandName() {
+        return 'count_matrix';
+    }
+
+    public static function CLI_longHelp() {
+        return <<<EOF
    
 Imports output files from Anna-Lena Keller's "aggregator_CountMat.pl" script.
 
@@ -123,16 +149,6 @@ comp234711_c0_seq9      21.93   11.26   8.83    2.40    0.00    2.25
 The label_RSEM names have to match the biomaterial names.
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 EOF;
-    }
-
-    protected function getName() {
-        return "Aggregated Count File Importer";
-    }
-
-    protected function register_getopt($getopt) {
-        parent::register_getopt($getopt);
-        $getopt->add('q|quantification-id:=i', 'quantification id');
-        $getopt->add('t|type-name:=s', 'type name. this has to be a cvterm.');
     }
 
 }

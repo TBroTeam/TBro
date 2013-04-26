@@ -51,10 +51,10 @@ class Importer_Sequences extends AbstractImporter {
      * @param string $filename filename
      * @throws ErrorException
      */
-    function import($options) {
+    static function import($options) {
         $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        $this->setLineCount($lines_total);
+        self::setLineCount($lines_total);
 
         global $db;
         $lines_imported = 0;
@@ -154,7 +154,7 @@ class Importer_Sequences extends AbstractImporter {
                     $predpeps_added++;
                 }
 
-                $this->updateProgress(++$lines_imported);
+                self::updateProgress(++$lines_imported);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -167,12 +167,16 @@ class Importer_Sequences extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated, 'predpeps_added' => $predpeps_added);
     }
 
-    protected function calledFromShell() {
-        return $this->import($this->options);
+    public static function CLI_commandDescription() {
+        return "Sequence File Importer";
     }
 
-    public function help() {
-        return $this->sharedHelp() . "\n" . <<<EOF
+    public static function CLI_commandName() {
+        return 'sequences';
+    }
+
+    public static function CLI_longHelp() {
+        return <<<EOF
    
 File Format has to be a typical fasta file.
 Header line has to look like this:
@@ -180,10 +184,6 @@ Header line has to look like this:
    
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 EOF;
-    }
-
-    protected function getName() {
-        return "Sequence File Importer";
     }
 }
 

@@ -42,7 +42,7 @@ EOF;
      * @param string $filename
      * @throws ErrorException
      */
-    function import($options) {
+    static function import($options) {
 #SEQNAME    ?   ?   ?   CRC LENGTH  EVIDENCE    MATCHID MATCHNAME   START   END SCORE   STATUS  DATE    INTERPROID  INTERPRONAME
         /*
          * http://wiki.bioinformatics.ucdavis.edu/index.php/InterProScan#Iprscan_raw_output_explanation
@@ -97,7 +97,7 @@ EOF;
 
         $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        $this->setLineCount($lines_total);
+        self::setLineCount($lines_total);
 
         global $dbrefx_versions;
         global $db;
@@ -156,7 +156,7 @@ EOF;
                 $match = array();
                 preg_match(self::$regex, $line, $match);
                 if (count($match) == 0)
-                    $this->log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
+                    self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
 
 
                 // set params for statements
@@ -212,7 +212,7 @@ EOF;
                     }
                 }
 
-                $this->updateProgress(++$lines_imported);
+                self::updateProgress(++$lines_imported);
             }
 
             if (!$db->commit()) {
@@ -226,20 +226,22 @@ EOF;
         return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added' => $dbxrefs_added);
     }
 
-    protected function calledFromShell() {
-        return $this->import($this->options);
+
+
+    public static function CLI_commandDescription() {
+        return "Interpro Output Importer";
     }
 
-    public function help() {
-        return $this->sharedHelp() . "\n" . <<<EOF
+    public static function CLI_commandName() {
+        return 'annotation_interpro';
+    }
+
+    public static function CLI_longHelp() {
+        return <<<EOF
 
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 \033[0;31mThis import requires a successful Sequence File Import!\033[0m
 EOF;
-    }
-
-    protected function getName() {
-        return "Interpro Output Importer";
     }
 }
 

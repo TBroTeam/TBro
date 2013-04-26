@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/AbstractImporter.php';
 
+ 
+
 class Importer_Map extends AbstractImporter {
 
     /**
@@ -11,12 +13,15 @@ class Importer_Map extends AbstractImporter {
      * @param string $filename filename
      * @throws ErrorException
      */
-    function import($options) {
+    static function import($options) {
         $filename = $options['file'];
         
         
+        var_dump($options);
+        die();
+        
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        $this->setLineCount($lines_total);
+        self::setLineCount($lines_total);
         
         global $db;
         if (false)
@@ -106,7 +111,7 @@ class Importer_Map extends AbstractImporter {
                 #link isoform to import
                 $stm_lnk_feature_import->execute();
 
-                $this->updateProgress(++$lines_imported);
+                self::updateProgress(++$lines_imported);
             }
             if (!$db->commit()) {
                 $err = $db->errorInfo();
@@ -119,24 +124,27 @@ class Importer_Map extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added);
     }
 
-    protected function calledFromShell() {
-        return $this->import($this->options);
+    
+    public static function CLI_commandName() {
+        return 'map';
+    }
+    
+    public static function CLI_commandDescription() {
+        return "Mapping File Importer";
     }
 
-    public function help() {
-        return $this->sharedHelp() . "\n" . <<<EOF
-   
-   File Format has to be like (tab-separated)
+    public static function CLI_longHelp() {
+        return <<<EOF
+
+File Format has to be like (tab-separated)
 
 unigene1    isoform1
 unigene1    isoform2
 unigene2    isoform3
 EOF;
     }
-
-    protected function getName() {
-        return "Mapping File Importer";
-    }
+  
+    
 }
 
 ?>

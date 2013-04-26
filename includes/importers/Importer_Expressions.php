@@ -25,15 +25,15 @@ class Importer_Expressions extends AbstractImporter {
         }
     }
 
-    function import($options) {
+    static function import($options) {
 
         $filename = $options['file'];
-        $analysis_id = $options['analysis-id'];
-        $biomaterial_parentA_name = $options['biomaterialA-name'];
-        $biomaterial_parentB_name = $options['biomaterialB-name'];
+        $analysis_id = $options['analysis_id'];
+        $biomaterial_parentA_name = $options['biomaterialA_name'];
+        $biomaterial_parentB_name = $options['biomaterialB_name'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        $this->setLineCount($lines_total);
+        self::setLineCount($lines_total);
 
         global $db;
         $lines_imported = 0;
@@ -139,7 +139,7 @@ class Importer_Expressions extends AbstractImporter {
                 $statement_set_relationshipB->execute();
                 $quantifications_linked+= $statement_set_relationshipB->fetchColumn();
 
-                $this->updateProgress(++$lines_imported);
+                self::updateProgress(++$lines_imported);
             }
 
             if (!$db->commit()) {
@@ -153,14 +153,47 @@ class Importer_Expressions extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'quantifications_linked' => $quantifications_linked, 'lines_NA_skipped' => $lines_skipped);
     }
 
-    
-    protected function calledFromShell() {
-        $this->require_parameter($this->options, array('analysis-id', 'biomaterialA-name', 'biomaterialB-name'));
-        return $this->import($this->options);
+
+    public static function CLI_getCommand($parser) {
+        $command = parent::CLI_getCommand($parser);
+
+        $command->addOption('analysis_id',
+                array(
+            'short_name' => '-a',
+            'long_name' => '--analysis_id',
+            'description' => 'analysis id'
+        ));
+        $command->addOption('biomaterialA_name',
+                array(
+            'short_name' => '-A',
+            'long_name' => '--biomaterialA_name',
+            'description' => 'parent biomaterial A name'
+        ));
+        $command->addOption('biomaterialB_name',
+                array(
+            'short_name' => '-B',
+            'long_name' => '--biomaterialB_name',
+            'description' => 'parent biomaterial B name'
+        ));
     }
 
-    public function help() {
-        return $this->sharedHelp() . "\n" . <<<EOF
+    public static function CLI_checkRequiredOpts($options) {
+        parent::CLI_checkRequiredOpts($options);
+        AbstractImporter::dieOnMissingArg($options, 'analysis_id');
+        AbstractImporter::dieOnMissingArg($options, 'biomaterialA_name');
+        AbstractImporter::dieOnMissingArg($options, 'biomaterialB_name');
+    }
+    
+    public static function CLI_commandDescription() {
+        return "Pooled Expression File Importer";
+    }
+
+    public static function CLI_commandName() {
+        return 'pooled-expressions';
+    }
+
+    public static function CLI_longHelp() {
+        return <<<EOF
 
 File Format looks like this (\033[0;31mFirst line will be skipped\033[0m):
 ,id,baseMean,baseMeanA,baseMeanB,foldChange,log2FoldChange,pval,padj
@@ -172,18 +205,6 @@ File Format looks like this (\033[0;31mFirst line will be skipped\033[0m):
 EOF;
     }
 
-    protected function getName() {
-        return "Pooled Expression File Importer";
-    }
-
-    protected function register_getopt($getopt) {
-        parent::register_getopt($getopt);
-        $getopt->add('a|analysis-id:=i', 'analysis id');
-        $getopt->add('A|biomaterialA-name:=s', 'parent biomaterial A name');
-        $getopt->add('B|biomaterialB-name:=s', 'parent biomaterial B name');
-    }
-
-    
 }
 
 ?>
