@@ -60,6 +60,7 @@ class Importer_Annotations_Blast2Go extends AbstractImporter {
 
                 self::updateProgress(++$lines_imported);
             }
+            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);

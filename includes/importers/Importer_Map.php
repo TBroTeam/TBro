@@ -15,11 +15,7 @@ class Importer_Map extends AbstractImporter {
      */
     static function import($options) {
         $filename = $options['file'];
-        
-        
-        var_dump($options);
-        die();
-        
+                
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         self::setLineCount($lines_total);
         
@@ -113,6 +109,7 @@ class Importer_Map extends AbstractImporter {
 
                 self::updateProgress(++$lines_imported);
             }
+            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);

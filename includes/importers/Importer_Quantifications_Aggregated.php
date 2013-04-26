@@ -94,7 +94,7 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
                 self::updateProgress(++$lines_imported);
             }
 
-
+            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
@@ -122,13 +122,12 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
         ));
     }
 
-    
     public static function CLI_checkRequiredOpts($options) {
         parent::CLI_checkRequiredOpts($options);
         AbstractImporter::dieOnMissingArg($options, 'quantification_id');
         AbstractImporter::dieOnMissingArg($options, 'type_name');
     }
-    
+
     public static function CLI_commandDescription() {
         return "Aggregated Count File Importer";
     }

@@ -141,7 +141,7 @@ class Importer_Expressions extends AbstractImporter {
 
                 self::updateProgress(++$lines_imported);
             }
-
+            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
@@ -152,7 +152,6 @@ class Importer_Expressions extends AbstractImporter {
         }
         return array(LINES_IMPORTED => $lines_imported, 'quantifications_linked' => $quantifications_linked, 'lines_NA_skipped' => $lines_skipped);
     }
-
 
     public static function CLI_getCommand($parser) {
         $command = parent::CLI_getCommand($parser);
@@ -183,7 +182,7 @@ class Importer_Expressions extends AbstractImporter {
         AbstractImporter::dieOnMissingArg($options, 'biomaterialA_name');
         AbstractImporter::dieOnMissingArg($options, 'biomaterialB_name');
     }
-    
+
     public static function CLI_commandDescription() {
         return "Pooled Expression File Importer";
     }

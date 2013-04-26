@@ -9,9 +9,6 @@ class Organism_dataset extends \WebService {
     public function execute($querydata) {
         global $_CONST, $db;
 
-        $species = $_REQUEST['species'];
-        $import = $_REQUEST['dataset'];
-        $term = $_REQUEST['term'] . '%';
 
 #UI hint
         if (false)

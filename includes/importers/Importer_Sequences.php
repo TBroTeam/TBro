@@ -8,14 +8,14 @@ class Importer_Sequences extends AbstractImporter {
      * reads the next fasta sequence from file handle $fasta_handle and returns a list of description and sequence (without whitespace and newlines)
      * @param resource $fasta_handle
      * @return list ($description, $sequence)
-     * @throws ErrorException with ErrorCode ERRCODE_ILLEGAL_FILE_FORMAT: next non-empty line has to start with '>'
+     * @throws ErrorException with ErrorMsg ERRCODE_ILLEGAL_FILE_FORMAT: next non-empty line has to start with '>'
      */
     static function read_fasta($fasta_handle) {
         $description = '';
         while (empty($description) && !feof($fasta_handle))
             $description = trim(fgets($fasta_handle));
         if (strpos($description, '>') !== 0)
-            throw new ErrorException('', ERRCODE_ILLEGAL_FILE_FORMAT, 1);
+            throw new ErrorException(ERR_ILLEGAL_FILE_FORMAT);
 
 
         $sequence = '';
@@ -103,7 +103,8 @@ class Importer_Sequences extends AbstractImporter {
             $statement_insert_predpep->bindParam('seqlen', $param_predpep_seqlen, PDO::PARAM_INT);
             $statement_insert_predpep->bindParam('residues', $param_predpep_residues, PDO::PARAM_STR);
 
-            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))',
+                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_predpep_location->bindParam('fmin', $param_predpep_fmin, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('fmax', $param_predpep_fmax, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('strand', $param_predpep_strand, PDO::PARAM_INT);
@@ -137,7 +138,8 @@ class Importer_Sequences extends AbstractImporter {
                 }
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
+                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/',
+                                $description, $matches)) {
                     $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
                     $param_predpep_uniq = IMPORT_PREFIX . "_" . $param_predpep_name;
                     $param_predpep_seqlen = $matches['len'];
@@ -156,6 +158,7 @@ class Importer_Sequences extends AbstractImporter {
 
                 self::updateProgress(++$lines_imported);
             }
+            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
@@ -185,6 +188,7 @@ Header line has to look like this:
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 EOF;
     }
+
 }
 
 ?>

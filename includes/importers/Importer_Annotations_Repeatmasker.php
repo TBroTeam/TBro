@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/AbstractImporter.php';
 
-class Importer_Annotations_Repeatmasker extends AbstractImporter{
+class Importer_Annotations_Repeatmasker extends AbstractImporter {
 
     /**
      * 
@@ -75,7 +75,8 @@ EOF;
             $statement_insert_domain->bindParam('name', $param_name, PDO::PARAM_STR);
             $statement_insert_domain->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
 
-            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
+                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
@@ -125,11 +126,12 @@ EOF;
 
 
                     self::updateProgress(++$lines_imported);
-                } else {
+                }
+                else {
                     echo "WARNING: Line does not match:\n\t$line\n";
                 }
             }
-
+            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);

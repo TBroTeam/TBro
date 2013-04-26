@@ -1,18 +1,30 @@
 <?php
-require_once __DIR__.'/constants.php';
-if (!defined('VERBOSE')) define('VERBOSE', false);
-if (!defined('DEBUG')) define('DEBUG', false);
+
+require_once __DIR__ . '/constants.php';
 
 try {
     global $db;
     $connstr = sprintf('pgsql:host=%s;dbname=%s', DB_SERVER, DB_DB);
-    if (VERBOSE || DEBUG) {
-        require_once __DIR__.'/libs/loggedPDO/LoggedPDO.php';
-        require_once __DIR__.'/libs/loggedPDO/Log_firebugJSON.php';
-        $logger = Log::factory('firebugJSON', '', 'PDO');
+    if (@DEBUG) {
+        require_once __DIR__ . '/libs/loggedPDO/LoggedPDO.php';
+        require_once __DIR__ . '/libs/loggedPDO/Log_firebugJSON.php';
+
+        if (PHP_SAPI == 'cli') {
+            $logtype = 'console';
+        }
+        else {
+            if (in_array('Content-type: application/json', headers_list())) {
+                $logtype = 'console';
+            }
+            else {
+                $logtype = 'firebugJSON';
+            }
+        }
+        $logger = Log::factory($logtype, '', 'PDO');
         $db = new \LoggedPDO\PDO($connstr, DB_USERNAME, DB_PASSWORD, null, $logger);
         //$db->log_replace_params = false;
-    } else {
+    }
+    else {
         $db = new PDO($connstr, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true));
     }
     #usually stop execution on DB error
