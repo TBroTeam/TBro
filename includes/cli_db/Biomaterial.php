@@ -37,6 +37,14 @@ class Biomaterial extends AbstractTable {
                 ),
                 'description' => 'description'
             ),
+            'organism_id' => array(
+                'colname' => 'TaxonId',
+                'actions' => array(
+                    'insert' => 'optional',
+                    'update' => 'optional',
+                ),
+                'description' => 'organism id'
+            ),
             'biosourceprovider_id' => array(
                 'colname' => 'BiosourceproviderId',
                 'actions' => array(
@@ -85,6 +93,7 @@ class Biomaterial extends AbstractTable {
                 $biomaterial = new propel\Biomaterial();
                 $biomaterial->setName($options['name']);
                 isset($options['description']) && $biomaterial->setDescription($options['description']);
+                isset($options['organism_id']) && $biomaterial->setTaxonId($options['organism_id']);
                 isset($options['biosourceprovider_id']) && $biomaterial->setBiosourceproviderId($options['biosourceprovider_id']);
                 $lines = $biomaterial->save();
                 printf("%d line(s) inserted.\n", $lines);
@@ -98,6 +107,7 @@ class Biomaterial extends AbstractTable {
                 }
                 isset($options['name']) && $biomaterial->setName($options['name']);
                 isset($options['description']) && $biomaterial->setDescription($options['description']);
+                isset($options['organism_id']) && $biomaterial->setTaxonId($options['organism_id']);
                 isset($options['biosourceprovider_id']) && $biomaterial->setBiosourceproviderId($options['biosourceprovider_id']);
                 $lines = $biomaterial->save();
                 printf("%d line(s) udpated.\n", $lines);
