@@ -58,9 +58,12 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
     public static function prepareQueryResult($res) {
         $keys = call_user_func(array(get_called_class(), 'getKeys'));
-        $column_keys = array_map(function($val) {
-                    return $val['colname'];
-                }, $keys);
+        $column_keys = array();
+        foreach ($keys as $key=>$val){
+            if (@$val['colname']!=null)
+                $column_keys[$key]=$val['colname'];
+        }
+
         $ret = array();
         foreach ($res as $row) {
             $ret_row = array();
