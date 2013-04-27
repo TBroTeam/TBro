@@ -28,7 +28,8 @@ $parser->renderer->line_width = $width;
 
 $old_classes = get_declared_classes();
 foreach (new DirectoryIterator(ROOT . 'tables') as $file) {
-    include_once ROOT.'tables/'.$file;
+    if (strpos($file, '.php')!==FALSE)
+        include_once ROOT.'tables/'.$file;
 }
 $new_classes = array_diff(get_declared_classes(), $old_classes);
 

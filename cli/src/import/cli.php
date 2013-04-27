@@ -1,8 +1,10 @@
 #!/usr/bin/php
 <?php
 //if we are in a phar archive, this has been set by the stub
-if (!defined('ROOT')) define('ROOT', __DIR__ . "/");
-if (!defined('CONFIG_DIR')) define('CONFIG_DIR', __DIR__ . "/../");
+if (!defined('ROOT'))
+    define('ROOT', __DIR__ . "/");
+if (!defined('CONFIG_DIR'))
+    define('CONFIG_DIR', __DIR__ . "/../");
 
 if (!@include_once 'Console/CommandLine.php')
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
@@ -43,7 +45,8 @@ $parser->addOption('debug',
 
 $old_classes = get_declared_classes();
 foreach (new DirectoryIterator(ROOT . 'importers') as $file) {
-    include_once ROOT.'importers/'.$file;
+    if (strpos($file, '.php') !== FALSE)
+        include_once ROOT . 'importers/' . $file;
 }
 $new_classes = array_diff(get_declared_classes(), $old_classes);
 
@@ -69,7 +72,8 @@ try {
         global $db;
         if (@DEBUG) {
             require_once ROOT . '/libs/loggedPDO/LoggedPDO.php';
-            $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION), Log::factory('console', '', 'PDO'));
+            $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION),
+                    Log::factory('console', '', 'PDO'));
         }
         else
             $db = new PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));

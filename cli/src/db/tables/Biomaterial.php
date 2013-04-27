@@ -136,7 +136,7 @@ class Biomaterial extends AbstractTable {
         $biomaterial = $bq->findOneByBiomaterialId($options['id']);
         if ($biomaterial == null) {
             printf("No contact found for id %d.\n", $options['id']);
-            break;
+            return;
         }
         isset($options['name']) && $biomaterial->setName($options['name']);
         isset($options['description']) && $biomaterial->setDescription($options['description']);
@@ -153,10 +153,12 @@ class Biomaterial extends AbstractTable {
         $biomaterial = $bq->findOneByBiomaterialId($options['id']);
         if ($biomaterial == null) {
             printf("No contact found for id %d.\n", $options['id']);
-            break;
+            return;
         }
-        $biomaterial->delete();
-        printf("Contact with id %d deleted successfully.\n", $biomaterial->getContactId());
+        if (self::confirm($options)) {
+            $biomaterial->delete();
+            printf("Contact with id %d deleted successfully.\n", $biomaterial->getContactId());
+        }
     }
 
     private static function command_list($options, $keys) {
@@ -192,7 +194,7 @@ class Biomaterial extends AbstractTable {
         $brp = $brqp->findOne();
         if ($brp == null) {
             printf("No relationship between parent %d and child %d found.\n", $options['parent_id'], $options['id']);
-            break;
+            return;
         }
         $brp->delete();
         printf("Relationship between parent %d and child %d deleted successfully.\n", $brp->getObjectId(), $brp->getSubjectId());
@@ -207,7 +209,7 @@ class Biomaterial extends AbstractTable {
         $brc = $brqc->findOne();
         if ($brc == null) {
             printf("No relationship between parent %d and child %d found.\n", $options['id'], $options['child_id']);
-            break;
+            return;
         }
         $brc->delete();
         printf("Relationship between parent %d and child %d deleted successfully.\n", $brc->getObjectId(), $brc->getSubjectId());
@@ -218,7 +220,7 @@ class Biomaterial extends AbstractTable {
         $biomaterial = $bq->findOneByBiomaterialId($options['id']);
         if ($biomaterial == null) {
             printf("No contact found for id %d.\n", $options['id']);
-            break;
+            return;
         }
 
         $table_keys = array_keys(array_filter($keys, function($val) {

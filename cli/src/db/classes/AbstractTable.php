@@ -28,6 +28,14 @@ abstract class AbstractTable implements \CLI_Command, Table {
                     'help_name' => $key
                 ));
         }
+        if ($subcommand_name == 'delete') {
+            $submcd->addOption('noconfirm',
+                    array(
+                'long_name' => '--noconfirm' . $key,
+                'description' => 'if set, will not ask for confirmation on delete',
+                'action' => 'StoreTrue'
+            ));
+        }
     }
 
     public static function CLI_getCommand(\Console_CommandLine $parser) {
@@ -57,9 +65,9 @@ abstract class AbstractTable implements \CLI_Command, Table {
     public static function prepareQueryResult($res) {
         $keys = call_user_func(array(get_called_class(), 'getKeys'));
         $column_keys = array();
-        foreach ($keys as $key=>$val){
-            if (@$val['colname']!=null)
-                $column_keys[$key]=$val['colname'];
+        foreach ($keys as $key => $val) {
+            if (@$val['colname'] != null)
+                $column_keys[$key] = $val['colname'];
         }
 
         $ret = array();
@@ -78,7 +86,18 @@ abstract class AbstractTable implements \CLI_Command, Table {
         echo $tbl->getTable();
     }
 
-}
+    public static function confirm($options) {
+        if (isset($options['noconfirm']) && $options['noconfirm'])
+            return true;
 
+        echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";
+        while (!in_array($line = trim(fgets(STDIN)), array('yes', 'no'))) {
+
+            echo "enter one of (yes/no):\n> ";
+        }
+        return $line == 'yes';
+    }
+
+}
 
 ?>
