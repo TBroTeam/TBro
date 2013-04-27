@@ -26,13 +26,12 @@ $parser = new \Console_CommandLine(array(
         ));
 $parser->subcommand_required = true;
 
-/* $parser->addOption('debug',
-  array(
-  'short_name' => '-d',
-  'long_name' => '--debug',
-  'action' => 'StoreTrue',
-  'description' => 'enables debug mode'
-  )); */
+$parser->addOption('debug', array(
+    'short_name' => '-d',
+    'long_name' => '--debug',
+    'action' => 'StoreTrue',
+    'description' => 'enables debug mode'
+));
 
 $width_exec = exec('tput cols 2>&1');
 $width = is_int($width_exec) && $width_exec > 0 ? $width_exec : 200;
@@ -57,9 +56,9 @@ foreach ($new_classes as $class) {
 try {
     $result = $parser->parse();
 
-    /* if ($result->options['debug'] === true) {
-      define('DEBUG', true);
-      } */
+    if ($result->options['debug'] === true) {
+        define('DEBUG', true);
+    }
     if (is_object($result->command)) {
         $class = $command_classes[$result->command_name];
 
@@ -71,7 +70,8 @@ try {
             if (is_object($result->command->command)) {
                 call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command->command->options, $result->command->command_name);
                 call_user_func(array($class, 'executeCommand'), $result->command->command->options, $result->command->command_name);
-            } else {
+            }
+            else {
                 $parser->commands[$result->command_name]->displayUsage();
             }
         }
@@ -81,7 +81,7 @@ try {
         exit(0);
     }
 } catch (\Exception $exc) {
-    if (@DEBUG) {
+    if (defined('DEBUG') && DEBUG) {
         throw $exc;
     }
     $parser->displayError($exc->getMessage());

@@ -9,7 +9,7 @@ class Analysis extends AbstractTable {
     public static function getKeys() {
         return array(
             'id' => array(
-                'colname' => 'AnalyisId',
+                'colname' => 'AnalysisId',
                 'actions' => array(
                     'details' => 'required',
                     'update' => 'required',

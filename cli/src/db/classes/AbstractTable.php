@@ -65,6 +65,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     }
 
     public static function prepareQueryResult($res) {
+        
         $keys = call_user_func(array(get_called_class(), 'getKeys'));
         $column_keys = array();
         foreach ($keys as $key => $val) {
@@ -92,7 +93,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         if (isset($options['noconfirm']) && $options['noconfirm'])
             return true;
 
-        echo "are you sure you want to delete this row? all referencing rows in other tables will be deleted too, so be careful! (yes/no)\n> ";
+        echo "are you sure you want to delete this row? (yes/no)\n> ";
         while (!in_array($line = trim(fgets(STDIN)), array('yes', 'no'))) {
 
             echo "enter one of (yes/no):\n> ";
@@ -167,12 +168,14 @@ abstract class AbstractTable implements \CLI_Command, Table {
     }
 
     protected static function command_list($options, $keys) {
+        
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
         $q = new $propel_class;
 
         $table_keys = array_keys(array_filter($keys, function($val) {
                             return isset($val['colname']);
                         }));
+                        
         $results = self::prepareQueryResult($q->find());
         self::printTable($table_keys, $results);
     }
