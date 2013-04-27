@@ -1,11 +1,23 @@
 #!/usr/bin/php
 <?php
-// we're using the PEAR Console_CommandLine package: pear install Console_CommandLine
-require_once 'Console/CommandLine.php';
-// we're using the PEAR Console_Table package: pear install Console_Table
-require_once 'Console/Table.php';
+//root dir. for testing, this can be __DIR__."/", for deployment it can be phing://
+define('ROOT', __DIR__ . "/");
+//TODO put this into configure options
+define('CONFIG', __DIR__ . "/../");
 
-require_once __DIR__ . '/../includes/constants.php';
+if (!@include_once 'Console/CommandLine.php')
+    die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
+
+if (!@include_once 'Console/Table.php')
+    die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
+
+
+if (!@include_once CONFIG . 'db-config.php')
+    die(sprintf("Missing config file: %s\n", CONFIG . 'db-config.php'));
+
+if (!@include_once CONFIG . 'db-cvterms.php')
+    die(sprintf("Missing config file: %s\n", CONFIG . 'db-cvterms.php'));
+
 
 $parser = new \Console_CommandLine(array(
     'description' => 'database tool for transcriptome browser!',
@@ -18,7 +30,7 @@ $parser->renderer->line_width = $width;
 
 $old_classes = get_declared_classes();
 
-foreach (glob(INC . '/cli_db/*.php') as $filename) {
+foreach (glob(ROOT . '/tables/*.php') as $filename) {
     include_once $filename;
 }
 $new_classes = array_diff(get_declared_classes(), $old_classes);
@@ -36,6 +48,8 @@ try {
     $result = $parser->parse();
     $class = $command_classes[$result->command_name];
 
+    require_once ROOT . '/propel-conf/propel-init.php';
+    
     $ref = new ReflectionClass($class);
     if ($ref->implementsInterface('\CLI_Command') && $ref->implementsInterface('\cli_db\Table') && !$ref->isAbstract()) {
         call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command->command->options, $result->command->command_name);

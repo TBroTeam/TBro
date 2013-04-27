@@ -2,9 +2,7 @@
 
 namespace cli_db;
 
-require_once __DIR__ . '/../constants.php';
-require_once __DIR__ . '/propel-conf/propel-init.php';
-require_once INC . '/CLI_Command.php';
+require_once ROOT . 'classes/CLI_Command.php';
 
 interface Table {
 

@@ -1,13 +1,6 @@
 <?php
 
-// we're using the PEAR Log package: pear install Log
-require_once 'Log.php';
-// we're using PEAR Console_Progressbar package: pear install channel://pear.php.net/Console_Progressbar-0.5.2beta
-require_once 'Console/ProgressBar.php';
-
-require_once __DIR__ . '/../constants.php';
-
-require_once INC.'/CLI_Command.php';
+require_once ROOT.'classes/CLI_Command.php';
 
 interface Importer {
 

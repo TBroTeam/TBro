@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/AbstractImporter.php';
+require_once ROOT . 'classes/AbstractImporter.php';
 
  
 

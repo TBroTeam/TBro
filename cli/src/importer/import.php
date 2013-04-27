@@ -1,12 +1,28 @@
 #!/usr/bin/php
 <?php
-// we're using the PEAR Console_CommandLine package: pear install Console_CommandLine
-require_once 'Console/CommandLine.php';
-// we're using the PEAR Console_Table package: pear install Console_Table
-require_once 'Console/Table.php';
+//root dir. for testing, this can be __DIR__."/", for deployment it can be phing://
+define('ROOT', __DIR__ . "/");
+//TODO put this into configure options
+define('CONFIG', __DIR__ . "/../");
 
-require_once __DIR__ . '/../includes/constants.php';
+if (!@include_once 'Console/CommandLine.php')
+    die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
 
+if (!@include_once 'Console/Table.php')
+    die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
+
+if (!@include_once 'Console/ProgressBar.php')
+    die("Failure including Console/ProgressBar.php\nplease install PEAR::Console_ProgressBar or check your include_path\n");
+
+if (!@include_once 'Log.php')
+    die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
+
+
+if (!@include_once CONFIG . 'db-config.php')
+    die(sprintf("Missing config file: %s\n", CONFIG . 'db-config.php'));
+
+if (!@include_once CONFIG . 'db-cvterms.php')
+    die(sprintf("Missing config file: %s\n", CONFIG . 'db-cvterms.php'));
 
 $parser = new Console_CommandLine(array(
     'description' => 'importer for transcriptome browser!',
@@ -28,7 +44,7 @@ $parser->addOption('debug',
 
 $old_classes = get_declared_classes();
 
-foreach (glob(INC . '/importers/*.php') as $filename) {
+foreach (glob(ROOT . 'importers/*.php') as $filename) {
     include_once $filename;
 }
 $new_classes = array_diff(get_declared_classes(), $old_classes);
@@ -51,7 +67,18 @@ try {
         define('DEBUG', true);
     }
 
-    require_once INC . '/db.php';
+    try {
+        global $db;
+        if (@DEBUG) {
+            require_once ROOT . '/libs/loggedPDO/LoggedPDO.php';
+            $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION), Log::factory('console', '', 'PDO'));
+        }
+        else
+            $db = new PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    } catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
 
     foreach ($result->command->args['files'] as $filename) {
         if (!file_exists($filename))

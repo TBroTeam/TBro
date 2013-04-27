@@ -1,7 +1,7 @@
 <?php
 namespace cli_db;
 
-require_once __DIR__ . '/AbstractTable.php';
+require_once ROOT . 'classes/AbstractTable.php';
 
 class Contact extends AbstractTable {
 
