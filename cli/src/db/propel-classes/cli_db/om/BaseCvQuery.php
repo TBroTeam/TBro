@@ -15,9 +15,7 @@ use \PropelPDO;
 use cli_db\propel\Cv;
 use cli_db\propel\CvPeer;
 use cli_db\propel\CvQuery;
-use cli_db\propel\Cvprop;
 use cli_db\propel\Cvterm;
-use cli_db\propel\Cvtermpath;
 
 /**
  * Base class that represents a query for the 'cv' table.
@@ -36,17 +34,9 @@ use cli_db\propel\Cvtermpath;
  * @method CvQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method CvQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method CvQuery leftJoinCvprop($relationAlias = null) Adds a LEFT JOIN clause to the query using the Cvprop relation
- * @method CvQuery rightJoinCvprop($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cvprop relation
- * @method CvQuery innerJoinCvprop($relationAlias = null) Adds a INNER JOIN clause to the query using the Cvprop relation
- *
  * @method CvQuery leftJoinCvterm($relationAlias = null) Adds a LEFT JOIN clause to the query using the Cvterm relation
  * @method CvQuery rightJoinCvterm($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cvterm relation
  * @method CvQuery innerJoinCvterm($relationAlias = null) Adds a INNER JOIN clause to the query using the Cvterm relation
- *
- * @method CvQuery leftJoinCvtermpath($relationAlias = null) Adds a LEFT JOIN clause to the query using the Cvtermpath relation
- * @method CvQuery rightJoinCvtermpath($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cvtermpath relation
- * @method CvQuery innerJoinCvtermpath($relationAlias = null) Adds a INNER JOIN clause to the query using the Cvtermpath relation
  *
  * @method Cv findOne(PropelPDO $con = null) Return the first Cv matching the query
  * @method Cv findOneOrCreate(PropelPDO $con = null) Return the first Cv matching the query, or a new Cv object populated from the query conditions when no match is found
@@ -350,80 +340,6 @@ abstract class BaseCvQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Cvprop object
-     *
-     * @param   Cvprop|PropelObjectCollection $cvprop  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 CvQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByCvprop($cvprop, $comparison = null)
-    {
-        if ($cvprop instanceof Cvprop) {
-            return $this
-                ->addUsingAlias(CvPeer::CV_ID, $cvprop->getCvId(), $comparison);
-        } elseif ($cvprop instanceof PropelObjectCollection) {
-            return $this
-                ->useCvpropQuery()
-                ->filterByPrimaryKeys($cvprop->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByCvprop() only accepts arguments of type Cvprop or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Cvprop relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return CvQuery The current query, for fluid interface
-     */
-    public function joinCvprop($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Cvprop');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Cvprop');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Cvprop relation Cvprop object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\CvpropQuery A secondary query class using the current class as primary query
-     */
-    public function useCvpropQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinCvprop($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Cvprop', '\cli_db\propel\CvpropQuery');
-    }
-
-    /**
      * Filter the query by a related Cvterm object
      *
      * @param   Cvterm|PropelObjectCollection $cvterm  the related object to use as filter
@@ -495,80 +411,6 @@ abstract class BaseCvQuery extends ModelCriteria
         return $this
             ->joinCvterm($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Cvterm', '\cli_db\propel\CvtermQuery');
-    }
-
-    /**
-     * Filter the query by a related Cvtermpath object
-     *
-     * @param   Cvtermpath|PropelObjectCollection $cvtermpath  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 CvQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByCvtermpath($cvtermpath, $comparison = null)
-    {
-        if ($cvtermpath instanceof Cvtermpath) {
-            return $this
-                ->addUsingAlias(CvPeer::CV_ID, $cvtermpath->getCvId(), $comparison);
-        } elseif ($cvtermpath instanceof PropelObjectCollection) {
-            return $this
-                ->useCvtermpathQuery()
-                ->filterByPrimaryKeys($cvtermpath->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByCvtermpath() only accepts arguments of type Cvtermpath or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Cvtermpath relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return CvQuery The current query, for fluid interface
-     */
-    public function joinCvtermpath($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Cvtermpath');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Cvtermpath');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Cvtermpath relation Cvtermpath object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\CvtermpathQuery A secondary query class using the current class as primary query
-     */
-    public function useCvtermpathQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinCvtermpath($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Cvtermpath', '\cli_db\propel\CvtermpathQuery');
     }
 
     /**

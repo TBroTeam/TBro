@@ -12,12 +12,9 @@ use \PropelPDO;
 use cli_db\propel\AcquisitionPeer;
 use cli_db\propel\AnalysisPeer;
 use cli_db\propel\ContactPeer;
-use cli_db\propel\ElementresultPeer;
 use cli_db\propel\ProtocolPeer;
 use cli_db\propel\Quantification;
 use cli_db\propel\QuantificationPeer;
-use cli_db\propel\QuantificationRelationshipPeer;
-use cli_db\propel\QuantificationpropPeer;
 use cli_db\propel\map\QuantificationTableMap;
 
 /**
@@ -411,18 +408,6 @@ abstract class BaseQuantificationPeer
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in ElementresultPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ElementresultPeer::clearInstancePool();
-        // Invalidate objects in QuantificationRelationshipPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        QuantificationRelationshipPeer::clearInstancePool();
-        // Invalidate objects in QuantificationRelationshipPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        QuantificationRelationshipPeer::clearInstancePool();
-        // Invalidate objects in QuantificationpropPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        QuantificationpropPeer::clearInstancePool();
     }
 
     /**

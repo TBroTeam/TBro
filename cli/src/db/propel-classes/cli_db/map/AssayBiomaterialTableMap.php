@@ -46,7 +46,7 @@ class AssayBiomaterialTableMap extends TableMap
         $this->addPrimaryKey('assay_biomaterial_id', 'AssayBiomaterialId', 'INTEGER', true, null, null);
         $this->addForeignKey('assay_id', 'AssayId', 'INTEGER', 'assay', 'assay_id', true, null, null);
         $this->addForeignKey('biomaterial_id', 'BiomaterialId', 'INTEGER', 'biomaterial', 'biomaterial_id', true, null, null);
-        $this->addForeignKey('channel_id', 'ChannelId', 'INTEGER', 'channel', 'channel_id', false, null, null);
+        $this->addColumn('channel_id', 'ChannelId', 'INTEGER', false, null, null);
         $this->addColumn('rank', 'Rank', 'INTEGER', true, null, 0);
         // validators
     } // initialize()
@@ -58,7 +58,6 @@ class AssayBiomaterialTableMap extends TableMap
     {
         $this->addRelation('Assay', 'cli_db\\propel\\Assay', RelationMap::MANY_TO_ONE, array('assay_id' => 'assay_id', ), 'CASCADE', null);
         $this->addRelation('Biomaterial', 'cli_db\\propel\\Biomaterial', RelationMap::MANY_TO_ONE, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null);
-        $this->addRelation('Channel', 'cli_db\\propel\\Channel', RelationMap::MANY_TO_ONE, array('channel_id' => 'channel_id', ), 'SET NULL', null);
     } // buildRelations()
 
 } // AssayBiomaterialTableMap

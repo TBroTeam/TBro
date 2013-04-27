@@ -9,16 +9,12 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
-use cli_db\propel\ArraydesignPeer;
 use cli_db\propel\AssayPeer;
 use cli_db\propel\BiomaterialPeer;
 use cli_db\propel\Contact;
 use cli_db\propel\ContactPeer;
-use cli_db\propel\ContactRelationshipPeer;
 use cli_db\propel\CvtermPeer;
-use cli_db\propel\ProjectContactPeer;
 use cli_db\propel\QuantificationPeer;
-use cli_db\propel\StudyPeer;
 use cli_db\propel\map\ContactTableMap;
 
 /**
@@ -392,30 +388,15 @@ abstract class BaseContactPeer
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in ArraydesignPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ArraydesignPeer::clearInstancePool();
         // Invalidate objects in AssayPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         AssayPeer::clearInstancePool();
         // Invalidate objects in BiomaterialPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         BiomaterialPeer::clearInstancePool();
-        // Invalidate objects in ContactRelationshipPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ContactRelationshipPeer::clearInstancePool();
-        // Invalidate objects in ContactRelationshipPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ContactRelationshipPeer::clearInstancePool();
-        // Invalidate objects in ProjectContactPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ProjectContactPeer::clearInstancePool();
         // Invalidate objects in QuantificationPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         QuantificationPeer::clearInstancePool();
-        // Invalidate objects in StudyPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        StudyPeer::clearInstancePool();
     }
 
     /**

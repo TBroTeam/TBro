@@ -18,8 +18,6 @@ use cli_db\propel\AssayBiomaterialQuery;
 use cli_db\propel\AssayQuery;
 use cli_db\propel\Biomaterial;
 use cli_db\propel\BiomaterialQuery;
-use cli_db\propel\Channel;
-use cli_db\propel\ChannelQuery;
 
 /**
  * Base class that represents a row from the 'assay_biomaterial' table.
@@ -89,11 +87,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
      * @var        Biomaterial
      */
     protected $aBiomaterial;
-
-    /**
-     * @var        Channel
-     */
-    protected $aChannel;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -274,10 +267,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
             $this->modifiedColumns[] = AssayBiomaterialPeer::CHANNEL_ID;
         }
 
-        if ($this->aChannel !== null && $this->aChannel->getChannelId() !== $v) {
-            $this->aChannel = null;
-        }
-
 
         return $this;
     } // setChannelId()
@@ -381,9 +370,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
         if ($this->aBiomaterial !== null && $this->biomaterial_id !== $this->aBiomaterial->getBiomaterialId()) {
             $this->aBiomaterial = null;
         }
-        if ($this->aChannel !== null && $this->channel_id !== $this->aChannel->getChannelId()) {
-            $this->aChannel = null;
-        }
     } // ensureConsistency
 
     /**
@@ -425,7 +411,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
 
             $this->aAssay = null;
             $this->aBiomaterial = null;
-            $this->aChannel = null;
         } // if (deep)
     }
 
@@ -556,13 +541,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
                     $affectedRows += $this->aBiomaterial->save($con);
                 }
                 $this->setBiomaterial($this->aBiomaterial);
-            }
-
-            if ($this->aChannel !== null) {
-                if ($this->aChannel->isModified() || $this->aChannel->isNew()) {
-                    $affectedRows += $this->aChannel->save($con);
-                }
-                $this->setChannel($this->aChannel);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -757,12 +735,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->aChannel !== null) {
-                if (!$this->aChannel->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aChannel->getValidationFailures());
-                }
-            }
-
 
             if (($retval = AssayBiomaterialPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
@@ -860,9 +832,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
             }
             if (null !== $this->aBiomaterial) {
                 $result['Biomaterial'] = $this->aBiomaterial->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aChannel) {
-                $result['Channel'] = $this->aChannel->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1188,58 +1157,6 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
     }
 
     /**
-     * Declares an association between this object and a Channel object.
-     *
-     * @param             Channel $v
-     * @return AssayBiomaterial The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setChannel(Channel $v = null)
-    {
-        if ($v === null) {
-            $this->setChannelId(NULL);
-        } else {
-            $this->setChannelId($v->getChannelId());
-        }
-
-        $this->aChannel = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the Channel object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAssayBiomaterial($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated Channel object
-     *
-     * @param PropelPDO $con Optional Connection object.
-     * @param $doQuery Executes a query to get the object if required
-     * @return Channel The associated Channel object.
-     * @throws PropelException
-     */
-    public function getChannel(PropelPDO $con = null, $doQuery = true)
-    {
-        if ($this->aChannel === null && ($this->channel_id !== null) && $doQuery) {
-            $this->aChannel = ChannelQuery::create()->findPk($this->channel_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aChannel->addAssayBiomaterials($this);
-             */
-        }
-
-        return $this->aChannel;
-    }
-
-    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -1278,16 +1195,12 @@ abstract class BaseAssayBiomaterial extends BaseObject implements Persistent
             if ($this->aBiomaterial instanceof Persistent) {
               $this->aBiomaterial->clearAllReferences($deep);
             }
-            if ($this->aChannel instanceof Persistent) {
-              $this->aChannel->clearAllReferences($deep);
-            }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
         $this->aAssay = null;
         $this->aBiomaterial = null;
-        $this->aChannel = null;
     }
 
     /**

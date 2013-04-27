@@ -12,9 +12,9 @@
     <foreign-key foreignTable="assay" name="acquisition_assay_id_fkey" onDelete="CASCADE">
       <reference local="assay_id" foreign="assay_id"/>
     </foreign-key>
-    <foreign-key foreignTable="channel" name="acquisition_channel_id_fkey" onDelete="SET NULL">
+    <!--foreign-key foreignTable="channel" name="acquisition_channel_id_fkey" onDelete="SET NULL">
       <reference local="channel_id" foreign="channel_id"/>
-    </foreign-key>
+    </foreign-key-->
     <foreign-key foreignTable="protocol" name="acquisition_protocol_id_fkey" onDelete="SET NULL">
       <reference local="protocol_id" foreign="protocol_id"/>
     </foreign-key>
@@ -27,11 +27,11 @@
     <index name="acquisition_idx2">
       <index-column name="protocol_id"/>
     </index>
-    <index name="acquisition_idx3">
+    <!--index name="acquisition_idx3">
       <index-column name="channel_id"/>
-    </index>
+    </index-->
   </table>
-  <table name="acquisition_relationship" phpName="AcquisitionRelationship" idMethod="native">
+  <!--table name="acquisition_relationship" phpName="AcquisitionRelationship" idMethod="native">
     <column name="acquisition_relationship_id" phpName="AcquisitionRelationshipId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="subject_id" phpName="SubjectId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
@@ -86,7 +86,7 @@
     <index name="acquisitionprop_idx2">
       <index-column name="type_id"/>
     </index>
-  </table>
+  </table-->
   <table name="analysis" phpName="Analysis" idMethod="native">
     <column name="analysis_id" phpName="AnalysisId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="false"/>
@@ -104,7 +104,7 @@
       <unique-column name="sourcename"/>
     </unique>
   </table>
-  <table name="analysisfeature" phpName="Analysisfeature" idMethod="native">
+  <!--table name="analysisfeature" phpName="Analysisfeature" idMethod="native">
     <column name="analysisfeature_id" phpName="AnalysisfeatureId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="feature_id" phpName="FeatureId" type="INTEGER" required="true"/>
     <column name="analysis_id" phpName="AnalysisId" type="INTEGER" required="true"/>
@@ -247,7 +247,7 @@
     <index name="arraydesignprop_idx2">
       <index-column name="type_id"/>
     </index>
-  </table>
+  </table-->
   <table name="assay" phpName="Assay" idMethod="native">
     <column name="assay_id" phpName="AssayId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="arraydesign_id" phpName="ArraydesignId" type="INTEGER" required="true"/>
@@ -259,12 +259,12 @@
     <column name="dbxref_id" phpName="DbxrefId" type="INTEGER" required="false"/>
     <column name="name" phpName="Name" type="LONGVARCHAR" required="false"/>
     <column name="description" phpName="Description" type="LONGVARCHAR" required="false"/>
-    <foreign-key foreignTable="arraydesign" name="assay_arraydesign_id_fkey" onDelete="CASCADE">
+    <!--foreign-key foreignTable="arraydesign" name="assay_arraydesign_id_fkey" onDelete="CASCADE">
       <reference local="arraydesign_id" foreign="arraydesign_id"/>
     </foreign-key>
     <foreign-key foreignTable="dbxref" name="assay_dbxref_id_fkey" onDelete="SET NULL">
       <reference local="dbxref_id" foreign="dbxref_id"/>
-    </foreign-key>
+    </foreign-key-->
     <foreign-key foreignTable="contact" name="assay_operator_id_fkey" onDelete="CASCADE">
       <reference local="operator_id" foreign="contact_id"/>
     </foreign-key>
@@ -274,18 +274,18 @@
     <unique name="assay_c1">
       <unique-column name="name"/>
     </unique>
-    <index name="assay_idx1">
+    <!--index name="assay_idx1">
       <index-column name="arraydesign_id"/>
-    </index>
+    </index-->
     <index name="assay_idx2">
       <index-column name="protocol_id"/>
     </index>
     <index name="assay_idx3">
       <index-column name="operator_id"/>
     </index>
-    <index name="assay_idx4">
+    <!--index name="assay_idx4">
       <index-column name="dbxref_id"/>
-    </index>
+    </index-->
   </table>
   <table name="assay_biomaterial" phpName="AssayBiomaterial" idMethod="native">
     <column name="assay_biomaterial_id" phpName="AssayBiomaterialId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
@@ -299,9 +299,9 @@
     <foreign-key foreignTable="biomaterial" name="assay_biomaterial_biomaterial_id_fkey" onDelete="CASCADE">
       <reference local="biomaterial_id" foreign="biomaterial_id"/>
     </foreign-key>
-    <foreign-key foreignTable="channel" name="assay_biomaterial_channel_id_fkey" onDelete="SET NULL">
+    <!--foreign-key foreignTable="channel" name="assay_biomaterial_channel_id_fkey" onDelete="SET NULL">
       <reference local="channel_id" foreign="channel_id"/>
-    </foreign-key>
+    </foreign-key-->
     <unique name="assay_biomaterial_c1">
       <unique-column name="assay_id"/>
       <unique-column name="biomaterial_id"/>
@@ -314,11 +314,11 @@
     <index name="assay_biomaterial_idx2">
       <index-column name="biomaterial_id"/>
     </index>
-    <index name="assay_biomaterial_idx3">
+    <!--index name="assay_biomaterial_idx3">
       <index-column name="channel_id"/>
-    </index>
+    </index-->
   </table>
-  <table name="assay_project" phpName="AssayProject" idMethod="native">
+  <!--table name="assay_project" phpName="AssayProject" idMethod="native">
     <column name="assay_project_id" phpName="AssayProjectId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="assay_id" phpName="AssayId" type="INTEGER" required="true"/>
     <column name="project_id" phpName="ProjectId" type="INTEGER" required="true"/>
@@ -362,7 +362,7 @@
     <index name="assayprop_idx2">
       <index-column name="type_id"/>
     </index>
-  </table>
+  </table-->
   <table name="biomaterial" phpName="Biomaterial" idMethod="native">
     <column name="biomaterial_id" phpName="BiomaterialId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="taxon_id" phpName="TaxonId" type="INTEGER" required="false"/>
@@ -373,9 +373,9 @@
     <foreign-key foreignTable="contact" name="biomaterial_biosourceprovider_id_fkey" onDelete="SET NULL">
       <reference local="biosourceprovider_id" foreign="contact_id"/>
     </foreign-key>
-    <foreign-key foreignTable="dbxref" name="biomaterial_dbxref_id_fkey" onDelete="SET NULL">
+    <!--foreign-key foreignTable="dbxref" name="biomaterial_dbxref_id_fkey" onDelete="SET NULL">
       <reference local="dbxref_id" foreign="dbxref_id"/>
-    </foreign-key>
+    </foreign-key-->
     <foreign-key foreignTable="organism" name="biomaterial_taxon_id_fkey" onDelete="SET NULL">
       <reference local="taxon_id" foreign="organism_id"/>
     </foreign-key>
@@ -388,11 +388,11 @@
     <index name="biomaterial_idx2">
       <index-column name="biosourceprovider_id"/>
     </index>
-    <index name="biomaterial_idx3">
+    <!--index name="biomaterial_idx3">
       <index-column name="dbxref_id"/>
-    </index>
+    </index-->
   </table>
-  <table name="biomaterial_dbxref" phpName="BiomaterialDbxref" idMethod="native">
+  <!--table name="biomaterial_dbxref" phpName="BiomaterialDbxref" idMethod="native">
     <column name="biomaterial_dbxref_id" phpName="BiomaterialDbxrefId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="biomaterial_id" phpName="BiomaterialId" type="INTEGER" required="true"/>
     <column name="dbxref_id" phpName="DbxrefId" type="INTEGER" required="true"/>
@@ -412,7 +412,7 @@
     <index name="biomaterial_dbxref_idx2">
       <index-column name="dbxref_id"/>
     </index>
-  </table>
+  </table-->
   <table name="biomaterial_relationship" phpName="BiomaterialRelationship" idMethod="native">
     <column name="biomaterial_relationship_id" phpName="BiomaterialRelationshipId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="subject_id" phpName="SubjectId" type="INTEGER" required="true"/>
@@ -442,7 +442,7 @@
       <index-column name="type_id"/>
     </index>
   </table>
-  <table name="biomaterial_treatment" phpName="BiomaterialTreatment" idMethod="native">
+  <!--table name="biomaterial_treatment" phpName="BiomaterialTreatment" idMethod="native">
     <column name="biomaterial_treatment_id" phpName="BiomaterialTreatmentId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="biomaterial_id" phpName="BiomaterialId" type="INTEGER" required="true"/>
     <column name="treatment_id" phpName="TreatmentId" type="INTEGER" required="true"/>
@@ -516,7 +516,7 @@
     <unique name="channel_c1">
       <unique-column name="name"/>
     </unique>
-  </table>
+  </table-->
   <table name="contact" phpName="Contact" idMethod="native">
     <column name="contact_id" phpName="ContactId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="false"/>
@@ -529,7 +529,7 @@
       <unique-column name="name"/>
     </unique>
   </table>
-  <table name="contact_relationship" phpName="ContactRelationship" idMethod="native">
+  <!--table name="contact_relationship" phpName="ContactRelationship" idMethod="native">
     <column name="contact_relationship_id" phpName="ContactRelationshipId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
     <column name="subject_id" phpName="SubjectId" type="INTEGER" required="true"/>
@@ -588,7 +588,7 @@
     <index name="control_idx4">
       <index-column name="row_id"/>
     </index>
-  </table>
+  </table-->
   <table name="cv" phpName="Cv" idMethod="native">
     <column name="cv_id" phpName="CvId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -597,7 +597,7 @@
       <unique-column name="name"/>
     </unique>
   </table>
-  <table name="cvprop" phpName="Cvprop" idMethod="native">
+  <!--table name="cvprop" phpName="Cvprop" idMethod="native">
     <column name="cvprop_id" phpName="CvpropId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="cv_id" phpName="CvId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
@@ -614,7 +614,7 @@
       <unique-column name="type_id"/>
       <unique-column name="rank"/>
     </unique>
-  </table>
+  </table-->
   <table name="cvterm" phpName="Cvterm" idMethod="native">
     <column name="cvterm_id" phpName="CvtermId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="cv_id" phpName="CvId" type="INTEGER" required="true"/>
@@ -626,28 +626,28 @@
     <foreign-key foreignTable="cv" name="cvterm_cv_id_fkey" onDelete="CASCADE">
       <reference local="cv_id" foreign="cv_id"/>
     </foreign-key>
-    <foreign-key foreignTable="dbxref" name="cvterm_dbxref_id_fkey" onDelete="SET NULL">
+    <!--foreign-key foreignTable="dbxref" name="cvterm_dbxref_id_fkey" onDelete="SET NULL">
       <reference local="dbxref_id" foreign="dbxref_id"/>
-    </foreign-key>
+    </foreign-key-->
     <unique name="cvterm_c1">
       <unique-column name="name"/>
       <unique-column name="cv_id"/>
       <unique-column name="is_obsolete"/>
     </unique>
-    <unique name="cvterm_c2">
+    <!--unique name="cvterm_c2">
       <unique-column name="dbxref_id"/>
-    </unique>
+    </unique-->
     <index name="cvterm_idx1">
       <index-column name="cv_id"/>
     </index>
     <index name="cvterm_idx2">
       <index-column name="name"/>
     </index>
-    <index name="cvterm_idx3">
+    <!--index name="cvterm_idx3">
       <index-column name="dbxref_id"/>
-    </index>
+    </index-->
   </table>
-  <table name="cvterm_dbxref" phpName="CvtermDbxref" idMethod="native">
+  <!--table name="cvterm_dbxref" phpName="CvtermDbxref" idMethod="native">
     <column name="cvterm_dbxref_id" phpName="CvtermDbxrefId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="cvterm_id" phpName="CvtermId" type="INTEGER" required="true"/>
     <column name="dbxref_id" phpName="DbxrefId" type="INTEGER" required="true"/>
@@ -1457,7 +1457,7 @@
     <column name="mageml_id" phpName="MagemlId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="mage_package" phpName="MagePackage" type="LONGVARCHAR" required="true"/>
     <column name="mage_ml" phpName="MageMl" type="LONGVARCHAR" required="true"/>
-  </table>
+  </table-->
   <table name="organism" phpName="Organism" idMethod="native">
     <column name="organism_id" phpName="OrganismId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="abbreviation" phpName="Abbreviation" type="VARCHAR" size="255" required="false"/>
@@ -1470,7 +1470,7 @@
       <unique-column name="species"/>
     </unique>
   </table>
-  <table name="organism_dbxref" phpName="OrganismDbxref" idMethod="native">
+  <!--table name="organism_dbxref" phpName="OrganismDbxref" idMethod="native">
     <column name="organism_dbxref_id" phpName="OrganismDbxrefId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="organism_id" phpName="OrganismId" type="INTEGER" required="true"/>
     <column name="dbxref_id" phpName="DbxrefId" type="INTEGER" required="true"/>
@@ -1602,7 +1602,7 @@
       <unique-column name="type_id"/>
       <unique-column name="rank"/>
     </unique>
-  </table>
+  </table-->
   <table name="protocol" phpName="Protocol" idMethod="native">
     <column name="protocol_id" phpName="ProtocolId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
@@ -1613,12 +1613,12 @@
     <column name="protocoldescription" phpName="Protocoldescription" type="LONGVARCHAR" required="false"/>
     <column name="hardwaredescription" phpName="Hardwaredescription" type="LONGVARCHAR" required="false"/>
     <column name="softwaredescription" phpName="Softwaredescription" type="LONGVARCHAR" required="false"/>
-    <foreign-key foreignTable="dbxref" name="protocol_dbxref_id_fkey" onDelete="SET NULL">
+    <!--foreign-key foreignTable="dbxref" name="protocol_dbxref_id_fkey" onDelete="SET NULL">
       <reference local="dbxref_id" foreign="dbxref_id"/>
     </foreign-key>
     <foreign-key foreignTable="pub" name="protocol_pub_id_fkey" onDelete="SET NULL">
       <reference local="pub_id" foreign="pub_id"/>
-    </foreign-key>
+    </foreign-key-->
     <foreign-key foreignTable="cvterm" name="protocol_type_id_fkey" onDelete="CASCADE">
       <reference local="type_id" foreign="cvterm_id"/>
     </foreign-key>
@@ -1628,14 +1628,14 @@
     <index name="protocol_idx1">
       <index-column name="type_id"/>
     </index>
-    <index name="protocol_idx2">
+    <!--index name="protocol_idx2">
       <index-column name="pub_id"/>
     </index>
     <index name="protocol_idx3">
       <index-column name="dbxref_id"/>
-    </index>
+    </index-->
   </table>
-  <table name="protocolparam" phpName="Protocolparam" idMethod="native">
+  <!--table name="protocolparam" phpName="Protocolparam" idMethod="native">
     <column name="protocolparam_id" phpName="ProtocolparamId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="protocol_id" phpName="ProtocolId" type="INTEGER" required="true"/>
     <column name="name" phpName="Name" type="LONGVARCHAR" required="true"/>
@@ -1780,7 +1780,7 @@
     <index name="pubprop_idx2">
       <index-column name="type_id"/>
     </index>
-  </table>
+  </table-->
   <table name="quantification" phpName="Quantification" idMethod="native">
     <column name="quantification_id" phpName="QuantificationId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="acquisition_id" phpName="AcquisitionId" type="INTEGER" required="true"/>
@@ -1819,7 +1819,7 @@
       <index-column name="analysis_id"/>
     </index>
   </table>
-  <table name="quantification_relationship" phpName="QuantificationRelationship" idMethod="native">
+  <!--table name="quantification_relationship" phpName="QuantificationRelationship" idMethod="native">
     <column name="quantification_relationship_id" phpName="QuantificationRelationshipId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="subject_id" phpName="SubjectId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
@@ -2138,5 +2138,5 @@
       <unique-column name="identity"/>
       <unique-column name="type_id"/>
     </unique>
-  </table>
+  </table-->
 </database>

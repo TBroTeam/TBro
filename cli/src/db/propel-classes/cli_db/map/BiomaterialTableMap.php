@@ -46,7 +46,7 @@ class BiomaterialTableMap extends TableMap
         $this->addPrimaryKey('biomaterial_id', 'BiomaterialId', 'INTEGER', true, null, null);
         $this->addForeignKey('taxon_id', 'TaxonId', 'INTEGER', 'organism', 'organism_id', false, null, null);
         $this->addForeignKey('biosourceprovider_id', 'BiosourceproviderId', 'INTEGER', 'contact', 'contact_id', false, null, null);
-        $this->addForeignKey('dbxref_id', 'DbxrefId', 'INTEGER', 'dbxref', 'dbxref_id', false, null, null);
+        $this->addColumn('dbxref_id', 'DbxrefId', 'INTEGER', false, null, null);
         $this->addColumn('name', 'Name', 'LONGVARCHAR', false, null, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         // validators
@@ -58,16 +58,10 @@ class BiomaterialTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Contact', 'cli_db\\propel\\Contact', RelationMap::MANY_TO_ONE, array('biosourceprovider_id' => 'contact_id', ), 'SET NULL', null);
-        $this->addRelation('Dbxref', 'cli_db\\propel\\Dbxref', RelationMap::MANY_TO_ONE, array('dbxref_id' => 'dbxref_id', ), 'SET NULL', null);
         $this->addRelation('Organism', 'cli_db\\propel\\Organism', RelationMap::MANY_TO_ONE, array('taxon_id' => 'organism_id', ), 'SET NULL', null);
         $this->addRelation('AssayBiomaterial', 'cli_db\\propel\\AssayBiomaterial', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'AssayBiomaterials');
-        $this->addRelation('BiomaterialDbxref', 'cli_db\\propel\\BiomaterialDbxref', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'BiomaterialDbxrefs');
         $this->addRelation('BiomaterialRelationshipRelatedByObjectId', 'cli_db\\propel\\BiomaterialRelationship', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'object_id', ), null, null, 'BiomaterialRelationshipsRelatedByObjectId');
         $this->addRelation('BiomaterialRelationshipRelatedBySubjectId', 'cli_db\\propel\\BiomaterialRelationship', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'subject_id', ), null, null, 'BiomaterialRelationshipsRelatedBySubjectId');
-        $this->addRelation('BiomaterialTreatment', 'cli_db\\propel\\BiomaterialTreatment', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'BiomaterialTreatments');
-        $this->addRelation('Biomaterialprop', 'cli_db\\propel\\Biomaterialprop', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'Biomaterialprops');
-        $this->addRelation('Quantificationresult', 'cli_db\\propel\\Quantificationresult', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), null, 'CASCADE', 'Quantificationresults');
-        $this->addRelation('Treatment', 'cli_db\\propel\\Treatment', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'Treatments');
     } // buildRelations()
 
 } // BiomaterialTableMap

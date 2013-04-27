@@ -44,13 +44,13 @@ class AssayTableMap extends TableMap
         $this->setPrimaryKeyMethodInfo('assay_assay_id_seq');
         // columns
         $this->addPrimaryKey('assay_id', 'AssayId', 'INTEGER', true, null, null);
-        $this->addForeignKey('arraydesign_id', 'ArraydesignId', 'INTEGER', 'arraydesign', 'arraydesign_id', true, null, null);
+        $this->addColumn('arraydesign_id', 'ArraydesignId', 'INTEGER', true, null, null);
         $this->addForeignKey('protocol_id', 'ProtocolId', 'INTEGER', 'protocol', 'protocol_id', false, null, null);
         $this->addColumn('assaydate', 'Assaydate', 'TIMESTAMP', false, null, 'now()');
         $this->addColumn('arrayidentifier', 'Arrayidentifier', 'LONGVARCHAR', false, null, null);
         $this->addColumn('arraybatchidentifier', 'Arraybatchidentifier', 'LONGVARCHAR', false, null, null);
         $this->addForeignKey('operator_id', 'OperatorId', 'INTEGER', 'contact', 'contact_id', true, null, null);
-        $this->addForeignKey('dbxref_id', 'DbxrefId', 'INTEGER', 'dbxref', 'dbxref_id', false, null, null);
+        $this->addColumn('dbxref_id', 'DbxrefId', 'INTEGER', false, null, null);
         $this->addColumn('name', 'Name', 'LONGVARCHAR', false, null, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         // validators
@@ -61,17 +61,10 @@ class AssayTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Arraydesign', 'cli_db\\propel\\Arraydesign', RelationMap::MANY_TO_ONE, array('arraydesign_id' => 'arraydesign_id', ), 'CASCADE', null);
-        $this->addRelation('Dbxref', 'cli_db\\propel\\Dbxref', RelationMap::MANY_TO_ONE, array('dbxref_id' => 'dbxref_id', ), 'SET NULL', null);
         $this->addRelation('Contact', 'cli_db\\propel\\Contact', RelationMap::MANY_TO_ONE, array('operator_id' => 'contact_id', ), 'CASCADE', null);
         $this->addRelation('Protocol', 'cli_db\\propel\\Protocol', RelationMap::MANY_TO_ONE, array('protocol_id' => 'protocol_id', ), 'SET NULL', null);
         $this->addRelation('Acquisition', 'cli_db\\propel\\Acquisition', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), 'CASCADE', null, 'Acquisitions');
         $this->addRelation('AssayBiomaterial', 'cli_db\\propel\\AssayBiomaterial', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), 'CASCADE', null, 'AssayBiomaterials');
-        $this->addRelation('AssayProject', 'cli_db\\propel\\AssayProject', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), null, null, 'AssayProjects');
-        $this->addRelation('Assayprop', 'cli_db\\propel\\Assayprop', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), 'CASCADE', null, 'Assayprops');
-        $this->addRelation('Control', 'cli_db\\propel\\Control', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), 'CASCADE', null, 'Controls');
-        $this->addRelation('StudyAssay', 'cli_db\\propel\\StudyAssay', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), 'CASCADE', null, 'StudyAssays');
-        $this->addRelation('Studyfactorvalue', 'cli_db\\propel\\Studyfactorvalue', RelationMap::ONE_TO_MANY, array('assay_id' => 'assay_id', ), 'CASCADE', null, 'Studyfactorvalues');
     } // buildRelations()
 
 } // AssayTableMap

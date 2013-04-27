@@ -17,7 +17,6 @@ use cli_db\propel\AssayBiomaterial;
 use cli_db\propel\AssayBiomaterialPeer;
 use cli_db\propel\AssayBiomaterialQuery;
 use cli_db\propel\Biomaterial;
-use cli_db\propel\Channel;
 
 /**
  * Base class that represents a query for the 'assay_biomaterial' table.
@@ -47,10 +46,6 @@ use cli_db\propel\Channel;
  * @method AssayBiomaterialQuery leftJoinBiomaterial($relationAlias = null) Adds a LEFT JOIN clause to the query using the Biomaterial relation
  * @method AssayBiomaterialQuery rightJoinBiomaterial($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Biomaterial relation
  * @method AssayBiomaterialQuery innerJoinBiomaterial($relationAlias = null) Adds a INNER JOIN clause to the query using the Biomaterial relation
- *
- * @method AssayBiomaterialQuery leftJoinChannel($relationAlias = null) Adds a LEFT JOIN clause to the query using the Channel relation
- * @method AssayBiomaterialQuery rightJoinChannel($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Channel relation
- * @method AssayBiomaterialQuery innerJoinChannel($relationAlias = null) Adds a INNER JOIN clause to the query using the Channel relation
  *
  * @method AssayBiomaterial findOne(PropelPDO $con = null) Return the first AssayBiomaterial matching the query
  * @method AssayBiomaterial findOneOrCreate(PropelPDO $con = null) Return the first AssayBiomaterial matching the query, or a new AssayBiomaterial object populated from the query conditions when no match is found
@@ -398,8 +393,6 @@ abstract class BaseAssayBiomaterialQuery extends ModelCriteria
      * $query->filterByChannelId(array('max' => 12)); // WHERE channel_id <= 12
      * </code>
      *
-     * @see       filterByChannel()
-     *
      * @param     mixed $channelId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -623,82 +616,6 @@ abstract class BaseAssayBiomaterialQuery extends ModelCriteria
         return $this
             ->joinBiomaterial($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Biomaterial', '\cli_db\propel\BiomaterialQuery');
-    }
-
-    /**
-     * Filter the query by a related Channel object
-     *
-     * @param   Channel|PropelObjectCollection $channel The related object(s) to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 AssayBiomaterialQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByChannel($channel, $comparison = null)
-    {
-        if ($channel instanceof Channel) {
-            return $this
-                ->addUsingAlias(AssayBiomaterialPeer::CHANNEL_ID, $channel->getChannelId(), $comparison);
-        } elseif ($channel instanceof PropelObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(AssayBiomaterialPeer::CHANNEL_ID, $channel->toKeyValue('PrimaryKey', 'ChannelId'), $comparison);
-        } else {
-            throw new PropelException('filterByChannel() only accepts arguments of type Channel or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Channel relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return AssayBiomaterialQuery The current query, for fluid interface
-     */
-    public function joinChannel($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Channel');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Channel');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Channel relation Channel object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ChannelQuery A secondary query class using the current class as primary query
-     */
-    public function useChannelQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinChannel($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Channel', '\cli_db\propel\ChannelQuery');
     }
 
     /**

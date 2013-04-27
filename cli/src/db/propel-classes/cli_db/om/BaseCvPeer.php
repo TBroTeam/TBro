@@ -12,7 +12,6 @@ use \PropelPDO;
 use cli_db\propel\Cv;
 use cli_db\propel\CvPeer;
 use cli_db\propel\CvtermPeer;
-use cli_db\propel\CvtermpathPeer;
 use cli_db\propel\map\CvTableMap;
 
 /**
@@ -384,9 +383,6 @@ abstract class BaseCvPeer
         // Invalidate objects in CvtermPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         CvtermPeer::clearInstancePool();
-        // Invalidate objects in CvtermpathPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        CvtermpathPeer::clearInstancePool();
     }
 
     /**

@@ -12,17 +12,13 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
-use cli_db\propel\Arraydesign;
 use cli_db\propel\Assay;
 use cli_db\propel\Biomaterial;
 use cli_db\propel\Contact;
 use cli_db\propel\ContactPeer;
 use cli_db\propel\ContactQuery;
-use cli_db\propel\ContactRelationship;
 use cli_db\propel\Cvterm;
-use cli_db\propel\ProjectContact;
 use cli_db\propel\Quantification;
-use cli_db\propel\Study;
 
 /**
  * Base class that represents a query for the 'contact' table.
@@ -47,10 +43,6 @@ use cli_db\propel\Study;
  * @method ContactQuery rightJoinCvterm($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cvterm relation
  * @method ContactQuery innerJoinCvterm($relationAlias = null) Adds a INNER JOIN clause to the query using the Cvterm relation
  *
- * @method ContactQuery leftJoinArraydesign($relationAlias = null) Adds a LEFT JOIN clause to the query using the Arraydesign relation
- * @method ContactQuery rightJoinArraydesign($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Arraydesign relation
- * @method ContactQuery innerJoinArraydesign($relationAlias = null) Adds a INNER JOIN clause to the query using the Arraydesign relation
- *
  * @method ContactQuery leftJoinAssay($relationAlias = null) Adds a LEFT JOIN clause to the query using the Assay relation
  * @method ContactQuery rightJoinAssay($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Assay relation
  * @method ContactQuery innerJoinAssay($relationAlias = null) Adds a INNER JOIN clause to the query using the Assay relation
@@ -59,25 +51,9 @@ use cli_db\propel\Study;
  * @method ContactQuery rightJoinBiomaterial($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Biomaterial relation
  * @method ContactQuery innerJoinBiomaterial($relationAlias = null) Adds a INNER JOIN clause to the query using the Biomaterial relation
  *
- * @method ContactQuery leftJoinContactRelationshipRelatedByObjectId($relationAlias = null) Adds a LEFT JOIN clause to the query using the ContactRelationshipRelatedByObjectId relation
- * @method ContactQuery rightJoinContactRelationshipRelatedByObjectId($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ContactRelationshipRelatedByObjectId relation
- * @method ContactQuery innerJoinContactRelationshipRelatedByObjectId($relationAlias = null) Adds a INNER JOIN clause to the query using the ContactRelationshipRelatedByObjectId relation
- *
- * @method ContactQuery leftJoinContactRelationshipRelatedBySubjectId($relationAlias = null) Adds a LEFT JOIN clause to the query using the ContactRelationshipRelatedBySubjectId relation
- * @method ContactQuery rightJoinContactRelationshipRelatedBySubjectId($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ContactRelationshipRelatedBySubjectId relation
- * @method ContactQuery innerJoinContactRelationshipRelatedBySubjectId($relationAlias = null) Adds a INNER JOIN clause to the query using the ContactRelationshipRelatedBySubjectId relation
- *
- * @method ContactQuery leftJoinProjectContact($relationAlias = null) Adds a LEFT JOIN clause to the query using the ProjectContact relation
- * @method ContactQuery rightJoinProjectContact($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ProjectContact relation
- * @method ContactQuery innerJoinProjectContact($relationAlias = null) Adds a INNER JOIN clause to the query using the ProjectContact relation
- *
  * @method ContactQuery leftJoinQuantification($relationAlias = null) Adds a LEFT JOIN clause to the query using the Quantification relation
  * @method ContactQuery rightJoinQuantification($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Quantification relation
  * @method ContactQuery innerJoinQuantification($relationAlias = null) Adds a INNER JOIN clause to the query using the Quantification relation
- *
- * @method ContactQuery leftJoinStudy($relationAlias = null) Adds a LEFT JOIN clause to the query using the Study relation
- * @method ContactQuery rightJoinStudy($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Study relation
- * @method ContactQuery innerJoinStudy($relationAlias = null) Adds a INNER JOIN clause to the query using the Study relation
  *
  * @method Contact findOne(PropelPDO $con = null) Return the first Contact matching the query
  * @method Contact findOneOrCreate(PropelPDO $con = null) Return the first Contact matching the query, or a new Contact object populated from the query conditions when no match is found
@@ -503,80 +479,6 @@ abstract class BaseContactQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Arraydesign object
-     *
-     * @param   Arraydesign|PropelObjectCollection $arraydesign  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ContactQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByArraydesign($arraydesign, $comparison = null)
-    {
-        if ($arraydesign instanceof Arraydesign) {
-            return $this
-                ->addUsingAlias(ContactPeer::CONTACT_ID, $arraydesign->getManufacturerId(), $comparison);
-        } elseif ($arraydesign instanceof PropelObjectCollection) {
-            return $this
-                ->useArraydesignQuery()
-                ->filterByPrimaryKeys($arraydesign->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByArraydesign() only accepts arguments of type Arraydesign or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Arraydesign relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ContactQuery The current query, for fluid interface
-     */
-    public function joinArraydesign($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Arraydesign');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Arraydesign');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Arraydesign relation Arraydesign object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ArraydesignQuery A secondary query class using the current class as primary query
-     */
-    public function useArraydesignQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinArraydesign($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Arraydesign', '\cli_db\propel\ArraydesignQuery');
-    }
-
-    /**
      * Filter the query by a related Assay object
      *
      * @param   Assay|PropelObjectCollection $assay  the related object to use as filter
@@ -725,228 +627,6 @@ abstract class BaseContactQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related ContactRelationship object
-     *
-     * @param   ContactRelationship|PropelObjectCollection $contactRelationship  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ContactQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByContactRelationshipRelatedByObjectId($contactRelationship, $comparison = null)
-    {
-        if ($contactRelationship instanceof ContactRelationship) {
-            return $this
-                ->addUsingAlias(ContactPeer::CONTACT_ID, $contactRelationship->getObjectId(), $comparison);
-        } elseif ($contactRelationship instanceof PropelObjectCollection) {
-            return $this
-                ->useContactRelationshipRelatedByObjectIdQuery()
-                ->filterByPrimaryKeys($contactRelationship->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByContactRelationshipRelatedByObjectId() only accepts arguments of type ContactRelationship or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the ContactRelationshipRelatedByObjectId relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ContactQuery The current query, for fluid interface
-     */
-    public function joinContactRelationshipRelatedByObjectId($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ContactRelationshipRelatedByObjectId');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'ContactRelationshipRelatedByObjectId');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the ContactRelationshipRelatedByObjectId relation ContactRelationship object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ContactRelationshipQuery A secondary query class using the current class as primary query
-     */
-    public function useContactRelationshipRelatedByObjectIdQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinContactRelationshipRelatedByObjectId($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ContactRelationshipRelatedByObjectId', '\cli_db\propel\ContactRelationshipQuery');
-    }
-
-    /**
-     * Filter the query by a related ContactRelationship object
-     *
-     * @param   ContactRelationship|PropelObjectCollection $contactRelationship  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ContactQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByContactRelationshipRelatedBySubjectId($contactRelationship, $comparison = null)
-    {
-        if ($contactRelationship instanceof ContactRelationship) {
-            return $this
-                ->addUsingAlias(ContactPeer::CONTACT_ID, $contactRelationship->getSubjectId(), $comparison);
-        } elseif ($contactRelationship instanceof PropelObjectCollection) {
-            return $this
-                ->useContactRelationshipRelatedBySubjectIdQuery()
-                ->filterByPrimaryKeys($contactRelationship->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByContactRelationshipRelatedBySubjectId() only accepts arguments of type ContactRelationship or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the ContactRelationshipRelatedBySubjectId relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ContactQuery The current query, for fluid interface
-     */
-    public function joinContactRelationshipRelatedBySubjectId($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ContactRelationshipRelatedBySubjectId');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'ContactRelationshipRelatedBySubjectId');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the ContactRelationshipRelatedBySubjectId relation ContactRelationship object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ContactRelationshipQuery A secondary query class using the current class as primary query
-     */
-    public function useContactRelationshipRelatedBySubjectIdQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinContactRelationshipRelatedBySubjectId($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ContactRelationshipRelatedBySubjectId', '\cli_db\propel\ContactRelationshipQuery');
-    }
-
-    /**
-     * Filter the query by a related ProjectContact object
-     *
-     * @param   ProjectContact|PropelObjectCollection $projectContact  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ContactQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByProjectContact($projectContact, $comparison = null)
-    {
-        if ($projectContact instanceof ProjectContact) {
-            return $this
-                ->addUsingAlias(ContactPeer::CONTACT_ID, $projectContact->getContactId(), $comparison);
-        } elseif ($projectContact instanceof PropelObjectCollection) {
-            return $this
-                ->useProjectContactQuery()
-                ->filterByPrimaryKeys($projectContact->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByProjectContact() only accepts arguments of type ProjectContact or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the ProjectContact relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ContactQuery The current query, for fluid interface
-     */
-    public function joinProjectContact($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ProjectContact');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'ProjectContact');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the ProjectContact relation ProjectContact object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ProjectContactQuery A secondary query class using the current class as primary query
-     */
-    public function useProjectContactQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinProjectContact($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ProjectContact', '\cli_db\propel\ProjectContactQuery');
-    }
-
-    /**
      * Filter the query by a related Quantification object
      *
      * @param   Quantification|PropelObjectCollection $quantification  the related object to use as filter
@@ -1018,80 +698,6 @@ abstract class BaseContactQuery extends ModelCriteria
         return $this
             ->joinQuantification($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Quantification', '\cli_db\propel\QuantificationQuery');
-    }
-
-    /**
-     * Filter the query by a related Study object
-     *
-     * @param   Study|PropelObjectCollection $study  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ContactQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByStudy($study, $comparison = null)
-    {
-        if ($study instanceof Study) {
-            return $this
-                ->addUsingAlias(ContactPeer::CONTACT_ID, $study->getContactId(), $comparison);
-        } elseif ($study instanceof PropelObjectCollection) {
-            return $this
-                ->useStudyQuery()
-                ->filterByPrimaryKeys($study->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByStudy() only accepts arguments of type Study or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Study relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ContactQuery The current query, for fluid interface
-     */
-    public function joinStudy($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Study');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Study');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Study relation Study object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\StudyQuery A secondary query class using the current class as primary query
-     */
-    public function useStudyQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinStudy($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Study', '\cli_db\propel\StudyQuery');
     }
 
     /**

@@ -16,12 +16,8 @@ use \PropelPDO;
 use cli_db\propel\Cv;
 use cli_db\propel\CvPeer;
 use cli_db\propel\CvQuery;
-use cli_db\propel\Cvprop;
-use cli_db\propel\CvpropQuery;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermQuery;
-use cli_db\propel\Cvtermpath;
-use cli_db\propel\CvtermpathQuery;
 
 /**
  * Base class that represents a row from the 'cv' table.
@@ -70,22 +66,10 @@ abstract class BaseCv extends BaseObject implements Persistent
     protected $definition;
 
     /**
-     * @var        PropelObjectCollection|Cvprop[] Collection to store aggregation of Cvprop objects.
-     */
-    protected $collCvprops;
-    protected $collCvpropsPartial;
-
-    /**
      * @var        PropelObjectCollection|Cvterm[] Collection to store aggregation of Cvterm objects.
      */
     protected $collCvterms;
     protected $collCvtermsPartial;
-
-    /**
-     * @var        PropelObjectCollection|Cvtermpath[] Collection to store aggregation of Cvtermpath objects.
-     */
-    protected $collCvtermpaths;
-    protected $collCvtermpathsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -111,19 +95,7 @@ abstract class BaseCv extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $cvpropsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
     protected $cvtermsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $cvtermpathsScheduledForDeletion = null;
 
     /**
      * Get the [cv_id] column value.
@@ -323,11 +295,7 @@ abstract class BaseCv extends BaseObject implements Persistent
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collCvprops = null;
-
             $this->collCvterms = null;
-
-            $this->collCvtermpaths = null;
 
         } // if (deep)
     }
@@ -453,23 +421,6 @@ abstract class BaseCv extends BaseObject implements Persistent
                 $this->resetModified();
             }
 
-            if ($this->cvpropsScheduledForDeletion !== null) {
-                if (!$this->cvpropsScheduledForDeletion->isEmpty()) {
-                    CvpropQuery::create()
-                        ->filterByPrimaryKeys($this->cvpropsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->cvpropsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collCvprops !== null) {
-                foreach ($this->collCvprops as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->cvtermsScheduledForDeletion !== null) {
                 if (!$this->cvtermsScheduledForDeletion->isEmpty()) {
                     CvtermQuery::create()
@@ -481,23 +432,6 @@ abstract class BaseCv extends BaseObject implements Persistent
 
             if ($this->collCvterms !== null) {
                 foreach ($this->collCvterms as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->cvtermpathsScheduledForDeletion !== null) {
-                if (!$this->cvtermpathsScheduledForDeletion->isEmpty()) {
-                    CvtermpathQuery::create()
-                        ->filterByPrimaryKeys($this->cvtermpathsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->cvtermpathsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collCvtermpaths !== null) {
-                foreach ($this->collCvtermpaths as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -661,24 +595,8 @@ abstract class BaseCv extends BaseObject implements Persistent
             }
 
 
-                if ($this->collCvprops !== null) {
-                    foreach ($this->collCvprops as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collCvterms !== null) {
                     foreach ($this->collCvterms as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collCvtermpaths !== null) {
-                    foreach ($this->collCvtermpaths as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -763,14 +681,8 @@ abstract class BaseCv extends BaseObject implements Persistent
             $keys[2] => $this->getDefinition(),
         );
         if ($includeForeignObjects) {
-            if (null !== $this->collCvprops) {
-                $result['Cvprops'] = $this->collCvprops->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collCvterms) {
                 $result['Cvterms'] = $this->collCvterms->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collCvtermpaths) {
-                $result['Cvtermpaths'] = $this->collCvtermpaths->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -929,21 +841,9 @@ abstract class BaseCv extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
-            foreach ($this->getCvprops() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addCvprop($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getCvterms() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addCvterm($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getCvtermpaths() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addCvtermpath($relObj->copy($deepCopy));
                 }
             }
 
@@ -1008,258 +908,9 @@ abstract class BaseCv extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
-        if ('Cvprop' == $relationName) {
-            $this->initCvprops();
-        }
         if ('Cvterm' == $relationName) {
             $this->initCvterms();
         }
-        if ('Cvtermpath' == $relationName) {
-            $this->initCvtermpaths();
-        }
-    }
-
-    /**
-     * Clears out the collCvprops collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Cv The current object (for fluent API support)
-     * @see        addCvprops()
-     */
-    public function clearCvprops()
-    {
-        $this->collCvprops = null; // important to set this to null since that means it is uninitialized
-        $this->collCvpropsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collCvprops collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialCvprops($v = true)
-    {
-        $this->collCvpropsPartial = $v;
-    }
-
-    /**
-     * Initializes the collCvprops collection.
-     *
-     * By default this just sets the collCvprops collection to an empty array (like clearcollCvprops());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initCvprops($overrideExisting = true)
-    {
-        if (null !== $this->collCvprops && !$overrideExisting) {
-            return;
-        }
-        $this->collCvprops = new PropelObjectCollection();
-        $this->collCvprops->setModel('Cvprop');
-    }
-
-    /**
-     * Gets an array of Cvprop objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Cv is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Cvprop[] List of Cvprop objects
-     * @throws PropelException
-     */
-    public function getCvprops($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collCvpropsPartial && !$this->isNew();
-        if (null === $this->collCvprops || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collCvprops) {
-                // return empty collection
-                $this->initCvprops();
-            } else {
-                $collCvprops = CvpropQuery::create(null, $criteria)
-                    ->filterByCv($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collCvpropsPartial && count($collCvprops)) {
-                      $this->initCvprops(false);
-
-                      foreach($collCvprops as $obj) {
-                        if (false == $this->collCvprops->contains($obj)) {
-                          $this->collCvprops->append($obj);
-                        }
-                      }
-
-                      $this->collCvpropsPartial = true;
-                    }
-
-                    $collCvprops->getInternalIterator()->rewind();
-                    return $collCvprops;
-                }
-
-                if($partial && $this->collCvprops) {
-                    foreach($this->collCvprops as $obj) {
-                        if($obj->isNew()) {
-                            $collCvprops[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collCvprops = $collCvprops;
-                $this->collCvpropsPartial = false;
-            }
-        }
-
-        return $this->collCvprops;
-    }
-
-    /**
-     * Sets a collection of Cvprop objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $cvprops A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Cv The current object (for fluent API support)
-     */
-    public function setCvprops(PropelCollection $cvprops, PropelPDO $con = null)
-    {
-        $cvpropsToDelete = $this->getCvprops(new Criteria(), $con)->diff($cvprops);
-
-        $this->cvpropsScheduledForDeletion = unserialize(serialize($cvpropsToDelete));
-
-        foreach ($cvpropsToDelete as $cvpropRemoved) {
-            $cvpropRemoved->setCv(null);
-        }
-
-        $this->collCvprops = null;
-        foreach ($cvprops as $cvprop) {
-            $this->addCvprop($cvprop);
-        }
-
-        $this->collCvprops = $cvprops;
-        $this->collCvpropsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Cvprop objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Cvprop objects.
-     * @throws PropelException
-     */
-    public function countCvprops(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collCvpropsPartial && !$this->isNew();
-        if (null === $this->collCvprops || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collCvprops) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getCvprops());
-            }
-            $query = CvpropQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByCv($this)
-                ->count($con);
-        }
-
-        return count($this->collCvprops);
-    }
-
-    /**
-     * Method called to associate a Cvprop object to this object
-     * through the Cvprop foreign key attribute.
-     *
-     * @param    Cvprop $l Cvprop
-     * @return Cv The current object (for fluent API support)
-     */
-    public function addCvprop(Cvprop $l)
-    {
-        if ($this->collCvprops === null) {
-            $this->initCvprops();
-            $this->collCvpropsPartial = true;
-        }
-        if (!in_array($l, $this->collCvprops->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddCvprop($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Cvprop $cvprop The cvprop object to add.
-     */
-    protected function doAddCvprop($cvprop)
-    {
-        $this->collCvprops[]= $cvprop;
-        $cvprop->setCv($this);
-    }
-
-    /**
-     * @param	Cvprop $cvprop The cvprop object to remove.
-     * @return Cv The current object (for fluent API support)
-     */
-    public function removeCvprop($cvprop)
-    {
-        if ($this->getCvprops()->contains($cvprop)) {
-            $this->collCvprops->remove($this->collCvprops->search($cvprop));
-            if (null === $this->cvpropsScheduledForDeletion) {
-                $this->cvpropsScheduledForDeletion = clone $this->collCvprops;
-                $this->cvpropsScheduledForDeletion->clear();
-            }
-            $this->cvpropsScheduledForDeletion[]= clone $cvprop;
-            $cvprop->setCv(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Cv is new, it will return
-     * an empty collection; or if this Cv has previously
-     * been saved, it will retrieve related Cvprops from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Cv.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Cvprop[] List of Cvprop objects
-     */
-    public function getCvpropsJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = CvpropQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getCvprops($query, $con);
     }
 
     /**
@@ -1480,324 +1131,6 @@ abstract class BaseCv extends BaseObject implements Persistent
         return $this;
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Cv is new, it will return
-     * an empty collection; or if this Cv has previously
-     * been saved, it will retrieve related Cvterms from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Cv.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Cvterm[] List of Cvterm objects
-     */
-    public function getCvtermsJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = CvtermQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getCvterms($query, $con);
-    }
-
-    /**
-     * Clears out the collCvtermpaths collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Cv The current object (for fluent API support)
-     * @see        addCvtermpaths()
-     */
-    public function clearCvtermpaths()
-    {
-        $this->collCvtermpaths = null; // important to set this to null since that means it is uninitialized
-        $this->collCvtermpathsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collCvtermpaths collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialCvtermpaths($v = true)
-    {
-        $this->collCvtermpathsPartial = $v;
-    }
-
-    /**
-     * Initializes the collCvtermpaths collection.
-     *
-     * By default this just sets the collCvtermpaths collection to an empty array (like clearcollCvtermpaths());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initCvtermpaths($overrideExisting = true)
-    {
-        if (null !== $this->collCvtermpaths && !$overrideExisting) {
-            return;
-        }
-        $this->collCvtermpaths = new PropelObjectCollection();
-        $this->collCvtermpaths->setModel('Cvtermpath');
-    }
-
-    /**
-     * Gets an array of Cvtermpath objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Cv is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Cvtermpath[] List of Cvtermpath objects
-     * @throws PropelException
-     */
-    public function getCvtermpaths($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collCvtermpathsPartial && !$this->isNew();
-        if (null === $this->collCvtermpaths || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collCvtermpaths) {
-                // return empty collection
-                $this->initCvtermpaths();
-            } else {
-                $collCvtermpaths = CvtermpathQuery::create(null, $criteria)
-                    ->filterByCv($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collCvtermpathsPartial && count($collCvtermpaths)) {
-                      $this->initCvtermpaths(false);
-
-                      foreach($collCvtermpaths as $obj) {
-                        if (false == $this->collCvtermpaths->contains($obj)) {
-                          $this->collCvtermpaths->append($obj);
-                        }
-                      }
-
-                      $this->collCvtermpathsPartial = true;
-                    }
-
-                    $collCvtermpaths->getInternalIterator()->rewind();
-                    return $collCvtermpaths;
-                }
-
-                if($partial && $this->collCvtermpaths) {
-                    foreach($this->collCvtermpaths as $obj) {
-                        if($obj->isNew()) {
-                            $collCvtermpaths[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collCvtermpaths = $collCvtermpaths;
-                $this->collCvtermpathsPartial = false;
-            }
-        }
-
-        return $this->collCvtermpaths;
-    }
-
-    /**
-     * Sets a collection of Cvtermpath objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $cvtermpaths A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Cv The current object (for fluent API support)
-     */
-    public function setCvtermpaths(PropelCollection $cvtermpaths, PropelPDO $con = null)
-    {
-        $cvtermpathsToDelete = $this->getCvtermpaths(new Criteria(), $con)->diff($cvtermpaths);
-
-        $this->cvtermpathsScheduledForDeletion = unserialize(serialize($cvtermpathsToDelete));
-
-        foreach ($cvtermpathsToDelete as $cvtermpathRemoved) {
-            $cvtermpathRemoved->setCv(null);
-        }
-
-        $this->collCvtermpaths = null;
-        foreach ($cvtermpaths as $cvtermpath) {
-            $this->addCvtermpath($cvtermpath);
-        }
-
-        $this->collCvtermpaths = $cvtermpaths;
-        $this->collCvtermpathsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Cvtermpath objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Cvtermpath objects.
-     * @throws PropelException
-     */
-    public function countCvtermpaths(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collCvtermpathsPartial && !$this->isNew();
-        if (null === $this->collCvtermpaths || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collCvtermpaths) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getCvtermpaths());
-            }
-            $query = CvtermpathQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByCv($this)
-                ->count($con);
-        }
-
-        return count($this->collCvtermpaths);
-    }
-
-    /**
-     * Method called to associate a Cvtermpath object to this object
-     * through the Cvtermpath foreign key attribute.
-     *
-     * @param    Cvtermpath $l Cvtermpath
-     * @return Cv The current object (for fluent API support)
-     */
-    public function addCvtermpath(Cvtermpath $l)
-    {
-        if ($this->collCvtermpaths === null) {
-            $this->initCvtermpaths();
-            $this->collCvtermpathsPartial = true;
-        }
-        if (!in_array($l, $this->collCvtermpaths->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddCvtermpath($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Cvtermpath $cvtermpath The cvtermpath object to add.
-     */
-    protected function doAddCvtermpath($cvtermpath)
-    {
-        $this->collCvtermpaths[]= $cvtermpath;
-        $cvtermpath->setCv($this);
-    }
-
-    /**
-     * @param	Cvtermpath $cvtermpath The cvtermpath object to remove.
-     * @return Cv The current object (for fluent API support)
-     */
-    public function removeCvtermpath($cvtermpath)
-    {
-        if ($this->getCvtermpaths()->contains($cvtermpath)) {
-            $this->collCvtermpaths->remove($this->collCvtermpaths->search($cvtermpath));
-            if (null === $this->cvtermpathsScheduledForDeletion) {
-                $this->cvtermpathsScheduledForDeletion = clone $this->collCvtermpaths;
-                $this->cvtermpathsScheduledForDeletion->clear();
-            }
-            $this->cvtermpathsScheduledForDeletion[]= clone $cvtermpath;
-            $cvtermpath->setCv(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Cv is new, it will return
-     * an empty collection; or if this Cv has previously
-     * been saved, it will retrieve related Cvtermpaths from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Cv.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Cvtermpath[] List of Cvtermpath objects
-     */
-    public function getCvtermpathsJoinCvtermRelatedByObjectId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = CvtermpathQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedByObjectId', $join_behavior);
-
-        return $this->getCvtermpaths($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Cv is new, it will return
-     * an empty collection; or if this Cv has previously
-     * been saved, it will retrieve related Cvtermpaths from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Cv.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Cvtermpath[] List of Cvtermpath objects
-     */
-    public function getCvtermpathsJoinCvtermRelatedBySubjectId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = CvtermpathQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedBySubjectId', $join_behavior);
-
-        return $this->getCvtermpaths($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Cv is new, it will return
-     * an empty collection; or if this Cv has previously
-     * been saved, it will retrieve related Cvtermpaths from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Cv.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Cvtermpath[] List of Cvtermpath objects
-     */
-    public function getCvtermpathsJoinCvtermRelatedByTypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = CvtermpathQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedByTypeId', $join_behavior);
-
-        return $this->getCvtermpaths($query, $con);
-    }
-
     /**
      * Clears the current object and sets all attributes to their default values
      */
@@ -1828,18 +1161,8 @@ abstract class BaseCv extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->collCvprops) {
-                foreach ($this->collCvprops as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collCvterms) {
                 foreach ($this->collCvterms as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collCvtermpaths) {
-                foreach ($this->collCvtermpaths as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -1847,18 +1170,10 @@ abstract class BaseCv extends BaseObject implements Persistent
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        if ($this->collCvprops instanceof PropelCollection) {
-            $this->collCvprops->clearIterator();
-        }
-        $this->collCvprops = null;
         if ($this->collCvterms instanceof PropelCollection) {
             $this->collCvterms->clearIterator();
         }
         $this->collCvterms = null;
-        if ($this->collCvtermpaths instanceof PropelCollection) {
-            $this->collCvtermpaths->clearIterator();
-        }
-        $this->collCvtermpaths = null;
     }
 
     /**

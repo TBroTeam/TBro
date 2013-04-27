@@ -58,9 +58,6 @@ class OrganismTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Biomaterial', 'cli_db\\propel\\Biomaterial', RelationMap::ONE_TO_MANY, array('organism_id' => 'taxon_id', ), 'SET NULL', null, 'Biomaterials');
-        $this->addRelation('Feature', 'cli_db\\propel\\Feature', RelationMap::ONE_TO_MANY, array('organism_id' => 'organism_id', ), 'CASCADE', null, 'Features');
-        $this->addRelation('OrganismDbxref', 'cli_db\\propel\\OrganismDbxref', RelationMap::ONE_TO_MANY, array('organism_id' => 'organism_id', ), 'CASCADE', null, 'OrganismDbxrefs');
-        $this->addRelation('Organismprop', 'cli_db\\propel\\Organismprop', RelationMap::ONE_TO_MANY, array('organism_id' => 'organism_id', ), 'CASCADE', null, 'Organismprops');
     } // buildRelations()
 
 } // OrganismTableMap

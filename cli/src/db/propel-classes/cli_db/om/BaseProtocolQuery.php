@@ -13,17 +13,12 @@ use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
 use cli_db\propel\Acquisition;
-use cli_db\propel\Arraydesign;
 use cli_db\propel\Assay;
 use cli_db\propel\Cvterm;
-use cli_db\propel\Dbxref;
 use cli_db\propel\Protocol;
 use cli_db\propel\ProtocolPeer;
 use cli_db\propel\ProtocolQuery;
-use cli_db\propel\Protocolparam;
-use cli_db\propel\Pub;
 use cli_db\propel\Quantification;
-use cli_db\propel\Treatment;
 
 /**
  * Base class that represents a query for the 'protocol' table.
@@ -54,14 +49,6 @@ use cli_db\propel\Treatment;
  * @method ProtocolQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method ProtocolQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method ProtocolQuery leftJoinDbxref($relationAlias = null) Adds a LEFT JOIN clause to the query using the Dbxref relation
- * @method ProtocolQuery rightJoinDbxref($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Dbxref relation
- * @method ProtocolQuery innerJoinDbxref($relationAlias = null) Adds a INNER JOIN clause to the query using the Dbxref relation
- *
- * @method ProtocolQuery leftJoinPub($relationAlias = null) Adds a LEFT JOIN clause to the query using the Pub relation
- * @method ProtocolQuery rightJoinPub($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Pub relation
- * @method ProtocolQuery innerJoinPub($relationAlias = null) Adds a INNER JOIN clause to the query using the Pub relation
- *
  * @method ProtocolQuery leftJoinCvterm($relationAlias = null) Adds a LEFT JOIN clause to the query using the Cvterm relation
  * @method ProtocolQuery rightJoinCvterm($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cvterm relation
  * @method ProtocolQuery innerJoinCvterm($relationAlias = null) Adds a INNER JOIN clause to the query using the Cvterm relation
@@ -70,25 +57,13 @@ use cli_db\propel\Treatment;
  * @method ProtocolQuery rightJoinAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Acquisition relation
  * @method ProtocolQuery innerJoinAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the Acquisition relation
  *
- * @method ProtocolQuery leftJoinArraydesign($relationAlias = null) Adds a LEFT JOIN clause to the query using the Arraydesign relation
- * @method ProtocolQuery rightJoinArraydesign($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Arraydesign relation
- * @method ProtocolQuery innerJoinArraydesign($relationAlias = null) Adds a INNER JOIN clause to the query using the Arraydesign relation
- *
  * @method ProtocolQuery leftJoinAssay($relationAlias = null) Adds a LEFT JOIN clause to the query using the Assay relation
  * @method ProtocolQuery rightJoinAssay($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Assay relation
  * @method ProtocolQuery innerJoinAssay($relationAlias = null) Adds a INNER JOIN clause to the query using the Assay relation
  *
- * @method ProtocolQuery leftJoinProtocolparam($relationAlias = null) Adds a LEFT JOIN clause to the query using the Protocolparam relation
- * @method ProtocolQuery rightJoinProtocolparam($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Protocolparam relation
- * @method ProtocolQuery innerJoinProtocolparam($relationAlias = null) Adds a INNER JOIN clause to the query using the Protocolparam relation
- *
  * @method ProtocolQuery leftJoinQuantification($relationAlias = null) Adds a LEFT JOIN clause to the query using the Quantification relation
  * @method ProtocolQuery rightJoinQuantification($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Quantification relation
  * @method ProtocolQuery innerJoinQuantification($relationAlias = null) Adds a INNER JOIN clause to the query using the Quantification relation
- *
- * @method ProtocolQuery leftJoinTreatment($relationAlias = null) Adds a LEFT JOIN clause to the query using the Treatment relation
- * @method ProtocolQuery rightJoinTreatment($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Treatment relation
- * @method ProtocolQuery innerJoinTreatment($relationAlias = null) Adds a INNER JOIN clause to the query using the Treatment relation
  *
  * @method Protocol findOne(PropelPDO $con = null) Return the first Protocol matching the query
  * @method Protocol findOneOrCreate(PropelPDO $con = null) Return the first Protocol matching the query, or a new Protocol object populated from the query conditions when no match is found
@@ -400,8 +375,6 @@ abstract class BaseProtocolQuery extends ModelCriteria
      * $query->filterByPubId(array('max' => 12)); // WHERE pub_id <= 12
      * </code>
      *
-     * @see       filterByPub()
-     *
      * @param     mixed $pubId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -443,8 +416,6 @@ abstract class BaseProtocolQuery extends ModelCriteria
      * $query->filterByDbxrefId(array('min' => 12)); // WHERE dbxref_id >= 12
      * $query->filterByDbxrefId(array('max' => 12)); // WHERE dbxref_id <= 12
      * </code>
-     *
-     * @see       filterByDbxref()
      *
      * @param     mixed $dbxrefId The value to use as filter.
      *              Use scalar values for equality.
@@ -623,158 +594,6 @@ abstract class BaseProtocolQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Dbxref object
-     *
-     * @param   Dbxref|PropelObjectCollection $dbxref The related object(s) to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ProtocolQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByDbxref($dbxref, $comparison = null)
-    {
-        if ($dbxref instanceof Dbxref) {
-            return $this
-                ->addUsingAlias(ProtocolPeer::DBXREF_ID, $dbxref->getDbxrefId(), $comparison);
-        } elseif ($dbxref instanceof PropelObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(ProtocolPeer::DBXREF_ID, $dbxref->toKeyValue('PrimaryKey', 'DbxrefId'), $comparison);
-        } else {
-            throw new PropelException('filterByDbxref() only accepts arguments of type Dbxref or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Dbxref relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ProtocolQuery The current query, for fluid interface
-     */
-    public function joinDbxref($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Dbxref');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Dbxref');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Dbxref relation Dbxref object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\DbxrefQuery A secondary query class using the current class as primary query
-     */
-    public function useDbxrefQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinDbxref($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Dbxref', '\cli_db\propel\DbxrefQuery');
-    }
-
-    /**
-     * Filter the query by a related Pub object
-     *
-     * @param   Pub|PropelObjectCollection $pub The related object(s) to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ProtocolQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByPub($pub, $comparison = null)
-    {
-        if ($pub instanceof Pub) {
-            return $this
-                ->addUsingAlias(ProtocolPeer::PUB_ID, $pub->getPubId(), $comparison);
-        } elseif ($pub instanceof PropelObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(ProtocolPeer::PUB_ID, $pub->toKeyValue('PrimaryKey', 'PubId'), $comparison);
-        } else {
-            throw new PropelException('filterByPub() only accepts arguments of type Pub or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Pub relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ProtocolQuery The current query, for fluid interface
-     */
-    public function joinPub($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Pub');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Pub');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Pub relation Pub object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\PubQuery A secondary query class using the current class as primary query
-     */
-    public function usePubQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinPub($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Pub', '\cli_db\propel\PubQuery');
-    }
-
-    /**
      * Filter the query by a related Cvterm object
      *
      * @param   Cvterm|PropelObjectCollection $cvterm The related object(s) to use as filter
@@ -925,80 +744,6 @@ abstract class BaseProtocolQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Arraydesign object
-     *
-     * @param   Arraydesign|PropelObjectCollection $arraydesign  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ProtocolQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByArraydesign($arraydesign, $comparison = null)
-    {
-        if ($arraydesign instanceof Arraydesign) {
-            return $this
-                ->addUsingAlias(ProtocolPeer::PROTOCOL_ID, $arraydesign->getProtocolId(), $comparison);
-        } elseif ($arraydesign instanceof PropelObjectCollection) {
-            return $this
-                ->useArraydesignQuery()
-                ->filterByPrimaryKeys($arraydesign->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByArraydesign() only accepts arguments of type Arraydesign or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Arraydesign relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ProtocolQuery The current query, for fluid interface
-     */
-    public function joinArraydesign($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Arraydesign');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Arraydesign');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Arraydesign relation Arraydesign object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ArraydesignQuery A secondary query class using the current class as primary query
-     */
-    public function useArraydesignQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinArraydesign($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Arraydesign', '\cli_db\propel\ArraydesignQuery');
-    }
-
-    /**
      * Filter the query by a related Assay object
      *
      * @param   Assay|PropelObjectCollection $assay  the related object to use as filter
@@ -1073,80 +818,6 @@ abstract class BaseProtocolQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Protocolparam object
-     *
-     * @param   Protocolparam|PropelObjectCollection $protocolparam  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ProtocolQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByProtocolparam($protocolparam, $comparison = null)
-    {
-        if ($protocolparam instanceof Protocolparam) {
-            return $this
-                ->addUsingAlias(ProtocolPeer::PROTOCOL_ID, $protocolparam->getProtocolId(), $comparison);
-        } elseif ($protocolparam instanceof PropelObjectCollection) {
-            return $this
-                ->useProtocolparamQuery()
-                ->filterByPrimaryKeys($protocolparam->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByProtocolparam() only accepts arguments of type Protocolparam or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Protocolparam relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ProtocolQuery The current query, for fluid interface
-     */
-    public function joinProtocolparam($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Protocolparam');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Protocolparam');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Protocolparam relation Protocolparam object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ProtocolparamQuery A secondary query class using the current class as primary query
-     */
-    public function useProtocolparamQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinProtocolparam($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Protocolparam', '\cli_db\propel\ProtocolparamQuery');
-    }
-
-    /**
      * Filter the query by a related Quantification object
      *
      * @param   Quantification|PropelObjectCollection $quantification  the related object to use as filter
@@ -1218,80 +889,6 @@ abstract class BaseProtocolQuery extends ModelCriteria
         return $this
             ->joinQuantification($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Quantification', '\cli_db\propel\QuantificationQuery');
-    }
-
-    /**
-     * Filter the query by a related Treatment object
-     *
-     * @param   Treatment|PropelObjectCollection $treatment  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 ProtocolQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByTreatment($treatment, $comparison = null)
-    {
-        if ($treatment instanceof Treatment) {
-            return $this
-                ->addUsingAlias(ProtocolPeer::PROTOCOL_ID, $treatment->getProtocolId(), $comparison);
-        } elseif ($treatment instanceof PropelObjectCollection) {
-            return $this
-                ->useTreatmentQuery()
-                ->filterByPrimaryKeys($treatment->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByTreatment() only accepts arguments of type Treatment or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Treatment relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return ProtocolQuery The current query, for fluid interface
-     */
-    public function joinTreatment($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Treatment');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Treatment');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Treatment relation Treatment object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\TreatmentQuery A secondary query class using the current class as primary query
-     */
-    public function useTreatmentQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinTreatment($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Treatment', '\cli_db\propel\TreatmentQuery');
     }
 
     /**

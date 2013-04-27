@@ -61,9 +61,6 @@ class AnalysisTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Analysisfeature', 'cli_db\\propel\\Analysisfeature', RelationMap::ONE_TO_MANY, array('analysis_id' => 'analysis_id', ), 'CASCADE', null, 'Analysisfeatures');
-        $this->addRelation('Analysisprop', 'cli_db\\propel\\Analysisprop', RelationMap::ONE_TO_MANY, array('analysis_id' => 'analysis_id', ), 'CASCADE', null, 'Analysisprops');
-        $this->addRelation('Expressionresult', 'cli_db\\propel\\Expressionresult', RelationMap::ONE_TO_MANY, array('analysis_id' => 'analysis_id', ), null, 'CASCADE', 'Expressionresults');
         $this->addRelation('Quantification', 'cli_db\\propel\\Quantification', RelationMap::ONE_TO_MANY, array('analysis_id' => 'analysis_id', ), 'CASCADE', null, 'Quantifications');
     } // buildRelations()
 

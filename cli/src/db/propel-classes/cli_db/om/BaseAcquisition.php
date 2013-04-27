@@ -18,14 +18,8 @@ use \PropelPDO;
 use cli_db\propel\Acquisition;
 use cli_db\propel\AcquisitionPeer;
 use cli_db\propel\AcquisitionQuery;
-use cli_db\propel\AcquisitionRelationship;
-use cli_db\propel\AcquisitionRelationshipQuery;
-use cli_db\propel\Acquisitionprop;
-use cli_db\propel\AcquisitionpropQuery;
 use cli_db\propel\Assay;
 use cli_db\propel\AssayQuery;
-use cli_db\propel\Channel;
-use cli_db\propel\ChannelQuery;
 use cli_db\propel\Protocol;
 use cli_db\propel\ProtocolQuery;
 use cli_db\propel\Quantification;
@@ -108,32 +102,9 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
     protected $aAssay;
 
     /**
-     * @var        Channel
-     */
-    protected $aChannel;
-
-    /**
      * @var        Protocol
      */
     protected $aProtocol;
-
-    /**
-     * @var        PropelObjectCollection|AcquisitionRelationship[] Collection to store aggregation of AcquisitionRelationship objects.
-     */
-    protected $collAcquisitionRelationshipsRelatedByObjectId;
-    protected $collAcquisitionRelationshipsRelatedByObjectIdPartial;
-
-    /**
-     * @var        PropelObjectCollection|AcquisitionRelationship[] Collection to store aggregation of AcquisitionRelationship objects.
-     */
-    protected $collAcquisitionRelationshipsRelatedBySubjectId;
-    protected $collAcquisitionRelationshipsRelatedBySubjectIdPartial;
-
-    /**
-     * @var        PropelObjectCollection|Acquisitionprop[] Collection to store aggregation of Acquisitionprop objects.
-     */
-    protected $collAcquisitionprops;
-    protected $collAcquisitionpropsPartial;
 
     /**
      * @var        PropelObjectCollection|Quantification[] Collection to store aggregation of Quantification objects.
@@ -160,24 +131,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
      * @var        boolean
      */
     protected $alreadyInClearAllReferencesDeep = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $acquisitionpropsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -388,10 +341,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
             $this->modifiedColumns[] = AcquisitionPeer::CHANNEL_ID;
         }
 
-        if ($this->aChannel !== null && $this->aChannel->getChannelId() !== $v) {
-            $this->aChannel = null;
-        }
-
 
         return $this;
     } // setChannelId()
@@ -537,9 +486,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
         if ($this->aProtocol !== null && $this->protocol_id !== $this->aProtocol->getProtocolId()) {
             $this->aProtocol = null;
         }
-        if ($this->aChannel !== null && $this->channel_id !== $this->aChannel->getChannelId()) {
-            $this->aChannel = null;
-        }
     } // ensureConsistency
 
     /**
@@ -580,14 +526,7 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
         if ($deep) {  // also de-associate any related objects?
 
             $this->aAssay = null;
-            $this->aChannel = null;
             $this->aProtocol = null;
-            $this->collAcquisitionRelationshipsRelatedByObjectId = null;
-
-            $this->collAcquisitionRelationshipsRelatedBySubjectId = null;
-
-            $this->collAcquisitionprops = null;
-
             $this->collQuantifications = null;
 
         } // if (deep)
@@ -715,13 +654,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
                 $this->setAssay($this->aAssay);
             }
 
-            if ($this->aChannel !== null) {
-                if ($this->aChannel->isModified() || $this->aChannel->isNew()) {
-                    $affectedRows += $this->aChannel->save($con);
-                }
-                $this->setChannel($this->aChannel);
-            }
-
             if ($this->aProtocol !== null) {
                 if ($this->aProtocol->isModified() || $this->aProtocol->isNew()) {
                     $affectedRows += $this->aProtocol->save($con);
@@ -738,57 +670,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
                 }
                 $affectedRows += 1;
                 $this->resetModified();
-            }
-
-            if ($this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion !== null) {
-                if (!$this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion->isEmpty()) {
-                    AcquisitionRelationshipQuery::create()
-                        ->filterByPrimaryKeys($this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collAcquisitionRelationshipsRelatedByObjectId !== null) {
-                foreach ($this->collAcquisitionRelationshipsRelatedByObjectId as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion !== null) {
-                if (!$this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion->isEmpty()) {
-                    AcquisitionRelationshipQuery::create()
-                        ->filterByPrimaryKeys($this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collAcquisitionRelationshipsRelatedBySubjectId !== null) {
-                foreach ($this->collAcquisitionRelationshipsRelatedBySubjectId as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->acquisitionpropsScheduledForDeletion !== null) {
-                if (!$this->acquisitionpropsScheduledForDeletion->isEmpty()) {
-                    AcquisitionpropQuery::create()
-                        ->filterByPrimaryKeys($this->acquisitionpropsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->acquisitionpropsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collAcquisitionprops !== null) {
-                foreach ($this->collAcquisitionprops as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             if ($this->quantificationsScheduledForDeletion !== null) {
@@ -995,12 +876,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->aChannel !== null) {
-                if (!$this->aChannel->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aChannel->getValidationFailures());
-                }
-            }
-
             if ($this->aProtocol !== null) {
                 if (!$this->aProtocol->validate($columns)) {
                     $failureMap = array_merge($failureMap, $this->aProtocol->getValidationFailures());
@@ -1012,30 +887,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
                 $failureMap = array_merge($failureMap, $retval);
             }
 
-
-                if ($this->collAcquisitionRelationshipsRelatedByObjectId !== null) {
-                    foreach ($this->collAcquisitionRelationshipsRelatedByObjectId as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collAcquisitionRelationshipsRelatedBySubjectId !== null) {
-                    foreach ($this->collAcquisitionRelationshipsRelatedBySubjectId as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collAcquisitionprops !== null) {
-                    foreach ($this->collAcquisitionprops as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
 
                 if ($this->collQuantifications !== null) {
                     foreach ($this->collQuantifications as $referrerFK) {
@@ -1142,20 +993,8 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
             if (null !== $this->aAssay) {
                 $result['Assay'] = $this->aAssay->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aChannel) {
-                $result['Channel'] = $this->aChannel->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aProtocol) {
                 $result['Protocol'] = $this->aProtocol->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->collAcquisitionRelationshipsRelatedByObjectId) {
-                $result['AcquisitionRelationshipsRelatedByObjectId'] = $this->collAcquisitionRelationshipsRelatedByObjectId->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collAcquisitionRelationshipsRelatedBySubjectId) {
-                $result['AcquisitionRelationshipsRelatedBySubjectId'] = $this->collAcquisitionRelationshipsRelatedBySubjectId->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collAcquisitionprops) {
-                $result['Acquisitionprops'] = $this->collAcquisitionprops->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collQuantifications) {
                 $result['Quantifications'] = $this->collQuantifications->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
@@ -1341,24 +1180,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
-            foreach ($this->getAcquisitionRelationshipsRelatedByObjectId() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addAcquisitionRelationshipRelatedByObjectId($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getAcquisitionRelationshipsRelatedBySubjectId() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addAcquisitionRelationshipRelatedBySubjectId($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getAcquisitionprops() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addAcquisitionprop($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getQuantifications() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addQuantification($relObj->copy($deepCopy));
@@ -1468,58 +1289,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
     }
 
     /**
-     * Declares an association between this object and a Channel object.
-     *
-     * @param             Channel $v
-     * @return Acquisition The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setChannel(Channel $v = null)
-    {
-        if ($v === null) {
-            $this->setChannelId(NULL);
-        } else {
-            $this->setChannelId($v->getChannelId());
-        }
-
-        $this->aChannel = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the Channel object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAcquisition($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated Channel object
-     *
-     * @param PropelPDO $con Optional Connection object.
-     * @param $doQuery Executes a query to get the object if required
-     * @return Channel The associated Channel object.
-     * @throws PropelException
-     */
-    public function getChannel(PropelPDO $con = null, $doQuery = true)
-    {
-        if ($this->aChannel === null && ($this->channel_id !== null) && $doQuery) {
-            $this->aChannel = ChannelQuery::create()->findPk($this->channel_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aChannel->addAcquisitions($this);
-             */
-        }
-
-        return $this->aChannel;
-    }
-
-    /**
      * Declares an association between this object and a Protocol object.
      *
      * @param             Protocol $v
@@ -1582,747 +1351,9 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
-        if ('AcquisitionRelationshipRelatedByObjectId' == $relationName) {
-            $this->initAcquisitionRelationshipsRelatedByObjectId();
-        }
-        if ('AcquisitionRelationshipRelatedBySubjectId' == $relationName) {
-            $this->initAcquisitionRelationshipsRelatedBySubjectId();
-        }
-        if ('Acquisitionprop' == $relationName) {
-            $this->initAcquisitionprops();
-        }
         if ('Quantification' == $relationName) {
             $this->initQuantifications();
         }
-    }
-
-    /**
-     * Clears out the collAcquisitionRelationshipsRelatedByObjectId collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Acquisition The current object (for fluent API support)
-     * @see        addAcquisitionRelationshipsRelatedByObjectId()
-     */
-    public function clearAcquisitionRelationshipsRelatedByObjectId()
-    {
-        $this->collAcquisitionRelationshipsRelatedByObjectId = null; // important to set this to null since that means it is uninitialized
-        $this->collAcquisitionRelationshipsRelatedByObjectIdPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collAcquisitionRelationshipsRelatedByObjectId collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialAcquisitionRelationshipsRelatedByObjectId($v = true)
-    {
-        $this->collAcquisitionRelationshipsRelatedByObjectIdPartial = $v;
-    }
-
-    /**
-     * Initializes the collAcquisitionRelationshipsRelatedByObjectId collection.
-     *
-     * By default this just sets the collAcquisitionRelationshipsRelatedByObjectId collection to an empty array (like clearcollAcquisitionRelationshipsRelatedByObjectId());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initAcquisitionRelationshipsRelatedByObjectId($overrideExisting = true)
-    {
-        if (null !== $this->collAcquisitionRelationshipsRelatedByObjectId && !$overrideExisting) {
-            return;
-        }
-        $this->collAcquisitionRelationshipsRelatedByObjectId = new PropelObjectCollection();
-        $this->collAcquisitionRelationshipsRelatedByObjectId->setModel('AcquisitionRelationship');
-    }
-
-    /**
-     * Gets an array of AcquisitionRelationship objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Acquisition is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|AcquisitionRelationship[] List of AcquisitionRelationship objects
-     * @throws PropelException
-     */
-    public function getAcquisitionRelationshipsRelatedByObjectId($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collAcquisitionRelationshipsRelatedByObjectIdPartial && !$this->isNew();
-        if (null === $this->collAcquisitionRelationshipsRelatedByObjectId || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collAcquisitionRelationshipsRelatedByObjectId) {
-                // return empty collection
-                $this->initAcquisitionRelationshipsRelatedByObjectId();
-            } else {
-                $collAcquisitionRelationshipsRelatedByObjectId = AcquisitionRelationshipQuery::create(null, $criteria)
-                    ->filterByAcquisitionRelatedByObjectId($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collAcquisitionRelationshipsRelatedByObjectIdPartial && count($collAcquisitionRelationshipsRelatedByObjectId)) {
-                      $this->initAcquisitionRelationshipsRelatedByObjectId(false);
-
-                      foreach($collAcquisitionRelationshipsRelatedByObjectId as $obj) {
-                        if (false == $this->collAcquisitionRelationshipsRelatedByObjectId->contains($obj)) {
-                          $this->collAcquisitionRelationshipsRelatedByObjectId->append($obj);
-                        }
-                      }
-
-                      $this->collAcquisitionRelationshipsRelatedByObjectIdPartial = true;
-                    }
-
-                    $collAcquisitionRelationshipsRelatedByObjectId->getInternalIterator()->rewind();
-                    return $collAcquisitionRelationshipsRelatedByObjectId;
-                }
-
-                if($partial && $this->collAcquisitionRelationshipsRelatedByObjectId) {
-                    foreach($this->collAcquisitionRelationshipsRelatedByObjectId as $obj) {
-                        if($obj->isNew()) {
-                            $collAcquisitionRelationshipsRelatedByObjectId[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collAcquisitionRelationshipsRelatedByObjectId = $collAcquisitionRelationshipsRelatedByObjectId;
-                $this->collAcquisitionRelationshipsRelatedByObjectIdPartial = false;
-            }
-        }
-
-        return $this->collAcquisitionRelationshipsRelatedByObjectId;
-    }
-
-    /**
-     * Sets a collection of AcquisitionRelationshipRelatedByObjectId objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $acquisitionRelationshipsRelatedByObjectId A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function setAcquisitionRelationshipsRelatedByObjectId(PropelCollection $acquisitionRelationshipsRelatedByObjectId, PropelPDO $con = null)
-    {
-        $acquisitionRelationshipsRelatedByObjectIdToDelete = $this->getAcquisitionRelationshipsRelatedByObjectId(new Criteria(), $con)->diff($acquisitionRelationshipsRelatedByObjectId);
-
-        $this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion = unserialize(serialize($acquisitionRelationshipsRelatedByObjectIdToDelete));
-
-        foreach ($acquisitionRelationshipsRelatedByObjectIdToDelete as $acquisitionRelationshipRelatedByObjectIdRemoved) {
-            $acquisitionRelationshipRelatedByObjectIdRemoved->setAcquisitionRelatedByObjectId(null);
-        }
-
-        $this->collAcquisitionRelationshipsRelatedByObjectId = null;
-        foreach ($acquisitionRelationshipsRelatedByObjectId as $acquisitionRelationshipRelatedByObjectId) {
-            $this->addAcquisitionRelationshipRelatedByObjectId($acquisitionRelationshipRelatedByObjectId);
-        }
-
-        $this->collAcquisitionRelationshipsRelatedByObjectId = $acquisitionRelationshipsRelatedByObjectId;
-        $this->collAcquisitionRelationshipsRelatedByObjectIdPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related AcquisitionRelationship objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related AcquisitionRelationship objects.
-     * @throws PropelException
-     */
-    public function countAcquisitionRelationshipsRelatedByObjectId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collAcquisitionRelationshipsRelatedByObjectIdPartial && !$this->isNew();
-        if (null === $this->collAcquisitionRelationshipsRelatedByObjectId || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collAcquisitionRelationshipsRelatedByObjectId) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getAcquisitionRelationshipsRelatedByObjectId());
-            }
-            $query = AcquisitionRelationshipQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByAcquisitionRelatedByObjectId($this)
-                ->count($con);
-        }
-
-        return count($this->collAcquisitionRelationshipsRelatedByObjectId);
-    }
-
-    /**
-     * Method called to associate a AcquisitionRelationship object to this object
-     * through the AcquisitionRelationship foreign key attribute.
-     *
-     * @param    AcquisitionRelationship $l AcquisitionRelationship
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function addAcquisitionRelationshipRelatedByObjectId(AcquisitionRelationship $l)
-    {
-        if ($this->collAcquisitionRelationshipsRelatedByObjectId === null) {
-            $this->initAcquisitionRelationshipsRelatedByObjectId();
-            $this->collAcquisitionRelationshipsRelatedByObjectIdPartial = true;
-        }
-        if (!in_array($l, $this->collAcquisitionRelationshipsRelatedByObjectId->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddAcquisitionRelationshipRelatedByObjectId($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	AcquisitionRelationshipRelatedByObjectId $acquisitionRelationshipRelatedByObjectId The acquisitionRelationshipRelatedByObjectId object to add.
-     */
-    protected function doAddAcquisitionRelationshipRelatedByObjectId($acquisitionRelationshipRelatedByObjectId)
-    {
-        $this->collAcquisitionRelationshipsRelatedByObjectId[]= $acquisitionRelationshipRelatedByObjectId;
-        $acquisitionRelationshipRelatedByObjectId->setAcquisitionRelatedByObjectId($this);
-    }
-
-    /**
-     * @param	AcquisitionRelationshipRelatedByObjectId $acquisitionRelationshipRelatedByObjectId The acquisitionRelationshipRelatedByObjectId object to remove.
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function removeAcquisitionRelationshipRelatedByObjectId($acquisitionRelationshipRelatedByObjectId)
-    {
-        if ($this->getAcquisitionRelationshipsRelatedByObjectId()->contains($acquisitionRelationshipRelatedByObjectId)) {
-            $this->collAcquisitionRelationshipsRelatedByObjectId->remove($this->collAcquisitionRelationshipsRelatedByObjectId->search($acquisitionRelationshipRelatedByObjectId));
-            if (null === $this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion) {
-                $this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion = clone $this->collAcquisitionRelationshipsRelatedByObjectId;
-                $this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion->clear();
-            }
-            $this->acquisitionRelationshipsRelatedByObjectIdScheduledForDeletion[]= clone $acquisitionRelationshipRelatedByObjectId;
-            $acquisitionRelationshipRelatedByObjectId->setAcquisitionRelatedByObjectId(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Acquisition is new, it will return
-     * an empty collection; or if this Acquisition has previously
-     * been saved, it will retrieve related AcquisitionRelationshipsRelatedByObjectId from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Acquisition.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|AcquisitionRelationship[] List of AcquisitionRelationship objects
-     */
-    public function getAcquisitionRelationshipsRelatedByObjectIdJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AcquisitionRelationshipQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getAcquisitionRelationshipsRelatedByObjectId($query, $con);
-    }
-
-    /**
-     * Clears out the collAcquisitionRelationshipsRelatedBySubjectId collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Acquisition The current object (for fluent API support)
-     * @see        addAcquisitionRelationshipsRelatedBySubjectId()
-     */
-    public function clearAcquisitionRelationshipsRelatedBySubjectId()
-    {
-        $this->collAcquisitionRelationshipsRelatedBySubjectId = null; // important to set this to null since that means it is uninitialized
-        $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collAcquisitionRelationshipsRelatedBySubjectId collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialAcquisitionRelationshipsRelatedBySubjectId($v = true)
-    {
-        $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial = $v;
-    }
-
-    /**
-     * Initializes the collAcquisitionRelationshipsRelatedBySubjectId collection.
-     *
-     * By default this just sets the collAcquisitionRelationshipsRelatedBySubjectId collection to an empty array (like clearcollAcquisitionRelationshipsRelatedBySubjectId());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initAcquisitionRelationshipsRelatedBySubjectId($overrideExisting = true)
-    {
-        if (null !== $this->collAcquisitionRelationshipsRelatedBySubjectId && !$overrideExisting) {
-            return;
-        }
-        $this->collAcquisitionRelationshipsRelatedBySubjectId = new PropelObjectCollection();
-        $this->collAcquisitionRelationshipsRelatedBySubjectId->setModel('AcquisitionRelationship');
-    }
-
-    /**
-     * Gets an array of AcquisitionRelationship objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Acquisition is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|AcquisitionRelationship[] List of AcquisitionRelationship objects
-     * @throws PropelException
-     */
-    public function getAcquisitionRelationshipsRelatedBySubjectId($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial && !$this->isNew();
-        if (null === $this->collAcquisitionRelationshipsRelatedBySubjectId || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collAcquisitionRelationshipsRelatedBySubjectId) {
-                // return empty collection
-                $this->initAcquisitionRelationshipsRelatedBySubjectId();
-            } else {
-                $collAcquisitionRelationshipsRelatedBySubjectId = AcquisitionRelationshipQuery::create(null, $criteria)
-                    ->filterByAcquisitionRelatedBySubjectId($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial && count($collAcquisitionRelationshipsRelatedBySubjectId)) {
-                      $this->initAcquisitionRelationshipsRelatedBySubjectId(false);
-
-                      foreach($collAcquisitionRelationshipsRelatedBySubjectId as $obj) {
-                        if (false == $this->collAcquisitionRelationshipsRelatedBySubjectId->contains($obj)) {
-                          $this->collAcquisitionRelationshipsRelatedBySubjectId->append($obj);
-                        }
-                      }
-
-                      $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial = true;
-                    }
-
-                    $collAcquisitionRelationshipsRelatedBySubjectId->getInternalIterator()->rewind();
-                    return $collAcquisitionRelationshipsRelatedBySubjectId;
-                }
-
-                if($partial && $this->collAcquisitionRelationshipsRelatedBySubjectId) {
-                    foreach($this->collAcquisitionRelationshipsRelatedBySubjectId as $obj) {
-                        if($obj->isNew()) {
-                            $collAcquisitionRelationshipsRelatedBySubjectId[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collAcquisitionRelationshipsRelatedBySubjectId = $collAcquisitionRelationshipsRelatedBySubjectId;
-                $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial = false;
-            }
-        }
-
-        return $this->collAcquisitionRelationshipsRelatedBySubjectId;
-    }
-
-    /**
-     * Sets a collection of AcquisitionRelationshipRelatedBySubjectId objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $acquisitionRelationshipsRelatedBySubjectId A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function setAcquisitionRelationshipsRelatedBySubjectId(PropelCollection $acquisitionRelationshipsRelatedBySubjectId, PropelPDO $con = null)
-    {
-        $acquisitionRelationshipsRelatedBySubjectIdToDelete = $this->getAcquisitionRelationshipsRelatedBySubjectId(new Criteria(), $con)->diff($acquisitionRelationshipsRelatedBySubjectId);
-
-        $this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion = unserialize(serialize($acquisitionRelationshipsRelatedBySubjectIdToDelete));
-
-        foreach ($acquisitionRelationshipsRelatedBySubjectIdToDelete as $acquisitionRelationshipRelatedBySubjectIdRemoved) {
-            $acquisitionRelationshipRelatedBySubjectIdRemoved->setAcquisitionRelatedBySubjectId(null);
-        }
-
-        $this->collAcquisitionRelationshipsRelatedBySubjectId = null;
-        foreach ($acquisitionRelationshipsRelatedBySubjectId as $acquisitionRelationshipRelatedBySubjectId) {
-            $this->addAcquisitionRelationshipRelatedBySubjectId($acquisitionRelationshipRelatedBySubjectId);
-        }
-
-        $this->collAcquisitionRelationshipsRelatedBySubjectId = $acquisitionRelationshipsRelatedBySubjectId;
-        $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related AcquisitionRelationship objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related AcquisitionRelationship objects.
-     * @throws PropelException
-     */
-    public function countAcquisitionRelationshipsRelatedBySubjectId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial && !$this->isNew();
-        if (null === $this->collAcquisitionRelationshipsRelatedBySubjectId || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collAcquisitionRelationshipsRelatedBySubjectId) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getAcquisitionRelationshipsRelatedBySubjectId());
-            }
-            $query = AcquisitionRelationshipQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByAcquisitionRelatedBySubjectId($this)
-                ->count($con);
-        }
-
-        return count($this->collAcquisitionRelationshipsRelatedBySubjectId);
-    }
-
-    /**
-     * Method called to associate a AcquisitionRelationship object to this object
-     * through the AcquisitionRelationship foreign key attribute.
-     *
-     * @param    AcquisitionRelationship $l AcquisitionRelationship
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function addAcquisitionRelationshipRelatedBySubjectId(AcquisitionRelationship $l)
-    {
-        if ($this->collAcquisitionRelationshipsRelatedBySubjectId === null) {
-            $this->initAcquisitionRelationshipsRelatedBySubjectId();
-            $this->collAcquisitionRelationshipsRelatedBySubjectIdPartial = true;
-        }
-        if (!in_array($l, $this->collAcquisitionRelationshipsRelatedBySubjectId->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddAcquisitionRelationshipRelatedBySubjectId($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	AcquisitionRelationshipRelatedBySubjectId $acquisitionRelationshipRelatedBySubjectId The acquisitionRelationshipRelatedBySubjectId object to add.
-     */
-    protected function doAddAcquisitionRelationshipRelatedBySubjectId($acquisitionRelationshipRelatedBySubjectId)
-    {
-        $this->collAcquisitionRelationshipsRelatedBySubjectId[]= $acquisitionRelationshipRelatedBySubjectId;
-        $acquisitionRelationshipRelatedBySubjectId->setAcquisitionRelatedBySubjectId($this);
-    }
-
-    /**
-     * @param	AcquisitionRelationshipRelatedBySubjectId $acquisitionRelationshipRelatedBySubjectId The acquisitionRelationshipRelatedBySubjectId object to remove.
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function removeAcquisitionRelationshipRelatedBySubjectId($acquisitionRelationshipRelatedBySubjectId)
-    {
-        if ($this->getAcquisitionRelationshipsRelatedBySubjectId()->contains($acquisitionRelationshipRelatedBySubjectId)) {
-            $this->collAcquisitionRelationshipsRelatedBySubjectId->remove($this->collAcquisitionRelationshipsRelatedBySubjectId->search($acquisitionRelationshipRelatedBySubjectId));
-            if (null === $this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion) {
-                $this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion = clone $this->collAcquisitionRelationshipsRelatedBySubjectId;
-                $this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion->clear();
-            }
-            $this->acquisitionRelationshipsRelatedBySubjectIdScheduledForDeletion[]= clone $acquisitionRelationshipRelatedBySubjectId;
-            $acquisitionRelationshipRelatedBySubjectId->setAcquisitionRelatedBySubjectId(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Acquisition is new, it will return
-     * an empty collection; or if this Acquisition has previously
-     * been saved, it will retrieve related AcquisitionRelationshipsRelatedBySubjectId from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Acquisition.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|AcquisitionRelationship[] List of AcquisitionRelationship objects
-     */
-    public function getAcquisitionRelationshipsRelatedBySubjectIdJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AcquisitionRelationshipQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getAcquisitionRelationshipsRelatedBySubjectId($query, $con);
-    }
-
-    /**
-     * Clears out the collAcquisitionprops collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Acquisition The current object (for fluent API support)
-     * @see        addAcquisitionprops()
-     */
-    public function clearAcquisitionprops()
-    {
-        $this->collAcquisitionprops = null; // important to set this to null since that means it is uninitialized
-        $this->collAcquisitionpropsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collAcquisitionprops collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialAcquisitionprops($v = true)
-    {
-        $this->collAcquisitionpropsPartial = $v;
-    }
-
-    /**
-     * Initializes the collAcquisitionprops collection.
-     *
-     * By default this just sets the collAcquisitionprops collection to an empty array (like clearcollAcquisitionprops());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initAcquisitionprops($overrideExisting = true)
-    {
-        if (null !== $this->collAcquisitionprops && !$overrideExisting) {
-            return;
-        }
-        $this->collAcquisitionprops = new PropelObjectCollection();
-        $this->collAcquisitionprops->setModel('Acquisitionprop');
-    }
-
-    /**
-     * Gets an array of Acquisitionprop objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Acquisition is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Acquisitionprop[] List of Acquisitionprop objects
-     * @throws PropelException
-     */
-    public function getAcquisitionprops($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collAcquisitionpropsPartial && !$this->isNew();
-        if (null === $this->collAcquisitionprops || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collAcquisitionprops) {
-                // return empty collection
-                $this->initAcquisitionprops();
-            } else {
-                $collAcquisitionprops = AcquisitionpropQuery::create(null, $criteria)
-                    ->filterByAcquisition($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collAcquisitionpropsPartial && count($collAcquisitionprops)) {
-                      $this->initAcquisitionprops(false);
-
-                      foreach($collAcquisitionprops as $obj) {
-                        if (false == $this->collAcquisitionprops->contains($obj)) {
-                          $this->collAcquisitionprops->append($obj);
-                        }
-                      }
-
-                      $this->collAcquisitionpropsPartial = true;
-                    }
-
-                    $collAcquisitionprops->getInternalIterator()->rewind();
-                    return $collAcquisitionprops;
-                }
-
-                if($partial && $this->collAcquisitionprops) {
-                    foreach($this->collAcquisitionprops as $obj) {
-                        if($obj->isNew()) {
-                            $collAcquisitionprops[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collAcquisitionprops = $collAcquisitionprops;
-                $this->collAcquisitionpropsPartial = false;
-            }
-        }
-
-        return $this->collAcquisitionprops;
-    }
-
-    /**
-     * Sets a collection of Acquisitionprop objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $acquisitionprops A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function setAcquisitionprops(PropelCollection $acquisitionprops, PropelPDO $con = null)
-    {
-        $acquisitionpropsToDelete = $this->getAcquisitionprops(new Criteria(), $con)->diff($acquisitionprops);
-
-        $this->acquisitionpropsScheduledForDeletion = unserialize(serialize($acquisitionpropsToDelete));
-
-        foreach ($acquisitionpropsToDelete as $acquisitionpropRemoved) {
-            $acquisitionpropRemoved->setAcquisition(null);
-        }
-
-        $this->collAcquisitionprops = null;
-        foreach ($acquisitionprops as $acquisitionprop) {
-            $this->addAcquisitionprop($acquisitionprop);
-        }
-
-        $this->collAcquisitionprops = $acquisitionprops;
-        $this->collAcquisitionpropsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Acquisitionprop objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Acquisitionprop objects.
-     * @throws PropelException
-     */
-    public function countAcquisitionprops(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collAcquisitionpropsPartial && !$this->isNew();
-        if (null === $this->collAcquisitionprops || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collAcquisitionprops) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getAcquisitionprops());
-            }
-            $query = AcquisitionpropQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByAcquisition($this)
-                ->count($con);
-        }
-
-        return count($this->collAcquisitionprops);
-    }
-
-    /**
-     * Method called to associate a Acquisitionprop object to this object
-     * through the Acquisitionprop foreign key attribute.
-     *
-     * @param    Acquisitionprop $l Acquisitionprop
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function addAcquisitionprop(Acquisitionprop $l)
-    {
-        if ($this->collAcquisitionprops === null) {
-            $this->initAcquisitionprops();
-            $this->collAcquisitionpropsPartial = true;
-        }
-        if (!in_array($l, $this->collAcquisitionprops->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddAcquisitionprop($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Acquisitionprop $acquisitionprop The acquisitionprop object to add.
-     */
-    protected function doAddAcquisitionprop($acquisitionprop)
-    {
-        $this->collAcquisitionprops[]= $acquisitionprop;
-        $acquisitionprop->setAcquisition($this);
-    }
-
-    /**
-     * @param	Acquisitionprop $acquisitionprop The acquisitionprop object to remove.
-     * @return Acquisition The current object (for fluent API support)
-     */
-    public function removeAcquisitionprop($acquisitionprop)
-    {
-        if ($this->getAcquisitionprops()->contains($acquisitionprop)) {
-            $this->collAcquisitionprops->remove($this->collAcquisitionprops->search($acquisitionprop));
-            if (null === $this->acquisitionpropsScheduledForDeletion) {
-                $this->acquisitionpropsScheduledForDeletion = clone $this->collAcquisitionprops;
-                $this->acquisitionpropsScheduledForDeletion->clear();
-            }
-            $this->acquisitionpropsScheduledForDeletion[]= clone $acquisitionprop;
-            $acquisitionprop->setAcquisition(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Acquisition is new, it will return
-     * an empty collection; or if this Acquisition has previously
-     * been saved, it will retrieve related Acquisitionprops from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Acquisition.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Acquisitionprop[] List of Acquisitionprop objects
-     */
-    public function getAcquisitionpropsJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AcquisitionpropQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getAcquisitionprops($query, $con);
     }
 
     /**
@@ -2653,21 +1684,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->collAcquisitionRelationshipsRelatedByObjectId) {
-                foreach ($this->collAcquisitionRelationshipsRelatedByObjectId as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collAcquisitionRelationshipsRelatedBySubjectId) {
-                foreach ($this->collAcquisitionRelationshipsRelatedBySubjectId as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collAcquisitionprops) {
-                foreach ($this->collAcquisitionprops as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collQuantifications) {
                 foreach ($this->collQuantifications as $o) {
                     $o->clearAllReferences($deep);
@@ -2676,9 +1692,6 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
             if ($this->aAssay instanceof Persistent) {
               $this->aAssay->clearAllReferences($deep);
             }
-            if ($this->aChannel instanceof Persistent) {
-              $this->aChannel->clearAllReferences($deep);
-            }
             if ($this->aProtocol instanceof Persistent) {
               $this->aProtocol->clearAllReferences($deep);
             }
@@ -2686,24 +1699,11 @@ abstract class BaseAcquisition extends BaseObject implements Persistent
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        if ($this->collAcquisitionRelationshipsRelatedByObjectId instanceof PropelCollection) {
-            $this->collAcquisitionRelationshipsRelatedByObjectId->clearIterator();
-        }
-        $this->collAcquisitionRelationshipsRelatedByObjectId = null;
-        if ($this->collAcquisitionRelationshipsRelatedBySubjectId instanceof PropelCollection) {
-            $this->collAcquisitionRelationshipsRelatedBySubjectId->clearIterator();
-        }
-        $this->collAcquisitionRelationshipsRelatedBySubjectId = null;
-        if ($this->collAcquisitionprops instanceof PropelCollection) {
-            $this->collAcquisitionprops->clearIterator();
-        }
-        $this->collAcquisitionprops = null;
         if ($this->collQuantifications instanceof PropelCollection) {
             $this->collQuantifications->clearIterator();
         }
         $this->collQuantifications = null;
         $this->aAssay = null;
-        $this->aChannel = null;
         $this->aProtocol = null;
     }
 

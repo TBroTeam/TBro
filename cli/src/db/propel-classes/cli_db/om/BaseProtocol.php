@@ -15,25 +15,15 @@ use \PropelObjectCollection;
 use \PropelPDO;
 use cli_db\propel\Acquisition;
 use cli_db\propel\AcquisitionQuery;
-use cli_db\propel\Arraydesign;
-use cli_db\propel\ArraydesignQuery;
 use cli_db\propel\Assay;
 use cli_db\propel\AssayQuery;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermQuery;
-use cli_db\propel\Dbxref;
-use cli_db\propel\DbxrefQuery;
 use cli_db\propel\Protocol;
 use cli_db\propel\ProtocolPeer;
 use cli_db\propel\ProtocolQuery;
-use cli_db\propel\Protocolparam;
-use cli_db\propel\ProtocolparamQuery;
-use cli_db\propel\Pub;
-use cli_db\propel\PubQuery;
 use cli_db\propel\Quantification;
 use cli_db\propel\QuantificationQuery;
-use cli_db\propel\Treatment;
-use cli_db\propel\TreatmentQuery;
 
 /**
  * Base class that represents a row from the 'protocol' table.
@@ -118,16 +108,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
     protected $softwaredescription;
 
     /**
-     * @var        Dbxref
-     */
-    protected $aDbxref;
-
-    /**
-     * @var        Pub
-     */
-    protected $aPub;
-
-    /**
      * @var        Cvterm
      */
     protected $aCvterm;
@@ -139,34 +119,16 @@ abstract class BaseProtocol extends BaseObject implements Persistent
     protected $collAcquisitionsPartial;
 
     /**
-     * @var        PropelObjectCollection|Arraydesign[] Collection to store aggregation of Arraydesign objects.
-     */
-    protected $collArraydesigns;
-    protected $collArraydesignsPartial;
-
-    /**
      * @var        PropelObjectCollection|Assay[] Collection to store aggregation of Assay objects.
      */
     protected $collAssays;
     protected $collAssaysPartial;
 
     /**
-     * @var        PropelObjectCollection|Protocolparam[] Collection to store aggregation of Protocolparam objects.
-     */
-    protected $collProtocolparams;
-    protected $collProtocolparamsPartial;
-
-    /**
      * @var        PropelObjectCollection|Quantification[] Collection to store aggregation of Quantification objects.
      */
     protected $collQuantifications;
     protected $collQuantificationsPartial;
-
-    /**
-     * @var        PropelObjectCollection|Treatment[] Collection to store aggregation of Treatment objects.
-     */
-    protected $collTreatments;
-    protected $collTreatmentsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -198,31 +160,13 @@ abstract class BaseProtocol extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $arraydesignsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
     protected $assaysScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $protocolparamsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
     protected $quantificationsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $treatmentsScheduledForDeletion = null;
 
     /**
      * Get the [protocol_id] column value.
@@ -377,10 +321,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
             $this->modifiedColumns[] = ProtocolPeer::PUB_ID;
         }
 
-        if ($this->aPub !== null && $this->aPub->getPubId() !== $v) {
-            $this->aPub = null;
-        }
-
 
         return $this;
     } // setPubId()
@@ -400,10 +340,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
         if ($this->dbxref_id !== $v) {
             $this->dbxref_id = $v;
             $this->modifiedColumns[] = ProtocolPeer::DBXREF_ID;
-        }
-
-        if ($this->aDbxref !== null && $this->aDbxref->getDbxrefId() !== $v) {
-            $this->aDbxref = null;
         }
 
 
@@ -590,12 +526,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
         if ($this->aCvterm !== null && $this->type_id !== $this->aCvterm->getCvtermId()) {
             $this->aCvterm = null;
         }
-        if ($this->aPub !== null && $this->pub_id !== $this->aPub->getPubId()) {
-            $this->aPub = null;
-        }
-        if ($this->aDbxref !== null && $this->dbxref_id !== $this->aDbxref->getDbxrefId()) {
-            $this->aDbxref = null;
-        }
     } // ensureConsistency
 
     /**
@@ -635,20 +565,12 @@ abstract class BaseProtocol extends BaseObject implements Persistent
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aDbxref = null;
-            $this->aPub = null;
             $this->aCvterm = null;
             $this->collAcquisitions = null;
 
-            $this->collArraydesigns = null;
-
             $this->collAssays = null;
 
-            $this->collProtocolparams = null;
-
             $this->collQuantifications = null;
-
-            $this->collTreatments = null;
 
         } // if (deep)
     }
@@ -768,20 +690,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aDbxref !== null) {
-                if ($this->aDbxref->isModified() || $this->aDbxref->isNew()) {
-                    $affectedRows += $this->aDbxref->save($con);
-                }
-                $this->setDbxref($this->aDbxref);
-            }
-
-            if ($this->aPub !== null) {
-                if ($this->aPub->isModified() || $this->aPub->isNew()) {
-                    $affectedRows += $this->aPub->save($con);
-                }
-                $this->setPub($this->aPub);
-            }
-
             if ($this->aCvterm !== null) {
                 if ($this->aCvterm->isModified() || $this->aCvterm->isNew()) {
                     $affectedRows += $this->aCvterm->save($con);
@@ -818,24 +726,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->arraydesignsScheduledForDeletion !== null) {
-                if (!$this->arraydesignsScheduledForDeletion->isEmpty()) {
-                    foreach ($this->arraydesignsScheduledForDeletion as $arraydesign) {
-                        // need to save related object because we set the relation to null
-                        $arraydesign->save($con);
-                    }
-                    $this->arraydesignsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collArraydesigns !== null) {
-                foreach ($this->collArraydesigns as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->assaysScheduledForDeletion !== null) {
                 if (!$this->assaysScheduledForDeletion->isEmpty()) {
                     foreach ($this->assaysScheduledForDeletion as $assay) {
@@ -854,23 +744,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->protocolparamsScheduledForDeletion !== null) {
-                if (!$this->protocolparamsScheduledForDeletion->isEmpty()) {
-                    ProtocolparamQuery::create()
-                        ->filterByPrimaryKeys($this->protocolparamsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->protocolparamsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collProtocolparams !== null) {
-                foreach ($this->collProtocolparams as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->quantificationsScheduledForDeletion !== null) {
                 if (!$this->quantificationsScheduledForDeletion->isEmpty()) {
                     foreach ($this->quantificationsScheduledForDeletion as $quantification) {
@@ -883,24 +756,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
 
             if ($this->collQuantifications !== null) {
                 foreach ($this->collQuantifications as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->treatmentsScheduledForDeletion !== null) {
-                if (!$this->treatmentsScheduledForDeletion->isEmpty()) {
-                    foreach ($this->treatmentsScheduledForDeletion as $treatment) {
-                        // need to save related object because we set the relation to null
-                        $treatment->save($con);
-                    }
-                    $this->treatmentsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collTreatments !== null) {
-                foreach ($this->collTreatments as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1100,18 +955,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aDbxref !== null) {
-                if (!$this->aDbxref->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aDbxref->getValidationFailures());
-                }
-            }
-
-            if ($this->aPub !== null) {
-                if (!$this->aPub->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aPub->getValidationFailures());
-                }
-            }
-
             if ($this->aCvterm !== null) {
                 if (!$this->aCvterm->validate($columns)) {
                     $failureMap = array_merge($failureMap, $this->aCvterm->getValidationFailures());
@@ -1132,14 +975,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                     }
                 }
 
-                if ($this->collArraydesigns !== null) {
-                    foreach ($this->collArraydesigns as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collAssays !== null) {
                     foreach ($this->collAssays as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -1148,24 +983,8 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                     }
                 }
 
-                if ($this->collProtocolparams !== null) {
-                    foreach ($this->collProtocolparams as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collQuantifications !== null) {
                     foreach ($this->collQuantifications as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collTreatments !== null) {
-                    foreach ($this->collTreatments as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -1274,32 +1093,17 @@ abstract class BaseProtocol extends BaseObject implements Persistent
             $keys[8] => $this->getSoftwaredescription(),
         );
         if ($includeForeignObjects) {
-            if (null !== $this->aDbxref) {
-                $result['Dbxref'] = $this->aDbxref->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aPub) {
-                $result['Pub'] = $this->aPub->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aCvterm) {
                 $result['Cvterm'] = $this->aCvterm->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collAcquisitions) {
                 $result['Acquisitions'] = $this->collAcquisitions->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collArraydesigns) {
-                $result['Arraydesigns'] = $this->collArraydesigns->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collAssays) {
                 $result['Assays'] = $this->collAssays->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collProtocolparams) {
-                $result['Protocolparams'] = $this->collProtocolparams->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collQuantifications) {
                 $result['Quantifications'] = $this->collQuantifications->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collTreatments) {
-                $result['Treatments'] = $this->collTreatments->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1500,33 +1304,15 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                 }
             }
 
-            foreach ($this->getArraydesigns() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addArraydesign($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getAssays() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addAssay($relObj->copy($deepCopy));
                 }
             }
 
-            foreach ($this->getProtocolparams() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addProtocolparam($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getQuantifications() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addQuantification($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getTreatments() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addTreatment($relObj->copy($deepCopy));
                 }
             }
 
@@ -1578,110 +1364,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
         }
 
         return self::$peer;
-    }
-
-    /**
-     * Declares an association between this object and a Dbxref object.
-     *
-     * @param             Dbxref $v
-     * @return Protocol The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setDbxref(Dbxref $v = null)
-    {
-        if ($v === null) {
-            $this->setDbxrefId(NULL);
-        } else {
-            $this->setDbxrefId($v->getDbxrefId());
-        }
-
-        $this->aDbxref = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the Dbxref object, it will not be re-added.
-        if ($v !== null) {
-            $v->addProtocol($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated Dbxref object
-     *
-     * @param PropelPDO $con Optional Connection object.
-     * @param $doQuery Executes a query to get the object if required
-     * @return Dbxref The associated Dbxref object.
-     * @throws PropelException
-     */
-    public function getDbxref(PropelPDO $con = null, $doQuery = true)
-    {
-        if ($this->aDbxref === null && ($this->dbxref_id !== null) && $doQuery) {
-            $this->aDbxref = DbxrefQuery::create()->findPk($this->dbxref_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aDbxref->addProtocols($this);
-             */
-        }
-
-        return $this->aDbxref;
-    }
-
-    /**
-     * Declares an association between this object and a Pub object.
-     *
-     * @param             Pub $v
-     * @return Protocol The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setPub(Pub $v = null)
-    {
-        if ($v === null) {
-            $this->setPubId(NULL);
-        } else {
-            $this->setPubId($v->getPubId());
-        }
-
-        $this->aPub = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the Pub object, it will not be re-added.
-        if ($v !== null) {
-            $v->addProtocol($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated Pub object
-     *
-     * @param PropelPDO $con Optional Connection object.
-     * @param $doQuery Executes a query to get the object if required
-     * @return Pub The associated Pub object.
-     * @throws PropelException
-     */
-    public function getPub(PropelPDO $con = null, $doQuery = true)
-    {
-        if ($this->aPub === null && ($this->pub_id !== null) && $doQuery) {
-            $this->aPub = PubQuery::create()->findPk($this->pub_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aPub->addProtocols($this);
-             */
-        }
-
-        return $this->aPub;
     }
 
     /**
@@ -1750,20 +1432,11 @@ abstract class BaseProtocol extends BaseObject implements Persistent
         if ('Acquisition' == $relationName) {
             $this->initAcquisitions();
         }
-        if ('Arraydesign' == $relationName) {
-            $this->initArraydesigns();
-        }
         if ('Assay' == $relationName) {
             $this->initAssays();
         }
-        if ('Protocolparam' == $relationName) {
-            $this->initProtocolparams();
-        }
         if ('Quantification' == $relationName) {
             $this->initQuantifications();
-        }
-        if ('Treatment' == $relationName) {
-            $this->initTreatments();
         }
     }
 
@@ -2010,349 +1683,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
         return $this->getAcquisitions($query, $con);
     }
 
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Acquisitions from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Acquisition[] List of Acquisition objects
-     */
-    public function getAcquisitionsJoinChannel($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AcquisitionQuery::create(null, $criteria);
-        $query->joinWith('Channel', $join_behavior);
-
-        return $this->getAcquisitions($query, $con);
-    }
-
-    /**
-     * Clears out the collArraydesigns collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Protocol The current object (for fluent API support)
-     * @see        addArraydesigns()
-     */
-    public function clearArraydesigns()
-    {
-        $this->collArraydesigns = null; // important to set this to null since that means it is uninitialized
-        $this->collArraydesignsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collArraydesigns collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialArraydesigns($v = true)
-    {
-        $this->collArraydesignsPartial = $v;
-    }
-
-    /**
-     * Initializes the collArraydesigns collection.
-     *
-     * By default this just sets the collArraydesigns collection to an empty array (like clearcollArraydesigns());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initArraydesigns($overrideExisting = true)
-    {
-        if (null !== $this->collArraydesigns && !$overrideExisting) {
-            return;
-        }
-        $this->collArraydesigns = new PropelObjectCollection();
-        $this->collArraydesigns->setModel('Arraydesign');
-    }
-
-    /**
-     * Gets an array of Arraydesign objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Protocol is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     * @throws PropelException
-     */
-    public function getArraydesigns($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collArraydesignsPartial && !$this->isNew();
-        if (null === $this->collArraydesigns || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collArraydesigns) {
-                // return empty collection
-                $this->initArraydesigns();
-            } else {
-                $collArraydesigns = ArraydesignQuery::create(null, $criteria)
-                    ->filterByProtocol($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collArraydesignsPartial && count($collArraydesigns)) {
-                      $this->initArraydesigns(false);
-
-                      foreach($collArraydesigns as $obj) {
-                        if (false == $this->collArraydesigns->contains($obj)) {
-                          $this->collArraydesigns->append($obj);
-                        }
-                      }
-
-                      $this->collArraydesignsPartial = true;
-                    }
-
-                    $collArraydesigns->getInternalIterator()->rewind();
-                    return $collArraydesigns;
-                }
-
-                if($partial && $this->collArraydesigns) {
-                    foreach($this->collArraydesigns as $obj) {
-                        if($obj->isNew()) {
-                            $collArraydesigns[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collArraydesigns = $collArraydesigns;
-                $this->collArraydesignsPartial = false;
-            }
-        }
-
-        return $this->collArraydesigns;
-    }
-
-    /**
-     * Sets a collection of Arraydesign objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $arraydesigns A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function setArraydesigns(PropelCollection $arraydesigns, PropelPDO $con = null)
-    {
-        $arraydesignsToDelete = $this->getArraydesigns(new Criteria(), $con)->diff($arraydesigns);
-
-        $this->arraydesignsScheduledForDeletion = unserialize(serialize($arraydesignsToDelete));
-
-        foreach ($arraydesignsToDelete as $arraydesignRemoved) {
-            $arraydesignRemoved->setProtocol(null);
-        }
-
-        $this->collArraydesigns = null;
-        foreach ($arraydesigns as $arraydesign) {
-            $this->addArraydesign($arraydesign);
-        }
-
-        $this->collArraydesigns = $arraydesigns;
-        $this->collArraydesignsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Arraydesign objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Arraydesign objects.
-     * @throws PropelException
-     */
-    public function countArraydesigns(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collArraydesignsPartial && !$this->isNew();
-        if (null === $this->collArraydesigns || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collArraydesigns) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getArraydesigns());
-            }
-            $query = ArraydesignQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByProtocol($this)
-                ->count($con);
-        }
-
-        return count($this->collArraydesigns);
-    }
-
-    /**
-     * Method called to associate a Arraydesign object to this object
-     * through the Arraydesign foreign key attribute.
-     *
-     * @param    Arraydesign $l Arraydesign
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function addArraydesign(Arraydesign $l)
-    {
-        if ($this->collArraydesigns === null) {
-            $this->initArraydesigns();
-            $this->collArraydesignsPartial = true;
-        }
-        if (!in_array($l, $this->collArraydesigns->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddArraydesign($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Arraydesign $arraydesign The arraydesign object to add.
-     */
-    protected function doAddArraydesign($arraydesign)
-    {
-        $this->collArraydesigns[]= $arraydesign;
-        $arraydesign->setProtocol($this);
-    }
-
-    /**
-     * @param	Arraydesign $arraydesign The arraydesign object to remove.
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function removeArraydesign($arraydesign)
-    {
-        if ($this->getArraydesigns()->contains($arraydesign)) {
-            $this->collArraydesigns->remove($this->collArraydesigns->search($arraydesign));
-            if (null === $this->arraydesignsScheduledForDeletion) {
-                $this->arraydesignsScheduledForDeletion = clone $this->collArraydesigns;
-                $this->arraydesignsScheduledForDeletion->clear();
-            }
-            $this->arraydesignsScheduledForDeletion[]= $arraydesign;
-            $arraydesign->setProtocol(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinContact($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('Contact', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinCvtermRelatedByPlatformtypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedByPlatformtypeId', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinCvtermRelatedBySubstratetypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedBySubstratetypeId', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
     /**
      * Clears out the collAssays collection
      *
@@ -2588,330 +1918,12 @@ abstract class BaseProtocol extends BaseObject implements Persistent
      * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return PropelObjectCollection|Assay[] List of Assay objects
      */
-    public function getAssaysJoinArraydesign($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AssayQuery::create(null, $criteria);
-        $query->joinWith('Arraydesign', $join_behavior);
-
-        return $this->getAssays($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Assays from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Assay[] List of Assay objects
-     */
-    public function getAssaysJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AssayQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getAssays($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Assays from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Assay[] List of Assay objects
-     */
     public function getAssaysJoinContact($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $query = AssayQuery::create(null, $criteria);
         $query->joinWith('Contact', $join_behavior);
 
         return $this->getAssays($query, $con);
-    }
-
-    /**
-     * Clears out the collProtocolparams collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Protocol The current object (for fluent API support)
-     * @see        addProtocolparams()
-     */
-    public function clearProtocolparams()
-    {
-        $this->collProtocolparams = null; // important to set this to null since that means it is uninitialized
-        $this->collProtocolparamsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collProtocolparams collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialProtocolparams($v = true)
-    {
-        $this->collProtocolparamsPartial = $v;
-    }
-
-    /**
-     * Initializes the collProtocolparams collection.
-     *
-     * By default this just sets the collProtocolparams collection to an empty array (like clearcollProtocolparams());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initProtocolparams($overrideExisting = true)
-    {
-        if (null !== $this->collProtocolparams && !$overrideExisting) {
-            return;
-        }
-        $this->collProtocolparams = new PropelObjectCollection();
-        $this->collProtocolparams->setModel('Protocolparam');
-    }
-
-    /**
-     * Gets an array of Protocolparam objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Protocol is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Protocolparam[] List of Protocolparam objects
-     * @throws PropelException
-     */
-    public function getProtocolparams($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collProtocolparamsPartial && !$this->isNew();
-        if (null === $this->collProtocolparams || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collProtocolparams) {
-                // return empty collection
-                $this->initProtocolparams();
-            } else {
-                $collProtocolparams = ProtocolparamQuery::create(null, $criteria)
-                    ->filterByProtocol($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collProtocolparamsPartial && count($collProtocolparams)) {
-                      $this->initProtocolparams(false);
-
-                      foreach($collProtocolparams as $obj) {
-                        if (false == $this->collProtocolparams->contains($obj)) {
-                          $this->collProtocolparams->append($obj);
-                        }
-                      }
-
-                      $this->collProtocolparamsPartial = true;
-                    }
-
-                    $collProtocolparams->getInternalIterator()->rewind();
-                    return $collProtocolparams;
-                }
-
-                if($partial && $this->collProtocolparams) {
-                    foreach($this->collProtocolparams as $obj) {
-                        if($obj->isNew()) {
-                            $collProtocolparams[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collProtocolparams = $collProtocolparams;
-                $this->collProtocolparamsPartial = false;
-            }
-        }
-
-        return $this->collProtocolparams;
-    }
-
-    /**
-     * Sets a collection of Protocolparam objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $protocolparams A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function setProtocolparams(PropelCollection $protocolparams, PropelPDO $con = null)
-    {
-        $protocolparamsToDelete = $this->getProtocolparams(new Criteria(), $con)->diff($protocolparams);
-
-        $this->protocolparamsScheduledForDeletion = unserialize(serialize($protocolparamsToDelete));
-
-        foreach ($protocolparamsToDelete as $protocolparamRemoved) {
-            $protocolparamRemoved->setProtocol(null);
-        }
-
-        $this->collProtocolparams = null;
-        foreach ($protocolparams as $protocolparam) {
-            $this->addProtocolparam($protocolparam);
-        }
-
-        $this->collProtocolparams = $protocolparams;
-        $this->collProtocolparamsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Protocolparam objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Protocolparam objects.
-     * @throws PropelException
-     */
-    public function countProtocolparams(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collProtocolparamsPartial && !$this->isNew();
-        if (null === $this->collProtocolparams || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collProtocolparams) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getProtocolparams());
-            }
-            $query = ProtocolparamQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByProtocol($this)
-                ->count($con);
-        }
-
-        return count($this->collProtocolparams);
-    }
-
-    /**
-     * Method called to associate a Protocolparam object to this object
-     * through the Protocolparam foreign key attribute.
-     *
-     * @param    Protocolparam $l Protocolparam
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function addProtocolparam(Protocolparam $l)
-    {
-        if ($this->collProtocolparams === null) {
-            $this->initProtocolparams();
-            $this->collProtocolparamsPartial = true;
-        }
-        if (!in_array($l, $this->collProtocolparams->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddProtocolparam($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Protocolparam $protocolparam The protocolparam object to add.
-     */
-    protected function doAddProtocolparam($protocolparam)
-    {
-        $this->collProtocolparams[]= $protocolparam;
-        $protocolparam->setProtocol($this);
-    }
-
-    /**
-     * @param	Protocolparam $protocolparam The protocolparam object to remove.
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function removeProtocolparam($protocolparam)
-    {
-        if ($this->getProtocolparams()->contains($protocolparam)) {
-            $this->collProtocolparams->remove($this->collProtocolparams->search($protocolparam));
-            if (null === $this->protocolparamsScheduledForDeletion) {
-                $this->protocolparamsScheduledForDeletion = clone $this->collProtocolparams;
-                $this->protocolparamsScheduledForDeletion->clear();
-            }
-            $this->protocolparamsScheduledForDeletion[]= clone $protocolparam;
-            $protocolparam->setProtocol(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Protocolparams from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Protocolparam[] List of Protocolparam objects
-     */
-    public function getProtocolparamsJoinCvtermRelatedByDatatypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ProtocolparamQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedByDatatypeId', $join_behavior);
-
-        return $this->getProtocolparams($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Protocolparams from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Protocolparam[] List of Protocolparam objects
-     */
-    public function getProtocolparamsJoinCvtermRelatedByUnittypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ProtocolparamQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedByUnittypeId', $join_behavior);
-
-        return $this->getProtocolparams($query, $con);
     }
 
     /**
@@ -3208,274 +2220,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
     }
 
     /**
-     * Clears out the collTreatments collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Protocol The current object (for fluent API support)
-     * @see        addTreatments()
-     */
-    public function clearTreatments()
-    {
-        $this->collTreatments = null; // important to set this to null since that means it is uninitialized
-        $this->collTreatmentsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collTreatments collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialTreatments($v = true)
-    {
-        $this->collTreatmentsPartial = $v;
-    }
-
-    /**
-     * Initializes the collTreatments collection.
-     *
-     * By default this just sets the collTreatments collection to an empty array (like clearcollTreatments());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initTreatments($overrideExisting = true)
-    {
-        if (null !== $this->collTreatments && !$overrideExisting) {
-            return;
-        }
-        $this->collTreatments = new PropelObjectCollection();
-        $this->collTreatments->setModel('Treatment');
-    }
-
-    /**
-     * Gets an array of Treatment objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Protocol is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Treatment[] List of Treatment objects
-     * @throws PropelException
-     */
-    public function getTreatments($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collTreatmentsPartial && !$this->isNew();
-        if (null === $this->collTreatments || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collTreatments) {
-                // return empty collection
-                $this->initTreatments();
-            } else {
-                $collTreatments = TreatmentQuery::create(null, $criteria)
-                    ->filterByProtocol($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collTreatmentsPartial && count($collTreatments)) {
-                      $this->initTreatments(false);
-
-                      foreach($collTreatments as $obj) {
-                        if (false == $this->collTreatments->contains($obj)) {
-                          $this->collTreatments->append($obj);
-                        }
-                      }
-
-                      $this->collTreatmentsPartial = true;
-                    }
-
-                    $collTreatments->getInternalIterator()->rewind();
-                    return $collTreatments;
-                }
-
-                if($partial && $this->collTreatments) {
-                    foreach($this->collTreatments as $obj) {
-                        if($obj->isNew()) {
-                            $collTreatments[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collTreatments = $collTreatments;
-                $this->collTreatmentsPartial = false;
-            }
-        }
-
-        return $this->collTreatments;
-    }
-
-    /**
-     * Sets a collection of Treatment objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $treatments A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function setTreatments(PropelCollection $treatments, PropelPDO $con = null)
-    {
-        $treatmentsToDelete = $this->getTreatments(new Criteria(), $con)->diff($treatments);
-
-        $this->treatmentsScheduledForDeletion = unserialize(serialize($treatmentsToDelete));
-
-        foreach ($treatmentsToDelete as $treatmentRemoved) {
-            $treatmentRemoved->setProtocol(null);
-        }
-
-        $this->collTreatments = null;
-        foreach ($treatments as $treatment) {
-            $this->addTreatment($treatment);
-        }
-
-        $this->collTreatments = $treatments;
-        $this->collTreatmentsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Treatment objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Treatment objects.
-     * @throws PropelException
-     */
-    public function countTreatments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collTreatmentsPartial && !$this->isNew();
-        if (null === $this->collTreatments || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collTreatments) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getTreatments());
-            }
-            $query = TreatmentQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByProtocol($this)
-                ->count($con);
-        }
-
-        return count($this->collTreatments);
-    }
-
-    /**
-     * Method called to associate a Treatment object to this object
-     * through the Treatment foreign key attribute.
-     *
-     * @param    Treatment $l Treatment
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function addTreatment(Treatment $l)
-    {
-        if ($this->collTreatments === null) {
-            $this->initTreatments();
-            $this->collTreatmentsPartial = true;
-        }
-        if (!in_array($l, $this->collTreatments->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddTreatment($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Treatment $treatment The treatment object to add.
-     */
-    protected function doAddTreatment($treatment)
-    {
-        $this->collTreatments[]= $treatment;
-        $treatment->setProtocol($this);
-    }
-
-    /**
-     * @param	Treatment $treatment The treatment object to remove.
-     * @return Protocol The current object (for fluent API support)
-     */
-    public function removeTreatment($treatment)
-    {
-        if ($this->getTreatments()->contains($treatment)) {
-            $this->collTreatments->remove($this->collTreatments->search($treatment));
-            if (null === $this->treatmentsScheduledForDeletion) {
-                $this->treatmentsScheduledForDeletion = clone $this->collTreatments;
-                $this->treatmentsScheduledForDeletion->clear();
-            }
-            $this->treatmentsScheduledForDeletion[]= $treatment;
-            $treatment->setProtocol(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Treatments from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Treatment[] List of Treatment objects
-     */
-    public function getTreatmentsJoinBiomaterial($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = TreatmentQuery::create(null, $criteria);
-        $query->joinWith('Biomaterial', $join_behavior);
-
-        return $this->getTreatments($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Protocol is new, it will return
-     * an empty collection; or if this Protocol has previously
-     * been saved, it will retrieve related Treatments from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Protocol.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Treatment[] List of Treatment objects
-     */
-    public function getTreatmentsJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = TreatmentQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getTreatments($query, $con);
-    }
-
-    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -3516,18 +2260,8 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collArraydesigns) {
-                foreach ($this->collArraydesigns as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collAssays) {
                 foreach ($this->collAssays as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collProtocolparams) {
-                foreach ($this->collProtocolparams as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -3535,17 +2269,6 @@ abstract class BaseProtocol extends BaseObject implements Persistent
                 foreach ($this->collQuantifications as $o) {
                     $o->clearAllReferences($deep);
                 }
-            }
-            if ($this->collTreatments) {
-                foreach ($this->collTreatments as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->aDbxref instanceof Persistent) {
-              $this->aDbxref->clearAllReferences($deep);
-            }
-            if ($this->aPub instanceof Persistent) {
-              $this->aPub->clearAllReferences($deep);
             }
             if ($this->aCvterm instanceof Persistent) {
               $this->aCvterm->clearAllReferences($deep);
@@ -3558,28 +2281,14 @@ abstract class BaseProtocol extends BaseObject implements Persistent
             $this->collAcquisitions->clearIterator();
         }
         $this->collAcquisitions = null;
-        if ($this->collArraydesigns instanceof PropelCollection) {
-            $this->collArraydesigns->clearIterator();
-        }
-        $this->collArraydesigns = null;
         if ($this->collAssays instanceof PropelCollection) {
             $this->collAssays->clearIterator();
         }
         $this->collAssays = null;
-        if ($this->collProtocolparams instanceof PropelCollection) {
-            $this->collProtocolparams->clearIterator();
-        }
-        $this->collProtocolparams = null;
         if ($this->collQuantifications instanceof PropelCollection) {
             $this->collQuantifications->clearIterator();
         }
         $this->collQuantifications = null;
-        if ($this->collTreatments instanceof PropelCollection) {
-            $this->collTreatments->clearIterator();
-        }
-        $this->collTreatments = null;
-        $this->aDbxref = null;
-        $this->aPub = null;
         $this->aCvterm = null;
     }
 

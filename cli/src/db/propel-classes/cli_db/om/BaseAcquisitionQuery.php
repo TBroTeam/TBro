@@ -15,10 +15,7 @@ use \PropelPDO;
 use cli_db\propel\Acquisition;
 use cli_db\propel\AcquisitionPeer;
 use cli_db\propel\AcquisitionQuery;
-use cli_db\propel\AcquisitionRelationship;
-use cli_db\propel\Acquisitionprop;
 use cli_db\propel\Assay;
-use cli_db\propel\Channel;
 use cli_db\propel\Protocol;
 use cli_db\propel\Quantification;
 
@@ -51,25 +48,9 @@ use cli_db\propel\Quantification;
  * @method AcquisitionQuery rightJoinAssay($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Assay relation
  * @method AcquisitionQuery innerJoinAssay($relationAlias = null) Adds a INNER JOIN clause to the query using the Assay relation
  *
- * @method AcquisitionQuery leftJoinChannel($relationAlias = null) Adds a LEFT JOIN clause to the query using the Channel relation
- * @method AcquisitionQuery rightJoinChannel($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Channel relation
- * @method AcquisitionQuery innerJoinChannel($relationAlias = null) Adds a INNER JOIN clause to the query using the Channel relation
- *
  * @method AcquisitionQuery leftJoinProtocol($relationAlias = null) Adds a LEFT JOIN clause to the query using the Protocol relation
  * @method AcquisitionQuery rightJoinProtocol($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Protocol relation
  * @method AcquisitionQuery innerJoinProtocol($relationAlias = null) Adds a INNER JOIN clause to the query using the Protocol relation
- *
- * @method AcquisitionQuery leftJoinAcquisitionRelationshipRelatedByObjectId($relationAlias = null) Adds a LEFT JOIN clause to the query using the AcquisitionRelationshipRelatedByObjectId relation
- * @method AcquisitionQuery rightJoinAcquisitionRelationshipRelatedByObjectId($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AcquisitionRelationshipRelatedByObjectId relation
- * @method AcquisitionQuery innerJoinAcquisitionRelationshipRelatedByObjectId($relationAlias = null) Adds a INNER JOIN clause to the query using the AcquisitionRelationshipRelatedByObjectId relation
- *
- * @method AcquisitionQuery leftJoinAcquisitionRelationshipRelatedBySubjectId($relationAlias = null) Adds a LEFT JOIN clause to the query using the AcquisitionRelationshipRelatedBySubjectId relation
- * @method AcquisitionQuery rightJoinAcquisitionRelationshipRelatedBySubjectId($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AcquisitionRelationshipRelatedBySubjectId relation
- * @method AcquisitionQuery innerJoinAcquisitionRelationshipRelatedBySubjectId($relationAlias = null) Adds a INNER JOIN clause to the query using the AcquisitionRelationshipRelatedBySubjectId relation
- *
- * @method AcquisitionQuery leftJoinAcquisitionprop($relationAlias = null) Adds a LEFT JOIN clause to the query using the Acquisitionprop relation
- * @method AcquisitionQuery rightJoinAcquisitionprop($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Acquisitionprop relation
- * @method AcquisitionQuery innerJoinAcquisitionprop($relationAlias = null) Adds a INNER JOIN clause to the query using the Acquisitionprop relation
  *
  * @method AcquisitionQuery leftJoinQuantification($relationAlias = null) Adds a LEFT JOIN clause to the query using the Quantification relation
  * @method AcquisitionQuery rightJoinQuantification($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Quantification relation
@@ -425,8 +406,6 @@ abstract class BaseAcquisitionQuery extends ModelCriteria
      * $query->filterByChannelId(array('max' => 12)); // WHERE channel_id <= 12
      * </code>
      *
-     * @see       filterByChannel()
-     *
      * @param     mixed $channelId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -636,82 +615,6 @@ abstract class BaseAcquisitionQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Channel object
-     *
-     * @param   Channel|PropelObjectCollection $channel The related object(s) to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 AcquisitionQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByChannel($channel, $comparison = null)
-    {
-        if ($channel instanceof Channel) {
-            return $this
-                ->addUsingAlias(AcquisitionPeer::CHANNEL_ID, $channel->getChannelId(), $comparison);
-        } elseif ($channel instanceof PropelObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(AcquisitionPeer::CHANNEL_ID, $channel->toKeyValue('PrimaryKey', 'ChannelId'), $comparison);
-        } else {
-            throw new PropelException('filterByChannel() only accepts arguments of type Channel or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Channel relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return AcquisitionQuery The current query, for fluid interface
-     */
-    public function joinChannel($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Channel');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Channel');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Channel relation Channel object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\ChannelQuery A secondary query class using the current class as primary query
-     */
-    public function useChannelQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinChannel($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Channel', '\cli_db\propel\ChannelQuery');
-    }
-
-    /**
      * Filter the query by a related Protocol object
      *
      * @param   Protocol|PropelObjectCollection $protocol The related object(s) to use as filter
@@ -785,228 +688,6 @@ abstract class BaseAcquisitionQuery extends ModelCriteria
         return $this
             ->joinProtocol($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Protocol', '\cli_db\propel\ProtocolQuery');
-    }
-
-    /**
-     * Filter the query by a related AcquisitionRelationship object
-     *
-     * @param   AcquisitionRelationship|PropelObjectCollection $acquisitionRelationship  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 AcquisitionQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByAcquisitionRelationshipRelatedByObjectId($acquisitionRelationship, $comparison = null)
-    {
-        if ($acquisitionRelationship instanceof AcquisitionRelationship) {
-            return $this
-                ->addUsingAlias(AcquisitionPeer::ACQUISITION_ID, $acquisitionRelationship->getObjectId(), $comparison);
-        } elseif ($acquisitionRelationship instanceof PropelObjectCollection) {
-            return $this
-                ->useAcquisitionRelationshipRelatedByObjectIdQuery()
-                ->filterByPrimaryKeys($acquisitionRelationship->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByAcquisitionRelationshipRelatedByObjectId() only accepts arguments of type AcquisitionRelationship or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the AcquisitionRelationshipRelatedByObjectId relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return AcquisitionQuery The current query, for fluid interface
-     */
-    public function joinAcquisitionRelationshipRelatedByObjectId($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('AcquisitionRelationshipRelatedByObjectId');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'AcquisitionRelationshipRelatedByObjectId');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the AcquisitionRelationshipRelatedByObjectId relation AcquisitionRelationship object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\AcquisitionRelationshipQuery A secondary query class using the current class as primary query
-     */
-    public function useAcquisitionRelationshipRelatedByObjectIdQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinAcquisitionRelationshipRelatedByObjectId($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'AcquisitionRelationshipRelatedByObjectId', '\cli_db\propel\AcquisitionRelationshipQuery');
-    }
-
-    /**
-     * Filter the query by a related AcquisitionRelationship object
-     *
-     * @param   AcquisitionRelationship|PropelObjectCollection $acquisitionRelationship  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 AcquisitionQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByAcquisitionRelationshipRelatedBySubjectId($acquisitionRelationship, $comparison = null)
-    {
-        if ($acquisitionRelationship instanceof AcquisitionRelationship) {
-            return $this
-                ->addUsingAlias(AcquisitionPeer::ACQUISITION_ID, $acquisitionRelationship->getSubjectId(), $comparison);
-        } elseif ($acquisitionRelationship instanceof PropelObjectCollection) {
-            return $this
-                ->useAcquisitionRelationshipRelatedBySubjectIdQuery()
-                ->filterByPrimaryKeys($acquisitionRelationship->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByAcquisitionRelationshipRelatedBySubjectId() only accepts arguments of type AcquisitionRelationship or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the AcquisitionRelationshipRelatedBySubjectId relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return AcquisitionQuery The current query, for fluid interface
-     */
-    public function joinAcquisitionRelationshipRelatedBySubjectId($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('AcquisitionRelationshipRelatedBySubjectId');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'AcquisitionRelationshipRelatedBySubjectId');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the AcquisitionRelationshipRelatedBySubjectId relation AcquisitionRelationship object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\AcquisitionRelationshipQuery A secondary query class using the current class as primary query
-     */
-    public function useAcquisitionRelationshipRelatedBySubjectIdQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinAcquisitionRelationshipRelatedBySubjectId($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'AcquisitionRelationshipRelatedBySubjectId', '\cli_db\propel\AcquisitionRelationshipQuery');
-    }
-
-    /**
-     * Filter the query by a related Acquisitionprop object
-     *
-     * @param   Acquisitionprop|PropelObjectCollection $acquisitionprop  the related object to use as filter
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return                 AcquisitionQuery The current query, for fluid interface
-     * @throws PropelException - if the provided filter is invalid.
-     */
-    public function filterByAcquisitionprop($acquisitionprop, $comparison = null)
-    {
-        if ($acquisitionprop instanceof Acquisitionprop) {
-            return $this
-                ->addUsingAlias(AcquisitionPeer::ACQUISITION_ID, $acquisitionprop->getAcquisitionId(), $comparison);
-        } elseif ($acquisitionprop instanceof PropelObjectCollection) {
-            return $this
-                ->useAcquisitionpropQuery()
-                ->filterByPrimaryKeys($acquisitionprop->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByAcquisitionprop() only accepts arguments of type Acquisitionprop or PropelCollection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Acquisitionprop relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return AcquisitionQuery The current query, for fluid interface
-     */
-    public function joinAcquisitionprop($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Acquisitionprop');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Acquisitionprop');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Acquisitionprop relation Acquisitionprop object
-     *
-     * @see       useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return   \cli_db\propel\AcquisitionpropQuery A secondary query class using the current class as primary query
-     */
-    public function useAcquisitionpropQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinAcquisitionprop($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Acquisitionprop', '\cli_db\propel\AcquisitionpropQuery');
     }
 
     /**

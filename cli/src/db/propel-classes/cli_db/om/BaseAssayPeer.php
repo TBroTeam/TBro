@@ -10,17 +10,11 @@ use \Propel;
 use \PropelException;
 use \PropelPDO;
 use cli_db\propel\AcquisitionPeer;
-use cli_db\propel\ArraydesignPeer;
 use cli_db\propel\Assay;
 use cli_db\propel\AssayBiomaterialPeer;
 use cli_db\propel\AssayPeer;
-use cli_db\propel\AssaypropPeer;
 use cli_db\propel\ContactPeer;
-use cli_db\propel\ControlPeer;
-use cli_db\propel\DbxrefPeer;
 use cli_db\propel\ProtocolPeer;
-use cli_db\propel\StudyAssayPeer;
-use cli_db\propel\StudyfactorvaluePeer;
 use cli_db\propel\map\AssayTableMap;
 
 /**
@@ -430,18 +424,6 @@ abstract class BaseAssayPeer
         // Invalidate objects in AssayBiomaterialPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         AssayBiomaterialPeer::clearInstancePool();
-        // Invalidate objects in AssaypropPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        AssaypropPeer::clearInstancePool();
-        // Invalidate objects in ControlPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ControlPeer::clearInstancePool();
-        // Invalidate objects in StudyAssayPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        StudyAssayPeer::clearInstancePool();
-        // Invalidate objects in StudyfactorvaluePeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        StudyfactorvaluePeer::clearInstancePool();
     }
 
     /**
@@ -536,108 +518,6 @@ abstract class BaseAssayPeer
         }
 
         return array($obj, $col);
-    }
-
-
-    /**
-     * Returns the number of rows matching criteria, joining the related Arraydesign table
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return int Number of matching rows.
-     */
-    public static function doCountJoinArraydesign(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        // we're going to modify criteria, so copy it first
-        $criteria = clone $criteria;
-
-        // We need to set the primary table name, since in the case that there are no WHERE columns
-        // it will be impossible for the BasePeer::createSelectSql() method to determine which
-        // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(AssayPeer::TABLE_NAME);
-
-        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-            $criteria->setDistinct();
-        }
-
-        if (!$criteria->hasSelectClause()) {
-            AssayPeer::addSelectColumns($criteria);
-        }
-
-        $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-        // Set the correct dbName
-        $criteria->setDbName(AssayPeer::DATABASE_NAME);
-
-        if ($con === null) {
-            $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-        }
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $stmt = BasePeer::doCount($criteria, $con);
-
-        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $count = (int) $row[0];
-        } else {
-            $count = 0; // no rows returned; we infer that means 0 matches.
-        }
-        $stmt->closeCursor();
-
-        return $count;
-    }
-
-
-    /**
-     * Returns the number of rows matching criteria, joining the related Dbxref table
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return int Number of matching rows.
-     */
-    public static function doCountJoinDbxref(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        // we're going to modify criteria, so copy it first
-        $criteria = clone $criteria;
-
-        // We need to set the primary table name, since in the case that there are no WHERE columns
-        // it will be impossible for the BasePeer::createSelectSql() method to determine which
-        // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(AssayPeer::TABLE_NAME);
-
-        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-            $criteria->setDistinct();
-        }
-
-        if (!$criteria->hasSelectClause()) {
-            AssayPeer::addSelectColumns($criteria);
-        }
-
-        $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-
-        // Set the correct dbName
-        $criteria->setDbName(AssayPeer::DATABASE_NAME);
-
-        if ($con === null) {
-            $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-        }
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
-        $stmt = BasePeer::doCount($criteria, $con);
-
-        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $count = (int) $row[0];
-        } else {
-            $count = 0; // no rows returned; we infer that means 0 matches.
-        }
-        $stmt->closeCursor();
-
-        return $count;
     }
 
 
@@ -740,140 +620,6 @@ abstract class BaseAssayPeer
         $stmt->closeCursor();
 
         return $count;
-    }
-
-
-    /**
-     * Selects a collection of Assay objects pre-filled with their Arraydesign objects.
-     * @param      Criteria  $criteria
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Assay objects.
-     * @throws PropelException Any exceptions caught during processing will be
-     *		 rethrown wrapped into a PropelException.
-     */
-    public static function doSelectJoinArraydesign(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $criteria = clone $criteria;
-
-        // Set the correct dbName if it has not been overridden
-        if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(AssayPeer::DATABASE_NAME);
-        }
-
-        AssayPeer::addSelectColumns($criteria);
-        $startcol = AssayPeer::NUM_HYDRATE_COLUMNS;
-        ArraydesignPeer::addSelectColumns($criteria);
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $stmt = BasePeer::doSelect($criteria, $con);
-        $results = array();
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = AssayPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = AssayPeer::getInstanceFromPool($key1))) {
-                // We no longer rehydrate the object, since this can cause data loss.
-                // See http://www.propelorm.org/ticket/509
-                // $obj1->hydrate($row, 0, true); // rehydrate
-            } else {
-
-                $cls = AssayPeer::getOMClass();
-
-                $obj1 = new $cls();
-                $obj1->hydrate($row);
-                AssayPeer::addInstanceToPool($obj1, $key1);
-            } // if $obj1 already loaded
-
-            $key2 = ArraydesignPeer::getPrimaryKeyHashFromRow($row, $startcol);
-            if ($key2 !== null) {
-                $obj2 = ArraydesignPeer::getInstanceFromPool($key2);
-                if (!$obj2) {
-
-                    $cls = ArraydesignPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol);
-                    ArraydesignPeer::addInstanceToPool($obj2, $key2);
-                } // if obj2 already loaded
-
-                // Add the $obj1 (Assay) to $obj2 (Arraydesign)
-                $obj2->addAssay($obj1);
-
-            } // if joined row was not null
-
-            $results[] = $obj1;
-        }
-        $stmt->closeCursor();
-
-        return $results;
-    }
-
-
-    /**
-     * Selects a collection of Assay objects pre-filled with their Dbxref objects.
-     * @param      Criteria  $criteria
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Assay objects.
-     * @throws PropelException Any exceptions caught during processing will be
-     *		 rethrown wrapped into a PropelException.
-     */
-    public static function doSelectJoinDbxref(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $criteria = clone $criteria;
-
-        // Set the correct dbName if it has not been overridden
-        if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(AssayPeer::DATABASE_NAME);
-        }
-
-        AssayPeer::addSelectColumns($criteria);
-        $startcol = AssayPeer::NUM_HYDRATE_COLUMNS;
-        DbxrefPeer::addSelectColumns($criteria);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
-        $stmt = BasePeer::doSelect($criteria, $con);
-        $results = array();
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = AssayPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = AssayPeer::getInstanceFromPool($key1))) {
-                // We no longer rehydrate the object, since this can cause data loss.
-                // See http://www.propelorm.org/ticket/509
-                // $obj1->hydrate($row, 0, true); // rehydrate
-            } else {
-
-                $cls = AssayPeer::getOMClass();
-
-                $obj1 = new $cls();
-                $obj1->hydrate($row);
-                AssayPeer::addInstanceToPool($obj1, $key1);
-            } // if $obj1 already loaded
-
-            $key2 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol);
-            if ($key2 !== null) {
-                $obj2 = DbxrefPeer::getInstanceFromPool($key2);
-                if (!$obj2) {
-
-                    $cls = DbxrefPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol);
-                    DbxrefPeer::addInstanceToPool($obj2, $key2);
-                } // if obj2 already loaded
-
-                // Add the $obj1 (Assay) to $obj2 (Dbxref)
-                $obj2->addAssay($obj1);
-
-            } // if joined row was not null
-
-            $results[] = $obj1;
-        }
-        $stmt->closeCursor();
-
-        return $results;
     }
 
 
@@ -1047,10 +793,6 @@ abstract class BaseAssayPeer
             $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
         $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
 
         $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
@@ -1089,21 +831,11 @@ abstract class BaseAssayPeer
         AssayPeer::addSelectColumns($criteria);
         $startcol2 = AssayPeer::NUM_HYDRATE_COLUMNS;
 
-        ArraydesignPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + ArraydesignPeer::NUM_HYDRATE_COLUMNS;
-
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
-
         ContactPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + ContactPeer::NUM_HYDRATE_COLUMNS;
+        $startcol3 = $startcol2 + ContactPeer::NUM_HYDRATE_COLUMNS;
 
         ProtocolPeer::addSelectColumns($criteria);
-        $startcol6 = $startcol5 + ProtocolPeer::NUM_HYDRATE_COLUMNS;
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $startcol4 = $startcol3 + ProtocolPeer::NUM_HYDRATE_COLUMNS;
 
         $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
 
@@ -1126,76 +858,40 @@ abstract class BaseAssayPeer
                 AssayPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-            // Add objects for joined Arraydesign rows
-
-            $key2 = ArraydesignPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-            if ($key2 !== null) {
-                $obj2 = ArraydesignPeer::getInstanceFromPool($key2);
-                if (!$obj2) {
-
-                    $cls = ArraydesignPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol2);
-                    ArraydesignPeer::addInstanceToPool($obj2, $key2);
-                } // if obj2 loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj2 (Arraydesign)
-                $obj2->addAssay($obj1);
-            } // if joined row not null
-
-            // Add objects for joined Dbxref rows
-
-            $key3 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-            if ($key3 !== null) {
-                $obj3 = DbxrefPeer::getInstanceFromPool($key3);
-                if (!$obj3) {
-
-                    $cls = DbxrefPeer::getOMClass();
-
-                    $obj3 = new $cls();
-                    $obj3->hydrate($row, $startcol3);
-                    DbxrefPeer::addInstanceToPool($obj3, $key3);
-                } // if obj3 loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj3 (Dbxref)
-                $obj3->addAssay($obj1);
-            } // if joined row not null
-
             // Add objects for joined Contact rows
 
-            $key4 = ContactPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-            if ($key4 !== null) {
-                $obj4 = ContactPeer::getInstanceFromPool($key4);
-                if (!$obj4) {
+            $key2 = ContactPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+            if ($key2 !== null) {
+                $obj2 = ContactPeer::getInstanceFromPool($key2);
+                if (!$obj2) {
 
                     $cls = ContactPeer::getOMClass();
 
-                    $obj4 = new $cls();
-                    $obj4->hydrate($row, $startcol4);
-                    ContactPeer::addInstanceToPool($obj4, $key4);
-                } // if obj4 loaded
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol2);
+                    ContactPeer::addInstanceToPool($obj2, $key2);
+                } // if obj2 loaded
 
-                // Add the $obj1 (Assay) to the collection in $obj4 (Contact)
-                $obj4->addAssay($obj1);
+                // Add the $obj1 (Assay) to the collection in $obj2 (Contact)
+                $obj2->addAssay($obj1);
             } // if joined row not null
 
             // Add objects for joined Protocol rows
 
-            $key5 = ProtocolPeer::getPrimaryKeyHashFromRow($row, $startcol5);
-            if ($key5 !== null) {
-                $obj5 = ProtocolPeer::getInstanceFromPool($key5);
-                if (!$obj5) {
+            $key3 = ProtocolPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+            if ($key3 !== null) {
+                $obj3 = ProtocolPeer::getInstanceFromPool($key3);
+                if (!$obj3) {
 
                     $cls = ProtocolPeer::getOMClass();
 
-                    $obj5 = new $cls();
-                    $obj5->hydrate($row, $startcol5);
-                    ProtocolPeer::addInstanceToPool($obj5, $key5);
-                } // if obj5 loaded
+                    $obj3 = new $cls();
+                    $obj3->hydrate($row, $startcol3);
+                    ProtocolPeer::addInstanceToPool($obj3, $key3);
+                } // if obj3 loaded
 
-                // Add the $obj1 (Assay) to the collection in $obj5 (Protocol)
-                $obj5->addAssay($obj1);
+                // Add the $obj1 (Assay) to the collection in $obj3 (Protocol)
+                $obj3->addAssay($obj1);
             } // if joined row not null
 
             $results[] = $obj1;
@@ -1203,116 +899,6 @@ abstract class BaseAssayPeer
         $stmt->closeCursor();
 
         return $results;
-    }
-
-
-    /**
-     * Returns the number of rows matching criteria, joining the related Arraydesign table
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return int Number of matching rows.
-     */
-    public static function doCountJoinAllExceptArraydesign(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        // we're going to modify criteria, so copy it first
-        $criteria = clone $criteria;
-
-        // We need to set the primary table name, since in the case that there are no WHERE columns
-        // it will be impossible for the BasePeer::createSelectSql() method to determine which
-        // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(AssayPeer::TABLE_NAME);
-
-        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-            $criteria->setDistinct();
-        }
-
-        if (!$criteria->hasSelectClause()) {
-            AssayPeer::addSelectColumns($criteria);
-        }
-
-        $criteria->clearOrderByColumns(); // ORDER BY should not affect count
-
-        // Set the correct dbName
-        $criteria->setDbName(AssayPeer::DATABASE_NAME);
-
-        if ($con === null) {
-            $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-        }
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
-
-        $stmt = BasePeer::doCount($criteria, $con);
-
-        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $count = (int) $row[0];
-        } else {
-            $count = 0; // no rows returned; we infer that means 0 matches.
-        }
-        $stmt->closeCursor();
-
-        return $count;
-    }
-
-
-    /**
-     * Returns the number of rows matching criteria, joining the related Dbxref table
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return int Number of matching rows.
-     */
-    public static function doCountJoinAllExceptDbxref(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        // we're going to modify criteria, so copy it first
-        $criteria = clone $criteria;
-
-        // We need to set the primary table name, since in the case that there are no WHERE columns
-        // it will be impossible for the BasePeer::createSelectSql() method to determine which
-        // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(AssayPeer::TABLE_NAME);
-
-        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-            $criteria->setDistinct();
-        }
-
-        if (!$criteria->hasSelectClause()) {
-            AssayPeer::addSelectColumns($criteria);
-        }
-
-        $criteria->clearOrderByColumns(); // ORDER BY should not affect count
-
-        // Set the correct dbName
-        $criteria->setDbName(AssayPeer::DATABASE_NAME);
-
-        if ($con === null) {
-            $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-        }
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
-
-        $stmt = BasePeer::doCount($criteria, $con);
-
-        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $count = (int) $row[0];
-        } else {
-            $count = 0; // no rows returned; we infer that means 0 matches.
-        }
-        $stmt->closeCursor();
-
-        return $count;
     }
 
 
@@ -1351,10 +937,6 @@ abstract class BaseAssayPeer
         if ($con === null) {
             $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
 
         $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
 
@@ -1407,10 +989,6 @@ abstract class BaseAssayPeer
             $con = Propel::getConnection(AssayPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
         $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
@@ -1423,250 +1001,6 @@ abstract class BaseAssayPeer
         $stmt->closeCursor();
 
         return $count;
-    }
-
-
-    /**
-     * Selects a collection of Assay objects pre-filled with all related objects except Arraydesign.
-     *
-     * @param      Criteria  $criteria
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Assay objects.
-     * @throws PropelException Any exceptions caught during processing will be
-     *		 rethrown wrapped into a PropelException.
-     */
-    public static function doSelectJoinAllExceptArraydesign(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $criteria = clone $criteria;
-
-        // Set the correct dbName if it has not been overridden
-        // $criteria->getDbName() will return the same object if not set to another value
-        // so == check is okay and faster
-        if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(AssayPeer::DATABASE_NAME);
-        }
-
-        AssayPeer::addSelectColumns($criteria);
-        $startcol2 = AssayPeer::NUM_HYDRATE_COLUMNS;
-
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
-
-        ContactPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + ContactPeer::NUM_HYDRATE_COLUMNS;
-
-        ProtocolPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + ProtocolPeer::NUM_HYDRATE_COLUMNS;
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
-
-
-        $stmt = BasePeer::doSelect($criteria, $con);
-        $results = array();
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = AssayPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = AssayPeer::getInstanceFromPool($key1))) {
-                // We no longer rehydrate the object, since this can cause data loss.
-                // See http://www.propelorm.org/ticket/509
-                // $obj1->hydrate($row, 0, true); // rehydrate
-            } else {
-                $cls = AssayPeer::getOMClass();
-
-                $obj1 = new $cls();
-                $obj1->hydrate($row);
-                AssayPeer::addInstanceToPool($obj1, $key1);
-            } // if obj1 already loaded
-
-                // Add objects for joined Dbxref rows
-
-                $key2 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-                if ($key2 !== null) {
-                    $obj2 = DbxrefPeer::getInstanceFromPool($key2);
-                    if (!$obj2) {
-
-                        $cls = DbxrefPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol2);
-                    DbxrefPeer::addInstanceToPool($obj2, $key2);
-                } // if $obj2 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj2 (Dbxref)
-                $obj2->addAssay($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined Contact rows
-
-                $key3 = ContactPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-                if ($key3 !== null) {
-                    $obj3 = ContactPeer::getInstanceFromPool($key3);
-                    if (!$obj3) {
-
-                        $cls = ContactPeer::getOMClass();
-
-                    $obj3 = new $cls();
-                    $obj3->hydrate($row, $startcol3);
-                    ContactPeer::addInstanceToPool($obj3, $key3);
-                } // if $obj3 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj3 (Contact)
-                $obj3->addAssay($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined Protocol rows
-
-                $key4 = ProtocolPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-                if ($key4 !== null) {
-                    $obj4 = ProtocolPeer::getInstanceFromPool($key4);
-                    if (!$obj4) {
-
-                        $cls = ProtocolPeer::getOMClass();
-
-                    $obj4 = new $cls();
-                    $obj4->hydrate($row, $startcol4);
-                    ProtocolPeer::addInstanceToPool($obj4, $key4);
-                } // if $obj4 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj4 (Protocol)
-                $obj4->addAssay($obj1);
-
-            } // if joined row is not null
-
-            $results[] = $obj1;
-        }
-        $stmt->closeCursor();
-
-        return $results;
-    }
-
-
-    /**
-     * Selects a collection of Assay objects pre-filled with all related objects except Dbxref.
-     *
-     * @param      Criteria  $criteria
-     * @param      PropelPDO $con
-     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Assay objects.
-     * @throws PropelException Any exceptions caught during processing will be
-     *		 rethrown wrapped into a PropelException.
-     */
-    public static function doSelectJoinAllExceptDbxref(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $criteria = clone $criteria;
-
-        // Set the correct dbName if it has not been overridden
-        // $criteria->getDbName() will return the same object if not set to another value
-        // so == check is okay and faster
-        if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(AssayPeer::DATABASE_NAME);
-        }
-
-        AssayPeer::addSelectColumns($criteria);
-        $startcol2 = AssayPeer::NUM_HYDRATE_COLUMNS;
-
-        ArraydesignPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + ArraydesignPeer::NUM_HYDRATE_COLUMNS;
-
-        ContactPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + ContactPeer::NUM_HYDRATE_COLUMNS;
-
-        ProtocolPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + ProtocolPeer::NUM_HYDRATE_COLUMNS;
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
-
-
-        $stmt = BasePeer::doSelect($criteria, $con);
-        $results = array();
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = AssayPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = AssayPeer::getInstanceFromPool($key1))) {
-                // We no longer rehydrate the object, since this can cause data loss.
-                // See http://www.propelorm.org/ticket/509
-                // $obj1->hydrate($row, 0, true); // rehydrate
-            } else {
-                $cls = AssayPeer::getOMClass();
-
-                $obj1 = new $cls();
-                $obj1->hydrate($row);
-                AssayPeer::addInstanceToPool($obj1, $key1);
-            } // if obj1 already loaded
-
-                // Add objects for joined Arraydesign rows
-
-                $key2 = ArraydesignPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-                if ($key2 !== null) {
-                    $obj2 = ArraydesignPeer::getInstanceFromPool($key2);
-                    if (!$obj2) {
-
-                        $cls = ArraydesignPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol2);
-                    ArraydesignPeer::addInstanceToPool($obj2, $key2);
-                } // if $obj2 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj2 (Arraydesign)
-                $obj2->addAssay($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined Contact rows
-
-                $key3 = ContactPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-                if ($key3 !== null) {
-                    $obj3 = ContactPeer::getInstanceFromPool($key3);
-                    if (!$obj3) {
-
-                        $cls = ContactPeer::getOMClass();
-
-                    $obj3 = new $cls();
-                    $obj3->hydrate($row, $startcol3);
-                    ContactPeer::addInstanceToPool($obj3, $key3);
-                } // if $obj3 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj3 (Contact)
-                $obj3->addAssay($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined Protocol rows
-
-                $key4 = ProtocolPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-                if ($key4 !== null) {
-                    $obj4 = ProtocolPeer::getInstanceFromPool($key4);
-                    if (!$obj4) {
-
-                        $cls = ProtocolPeer::getOMClass();
-
-                    $obj4 = new $cls();
-                    $obj4->hydrate($row, $startcol4);
-                    ProtocolPeer::addInstanceToPool($obj4, $key4);
-                } // if $obj4 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj4 (Protocol)
-                $obj4->addAssay($obj1);
-
-            } // if joined row is not null
-
-            $results[] = $obj1;
-        }
-        $stmt->closeCursor();
-
-        return $results;
     }
 
 
@@ -1694,18 +1028,8 @@ abstract class BaseAssayPeer
         AssayPeer::addSelectColumns($criteria);
         $startcol2 = AssayPeer::NUM_HYDRATE_COLUMNS;
 
-        ArraydesignPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + ArraydesignPeer::NUM_HYDRATE_COLUMNS;
-
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
-
         ProtocolPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + ProtocolPeer::NUM_HYDRATE_COLUMNS;
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $startcol3 = $startcol2 + ProtocolPeer::NUM_HYDRATE_COLUMNS;
 
         $criteria->addJoin(AssayPeer::PROTOCOL_ID, ProtocolPeer::PROTOCOL_ID, $join_behavior);
 
@@ -1727,60 +1051,22 @@ abstract class BaseAssayPeer
                 AssayPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined Arraydesign rows
-
-                $key2 = ArraydesignPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-                if ($key2 !== null) {
-                    $obj2 = ArraydesignPeer::getInstanceFromPool($key2);
-                    if (!$obj2) {
-
-                        $cls = ArraydesignPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol2);
-                    ArraydesignPeer::addInstanceToPool($obj2, $key2);
-                } // if $obj2 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj2 (Arraydesign)
-                $obj2->addAssay($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined Dbxref rows
-
-                $key3 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-                if ($key3 !== null) {
-                    $obj3 = DbxrefPeer::getInstanceFromPool($key3);
-                    if (!$obj3) {
-
-                        $cls = DbxrefPeer::getOMClass();
-
-                    $obj3 = new $cls();
-                    $obj3->hydrate($row, $startcol3);
-                    DbxrefPeer::addInstanceToPool($obj3, $key3);
-                } // if $obj3 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj3 (Dbxref)
-                $obj3->addAssay($obj1);
-
-            } // if joined row is not null
-
                 // Add objects for joined Protocol rows
 
-                $key4 = ProtocolPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-                if ($key4 !== null) {
-                    $obj4 = ProtocolPeer::getInstanceFromPool($key4);
-                    if (!$obj4) {
+                $key2 = ProtocolPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                if ($key2 !== null) {
+                    $obj2 = ProtocolPeer::getInstanceFromPool($key2);
+                    if (!$obj2) {
 
                         $cls = ProtocolPeer::getOMClass();
 
-                    $obj4 = new $cls();
-                    $obj4->hydrate($row, $startcol4);
-                    ProtocolPeer::addInstanceToPool($obj4, $key4);
-                } // if $obj4 already loaded
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol2);
+                    ProtocolPeer::addInstanceToPool($obj2, $key2);
+                } // if $obj2 already loaded
 
-                // Add the $obj1 (Assay) to the collection in $obj4 (Protocol)
-                $obj4->addAssay($obj1);
+                // Add the $obj1 (Assay) to the collection in $obj2 (Protocol)
+                $obj2->addAssay($obj1);
 
             } // if joined row is not null
 
@@ -1816,18 +1102,8 @@ abstract class BaseAssayPeer
         AssayPeer::addSelectColumns($criteria);
         $startcol2 = AssayPeer::NUM_HYDRATE_COLUMNS;
 
-        ArraydesignPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + ArraydesignPeer::NUM_HYDRATE_COLUMNS;
-
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
-
         ContactPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + ContactPeer::NUM_HYDRATE_COLUMNS;
-
-        $criteria->addJoin(AssayPeer::ARRAYDESIGN_ID, ArraydesignPeer::ARRAYDESIGN_ID, $join_behavior);
-
-        $criteria->addJoin(AssayPeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $startcol3 = $startcol2 + ContactPeer::NUM_HYDRATE_COLUMNS;
 
         $criteria->addJoin(AssayPeer::OPERATOR_ID, ContactPeer::CONTACT_ID, $join_behavior);
 
@@ -1849,60 +1125,22 @@ abstract class BaseAssayPeer
                 AssayPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined Arraydesign rows
-
-                $key2 = ArraydesignPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-                if ($key2 !== null) {
-                    $obj2 = ArraydesignPeer::getInstanceFromPool($key2);
-                    if (!$obj2) {
-
-                        $cls = ArraydesignPeer::getOMClass();
-
-                    $obj2 = new $cls();
-                    $obj2->hydrate($row, $startcol2);
-                    ArraydesignPeer::addInstanceToPool($obj2, $key2);
-                } // if $obj2 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj2 (Arraydesign)
-                $obj2->addAssay($obj1);
-
-            } // if joined row is not null
-
-                // Add objects for joined Dbxref rows
-
-                $key3 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-                if ($key3 !== null) {
-                    $obj3 = DbxrefPeer::getInstanceFromPool($key3);
-                    if (!$obj3) {
-
-                        $cls = DbxrefPeer::getOMClass();
-
-                    $obj3 = new $cls();
-                    $obj3->hydrate($row, $startcol3);
-                    DbxrefPeer::addInstanceToPool($obj3, $key3);
-                } // if $obj3 already loaded
-
-                // Add the $obj1 (Assay) to the collection in $obj3 (Dbxref)
-                $obj3->addAssay($obj1);
-
-            } // if joined row is not null
-
                 // Add objects for joined Contact rows
 
-                $key4 = ContactPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-                if ($key4 !== null) {
-                    $obj4 = ContactPeer::getInstanceFromPool($key4);
-                    if (!$obj4) {
+                $key2 = ContactPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                if ($key2 !== null) {
+                    $obj2 = ContactPeer::getInstanceFromPool($key2);
+                    if (!$obj2) {
 
                         $cls = ContactPeer::getOMClass();
 
-                    $obj4 = new $cls();
-                    $obj4->hydrate($row, $startcol4);
-                    ContactPeer::addInstanceToPool($obj4, $key4);
-                } // if $obj4 already loaded
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol2);
+                    ContactPeer::addInstanceToPool($obj2, $key2);
+                } // if $obj2 already loaded
 
-                // Add the $obj1 (Assay) to the collection in $obj4 (Contact)
-                $obj4->addAssay($obj1);
+                // Add the $obj1 (Assay) to the collection in $obj2 (Contact)
+                $obj2->addAssay($obj1);
 
             } // if joined row is not null
 

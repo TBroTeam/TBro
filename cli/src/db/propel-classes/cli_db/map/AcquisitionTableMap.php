@@ -46,7 +46,7 @@ class AcquisitionTableMap extends TableMap
         $this->addPrimaryKey('acquisition_id', 'AcquisitionId', 'INTEGER', true, null, null);
         $this->addForeignKey('assay_id', 'AssayId', 'INTEGER', 'assay', 'assay_id', true, null, null);
         $this->addForeignKey('protocol_id', 'ProtocolId', 'INTEGER', 'protocol', 'protocol_id', false, null, null);
-        $this->addForeignKey('channel_id', 'ChannelId', 'INTEGER', 'channel', 'channel_id', false, null, null);
+        $this->addColumn('channel_id', 'ChannelId', 'INTEGER', false, null, null);
         $this->addColumn('acquisitiondate', 'Acquisitiondate', 'TIMESTAMP', false, null, 'now()');
         $this->addColumn('name', 'Name', 'LONGVARCHAR', false, null, null);
         $this->addColumn('uri', 'Uri', 'LONGVARCHAR', false, null, null);
@@ -59,11 +59,7 @@ class AcquisitionTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Assay', 'cli_db\\propel\\Assay', RelationMap::MANY_TO_ONE, array('assay_id' => 'assay_id', ), 'CASCADE', null);
-        $this->addRelation('Channel', 'cli_db\\propel\\Channel', RelationMap::MANY_TO_ONE, array('channel_id' => 'channel_id', ), 'SET NULL', null);
         $this->addRelation('Protocol', 'cli_db\\propel\\Protocol', RelationMap::MANY_TO_ONE, array('protocol_id' => 'protocol_id', ), 'SET NULL', null);
-        $this->addRelation('AcquisitionRelationshipRelatedByObjectId', 'cli_db\\propel\\AcquisitionRelationship', RelationMap::ONE_TO_MANY, array('acquisition_id' => 'object_id', ), 'CASCADE', null, 'AcquisitionRelationshipsRelatedByObjectId');
-        $this->addRelation('AcquisitionRelationshipRelatedBySubjectId', 'cli_db\\propel\\AcquisitionRelationship', RelationMap::ONE_TO_MANY, array('acquisition_id' => 'subject_id', ), 'CASCADE', null, 'AcquisitionRelationshipsRelatedBySubjectId');
-        $this->addRelation('Acquisitionprop', 'cli_db\\propel\\Acquisitionprop', RelationMap::ONE_TO_MANY, array('acquisition_id' => 'acquisition_id', ), 'CASCADE', null, 'Acquisitionprops');
         $this->addRelation('Quantification', 'cli_db\\propel\\Quantification', RelationMap::ONE_TO_MANY, array('acquisition_id' => 'acquisition_id', ), 'CASCADE', null, 'Quantifications');
     } // buildRelations()
 

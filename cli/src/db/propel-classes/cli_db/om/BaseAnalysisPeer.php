@@ -11,8 +11,6 @@ use \PropelException;
 use \PropelPDO;
 use cli_db\propel\Analysis;
 use cli_db\propel\AnalysisPeer;
-use cli_db\propel\AnalysisfeaturePeer;
-use cli_db\propel\AnalysispropPeer;
 use cli_db\propel\QuantificationPeer;
 use cli_db\propel\map\AnalysisTableMap;
 
@@ -417,12 +415,6 @@ abstract class BaseAnalysisPeer
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in AnalysisfeaturePeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        AnalysisfeaturePeer::clearInstancePool();
-        // Invalidate objects in AnalysispropPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        AnalysispropPeer::clearInstancePool();
         // Invalidate objects in QuantificationPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         QuantificationPeer::clearInstancePool();

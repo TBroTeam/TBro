@@ -13,8 +13,6 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
-use cli_db\propel\Arraydesign;
-use cli_db\propel\ArraydesignQuery;
 use cli_db\propel\Assay;
 use cli_db\propel\AssayQuery;
 use cli_db\propel\Biomaterial;
@@ -22,16 +20,10 @@ use cli_db\propel\BiomaterialQuery;
 use cli_db\propel\Contact;
 use cli_db\propel\ContactPeer;
 use cli_db\propel\ContactQuery;
-use cli_db\propel\ContactRelationship;
-use cli_db\propel\ContactRelationshipQuery;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermQuery;
-use cli_db\propel\ProjectContact;
-use cli_db\propel\ProjectContactQuery;
 use cli_db\propel\Quantification;
 use cli_db\propel\QuantificationQuery;
-use cli_db\propel\Study;
-use cli_db\propel\StudyQuery;
 
 /**
  * Base class that represents a row from the 'contact' table.
@@ -91,12 +83,6 @@ abstract class BaseContact extends BaseObject implements Persistent
     protected $aCvterm;
 
     /**
-     * @var        PropelObjectCollection|Arraydesign[] Collection to store aggregation of Arraydesign objects.
-     */
-    protected $collArraydesigns;
-    protected $collArraydesignsPartial;
-
-    /**
      * @var        PropelObjectCollection|Assay[] Collection to store aggregation of Assay objects.
      */
     protected $collAssays;
@@ -109,34 +95,10 @@ abstract class BaseContact extends BaseObject implements Persistent
     protected $collBiomaterialsPartial;
 
     /**
-     * @var        PropelObjectCollection|ContactRelationship[] Collection to store aggregation of ContactRelationship objects.
-     */
-    protected $collContactRelationshipsRelatedByObjectId;
-    protected $collContactRelationshipsRelatedByObjectIdPartial;
-
-    /**
-     * @var        PropelObjectCollection|ContactRelationship[] Collection to store aggregation of ContactRelationship objects.
-     */
-    protected $collContactRelationshipsRelatedBySubjectId;
-    protected $collContactRelationshipsRelatedBySubjectIdPartial;
-
-    /**
-     * @var        PropelObjectCollection|ProjectContact[] Collection to store aggregation of ProjectContact objects.
-     */
-    protected $collProjectContacts;
-    protected $collProjectContactsPartial;
-
-    /**
      * @var        PropelObjectCollection|Quantification[] Collection to store aggregation of Quantification objects.
      */
     protected $collQuantifications;
     protected $collQuantificationsPartial;
-
-    /**
-     * @var        PropelObjectCollection|Study[] Collection to store aggregation of Study objects.
-     */
-    protected $collStudys;
-    protected $collStudysPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -162,12 +124,6 @@ abstract class BaseContact extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $arraydesignsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
     protected $assaysScheduledForDeletion = null;
 
     /**
@@ -180,31 +136,7 @@ abstract class BaseContact extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $contactRelationshipsRelatedByObjectIdScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $contactRelationshipsRelatedBySubjectIdScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $projectContactsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
     protected $quantificationsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var		PropelObjectCollection
-     */
-    protected $studysScheduledForDeletion = null;
 
     /**
      * Get the [contact_id] column value.
@@ -444,21 +376,11 @@ abstract class BaseContact extends BaseObject implements Persistent
         if ($deep) {  // also de-associate any related objects?
 
             $this->aCvterm = null;
-            $this->collArraydesigns = null;
-
             $this->collAssays = null;
 
             $this->collBiomaterials = null;
 
-            $this->collContactRelationshipsRelatedByObjectId = null;
-
-            $this->collContactRelationshipsRelatedBySubjectId = null;
-
-            $this->collProjectContacts = null;
-
             $this->collQuantifications = null;
-
-            $this->collStudys = null;
 
         } // if (deep)
     }
@@ -596,23 +518,6 @@ abstract class BaseContact extends BaseObject implements Persistent
                 $this->resetModified();
             }
 
-            if ($this->arraydesignsScheduledForDeletion !== null) {
-                if (!$this->arraydesignsScheduledForDeletion->isEmpty()) {
-                    ArraydesignQuery::create()
-                        ->filterByPrimaryKeys($this->arraydesignsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->arraydesignsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collArraydesigns !== null) {
-                foreach ($this->collArraydesigns as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->assaysScheduledForDeletion !== null) {
                 if (!$this->assaysScheduledForDeletion->isEmpty()) {
                     AssayQuery::create()
@@ -648,57 +553,6 @@ abstract class BaseContact extends BaseObject implements Persistent
                 }
             }
 
-            if ($this->contactRelationshipsRelatedByObjectIdScheduledForDeletion !== null) {
-                if (!$this->contactRelationshipsRelatedByObjectIdScheduledForDeletion->isEmpty()) {
-                    ContactRelationshipQuery::create()
-                        ->filterByPrimaryKeys($this->contactRelationshipsRelatedByObjectIdScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->contactRelationshipsRelatedByObjectIdScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collContactRelationshipsRelatedByObjectId !== null) {
-                foreach ($this->collContactRelationshipsRelatedByObjectId as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion !== null) {
-                if (!$this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion->isEmpty()) {
-                    ContactRelationshipQuery::create()
-                        ->filterByPrimaryKeys($this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collContactRelationshipsRelatedBySubjectId !== null) {
-                foreach ($this->collContactRelationshipsRelatedBySubjectId as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->projectContactsScheduledForDeletion !== null) {
-                if (!$this->projectContactsScheduledForDeletion->isEmpty()) {
-                    ProjectContactQuery::create()
-                        ->filterByPrimaryKeys($this->projectContactsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->projectContactsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collProjectContacts !== null) {
-                foreach ($this->collProjectContacts as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->quantificationsScheduledForDeletion !== null) {
                 if (!$this->quantificationsScheduledForDeletion->isEmpty()) {
                     foreach ($this->quantificationsScheduledForDeletion as $quantification) {
@@ -711,23 +565,6 @@ abstract class BaseContact extends BaseObject implements Persistent
 
             if ($this->collQuantifications !== null) {
                 foreach ($this->collQuantifications as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->studysScheduledForDeletion !== null) {
-                if (!$this->studysScheduledForDeletion->isEmpty()) {
-                    StudyQuery::create()
-                        ->filterByPrimaryKeys($this->studysScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->studysScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collStudys !== null) {
-                foreach ($this->collStudys as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -909,14 +746,6 @@ abstract class BaseContact extends BaseObject implements Persistent
             }
 
 
-                if ($this->collArraydesigns !== null) {
-                    foreach ($this->collArraydesigns as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collAssays !== null) {
                     foreach ($this->collAssays as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -933,40 +762,8 @@ abstract class BaseContact extends BaseObject implements Persistent
                     }
                 }
 
-                if ($this->collContactRelationshipsRelatedByObjectId !== null) {
-                    foreach ($this->collContactRelationshipsRelatedByObjectId as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collContactRelationshipsRelatedBySubjectId !== null) {
-                    foreach ($this->collContactRelationshipsRelatedBySubjectId as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collProjectContacts !== null) {
-                    foreach ($this->collProjectContacts as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
                 if ($this->collQuantifications !== null) {
                     foreach ($this->collQuantifications as $referrerFK) {
-                        if (!$referrerFK->validate($columns)) {
-                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-
-                if ($this->collStudys !== null) {
-                    foreach ($this->collStudys as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -1058,29 +855,14 @@ abstract class BaseContact extends BaseObject implements Persistent
             if (null !== $this->aCvterm) {
                 $result['Cvterm'] = $this->aCvterm->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->collArraydesigns) {
-                $result['Arraydesigns'] = $this->collArraydesigns->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collAssays) {
                 $result['Assays'] = $this->collAssays->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collBiomaterials) {
                 $result['Biomaterials'] = $this->collBiomaterials->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collContactRelationshipsRelatedByObjectId) {
-                $result['ContactRelationshipsRelatedByObjectId'] = $this->collContactRelationshipsRelatedByObjectId->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collContactRelationshipsRelatedBySubjectId) {
-                $result['ContactRelationshipsRelatedBySubjectId'] = $this->collContactRelationshipsRelatedBySubjectId->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collProjectContacts) {
-                $result['ProjectContacts'] = $this->collProjectContacts->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collQuantifications) {
                 $result['Quantifications'] = $this->collQuantifications->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collStudys) {
-                $result['Studys'] = $this->collStudys->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1245,12 +1027,6 @@ abstract class BaseContact extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
-            foreach ($this->getArraydesigns() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addArraydesign($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getAssays() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addAssay($relObj->copy($deepCopy));
@@ -1263,33 +1039,9 @@ abstract class BaseContact extends BaseObject implements Persistent
                 }
             }
 
-            foreach ($this->getContactRelationshipsRelatedByObjectId() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addContactRelationshipRelatedByObjectId($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getContactRelationshipsRelatedBySubjectId() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addContactRelationshipRelatedBySubjectId($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getProjectContacts() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addProjectContact($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getQuantifications() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addQuantification($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getStudys() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addStudy($relObj->copy($deepCopy));
                 }
             }
 
@@ -1406,348 +1158,15 @@ abstract class BaseContact extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
-        if ('Arraydesign' == $relationName) {
-            $this->initArraydesigns();
-        }
         if ('Assay' == $relationName) {
             $this->initAssays();
         }
         if ('Biomaterial' == $relationName) {
             $this->initBiomaterials();
         }
-        if ('ContactRelationshipRelatedByObjectId' == $relationName) {
-            $this->initContactRelationshipsRelatedByObjectId();
-        }
-        if ('ContactRelationshipRelatedBySubjectId' == $relationName) {
-            $this->initContactRelationshipsRelatedBySubjectId();
-        }
-        if ('ProjectContact' == $relationName) {
-            $this->initProjectContacts();
-        }
         if ('Quantification' == $relationName) {
             $this->initQuantifications();
         }
-        if ('Study' == $relationName) {
-            $this->initStudys();
-        }
-    }
-
-    /**
-     * Clears out the collArraydesigns collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Contact The current object (for fluent API support)
-     * @see        addArraydesigns()
-     */
-    public function clearArraydesigns()
-    {
-        $this->collArraydesigns = null; // important to set this to null since that means it is uninitialized
-        $this->collArraydesignsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collArraydesigns collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialArraydesigns($v = true)
-    {
-        $this->collArraydesignsPartial = $v;
-    }
-
-    /**
-     * Initializes the collArraydesigns collection.
-     *
-     * By default this just sets the collArraydesigns collection to an empty array (like clearcollArraydesigns());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initArraydesigns($overrideExisting = true)
-    {
-        if (null !== $this->collArraydesigns && !$overrideExisting) {
-            return;
-        }
-        $this->collArraydesigns = new PropelObjectCollection();
-        $this->collArraydesigns->setModel('Arraydesign');
-    }
-
-    /**
-     * Gets an array of Arraydesign objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Contact is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     * @throws PropelException
-     */
-    public function getArraydesigns($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collArraydesignsPartial && !$this->isNew();
-        if (null === $this->collArraydesigns || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collArraydesigns) {
-                // return empty collection
-                $this->initArraydesigns();
-            } else {
-                $collArraydesigns = ArraydesignQuery::create(null, $criteria)
-                    ->filterByContact($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collArraydesignsPartial && count($collArraydesigns)) {
-                      $this->initArraydesigns(false);
-
-                      foreach($collArraydesigns as $obj) {
-                        if (false == $this->collArraydesigns->contains($obj)) {
-                          $this->collArraydesigns->append($obj);
-                        }
-                      }
-
-                      $this->collArraydesignsPartial = true;
-                    }
-
-                    $collArraydesigns->getInternalIterator()->rewind();
-                    return $collArraydesigns;
-                }
-
-                if($partial && $this->collArraydesigns) {
-                    foreach($this->collArraydesigns as $obj) {
-                        if($obj->isNew()) {
-                            $collArraydesigns[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collArraydesigns = $collArraydesigns;
-                $this->collArraydesignsPartial = false;
-            }
-        }
-
-        return $this->collArraydesigns;
-    }
-
-    /**
-     * Sets a collection of Arraydesign objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $arraydesigns A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Contact The current object (for fluent API support)
-     */
-    public function setArraydesigns(PropelCollection $arraydesigns, PropelPDO $con = null)
-    {
-        $arraydesignsToDelete = $this->getArraydesigns(new Criteria(), $con)->diff($arraydesigns);
-
-        $this->arraydesignsScheduledForDeletion = unserialize(serialize($arraydesignsToDelete));
-
-        foreach ($arraydesignsToDelete as $arraydesignRemoved) {
-            $arraydesignRemoved->setContact(null);
-        }
-
-        $this->collArraydesigns = null;
-        foreach ($arraydesigns as $arraydesign) {
-            $this->addArraydesign($arraydesign);
-        }
-
-        $this->collArraydesigns = $arraydesigns;
-        $this->collArraydesignsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Arraydesign objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Arraydesign objects.
-     * @throws PropelException
-     */
-    public function countArraydesigns(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collArraydesignsPartial && !$this->isNew();
-        if (null === $this->collArraydesigns || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collArraydesigns) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getArraydesigns());
-            }
-            $query = ArraydesignQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByContact($this)
-                ->count($con);
-        }
-
-        return count($this->collArraydesigns);
-    }
-
-    /**
-     * Method called to associate a Arraydesign object to this object
-     * through the Arraydesign foreign key attribute.
-     *
-     * @param    Arraydesign $l Arraydesign
-     * @return Contact The current object (for fluent API support)
-     */
-    public function addArraydesign(Arraydesign $l)
-    {
-        if ($this->collArraydesigns === null) {
-            $this->initArraydesigns();
-            $this->collArraydesignsPartial = true;
-        }
-        if (!in_array($l, $this->collArraydesigns->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddArraydesign($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Arraydesign $arraydesign The arraydesign object to add.
-     */
-    protected function doAddArraydesign($arraydesign)
-    {
-        $this->collArraydesigns[]= $arraydesign;
-        $arraydesign->setContact($this);
-    }
-
-    /**
-     * @param	Arraydesign $arraydesign The arraydesign object to remove.
-     * @return Contact The current object (for fluent API support)
-     */
-    public function removeArraydesign($arraydesign)
-    {
-        if ($this->getArraydesigns()->contains($arraydesign)) {
-            $this->collArraydesigns->remove($this->collArraydesigns->search($arraydesign));
-            if (null === $this->arraydesignsScheduledForDeletion) {
-                $this->arraydesignsScheduledForDeletion = clone $this->collArraydesigns;
-                $this->arraydesignsScheduledForDeletion->clear();
-            }
-            $this->arraydesignsScheduledForDeletion[]= clone $arraydesign;
-            $arraydesign->setContact(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinCvtermRelatedByPlatformtypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedByPlatformtypeId', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinProtocol($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('Protocol', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Arraydesigns from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Arraydesign[] List of Arraydesign objects
-     */
-    public function getArraydesignsJoinCvtermRelatedBySubstratetypeId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ArraydesignQuery::create(null, $criteria);
-        $query->joinWith('CvtermRelatedBySubstratetypeId', $join_behavior);
-
-        return $this->getArraydesigns($query, $con);
     }
 
     /**
@@ -1966,56 +1385,6 @@ abstract class BaseContact extends BaseObject implements Persistent
         }
 
         return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Assays from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Assay[] List of Assay objects
-     */
-    public function getAssaysJoinArraydesign($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AssayQuery::create(null, $criteria);
-        $query->joinWith('Arraydesign', $join_behavior);
-
-        return $this->getAssays($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Assays from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Assay[] List of Assay objects
-     */
-    public function getAssaysJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = AssayQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getAssays($query, $con);
     }
 
 
@@ -2278,766 +1647,12 @@ abstract class BaseContact extends BaseObject implements Persistent
      * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return PropelObjectCollection|Biomaterial[] List of Biomaterial objects
      */
-    public function getBiomaterialsJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = BiomaterialQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getBiomaterials($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Biomaterials from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Biomaterial[] List of Biomaterial objects
-     */
     public function getBiomaterialsJoinOrganism($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $query = BiomaterialQuery::create(null, $criteria);
         $query->joinWith('Organism', $join_behavior);
 
         return $this->getBiomaterials($query, $con);
-    }
-
-    /**
-     * Clears out the collContactRelationshipsRelatedByObjectId collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Contact The current object (for fluent API support)
-     * @see        addContactRelationshipsRelatedByObjectId()
-     */
-    public function clearContactRelationshipsRelatedByObjectId()
-    {
-        $this->collContactRelationshipsRelatedByObjectId = null; // important to set this to null since that means it is uninitialized
-        $this->collContactRelationshipsRelatedByObjectIdPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collContactRelationshipsRelatedByObjectId collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialContactRelationshipsRelatedByObjectId($v = true)
-    {
-        $this->collContactRelationshipsRelatedByObjectIdPartial = $v;
-    }
-
-    /**
-     * Initializes the collContactRelationshipsRelatedByObjectId collection.
-     *
-     * By default this just sets the collContactRelationshipsRelatedByObjectId collection to an empty array (like clearcollContactRelationshipsRelatedByObjectId());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initContactRelationshipsRelatedByObjectId($overrideExisting = true)
-    {
-        if (null !== $this->collContactRelationshipsRelatedByObjectId && !$overrideExisting) {
-            return;
-        }
-        $this->collContactRelationshipsRelatedByObjectId = new PropelObjectCollection();
-        $this->collContactRelationshipsRelatedByObjectId->setModel('ContactRelationship');
-    }
-
-    /**
-     * Gets an array of ContactRelationship objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Contact is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|ContactRelationship[] List of ContactRelationship objects
-     * @throws PropelException
-     */
-    public function getContactRelationshipsRelatedByObjectId($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collContactRelationshipsRelatedByObjectIdPartial && !$this->isNew();
-        if (null === $this->collContactRelationshipsRelatedByObjectId || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collContactRelationshipsRelatedByObjectId) {
-                // return empty collection
-                $this->initContactRelationshipsRelatedByObjectId();
-            } else {
-                $collContactRelationshipsRelatedByObjectId = ContactRelationshipQuery::create(null, $criteria)
-                    ->filterByContactRelatedByObjectId($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collContactRelationshipsRelatedByObjectIdPartial && count($collContactRelationshipsRelatedByObjectId)) {
-                      $this->initContactRelationshipsRelatedByObjectId(false);
-
-                      foreach($collContactRelationshipsRelatedByObjectId as $obj) {
-                        if (false == $this->collContactRelationshipsRelatedByObjectId->contains($obj)) {
-                          $this->collContactRelationshipsRelatedByObjectId->append($obj);
-                        }
-                      }
-
-                      $this->collContactRelationshipsRelatedByObjectIdPartial = true;
-                    }
-
-                    $collContactRelationshipsRelatedByObjectId->getInternalIterator()->rewind();
-                    return $collContactRelationshipsRelatedByObjectId;
-                }
-
-                if($partial && $this->collContactRelationshipsRelatedByObjectId) {
-                    foreach($this->collContactRelationshipsRelatedByObjectId as $obj) {
-                        if($obj->isNew()) {
-                            $collContactRelationshipsRelatedByObjectId[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collContactRelationshipsRelatedByObjectId = $collContactRelationshipsRelatedByObjectId;
-                $this->collContactRelationshipsRelatedByObjectIdPartial = false;
-            }
-        }
-
-        return $this->collContactRelationshipsRelatedByObjectId;
-    }
-
-    /**
-     * Sets a collection of ContactRelationshipRelatedByObjectId objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $contactRelationshipsRelatedByObjectId A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Contact The current object (for fluent API support)
-     */
-    public function setContactRelationshipsRelatedByObjectId(PropelCollection $contactRelationshipsRelatedByObjectId, PropelPDO $con = null)
-    {
-        $contactRelationshipsRelatedByObjectIdToDelete = $this->getContactRelationshipsRelatedByObjectId(new Criteria(), $con)->diff($contactRelationshipsRelatedByObjectId);
-
-        $this->contactRelationshipsRelatedByObjectIdScheduledForDeletion = unserialize(serialize($contactRelationshipsRelatedByObjectIdToDelete));
-
-        foreach ($contactRelationshipsRelatedByObjectIdToDelete as $contactRelationshipRelatedByObjectIdRemoved) {
-            $contactRelationshipRelatedByObjectIdRemoved->setContactRelatedByObjectId(null);
-        }
-
-        $this->collContactRelationshipsRelatedByObjectId = null;
-        foreach ($contactRelationshipsRelatedByObjectId as $contactRelationshipRelatedByObjectId) {
-            $this->addContactRelationshipRelatedByObjectId($contactRelationshipRelatedByObjectId);
-        }
-
-        $this->collContactRelationshipsRelatedByObjectId = $contactRelationshipsRelatedByObjectId;
-        $this->collContactRelationshipsRelatedByObjectIdPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related ContactRelationship objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related ContactRelationship objects.
-     * @throws PropelException
-     */
-    public function countContactRelationshipsRelatedByObjectId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collContactRelationshipsRelatedByObjectIdPartial && !$this->isNew();
-        if (null === $this->collContactRelationshipsRelatedByObjectId || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collContactRelationshipsRelatedByObjectId) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getContactRelationshipsRelatedByObjectId());
-            }
-            $query = ContactRelationshipQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByContactRelatedByObjectId($this)
-                ->count($con);
-        }
-
-        return count($this->collContactRelationshipsRelatedByObjectId);
-    }
-
-    /**
-     * Method called to associate a ContactRelationship object to this object
-     * through the ContactRelationship foreign key attribute.
-     *
-     * @param    ContactRelationship $l ContactRelationship
-     * @return Contact The current object (for fluent API support)
-     */
-    public function addContactRelationshipRelatedByObjectId(ContactRelationship $l)
-    {
-        if ($this->collContactRelationshipsRelatedByObjectId === null) {
-            $this->initContactRelationshipsRelatedByObjectId();
-            $this->collContactRelationshipsRelatedByObjectIdPartial = true;
-        }
-        if (!in_array($l, $this->collContactRelationshipsRelatedByObjectId->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddContactRelationshipRelatedByObjectId($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	ContactRelationshipRelatedByObjectId $contactRelationshipRelatedByObjectId The contactRelationshipRelatedByObjectId object to add.
-     */
-    protected function doAddContactRelationshipRelatedByObjectId($contactRelationshipRelatedByObjectId)
-    {
-        $this->collContactRelationshipsRelatedByObjectId[]= $contactRelationshipRelatedByObjectId;
-        $contactRelationshipRelatedByObjectId->setContactRelatedByObjectId($this);
-    }
-
-    /**
-     * @param	ContactRelationshipRelatedByObjectId $contactRelationshipRelatedByObjectId The contactRelationshipRelatedByObjectId object to remove.
-     * @return Contact The current object (for fluent API support)
-     */
-    public function removeContactRelationshipRelatedByObjectId($contactRelationshipRelatedByObjectId)
-    {
-        if ($this->getContactRelationshipsRelatedByObjectId()->contains($contactRelationshipRelatedByObjectId)) {
-            $this->collContactRelationshipsRelatedByObjectId->remove($this->collContactRelationshipsRelatedByObjectId->search($contactRelationshipRelatedByObjectId));
-            if (null === $this->contactRelationshipsRelatedByObjectIdScheduledForDeletion) {
-                $this->contactRelationshipsRelatedByObjectIdScheduledForDeletion = clone $this->collContactRelationshipsRelatedByObjectId;
-                $this->contactRelationshipsRelatedByObjectIdScheduledForDeletion->clear();
-            }
-            $this->contactRelationshipsRelatedByObjectIdScheduledForDeletion[]= clone $contactRelationshipRelatedByObjectId;
-            $contactRelationshipRelatedByObjectId->setContactRelatedByObjectId(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related ContactRelationshipsRelatedByObjectId from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|ContactRelationship[] List of ContactRelationship objects
-     */
-    public function getContactRelationshipsRelatedByObjectIdJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ContactRelationshipQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getContactRelationshipsRelatedByObjectId($query, $con);
-    }
-
-    /**
-     * Clears out the collContactRelationshipsRelatedBySubjectId collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Contact The current object (for fluent API support)
-     * @see        addContactRelationshipsRelatedBySubjectId()
-     */
-    public function clearContactRelationshipsRelatedBySubjectId()
-    {
-        $this->collContactRelationshipsRelatedBySubjectId = null; // important to set this to null since that means it is uninitialized
-        $this->collContactRelationshipsRelatedBySubjectIdPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collContactRelationshipsRelatedBySubjectId collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialContactRelationshipsRelatedBySubjectId($v = true)
-    {
-        $this->collContactRelationshipsRelatedBySubjectIdPartial = $v;
-    }
-
-    /**
-     * Initializes the collContactRelationshipsRelatedBySubjectId collection.
-     *
-     * By default this just sets the collContactRelationshipsRelatedBySubjectId collection to an empty array (like clearcollContactRelationshipsRelatedBySubjectId());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initContactRelationshipsRelatedBySubjectId($overrideExisting = true)
-    {
-        if (null !== $this->collContactRelationshipsRelatedBySubjectId && !$overrideExisting) {
-            return;
-        }
-        $this->collContactRelationshipsRelatedBySubjectId = new PropelObjectCollection();
-        $this->collContactRelationshipsRelatedBySubjectId->setModel('ContactRelationship');
-    }
-
-    /**
-     * Gets an array of ContactRelationship objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Contact is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|ContactRelationship[] List of ContactRelationship objects
-     * @throws PropelException
-     */
-    public function getContactRelationshipsRelatedBySubjectId($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collContactRelationshipsRelatedBySubjectIdPartial && !$this->isNew();
-        if (null === $this->collContactRelationshipsRelatedBySubjectId || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collContactRelationshipsRelatedBySubjectId) {
-                // return empty collection
-                $this->initContactRelationshipsRelatedBySubjectId();
-            } else {
-                $collContactRelationshipsRelatedBySubjectId = ContactRelationshipQuery::create(null, $criteria)
-                    ->filterByContactRelatedBySubjectId($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collContactRelationshipsRelatedBySubjectIdPartial && count($collContactRelationshipsRelatedBySubjectId)) {
-                      $this->initContactRelationshipsRelatedBySubjectId(false);
-
-                      foreach($collContactRelationshipsRelatedBySubjectId as $obj) {
-                        if (false == $this->collContactRelationshipsRelatedBySubjectId->contains($obj)) {
-                          $this->collContactRelationshipsRelatedBySubjectId->append($obj);
-                        }
-                      }
-
-                      $this->collContactRelationshipsRelatedBySubjectIdPartial = true;
-                    }
-
-                    $collContactRelationshipsRelatedBySubjectId->getInternalIterator()->rewind();
-                    return $collContactRelationshipsRelatedBySubjectId;
-                }
-
-                if($partial && $this->collContactRelationshipsRelatedBySubjectId) {
-                    foreach($this->collContactRelationshipsRelatedBySubjectId as $obj) {
-                        if($obj->isNew()) {
-                            $collContactRelationshipsRelatedBySubjectId[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collContactRelationshipsRelatedBySubjectId = $collContactRelationshipsRelatedBySubjectId;
-                $this->collContactRelationshipsRelatedBySubjectIdPartial = false;
-            }
-        }
-
-        return $this->collContactRelationshipsRelatedBySubjectId;
-    }
-
-    /**
-     * Sets a collection of ContactRelationshipRelatedBySubjectId objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $contactRelationshipsRelatedBySubjectId A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Contact The current object (for fluent API support)
-     */
-    public function setContactRelationshipsRelatedBySubjectId(PropelCollection $contactRelationshipsRelatedBySubjectId, PropelPDO $con = null)
-    {
-        $contactRelationshipsRelatedBySubjectIdToDelete = $this->getContactRelationshipsRelatedBySubjectId(new Criteria(), $con)->diff($contactRelationshipsRelatedBySubjectId);
-
-        $this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion = unserialize(serialize($contactRelationshipsRelatedBySubjectIdToDelete));
-
-        foreach ($contactRelationshipsRelatedBySubjectIdToDelete as $contactRelationshipRelatedBySubjectIdRemoved) {
-            $contactRelationshipRelatedBySubjectIdRemoved->setContactRelatedBySubjectId(null);
-        }
-
-        $this->collContactRelationshipsRelatedBySubjectId = null;
-        foreach ($contactRelationshipsRelatedBySubjectId as $contactRelationshipRelatedBySubjectId) {
-            $this->addContactRelationshipRelatedBySubjectId($contactRelationshipRelatedBySubjectId);
-        }
-
-        $this->collContactRelationshipsRelatedBySubjectId = $contactRelationshipsRelatedBySubjectId;
-        $this->collContactRelationshipsRelatedBySubjectIdPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related ContactRelationship objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related ContactRelationship objects.
-     * @throws PropelException
-     */
-    public function countContactRelationshipsRelatedBySubjectId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collContactRelationshipsRelatedBySubjectIdPartial && !$this->isNew();
-        if (null === $this->collContactRelationshipsRelatedBySubjectId || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collContactRelationshipsRelatedBySubjectId) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getContactRelationshipsRelatedBySubjectId());
-            }
-            $query = ContactRelationshipQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByContactRelatedBySubjectId($this)
-                ->count($con);
-        }
-
-        return count($this->collContactRelationshipsRelatedBySubjectId);
-    }
-
-    /**
-     * Method called to associate a ContactRelationship object to this object
-     * through the ContactRelationship foreign key attribute.
-     *
-     * @param    ContactRelationship $l ContactRelationship
-     * @return Contact The current object (for fluent API support)
-     */
-    public function addContactRelationshipRelatedBySubjectId(ContactRelationship $l)
-    {
-        if ($this->collContactRelationshipsRelatedBySubjectId === null) {
-            $this->initContactRelationshipsRelatedBySubjectId();
-            $this->collContactRelationshipsRelatedBySubjectIdPartial = true;
-        }
-        if (!in_array($l, $this->collContactRelationshipsRelatedBySubjectId->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddContactRelationshipRelatedBySubjectId($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	ContactRelationshipRelatedBySubjectId $contactRelationshipRelatedBySubjectId The contactRelationshipRelatedBySubjectId object to add.
-     */
-    protected function doAddContactRelationshipRelatedBySubjectId($contactRelationshipRelatedBySubjectId)
-    {
-        $this->collContactRelationshipsRelatedBySubjectId[]= $contactRelationshipRelatedBySubjectId;
-        $contactRelationshipRelatedBySubjectId->setContactRelatedBySubjectId($this);
-    }
-
-    /**
-     * @param	ContactRelationshipRelatedBySubjectId $contactRelationshipRelatedBySubjectId The contactRelationshipRelatedBySubjectId object to remove.
-     * @return Contact The current object (for fluent API support)
-     */
-    public function removeContactRelationshipRelatedBySubjectId($contactRelationshipRelatedBySubjectId)
-    {
-        if ($this->getContactRelationshipsRelatedBySubjectId()->contains($contactRelationshipRelatedBySubjectId)) {
-            $this->collContactRelationshipsRelatedBySubjectId->remove($this->collContactRelationshipsRelatedBySubjectId->search($contactRelationshipRelatedBySubjectId));
-            if (null === $this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion) {
-                $this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion = clone $this->collContactRelationshipsRelatedBySubjectId;
-                $this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion->clear();
-            }
-            $this->contactRelationshipsRelatedBySubjectIdScheduledForDeletion[]= clone $contactRelationshipRelatedBySubjectId;
-            $contactRelationshipRelatedBySubjectId->setContactRelatedBySubjectId(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related ContactRelationshipsRelatedBySubjectId from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|ContactRelationship[] List of ContactRelationship objects
-     */
-    public function getContactRelationshipsRelatedBySubjectIdJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ContactRelationshipQuery::create(null, $criteria);
-        $query->joinWith('Cvterm', $join_behavior);
-
-        return $this->getContactRelationshipsRelatedBySubjectId($query, $con);
-    }
-
-    /**
-     * Clears out the collProjectContacts collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Contact The current object (for fluent API support)
-     * @see        addProjectContacts()
-     */
-    public function clearProjectContacts()
-    {
-        $this->collProjectContacts = null; // important to set this to null since that means it is uninitialized
-        $this->collProjectContactsPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collProjectContacts collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialProjectContacts($v = true)
-    {
-        $this->collProjectContactsPartial = $v;
-    }
-
-    /**
-     * Initializes the collProjectContacts collection.
-     *
-     * By default this just sets the collProjectContacts collection to an empty array (like clearcollProjectContacts());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initProjectContacts($overrideExisting = true)
-    {
-        if (null !== $this->collProjectContacts && !$overrideExisting) {
-            return;
-        }
-        $this->collProjectContacts = new PropelObjectCollection();
-        $this->collProjectContacts->setModel('ProjectContact');
-    }
-
-    /**
-     * Gets an array of ProjectContact objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Contact is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|ProjectContact[] List of ProjectContact objects
-     * @throws PropelException
-     */
-    public function getProjectContacts($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collProjectContactsPartial && !$this->isNew();
-        if (null === $this->collProjectContacts || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collProjectContacts) {
-                // return empty collection
-                $this->initProjectContacts();
-            } else {
-                $collProjectContacts = ProjectContactQuery::create(null, $criteria)
-                    ->filterByContact($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collProjectContactsPartial && count($collProjectContacts)) {
-                      $this->initProjectContacts(false);
-
-                      foreach($collProjectContacts as $obj) {
-                        if (false == $this->collProjectContacts->contains($obj)) {
-                          $this->collProjectContacts->append($obj);
-                        }
-                      }
-
-                      $this->collProjectContactsPartial = true;
-                    }
-
-                    $collProjectContacts->getInternalIterator()->rewind();
-                    return $collProjectContacts;
-                }
-
-                if($partial && $this->collProjectContacts) {
-                    foreach($this->collProjectContacts as $obj) {
-                        if($obj->isNew()) {
-                            $collProjectContacts[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collProjectContacts = $collProjectContacts;
-                $this->collProjectContactsPartial = false;
-            }
-        }
-
-        return $this->collProjectContacts;
-    }
-
-    /**
-     * Sets a collection of ProjectContact objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $projectContacts A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Contact The current object (for fluent API support)
-     */
-    public function setProjectContacts(PropelCollection $projectContacts, PropelPDO $con = null)
-    {
-        $projectContactsToDelete = $this->getProjectContacts(new Criteria(), $con)->diff($projectContacts);
-
-        $this->projectContactsScheduledForDeletion = unserialize(serialize($projectContactsToDelete));
-
-        foreach ($projectContactsToDelete as $projectContactRemoved) {
-            $projectContactRemoved->setContact(null);
-        }
-
-        $this->collProjectContacts = null;
-        foreach ($projectContacts as $projectContact) {
-            $this->addProjectContact($projectContact);
-        }
-
-        $this->collProjectContacts = $projectContacts;
-        $this->collProjectContactsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related ProjectContact objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related ProjectContact objects.
-     * @throws PropelException
-     */
-    public function countProjectContacts(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collProjectContactsPartial && !$this->isNew();
-        if (null === $this->collProjectContacts || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collProjectContacts) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getProjectContacts());
-            }
-            $query = ProjectContactQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByContact($this)
-                ->count($con);
-        }
-
-        return count($this->collProjectContacts);
-    }
-
-    /**
-     * Method called to associate a ProjectContact object to this object
-     * through the ProjectContact foreign key attribute.
-     *
-     * @param    ProjectContact $l ProjectContact
-     * @return Contact The current object (for fluent API support)
-     */
-    public function addProjectContact(ProjectContact $l)
-    {
-        if ($this->collProjectContacts === null) {
-            $this->initProjectContacts();
-            $this->collProjectContactsPartial = true;
-        }
-        if (!in_array($l, $this->collProjectContacts->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddProjectContact($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	ProjectContact $projectContact The projectContact object to add.
-     */
-    protected function doAddProjectContact($projectContact)
-    {
-        $this->collProjectContacts[]= $projectContact;
-        $projectContact->setContact($this);
-    }
-
-    /**
-     * @param	ProjectContact $projectContact The projectContact object to remove.
-     * @return Contact The current object (for fluent API support)
-     */
-    public function removeProjectContact($projectContact)
-    {
-        if ($this->getProjectContacts()->contains($projectContact)) {
-            $this->collProjectContacts->remove($this->collProjectContacts->search($projectContact));
-            if (null === $this->projectContactsScheduledForDeletion) {
-                $this->projectContactsScheduledForDeletion = clone $this->collProjectContacts;
-                $this->projectContactsScheduledForDeletion->clear();
-            }
-            $this->projectContactsScheduledForDeletion[]= clone $projectContact;
-            $projectContact->setContact(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related ProjectContacts from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|ProjectContact[] List of ProjectContact objects
-     */
-    public function getProjectContactsJoinProject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = ProjectContactQuery::create(null, $criteria);
-        $query->joinWith('Project', $join_behavior);
-
-        return $this->getProjectContacts($query, $con);
     }
 
     /**
@@ -3334,274 +1949,6 @@ abstract class BaseContact extends BaseObject implements Persistent
     }
 
     /**
-     * Clears out the collStudys collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return Contact The current object (for fluent API support)
-     * @see        addStudys()
-     */
-    public function clearStudys()
-    {
-        $this->collStudys = null; // important to set this to null since that means it is uninitialized
-        $this->collStudysPartial = null;
-
-        return $this;
-    }
-
-    /**
-     * reset is the collStudys collection loaded partially
-     *
-     * @return void
-     */
-    public function resetPartialStudys($v = true)
-    {
-        $this->collStudysPartial = $v;
-    }
-
-    /**
-     * Initializes the collStudys collection.
-     *
-     * By default this just sets the collStudys collection to an empty array (like clearcollStudys());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initStudys($overrideExisting = true)
-    {
-        if (null !== $this->collStudys && !$overrideExisting) {
-            return;
-        }
-        $this->collStudys = new PropelObjectCollection();
-        $this->collStudys->setModel('Study');
-    }
-
-    /**
-     * Gets an array of Study objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this Contact is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|Study[] List of Study objects
-     * @throws PropelException
-     */
-    public function getStudys($criteria = null, PropelPDO $con = null)
-    {
-        $partial = $this->collStudysPartial && !$this->isNew();
-        if (null === $this->collStudys || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collStudys) {
-                // return empty collection
-                $this->initStudys();
-            } else {
-                $collStudys = StudyQuery::create(null, $criteria)
-                    ->filterByContact($this)
-                    ->find($con);
-                if (null !== $criteria) {
-                    if (false !== $this->collStudysPartial && count($collStudys)) {
-                      $this->initStudys(false);
-
-                      foreach($collStudys as $obj) {
-                        if (false == $this->collStudys->contains($obj)) {
-                          $this->collStudys->append($obj);
-                        }
-                      }
-
-                      $this->collStudysPartial = true;
-                    }
-
-                    $collStudys->getInternalIterator()->rewind();
-                    return $collStudys;
-                }
-
-                if($partial && $this->collStudys) {
-                    foreach($this->collStudys as $obj) {
-                        if($obj->isNew()) {
-                            $collStudys[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collStudys = $collStudys;
-                $this->collStudysPartial = false;
-            }
-        }
-
-        return $this->collStudys;
-    }
-
-    /**
-     * Sets a collection of Study objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param PropelCollection $studys A Propel collection.
-     * @param PropelPDO $con Optional connection object
-     * @return Contact The current object (for fluent API support)
-     */
-    public function setStudys(PropelCollection $studys, PropelPDO $con = null)
-    {
-        $studysToDelete = $this->getStudys(new Criteria(), $con)->diff($studys);
-
-        $this->studysScheduledForDeletion = unserialize(serialize($studysToDelete));
-
-        foreach ($studysToDelete as $studyRemoved) {
-            $studyRemoved->setContact(null);
-        }
-
-        $this->collStudys = null;
-        foreach ($studys as $study) {
-            $this->addStudy($study);
-        }
-
-        $this->collStudys = $studys;
-        $this->collStudysPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Study objects.
-     *
-     * @param Criteria $criteria
-     * @param boolean $distinct
-     * @param PropelPDO $con
-     * @return int             Count of related Study objects.
-     * @throws PropelException
-     */
-    public function countStudys(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-    {
-        $partial = $this->collStudysPartial && !$this->isNew();
-        if (null === $this->collStudys || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collStudys) {
-                return 0;
-            }
-
-            if($partial && !$criteria) {
-                return count($this->getStudys());
-            }
-            $query = StudyQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByContact($this)
-                ->count($con);
-        }
-
-        return count($this->collStudys);
-    }
-
-    /**
-     * Method called to associate a Study object to this object
-     * through the Study foreign key attribute.
-     *
-     * @param    Study $l Study
-     * @return Contact The current object (for fluent API support)
-     */
-    public function addStudy(Study $l)
-    {
-        if ($this->collStudys === null) {
-            $this->initStudys();
-            $this->collStudysPartial = true;
-        }
-        if (!in_array($l, $this->collStudys->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddStudy($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param	Study $study The study object to add.
-     */
-    protected function doAddStudy($study)
-    {
-        $this->collStudys[]= $study;
-        $study->setContact($this);
-    }
-
-    /**
-     * @param	Study $study The study object to remove.
-     * @return Contact The current object (for fluent API support)
-     */
-    public function removeStudy($study)
-    {
-        if ($this->getStudys()->contains($study)) {
-            $this->collStudys->remove($this->collStudys->search($study));
-            if (null === $this->studysScheduledForDeletion) {
-                $this->studysScheduledForDeletion = clone $this->collStudys;
-                $this->studysScheduledForDeletion->clear();
-            }
-            $this->studysScheduledForDeletion[]= clone $study;
-            $study->setContact(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Studys from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Study[] List of Study objects
-     */
-    public function getStudysJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = StudyQuery::create(null, $criteria);
-        $query->joinWith('Dbxref', $join_behavior);
-
-        return $this->getStudys($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Contact is new, it will return
-     * an empty collection; or if this Contact has previously
-     * been saved, it will retrieve related Studys from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Contact.
-     *
-     * @param Criteria $criteria optional Criteria object to narrow the query
-     * @param PropelPDO $con optional connection object
-     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|Study[] List of Study objects
-     */
-    public function getStudysJoinPub($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-    {
-        $query = StudyQuery::create(null, $criteria);
-        $query->joinWith('Pub', $join_behavior);
-
-        return $this->getStudys($query, $con);
-    }
-
-    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -3632,11 +1979,6 @@ abstract class BaseContact extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->collArraydesigns) {
-                foreach ($this->collArraydesigns as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collAssays) {
                 foreach ($this->collAssays as $o) {
                     $o->clearAllReferences($deep);
@@ -3647,28 +1989,8 @@ abstract class BaseContact extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collContactRelationshipsRelatedByObjectId) {
-                foreach ($this->collContactRelationshipsRelatedByObjectId as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collContactRelationshipsRelatedBySubjectId) {
-                foreach ($this->collContactRelationshipsRelatedBySubjectId as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collProjectContacts) {
-                foreach ($this->collProjectContacts as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collQuantifications) {
                 foreach ($this->collQuantifications as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collStudys) {
-                foreach ($this->collStudys as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -3679,10 +2001,6 @@ abstract class BaseContact extends BaseObject implements Persistent
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        if ($this->collArraydesigns instanceof PropelCollection) {
-            $this->collArraydesigns->clearIterator();
-        }
-        $this->collArraydesigns = null;
         if ($this->collAssays instanceof PropelCollection) {
             $this->collAssays->clearIterator();
         }
@@ -3691,26 +2009,10 @@ abstract class BaseContact extends BaseObject implements Persistent
             $this->collBiomaterials->clearIterator();
         }
         $this->collBiomaterials = null;
-        if ($this->collContactRelationshipsRelatedByObjectId instanceof PropelCollection) {
-            $this->collContactRelationshipsRelatedByObjectId->clearIterator();
-        }
-        $this->collContactRelationshipsRelatedByObjectId = null;
-        if ($this->collContactRelationshipsRelatedBySubjectId instanceof PropelCollection) {
-            $this->collContactRelationshipsRelatedBySubjectId->clearIterator();
-        }
-        $this->collContactRelationshipsRelatedBySubjectId = null;
-        if ($this->collProjectContacts instanceof PropelCollection) {
-            $this->collProjectContacts->clearIterator();
-        }
-        $this->collProjectContacts = null;
         if ($this->collQuantifications instanceof PropelCollection) {
             $this->collQuantifications->clearIterator();
         }
         $this->collQuantifications = null;
-        if ($this->collStudys instanceof PropelCollection) {
-            $this->collStudys->clearIterator();
-        }
-        $this->collStudys = null;
         $this->aCvterm = null;
     }
 

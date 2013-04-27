@@ -63,11 +63,6 @@ class QuantificationTableMap extends TableMap
         $this->addRelation('Analysis', 'cli_db\\propel\\Analysis', RelationMap::MANY_TO_ONE, array('analysis_id' => 'analysis_id', ), 'CASCADE', null);
         $this->addRelation('Contact', 'cli_db\\propel\\Contact', RelationMap::MANY_TO_ONE, array('operator_id' => 'contact_id', ), 'SET NULL', null);
         $this->addRelation('Protocol', 'cli_db\\propel\\Protocol', RelationMap::MANY_TO_ONE, array('protocol_id' => 'protocol_id', ), 'SET NULL', null);
-        $this->addRelation('Elementresult', 'cli_db\\propel\\Elementresult', RelationMap::ONE_TO_MANY, array('quantification_id' => 'quantification_id', ), 'CASCADE', null, 'Elementresults');
-        $this->addRelation('QuantificationRelationshipRelatedByObjectId', 'cli_db\\propel\\QuantificationRelationship', RelationMap::ONE_TO_MANY, array('quantification_id' => 'object_id', ), 'CASCADE', null, 'QuantificationRelationshipsRelatedByObjectId');
-        $this->addRelation('QuantificationRelationshipRelatedBySubjectId', 'cli_db\\propel\\QuantificationRelationship', RelationMap::ONE_TO_MANY, array('quantification_id' => 'subject_id', ), 'CASCADE', null, 'QuantificationRelationshipsRelatedBySubjectId');
-        $this->addRelation('Quantificationprop', 'cli_db\\propel\\Quantificationprop', RelationMap::ONE_TO_MANY, array('quantification_id' => 'quantification_id', ), 'CASCADE', null, 'Quantificationprops');
-        $this->addRelation('Quantificationresult', 'cli_db\\propel\\Quantificationresult', RelationMap::ONE_TO_MANY, array('quantification_id' => 'quantification_id', ), null, 'CASCADE', 'Quantificationresults');
     } // buildRelations()
 
 } // QuantificationTableMap

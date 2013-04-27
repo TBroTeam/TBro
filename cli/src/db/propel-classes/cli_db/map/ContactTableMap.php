@@ -56,14 +56,9 @@ class ContactTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Cvterm', 'cli_db\\propel\\Cvterm', RelationMap::MANY_TO_ONE, array('type_id' => 'cvterm_id', ), null, null);
-        $this->addRelation('Arraydesign', 'cli_db\\propel\\Arraydesign', RelationMap::ONE_TO_MANY, array('contact_id' => 'manufacturer_id', ), 'CASCADE', null, 'Arraydesigns');
         $this->addRelation('Assay', 'cli_db\\propel\\Assay', RelationMap::ONE_TO_MANY, array('contact_id' => 'operator_id', ), 'CASCADE', null, 'Assays');
         $this->addRelation('Biomaterial', 'cli_db\\propel\\Biomaterial', RelationMap::ONE_TO_MANY, array('contact_id' => 'biosourceprovider_id', ), 'SET NULL', null, 'Biomaterials');
-        $this->addRelation('ContactRelationshipRelatedByObjectId', 'cli_db\\propel\\ContactRelationship', RelationMap::ONE_TO_MANY, array('contact_id' => 'object_id', ), 'CASCADE', null, 'ContactRelationshipsRelatedByObjectId');
-        $this->addRelation('ContactRelationshipRelatedBySubjectId', 'cli_db\\propel\\ContactRelationship', RelationMap::ONE_TO_MANY, array('contact_id' => 'subject_id', ), 'CASCADE', null, 'ContactRelationshipsRelatedBySubjectId');
-        $this->addRelation('ProjectContact', 'cli_db\\propel\\ProjectContact', RelationMap::ONE_TO_MANY, array('contact_id' => 'contact_id', ), 'CASCADE', null, 'ProjectContacts');
         $this->addRelation('Quantification', 'cli_db\\propel\\Quantification', RelationMap::ONE_TO_MANY, array('contact_id' => 'operator_id', ), 'SET NULL', null, 'Quantifications');
-        $this->addRelation('Study', 'cli_db\\propel\\Study', RelationMap::ONE_TO_MANY, array('contact_id' => 'contact_id', ), 'CASCADE', null, 'Studys');
     } // buildRelations()
 
 } // ContactTableMap

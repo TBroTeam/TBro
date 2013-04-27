@@ -54,9 +54,7 @@ class CvTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Cvprop', 'cli_db\\propel\\Cvprop', RelationMap::ONE_TO_MANY, array('cv_id' => 'cv_id', ), null, null, 'Cvprops');
         $this->addRelation('Cvterm', 'cli_db\\propel\\Cvterm', RelationMap::ONE_TO_MANY, array('cv_id' => 'cv_id', ), 'CASCADE', null, 'Cvterms');
-        $this->addRelation('Cvtermpath', 'cli_db\\propel\\Cvtermpath', RelationMap::ONE_TO_MANY, array('cv_id' => 'cv_id', ), 'CASCADE', null, 'Cvtermpaths');
     } // buildRelations()
 
 } // CvTableMap
