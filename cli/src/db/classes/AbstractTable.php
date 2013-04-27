@@ -11,6 +11,8 @@ interface Table {
     static function getSubCommands();
 
     static function executeCommand($command, $options);
+
+    static function getPropelClass();
 }
 
 abstract class AbstractTable implements \CLI_Command, Table {
@@ -96,6 +98,83 @@ abstract class AbstractTable implements \CLI_Command, Table {
             echo "enter one of (yes/no):\n> ";
         }
         return $line == 'yes';
+    }
+
+    protected static function command_insert($options, $keys) {
+        $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
+        $item = new $propel_class();
+        foreach ($keys as $key => $data) {
+            if (@$data['actions']['insert'] == 'required')
+                $item->{"set" . $data['colname']}($options[$key]);
+            else if (@$data['actions']['insert'] == 'optional' && isset($options[$key]))
+                $item->{"set" . $data['colname']}($options[$key]);
+        }
+        $lines = $item->save();
+        printf("%d line(s) inserted.\n", $lines);
+    }
+
+    protected static function command_update($options, $keys) {
+        $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
+        $q = new $propel_class;
+
+        $item = $q->findOneBy($keys['id']['colname'], $options['id']);
+        if ($item == null) {
+            printf("No contact found for id %d.\n", $options['id']);
+            return;
+        }
+
+        foreach ($keys as $key => $data) {
+            if ($key != 'id' && isset($data['colname']) && isset($options[$key]))
+                $item->{"set" . $data['colname']}($options[$key]);
+        }
+
+        $lines = $item->save();
+        printf("%d line(s) udpated.\n", $lines);
+    }
+
+    protected static function command_delete($options, $keys) {
+
+        $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
+        $q = new $propel_class;
+
+        $item = $q->findOneBy($keys['id']['colname'], $options['id']);
+
+        if ($item == null) {
+            printf("No contact found for id %d.\n", $options['id']);
+            return;
+        }
+        if (self::confirm($options)) {
+            $item->delete();
+            printf("Contact with id %d deleted successfully.\n", $item->getContactId());
+        }
+    }
+
+    protected static function command_details($options, $keys) {
+        $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
+        $q = new $propel_class;
+
+        $item = $q->findOneBy($keys['id']['colname'], $options['id']);
+        if ($item == null) {
+            printf("No contact found for id %d.\n", $options['id']);
+            return;
+        }
+
+        $table_keys = array_keys(array_filter($keys, function($val) {
+                            return isset($val['colname']);
+                        }));
+        $results = self::prepareQueryResult(array($item));
+        self::printTable($table_keys, $results);
+    }
+
+    protected static function command_list($options, $keys) {
+        $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
+        $q = new $propel_class;
+
+        $table_keys = array_keys(array_filter($keys, function($val) {
+                            return isset($val['colname']);
+                        }));
+        $results = self::prepareQueryResult($q->find());
+        self::printTable($table_keys, $results);
     }
 
 }

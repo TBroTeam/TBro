@@ -119,55 +119,32 @@ class Biomaterial extends AbstractTable {
         }
     }
 
-    private static function command_insert($options, $keys) {
-        $biomaterial = new propel\Biomaterial();
-        $biomaterial->setName($options['name']);
-        isset($options['description']) && $biomaterial->setDescription($options['description']);
-        isset($options['organism_id']) && $biomaterial->setTaxonId($options['organism_id']);
-        isset($options['biosourceprovider_id']) && $biomaterial->setBiosourceproviderId($options['biosourceprovider_id']);
-        $lines = $biomaterial->save();
-        printf("%d line(s) inserted.\n", $lines);
+    protected static function command_details($options, $keys) {
+        parent::command_details($options, $keys);
 
-        return array($biomaterial, $lines);
-    }
+        $references = array();
+        $brqp = new propel\BiomaterialRelationshipQuery();
+        $parent_relationships = $brqp->findBySubjectId($options['id']);
 
-    private static function command_update($options, $keys) {
-        $bq = new propel\BiomaterialQuery();
-        $biomaterial = $bq->findOneByBiomaterialId($options['id']);
-        if ($biomaterial == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
+        foreach ($parent_relationships as $parent_relationship) {
+            $parent = $parent_relationship->getBiomaterialRelatedByObjectId();
+            $references[] = array('Parent Biomaterial', sprintf("Id: %s\nName: %s", $parent->getBiomaterialId(), $parent->getName()));
         }
-        isset($options['name']) && $biomaterial->setName($options['name']);
-        isset($options['description']) && $biomaterial->setDescription($options['description']);
-        isset($options['organism_id']) && $biomaterial->setTaxonId($options['organism_id']);
-        isset($options['biosourceprovider_id']) && $biomaterial->setBiosourceproviderId($options['biosourceprovider_id']);
-        $lines = $biomaterial->save();
-        printf("%d line(s) udpated.\n", $lines);
 
-        return $lines;
-    }
-
-    private static function command_delete($options, $keys) {
-        $bq = new propel\BiomaterialQuery();
-        $biomaterial = $bq->findOneByBiomaterialId($options['id']);
-        if ($biomaterial == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
+        $brqc = new propel\BiomaterialRelationshipQuery();
+        $child_relationships = $brqc->findByObjectId($options['id']);
+        foreach ($child_relationships as $child_relationship) {
+            $child = $child_relationship->getBiomaterialRelatedBySubjectId();
+            $references[] = array('Child Biomaterial', sprintf("Id: %s\nName: %s", $child->getBiomaterialId(), $child->getName()));
         }
-        if (self::confirm($options)) {
-            $biomaterial->delete();
-            printf("Contact with id %d deleted successfully.\n", $biomaterial->getContactId());
+
+        if (count($references) > 0) {
+            print "Has Child/Parent relationships:\n";
+            self::printTable(array('', 'Row'), $references);
         }
     }
 
-    private static function command_list($options, $keys) {
-        $bq = new propel\BiomaterialQuery();
-        $results = self::prepareQueryResult($bq->find());
-        self::printTable(array_keys($keys), $results);
-    }
-
-    private static function command_add_parent($options, $keys) {
+    protected static function command_add_parent($options, $keys) {
         $brp = new propel\BiomaterialRelationship();
         $brp->setSubjectId($options['id']);
         $brp->setTypeId(CV_BIOMATERIAL_ISA);
@@ -178,7 +155,7 @@ class Biomaterial extends AbstractTable {
         return array($brp, $lines);
     }
 
-    private static function command_add_child($options, $keys) {
+    protected static function command_add_child($options, $keys) {
         $brc = new propel\BiomaterialRelationship();
         $brc->setSubjectId($options['child_id']);
         $brc->setTypeId(CV_BIOMATERIAL_ISA);
@@ -187,7 +164,7 @@ class Biomaterial extends AbstractTable {
         printf("%d line(s) inserted.\n", $lines);
     }
 
-    private static function command_remove_parent($options, $keys) {
+    protected static function command_remove_parent($options, $keys) {
         $brqp = new propel\BiomaterialRelationshipQuery();
         $brqp->filterBySubjectId($options['id']);
         $brqp->filterByObjectId($options['parent_id']);
@@ -202,7 +179,7 @@ class Biomaterial extends AbstractTable {
         return $brp;
     }
 
-    private static function command_remove_child($options, $keys) {
+    protected static function command_remove_child($options, $keys) {
         $brqc = new propel\BiomaterialRelationshipQuery();
         $brqc->filterBySubjectId($options['child_id']);
         $brqc->filterByObjectId($options['id']);
@@ -215,40 +192,8 @@ class Biomaterial extends AbstractTable {
         printf("Relationship between parent %d and child %d deleted successfully.\n", $brc->getObjectId(), $brc->getSubjectId());
     }
 
-    private static function command_details($options, $keys) {
-        $bq = new propel\BiomaterialQuery();
-        $biomaterial = $bq->findOneByBiomaterialId($options['id']);
-        if ($biomaterial == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
-        }
-
-        $table_keys = array_keys(array_filter($keys, function($val) {
-                            return isset($val['colname']);
-                        }));
-        $results = self::prepareQueryResult(array($biomaterial));
-        self::printTable($table_keys, $results);
-
-        $references = array();
-        $brqp = new propel\BiomaterialRelationshipQuery();
-        $parent_relationships = $brqp->findBySubjectId($biomaterial->getBiomaterialId());
-
-        foreach ($parent_relationships as $parent_relationship) {
-            $parent = $parent_relationship->getBiomaterialRelatedByObjectId();
-            $references[] = array('Parent Biomaterial', sprintf("Id: %s\nName: %s", $parent->getBiomaterialId(), $parent->getName()));
-        }
-
-        $brqc = new propel\BiomaterialRelationshipQuery();
-        $child_relationships = $brqc->findByObjectId($biomaterial->getBiomaterialId());
-        foreach ($child_relationships as $child_relationship) {
-            $child = $child_relationship->getBiomaterialRelatedBySubjectId();
-            $references[] = array('Child Biomaterial', sprintf("Id: %s\nName: %s", $child->getBiomaterialId(), $child->getName()));
-        }
-
-        if (count($references) > 0) {
-            print "Has Child/Parent relationships:\n";
-            self::printTable(array('', 'Row'), $references);
-        }
+    public static function getPropelClass() {
+        return '\\cli_db\\propel\\Biomaterial';
     }
 
 }

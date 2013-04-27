@@ -54,6 +54,7 @@ class Contact extends AbstractTable {
 
     public static function executeCommand($options, $command_name) {
         $keys = self::getKeys();
+
         switch ($command_name) {
             case 'insert':
                 self::command_insert($options, $keys);
@@ -73,50 +74,12 @@ class Contact extends AbstractTable {
         }
     }
 
-    private static function command_insert($options, $keys) {
-        $contact = new \cli_db\propel\Contact();
-        $contact->setName($options['name']);
-        isset($options['description']) && $contact->setDescription($options['description']);
-        $lines = $contact->save();
-        printf("%d line(s) inserted.\n", $lines);
-    }
-
-    private static function command_update($options, $keys) {
-        $q = new \cli_db\propel\ContactQuery();
-        $contact = $q->findOneByContactId($options['id']);
-        if ($contact == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
-        }
-        isset($options['name']) && $contact->setName($options['name']);
-        isset($options['description']) && $contact->setDescription($options['description']);
-        $lines = $contact->save();
-        printf("%d line(s) udpated.\n", $lines);
-    }
-
-    private static function command_delete($options, $keys) {
+    protected static function command_details($options, $keys) {
+        parent::command_details($options, $keys);
 
         $q = new \cli_db\propel\ContactQuery();
         $contact = $q->findOneByContactId($options['id']);
-        if ($contact == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
-        }
-        if (self::confirm($options)) {
-            $contact->delete();
-            printf("Contact with id %d deleted successfully.\n", $contact->getContactId());
-        }
-    }
 
-    private static function command_details($options, $keys) {
-        $q = new \cli_db\propel\ContactQuery();
-        $contact = $q->findOneByContactId($options['id']);
-        if ($contact == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
-        }
-        $results = self::prepareQueryResult(array($contact));
-        self::printTable(array_keys($keys), $results);
         $references = array();
         foreach ($contact->getBiomaterials() as $biomat) {
             $references[] = array('Biomaterial', sprintf("Id: %s\nName: %s", $biomat->getBiomaterialId(), $biomat->getName()));
@@ -133,10 +96,8 @@ class Contact extends AbstractTable {
         }
     }
 
-    private static function command_list($options, $keys) {
-        $q = new \cli_db\propel\ContactQuery();
-        $results = self::prepareQueryResult($q->find());
-        self::printTable(array_keys($keys), $results);
+    public static function getPropelClass() {
+        return '\\cli_db\\propel\\Contact';
     }
 
 }
