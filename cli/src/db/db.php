@@ -1,9 +1,7 @@
-#!/usr/bin/php
 <?php
-//root dir. for testing, this can be __DIR__."/", for deployment it can be phing://
-define('ROOT', __DIR__ . "/");
-//TODO put this into configure options
-define('CONFIG', __DIR__ . "/../");
+//if we are in a phar archive, this has been set by the stub
+if (!defined('ROOT')) define('ROOT', __DIR__ . "/");
+if (!defined('CONFIG_DIR')) define('CONFIG_DIR', __DIR__ . "/../");
 
 if (!@include_once 'Console/CommandLine.php')
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
@@ -12,11 +10,11 @@ if (!@include_once 'Console/Table.php')
     die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
 
 
-if (!@include_once CONFIG . 'db-config.php')
-    die(sprintf("Missing config file: %s\n", CONFIG . 'db-config.php'));
+if (!@include_once CONFIG_DIR . 'db-config.php')
+    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-config.php'));
 
-if (!@include_once CONFIG . 'db-cvterms.php')
-    die(sprintf("Missing config file: %s\n", CONFIG . 'db-cvterms.php'));
+if (!@include_once CONFIG_DIR . 'db-cvterms.php')
+    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-cvterms.php'));
 
 
 $parser = new \Console_CommandLine(array(
@@ -29,9 +27,8 @@ $width = is_int($width_exec) && $width_exec > 0 ? $width_exec : 200;
 $parser->renderer->line_width = $width;
 
 $old_classes = get_declared_classes();
-
-foreach (glob(ROOT . '/tables/*.php') as $filename) {
-    include_once $filename;
+foreach (new DirectoryIterator(ROOT . 'tables') as $file) {
+    include_once ROOT.'tables/'.$file;
 }
 $new_classes = array_diff(get_declared_classes(), $old_classes);
 

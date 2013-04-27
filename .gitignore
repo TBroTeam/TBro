@@ -1,4 +1,5 @@
 *~
+*.phar
 /nbproject/private/
 /httpdocs/smarty/templates_c/*
 /httpdocs/smarty/cache/*
