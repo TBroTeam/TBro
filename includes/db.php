@@ -6,7 +6,7 @@ try {
     global $db;
     $connstr = sprintf('pgsql:host=%s;dbname=%s', DB_SERVER, DB_DB);
     if (@DEBUG) {
-        require_once __DIR__ . '/libs/loggedPDO/LoggedPDO.php';
+        require_once __DIR__ . '/libs/loggedPDO/PDO.php';
         require_once __DIR__ . '/libs/loggedPDO/Log_firebugJSON.php';
 
         if (PHP_SAPI == 'cli') {
