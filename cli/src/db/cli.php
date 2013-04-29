@@ -6,18 +6,29 @@ if (!defined('ROOT'))
 if (!defined('CONFIG_DIR'))
     define('CONFIG_DIR', __DIR__ . "/../");
 
-if (!@include_once 'Console/CommandLine.php')
+if (!include_once 'Console/CommandLine.php')
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
 
-if (!@include_once 'Console/Table.php')
+if (!include_once 'Console/Table.php')
     die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
 
 
-if (!@include_once CONFIG_DIR . 'db-config.php')
+if (!include_once 'propel/Propel.php')
+    die(<<<EOF
+Failure including propel/Propel.php
+please install propel_runtime via PEAR or check your include_path
+        
+    pear channel-discover pear.propelorm.org
+    pear install -a propel/propel_runtime
+EOF
+);
+
+if (!include_once CONFIG_DIR . 'db-config.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-config.php'));
 
-if (!@include_once CONFIG_DIR . 'db-cvterms.php')
+if (!include_once CONFIG_DIR . 'db-cvterms.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-cvterms.php'));
+
 
 
 $parser = new \Console_CommandLine(array(

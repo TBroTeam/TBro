@@ -5,16 +5,16 @@ if (!defined('ROOT'))
 if (!defined('CONFIG_DIR'))
     define('CONFIG_DIR', __DIR__ . "/../");
 
-if (!@include_once 'Console/CommandLine.php')
+if (!include_once 'Console/CommandLine.php')
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
 
-if (!@include_once 'Console/Table.php')
+if (!include_once 'Console/Table.php')
     die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
 
-if (!@include_once 'Console/ProgressBar.php')
+if (!include_once 'Console/ProgressBar.php')
     die("Failure including Console/ProgressBar.php\nplease install PEAR::Console_ProgressBar or check your include_path\n");
 
-if (!@include_once 'Log.php')
+if (!include_once 'Log.php')
     die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
 
 
