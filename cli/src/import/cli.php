@@ -21,7 +21,7 @@ if (stream_resolve_include_path('Console/ProgressBar.php'))
 else
     die("Failure including Console/ProgressBar.php\nplease install PEAR::Console_ProgressBar or check your include_path\n");
 
-if (stream_resolve_include_path('Console/Log.php'))
+if (stream_resolve_include_path('Log.php'))
     require_once 'Log.php';
 else
     die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");

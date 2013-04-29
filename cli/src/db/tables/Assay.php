@@ -127,7 +127,7 @@ class Assay extends AbstractTable {
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
-        $q = new \cli_db\propel\AssayQuery();
+        $q = new propel\AssayQuery();
         $assay = $q->findOneByAssayId($options['id']);
 
         $references = array();
