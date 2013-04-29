@@ -1,8 +1,31 @@
-# install PEAR::phing
-pear channel-discover pear.phing.info
-pear install --alldeps phing/phing
+#############################
+###     prerequisites     ###
+#############################
 
-# execute phing
-./phing
+install phing
+    $ pear channel-discover pear.phing.info
+    $ pear install --alldeps phing/phing
 
-#ready to use
+in your php.ini, change phar.readonly to Off:
+    [Phar]
+    phar.readonly = Off
+
+#############################
+### building & installing ###
+#############################
+
+execute phing to build & deploy into this directory
+    $ phing
+
+alternatively, specify where to install (example for $HOME)
+    $ phing -D install_dir=$HOME/bin -D config_dir=$HOME/etc
+
+#############################
+###   edit configuration  ###
+#############################
+
+<filename>.example files have been copied to your $config_dir (./etc if run without parameters)
+db-config.php will need some editing
+db-cvterms.php should be ready to use if you use our prepared db
+
+you're set to go!

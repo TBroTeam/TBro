@@ -6,14 +6,19 @@ if (!defined('ROOT'))
 if (!defined('CONFIG_DIR'))
     define('CONFIG_DIR', __DIR__ . "/../");
 
-if (!include_once 'Console/CommandLine.php')
+if (stream_resolve_include_path('Console/CommandLine.php'))
+    require_once 'Console/CommandLine.php';
+else
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
 
-if (!include_once 'Console/Table.php')
+if (stream_resolve_include_path('Console/Table.php'))
+    require_once 'Console/Table.php';
+else
     die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
 
-
-if (!include_once 'propel/Propel.php')
+if (stream_resolve_include_path('propel/Propel.php'))
+    require_once 'propel/Propel.php';
+else
     die(<<<EOF
 Failure including propel/Propel.php
 please install propel_runtime via PEAR or check your include_path
@@ -21,19 +26,19 @@ please install propel_runtime via PEAR or check your include_path
     pear channel-discover pear.propelorm.org
     pear install -a propel/propel_runtime
 EOF
-);
+    );
 
-if (!include_once CONFIG_DIR . 'db-config.php')
+if (!@include_once CONFIG_DIR . 'db-config.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-config.php'));
 
-if (!include_once CONFIG_DIR . 'db-cvterms.php')
+if (!@include_once CONFIG_DIR . 'db-cvterms.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-cvterms.php'));
 
 
 
 $parser = new \Console_CommandLine(array(
-    'description' => 'database tool for transcriptome browser!',
-    'version' => '0.1'
+            'description' => 'database tool for transcriptome browser!',
+            'version' => '0.1'
         ));
 $parser->subcommand_required = true;
 
@@ -81,13 +86,11 @@ try {
             if (is_object($result->command->command)) {
                 call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command->command->options, $result->command->command_name);
                 call_user_func(array($class, 'executeCommand'), $result->command->command->options, $result->command->command_name);
-            }
-            else {
+            } else {
                 $parser->commands[$result->command_name]->displayUsage();
             }
         }
-    }
-    else {
+    } else {
         $parser->displayUsage();
         exit(0);
     }

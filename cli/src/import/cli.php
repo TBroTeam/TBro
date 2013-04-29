@@ -1,20 +1,29 @@
 <?php
+
 //if we are in a phar archive, this has been set by the stub
 if (!defined('ROOT'))
     define('ROOT', __DIR__ . "/");
 if (!defined('CONFIG_DIR'))
     define('CONFIG_DIR', __DIR__ . "/../");
 
-if (!include_once 'Console/CommandLine.php')
+if (stream_resolve_include_path('Console/CommandLine.php'))
+    require_once 'Console/CommandLine.php';
+else
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
 
-if (!include_once 'Console/Table.php')
+if (stream_resolve_include_path('Console/Table.php'))
+    require_once 'Console/Table.php';
+else
     die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
 
-if (!include_once 'Console/ProgressBar.php')
+if (stream_resolve_include_path('Console/ProgressBar.php'))
+    require_once 'Console/ProgressBar.php';
+else
     die("Failure including Console/ProgressBar.php\nplease install PEAR::Console_ProgressBar or check your include_path\n");
 
-if (!include_once 'Log.php')
+if (stream_resolve_include_path('Console/Log.php'))
+    require_once 'Log.php';
+else
     die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
 
 
@@ -25,8 +34,8 @@ if (!@include_once CONFIG_DIR . 'db-cvterms.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-cvterms.php'));
 
 $parser = new Console_CommandLine(array(
-    'description' => 'importer for transcriptome browser!',
-    'version' => '0.1'
+            'description' => 'importer for transcriptome browser!',
+            'version' => '0.1'
         ));
 
 $parser->subcommand_required = true;
@@ -34,8 +43,7 @@ $width_exec = exec('tput cols 2>&1');
 $width = is_int($width_exec) && $width_exec > 0 ? $width_exec : 200;
 $parser->renderer->line_width = $width;
 
-$parser->addOption('debug',
-        array(
+$parser->addOption('debug', array(
     'short_name' => '-d',
     'long_name' => '--debug',
     'action' => 'StoreTrue',
@@ -72,7 +80,7 @@ try {
         if (defined('DEBUG') && DEBUG) {
             require_once ROOT . '/libs/loggedPDO/LoggedPDO.php';
             $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION),
-                    Log::factory('console', '', 'PDO'));
+                            Log::factory('console', '', 'PDO'));
         }
         else
             $db = new PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -99,16 +107,15 @@ try {
             printf("importing %s as %s\n", $filename, $result->command_name);
             $ret_table = call_user_func(array($class, 'import'), array_merge($result->command->options, array('file' => $filename)));
             $tbl = new Console_Table();
-            foreach ($ret_table as $key => $value) $tbl->addRow(array($key, $value));
+            foreach ($ret_table as $key => $value)
+                $tbl->addRow(array($key, $value));
             echo $tbl->getTable();
         }
-    }
-    else {
+    } else {
         $parser->displayUsage();
         exit(0);
     }
 } catch (Exception $exc) {
     $parser->displayError($exc->getMessage());
-    
 }
 ?>

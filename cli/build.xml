@@ -97,6 +97,8 @@
                 <include name="import.phar" />
             </fileset>
         </copy>
+        <chmod file="${install_dir}/db.phar" mode="0755" />
+        <chmod file="${install_dir}/import.phar" mode="0755" />
         
         <mkdir dir="${config_dir}"/>
         <copy todir="${config_dir}" >
