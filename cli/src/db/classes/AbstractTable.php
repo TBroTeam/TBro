@@ -101,7 +101,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         return $line == 'yes';
     }
 
-    protected static function command_insert($options, $keys) {
+    protected static function command_insert($options, $keys, $callback_set_defaults=null) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
         $item = new $propel_class();
         foreach ($keys as $key => $data) {
@@ -109,6 +109,9 @@ abstract class AbstractTable implements \CLI_Command, Table {
                 $item->{"set" . $data['colname']}($options[$key]);
             else if (@$data['actions']['insert'] == 'optional' && isset($options[$key]))
                 $item->{"set" . $data['colname']}($options[$key]);
+        }
+        if ($callback_set_defaults!=null){
+            $callback_set_defaults($item);
         }
         $lines = $item->save();
         printf("%d line(s) inserted.\n", $lines);

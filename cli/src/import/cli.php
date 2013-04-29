@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 //if we are in a phar archive, this has been set by the stub
 if (!defined('ROOT'))

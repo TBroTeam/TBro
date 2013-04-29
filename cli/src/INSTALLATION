@@ -1,0 +1,8 @@
+# install PEAR::phing
+pear channel-discover pear.phing.info
+pear install --alldeps phing/phing
+
+# execute phing
+./phing
+
+#ready to use
