@@ -41,7 +41,7 @@
                      destfile="${builddir}/db.phar"
                      alias="db.phar"
                      stub="${srcdir}/res/phar-stub-db.php"
-                     compression="none"
+                     compression="bzip2"
         >
             <metadata>
                 <element name="version" value="${version}" />
@@ -66,7 +66,7 @@
                      destfile="${builddir}/import.phar"
                      alias="import.phar"
                      stub="${srcdir}/res/phar-stub-import.php"
-                     compression="none"
+                     compression="bzip2"
         >
             <metadata>
                 <element name="version" value="${version}" />

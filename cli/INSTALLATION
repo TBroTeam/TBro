@@ -1,10 +1,13 @@
 #############################
-###     prerequisites     ###
+###  build prerequisites  ###
 #############################
 
 install phing
     $ pear channel-discover pear.phing.info
     $ pear install --alldeps phing/phing
+
+the extension php_phar.dll should be included and enabled in a standard php installation, otherwise see
+    http://www.php.net/manual/en/phar.setup.php
 
 in your php.ini, change phar.readonly to Off:
     [Phar]
@@ -28,4 +31,18 @@ alternatively, specify where to install (example for $HOME)
 db-config.php will need some editing
 db-cvterms.php should be ready to use if you use our prepared db
 
-you're set to go!
+#############################
+###  usage prerequisites  ###
+#############################
+
+you will need PEAR packages (install via pear install --alldeps <pkgname>)
+    Console_CommandLine
+    Console_Table
+    Console_Progressbar
+    Log
+and
+Propel::Runtime, installed via
+    $ pear channel-discover pear.propelorm.org
+    $ pear install -a propel/propel_runtime
+
+now you're set to go!
