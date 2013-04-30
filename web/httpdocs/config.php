@@ -1,15 +1,15 @@
 <?php
-define('APPPATH', '/httpdocs/');
-define('SERVICEPATH', '/httpdocs/ajax');
+define('APPPATH', '/');
+define('SERVICEPATH', '/ajax');
 
 define('OPENID_DOMAIN', 'localhost');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/home/s202139/git/web/includes');
+set_include_path(get_include_path() . PATH_SEPARATOR . '/path/to/web/includes');
 
-define('DB_SERVER', '132.187.22.155');
-define('DB_USERNAME', 's202139');
-define('DB_PASSWORD', 's202139');
-define('DB_DB', 'dionaea_transcript_db_dev');
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_DB', 'mydb');
 
 if (isset($_REQUEST['DEBUG']))
     define('DEBUG', true);
