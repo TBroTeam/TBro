@@ -1,10 +1,11 @@
 <?php
-define('APPPATH', '/');
-define('SERVICEPATH', '/ajax');
+define('APPPATH', '/httpdocs');
+define('SERVICEPATH', '/httpdocs/ajax');
 
 define('OPENID_DOMAIN', 'localhost');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/path/to/web/includes');
+define('CFG_SMARTY_DIR', '/path/to/web/smarty/');
+set_include_path(get_include_path() . PATH_SEPARATOR . '/path/to/web/includes/');
 
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
