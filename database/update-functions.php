@@ -5,7 +5,8 @@ define('INC', __DIR__ . '/../includes/');
 
 require_once INC . '/db.php';
 require_once INC . '/constants.php';
-global $db, $_CONST;
+global $db;
+$constant = 'constant';
 
 $stored_functions = array(
     array('func_header' => 'get_or_insert_analysis (_name character varying(255), _program character varying(255), _version character varying(255), _timeexecuted timestamp)',
@@ -85,7 +86,7 @@ FOR _line IN (
     quantificationresult.biomaterial_id = biomaterial.biomaterial_id AND 
     biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND 
     biomaterial_relationship.object_id = _parent_id AND
-    biomaterial_relationship.type_id = {$_CONST('CV_BIOMATERIAL_ISA')} AND
+    biomaterial_relationship.type_id = {$constant('CV_BIOMATERIAL_ISA')} AND
     feature.uniquename = _feature_uniq
 ) LOOP
         _count:=_count+1;
@@ -110,12 +111,12 @@ EOF
         FROM
             feature AS repeatmasker
             INNER JOIN featureloc ON (repeatmasker.feature_id = featureloc.feature_id)
-            LEFT OUTER JOIN featureprop AS repeat_name ON (repeat_name.feature_id = repeatmasker.feature_id AND repeat_name.type_id = {$_CONST('CV_REPEAT_NAME')})
-            LEFT OUTER JOIN featureprop AS repeat_family ON (repeat_family.feature_id = repeatmasker.feature_id AND repeat_family.type_id = {$_CONST('CV_REPEAT_FAMILY')})
-            LEFT OUTER JOIN featureprop AS repeat_class ON (repeat_class.feature_id = repeatmasker.feature_id AND repeat_class.type_id = {$_CONST('CV_REPEAT_CLASS')})
+            LEFT OUTER JOIN featureprop AS repeat_name ON (repeat_name.feature_id = repeatmasker.feature_id AND repeat_name.type_id = {$constant('CV_REPEAT_NAME')})
+            LEFT OUTER JOIN featureprop AS repeat_family ON (repeat_family.feature_id = repeatmasker.feature_id AND repeat_family.type_id = {$constant('CV_REPEAT_FAMILY')})
+            LEFT OUTER JOIN featureprop AS repeat_class ON (repeat_class.feature_id = repeatmasker.feature_id AND repeat_class.type_id = {$constant('CV_REPEAT_CLASS')})
         WHERE
             featureloc.srcfeature_id = any(_isoform_ids) AND
-            repeatmasker.type_id = {$_CONST('CV_ANNOTATION_REPEATMASKER')};
+            repeatmasker.type_id = {$constant('CV_ANNOTATION_REPEATMASKER')};
 END;
 EOF
     ),
@@ -129,14 +130,14 @@ BEGIN
     FROM 
         feature interpro
         INNER JOIN featureloc ON (interpro.feature_id = featureloc.feature_id)
-        LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id = interpro.feature_id AND interpro_ID.type_id = {$_CONST('CV_INTERPRO_ID')}) 
+        LEFT OUTER JOIN featureprop AS interpro_ID ON (interpro_ID.feature_id = interpro.feature_id AND interpro_ID.type_id = {$constant('CV_INTERPRO_ID')}) 
         LEFT OUTER JOIN analysisfeature ON (interpro.feature_id = analysisfeature.feature_id)
         LEFT OUTER JOIN analysis ON (analysisfeature.analysis_id = analysis.analysis_id)
-        LEFT OUTER JOIN featureprop AS analysis_match_id ON (analysis_match_id.feature_id = interpro.feature_id AND analysis_match_id.type_id = {$_CONST('CV_INTERPRO_ANALYSIS_MATCH_ID')})
-        LEFT OUTER JOIN featureprop AS analysis_match_description ON (analysis_match_description.feature_id = interpro.feature_id AND analysis_match_description.type_id = {$_CONST('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION')})
+        LEFT OUTER JOIN featureprop AS analysis_match_id ON (analysis_match_id.feature_id = interpro.feature_id AND analysis_match_id.type_id = {$constant('CV_INTERPRO_ANALYSIS_MATCH_ID')})
+        LEFT OUTER JOIN featureprop AS analysis_match_description ON (analysis_match_description.feature_id = interpro.feature_id AND analysis_match_description.type_id = {$constant('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION')})
     WHERE 
         featureloc.srcfeature_id = any(_predpep_ids) AND
-        interpro.type_id = {$_CONST('CV_ANNOTATION_INTERPRO')};
+        interpro.type_id = {$constant('CV_ANNOTATION_INTERPRO')};
 END;
 EOF
     ),

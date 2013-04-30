@@ -26,7 +26,6 @@ if (stream_resolve_include_path('Log.php'))
 else
     die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
 
-
 if (!@include_once CONFIG_DIR . 'db-config.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'db-config.php'));
 
@@ -100,6 +99,7 @@ try {
 
         call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command->options);
 
+        define('LINES_IMPORTED', 'datasets_imported');
         define('DB_ORGANISM_ID', $result->command->options['organism_id']);
         define('IMPORT_PREFIX', $result->command->options['import_prefix']);
 

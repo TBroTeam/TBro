@@ -7,7 +7,7 @@ $outfilename = "setup-cvterms.latest";
 
 require_once INC . '/db.php';
 require_once INC . '/constants.php';
-global $db, $_CONST;
+global $db;
 
 
 global $cvterms;
@@ -129,22 +129,22 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
         $cvterm['id'] = $cvterm_id;
     }
 
-    if ($_CONST($cvterm_const) != $cvterm['id']) {
-        printf("-- constant %s has changed: %d => %d", $cvterm_const, $_CONST($cvterm_const), $cvterm['id']);
+    if (constant($cvterm_const) != $cvterm['id']) {
+        printf("-- constant %s has changed: %d => %d", $cvterm_const, constant($cvterm_const), $cvterm['id']);
         print(" suggested query:\n");
         switch ($cvterm['cv']) {
             case 'sequence':
-                printf('UPDATE feature SET type_id=%2$d WHERE type_id=%1$d;', $_CONST($cvterm_const), $cvterm['id']);
+                printf('UPDATE feature SET type_id=%2$d WHERE type_id=%1$d;', constant($cvterm_const), $cvterm['id']);
                 break;
             case 'feature_property':
-                printf('UPDATE featureprop SET type_id=%2$d WHERE type_id=%1$d;', $_CONST($cvterm_const), $cvterm['id']);
+                printf('UPDATE featureprop SET type_id=%2$d WHERE type_id=%1$d;', constant($cvterm_const), $cvterm['id']);
                 break;
             case 'relationship':
                 if (strpos(strtolower($cvterm_const), 'biomaterial') !== false) {
-                    printf('UPDATE biomaterial_relationship SET type_id=%2$d WHERE type_id=%1$d;', $_CONST($cvterm_const), $cvterm['id']);
+                    printf('UPDATE biomaterial_relationship SET type_id=%2$d WHERE type_id=%1$d;', constant($cvterm_const), $cvterm['id']);
                 }
                 else {
-                    printf('UPDATE feature_relationship SET type_id=%2$d WHERE type_id=%1$d;', $_CONST($cvterm_const), $cvterm['id']);
+                    printf('UPDATE feature_relationship SET type_id=%2$d WHERE type_id=%1$d;', constant($cvterm_const), $cvterm['id']);
                 }
                 break;
         }
