@@ -63,9 +63,10 @@ try {
 // Page display
 $page = requestVal('page', '/^[a-z-\.]*$/', '');
 switch ($page) {
-    case 'cart.js':
+    case 'js':
+        $js = requestVal('js', '/^[a-z-\.]*$/', '');
         header('Content-type: application/javascript');
-        $smarty->display('cart.js');
+        $smarty->display(sprintf('js/%s.js', $js));
         die();
     case 'multisearch':
         $smarty->display('multisearch.tpl');
