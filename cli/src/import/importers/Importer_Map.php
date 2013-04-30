@@ -35,7 +35,6 @@ class Importer_Map extends AbstractImporter {
 
         try {
             $db->beginTransaction();
-
             # get import prefix id, insert into dbxref if neccessary
             $stm_get_import_prefix_id = $db->prepare('SELECT get_or_insert_dbxref(?, ?)');
             $stm_get_import_prefix_id->execute(array(DB_NAME_IMPORTS, IMPORT_PREFIX));

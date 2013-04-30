@@ -19,7 +19,7 @@ class Biomaterial extends AbstractTable {
                     'remove_parent' => 'required',
                     'remove_child' => 'required',
                 ),
-                'description' => 'contact id'
+                'description' => 'biomaterial id'
             ),
             'name' => array(
                 'colname' => 'Name',

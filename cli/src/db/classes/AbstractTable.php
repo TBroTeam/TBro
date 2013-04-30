@@ -23,17 +23,22 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
         foreach ($keys as $key => $data) {
             if (isset($data['actions'][$subcommand_name]))
-                $submcd->addOption($key,
-                        array(
+                $submcd->addOption($key, array(
                     'long_name' => '--' . $key,
                     'description' => sprintf('(%2$s) %1$s', $data['description'], $data['actions'][$subcommand_name]),
                     'help_name' => $key
                 ));
         }
-        if ($subcommand_name == 'delete') {
-            $submcd->addOption('noconfirm',
-                    array(
-                'long_name' => '--noconfirm' . $key,
+
+        if ($subcommand_name == 'insert') {
+            $submcd->addOption('short', array(
+                'long_name' => '--short',
+                'description' => 'if set, will just output the ID of newly inserted line on success',
+                'action' => 'StoreTrue'
+            ));
+        } else if ($subcommand_name == 'delete') {
+            $submcd->addOption('noconfirm', array(
+                'long_name' => '--noconfirm',
                 'description' => 'if set, will not ask for confirmation on delete',
                 'action' => 'StoreTrue'
             ));
@@ -41,10 +46,9 @@ abstract class AbstractTable implements \CLI_Command, Table {
     }
 
     public static function CLI_getCommand(\Console_CommandLine $parser) {
-        $command = $parser->addCommand(call_user_func(array(get_called_class(), 'CLI_commandName')),
-                array(
+        $command = $parser->addCommand(call_user_func(array(get_called_class(), 'CLI_commandName')), array(
             'description' => call_user_func(array(get_called_class(), 'CLI_commandDescription'), $parser)
-        ));
+                ));
 
 
         $keys = call_user_func(array(get_called_class(), 'getKeys'));
@@ -65,7 +69,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     }
 
     public static function prepareQueryResult($res) {
-        
+
         $keys = call_user_func(array(get_called_class(), 'getKeys'));
         $column_keys = array();
         foreach ($keys as $key => $val) {
@@ -76,7 +80,8 @@ abstract class AbstractTable implements \CLI_Command, Table {
         $ret = array();
         foreach ($res as $row) {
             $ret_row = array();
-            foreach ($column_keys as $key => $val) $ret_row[$key] = call_user_func(array($row, "get" . $val));
+            foreach ($column_keys as $key => $val)
+                $ret_row[$key] = call_user_func(array($row, "get" . $val));
             $ret[] = $ret_row;
         }
         return $ret;
@@ -101,7 +106,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         return $line == 'yes';
     }
 
-    protected static function command_insert($options, $keys, $callback_set_defaults=null) {
+    protected static function command_insert($options, $keys, $callback_set_defaults = null) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
         $item = new $propel_class();
         foreach ($keys as $key => $data) {
@@ -110,11 +115,14 @@ abstract class AbstractTable implements \CLI_Command, Table {
             else if (@$data['actions']['insert'] == 'optional' && isset($options[$key]))
                 $item->{"set" . $data['colname']}($options[$key]);
         }
-        if ($callback_set_defaults!=null){
+        if ($callback_set_defaults != null) {
             $callback_set_defaults($item);
         }
         $lines = $item->save();
-        printf("%d line(s) inserted.\n", $lines);
+        if (isset($options['short']) && $options['short'])
+            print $item->getPrimaryKey();
+        else
+            printf("%d line(s) inserted.\n", $lines);
     }
 
     protected static function command_update($options, $keys) {
@@ -143,13 +151,15 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
         $item = $q->findOneBy($keys['id']['colname'], $options['id']);
 
+        $cmdname = call_user_func(array(get_called_class(), 'CLI_commandName'));
+        
         if ($item == null) {
-            printf("No contact found for id %d.\n", $options['id']);
+            printf("No $cmdname found for id %d.\n", $options['id']);
             return;
         }
         if (self::confirm($options)) {
             $item->delete();
-            printf("Contact with id %d deleted successfully.\n", $item->getContactId());
+            printf("$cmdname with id %d deleted successfully.\n", $options['id']);
         }
     }
 
@@ -159,7 +169,8 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
         $item = $q->findOneBy($keys['id']['colname'], $options['id']);
         if ($item == null) {
-            printf("No contact found for id %d.\n", $options['id']);
+            $cmdname = call_user_func(array(get_called_class(), 'CLI_commandName'));
+            printf("No $cmdname found for id %d.\n", $options['id']);
             return;
         }
 
@@ -171,14 +182,14 @@ abstract class AbstractTable implements \CLI_Command, Table {
     }
 
     protected static function command_list($options, $keys) {
-        
+
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
         $q = new $propel_class;
 
         $table_keys = array_keys(array_filter($keys, function($val) {
                             return isset($val['colname']);
                         }));
-                        
+
         $results = self::prepareQueryResult($q->find());
         self::printTable($table_keys, $results);
     }
