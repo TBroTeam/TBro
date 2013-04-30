@@ -11,11 +11,11 @@ require_once 'smarty/Smarty.class.php';
 require_once 'lightopenid/openid.php';
 
 $smarty = new Smarty();
-$smarty->setTemplateDir(SMARTY_DIR . '/templates');
-$smarty->setCompileDir(SMARTY_DIR . '/templates_c');
-$smarty->setCacheDir(SMARTY_DIR . '/cache');
-$smarty->setConfigDir(SMARTY_DIR . '/configs');
-$smarty->addPluginsDir(SMARTY_DIR . '/plugins');
+$smarty->setTemplateDir(CFG_SMARTY_DIR . '/templates');
+$smarty->setCompileDir(CFG_SMARTY_DIR . '/templates_c');
+$smarty->setCacheDir(CFG_SMARTY_DIR . '/cache');
+$smarty->setConfigDir(CFG_SMARTY_DIR . '/configs');
+$smarty->addPluginsDir(CFG_SMARTY_DIR . '/plugins');
 
 $smarty->assign('AppPath', APPPATH);
 $smarty->assign('ServicePath', SERVICEPATH);
