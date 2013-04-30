@@ -1,11 +1,15 @@
 #!/usr/bin/php
 <?php
 define('DEBUG', false);
-define('INC', __DIR__ . '/../includes/');
 
-require_once INC . '/db.php';
-require_once INC . '/constants.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . '/home/s202139/git/web/includes');
+
+require_once __DIR__.'/../web/httpdocs/config.php';
+require_once __DIR__.'/../web/httpdocs/config_cvterms.php';
+
+require_once 'TranscriptDB/db.php';
 global $db;
+
 $constant = 'constant';
 
 $stored_functions = array(
