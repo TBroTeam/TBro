@@ -79,7 +79,7 @@ try {
     try {
         global $db;
         if (defined('DEBUG') && DEBUG) {
-            require_once ROOT . '/libs/loggedPDO/LoggedPDO.php';
+            require_once SHARED . '/libs/loggedPDO/LoggedPDO.php';
             $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION),
                             Log::factory('console', '', 'PDO'));
         }

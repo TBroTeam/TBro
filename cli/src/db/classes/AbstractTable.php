@@ -173,11 +173,12 @@ abstract class AbstractTable implements \CLI_Command, Table {
         printf("%d line(s) udpated.\n", $lines);
     }
 
-    public static function command_delete_confirm($options) {
+    public static function command_delete_confirm($options, $message = "This will delete a row from the database.\n") {
         if (isset($options['noconfirm']) && $options['noconfirm'])
             return true;
 
-        echo "are you sure you want to delete this row? (yes/no)\n> ";
+        echo $message;
+        echo "Coninue (yes/no)\n> ";
         while (!in_array($line = trim(fgets(STDIN)), array('yes', 'no'))) {
 
             echo "enter one of (yes/no):\n> ";
