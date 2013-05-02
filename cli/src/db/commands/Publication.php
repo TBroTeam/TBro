@@ -79,7 +79,7 @@ class Publication extends AbstractTable {
 
     public static function command_link_bibsonomy($options, $keys) {
         $matches = null;
-        if (!preg_match('{^\[\[.*/(?<resource>.*)/.*\]\]$}', $options['bibsonomy_internal_link'], $matches)) {
+        if (!preg_match('{^\[\[(?<type>.*)/(?<resource>.*)/(?<user>.*)\]\]$}', $options['bibsonomy_internal_link'], $matches)) {
             throw new Exception('wrong format for option --bibsonomy_internal_link');
         }
 
@@ -162,7 +162,7 @@ class Publication extends AbstractTable {
             $pub->setIssue($bibtex['number']);
             $pub->setPyear($bibtex['year']);
             $pub->setPages($bibtex['pages']);
-            $pub->setMiniref($bibtex['href']);
+            $pub->setMiniref(sprintf('http://www.bibsonomy.org/%s/%s/%s', $matches['type'], $matches['resource'], $matches['user']));
             $pub->setPublisher($bibtex['publisher']);
             $typequery = new propel\CvtermQuery();
             $type = $typequery->findOneByName($bibtex['entrytype']);
