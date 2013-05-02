@@ -10,6 +10,7 @@ use \Propel;
 use \PropelException;
 use \PropelPDO;
 use cli_db\propel\BiomaterialPeer;
+use cli_db\propel\FeaturePeer;
 use cli_db\propel\Organism;
 use cli_db\propel\OrganismPeer;
 use cli_db\propel\map\OrganismTableMap;
@@ -398,6 +399,9 @@ abstract class BaseOrganismPeer
         // Invalidate objects in BiomaterialPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         BiomaterialPeer::clearInstancePool();
+        // Invalidate objects in FeaturePeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        FeaturePeer::clearInstancePool();
     }
 
     /**

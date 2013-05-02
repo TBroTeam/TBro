@@ -84,46 +84,15 @@ class Assay extends AbstractTable {
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list', 'link_biomaterial', 'unlink_biomaterial');
     }
-
-    public static function executeCommand($options, $command_name) {
-        $keys = self::getKeys();
-        switch ($command_name) {
-            case 'insert':
-                self::command_insert($options, $keys);
-                break;
-            case 'update':
-                self::command_update($options, $keys);
-                break;
-            case 'delete':
-                self::command_delete($options, $keys);
-                break;
-            case 'details':
-                self::command_details($options, $keys);
-                break;
-            case 'list':
-                self::command_list($options, $keys);
-                break;
-            case 'link_biomaterial':
-                self::command_add_biomaterial($options, $keys);
-                break;
-            case 'unlink_biomaterial':
-                self::command_remove_biomaterial($options, $keys);
-                break;
-        }
-    }
-
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Assay';
     }
 
-    protected static function command_insert($options, $keys) {
-        $callback_set_defaults = function($item) {
-                    // satisfy NOT NULL constraint
+    protected static function command_insert_set_defaults(propel\BaseObject $item){
+        // satisfy NOT NULL constraint
                     $item->setArraydesignId(1);
-                };
-        parent::command_insert($options, $keys, $callback_set_defaults);
     }
-
+    
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
@@ -141,7 +110,7 @@ class Assay extends AbstractTable {
         }
     }
 
-    protected static function command_add_biomaterial($options, $keys) {
+    protected static function command_link_biomaterial($options, $keys) {
         $ass_b = new propel\AssayBiomaterial();
         $ass_b->setAssayId($options['id']);
         $ass_b->setBiomaterialId($options['biomaterial_id']);
@@ -151,7 +120,7 @@ class Assay extends AbstractTable {
         return array($ass_b, $lines);
     }
 
-    protected static function command_remove_biomaterial($options, $keys) {
+    protected static function command_unlink_biomaterial($options, $keys) {
         $ass_b_q = new propel\AssayBiomaterialQuery();
         $ass_b_q->filterByAssayId($options['id']);
         $ass_b_q->filterByBiomaterialId($options['biomaterial_id']);

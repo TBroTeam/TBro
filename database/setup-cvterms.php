@@ -4,9 +4,9 @@ define('DEBUG', false);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '/home/s202139/git/web/includes');
 
-require_once __DIR__.'/../web/httpdocs/config.php';
+require_once __DIR__ . '/../web/httpdocs/config.php';
 //if this file exists and we make changes, these changes will be pointed out later on
-@include_once __DIR__.'/../web/httpdocs/config_cvterms.php';
+@include_once __DIR__ . '/../web/httpdocs/config_cvterms.php';
 
 require_once 'TranscriptDB/db.php';
 global $db;
@@ -87,7 +87,31 @@ $cvterms = array(
         'name' => 'expected_count',
         'cv' => 'Statistical Terms'
     ),
+    array('name' => 'article', 'cv' => 'local'),
+    array('name' => 'book', 'cv' => 'local'),
+    array('name' => 'booklet', 'cv' => 'local'),
+    array('name' => 'conference', 'cv' => 'local'),
+    array('name' => 'electronic', 'cv' => 'local'),
+    array('name' => 'inbook', 'cv' => 'local'),
+    array('name' => 'incollection', 'cv' => 'local'),
+    array('name' => 'inproceedings', 'cv' => 'local'),
+    array('name' => 'manual', 'cv' => 'local'),
+    array('name' => 'mastersthesis', 'cv' => 'local'),
+    array('name' => 'misc', 'cv' => 'local'),
+    array('name' => 'patent', 'cv' => 'local'),
+    array('name' => 'periodical', 'cv' => 'local'),
+    array('name' => 'phdthesis', 'cv' => 'local'),
+    array('name' => 'preamble', 'cv' => 'local'),
+    array('name' => 'presentation', 'cv' => 'local'),
+    array('name' => 'proceedings', 'cv' => 'local'),
+    array('name' => 'standard', 'cv' => 'local'),
+    array('name' => 'techreport', 'cv' => 'local'),
+    array('name' => 'unpublished', 'cv' => 'local'),
+    array('name' => 'preprint', 'cv' => 'local')
 );
+
+
+
 
 $param_cvterm_name = null;
 $param_cv_name = null;
@@ -130,7 +154,9 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
         $cvterm_id = $stm_insert_cvterm->fetchColumn();
         $cvterm['id'] = $cvterm_id;
     }
-
+    //skip lines without const
+    if (is_int($cvterm_const)) continue;
+    
     if (defined($cvterm_const) && constant($cvterm_const) != $cvterm['id']) {
         printf("-- constant %s has changed: %d => %d", $cvterm_const, constant($cvterm_const), $cvterm['id']);
         print(" suggested query:\n");
@@ -160,6 +186,9 @@ print "data file output to $outfilename. copy to web/httpdocs folder\n";
 
 $insert = "";
 foreach ($cvterms as $cvterm_const => $cvterm) {
+    //skip lines without const
+    if (is_int($cvterm_const)) continue;
+    
     $insert .= sprintf("define ('%s', '%s');\n", $cvterm_const, $cvterms[$cvterm_const]['id']);
 }
 

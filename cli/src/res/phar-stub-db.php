@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 define('PHAR_DIR', __DIR__ . DIRECTORY_SEPARATOR);
 Phar::mapPhar();
 define('ROOT', 'phar://db.phar/');
+define('SHARED', ROOT);
 $config = parse_ini_file(ROOT.'config.ini');
 if (isset($config['config_dir'])) {
         $confdir = preg_replace('{^.$}', PHAR_DIR, $config['config_dir']);

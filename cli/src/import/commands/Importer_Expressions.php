@@ -156,28 +156,26 @@ class Importer_Expressions extends AbstractImporter {
     public static function CLI_getCommand(Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
 
-        $command->addOption('analysis_id',
-                array(
+        $command->addOption('analysis_id', array(
             'short_name' => '-a',
             'long_name' => '--analysis_id',
             'description' => 'analysis id'
         ));
-        $command->addOption('biomaterialA_name',
-                array(
+        $command->addOption('biomaterialA_name', array(
             'short_name' => '-A',
             'long_name' => '--biomaterialA_name',
             'description' => 'parent biomaterial A name'
         ));
-        $command->addOption('biomaterialB_name',
-                array(
+        $command->addOption('biomaterialB_name', array(
             'short_name' => '-B',
             'long_name' => '--biomaterialB_name',
             'description' => 'parent biomaterial B name'
         ));
     }
 
-    public static function CLI_checkRequiredOpts($options) {
-        parent::CLI_checkRequiredOpts($options);
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        parent::CLI_checkRequiredOpts($command);
+        $options = $command->options;
         AbstractImporter::dieOnMissingArg($options, 'analysis_id');
         AbstractImporter::dieOnMissingArg($options, 'biomaterialA_name');
         AbstractImporter::dieOnMissingArg($options, 'biomaterialB_name');

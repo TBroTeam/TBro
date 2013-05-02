@@ -1,6 +1,7 @@
 <?php
 
-require_once ROOT.'classes/CLI_Command.php';
+
+require_once SHARED . 'classes/CLI_Command.php';
 
 interface Importer {
 
@@ -14,7 +15,7 @@ abstract class AbstractImporter implements CLI_Command, Importer {
     public static function CLI_getCommand(Console_CommandLine $parser) {
         $command = $parser->addCommand(call_user_func(array(get_called_class(), 'CLI_commandName')),
                 array(
-            'description' => call_user_func(array(get_called_class(), 'CLI_commandDescription'), $parser)
+            'description' => call_user_func(array(get_called_class(), 'CLI_commandDescription'))
         ));
 
         $command->add_help_option = false;
@@ -50,10 +51,32 @@ abstract class AbstractImporter implements CLI_Command, Importer {
         return $command;
     }
 
-    public static function CLI_checkRequiredOpts($options) {
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        $options = $command->options;
+        
         self::dieOnMissingArg($options, 'organism_id');
         self::dieOnMissingArg($options, 'import_prefix');
     }
+    
+    static function CLI_execute(Console_CommandLine_Result $command, Console_CommandLine $parser){
+        define('LINES_IMPORTED', 'datasets_imported');
+        define('DB_ORGANISM_ID', $command->options['organism_id']);
+        define('IMPORT_PREFIX', $command->options['import_prefix']);
+        $command_name = call_user_func(array(get_called_class(), 'CLI_commandName'));
+        $command_options = $command->options;
+        $command_args = $command->args;
+        
+        foreach ($command_args['files'] as $filename) {
+            printf("importing %s as %s\n", $filename, $command_name);
+            $ret_table = call_user_func(array(get_called_class, 'import'), array_merge($command_options, array('file' => $filename)));
+            $tbl = new Console_Table();
+            foreach ($ret_table as $key => $value)
+                $tbl->addRow(array($key, $value));
+            echo $tbl->getTable();
+        }
+    }
+    
+    
 
     static function preCommitMsg() {
         echo "\ncommiting changes to database. this may take a moment.\n";
@@ -88,23 +111,6 @@ abstract class AbstractImporter implements CLI_Command, Importer {
     }
 
 }
-
-require_once 'Console/CommandLine/Action.php';
-
-class Console_CommandLine_Action_ExtendedHelp extends Console_CommandLine_Action {
-
-    public function execute($value = false, $params = array()) {
-        $helpstr = $this->parser->renderer->usage();
-        if (isset($params['class']) && class_exists($params['class']))
-            $helpstr.=call_user_func(array($params['class'], 'CLI_longHelp')) . "\n";
-        $this->parser->outputter->stdout($helpstr);
-        exit(0);
-    }
-
-}
-
-//overwrite CommandLine Help function... ouch!
-Console_CommandLine::$actions['Help'] = array('Console_CommandLine_Action_ExtendedHelp', false);
 
 //set importer Log instance
 AbstractImporter::$log = Log::factory('console', '', 'Importer');

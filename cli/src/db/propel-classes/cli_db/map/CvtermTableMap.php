@@ -61,7 +61,13 @@ class CvtermTableMap extends TableMap
         $this->addRelation('Cv', 'cli_db\\propel\\Cv', RelationMap::MANY_TO_ONE, array('cv_id' => 'cv_id', ), 'CASCADE', null);
         $this->addRelation('BiomaterialRelationship', 'cli_db\\propel\\BiomaterialRelationship', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), null, null, 'BiomaterialRelationships');
         $this->addRelation('Contact', 'cli_db\\propel\\Contact', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), null, null, 'Contacts');
+        $this->addRelation('Feature', 'cli_db\\propel\\Feature', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Features');
+        $this->addRelation('FeatureCvterm', 'cli_db\\propel\\FeatureCvterm', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'cvterm_id', ), 'CASCADE', null, 'FeatureCvterms');
+        $this->addRelation('FeatureCvtermprop', 'cli_db\\propel\\FeatureCvtermprop', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'FeatureCvtermprops');
         $this->addRelation('Protocol', 'cli_db\\propel\\Protocol', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Protocols');
+        $this->addRelation('Pub', 'cli_db\\propel\\Pub', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Pubs');
+        $this->addRelation('PubRelationship', 'cli_db\\propel\\PubRelationship', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'PubRelationships');
+        $this->addRelation('Pubprop', 'cli_db\\propel\\Pubprop', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Pubprops');
     } // buildRelations()
 
 } // CvtermTableMap

@@ -22,8 +22,20 @@ use cli_db\propel\CvQuery;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermPeer;
 use cli_db\propel\CvtermQuery;
+use cli_db\propel\Feature;
+use cli_db\propel\FeatureCvterm;
+use cli_db\propel\FeatureCvtermQuery;
+use cli_db\propel\FeatureCvtermprop;
+use cli_db\propel\FeatureCvtermpropQuery;
+use cli_db\propel\FeatureQuery;
 use cli_db\propel\Protocol;
 use cli_db\propel\ProtocolQuery;
+use cli_db\propel\Pub;
+use cli_db\propel\PubQuery;
+use cli_db\propel\PubRelationship;
+use cli_db\propel\PubRelationshipQuery;
+use cli_db\propel\Pubprop;
+use cli_db\propel\PubpropQuery;
 
 /**
  * Base class that represents a row from the 'cvterm' table.
@@ -115,10 +127,46 @@ abstract class BaseCvterm extends BaseObject implements Persistent
     protected $collContactsPartial;
 
     /**
+     * @var        PropelObjectCollection|Feature[] Collection to store aggregation of Feature objects.
+     */
+    protected $collFeatures;
+    protected $collFeaturesPartial;
+
+    /**
+     * @var        PropelObjectCollection|FeatureCvterm[] Collection to store aggregation of FeatureCvterm objects.
+     */
+    protected $collFeatureCvterms;
+    protected $collFeatureCvtermsPartial;
+
+    /**
+     * @var        PropelObjectCollection|FeatureCvtermprop[] Collection to store aggregation of FeatureCvtermprop objects.
+     */
+    protected $collFeatureCvtermprops;
+    protected $collFeatureCvtermpropsPartial;
+
+    /**
      * @var        PropelObjectCollection|Protocol[] Collection to store aggregation of Protocol objects.
      */
     protected $collProtocols;
     protected $collProtocolsPartial;
+
+    /**
+     * @var        PropelObjectCollection|Pub[] Collection to store aggregation of Pub objects.
+     */
+    protected $collPubs;
+    protected $collPubsPartial;
+
+    /**
+     * @var        PropelObjectCollection|PubRelationship[] Collection to store aggregation of PubRelationship objects.
+     */
+    protected $collPubRelationships;
+    protected $collPubRelationshipsPartial;
+
+    /**
+     * @var        PropelObjectCollection|Pubprop[] Collection to store aggregation of Pubprop objects.
+     */
+    protected $collPubprops;
+    protected $collPubpropsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -156,7 +204,43 @@ abstract class BaseCvterm extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
+    protected $featuresScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $featureCvtermsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $featureCvtermpropsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
     protected $protocolsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $pubsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $pubRelationshipsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $pubpropsScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -526,7 +610,19 @@ abstract class BaseCvterm extends BaseObject implements Persistent
 
             $this->collContacts = null;
 
+            $this->collFeatures = null;
+
+            $this->collFeatureCvterms = null;
+
+            $this->collFeatureCvtermprops = null;
+
             $this->collProtocols = null;
+
+            $this->collPubs = null;
+
+            $this->collPubRelationships = null;
+
+            $this->collPubprops = null;
 
         } // if (deep)
     }
@@ -699,6 +795,57 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                 }
             }
 
+            if ($this->featuresScheduledForDeletion !== null) {
+                if (!$this->featuresScheduledForDeletion->isEmpty()) {
+                    FeatureQuery::create()
+                        ->filterByPrimaryKeys($this->featuresScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->featuresScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collFeatures !== null) {
+                foreach ($this->collFeatures as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->featureCvtermsScheduledForDeletion !== null) {
+                if (!$this->featureCvtermsScheduledForDeletion->isEmpty()) {
+                    FeatureCvtermQuery::create()
+                        ->filterByPrimaryKeys($this->featureCvtermsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->featureCvtermsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collFeatureCvterms !== null) {
+                foreach ($this->collFeatureCvterms as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->featureCvtermpropsScheduledForDeletion !== null) {
+                if (!$this->featureCvtermpropsScheduledForDeletion->isEmpty()) {
+                    FeatureCvtermpropQuery::create()
+                        ->filterByPrimaryKeys($this->featureCvtermpropsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->featureCvtermpropsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collFeatureCvtermprops !== null) {
+                foreach ($this->collFeatureCvtermprops as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->protocolsScheduledForDeletion !== null) {
                 if (!$this->protocolsScheduledForDeletion->isEmpty()) {
                     ProtocolQuery::create()
@@ -710,6 +857,57 @@ abstract class BaseCvterm extends BaseObject implements Persistent
 
             if ($this->collProtocols !== null) {
                 foreach ($this->collProtocols as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->pubsScheduledForDeletion !== null) {
+                if (!$this->pubsScheduledForDeletion->isEmpty()) {
+                    PubQuery::create()
+                        ->filterByPrimaryKeys($this->pubsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->pubsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPubs !== null) {
+                foreach ($this->collPubs as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->pubRelationshipsScheduledForDeletion !== null) {
+                if (!$this->pubRelationshipsScheduledForDeletion->isEmpty()) {
+                    PubRelationshipQuery::create()
+                        ->filterByPrimaryKeys($this->pubRelationshipsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->pubRelationshipsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPubRelationships !== null) {
+                foreach ($this->collPubRelationships as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->pubpropsScheduledForDeletion !== null) {
+                if (!$this->pubpropsScheduledForDeletion->isEmpty()) {
+                    PubpropQuery::create()
+                        ->filterByPrimaryKeys($this->pubpropsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->pubpropsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPubprops !== null) {
+                foreach ($this->collPubprops as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -925,8 +1123,56 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collFeatures !== null) {
+                    foreach ($this->collFeatures as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
+                if ($this->collFeatureCvterms !== null) {
+                    foreach ($this->collFeatureCvterms as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
+                if ($this->collFeatureCvtermprops !== null) {
+                    foreach ($this->collFeatureCvtermprops as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
                 if ($this->collProtocols !== null) {
                     foreach ($this->collProtocols as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
+                if ($this->collPubs !== null) {
+                    foreach ($this->collPubs as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
+                if ($this->collPubRelationships !== null) {
+                    foreach ($this->collPubRelationships as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
+                if ($this->collPubprops !== null) {
+                    foreach ($this->collPubprops as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -1036,8 +1282,26 @@ abstract class BaseCvterm extends BaseObject implements Persistent
             if (null !== $this->collContacts) {
                 $result['Contacts'] = $this->collContacts->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
+            if (null !== $this->collFeatures) {
+                $result['Features'] = $this->collFeatures->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collFeatureCvterms) {
+                $result['FeatureCvterms'] = $this->collFeatureCvterms->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collFeatureCvtermprops) {
+                $result['FeatureCvtermprops'] = $this->collFeatureCvtermprops->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collProtocols) {
                 $result['Protocols'] = $this->collProtocols->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collPubs) {
+                $result['Pubs'] = $this->collPubs->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collPubRelationships) {
+                $result['PubRelationships'] = $this->collPubRelationships->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collPubprops) {
+                $result['Pubprops'] = $this->collPubprops->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1232,9 +1496,45 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                 }
             }
 
+            foreach ($this->getFeatures() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addFeature($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getFeatureCvterms() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addFeatureCvterm($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getFeatureCvtermprops() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addFeatureCvtermprop($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getProtocols() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addProtocol($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getPubs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPub($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getPubRelationships() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPubRelationship($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getPubprops() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPubprop($relObj->copy($deepCopy));
                 }
             }
 
@@ -1357,8 +1657,26 @@ abstract class BaseCvterm extends BaseObject implements Persistent
         if ('Contact' == $relationName) {
             $this->initContacts();
         }
+        if ('Feature' == $relationName) {
+            $this->initFeatures();
+        }
+        if ('FeatureCvterm' == $relationName) {
+            $this->initFeatureCvterms();
+        }
+        if ('FeatureCvtermprop' == $relationName) {
+            $this->initFeatureCvtermprops();
+        }
         if ('Protocol' == $relationName) {
             $this->initProtocols();
+        }
+        if ('Pub' == $relationName) {
+            $this->initPubs();
+        }
+        if ('PubRelationship' == $relationName) {
+            $this->initPubRelationships();
+        }
+        if ('Pubprop' == $relationName) {
+            $this->initPubprops();
         }
     }
 
@@ -1849,6 +2167,785 @@ abstract class BaseCvterm extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collFeatures collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addFeatures()
+     */
+    public function clearFeatures()
+    {
+        $this->collFeatures = null; // important to set this to null since that means it is uninitialized
+        $this->collFeaturesPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collFeatures collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialFeatures($v = true)
+    {
+        $this->collFeaturesPartial = $v;
+    }
+
+    /**
+     * Initializes the collFeatures collection.
+     *
+     * By default this just sets the collFeatures collection to an empty array (like clearcollFeatures());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initFeatures($overrideExisting = true)
+    {
+        if (null !== $this->collFeatures && !$overrideExisting) {
+            return;
+        }
+        $this->collFeatures = new PropelObjectCollection();
+        $this->collFeatures->setModel('Feature');
+    }
+
+    /**
+     * Gets an array of Feature objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Feature[] List of Feature objects
+     * @throws PropelException
+     */
+    public function getFeatures($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collFeaturesPartial && !$this->isNew();
+        if (null === $this->collFeatures || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFeatures) {
+                // return empty collection
+                $this->initFeatures();
+            } else {
+                $collFeatures = FeatureQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collFeaturesPartial && count($collFeatures)) {
+                      $this->initFeatures(false);
+
+                      foreach($collFeatures as $obj) {
+                        if (false == $this->collFeatures->contains($obj)) {
+                          $this->collFeatures->append($obj);
+                        }
+                      }
+
+                      $this->collFeaturesPartial = true;
+                    }
+
+                    $collFeatures->getInternalIterator()->rewind();
+                    return $collFeatures;
+                }
+
+                if($partial && $this->collFeatures) {
+                    foreach($this->collFeatures as $obj) {
+                        if($obj->isNew()) {
+                            $collFeatures[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collFeatures = $collFeatures;
+                $this->collFeaturesPartial = false;
+            }
+        }
+
+        return $this->collFeatures;
+    }
+
+    /**
+     * Sets a collection of Feature objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $features A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setFeatures(PropelCollection $features, PropelPDO $con = null)
+    {
+        $featuresToDelete = $this->getFeatures(new Criteria(), $con)->diff($features);
+
+        $this->featuresScheduledForDeletion = unserialize(serialize($featuresToDelete));
+
+        foreach ($featuresToDelete as $featureRemoved) {
+            $featureRemoved->setCvterm(null);
+        }
+
+        $this->collFeatures = null;
+        foreach ($features as $feature) {
+            $this->addFeature($feature);
+        }
+
+        $this->collFeatures = $features;
+        $this->collFeaturesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Feature objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Feature objects.
+     * @throws PropelException
+     */
+    public function countFeatures(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collFeaturesPartial && !$this->isNew();
+        if (null === $this->collFeatures || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFeatures) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getFeatures());
+            }
+            $query = FeatureQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collFeatures);
+    }
+
+    /**
+     * Method called to associate a Feature object to this object
+     * through the Feature foreign key attribute.
+     *
+     * @param    Feature $l Feature
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addFeature(Feature $l)
+    {
+        if ($this->collFeatures === null) {
+            $this->initFeatures();
+            $this->collFeaturesPartial = true;
+        }
+        if (!in_array($l, $this->collFeatures->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddFeature($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Feature $feature The feature object to add.
+     */
+    protected function doAddFeature($feature)
+    {
+        $this->collFeatures[]= $feature;
+        $feature->setCvterm($this);
+    }
+
+    /**
+     * @param	Feature $feature The feature object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removeFeature($feature)
+    {
+        if ($this->getFeatures()->contains($feature)) {
+            $this->collFeatures->remove($this->collFeatures->search($feature));
+            if (null === $this->featuresScheduledForDeletion) {
+                $this->featuresScheduledForDeletion = clone $this->collFeatures;
+                $this->featuresScheduledForDeletion->clear();
+            }
+            $this->featuresScheduledForDeletion[]= clone $feature;
+            $feature->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related Features from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|Feature[] List of Feature objects
+     */
+    public function getFeaturesJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureQuery::create(null, $criteria);
+        $query->joinWith('Dbxref', $join_behavior);
+
+        return $this->getFeatures($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related Features from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|Feature[] List of Feature objects
+     */
+    public function getFeaturesJoinOrganism($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureQuery::create(null, $criteria);
+        $query->joinWith('Organism', $join_behavior);
+
+        return $this->getFeatures($query, $con);
+    }
+
+    /**
+     * Clears out the collFeatureCvterms collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addFeatureCvterms()
+     */
+    public function clearFeatureCvterms()
+    {
+        $this->collFeatureCvterms = null; // important to set this to null since that means it is uninitialized
+        $this->collFeatureCvtermsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collFeatureCvterms collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialFeatureCvterms($v = true)
+    {
+        $this->collFeatureCvtermsPartial = $v;
+    }
+
+    /**
+     * Initializes the collFeatureCvterms collection.
+     *
+     * By default this just sets the collFeatureCvterms collection to an empty array (like clearcollFeatureCvterms());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initFeatureCvterms($overrideExisting = true)
+    {
+        if (null !== $this->collFeatureCvterms && !$overrideExisting) {
+            return;
+        }
+        $this->collFeatureCvterms = new PropelObjectCollection();
+        $this->collFeatureCvterms->setModel('FeatureCvterm');
+    }
+
+    /**
+     * Gets an array of FeatureCvterm objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|FeatureCvterm[] List of FeatureCvterm objects
+     * @throws PropelException
+     */
+    public function getFeatureCvterms($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collFeatureCvtermsPartial && !$this->isNew();
+        if (null === $this->collFeatureCvterms || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFeatureCvterms) {
+                // return empty collection
+                $this->initFeatureCvterms();
+            } else {
+                $collFeatureCvterms = FeatureCvtermQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collFeatureCvtermsPartial && count($collFeatureCvterms)) {
+                      $this->initFeatureCvterms(false);
+
+                      foreach($collFeatureCvterms as $obj) {
+                        if (false == $this->collFeatureCvterms->contains($obj)) {
+                          $this->collFeatureCvterms->append($obj);
+                        }
+                      }
+
+                      $this->collFeatureCvtermsPartial = true;
+                    }
+
+                    $collFeatureCvterms->getInternalIterator()->rewind();
+                    return $collFeatureCvterms;
+                }
+
+                if($partial && $this->collFeatureCvterms) {
+                    foreach($this->collFeatureCvterms as $obj) {
+                        if($obj->isNew()) {
+                            $collFeatureCvterms[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collFeatureCvterms = $collFeatureCvterms;
+                $this->collFeatureCvtermsPartial = false;
+            }
+        }
+
+        return $this->collFeatureCvterms;
+    }
+
+    /**
+     * Sets a collection of FeatureCvterm objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $featureCvterms A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setFeatureCvterms(PropelCollection $featureCvterms, PropelPDO $con = null)
+    {
+        $featureCvtermsToDelete = $this->getFeatureCvterms(new Criteria(), $con)->diff($featureCvterms);
+
+        $this->featureCvtermsScheduledForDeletion = unserialize(serialize($featureCvtermsToDelete));
+
+        foreach ($featureCvtermsToDelete as $featureCvtermRemoved) {
+            $featureCvtermRemoved->setCvterm(null);
+        }
+
+        $this->collFeatureCvterms = null;
+        foreach ($featureCvterms as $featureCvterm) {
+            $this->addFeatureCvterm($featureCvterm);
+        }
+
+        $this->collFeatureCvterms = $featureCvterms;
+        $this->collFeatureCvtermsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related FeatureCvterm objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related FeatureCvterm objects.
+     * @throws PropelException
+     */
+    public function countFeatureCvterms(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collFeatureCvtermsPartial && !$this->isNew();
+        if (null === $this->collFeatureCvterms || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFeatureCvterms) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getFeatureCvterms());
+            }
+            $query = FeatureCvtermQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collFeatureCvterms);
+    }
+
+    /**
+     * Method called to associate a FeatureCvterm object to this object
+     * through the FeatureCvterm foreign key attribute.
+     *
+     * @param    FeatureCvterm $l FeatureCvterm
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addFeatureCvterm(FeatureCvterm $l)
+    {
+        if ($this->collFeatureCvterms === null) {
+            $this->initFeatureCvterms();
+            $this->collFeatureCvtermsPartial = true;
+        }
+        if (!in_array($l, $this->collFeatureCvterms->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddFeatureCvterm($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	FeatureCvterm $featureCvterm The featureCvterm object to add.
+     */
+    protected function doAddFeatureCvterm($featureCvterm)
+    {
+        $this->collFeatureCvterms[]= $featureCvterm;
+        $featureCvterm->setCvterm($this);
+    }
+
+    /**
+     * @param	FeatureCvterm $featureCvterm The featureCvterm object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removeFeatureCvterm($featureCvterm)
+    {
+        if ($this->getFeatureCvterms()->contains($featureCvterm)) {
+            $this->collFeatureCvterms->remove($this->collFeatureCvterms->search($featureCvterm));
+            if (null === $this->featureCvtermsScheduledForDeletion) {
+                $this->featureCvtermsScheduledForDeletion = clone $this->collFeatureCvterms;
+                $this->featureCvtermsScheduledForDeletion->clear();
+            }
+            $this->featureCvtermsScheduledForDeletion[]= clone $featureCvterm;
+            $featureCvterm->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related FeatureCvterms from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|FeatureCvterm[] List of FeatureCvterm objects
+     */
+    public function getFeatureCvtermsJoinFeature($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureCvtermQuery::create(null, $criteria);
+        $query->joinWith('Feature', $join_behavior);
+
+        return $this->getFeatureCvterms($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related FeatureCvterms from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|FeatureCvterm[] List of FeatureCvterm objects
+     */
+    public function getFeatureCvtermsJoinPub($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureCvtermQuery::create(null, $criteria);
+        $query->joinWith('Pub', $join_behavior);
+
+        return $this->getFeatureCvterms($query, $con);
+    }
+
+    /**
+     * Clears out the collFeatureCvtermprops collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addFeatureCvtermprops()
+     */
+    public function clearFeatureCvtermprops()
+    {
+        $this->collFeatureCvtermprops = null; // important to set this to null since that means it is uninitialized
+        $this->collFeatureCvtermpropsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collFeatureCvtermprops collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialFeatureCvtermprops($v = true)
+    {
+        $this->collFeatureCvtermpropsPartial = $v;
+    }
+
+    /**
+     * Initializes the collFeatureCvtermprops collection.
+     *
+     * By default this just sets the collFeatureCvtermprops collection to an empty array (like clearcollFeatureCvtermprops());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initFeatureCvtermprops($overrideExisting = true)
+    {
+        if (null !== $this->collFeatureCvtermprops && !$overrideExisting) {
+            return;
+        }
+        $this->collFeatureCvtermprops = new PropelObjectCollection();
+        $this->collFeatureCvtermprops->setModel('FeatureCvtermprop');
+    }
+
+    /**
+     * Gets an array of FeatureCvtermprop objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|FeatureCvtermprop[] List of FeatureCvtermprop objects
+     * @throws PropelException
+     */
+    public function getFeatureCvtermprops($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collFeatureCvtermpropsPartial && !$this->isNew();
+        if (null === $this->collFeatureCvtermprops || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFeatureCvtermprops) {
+                // return empty collection
+                $this->initFeatureCvtermprops();
+            } else {
+                $collFeatureCvtermprops = FeatureCvtermpropQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collFeatureCvtermpropsPartial && count($collFeatureCvtermprops)) {
+                      $this->initFeatureCvtermprops(false);
+
+                      foreach($collFeatureCvtermprops as $obj) {
+                        if (false == $this->collFeatureCvtermprops->contains($obj)) {
+                          $this->collFeatureCvtermprops->append($obj);
+                        }
+                      }
+
+                      $this->collFeatureCvtermpropsPartial = true;
+                    }
+
+                    $collFeatureCvtermprops->getInternalIterator()->rewind();
+                    return $collFeatureCvtermprops;
+                }
+
+                if($partial && $this->collFeatureCvtermprops) {
+                    foreach($this->collFeatureCvtermprops as $obj) {
+                        if($obj->isNew()) {
+                            $collFeatureCvtermprops[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collFeatureCvtermprops = $collFeatureCvtermprops;
+                $this->collFeatureCvtermpropsPartial = false;
+            }
+        }
+
+        return $this->collFeatureCvtermprops;
+    }
+
+    /**
+     * Sets a collection of FeatureCvtermprop objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $featureCvtermprops A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setFeatureCvtermprops(PropelCollection $featureCvtermprops, PropelPDO $con = null)
+    {
+        $featureCvtermpropsToDelete = $this->getFeatureCvtermprops(new Criteria(), $con)->diff($featureCvtermprops);
+
+        $this->featureCvtermpropsScheduledForDeletion = unserialize(serialize($featureCvtermpropsToDelete));
+
+        foreach ($featureCvtermpropsToDelete as $featureCvtermpropRemoved) {
+            $featureCvtermpropRemoved->setCvterm(null);
+        }
+
+        $this->collFeatureCvtermprops = null;
+        foreach ($featureCvtermprops as $featureCvtermprop) {
+            $this->addFeatureCvtermprop($featureCvtermprop);
+        }
+
+        $this->collFeatureCvtermprops = $featureCvtermprops;
+        $this->collFeatureCvtermpropsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related FeatureCvtermprop objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related FeatureCvtermprop objects.
+     * @throws PropelException
+     */
+    public function countFeatureCvtermprops(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collFeatureCvtermpropsPartial && !$this->isNew();
+        if (null === $this->collFeatureCvtermprops || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFeatureCvtermprops) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getFeatureCvtermprops());
+            }
+            $query = FeatureCvtermpropQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collFeatureCvtermprops);
+    }
+
+    /**
+     * Method called to associate a FeatureCvtermprop object to this object
+     * through the FeatureCvtermprop foreign key attribute.
+     *
+     * @param    FeatureCvtermprop $l FeatureCvtermprop
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addFeatureCvtermprop(FeatureCvtermprop $l)
+    {
+        if ($this->collFeatureCvtermprops === null) {
+            $this->initFeatureCvtermprops();
+            $this->collFeatureCvtermpropsPartial = true;
+        }
+        if (!in_array($l, $this->collFeatureCvtermprops->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddFeatureCvtermprop($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	FeatureCvtermprop $featureCvtermprop The featureCvtermprop object to add.
+     */
+    protected function doAddFeatureCvtermprop($featureCvtermprop)
+    {
+        $this->collFeatureCvtermprops[]= $featureCvtermprop;
+        $featureCvtermprop->setCvterm($this);
+    }
+
+    /**
+     * @param	FeatureCvtermprop $featureCvtermprop The featureCvtermprop object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removeFeatureCvtermprop($featureCvtermprop)
+    {
+        if ($this->getFeatureCvtermprops()->contains($featureCvtermprop)) {
+            $this->collFeatureCvtermprops->remove($this->collFeatureCvtermprops->search($featureCvtermprop));
+            if (null === $this->featureCvtermpropsScheduledForDeletion) {
+                $this->featureCvtermpropsScheduledForDeletion = clone $this->collFeatureCvtermprops;
+                $this->featureCvtermpropsScheduledForDeletion->clear();
+            }
+            $this->featureCvtermpropsScheduledForDeletion[]= clone $featureCvtermprop;
+            $featureCvtermprop->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related FeatureCvtermprops from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|FeatureCvtermprop[] List of FeatureCvtermprop objects
+     */
+    public function getFeatureCvtermpropsJoinFeatureCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureCvtermpropQuery::create(null, $criteria);
+        $query->joinWith('FeatureCvterm', $join_behavior);
+
+        return $this->getFeatureCvtermprops($query, $con);
+    }
+
+    /**
      * Clears out the collProtocols collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -2067,6 +3164,735 @@ abstract class BaseCvterm extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collPubs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addPubs()
+     */
+    public function clearPubs()
+    {
+        $this->collPubs = null; // important to set this to null since that means it is uninitialized
+        $this->collPubsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collPubs collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialPubs($v = true)
+    {
+        $this->collPubsPartial = $v;
+    }
+
+    /**
+     * Initializes the collPubs collection.
+     *
+     * By default this just sets the collPubs collection to an empty array (like clearcollPubs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPubs($overrideExisting = true)
+    {
+        if (null !== $this->collPubs && !$overrideExisting) {
+            return;
+        }
+        $this->collPubs = new PropelObjectCollection();
+        $this->collPubs->setModel('Pub');
+    }
+
+    /**
+     * Gets an array of Pub objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Pub[] List of Pub objects
+     * @throws PropelException
+     */
+    public function getPubs($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collPubsPartial && !$this->isNew();
+        if (null === $this->collPubs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPubs) {
+                // return empty collection
+                $this->initPubs();
+            } else {
+                $collPubs = PubQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collPubsPartial && count($collPubs)) {
+                      $this->initPubs(false);
+
+                      foreach($collPubs as $obj) {
+                        if (false == $this->collPubs->contains($obj)) {
+                          $this->collPubs->append($obj);
+                        }
+                      }
+
+                      $this->collPubsPartial = true;
+                    }
+
+                    $collPubs->getInternalIterator()->rewind();
+                    return $collPubs;
+                }
+
+                if($partial && $this->collPubs) {
+                    foreach($this->collPubs as $obj) {
+                        if($obj->isNew()) {
+                            $collPubs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPubs = $collPubs;
+                $this->collPubsPartial = false;
+            }
+        }
+
+        return $this->collPubs;
+    }
+
+    /**
+     * Sets a collection of Pub objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $pubs A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setPubs(PropelCollection $pubs, PropelPDO $con = null)
+    {
+        $pubsToDelete = $this->getPubs(new Criteria(), $con)->diff($pubs);
+
+        $this->pubsScheduledForDeletion = unserialize(serialize($pubsToDelete));
+
+        foreach ($pubsToDelete as $pubRemoved) {
+            $pubRemoved->setCvterm(null);
+        }
+
+        $this->collPubs = null;
+        foreach ($pubs as $pub) {
+            $this->addPub($pub);
+        }
+
+        $this->collPubs = $pubs;
+        $this->collPubsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Pub objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Pub objects.
+     * @throws PropelException
+     */
+    public function countPubs(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collPubsPartial && !$this->isNew();
+        if (null === $this->collPubs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPubs) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getPubs());
+            }
+            $query = PubQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collPubs);
+    }
+
+    /**
+     * Method called to associate a Pub object to this object
+     * through the Pub foreign key attribute.
+     *
+     * @param    Pub $l Pub
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addPub(Pub $l)
+    {
+        if ($this->collPubs === null) {
+            $this->initPubs();
+            $this->collPubsPartial = true;
+        }
+        if (!in_array($l, $this->collPubs->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddPub($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Pub $pub The pub object to add.
+     */
+    protected function doAddPub($pub)
+    {
+        $this->collPubs[]= $pub;
+        $pub->setCvterm($this);
+    }
+
+    /**
+     * @param	Pub $pub The pub object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removePub($pub)
+    {
+        if ($this->getPubs()->contains($pub)) {
+            $this->collPubs->remove($this->collPubs->search($pub));
+            if (null === $this->pubsScheduledForDeletion) {
+                $this->pubsScheduledForDeletion = clone $this->collPubs;
+                $this->pubsScheduledForDeletion->clear();
+            }
+            $this->pubsScheduledForDeletion[]= clone $pub;
+            $pub->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Clears out the collPubRelationships collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addPubRelationships()
+     */
+    public function clearPubRelationships()
+    {
+        $this->collPubRelationships = null; // important to set this to null since that means it is uninitialized
+        $this->collPubRelationshipsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collPubRelationships collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialPubRelationships($v = true)
+    {
+        $this->collPubRelationshipsPartial = $v;
+    }
+
+    /**
+     * Initializes the collPubRelationships collection.
+     *
+     * By default this just sets the collPubRelationships collection to an empty array (like clearcollPubRelationships());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPubRelationships($overrideExisting = true)
+    {
+        if (null !== $this->collPubRelationships && !$overrideExisting) {
+            return;
+        }
+        $this->collPubRelationships = new PropelObjectCollection();
+        $this->collPubRelationships->setModel('PubRelationship');
+    }
+
+    /**
+     * Gets an array of PubRelationship objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|PubRelationship[] List of PubRelationship objects
+     * @throws PropelException
+     */
+    public function getPubRelationships($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collPubRelationshipsPartial && !$this->isNew();
+        if (null === $this->collPubRelationships || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPubRelationships) {
+                // return empty collection
+                $this->initPubRelationships();
+            } else {
+                $collPubRelationships = PubRelationshipQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collPubRelationshipsPartial && count($collPubRelationships)) {
+                      $this->initPubRelationships(false);
+
+                      foreach($collPubRelationships as $obj) {
+                        if (false == $this->collPubRelationships->contains($obj)) {
+                          $this->collPubRelationships->append($obj);
+                        }
+                      }
+
+                      $this->collPubRelationshipsPartial = true;
+                    }
+
+                    $collPubRelationships->getInternalIterator()->rewind();
+                    return $collPubRelationships;
+                }
+
+                if($partial && $this->collPubRelationships) {
+                    foreach($this->collPubRelationships as $obj) {
+                        if($obj->isNew()) {
+                            $collPubRelationships[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPubRelationships = $collPubRelationships;
+                $this->collPubRelationshipsPartial = false;
+            }
+        }
+
+        return $this->collPubRelationships;
+    }
+
+    /**
+     * Sets a collection of PubRelationship objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $pubRelationships A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setPubRelationships(PropelCollection $pubRelationships, PropelPDO $con = null)
+    {
+        $pubRelationshipsToDelete = $this->getPubRelationships(new Criteria(), $con)->diff($pubRelationships);
+
+        $this->pubRelationshipsScheduledForDeletion = unserialize(serialize($pubRelationshipsToDelete));
+
+        foreach ($pubRelationshipsToDelete as $pubRelationshipRemoved) {
+            $pubRelationshipRemoved->setCvterm(null);
+        }
+
+        $this->collPubRelationships = null;
+        foreach ($pubRelationships as $pubRelationship) {
+            $this->addPubRelationship($pubRelationship);
+        }
+
+        $this->collPubRelationships = $pubRelationships;
+        $this->collPubRelationshipsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related PubRelationship objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related PubRelationship objects.
+     * @throws PropelException
+     */
+    public function countPubRelationships(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collPubRelationshipsPartial && !$this->isNew();
+        if (null === $this->collPubRelationships || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPubRelationships) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getPubRelationships());
+            }
+            $query = PubRelationshipQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collPubRelationships);
+    }
+
+    /**
+     * Method called to associate a PubRelationship object to this object
+     * through the PubRelationship foreign key attribute.
+     *
+     * @param    PubRelationship $l PubRelationship
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addPubRelationship(PubRelationship $l)
+    {
+        if ($this->collPubRelationships === null) {
+            $this->initPubRelationships();
+            $this->collPubRelationshipsPartial = true;
+        }
+        if (!in_array($l, $this->collPubRelationships->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddPubRelationship($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	PubRelationship $pubRelationship The pubRelationship object to add.
+     */
+    protected function doAddPubRelationship($pubRelationship)
+    {
+        $this->collPubRelationships[]= $pubRelationship;
+        $pubRelationship->setCvterm($this);
+    }
+
+    /**
+     * @param	PubRelationship $pubRelationship The pubRelationship object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removePubRelationship($pubRelationship)
+    {
+        if ($this->getPubRelationships()->contains($pubRelationship)) {
+            $this->collPubRelationships->remove($this->collPubRelationships->search($pubRelationship));
+            if (null === $this->pubRelationshipsScheduledForDeletion) {
+                $this->pubRelationshipsScheduledForDeletion = clone $this->collPubRelationships;
+                $this->pubRelationshipsScheduledForDeletion->clear();
+            }
+            $this->pubRelationshipsScheduledForDeletion[]= clone $pubRelationship;
+            $pubRelationship->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related PubRelationships from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|PubRelationship[] List of PubRelationship objects
+     */
+    public function getPubRelationshipsJoinPubRelatedByObjectId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = PubRelationshipQuery::create(null, $criteria);
+        $query->joinWith('PubRelatedByObjectId', $join_behavior);
+
+        return $this->getPubRelationships($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related PubRelationships from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|PubRelationship[] List of PubRelationship objects
+     */
+    public function getPubRelationshipsJoinPubRelatedBySubjectId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = PubRelationshipQuery::create(null, $criteria);
+        $query->joinWith('PubRelatedBySubjectId', $join_behavior);
+
+        return $this->getPubRelationships($query, $con);
+    }
+
+    /**
+     * Clears out the collPubprops collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addPubprops()
+     */
+    public function clearPubprops()
+    {
+        $this->collPubprops = null; // important to set this to null since that means it is uninitialized
+        $this->collPubpropsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collPubprops collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialPubprops($v = true)
+    {
+        $this->collPubpropsPartial = $v;
+    }
+
+    /**
+     * Initializes the collPubprops collection.
+     *
+     * By default this just sets the collPubprops collection to an empty array (like clearcollPubprops());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPubprops($overrideExisting = true)
+    {
+        if (null !== $this->collPubprops && !$overrideExisting) {
+            return;
+        }
+        $this->collPubprops = new PropelObjectCollection();
+        $this->collPubprops->setModel('Pubprop');
+    }
+
+    /**
+     * Gets an array of Pubprop objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Pubprop[] List of Pubprop objects
+     * @throws PropelException
+     */
+    public function getPubprops($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collPubpropsPartial && !$this->isNew();
+        if (null === $this->collPubprops || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPubprops) {
+                // return empty collection
+                $this->initPubprops();
+            } else {
+                $collPubprops = PubpropQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collPubpropsPartial && count($collPubprops)) {
+                      $this->initPubprops(false);
+
+                      foreach($collPubprops as $obj) {
+                        if (false == $this->collPubprops->contains($obj)) {
+                          $this->collPubprops->append($obj);
+                        }
+                      }
+
+                      $this->collPubpropsPartial = true;
+                    }
+
+                    $collPubprops->getInternalIterator()->rewind();
+                    return $collPubprops;
+                }
+
+                if($partial && $this->collPubprops) {
+                    foreach($this->collPubprops as $obj) {
+                        if($obj->isNew()) {
+                            $collPubprops[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPubprops = $collPubprops;
+                $this->collPubpropsPartial = false;
+            }
+        }
+
+        return $this->collPubprops;
+    }
+
+    /**
+     * Sets a collection of Pubprop objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $pubprops A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setPubprops(PropelCollection $pubprops, PropelPDO $con = null)
+    {
+        $pubpropsToDelete = $this->getPubprops(new Criteria(), $con)->diff($pubprops);
+
+        $this->pubpropsScheduledForDeletion = unserialize(serialize($pubpropsToDelete));
+
+        foreach ($pubpropsToDelete as $pubpropRemoved) {
+            $pubpropRemoved->setCvterm(null);
+        }
+
+        $this->collPubprops = null;
+        foreach ($pubprops as $pubprop) {
+            $this->addPubprop($pubprop);
+        }
+
+        $this->collPubprops = $pubprops;
+        $this->collPubpropsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Pubprop objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Pubprop objects.
+     * @throws PropelException
+     */
+    public function countPubprops(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collPubpropsPartial && !$this->isNew();
+        if (null === $this->collPubprops || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPubprops) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getPubprops());
+            }
+            $query = PubpropQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collPubprops);
+    }
+
+    /**
+     * Method called to associate a Pubprop object to this object
+     * through the Pubprop foreign key attribute.
+     *
+     * @param    Pubprop $l Pubprop
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addPubprop(Pubprop $l)
+    {
+        if ($this->collPubprops === null) {
+            $this->initPubprops();
+            $this->collPubpropsPartial = true;
+        }
+        if (!in_array($l, $this->collPubprops->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddPubprop($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Pubprop $pubprop The pubprop object to add.
+     */
+    protected function doAddPubprop($pubprop)
+    {
+        $this->collPubprops[]= $pubprop;
+        $pubprop->setCvterm($this);
+    }
+
+    /**
+     * @param	Pubprop $pubprop The pubprop object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removePubprop($pubprop)
+    {
+        if ($this->getPubprops()->contains($pubprop)) {
+            $this->collPubprops->remove($this->collPubprops->search($pubprop));
+            if (null === $this->pubpropsScheduledForDeletion) {
+                $this->pubpropsScheduledForDeletion = clone $this->collPubprops;
+                $this->pubpropsScheduledForDeletion->clear();
+            }
+            $this->pubpropsScheduledForDeletion[]= clone $pubprop;
+            $pubprop->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Cvterm is new, it will return
+     * an empty collection; or if this Cvterm has previously
+     * been saved, it will retrieve related Pubprops from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Cvterm.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|Pubprop[] List of Pubprop objects
+     */
+    public function getPubpropsJoinPub($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = PubpropQuery::create(null, $criteria);
+        $query->joinWith('Pub', $join_behavior);
+
+        return $this->getPubprops($query, $con);
+    }
+
+    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -2111,8 +3937,38 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collFeatures) {
+                foreach ($this->collFeatures as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collFeatureCvterms) {
+                foreach ($this->collFeatureCvterms as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collFeatureCvtermprops) {
+                foreach ($this->collFeatureCvtermprops as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collProtocols) {
                 foreach ($this->collProtocols as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collPubs) {
+                foreach ($this->collPubs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collPubRelationships) {
+                foreach ($this->collPubRelationships as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collPubprops) {
+                foreach ($this->collPubprops as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -2131,10 +3987,34 @@ abstract class BaseCvterm extends BaseObject implements Persistent
             $this->collContacts->clearIterator();
         }
         $this->collContacts = null;
+        if ($this->collFeatures instanceof PropelCollection) {
+            $this->collFeatures->clearIterator();
+        }
+        $this->collFeatures = null;
+        if ($this->collFeatureCvterms instanceof PropelCollection) {
+            $this->collFeatureCvterms->clearIterator();
+        }
+        $this->collFeatureCvterms = null;
+        if ($this->collFeatureCvtermprops instanceof PropelCollection) {
+            $this->collFeatureCvtermprops->clearIterator();
+        }
+        $this->collFeatureCvtermprops = null;
         if ($this->collProtocols instanceof PropelCollection) {
             $this->collProtocols->clearIterator();
         }
         $this->collProtocols = null;
+        if ($this->collPubs instanceof PropelCollection) {
+            $this->collPubs->clearIterator();
+        }
+        $this->collPubs = null;
+        if ($this->collPubRelationships instanceof PropelCollection) {
+            $this->collPubRelationships->clearIterator();
+        }
+        $this->collPubRelationships = null;
+        if ($this->collPubprops instanceof PropelCollection) {
+            $this->collPubprops->clearIterator();
+        }
+        $this->collPubprops = null;
         $this->aCv = null;
     }
 

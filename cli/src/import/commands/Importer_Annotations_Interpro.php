@@ -1,7 +1,7 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
-require_once ROOT . 'importers/Importer_Sequences.php';
+require_once ROOT . 'commands/Importer_Sequences.php';
 
 #versions of databases for interpro import
 global $dbrefx_versions;

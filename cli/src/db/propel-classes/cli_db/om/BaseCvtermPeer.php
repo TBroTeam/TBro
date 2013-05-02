@@ -12,7 +12,13 @@ use \PropelPDO;
 use cli_db\propel\CvPeer;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermPeer;
+use cli_db\propel\FeatureCvtermPeer;
+use cli_db\propel\FeatureCvtermpropPeer;
+use cli_db\propel\FeaturePeer;
 use cli_db\propel\ProtocolPeer;
+use cli_db\propel\PubPeer;
+use cli_db\propel\PubRelationshipPeer;
+use cli_db\propel\PubpropPeer;
 use cli_db\propel\map\CvtermTableMap;
 
 /**
@@ -401,9 +407,27 @@ abstract class BaseCvtermPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in FeaturePeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        FeaturePeer::clearInstancePool();
+        // Invalidate objects in FeatureCvtermPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        FeatureCvtermPeer::clearInstancePool();
+        // Invalidate objects in FeatureCvtermpropPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        FeatureCvtermpropPeer::clearInstancePool();
         // Invalidate objects in ProtocolPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         ProtocolPeer::clearInstancePool();
+        // Invalidate objects in PubPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        PubPeer::clearInstancePool();
+        // Invalidate objects in PubRelationshipPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        PubRelationshipPeer::clearInstancePool();
+        // Invalidate objects in PubpropPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        PubpropPeer::clearInstancePool();
     }
 
     /**

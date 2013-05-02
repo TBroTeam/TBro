@@ -122,8 +122,9 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
         ));
     }
 
-    public static function CLI_checkRequiredOpts($options) {
-        parent::CLI_checkRequiredOpts($options);
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        parent::CLI_checkRequiredOpts($command);
+        $options = $command->options;
         AbstractImporter::dieOnMissingArg($options, 'quantification_id');
         AbstractImporter::dieOnMissingArg($options, 'type_name');
     }

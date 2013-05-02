@@ -15,6 +15,8 @@ use \PropelObjectCollection;
 use \PropelPDO;
 use cli_db\propel\Biomaterial;
 use cli_db\propel\BiomaterialQuery;
+use cli_db\propel\Feature;
+use cli_db\propel\FeatureQuery;
 use cli_db\propel\Organism;
 use cli_db\propel\OrganismPeer;
 use cli_db\propel\OrganismQuery;
@@ -90,6 +92,12 @@ abstract class BaseOrganism extends BaseObject implements Persistent
     protected $collBiomaterialsPartial;
 
     /**
+     * @var        PropelObjectCollection|Feature[] Collection to store aggregation of Feature objects.
+     */
+    protected $collFeatures;
+    protected $collFeaturesPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      * @var        boolean
@@ -114,6 +122,12 @@ abstract class BaseOrganism extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $biomaterialsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $featuresScheduledForDeletion = null;
 
     /**
      * Get the [organism_id] column value.
@@ -411,6 +425,8 @@ abstract class BaseOrganism extends BaseObject implements Persistent
 
             $this->collBiomaterials = null;
 
+            $this->collFeatures = null;
+
         } // if (deep)
     }
 
@@ -547,6 +563,23 @@ abstract class BaseOrganism extends BaseObject implements Persistent
 
             if ($this->collBiomaterials !== null) {
                 foreach ($this->collBiomaterials as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->featuresScheduledForDeletion !== null) {
+                if (!$this->featuresScheduledForDeletion->isEmpty()) {
+                    FeatureQuery::create()
+                        ->filterByPrimaryKeys($this->featuresScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->featuresScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collFeatures !== null) {
+                foreach ($this->collFeatures as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -736,6 +769,14 @@ abstract class BaseOrganism extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collFeatures !== null) {
+                    foreach ($this->collFeatures as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
 
             $this->alreadyInValidation = false;
         }
@@ -828,6 +869,9 @@ abstract class BaseOrganism extends BaseObject implements Persistent
         if ($includeForeignObjects) {
             if (null !== $this->collBiomaterials) {
                 $result['Biomaterials'] = $this->collBiomaterials->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collFeatures) {
+                $result['Features'] = $this->collFeatures->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1010,6 +1054,12 @@ abstract class BaseOrganism extends BaseObject implements Persistent
                 }
             }
 
+            foreach ($this->getFeatures() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addFeature($relObj->copy($deepCopy));
+                }
+            }
+
             //unflag object copy
             $this->startCopy = false;
         } // if ($deepCopy)
@@ -1073,6 +1123,9 @@ abstract class BaseOrganism extends BaseObject implements Persistent
     {
         if ('Biomaterial' == $relationName) {
             $this->initBiomaterials();
+        }
+        if ('Feature' == $relationName) {
+            $this->initFeatures();
         }
     }
 
@@ -1320,6 +1373,274 @@ abstract class BaseOrganism extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collFeatures collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Organism The current object (for fluent API support)
+     * @see        addFeatures()
+     */
+    public function clearFeatures()
+    {
+        $this->collFeatures = null; // important to set this to null since that means it is uninitialized
+        $this->collFeaturesPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collFeatures collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialFeatures($v = true)
+    {
+        $this->collFeaturesPartial = $v;
+    }
+
+    /**
+     * Initializes the collFeatures collection.
+     *
+     * By default this just sets the collFeatures collection to an empty array (like clearcollFeatures());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initFeatures($overrideExisting = true)
+    {
+        if (null !== $this->collFeatures && !$overrideExisting) {
+            return;
+        }
+        $this->collFeatures = new PropelObjectCollection();
+        $this->collFeatures->setModel('Feature');
+    }
+
+    /**
+     * Gets an array of Feature objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Organism is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Feature[] List of Feature objects
+     * @throws PropelException
+     */
+    public function getFeatures($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collFeaturesPartial && !$this->isNew();
+        if (null === $this->collFeatures || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFeatures) {
+                // return empty collection
+                $this->initFeatures();
+            } else {
+                $collFeatures = FeatureQuery::create(null, $criteria)
+                    ->filterByOrganism($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collFeaturesPartial && count($collFeatures)) {
+                      $this->initFeatures(false);
+
+                      foreach($collFeatures as $obj) {
+                        if (false == $this->collFeatures->contains($obj)) {
+                          $this->collFeatures->append($obj);
+                        }
+                      }
+
+                      $this->collFeaturesPartial = true;
+                    }
+
+                    $collFeatures->getInternalIterator()->rewind();
+                    return $collFeatures;
+                }
+
+                if($partial && $this->collFeatures) {
+                    foreach($this->collFeatures as $obj) {
+                        if($obj->isNew()) {
+                            $collFeatures[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collFeatures = $collFeatures;
+                $this->collFeaturesPartial = false;
+            }
+        }
+
+        return $this->collFeatures;
+    }
+
+    /**
+     * Sets a collection of Feature objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $features A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Organism The current object (for fluent API support)
+     */
+    public function setFeatures(PropelCollection $features, PropelPDO $con = null)
+    {
+        $featuresToDelete = $this->getFeatures(new Criteria(), $con)->diff($features);
+
+        $this->featuresScheduledForDeletion = unserialize(serialize($featuresToDelete));
+
+        foreach ($featuresToDelete as $featureRemoved) {
+            $featureRemoved->setOrganism(null);
+        }
+
+        $this->collFeatures = null;
+        foreach ($features as $feature) {
+            $this->addFeature($feature);
+        }
+
+        $this->collFeatures = $features;
+        $this->collFeaturesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Feature objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Feature objects.
+     * @throws PropelException
+     */
+    public function countFeatures(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collFeaturesPartial && !$this->isNew();
+        if (null === $this->collFeatures || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFeatures) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getFeatures());
+            }
+            $query = FeatureQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByOrganism($this)
+                ->count($con);
+        }
+
+        return count($this->collFeatures);
+    }
+
+    /**
+     * Method called to associate a Feature object to this object
+     * through the Feature foreign key attribute.
+     *
+     * @param    Feature $l Feature
+     * @return Organism The current object (for fluent API support)
+     */
+    public function addFeature(Feature $l)
+    {
+        if ($this->collFeatures === null) {
+            $this->initFeatures();
+            $this->collFeaturesPartial = true;
+        }
+        if (!in_array($l, $this->collFeatures->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddFeature($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Feature $feature The feature object to add.
+     */
+    protected function doAddFeature($feature)
+    {
+        $this->collFeatures[]= $feature;
+        $feature->setOrganism($this);
+    }
+
+    /**
+     * @param	Feature $feature The feature object to remove.
+     * @return Organism The current object (for fluent API support)
+     */
+    public function removeFeature($feature)
+    {
+        if ($this->getFeatures()->contains($feature)) {
+            $this->collFeatures->remove($this->collFeatures->search($feature));
+            if (null === $this->featuresScheduledForDeletion) {
+                $this->featuresScheduledForDeletion = clone $this->collFeatures;
+                $this->featuresScheduledForDeletion->clear();
+            }
+            $this->featuresScheduledForDeletion[]= clone $feature;
+            $feature->setOrganism(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Organism is new, it will return
+     * an empty collection; or if this Organism has previously
+     * been saved, it will retrieve related Features from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Organism.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|Feature[] List of Feature objects
+     */
+    public function getFeaturesJoinDbxref($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureQuery::create(null, $criteria);
+        $query->joinWith('Dbxref', $join_behavior);
+
+        return $this->getFeatures($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Organism is new, it will return
+     * an empty collection; or if this Organism has previously
+     * been saved, it will retrieve related Features from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Organism.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|Feature[] List of Feature objects
+     */
+    public function getFeaturesJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureQuery::create(null, $criteria);
+        $query->joinWith('Cvterm', $join_behavior);
+
+        return $this->getFeatures($query, $con);
+    }
+
+    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -1357,6 +1678,11 @@ abstract class BaseOrganism extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collFeatures) {
+                foreach ($this->collFeatures as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
@@ -1365,6 +1691,10 @@ abstract class BaseOrganism extends BaseObject implements Persistent
             $this->collBiomaterials->clearIterator();
         }
         $this->collBiomaterials = null;
+        if ($this->collFeatures instanceof PropelCollection) {
+            $this->collFeatures->clearIterator();
+        }
+        $this->collFeatures = null;
     }
 
     /**

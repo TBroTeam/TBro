@@ -108,28 +108,6 @@ class Analysis extends AbstractTable {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
 
-    public static function executeCommand($options, $command_name) {
-        $keys = self::getKeys();
-        switch ($command_name) {
-            case 'insert':
-                self::command_insert($options, $keys);
-                break;
-            case 'update':
-                self::command_update($options, $keys);
-                break;
-            case 'delete':
-                self::command_delete($options, $keys);
-                break;
-            case 'details':
-                self::command_details($options, $keys);
-                break;
-            case 'list':
-                self::command_list($options, $keys);
-                break;
-        }
-    }
-   
-
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Analysis';
     }

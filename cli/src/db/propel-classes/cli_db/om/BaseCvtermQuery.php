@@ -18,7 +18,13 @@ use cli_db\propel\Cv;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermPeer;
 use cli_db\propel\CvtermQuery;
+use cli_db\propel\Feature;
+use cli_db\propel\FeatureCvterm;
+use cli_db\propel\FeatureCvtermprop;
 use cli_db\propel\Protocol;
+use cli_db\propel\Pub;
+use cli_db\propel\PubRelationship;
+use cli_db\propel\Pubprop;
 
 /**
  * Base class that represents a query for the 'cvterm' table.
@@ -57,9 +63,33 @@ use cli_db\propel\Protocol;
  * @method CvtermQuery rightJoinContact($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Contact relation
  * @method CvtermQuery innerJoinContact($relationAlias = null) Adds a INNER JOIN clause to the query using the Contact relation
  *
+ * @method CvtermQuery leftJoinFeature($relationAlias = null) Adds a LEFT JOIN clause to the query using the Feature relation
+ * @method CvtermQuery rightJoinFeature($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Feature relation
+ * @method CvtermQuery innerJoinFeature($relationAlias = null) Adds a INNER JOIN clause to the query using the Feature relation
+ *
+ * @method CvtermQuery leftJoinFeatureCvterm($relationAlias = null) Adds a LEFT JOIN clause to the query using the FeatureCvterm relation
+ * @method CvtermQuery rightJoinFeatureCvterm($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation
+ * @method CvtermQuery innerJoinFeatureCvterm($relationAlias = null) Adds a INNER JOIN clause to the query using the FeatureCvterm relation
+ *
+ * @method CvtermQuery leftJoinFeatureCvtermprop($relationAlias = null) Adds a LEFT JOIN clause to the query using the FeatureCvtermprop relation
+ * @method CvtermQuery rightJoinFeatureCvtermprop($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FeatureCvtermprop relation
+ * @method CvtermQuery innerJoinFeatureCvtermprop($relationAlias = null) Adds a INNER JOIN clause to the query using the FeatureCvtermprop relation
+ *
  * @method CvtermQuery leftJoinProtocol($relationAlias = null) Adds a LEFT JOIN clause to the query using the Protocol relation
  * @method CvtermQuery rightJoinProtocol($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Protocol relation
  * @method CvtermQuery innerJoinProtocol($relationAlias = null) Adds a INNER JOIN clause to the query using the Protocol relation
+ *
+ * @method CvtermQuery leftJoinPub($relationAlias = null) Adds a LEFT JOIN clause to the query using the Pub relation
+ * @method CvtermQuery rightJoinPub($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Pub relation
+ * @method CvtermQuery innerJoinPub($relationAlias = null) Adds a INNER JOIN clause to the query using the Pub relation
+ *
+ * @method CvtermQuery leftJoinPubRelationship($relationAlias = null) Adds a LEFT JOIN clause to the query using the PubRelationship relation
+ * @method CvtermQuery rightJoinPubRelationship($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PubRelationship relation
+ * @method CvtermQuery innerJoinPubRelationship($relationAlias = null) Adds a INNER JOIN clause to the query using the PubRelationship relation
+ *
+ * @method CvtermQuery leftJoinPubprop($relationAlias = null) Adds a LEFT JOIN clause to the query using the Pubprop relation
+ * @method CvtermQuery rightJoinPubprop($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Pubprop relation
+ * @method CvtermQuery innerJoinPubprop($relationAlias = null) Adds a INNER JOIN clause to the query using the Pubprop relation
  *
  * @method Cvterm findOne(PropelPDO $con = null) Return the first Cvterm matching the query
  * @method Cvterm findOneOrCreate(PropelPDO $con = null) Return the first Cvterm matching the query, or a new Cvterm object populated from the query conditions when no match is found
@@ -765,6 +795,228 @@ abstract class BaseCvtermQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related Feature object
+     *
+     * @param   Feature|PropelObjectCollection $feature  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByFeature($feature, $comparison = null)
+    {
+        if ($feature instanceof Feature) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $feature->getTypeId(), $comparison);
+        } elseif ($feature instanceof PropelObjectCollection) {
+            return $this
+                ->useFeatureQuery()
+                ->filterByPrimaryKeys($feature->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFeature() only accepts arguments of type Feature or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Feature relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinFeature($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Feature');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Feature');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Feature relation Feature object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\FeatureQuery A secondary query class using the current class as primary query
+     */
+    public function useFeatureQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFeature($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Feature', '\cli_db\propel\FeatureQuery');
+    }
+
+    /**
+     * Filter the query by a related FeatureCvterm object
+     *
+     * @param   FeatureCvterm|PropelObjectCollection $featureCvterm  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByFeatureCvterm($featureCvterm, $comparison = null)
+    {
+        if ($featureCvterm instanceof FeatureCvterm) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $featureCvterm->getCvtermId(), $comparison);
+        } elseif ($featureCvterm instanceof PropelObjectCollection) {
+            return $this
+                ->useFeatureCvtermQuery()
+                ->filterByPrimaryKeys($featureCvterm->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFeatureCvterm() only accepts arguments of type FeatureCvterm or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the FeatureCvterm relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinFeatureCvterm($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('FeatureCvterm');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'FeatureCvterm');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the FeatureCvterm relation FeatureCvterm object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\FeatureCvtermQuery A secondary query class using the current class as primary query
+     */
+    public function useFeatureCvtermQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFeatureCvterm($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FeatureCvterm', '\cli_db\propel\FeatureCvtermQuery');
+    }
+
+    /**
+     * Filter the query by a related FeatureCvtermprop object
+     *
+     * @param   FeatureCvtermprop|PropelObjectCollection $featureCvtermprop  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByFeatureCvtermprop($featureCvtermprop, $comparison = null)
+    {
+        if ($featureCvtermprop instanceof FeatureCvtermprop) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $featureCvtermprop->getTypeId(), $comparison);
+        } elseif ($featureCvtermprop instanceof PropelObjectCollection) {
+            return $this
+                ->useFeatureCvtermpropQuery()
+                ->filterByPrimaryKeys($featureCvtermprop->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFeatureCvtermprop() only accepts arguments of type FeatureCvtermprop or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the FeatureCvtermprop relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinFeatureCvtermprop($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('FeatureCvtermprop');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'FeatureCvtermprop');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the FeatureCvtermprop relation FeatureCvtermprop object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\FeatureCvtermpropQuery A secondary query class using the current class as primary query
+     */
+    public function useFeatureCvtermpropQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFeatureCvtermprop($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FeatureCvtermprop', '\cli_db\propel\FeatureCvtermpropQuery');
+    }
+
+    /**
      * Filter the query by a related Protocol object
      *
      * @param   Protocol|PropelObjectCollection $protocol  the related object to use as filter
@@ -836,6 +1088,228 @@ abstract class BaseCvtermQuery extends ModelCriteria
         return $this
             ->joinProtocol($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Protocol', '\cli_db\propel\ProtocolQuery');
+    }
+
+    /**
+     * Filter the query by a related Pub object
+     *
+     * @param   Pub|PropelObjectCollection $pub  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByPub($pub, $comparison = null)
+    {
+        if ($pub instanceof Pub) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $pub->getTypeId(), $comparison);
+        } elseif ($pub instanceof PropelObjectCollection) {
+            return $this
+                ->usePubQuery()
+                ->filterByPrimaryKeys($pub->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPub() only accepts arguments of type Pub or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Pub relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinPub($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Pub');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Pub');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Pub relation Pub object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\PubQuery A secondary query class using the current class as primary query
+     */
+    public function usePubQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPub($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Pub', '\cli_db\propel\PubQuery');
+    }
+
+    /**
+     * Filter the query by a related PubRelationship object
+     *
+     * @param   PubRelationship|PropelObjectCollection $pubRelationship  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByPubRelationship($pubRelationship, $comparison = null)
+    {
+        if ($pubRelationship instanceof PubRelationship) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $pubRelationship->getTypeId(), $comparison);
+        } elseif ($pubRelationship instanceof PropelObjectCollection) {
+            return $this
+                ->usePubRelationshipQuery()
+                ->filterByPrimaryKeys($pubRelationship->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPubRelationship() only accepts arguments of type PubRelationship or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the PubRelationship relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinPubRelationship($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('PubRelationship');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'PubRelationship');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the PubRelationship relation PubRelationship object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\PubRelationshipQuery A secondary query class using the current class as primary query
+     */
+    public function usePubRelationshipQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPubRelationship($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PubRelationship', '\cli_db\propel\PubRelationshipQuery');
+    }
+
+    /**
+     * Filter the query by a related Pubprop object
+     *
+     * @param   Pubprop|PropelObjectCollection $pubprop  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByPubprop($pubprop, $comparison = null)
+    {
+        if ($pubprop instanceof Pubprop) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $pubprop->getTypeId(), $comparison);
+        } elseif ($pubprop instanceof PropelObjectCollection) {
+            return $this
+                ->usePubpropQuery()
+                ->filterByPrimaryKeys($pubprop->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPubprop() only accepts arguments of type Pubprop or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Pubprop relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinPubprop($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Pubprop');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Pubprop');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Pubprop relation Pubprop object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\PubpropQuery A secondary query class using the current class as primary query
+     */
+    public function usePubpropQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPubprop($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Pubprop', '\cli_db\propel\PubpropQuery');
     }
 
     /**

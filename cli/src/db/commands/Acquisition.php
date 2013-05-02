@@ -4,18 +4,18 @@ namespace cli_db;
 
 require_once ROOT . 'classes/AbstractTable.php';
 
-class Quantification extends AbstractTable {
+class Acquisition extends AbstractTable {
 
     public static function getKeys() {
         return array(
             'id' => array(
-                'colname' => 'QuantificationId',
+                'colname' => 'AcquisitionId',
                 'actions' => array(
                     'details' => 'required',
                     'update' => 'required',
                     'delete' => 'required',
                 ),
-                'description' => 'quantification id'
+                'description' => 'acquisition id'
             ),
             'name' => array(
                 'colname' => 'Name',
@@ -33,21 +33,13 @@ class Quantification extends AbstractTable {
                 ),
                 'description' => 'uri'
             ),
-            'acquisition_id' => array(
-                'colname' => 'AcquisitionId',
+            'assay_id' => array(
+                'colname' => 'AssayId',
                 'actions' => array(
                     'insert' => 'required',
                     'update' => 'optional',
                 ),
-                'description' => 'acquisition id'
-            ),
-            'operator_id' => array(
-                'colname' => 'OperatorId',
-                'actions' => array(
-                    'insert' => 'optional',
-                    'update' => 'optional',
-                ),
-                'description' => 'contact id'
+                'description' => 'assay id'
             ),
             'protocol_id' => array(
                 'colname' => 'ProtocolId',
@@ -57,31 +49,23 @@ class Quantification extends AbstractTable {
                 ),
                 'description' => 'protocol id'
             ),
-             'analysis_id' => array(
-                'colname' => 'AnalysisId',
-                'actions' => array(
-                    'insert' => 'required',
-                    'update' => 'optional',
-                ),
-                'description' => 'analysis id'
-            ),
-            'quantificationdate' => array(
-                'colname' => 'Quantificationdate',
+            'acquisitiondate' => array(
+                'colname' => 'Acquisitiondate',
                 'actions' => array(
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'time of quantification'
+                'description' => 'time of acquisition'
             ),
         );
     }
 
     public static function CLI_commandDescription() {
-        return 'Manipulate the database quantification.';
+        return 'Manipulate the database acquisition.';
     }
 
     public static function CLI_commandName() {
-        return 'quantification';
+        return 'acquisition';
     }
 
     public static function CLI_longHelp() {
@@ -91,31 +75,10 @@ class Quantification extends AbstractTable {
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
-
-    public static function executeCommand($options, $command_name) {
-        $keys = self::getKeys();
-        switch ($command_name) {
-            case 'insert':
-                self::command_insert($options, $keys);
-                break;
-            case 'update':
-                self::command_update($options, $keys);
-                break;
-            case 'delete':
-                self::command_delete($options, $keys);
-                break;
-            case 'details':
-                self::command_details($options, $keys);
-                break;
-            case 'list':
-                self::command_list($options, $keys);
-                break;
-        }
-    }
-   
+ 
 
     public static function getPropelClass() {
-        return '\\cli_db\\propel\\Quantification';
+        return '\\cli_db\\propel\\Acquisition';
     }
     
 }

@@ -20,6 +20,12 @@
                 <include name="**/**" />
             </fileset>
         </copy>
+        <copy todir="${builddir}/db" >
+            <fileset dir="${srcdir}/shared/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
         <echo file="${builddir}/db/config.ini">config_dir=${config_dir}</echo>
     </target>
     
@@ -32,6 +38,12 @@
                 <include name="**/**" />
             </fileset>
         </copy>
+        <copy todir="${builddir}/import" >
+            <fileset dir="${srcdir}/shared/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>        
         <echo file="${builddir}/import/config.ini">config_dir=${config_dir}</echo>
     </target>
 

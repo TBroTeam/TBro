@@ -779,7 +779,7 @@
     <index name="cvtermsynonym_idx1">
       <index-column name="cvterm_id"/>
     </index>
-  </table>
+  </table-->
   <table name="db" phpName="Db" idMethod="native">
     <column name="db_id" phpName="DbId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -814,7 +814,7 @@
       <index-column name="version"/>
     </index>
   </table>
-  <table name="dbxrefprop" phpName="Dbxrefprop" idMethod="native">
+  <!--table name="dbxrefprop" phpName="Dbxrefprop" idMethod="native">
     <column name="dbxrefprop_id" phpName="DbxrefpropId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="dbxref_id" phpName="DbxrefId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
@@ -993,7 +993,7 @@
     <foreign-key foreignTable="quantificationresult" name="expressionresult_quantificationresult_quantificationresult_fkey" onUpdate="CASCADE">
       <reference local="quantificationresult_id" foreign="quantificationresult_id"/>
     </foreign-key>
-  </table>
+  </table-->
   <table name="feature" phpName="Feature" idMethod="native">
     <column name="feature_id" phpName="FeatureId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="dbxref_id" phpName="DbxrefId" type="INTEGER" required="false"/>
@@ -1179,7 +1179,7 @@
       <index-column name="pub_id"/>
     </index>
   </table>
-  <table name="feature_pubprop" phpName="FeaturePubprop" idMethod="native">
+  <!--table name="feature_pubprop" phpName="FeaturePubprop" idMethod="native">
     <column name="feature_pubprop_id" phpName="FeaturePubpropId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="feature_pub_id" phpName="FeaturePubId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
@@ -1661,7 +1661,7 @@
     <index name="protocolparam_idx3">
       <index-column name="unittype_id"/>
     </index>
-  </table>
+  </table-->
   <table name="pub" phpName="Pub" idMethod="native">
     <column name="pub_id" phpName="PubId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="title" phpName="Title" type="LONGVARCHAR" required="false"/>
@@ -1780,7 +1780,7 @@
     <index name="pubprop_idx2">
       <index-column name="type_id"/>
     </index>
-  </table-->
+  </table>
   <table name="quantification" phpName="Quantification" idMethod="native">
     <column name="quantification_id" phpName="QuantificationId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="acquisition_id" phpName="AcquisitionId" type="INTEGER" required="true"/>

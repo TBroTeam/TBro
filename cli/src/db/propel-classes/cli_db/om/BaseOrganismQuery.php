@@ -13,6 +13,7 @@ use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
 use cli_db\propel\Biomaterial;
+use cli_db\propel\Feature;
 use cli_db\propel\Organism;
 use cli_db\propel\OrganismPeer;
 use cli_db\propel\OrganismQuery;
@@ -43,6 +44,10 @@ use cli_db\propel\OrganismQuery;
  * @method OrganismQuery leftJoinBiomaterial($relationAlias = null) Adds a LEFT JOIN clause to the query using the Biomaterial relation
  * @method OrganismQuery rightJoinBiomaterial($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Biomaterial relation
  * @method OrganismQuery innerJoinBiomaterial($relationAlias = null) Adds a INNER JOIN clause to the query using the Biomaterial relation
+ *
+ * @method OrganismQuery leftJoinFeature($relationAlias = null) Adds a LEFT JOIN clause to the query using the Feature relation
+ * @method OrganismQuery rightJoinFeature($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Feature relation
+ * @method OrganismQuery innerJoinFeature($relationAlias = null) Adds a INNER JOIN clause to the query using the Feature relation
  *
  * @method Organism findOne(PropelPDO $con = null) Return the first Organism matching the query
  * @method Organism findOneOrCreate(PropelPDO $con = null) Return the first Organism matching the query, or a new Organism object populated from the query conditions when no match is found
@@ -510,6 +515,80 @@ abstract class BaseOrganismQuery extends ModelCriteria
         return $this
             ->joinBiomaterial($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Biomaterial', '\cli_db\propel\BiomaterialQuery');
+    }
+
+    /**
+     * Filter the query by a related Feature object
+     *
+     * @param   Feature|PropelObjectCollection $feature  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 OrganismQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByFeature($feature, $comparison = null)
+    {
+        if ($feature instanceof Feature) {
+            return $this
+                ->addUsingAlias(OrganismPeer::ORGANISM_ID, $feature->getOrganismId(), $comparison);
+        } elseif ($feature instanceof PropelObjectCollection) {
+            return $this
+                ->useFeatureQuery()
+                ->filterByPrimaryKeys($feature->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFeature() only accepts arguments of type Feature or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Feature relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return OrganismQuery The current query, for fluid interface
+     */
+    public function joinFeature($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Feature');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Feature');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Feature relation Feature object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\FeatureQuery A secondary query class using the current class as primary query
+     */
+    public function useFeatureQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFeature($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Feature', '\cli_db\propel\FeatureQuery');
     }
 
     /**

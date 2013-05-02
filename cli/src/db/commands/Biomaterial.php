@@ -86,38 +86,6 @@ class Biomaterial extends AbstractTable {
         return array('insert', 'update', 'delete', 'details', 'list', 'add_parent', 'add_child', 'remove_parent', 'remove_child');
     }
 
-    public static function executeCommand($options, $command_name) {
-        $keys = self::getKeys();
-        switch ($command_name) {
-            case 'insert':
-                self::command_insert($options, $keys);
-                break;
-            case 'update':
-                self::command_update($options, $keys);
-                break;
-            case 'delete':
-                self::command_delete($options, $keys);
-                break;
-            case 'details':
-                self::command_details($options, $keys);
-                break;
-            case 'list':
-                self::command_list($options, $keys);
-                break;
-            case 'add_parent':
-                self::command_add_parent($options, $keys);
-                break;
-            case 'add_child':
-                self::command_add_child($options, $keys);
-                break;
-            case 'remove_parent':
-                self::command_remove_parent($options, $keys);
-                break;
-            case 'remove_child':
-                self::command_remove_child($options, $keys);
-                break;
-        }
-    }
 
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
