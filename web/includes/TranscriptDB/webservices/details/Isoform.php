@@ -109,8 +109,11 @@ EOF;
                 $isoform['unigene'] = $unigene;
             }
 
-            list($dbxref, $trash) = \WebService::factory('details/annotations/isoform/dbxref');
+            list($dbxref, $trash) = \WebService::factory('details/annotations/feature/dbxref');
             $isoform['dbxref'] = $dbxref->getById($isoform['feature_id']);
+            
+            list($pub, $trash) = \WebService::factory('details/annotations/feature/pub');
+            $isoform['pub'] = $pub->getById($isoform['feature_id']);
             
             $stm_get_blast2go->execute();
             while ($blast2go = $stm_get_blast2go->fetch(PDO::FETCH_ASSOC)) {

@@ -173,13 +173,14 @@ class Publication extends AbstractTable {
             }
 
             $authors = explode(' and ', $bibtex['author']);
+            $i=0;
             foreach ($authors as $author) {
-                list ($givennames, $surname) = explode(',', $author, 2);
+                list ($surname, $givennames) = explode(',', $author, 2);
 
                 $pubauthor = new propel\Pubauthor();
                 $pubauthor->setGivennames($givennames);
                 $pubauthor->setSurname($surname);
-                $pubauthor->setRank(0);
+                $pubauthor->setRank($i++);
 
                 $pub->addPubauthor($pubauthor);
             }

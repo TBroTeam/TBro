@@ -43,25 +43,36 @@
             query = $(queryInput.data('ref')).html();
             queryInput.val(query);
         });
-
-
-        $('.contains-dbxref').tooltip({
-            items: "span.dbxref-tooltip",
+        
+        $('.contains-tooltip').tooltip({
+            items: ".has-tooltip",
             open: function(event, ui) {
+                /*ui.tooltip.offset({
+                top: event.pageY, 
+                left: event.pageX
+            });*/
                 ui.tooltip.css("max-width", "600px");
             },
             content: function() {
                 var element = $(this);
-                var newElStr = $('#dbxref-tooltip').html();
-                newElStr = newElStr.replace(/#dbname#/g, element.attr('data-dbname'));
-                newElStr = newElStr.replace(/#accession#/g, element.attr('data-accession'));
-                newElStr = newElStr.replace(/#name#/g, element.attr('data-name'));
-                newElStr = newElStr.replace(/#definition#/g, element.attr('data-definition'));
-                newElStr = newElStr.replace(/#dbversion#/g, element.attr('data-dbversion'));
-                return newElStr;
+                var tooltip = $("<table/>");
+                console.log(this.attributes);
+                
+                $.each(this.attributes, function(key,attr) {
+                    if (attr.name.substr(0,5)=='data-'){
+                        var splitAt = attr.nodeValue.indexOf('|');
+                        var name = attr.nodeValue.substr(0,splitAt);
+                        var value = attr.nodeValue.substr(splitAt+1);
+                        $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
+                        }
+                });
+                tooltip.foundation();
+                return tooltip;
             }
         });
     });
+
+    
 
     function jumptoanchor(name){
         $(document.body).scrollTop($('#'+name).offset().top-45);
@@ -84,15 +95,7 @@
 {#/block#}
 {#block name='body'#}
 
-<div class="contains-dbxref">
-    <div id="dbxref-tooltip" style="display:none">
-        <table>
-            <tr><td>DbxRef</td><td>#dbname#:#accession#</td></tr>
-            <tr><td>Name</td><td>#name#</td></tr>
-            <tr><td>Definition</td><td>#definition#</td></tr>
-            <tr><td>DB-Version</td><td>#dbversion#</td></tr>
-        </table>
-    </div>
+<div>
     <div class="row">
         <div id="isoform-overview"> </div>
         <div class="large-12 columns panel" id="description">
@@ -155,7 +158,7 @@
                 </div>
             </div>
             <div id="isoform-annotations"> </div>
-            <div class="row">
+            <div class="row contains-tooltip">
                 <div class="large-12 columns">
                     {#if isset($data.isoform.blast2go) #}
                         <h4>possible description:</h4>
@@ -196,6 +199,21 @@
                     {#/if#}
                 </div>
             </div>
+            {#if isset($data.isoform.pub) && count($data.isoform.pub) > 0 #}
+                <div id="isoform-publications"> </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <h4>Publications</h4>                        
+                        <table style="width:100%">
+                            <tbody class="contains-tooltip">
+                                {#foreach $data.isoform.pub as $pub#}
+                                    {#publink pub=$pub#}
+                                {#/foreach#}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {#/if#}
         </div>
     </div>
 

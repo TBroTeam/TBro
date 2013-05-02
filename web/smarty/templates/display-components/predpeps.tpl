@@ -71,7 +71,7 @@
                                     <div class="large-12 columns">
                                         <h4>Interpro Annotations:</h4>
 
-                                        <table style="width:100%">
+                                        <table style="width:100%" class="contains-tooltip">
                                             <thead>
                                                 <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>evalue</td><td>database match</td><td>time executed</td><td>dbxref</td></tr>
                                             </thead>

@@ -1,4 +1,4 @@
-<div class="row" id="repeatmasker">
+<div class="row" id="repeatmasker" class="contains-tooltip">
     <div class="large-12 columns">
         <div id="repeatmasker-annotations"> </div>
         <h2>Repeatmasker Annotations:</h2>
