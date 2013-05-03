@@ -67,7 +67,6 @@
             method: 'post',
             data: {ids: ids},
             success: function(data) {
-                console.log(data);
                 filterdata = data;
                 select_element.click();
             }
@@ -77,7 +76,7 @@
             var selected = select_element.find(':selected');
             var ret = [];
             selected.each(function(){
-                ret.push(this.val);
+                ret.push($(this).val());
             });
             return ret;
         }
@@ -88,22 +87,26 @@
             var currently_selected = {
                 elements: getSelectedArr()
             };
-            
             var last_selected = $(this).data('last-selected');
             if (_.isEqual(currently_selected, last_selected))
                 return;
+            $(this).data('last-selected', currently_selected);
             
             var intersection = [];
             selected.each(function(){
                 var feature_id = $(this).data('metadata').feature_id;
                 var this_assays = filterdata.assay[feature_id];
+                if (this_assays == null){
+                    intersection = [];
+                    //jquery break
+                    return false;
+                }
                 if (intersection.length===0){
                     intersection = this_assays;
                 } else {
                     intersection = arr_intersect(intersection, this_assays);
                 }
             });
-        
             select_assay.empty();
             $.each(intersection, function() {
                 var data = filterdata.data.assay[this];
@@ -111,14 +114,13 @@
                 opt.appendTo(select_assay);
             });
             
-            $(this).data('last-selected', currently_selected);
-            
             select_assay.find('option').first().attr('selected','selected');
             select_assay.click();
         });
         
         select_assay.click(function() {
             var assay = $(this).val();
+            
             var selected = select_element.find(':selected');
             var currently_selected = {
                 assay: assay, 
@@ -128,9 +130,22 @@
             var last_selected = $(this).data('last-selected');
             if (_.isEqual(currently_selected, last_selected))
                 return;
-                
+            $(this).data('last-selected', currently_selected);            
+
+            if (assay==null){
+                select_analysis.empty();
+                select_analysis.click();
+                return;
+            }
+
             var intersection = [];
             selected.each(function(){
+                if (filterdata.analysis[$(this).data('metadata').feature_id] == null 
+                    || filterdata.analysis[$(this).data('metadata').feature_id][assay] == null){
+                    intersection = [];
+                    //jquery break
+                    return false;
+                }
                 var this_analysises = filterdata.analysis[$(this).data('metadata').feature_id][assay];
                 if (intersection.length===0){
                     intersection = this_analysises;
@@ -138,7 +153,6 @@
                     intersection = arr_intersect(intersection, this_analysises);
                 }
             });
-                
             select_analysis.empty();
 
             $.each(intersection, function() {
@@ -147,7 +161,6 @@
                 opt.appendTo(select_analysis);
             });
 
-            $(this).data('last-selected', currently_selected);
             
             select_analysis.find('option').first().attr('selected','selected');
             select_analysis.click();
@@ -155,6 +168,7 @@
 
         select_analysis.click(function() {
             var analysis = $(this).val();
+            
             var selected = select_element.find(':selected');
             var assay = select_assay.val();
             var currently_selected = {
@@ -166,8 +180,13 @@
             var last_selected = $(this).data('last-selected');
             if (_.isEqual(currently_selected, last_selected))
                 return;
-            
-               
+            $(this).data('last-selected', currently_selected);            
+
+            if (analysis==null){
+                select_tissues.empty();
+                return;
+            }
+
             var intersection = [];
             selected.each(function(){
                 var this_tissues = filterdata.biomaterial[$(this).data('metadata').feature_id][analysis][assay];
@@ -185,15 +204,12 @@
                 var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data).attr('selected','selected');
                 opt.appendTo(select_tissues);
             });
-
-            $(this).data('last-selected', currently_selected);
         });
         
         
         function getFilterData(){
             var data = {parents:[], analysis:[], assay:[], biomaterial:[]};
             select_element.find(':selected').each(function(){
-                console.log(this);
                 data.parents.push($(this).val());
             });
             data.analysis.push(select_analysis.find(':selected').val());
@@ -240,9 +256,11 @@
                         "graphOrientation": "vertical"
                     });
                     
+                    canvas.data('canvasxpress', cx);
+                    
                     $('#isoform-barplot-groupByTissues').click();
                     
-                    canvas.data('canvasxpress', cx);
+                    
                 }
             });
             return false;
