@@ -25,6 +25,7 @@ use cli_db\propel\Protocol;
 use cli_db\propel\Pub;
 use cli_db\propel\PubRelationship;
 use cli_db\propel\Pubprop;
+use cli_db\propel\Synonym;
 
 /**
  * Base class that represents a query for the 'cvterm' table.
@@ -90,6 +91,10 @@ use cli_db\propel\Pubprop;
  * @method CvtermQuery leftJoinPubprop($relationAlias = null) Adds a LEFT JOIN clause to the query using the Pubprop relation
  * @method CvtermQuery rightJoinPubprop($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Pubprop relation
  * @method CvtermQuery innerJoinPubprop($relationAlias = null) Adds a INNER JOIN clause to the query using the Pubprop relation
+ *
+ * @method CvtermQuery leftJoinSynonym($relationAlias = null) Adds a LEFT JOIN clause to the query using the Synonym relation
+ * @method CvtermQuery rightJoinSynonym($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Synonym relation
+ * @method CvtermQuery innerJoinSynonym($relationAlias = null) Adds a INNER JOIN clause to the query using the Synonym relation
  *
  * @method Cvterm findOne(PropelPDO $con = null) Return the first Cvterm matching the query
  * @method Cvterm findOneOrCreate(PropelPDO $con = null) Return the first Cvterm matching the query, or a new Cvterm object populated from the query conditions when no match is found
@@ -1310,6 +1315,80 @@ abstract class BaseCvtermQuery extends ModelCriteria
         return $this
             ->joinPubprop($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Pubprop', '\cli_db\propel\PubpropQuery');
+    }
+
+    /**
+     * Filter the query by a related Synonym object
+     *
+     * @param   Synonym|PropelObjectCollection $synonym  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterBySynonym($synonym, $comparison = null)
+    {
+        if ($synonym instanceof Synonym) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $synonym->getTypeId(), $comparison);
+        } elseif ($synonym instanceof PropelObjectCollection) {
+            return $this
+                ->useSynonymQuery()
+                ->filterByPrimaryKeys($synonym->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySynonym() only accepts arguments of type Synonym or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Synonym relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinSynonym($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Synonym');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Synonym');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Synonym relation Synonym object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\SynonymQuery A secondary query class using the current class as primary query
+     */
+    public function useSynonymQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSynonym($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Synonym', '\cli_db\propel\SynonymQuery');
     }
 
     /**

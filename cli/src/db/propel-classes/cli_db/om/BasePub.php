@@ -21,6 +21,8 @@ use cli_db\propel\FeatureCvtermPubQuery;
 use cli_db\propel\FeatureCvtermQuery;
 use cli_db\propel\FeaturePub;
 use cli_db\propel\FeaturePubQuery;
+use cli_db\propel\FeatureSynonym;
+use cli_db\propel\FeatureSynonymQuery;
 use cli_db\propel\Pub;
 use cli_db\propel\PubDbxref;
 use cli_db\propel\PubDbxrefQuery;
@@ -170,6 +172,12 @@ abstract class BasePub extends BaseObject implements Persistent
     protected $collFeaturePubsPartial;
 
     /**
+     * @var        PropelObjectCollection|FeatureSynonym[] Collection to store aggregation of FeatureSynonym objects.
+     */
+    protected $collFeatureSynonyms;
+    protected $collFeatureSynonymsPartial;
+
+    /**
      * @var        PropelObjectCollection|PubDbxref[] Collection to store aggregation of PubDbxref objects.
      */
     protected $collPubDbxrefs;
@@ -236,6 +244,12 @@ abstract class BasePub extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $featurePubsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $featureSynonymsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -864,6 +878,8 @@ abstract class BasePub extends BaseObject implements Persistent
 
             $this->collFeaturePubs = null;
 
+            $this->collFeatureSynonyms = null;
+
             $this->collPubDbxrefs = null;
 
             $this->collPubRelationshipsRelatedByObjectId = null;
@@ -1055,6 +1071,23 @@ abstract class BasePub extends BaseObject implements Persistent
 
             if ($this->collFeaturePubs !== null) {
                 foreach ($this->collFeaturePubs as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->featureSynonymsScheduledForDeletion !== null) {
+                if (!$this->featureSynonymsScheduledForDeletion->isEmpty()) {
+                    FeatureSynonymQuery::create()
+                        ->filterByPrimaryKeys($this->featureSynonymsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->featureSynonymsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collFeatureSynonyms !== null) {
+                foreach ($this->collFeatureSynonyms as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1405,6 +1438,14 @@ abstract class BasePub extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collFeatureSynonyms !== null) {
+                    foreach ($this->collFeatureSynonyms as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
                 if ($this->collPubDbxrefs !== null) {
                     foreach ($this->collPubDbxrefs as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -1578,6 +1619,9 @@ abstract class BasePub extends BaseObject implements Persistent
             }
             if (null !== $this->collFeaturePubs) {
                 $result['FeaturePubs'] = $this->collFeaturePubs->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collFeatureSynonyms) {
+                $result['FeatureSynonyms'] = $this->collFeatureSynonyms->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPubDbxrefs) {
                 $result['PubDbxrefs'] = $this->collPubDbxrefs->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
@@ -1835,6 +1879,12 @@ abstract class BasePub extends BaseObject implements Persistent
                 }
             }
 
+            foreach ($this->getFeatureSynonyms() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addFeatureSynonym($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getPubDbxrefs() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPubDbxref($relObj->copy($deepCopy));
@@ -1986,6 +2036,9 @@ abstract class BasePub extends BaseObject implements Persistent
         }
         if ('FeaturePub' == $relationName) {
             $this->initFeaturePubs();
+        }
+        if ('FeatureSynonym' == $relationName) {
+            $this->initFeatureSynonyms();
         }
         if ('PubDbxref' == $relationName) {
             $this->initPubDbxrefs();
@@ -2756,6 +2809,274 @@ abstract class BasePub extends BaseObject implements Persistent
         $query->joinWith('Feature', $join_behavior);
 
         return $this->getFeaturePubs($query, $con);
+    }
+
+    /**
+     * Clears out the collFeatureSynonyms collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Pub The current object (for fluent API support)
+     * @see        addFeatureSynonyms()
+     */
+    public function clearFeatureSynonyms()
+    {
+        $this->collFeatureSynonyms = null; // important to set this to null since that means it is uninitialized
+        $this->collFeatureSynonymsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collFeatureSynonyms collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialFeatureSynonyms($v = true)
+    {
+        $this->collFeatureSynonymsPartial = $v;
+    }
+
+    /**
+     * Initializes the collFeatureSynonyms collection.
+     *
+     * By default this just sets the collFeatureSynonyms collection to an empty array (like clearcollFeatureSynonyms());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initFeatureSynonyms($overrideExisting = true)
+    {
+        if (null !== $this->collFeatureSynonyms && !$overrideExisting) {
+            return;
+        }
+        $this->collFeatureSynonyms = new PropelObjectCollection();
+        $this->collFeatureSynonyms->setModel('FeatureSynonym');
+    }
+
+    /**
+     * Gets an array of FeatureSynonym objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Pub is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|FeatureSynonym[] List of FeatureSynonym objects
+     * @throws PropelException
+     */
+    public function getFeatureSynonyms($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collFeatureSynonymsPartial && !$this->isNew();
+        if (null === $this->collFeatureSynonyms || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFeatureSynonyms) {
+                // return empty collection
+                $this->initFeatureSynonyms();
+            } else {
+                $collFeatureSynonyms = FeatureSynonymQuery::create(null, $criteria)
+                    ->filterByPub($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collFeatureSynonymsPartial && count($collFeatureSynonyms)) {
+                      $this->initFeatureSynonyms(false);
+
+                      foreach($collFeatureSynonyms as $obj) {
+                        if (false == $this->collFeatureSynonyms->contains($obj)) {
+                          $this->collFeatureSynonyms->append($obj);
+                        }
+                      }
+
+                      $this->collFeatureSynonymsPartial = true;
+                    }
+
+                    $collFeatureSynonyms->getInternalIterator()->rewind();
+                    return $collFeatureSynonyms;
+                }
+
+                if($partial && $this->collFeatureSynonyms) {
+                    foreach($this->collFeatureSynonyms as $obj) {
+                        if($obj->isNew()) {
+                            $collFeatureSynonyms[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collFeatureSynonyms = $collFeatureSynonyms;
+                $this->collFeatureSynonymsPartial = false;
+            }
+        }
+
+        return $this->collFeatureSynonyms;
+    }
+
+    /**
+     * Sets a collection of FeatureSynonym objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $featureSynonyms A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Pub The current object (for fluent API support)
+     */
+    public function setFeatureSynonyms(PropelCollection $featureSynonyms, PropelPDO $con = null)
+    {
+        $featureSynonymsToDelete = $this->getFeatureSynonyms(new Criteria(), $con)->diff($featureSynonyms);
+
+        $this->featureSynonymsScheduledForDeletion = unserialize(serialize($featureSynonymsToDelete));
+
+        foreach ($featureSynonymsToDelete as $featureSynonymRemoved) {
+            $featureSynonymRemoved->setPub(null);
+        }
+
+        $this->collFeatureSynonyms = null;
+        foreach ($featureSynonyms as $featureSynonym) {
+            $this->addFeatureSynonym($featureSynonym);
+        }
+
+        $this->collFeatureSynonyms = $featureSynonyms;
+        $this->collFeatureSynonymsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related FeatureSynonym objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related FeatureSynonym objects.
+     * @throws PropelException
+     */
+    public function countFeatureSynonyms(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collFeatureSynonymsPartial && !$this->isNew();
+        if (null === $this->collFeatureSynonyms || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFeatureSynonyms) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getFeatureSynonyms());
+            }
+            $query = FeatureSynonymQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPub($this)
+                ->count($con);
+        }
+
+        return count($this->collFeatureSynonyms);
+    }
+
+    /**
+     * Method called to associate a FeatureSynonym object to this object
+     * through the FeatureSynonym foreign key attribute.
+     *
+     * @param    FeatureSynonym $l FeatureSynonym
+     * @return Pub The current object (for fluent API support)
+     */
+    public function addFeatureSynonym(FeatureSynonym $l)
+    {
+        if ($this->collFeatureSynonyms === null) {
+            $this->initFeatureSynonyms();
+            $this->collFeatureSynonymsPartial = true;
+        }
+        if (!in_array($l, $this->collFeatureSynonyms->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddFeatureSynonym($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	FeatureSynonym $featureSynonym The featureSynonym object to add.
+     */
+    protected function doAddFeatureSynonym($featureSynonym)
+    {
+        $this->collFeatureSynonyms[]= $featureSynonym;
+        $featureSynonym->setPub($this);
+    }
+
+    /**
+     * @param	FeatureSynonym $featureSynonym The featureSynonym object to remove.
+     * @return Pub The current object (for fluent API support)
+     */
+    public function removeFeatureSynonym($featureSynonym)
+    {
+        if ($this->getFeatureSynonyms()->contains($featureSynonym)) {
+            $this->collFeatureSynonyms->remove($this->collFeatureSynonyms->search($featureSynonym));
+            if (null === $this->featureSynonymsScheduledForDeletion) {
+                $this->featureSynonymsScheduledForDeletion = clone $this->collFeatureSynonyms;
+                $this->featureSynonymsScheduledForDeletion->clear();
+            }
+            $this->featureSynonymsScheduledForDeletion[]= clone $featureSynonym;
+            $featureSynonym->setPub(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Pub is new, it will return
+     * an empty collection; or if this Pub has previously
+     * been saved, it will retrieve related FeatureSynonyms from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Pub.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|FeatureSynonym[] List of FeatureSynonym objects
+     */
+    public function getFeatureSynonymsJoinFeature($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureSynonymQuery::create(null, $criteria);
+        $query->joinWith('Feature', $join_behavior);
+
+        return $this->getFeatureSynonyms($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Pub is new, it will return
+     * an empty collection; or if this Pub has previously
+     * been saved, it will retrieve related FeatureSynonyms from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Pub.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|FeatureSynonym[] List of FeatureSynonym objects
+     */
+    public function getFeatureSynonymsJoinSynonym($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = FeatureSynonymQuery::create(null, $criteria);
+        $query->joinWith('Synonym', $join_behavior);
+
+        return $this->getFeatureSynonyms($query, $con);
     }
 
     /**
@@ -4005,6 +4326,11 @@ abstract class BasePub extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collFeatureSynonyms) {
+                foreach ($this->collFeatureSynonyms as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collPubDbxrefs) {
                 foreach ($this->collPubDbxrefs as $o) {
                     $o->clearAllReferences($deep);
@@ -4049,6 +4375,10 @@ abstract class BasePub extends BaseObject implements Persistent
             $this->collFeaturePubs->clearIterator();
         }
         $this->collFeaturePubs = null;
+        if ($this->collFeatureSynonyms instanceof PropelCollection) {
+            $this->collFeatureSynonyms->clearIterator();
+        }
+        $this->collFeatureSynonyms = null;
         if ($this->collPubDbxrefs instanceof PropelCollection) {
             $this->collPubDbxrefs->clearIterator();
         }

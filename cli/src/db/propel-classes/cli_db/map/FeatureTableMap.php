@@ -70,6 +70,7 @@ class FeatureTableMap extends TableMap
         $this->addRelation('FeatureCvterm', 'cli_db\\propel\\FeatureCvterm', RelationMap::ONE_TO_MANY, array('feature_id' => 'feature_id', ), 'CASCADE', null, 'FeatureCvterms');
         $this->addRelation('FeatureDbxref', 'cli_db\\propel\\FeatureDbxref', RelationMap::ONE_TO_MANY, array('feature_id' => 'feature_id', ), 'CASCADE', null, 'FeatureDbxrefs');
         $this->addRelation('FeaturePub', 'cli_db\\propel\\FeaturePub', RelationMap::ONE_TO_MANY, array('feature_id' => 'feature_id', ), 'CASCADE', null, 'FeaturePubs');
+        $this->addRelation('FeatureSynonym', 'cli_db\\propel\\FeatureSynonym', RelationMap::ONE_TO_MANY, array('feature_id' => 'feature_id', ), 'CASCADE', null, 'FeatureSynonyms');
     } // buildRelations()
 
 } // FeatureTableMap

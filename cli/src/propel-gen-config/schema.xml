@@ -1297,7 +1297,7 @@
     <index name="feature_relationshipprop_pub_idx">
       <index-column name="pub_id"/>
     </index>
-  </table>
+  </table-->
   <table name="feature_synonym" phpName="FeatureSynonym" idMethod="native">
     <column name="feature_synonym_id" phpName="FeatureSynonymId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="synonym_id" phpName="SynonymId" type="INTEGER" required="true"/>
@@ -1329,7 +1329,7 @@
       <index-column name="pub_id"/>
     </index>
   </table>
-  <table name="featureloc" phpName="Featureloc" idMethod="native">
+  <!--table name="featureloc" phpName="Featureloc" idMethod="native">
     <column name="featureloc_id" phpName="FeaturelocId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="feature_id" phpName="FeatureId" type="INTEGER" required="true"/>
     <column name="srcfeature_id" phpName="SrcfeatureId" type="INTEGER" required="false"/>
@@ -2070,7 +2070,7 @@
       <unique-column name="studyprop_id"/>
       <unique-column name="feature_id"/>
     </unique>
-  </table>
+  </table-->
   <table name="synonym" phpName="Synonym" idMethod="native">
     <column name="synonym_id" phpName="SynonymId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -2087,7 +2087,7 @@
       <index-column name="type_id"/>
     </index>
   </table>
-  <table name="tableinfo" phpName="Tableinfo" idMethod="native">
+  <!--table name="tableinfo" phpName="Tableinfo" idMethod="native">
     <column name="tableinfo_id" phpName="TableinfoId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="30" required="true"/>
     <column name="primary_key_column" phpName="PrimaryKeyColumn" type="VARCHAR" size="30" required="false"/>

@@ -16,6 +16,7 @@ use cli_db\propel\Cvterm;
 use cli_db\propel\FeatureCvterm;
 use cli_db\propel\FeatureCvtermPub;
 use cli_db\propel\FeaturePub;
+use cli_db\propel\FeatureSynonym;
 use cli_db\propel\Pub;
 use cli_db\propel\PubDbxref;
 use cli_db\propel\PubPeer;
@@ -78,6 +79,10 @@ use cli_db\propel\Pubprop;
  * @method PubQuery leftJoinFeaturePub($relationAlias = null) Adds a LEFT JOIN clause to the query using the FeaturePub relation
  * @method PubQuery rightJoinFeaturePub($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FeaturePub relation
  * @method PubQuery innerJoinFeaturePub($relationAlias = null) Adds a INNER JOIN clause to the query using the FeaturePub relation
+ *
+ * @method PubQuery leftJoinFeatureSynonym($relationAlias = null) Adds a LEFT JOIN clause to the query using the FeatureSynonym relation
+ * @method PubQuery rightJoinFeatureSynonym($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FeatureSynonym relation
+ * @method PubQuery innerJoinFeatureSynonym($relationAlias = null) Adds a INNER JOIN clause to the query using the FeatureSynonym relation
  *
  * @method PubQuery leftJoinPubDbxref($relationAlias = null) Adds a LEFT JOIN clause to the query using the PubDbxref relation
  * @method PubQuery rightJoinPubDbxref($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PubDbxref relation
@@ -1050,6 +1055,80 @@ abstract class BasePubQuery extends ModelCriteria
         return $this
             ->joinFeaturePub($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'FeaturePub', '\cli_db\propel\FeaturePubQuery');
+    }
+
+    /**
+     * Filter the query by a related FeatureSynonym object
+     *
+     * @param   FeatureSynonym|PropelObjectCollection $featureSynonym  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 PubQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByFeatureSynonym($featureSynonym, $comparison = null)
+    {
+        if ($featureSynonym instanceof FeatureSynonym) {
+            return $this
+                ->addUsingAlias(PubPeer::PUB_ID, $featureSynonym->getPubId(), $comparison);
+        } elseif ($featureSynonym instanceof PropelObjectCollection) {
+            return $this
+                ->useFeatureSynonymQuery()
+                ->filterByPrimaryKeys($featureSynonym->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFeatureSynonym() only accepts arguments of type FeatureSynonym or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the FeatureSynonym relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return PubQuery The current query, for fluid interface
+     */
+    public function joinFeatureSynonym($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('FeatureSynonym');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'FeatureSynonym');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the FeatureSynonym relation FeatureSynonym object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\FeatureSynonymQuery A secondary query class using the current class as primary query
+     */
+    public function useFeatureSynonymQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFeatureSynonym($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FeatureSynonym', '\cli_db\propel\FeatureSynonymQuery');
     }
 
     /**

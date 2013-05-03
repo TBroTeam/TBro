@@ -68,6 +68,7 @@ class CvtermTableMap extends TableMap
         $this->addRelation('Pub', 'cli_db\\propel\\Pub', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Pubs');
         $this->addRelation('PubRelationship', 'cli_db\\propel\\PubRelationship', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'PubRelationships');
         $this->addRelation('Pubprop', 'cli_db\\propel\\Pubprop', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Pubprops');
+        $this->addRelation('Synonym', 'cli_db\\propel\\Synonym', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Synonyms');
     } // buildRelations()
 
 } // CvtermTableMap

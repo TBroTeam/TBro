@@ -36,6 +36,8 @@ use cli_db\propel\PubRelationship;
 use cli_db\propel\PubRelationshipQuery;
 use cli_db\propel\Pubprop;
 use cli_db\propel\PubpropQuery;
+use cli_db\propel\Synonym;
+use cli_db\propel\SynonymQuery;
 
 /**
  * Base class that represents a row from the 'cvterm' table.
@@ -169,6 +171,12 @@ abstract class BaseCvterm extends BaseObject implements Persistent
     protected $collPubpropsPartial;
 
     /**
+     * @var        PropelObjectCollection|Synonym[] Collection to store aggregation of Synonym objects.
+     */
+    protected $collSynonyms;
+    protected $collSynonymsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      * @var        boolean
@@ -241,6 +249,12 @@ abstract class BaseCvterm extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $pubpropsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $synonymsScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -624,6 +638,8 @@ abstract class BaseCvterm extends BaseObject implements Persistent
 
             $this->collPubprops = null;
 
+            $this->collSynonyms = null;
+
         } // if (deep)
     }
 
@@ -914,6 +930,23 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                 }
             }
 
+            if ($this->synonymsScheduledForDeletion !== null) {
+                if (!$this->synonymsScheduledForDeletion->isEmpty()) {
+                    SynonymQuery::create()
+                        ->filterByPrimaryKeys($this->synonymsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->synonymsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSynonyms !== null) {
+                foreach ($this->collSynonyms as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -1179,6 +1212,14 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collSynonyms !== null) {
+                    foreach ($this->collSynonyms as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
 
             $this->alreadyInValidation = false;
         }
@@ -1302,6 +1343,9 @@ abstract class BaseCvterm extends BaseObject implements Persistent
             }
             if (null !== $this->collPubprops) {
                 $result['Pubprops'] = $this->collPubprops->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collSynonyms) {
+                $result['Synonyms'] = $this->collSynonyms->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1538,6 +1582,12 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                 }
             }
 
+            foreach ($this->getSynonyms() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSynonym($relObj->copy($deepCopy));
+                }
+            }
+
             //unflag object copy
             $this->startCopy = false;
         } // if ($deepCopy)
@@ -1677,6 +1727,9 @@ abstract class BaseCvterm extends BaseObject implements Persistent
         }
         if ('Pubprop' == $relationName) {
             $this->initPubprops();
+        }
+        if ('Synonym' == $relationName) {
+            $this->initSynonyms();
         }
     }
 
@@ -3893,6 +3946,224 @@ abstract class BaseCvterm extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collSynonyms collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Cvterm The current object (for fluent API support)
+     * @see        addSynonyms()
+     */
+    public function clearSynonyms()
+    {
+        $this->collSynonyms = null; // important to set this to null since that means it is uninitialized
+        $this->collSynonymsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collSynonyms collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialSynonyms($v = true)
+    {
+        $this->collSynonymsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSynonyms collection.
+     *
+     * By default this just sets the collSynonyms collection to an empty array (like clearcollSynonyms());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSynonyms($overrideExisting = true)
+    {
+        if (null !== $this->collSynonyms && !$overrideExisting) {
+            return;
+        }
+        $this->collSynonyms = new PropelObjectCollection();
+        $this->collSynonyms->setModel('Synonym');
+    }
+
+    /**
+     * Gets an array of Synonym objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Cvterm is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Synonym[] List of Synonym objects
+     * @throws PropelException
+     */
+    public function getSynonyms($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collSynonymsPartial && !$this->isNew();
+        if (null === $this->collSynonyms || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSynonyms) {
+                // return empty collection
+                $this->initSynonyms();
+            } else {
+                $collSynonyms = SynonymQuery::create(null, $criteria)
+                    ->filterByCvterm($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collSynonymsPartial && count($collSynonyms)) {
+                      $this->initSynonyms(false);
+
+                      foreach($collSynonyms as $obj) {
+                        if (false == $this->collSynonyms->contains($obj)) {
+                          $this->collSynonyms->append($obj);
+                        }
+                      }
+
+                      $this->collSynonymsPartial = true;
+                    }
+
+                    $collSynonyms->getInternalIterator()->rewind();
+                    return $collSynonyms;
+                }
+
+                if($partial && $this->collSynonyms) {
+                    foreach($this->collSynonyms as $obj) {
+                        if($obj->isNew()) {
+                            $collSynonyms[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSynonyms = $collSynonyms;
+                $this->collSynonymsPartial = false;
+            }
+        }
+
+        return $this->collSynonyms;
+    }
+
+    /**
+     * Sets a collection of Synonym objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $synonyms A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function setSynonyms(PropelCollection $synonyms, PropelPDO $con = null)
+    {
+        $synonymsToDelete = $this->getSynonyms(new Criteria(), $con)->diff($synonyms);
+
+        $this->synonymsScheduledForDeletion = unserialize(serialize($synonymsToDelete));
+
+        foreach ($synonymsToDelete as $synonymRemoved) {
+            $synonymRemoved->setCvterm(null);
+        }
+
+        $this->collSynonyms = null;
+        foreach ($synonyms as $synonym) {
+            $this->addSynonym($synonym);
+        }
+
+        $this->collSynonyms = $synonyms;
+        $this->collSynonymsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Synonym objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Synonym objects.
+     * @throws PropelException
+     */
+    public function countSynonyms(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collSynonymsPartial && !$this->isNew();
+        if (null === $this->collSynonyms || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSynonyms) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getSynonyms());
+            }
+            $query = SynonymQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCvterm($this)
+                ->count($con);
+        }
+
+        return count($this->collSynonyms);
+    }
+
+    /**
+     * Method called to associate a Synonym object to this object
+     * through the Synonym foreign key attribute.
+     *
+     * @param    Synonym $l Synonym
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function addSynonym(Synonym $l)
+    {
+        if ($this->collSynonyms === null) {
+            $this->initSynonyms();
+            $this->collSynonymsPartial = true;
+        }
+        if (!in_array($l, $this->collSynonyms->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddSynonym($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Synonym $synonym The synonym object to add.
+     */
+    protected function doAddSynonym($synonym)
+    {
+        $this->collSynonyms[]= $synonym;
+        $synonym->setCvterm($this);
+    }
+
+    /**
+     * @param	Synonym $synonym The synonym object to remove.
+     * @return Cvterm The current object (for fluent API support)
+     */
+    public function removeSynonym($synonym)
+    {
+        if ($this->getSynonyms()->contains($synonym)) {
+            $this->collSynonyms->remove($this->collSynonyms->search($synonym));
+            if (null === $this->synonymsScheduledForDeletion) {
+                $this->synonymsScheduledForDeletion = clone $this->collSynonyms;
+                $this->synonymsScheduledForDeletion->clear();
+            }
+            $this->synonymsScheduledForDeletion[]= clone $synonym;
+            $synonym->setCvterm(null);
+        }
+
+        return $this;
+    }
+
+    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -3972,6 +4243,11 @@ abstract class BaseCvterm extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collSynonyms) {
+                foreach ($this->collSynonyms as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->aCv instanceof Persistent) {
               $this->aCv->clearAllReferences($deep);
             }
@@ -4015,6 +4291,10 @@ abstract class BaseCvterm extends BaseObject implements Persistent
             $this->collPubprops->clearIterator();
         }
         $this->collPubprops = null;
+        if ($this->collSynonyms instanceof PropelCollection) {
+            $this->collSynonyms->clearIterator();
+        }
+        $this->collSynonyms = null;
         $this->aCv = null;
     }
 

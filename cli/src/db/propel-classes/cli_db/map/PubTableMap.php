@@ -69,6 +69,7 @@ class PubTableMap extends TableMap
         $this->addRelation('FeatureCvterm', 'cli_db\\propel\\FeatureCvterm', RelationMap::ONE_TO_MANY, array('pub_id' => 'pub_id', ), 'CASCADE', null, 'FeatureCvterms');
         $this->addRelation('FeatureCvtermPub', 'cli_db\\propel\\FeatureCvtermPub', RelationMap::ONE_TO_MANY, array('pub_id' => 'pub_id', ), 'CASCADE', null, 'FeatureCvtermPubs');
         $this->addRelation('FeaturePub', 'cli_db\\propel\\FeaturePub', RelationMap::ONE_TO_MANY, array('pub_id' => 'pub_id', ), 'CASCADE', null, 'FeaturePubs');
+        $this->addRelation('FeatureSynonym', 'cli_db\\propel\\FeatureSynonym', RelationMap::ONE_TO_MANY, array('pub_id' => 'pub_id', ), 'CASCADE', null, 'FeatureSynonyms');
         $this->addRelation('PubDbxref', 'cli_db\\propel\\PubDbxref', RelationMap::ONE_TO_MANY, array('pub_id' => 'pub_id', ), 'CASCADE', null, 'PubDbxrefs');
         $this->addRelation('PubRelationshipRelatedByObjectId', 'cli_db\\propel\\PubRelationship', RelationMap::ONE_TO_MANY, array('pub_id' => 'object_id', ), 'CASCADE', null, 'PubRelationshipsRelatedByObjectId');
         $this->addRelation('PubRelationshipRelatedBySubjectId', 'cli_db\\propel\\PubRelationship', RelationMap::ONE_TO_MANY, array('pub_id' => 'subject_id', ), 'CASCADE', null, 'PubRelationshipsRelatedBySubjectId');

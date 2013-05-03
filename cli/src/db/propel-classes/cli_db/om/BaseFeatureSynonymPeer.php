@@ -9,95 +9,70 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
-use cli_db\propel\CvtermPeer;
-use cli_db\propel\DbxrefPeer;
-use cli_db\propel\Feature;
-use cli_db\propel\FeatureCvtermPeer;
-use cli_db\propel\FeatureDbxrefPeer;
 use cli_db\propel\FeaturePeer;
-use cli_db\propel\FeaturePubPeer;
+use cli_db\propel\FeatureSynonym;
 use cli_db\propel\FeatureSynonymPeer;
-use cli_db\propel\OrganismPeer;
-use cli_db\propel\map\FeatureTableMap;
+use cli_db\propel\PubPeer;
+use cli_db\propel\SynonymPeer;
+use cli_db\propel\map\FeatureSynonymTableMap;
 
 /**
- * Base static class for performing query and update operations on the 'feature' table.
+ * Base static class for performing query and update operations on the 'feature_synonym' table.
  *
  *
  *
  * @package propel.generator.cli_db.om
  */
-abstract class BaseFeaturePeer
+abstract class BaseFeatureSynonymPeer
 {
 
     /** the default database name for this class */
     const DATABASE_NAME = 'cli_db';
 
     /** the table name for this class */
-    const TABLE_NAME = 'feature';
+    const TABLE_NAME = 'feature_synonym';
 
     /** the related Propel class for this table */
-    const OM_CLASS = 'cli_db\\propel\\Feature';
+    const OM_CLASS = 'cli_db\\propel\\FeatureSynonym';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = 'FeatureTableMap';
+    const TM_CLASS = 'FeatureSynonymTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 13;
+    const NUM_COLUMNS = 6;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 13;
+    const NUM_HYDRATE_COLUMNS = 6;
+
+    /** the column name for the feature_synonym_id field */
+    const FEATURE_SYNONYM_ID = 'feature_synonym.feature_synonym_id';
+
+    /** the column name for the synonym_id field */
+    const SYNONYM_ID = 'feature_synonym.synonym_id';
 
     /** the column name for the feature_id field */
-    const FEATURE_ID = 'feature.feature_id';
+    const FEATURE_ID = 'feature_synonym.feature_id';
 
-    /** the column name for the dbxref_id field */
-    const DBXREF_ID = 'feature.dbxref_id';
+    /** the column name for the pub_id field */
+    const PUB_ID = 'feature_synonym.pub_id';
 
-    /** the column name for the organism_id field */
-    const ORGANISM_ID = 'feature.organism_id';
+    /** the column name for the is_current field */
+    const IS_CURRENT = 'feature_synonym.is_current';
 
-    /** the column name for the name field */
-    const NAME = 'feature.name';
-
-    /** the column name for the uniquename field */
-    const UNIQUENAME = 'feature.uniquename';
-
-    /** the column name for the residues field */
-    const RESIDUES = 'feature.residues';
-
-    /** the column name for the seqlen field */
-    const SEQLEN = 'feature.seqlen';
-
-    /** the column name for the md5checksum field */
-    const MD5CHECKSUM = 'feature.md5checksum';
-
-    /** the column name for the type_id field */
-    const TYPE_ID = 'feature.type_id';
-
-    /** the column name for the is_analysis field */
-    const IS_ANALYSIS = 'feature.is_analysis';
-
-    /** the column name for the is_obsolete field */
-    const IS_OBSOLETE = 'feature.is_obsolete';
-
-    /** the column name for the timeaccessioned field */
-    const TIMEACCESSIONED = 'feature.timeaccessioned';
-
-    /** the column name for the timelastmodified field */
-    const TIMELASTMODIFIED = 'feature.timelastmodified';
+    /** the column name for the is_internal field */
+    const IS_INTERNAL = 'feature_synonym.is_internal';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
 
     /**
-     * An identiy map to hold any loaded instances of Feature objects.
+     * An identiy map to hold any loaded instances of FeatureSynonym objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array Feature[]
+     * @var        array FeatureSynonym[]
      */
     public static $instances = array();
 
@@ -106,30 +81,30 @@ abstract class BaseFeaturePeer
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. FeaturePeer::$fieldNames[FeaturePeer::TYPE_PHPNAME][0] = 'Id'
+     * e.g. FeatureSynonymPeer::$fieldNames[FeatureSynonymPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('FeatureId', 'DbxrefId', 'OrganismId', 'Name', 'Uniquename', 'Residues', 'Seqlen', 'Md5checksum', 'TypeId', 'IsAnalysis', 'IsObsolete', 'Timeaccessioned', 'Timelastmodified', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('featureId', 'dbxrefId', 'organismId', 'name', 'uniquename', 'residues', 'seqlen', 'md5checksum', 'typeId', 'isAnalysis', 'isObsolete', 'timeaccessioned', 'timelastmodified', ),
-        BasePeer::TYPE_COLNAME => array (FeaturePeer::FEATURE_ID, FeaturePeer::DBXREF_ID, FeaturePeer::ORGANISM_ID, FeaturePeer::NAME, FeaturePeer::UNIQUENAME, FeaturePeer::RESIDUES, FeaturePeer::SEQLEN, FeaturePeer::MD5CHECKSUM, FeaturePeer::TYPE_ID, FeaturePeer::IS_ANALYSIS, FeaturePeer::IS_OBSOLETE, FeaturePeer::TIMEACCESSIONED, FeaturePeer::TIMELASTMODIFIED, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('FEATURE_ID', 'DBXREF_ID', 'ORGANISM_ID', 'NAME', 'UNIQUENAME', 'RESIDUES', 'SEQLEN', 'MD5CHECKSUM', 'TYPE_ID', 'IS_ANALYSIS', 'IS_OBSOLETE', 'TIMEACCESSIONED', 'TIMELASTMODIFIED', ),
-        BasePeer::TYPE_FIELDNAME => array ('feature_id', 'dbxref_id', 'organism_id', 'name', 'uniquename', 'residues', 'seqlen', 'md5checksum', 'type_id', 'is_analysis', 'is_obsolete', 'timeaccessioned', 'timelastmodified', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        BasePeer::TYPE_PHPNAME => array ('FeatureSynonymId', 'SynonymId', 'FeatureId', 'PubId', 'IsCurrent', 'IsInternal', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('featureSynonymId', 'synonymId', 'featureId', 'pubId', 'isCurrent', 'isInternal', ),
+        BasePeer::TYPE_COLNAME => array (FeatureSynonymPeer::FEATURE_SYNONYM_ID, FeatureSynonymPeer::SYNONYM_ID, FeatureSynonymPeer::FEATURE_ID, FeatureSynonymPeer::PUB_ID, FeatureSynonymPeer::IS_CURRENT, FeatureSynonymPeer::IS_INTERNAL, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('FEATURE_SYNONYM_ID', 'SYNONYM_ID', 'FEATURE_ID', 'PUB_ID', 'IS_CURRENT', 'IS_INTERNAL', ),
+        BasePeer::TYPE_FIELDNAME => array ('feature_synonym_id', 'synonym_id', 'feature_id', 'pub_id', 'is_current', 'is_internal', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
     );
 
     /**
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. FeaturePeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. FeatureSynonymPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('FeatureId' => 0, 'DbxrefId' => 1, 'OrganismId' => 2, 'Name' => 3, 'Uniquename' => 4, 'Residues' => 5, 'Seqlen' => 6, 'Md5checksum' => 7, 'TypeId' => 8, 'IsAnalysis' => 9, 'IsObsolete' => 10, 'Timeaccessioned' => 11, 'Timelastmodified' => 12, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('featureId' => 0, 'dbxrefId' => 1, 'organismId' => 2, 'name' => 3, 'uniquename' => 4, 'residues' => 5, 'seqlen' => 6, 'md5checksum' => 7, 'typeId' => 8, 'isAnalysis' => 9, 'isObsolete' => 10, 'timeaccessioned' => 11, 'timelastmodified' => 12, ),
-        BasePeer::TYPE_COLNAME => array (FeaturePeer::FEATURE_ID => 0, FeaturePeer::DBXREF_ID => 1, FeaturePeer::ORGANISM_ID => 2, FeaturePeer::NAME => 3, FeaturePeer::UNIQUENAME => 4, FeaturePeer::RESIDUES => 5, FeaturePeer::SEQLEN => 6, FeaturePeer::MD5CHECKSUM => 7, FeaturePeer::TYPE_ID => 8, FeaturePeer::IS_ANALYSIS => 9, FeaturePeer::IS_OBSOLETE => 10, FeaturePeer::TIMEACCESSIONED => 11, FeaturePeer::TIMELASTMODIFIED => 12, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('FEATURE_ID' => 0, 'DBXREF_ID' => 1, 'ORGANISM_ID' => 2, 'NAME' => 3, 'UNIQUENAME' => 4, 'RESIDUES' => 5, 'SEQLEN' => 6, 'MD5CHECKSUM' => 7, 'TYPE_ID' => 8, 'IS_ANALYSIS' => 9, 'IS_OBSOLETE' => 10, 'TIMEACCESSIONED' => 11, 'TIMELASTMODIFIED' => 12, ),
-        BasePeer::TYPE_FIELDNAME => array ('feature_id' => 0, 'dbxref_id' => 1, 'organism_id' => 2, 'name' => 3, 'uniquename' => 4, 'residues' => 5, 'seqlen' => 6, 'md5checksum' => 7, 'type_id' => 8, 'is_analysis' => 9, 'is_obsolete' => 10, 'timeaccessioned' => 11, 'timelastmodified' => 12, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+        BasePeer::TYPE_PHPNAME => array ('FeatureSynonymId' => 0, 'SynonymId' => 1, 'FeatureId' => 2, 'PubId' => 3, 'IsCurrent' => 4, 'IsInternal' => 5, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('featureSynonymId' => 0, 'synonymId' => 1, 'featureId' => 2, 'pubId' => 3, 'isCurrent' => 4, 'isInternal' => 5, ),
+        BasePeer::TYPE_COLNAME => array (FeatureSynonymPeer::FEATURE_SYNONYM_ID => 0, FeatureSynonymPeer::SYNONYM_ID => 1, FeatureSynonymPeer::FEATURE_ID => 2, FeatureSynonymPeer::PUB_ID => 3, FeatureSynonymPeer::IS_CURRENT => 4, FeatureSynonymPeer::IS_INTERNAL => 5, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('FEATURE_SYNONYM_ID' => 0, 'SYNONYM_ID' => 1, 'FEATURE_ID' => 2, 'PUB_ID' => 3, 'IS_CURRENT' => 4, 'IS_INTERNAL' => 5, ),
+        BasePeer::TYPE_FIELDNAME => array ('feature_synonym_id' => 0, 'synonym_id' => 1, 'feature_id' => 2, 'pub_id' => 3, 'is_current' => 4, 'is_internal' => 5, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -144,10 +119,10 @@ abstract class BaseFeaturePeer
      */
     public static function translateFieldName($name, $fromType, $toType)
     {
-        $toNames = FeaturePeer::getFieldNames($toType);
-        $key = isset(FeaturePeer::$fieldKeys[$fromType][$name]) ? FeaturePeer::$fieldKeys[$fromType][$name] : null;
+        $toNames = FeatureSynonymPeer::getFieldNames($toType);
+        $key = isset(FeatureSynonymPeer::$fieldKeys[$fromType][$name]) ? FeatureSynonymPeer::$fieldKeys[$fromType][$name] : null;
         if ($key === null) {
-            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(FeaturePeer::$fieldKeys[$fromType], true));
+            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(FeatureSynonymPeer::$fieldKeys[$fromType], true));
         }
 
         return $toNames[$key];
@@ -164,11 +139,11 @@ abstract class BaseFeaturePeer
      */
     public static function getFieldNames($type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists($type, FeaturePeer::$fieldNames)) {
+        if (!array_key_exists($type, FeatureSynonymPeer::$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
         }
 
-        return FeaturePeer::$fieldNames[$type];
+        return FeatureSynonymPeer::$fieldNames[$type];
     }
 
     /**
@@ -180,12 +155,12 @@ abstract class BaseFeaturePeer
      *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
      * @param      string $alias The alias for the current table.
-     * @param      string $column The column name for current table. (i.e. FeaturePeer::COLUMN_NAME).
+     * @param      string $column The column name for current table. (i.e. FeatureSynonymPeer::COLUMN_NAME).
      * @return string
      */
     public static function alias($alias, $column)
     {
-        return str_replace(FeaturePeer::TABLE_NAME.'.', $alias.'.', $column);
+        return str_replace(FeatureSynonymPeer::TABLE_NAME.'.', $alias.'.', $column);
     }
 
     /**
@@ -203,33 +178,19 @@ abstract class BaseFeaturePeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(FeaturePeer::FEATURE_ID);
-            $criteria->addSelectColumn(FeaturePeer::DBXREF_ID);
-            $criteria->addSelectColumn(FeaturePeer::ORGANISM_ID);
-            $criteria->addSelectColumn(FeaturePeer::NAME);
-            $criteria->addSelectColumn(FeaturePeer::UNIQUENAME);
-            $criteria->addSelectColumn(FeaturePeer::RESIDUES);
-            $criteria->addSelectColumn(FeaturePeer::SEQLEN);
-            $criteria->addSelectColumn(FeaturePeer::MD5CHECKSUM);
-            $criteria->addSelectColumn(FeaturePeer::TYPE_ID);
-            $criteria->addSelectColumn(FeaturePeer::IS_ANALYSIS);
-            $criteria->addSelectColumn(FeaturePeer::IS_OBSOLETE);
-            $criteria->addSelectColumn(FeaturePeer::TIMEACCESSIONED);
-            $criteria->addSelectColumn(FeaturePeer::TIMELASTMODIFIED);
+            $criteria->addSelectColumn(FeatureSynonymPeer::FEATURE_SYNONYM_ID);
+            $criteria->addSelectColumn(FeatureSynonymPeer::SYNONYM_ID);
+            $criteria->addSelectColumn(FeatureSynonymPeer::FEATURE_ID);
+            $criteria->addSelectColumn(FeatureSynonymPeer::PUB_ID);
+            $criteria->addSelectColumn(FeatureSynonymPeer::IS_CURRENT);
+            $criteria->addSelectColumn(FeatureSynonymPeer::IS_INTERNAL);
         } else {
+            $criteria->addSelectColumn($alias . '.feature_synonym_id');
+            $criteria->addSelectColumn($alias . '.synonym_id');
             $criteria->addSelectColumn($alias . '.feature_id');
-            $criteria->addSelectColumn($alias . '.dbxref_id');
-            $criteria->addSelectColumn($alias . '.organism_id');
-            $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.uniquename');
-            $criteria->addSelectColumn($alias . '.residues');
-            $criteria->addSelectColumn($alias . '.seqlen');
-            $criteria->addSelectColumn($alias . '.md5checksum');
-            $criteria->addSelectColumn($alias . '.type_id');
-            $criteria->addSelectColumn($alias . '.is_analysis');
-            $criteria->addSelectColumn($alias . '.is_obsolete');
-            $criteria->addSelectColumn($alias . '.timeaccessioned');
-            $criteria->addSelectColumn($alias . '.timelastmodified');
+            $criteria->addSelectColumn($alias . '.pub_id');
+            $criteria->addSelectColumn($alias . '.is_current');
+            $criteria->addSelectColumn($alias . '.is_internal');
         }
     }
 
@@ -249,21 +210,21 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME); // Set the correct dbName
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME); // Set the correct dbName
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         // BasePeer returns a PDOStatement
         $stmt = BasePeer::doCount($criteria, $con);
@@ -282,7 +243,7 @@ abstract class BaseFeaturePeer
      *
      * @param      Criteria $criteria object used to create the SELECT statement.
      * @param      PropelPDO $con
-     * @return                 Feature
+     * @return                 FeatureSynonym
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -290,7 +251,7 @@ abstract class BaseFeaturePeer
     {
         $critcopy = clone $criteria;
         $critcopy->setLimit(1);
-        $objects = FeaturePeer::doSelect($critcopy, $con);
+        $objects = FeatureSynonymPeer::doSelect($critcopy, $con);
         if ($objects) {
             return $objects[0];
         }
@@ -308,7 +269,7 @@ abstract class BaseFeaturePeer
      */
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)
     {
-        return FeaturePeer::populateObjects(FeaturePeer::doSelectStmt($criteria, $con));
+        return FeatureSynonymPeer::populateObjects(FeatureSynonymPeer::doSelectStmt($criteria, $con));
     }
     /**
      * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -326,16 +287,16 @@ abstract class BaseFeaturePeer
     public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         if (!$criteria->hasSelectClause()) {
             $criteria = clone $criteria;
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         // BasePeer returns a PDOStatement
         return BasePeer::doSelect($criteria, $con);
@@ -349,16 +310,16 @@ abstract class BaseFeaturePeer
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param      Feature $obj A Feature object.
+     * @param      FeatureSynonym $obj A FeatureSynonym object.
      * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
     {
         if (Propel::isInstancePoolingEnabled()) {
             if ($key === null) {
-                $key = (string) $obj->getFeatureId();
+                $key = (string) $obj->getFeatureSynonymId();
             } // if key === null
-            FeaturePeer::$instances[$key] = $obj;
+            FeatureSynonymPeer::$instances[$key] = $obj;
         }
     }
 
@@ -370,7 +331,7 @@ abstract class BaseFeaturePeer
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param      mixed $value A Feature object or a primary key value.
+     * @param      mixed $value A FeatureSynonym object or a primary key value.
      *
      * @return void
      * @throws PropelException - if the value is invalid.
@@ -378,17 +339,17 @@ abstract class BaseFeaturePeer
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
-            if (is_object($value) && $value instanceof Feature) {
-                $key = (string) $value->getFeatureId();
+            if (is_object($value) && $value instanceof FeatureSynonym) {
+                $key = (string) $value->getFeatureSynonymId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Feature object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or FeatureSynonym object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
                 throw $e;
             }
 
-            unset(FeaturePeer::$instances[$key]);
+            unset(FeatureSynonymPeer::$instances[$key]);
         }
     } // removeInstanceFromPool()
 
@@ -399,14 +360,14 @@ abstract class BaseFeaturePeer
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return   Feature Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return   FeatureSynonym Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool($key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(FeaturePeer::$instances[$key])) {
-                return FeaturePeer::$instances[$key];
+            if (isset(FeatureSynonymPeer::$instances[$key])) {
+                return FeatureSynonymPeer::$instances[$key];
             }
         }
 
@@ -422,32 +383,20 @@ abstract class BaseFeaturePeer
     {
       if ($and_clear_all_references)
       {
-        foreach (FeaturePeer::$instances as $instance)
+        foreach (FeatureSynonymPeer::$instances as $instance)
         {
           $instance->clearAllReferences(true);
         }
       }
-        FeaturePeer::$instances = array();
+        FeatureSynonymPeer::$instances = array();
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to feature
+     * Method to invalidate the instance pool of all tables related to feature_synonym
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in FeatureCvtermPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeatureCvtermPeer::clearInstancePool();
-        // Invalidate objects in FeatureDbxrefPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeatureDbxrefPeer::clearInstancePool();
-        // Invalidate objects in FeaturePubPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeaturePubPeer::clearInstancePool();
-        // Invalidate objects in FeatureSynonymPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeatureSynonymPeer::clearInstancePool();
     }
 
     /**
@@ -497,11 +446,11 @@ abstract class BaseFeaturePeer
         $results = array();
 
         // set the class once to avoid overhead in the loop
-        $cls = FeaturePeer::getOMClass();
+        $cls = FeatureSynonymPeer::getOMClass();
         // populate the object(s)
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj = FeaturePeer::getInstanceFromPool($key))) {
+            $key = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj = FeatureSynonymPeer::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
@@ -510,7 +459,7 @@ abstract class BaseFeaturePeer
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                FeaturePeer::addInstanceToPool($obj, $key);
+                FeatureSynonymPeer::addInstanceToPool($obj, $key);
             } // if key exists
         }
         $stmt->closeCursor();
@@ -524,21 +473,21 @@ abstract class BaseFeaturePeer
      * @param      int $startcol The 0-based offset for reading from the resultset row.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (Feature object, last column rank)
+     * @return array (FeatureSynonym object, last column rank)
      */
     public static function populateObject($row, $startcol = 0)
     {
-        $key = FeaturePeer::getPrimaryKeyHashFromRow($row, $startcol);
-        if (null !== ($obj = FeaturePeer::getInstanceFromPool($key))) {
+        $key = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, $startcol);
+        if (null !== ($obj = FeatureSynonymPeer::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $startcol, true); // rehydrate
-            $col = $startcol + FeaturePeer::NUM_HYDRATE_COLUMNS;
+            $col = $startcol + FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = FeaturePeer::OM_CLASS;
+            $cls = FeatureSynonymPeer::OM_CLASS;
             $obj = new $cls();
             $col = $obj->hydrate($row, $startcol);
-            FeaturePeer::addInstanceToPool($obj, $key);
+            FeatureSynonymPeer::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -546,7 +495,7 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Dbxref table
+     * Returns the number of rows matching criteria, joining the related Feature table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -554,7 +503,7 @@ abstract class BaseFeaturePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinDbxref(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinFeature(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -562,26 +511,26 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -597,7 +546,7 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Organism table
+     * Returns the number of rows matching criteria, joining the related Pub table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -605,7 +554,7 @@ abstract class BaseFeaturePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinOrganism(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinPub(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -613,26 +562,26 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -648,7 +597,7 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Cvterm table
+     * Returns the number of rows matching criteria, joining the related Synonym table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -656,7 +605,7 @@ abstract class BaseFeaturePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinCvterm(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinSynonym(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -664,26 +613,26 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -699,61 +648,61 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Selects a collection of Feature objects pre-filled with their Dbxref objects.
+     * Selects a collection of FeatureSynonym objects pre-filled with their Feature objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinDbxref(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinFeature(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
         FeaturePeer::addSelectColumns($criteria);
-        $startcol = FeaturePeer::NUM_HYDRATE_COLUMNS;
-        DbxrefPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
 
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
-            $key2 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol);
+            $key2 = FeaturePeer::getPrimaryKeyHashFromRow($row, $startcol);
             if ($key2 !== null) {
-                $obj2 = DbxrefPeer::getInstanceFromPool($key2);
+                $obj2 = FeaturePeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = DbxrefPeer::getOMClass();
+                    $cls = FeaturePeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol);
-                    DbxrefPeer::addInstanceToPool($obj2, $key2);
+                    FeaturePeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (Feature) to $obj2 (Dbxref)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to $obj2 (Feature)
+                $obj2->addFeatureSynonym($obj1);
 
             } // if joined row was not null
 
@@ -766,61 +715,61 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Selects a collection of Feature objects pre-filled with their Organism objects.
+     * Selects a collection of FeatureSynonym objects pre-filled with their Pub objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinOrganism(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinPub(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
-        FeaturePeer::addSelectColumns($criteria);
-        $startcol = FeaturePeer::NUM_HYDRATE_COLUMNS;
-        OrganismPeer::addSelectColumns($criteria);
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
+        PubPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
 
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
-            $key2 = OrganismPeer::getPrimaryKeyHashFromRow($row, $startcol);
+            $key2 = PubPeer::getPrimaryKeyHashFromRow($row, $startcol);
             if ($key2 !== null) {
-                $obj2 = OrganismPeer::getInstanceFromPool($key2);
+                $obj2 = PubPeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = OrganismPeer::getOMClass();
+                    $cls = PubPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol);
-                    OrganismPeer::addInstanceToPool($obj2, $key2);
+                    PubPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (Feature) to $obj2 (Organism)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to $obj2 (Pub)
+                $obj2->addFeatureSynonym($obj1);
 
             } // if joined row was not null
 
@@ -833,61 +782,61 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Selects a collection of Feature objects pre-filled with their Cvterm objects.
+     * Selects a collection of FeatureSynonym objects pre-filled with their Synonym objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinCvterm(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinSynonym(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
-        FeaturePeer::addSelectColumns($criteria);
-        $startcol = FeaturePeer::NUM_HYDRATE_COLUMNS;
-        CvtermPeer::addSelectColumns($criteria);
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
+        SynonymPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
 
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
-            $key2 = CvtermPeer::getPrimaryKeyHashFromRow($row, $startcol);
+            $key2 = SynonymPeer::getPrimaryKeyHashFromRow($row, $startcol);
             if ($key2 !== null) {
-                $obj2 = CvtermPeer::getInstanceFromPool($key2);
+                $obj2 = SynonymPeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = CvtermPeer::getOMClass();
+                    $cls = SynonymPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol);
-                    CvtermPeer::addInstanceToPool($obj2, $key2);
+                    SynonymPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (Feature) to $obj2 (Cvterm)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to $obj2 (Synonym)
+                $obj2->addFeatureSynonym($obj1);
 
             } // if joined row was not null
 
@@ -916,30 +865,30 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -954,12 +903,12 @@ abstract class BaseFeaturePeer
     }
 
     /**
-     * Selects a collection of Feature objects pre-filled with all related objects.
+     * Selects a collection of FeatureSynonym objects pre-filled with all related objects.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -969,96 +918,96 @@ abstract class BaseFeaturePeer
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol2 = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
+
         FeaturePeer::addSelectColumns($criteria);
-        $startcol2 = FeaturePeer::NUM_HYDRATE_COLUMNS;
+        $startcol3 = $startcol2 + FeaturePeer::NUM_HYDRATE_COLUMNS;
 
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
+        PubPeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + PubPeer::NUM_HYDRATE_COLUMNS;
 
-        OrganismPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + OrganismPeer::NUM_HYDRATE_COLUMNS;
+        SynonymPeer::addSelectColumns($criteria);
+        $startcol5 = $startcol4 + SynonymPeer::NUM_HYDRATE_COLUMNS;
 
-        CvtermPeer::addSelectColumns($criteria);
-        $startcol5 = $startcol4 + CvtermPeer::NUM_HYDRATE_COLUMNS;
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
-
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-            // Add objects for joined Dbxref rows
+            // Add objects for joined Feature rows
 
-            $key2 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+            $key2 = FeaturePeer::getPrimaryKeyHashFromRow($row, $startcol2);
             if ($key2 !== null) {
-                $obj2 = DbxrefPeer::getInstanceFromPool($key2);
+                $obj2 = FeaturePeer::getInstanceFromPool($key2);
                 if (!$obj2) {
 
-                    $cls = DbxrefPeer::getOMClass();
+                    $cls = FeaturePeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    DbxrefPeer::addInstanceToPool($obj2, $key2);
+                    FeaturePeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj2 (Dbxref)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj2 (Feature)
+                $obj2->addFeatureSynonym($obj1);
             } // if joined row not null
 
-            // Add objects for joined Organism rows
+            // Add objects for joined Pub rows
 
-            $key3 = OrganismPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+            $key3 = PubPeer::getPrimaryKeyHashFromRow($row, $startcol3);
             if ($key3 !== null) {
-                $obj3 = OrganismPeer::getInstanceFromPool($key3);
+                $obj3 = PubPeer::getInstanceFromPool($key3);
                 if (!$obj3) {
 
-                    $cls = OrganismPeer::getOMClass();
+                    $cls = PubPeer::getOMClass();
 
                     $obj3 = new $cls();
                     $obj3->hydrate($row, $startcol3);
-                    OrganismPeer::addInstanceToPool($obj3, $key3);
+                    PubPeer::addInstanceToPool($obj3, $key3);
                 } // if obj3 loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj3 (Organism)
-                $obj3->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj3 (Pub)
+                $obj3->addFeatureSynonym($obj1);
             } // if joined row not null
 
-            // Add objects for joined Cvterm rows
+            // Add objects for joined Synonym rows
 
-            $key4 = CvtermPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+            $key4 = SynonymPeer::getPrimaryKeyHashFromRow($row, $startcol4);
             if ($key4 !== null) {
-                $obj4 = CvtermPeer::getInstanceFromPool($key4);
+                $obj4 = SynonymPeer::getInstanceFromPool($key4);
                 if (!$obj4) {
 
-                    $cls = CvtermPeer::getOMClass();
+                    $cls = SynonymPeer::getOMClass();
 
                     $obj4 = new $cls();
                     $obj4->hydrate($row, $startcol4);
-                    CvtermPeer::addInstanceToPool($obj4, $key4);
+                    SynonymPeer::addInstanceToPool($obj4, $key4);
                 } // if obj4 loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj4 (Cvterm)
-                $obj4->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj4 (Synonym)
+                $obj4->addFeatureSynonym($obj1);
             } // if joined row not null
 
             $results[] = $obj1;
@@ -1070,7 +1019,7 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Dbxref table
+     * Returns the number of rows matching criteria, joining the related Feature table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1078,7 +1027,7 @@ abstract class BaseFeaturePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinAllExceptDbxref(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinAllExceptFeature(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -1086,28 +1035,28 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY should not affect count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -1123,7 +1072,7 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Organism table
+     * Returns the number of rows matching criteria, joining the related Pub table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1131,7 +1080,7 @@ abstract class BaseFeaturePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinAllExceptOrganism(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinAllExceptPub(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -1139,28 +1088,28 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY should not affect count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -1176,7 +1125,7 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Returns the number of rows matching criteria, joining the related Cvterm table
+     * Returns the number of rows matching criteria, joining the related Synonym table
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1184,7 +1133,7 @@ abstract class BaseFeaturePeer
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
      * @return int Number of matching rows.
      */
-    public static function doCountJoinAllExceptCvterm(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doCountJoinAllExceptSynonym(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         // we're going to modify criteria, so copy it first
         $criteria = clone $criteria;
@@ -1192,28 +1141,28 @@ abstract class BaseFeaturePeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            FeaturePeer::addSelectColumns($criteria);
+            FeatureSynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY should not affect count
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -1229,16 +1178,16 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Selects a collection of Feature objects pre-filled with all related objects except Dbxref.
+     * Selects a collection of FeatureSynonym objects pre-filled with all related objects except Feature.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinAllExceptDbxref(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinAllExceptFeature(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
@@ -1246,75 +1195,75 @@ abstract class BaseFeaturePeer
         // $criteria->getDbName() will return the same object if not set to another value
         // so == check is okay and faster
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
-        FeaturePeer::addSelectColumns($criteria);
-        $startcol2 = FeaturePeer::NUM_HYDRATE_COLUMNS;
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol2 = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
 
-        OrganismPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + OrganismPeer::NUM_HYDRATE_COLUMNS;
+        PubPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + PubPeer::NUM_HYDRATE_COLUMNS;
 
-        CvtermPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + CvtermPeer::NUM_HYDRATE_COLUMNS;
+        SynonymPeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + SynonymPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined Organism rows
+                // Add objects for joined Pub rows
 
-                $key2 = OrganismPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                $key2 = PubPeer::getPrimaryKeyHashFromRow($row, $startcol2);
                 if ($key2 !== null) {
-                    $obj2 = OrganismPeer::getInstanceFromPool($key2);
+                    $obj2 = PubPeer::getInstanceFromPool($key2);
                     if (!$obj2) {
 
-                        $cls = OrganismPeer::getOMClass();
+                        $cls = PubPeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    OrganismPeer::addInstanceToPool($obj2, $key2);
+                    PubPeer::addInstanceToPool($obj2, $key2);
                 } // if $obj2 already loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj2 (Organism)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj2 (Pub)
+                $obj2->addFeatureSynonym($obj1);
 
             } // if joined row is not null
 
-                // Add objects for joined Cvterm rows
+                // Add objects for joined Synonym rows
 
-                $key3 = CvtermPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+                $key3 = SynonymPeer::getPrimaryKeyHashFromRow($row, $startcol3);
                 if ($key3 !== null) {
-                    $obj3 = CvtermPeer::getInstanceFromPool($key3);
+                    $obj3 = SynonymPeer::getInstanceFromPool($key3);
                     if (!$obj3) {
 
-                        $cls = CvtermPeer::getOMClass();
+                        $cls = SynonymPeer::getOMClass();
 
                     $obj3 = new $cls();
                     $obj3->hydrate($row, $startcol3);
-                    CvtermPeer::addInstanceToPool($obj3, $key3);
+                    SynonymPeer::addInstanceToPool($obj3, $key3);
                 } // if $obj3 already loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj3 (Cvterm)
-                $obj3->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj3 (Synonym)
+                $obj3->addFeatureSynonym($obj1);
 
             } // if joined row is not null
 
@@ -1327,16 +1276,16 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Selects a collection of Feature objects pre-filled with all related objects except Organism.
+     * Selects a collection of FeatureSynonym objects pre-filled with all related objects except Pub.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinAllExceptOrganism(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinAllExceptPub(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
@@ -1344,75 +1293,75 @@ abstract class BaseFeaturePeer
         // $criteria->getDbName() will return the same object if not set to another value
         // so == check is okay and faster
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol2 = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
+
         FeaturePeer::addSelectColumns($criteria);
-        $startcol2 = FeaturePeer::NUM_HYDRATE_COLUMNS;
+        $startcol3 = $startcol2 + FeaturePeer::NUM_HYDRATE_COLUMNS;
 
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
+        SynonymPeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + SynonymPeer::NUM_HYDRATE_COLUMNS;
 
-        CvtermPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + CvtermPeer::NUM_HYDRATE_COLUMNS;
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
-        $criteria->addJoin(FeaturePeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::SYNONYM_ID, SynonymPeer::SYNONYM_ID, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined Dbxref rows
+                // Add objects for joined Feature rows
 
-                $key2 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                $key2 = FeaturePeer::getPrimaryKeyHashFromRow($row, $startcol2);
                 if ($key2 !== null) {
-                    $obj2 = DbxrefPeer::getInstanceFromPool($key2);
+                    $obj2 = FeaturePeer::getInstanceFromPool($key2);
                     if (!$obj2) {
 
-                        $cls = DbxrefPeer::getOMClass();
+                        $cls = FeaturePeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    DbxrefPeer::addInstanceToPool($obj2, $key2);
+                    FeaturePeer::addInstanceToPool($obj2, $key2);
                 } // if $obj2 already loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj2 (Dbxref)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj2 (Feature)
+                $obj2->addFeatureSynonym($obj1);
 
             } // if joined row is not null
 
-                // Add objects for joined Cvterm rows
+                // Add objects for joined Synonym rows
 
-                $key3 = CvtermPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+                $key3 = SynonymPeer::getPrimaryKeyHashFromRow($row, $startcol3);
                 if ($key3 !== null) {
-                    $obj3 = CvtermPeer::getInstanceFromPool($key3);
+                    $obj3 = SynonymPeer::getInstanceFromPool($key3);
                     if (!$obj3) {
 
-                        $cls = CvtermPeer::getOMClass();
+                        $cls = SynonymPeer::getOMClass();
 
                     $obj3 = new $cls();
                     $obj3->hydrate($row, $startcol3);
-                    CvtermPeer::addInstanceToPool($obj3, $key3);
+                    SynonymPeer::addInstanceToPool($obj3, $key3);
                 } // if $obj3 already loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj3 (Cvterm)
-                $obj3->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj3 (Synonym)
+                $obj3->addFeatureSynonym($obj1);
 
             } // if joined row is not null
 
@@ -1425,16 +1374,16 @@ abstract class BaseFeaturePeer
 
 
     /**
-     * Selects a collection of Feature objects pre-filled with all related objects except Cvterm.
+     * Selects a collection of FeatureSynonym objects pre-filled with all related objects except Synonym.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Feature objects.
+     * @return array           Array of FeatureSynonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinAllExceptCvterm(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public static function doSelectJoinAllExceptSynonym(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
         $criteria = clone $criteria;
 
@@ -1442,75 +1391,75 @@ abstract class BaseFeaturePeer
         // $criteria->getDbName() will return the same object if not set to another value
         // so == check is okay and faster
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+            $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
         }
 
+        FeatureSynonymPeer::addSelectColumns($criteria);
+        $startcol2 = FeatureSynonymPeer::NUM_HYDRATE_COLUMNS;
+
         FeaturePeer::addSelectColumns($criteria);
-        $startcol2 = FeaturePeer::NUM_HYDRATE_COLUMNS;
+        $startcol3 = $startcol2 + FeaturePeer::NUM_HYDRATE_COLUMNS;
 
-        DbxrefPeer::addSelectColumns($criteria);
-        $startcol3 = $startcol2 + DbxrefPeer::NUM_HYDRATE_COLUMNS;
+        PubPeer::addSelectColumns($criteria);
+        $startcol4 = $startcol3 + PubPeer::NUM_HYDRATE_COLUMNS;
 
-        OrganismPeer::addSelectColumns($criteria);
-        $startcol4 = $startcol3 + OrganismPeer::NUM_HYDRATE_COLUMNS;
+        $criteria->addJoin(FeatureSynonymPeer::FEATURE_ID, FeaturePeer::FEATURE_ID, $join_behavior);
 
-        $criteria->addJoin(FeaturePeer::DBXREF_ID, DbxrefPeer::DBXREF_ID, $join_behavior);
-
-        $criteria->addJoin(FeaturePeer::ORGANISM_ID, OrganismPeer::ORGANISM_ID, $join_behavior);
+        $criteria->addJoin(FeatureSynonymPeer::PUB_ID, PubPeer::PUB_ID, $join_behavior);
 
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = FeaturePeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = FeaturePeer::getInstanceFromPool($key1))) {
+            $key1 = FeatureSynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = FeatureSynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = FeaturePeer::getOMClass();
+                $cls = FeatureSynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                FeaturePeer::addInstanceToPool($obj1, $key1);
+                FeatureSynonymPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
-                // Add objects for joined Dbxref rows
+                // Add objects for joined Feature rows
 
-                $key2 = DbxrefPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+                $key2 = FeaturePeer::getPrimaryKeyHashFromRow($row, $startcol2);
                 if ($key2 !== null) {
-                    $obj2 = DbxrefPeer::getInstanceFromPool($key2);
+                    $obj2 = FeaturePeer::getInstanceFromPool($key2);
                     if (!$obj2) {
 
-                        $cls = DbxrefPeer::getOMClass();
+                        $cls = FeaturePeer::getOMClass();
 
                     $obj2 = new $cls();
                     $obj2->hydrate($row, $startcol2);
-                    DbxrefPeer::addInstanceToPool($obj2, $key2);
+                    FeaturePeer::addInstanceToPool($obj2, $key2);
                 } // if $obj2 already loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj2 (Dbxref)
-                $obj2->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj2 (Feature)
+                $obj2->addFeatureSynonym($obj1);
 
             } // if joined row is not null
 
-                // Add objects for joined Organism rows
+                // Add objects for joined Pub rows
 
-                $key3 = OrganismPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+                $key3 = PubPeer::getPrimaryKeyHashFromRow($row, $startcol3);
                 if ($key3 !== null) {
-                    $obj3 = OrganismPeer::getInstanceFromPool($key3);
+                    $obj3 = PubPeer::getInstanceFromPool($key3);
                     if (!$obj3) {
 
-                        $cls = OrganismPeer::getOMClass();
+                        $cls = PubPeer::getOMClass();
 
                     $obj3 = new $cls();
                     $obj3->hydrate($row, $startcol3);
-                    OrganismPeer::addInstanceToPool($obj3, $key3);
+                    PubPeer::addInstanceToPool($obj3, $key3);
                 } // if $obj3 already loaded
 
-                // Add the $obj1 (Feature) to the collection in $obj3 (Organism)
-                $obj3->addFeature($obj1);
+                // Add the $obj1 (FeatureSynonym) to the collection in $obj3 (Pub)
+                $obj3->addFeatureSynonym($obj1);
 
             } // if joined row is not null
 
@@ -1530,7 +1479,7 @@ abstract class BaseFeaturePeer
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(FeaturePeer::DATABASE_NAME)->getTable(FeaturePeer::TABLE_NAME);
+        return Propel::getDatabaseMap(FeatureSynonymPeer::DATABASE_NAME)->getTable(FeatureSynonymPeer::TABLE_NAME);
     }
 
     /**
@@ -1538,9 +1487,9 @@ abstract class BaseFeaturePeer
      */
     public static function buildTableMap()
     {
-      $dbMap = Propel::getDatabaseMap(BaseFeaturePeer::DATABASE_NAME);
-      if (!$dbMap->hasTable(BaseFeaturePeer::TABLE_NAME)) {
-        $dbMap->addTableObject(new FeatureTableMap());
+      $dbMap = Propel::getDatabaseMap(BaseFeatureSynonymPeer::DATABASE_NAME);
+      if (!$dbMap->hasTable(BaseFeatureSynonymPeer::TABLE_NAME)) {
+        $dbMap->addTableObject(new FeatureSynonymTableMap());
       }
     }
 
@@ -1552,13 +1501,13 @@ abstract class BaseFeaturePeer
      */
     public static function getOMClass($row = 0, $colnum = 0)
     {
-        return FeaturePeer::OM_CLASS;
+        return FeatureSynonymPeer::OM_CLASS;
     }
 
     /**
-     * Performs an INSERT on the database, given a Feature or Criteria object.
+     * Performs an INSERT on the database, given a FeatureSynonym or Criteria object.
      *
-     * @param      mixed $values Criteria or Feature object containing data that is used to create the INSERT statement.
+     * @param      mixed $values Criteria or FeatureSynonym object containing data that is used to create the INSERT statement.
      * @param      PropelPDO $con the PropelPDO connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -1567,22 +1516,22 @@ abstract class BaseFeaturePeer
     public static function doInsert($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
         } else {
-            $criteria = $values->buildCriteria(); // build Criteria from Feature object
+            $criteria = $values->buildCriteria(); // build Criteria from FeatureSynonym object
         }
 
-        if ($criteria->containsKey(FeaturePeer::FEATURE_ID) && $criteria->keyContainsValue(FeaturePeer::FEATURE_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.FeaturePeer::FEATURE_ID.')');
+        if ($criteria->containsKey(FeatureSynonymPeer::FEATURE_SYNONYM_ID) && $criteria->keyContainsValue(FeatureSynonymPeer::FEATURE_SYNONYM_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.FeatureSynonymPeer::FEATURE_SYNONYM_ID.')');
         }
 
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         try {
             // use transaction because $criteria could contain info
@@ -1599,9 +1548,9 @@ abstract class BaseFeaturePeer
     }
 
     /**
-     * Performs an UPDATE on the database, given a Feature or Criteria object.
+     * Performs an UPDATE on the database, given a FeatureSynonym or Criteria object.
      *
-     * @param      mixed $values Criteria or Feature object containing data that is used to create the UPDATE statement.
+     * @param      mixed $values Criteria or FeatureSynonym object containing data that is used to create the UPDATE statement.
      * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
      * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException Any exceptions caught during processing will be
@@ -1610,35 +1559,35 @@ abstract class BaseFeaturePeer
     public static function doUpdate($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        $selectCriteria = new Criteria(FeaturePeer::DATABASE_NAME);
+        $selectCriteria = new Criteria(FeatureSynonymPeer::DATABASE_NAME);
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(FeaturePeer::FEATURE_ID);
-            $value = $criteria->remove(FeaturePeer::FEATURE_ID);
+            $comparison = $criteria->getComparison(FeatureSynonymPeer::FEATURE_SYNONYM_ID);
+            $value = $criteria->remove(FeatureSynonymPeer::FEATURE_SYNONYM_ID);
             if ($value) {
-                $selectCriteria->add(FeaturePeer::FEATURE_ID, $value, $comparison);
+                $selectCriteria->add(FeatureSynonymPeer::FEATURE_SYNONYM_ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(FeaturePeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(FeatureSynonymPeer::TABLE_NAME);
             }
 
-        } else { // $values is Feature object
+        } else { // $values is FeatureSynonym object
             $criteria = $values->buildCriteria(); // gets full criteria
             $selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
         }
 
         // set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         return BasePeer::doUpdate($selectCriteria, $criteria, $con);
     }
 
     /**
-     * Deletes all rows from the feature table.
+     * Deletes all rows from the feature_synonym table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -1647,19 +1596,19 @@ abstract class BaseFeaturePeer
     public static function doDeleteAll(PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         $affectedRows = 0; // initialize var to track total num of affected rows
         try {
             // use transaction because $criteria could contain info
             // for more than one table or we could emulating ON DELETE CASCADE, etc.
             $con->beginTransaction();
-            $affectedRows += BasePeer::doDeleteAll(FeaturePeer::TABLE_NAME, $con, FeaturePeer::DATABASE_NAME);
+            $affectedRows += BasePeer::doDeleteAll(FeatureSynonymPeer::TABLE_NAME, $con, FeatureSynonymPeer::DATABASE_NAME);
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            FeaturePeer::clearInstancePool();
-            FeaturePeer::clearRelatedInstancePool();
+            FeatureSynonymPeer::clearInstancePool();
+            FeatureSynonymPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -1670,9 +1619,9 @@ abstract class BaseFeaturePeer
     }
 
     /**
-     * Performs a DELETE on the database, given a Feature or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a FeatureSynonym or Criteria object OR a primary key value.
      *
-     * @param      mixed $values Criteria or Feature object or primary key or array of primary keys
+     * @param      mixed $values Criteria or FeatureSynonym object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param      PropelPDO $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -1683,32 +1632,32 @@ abstract class BaseFeaturePeer
      public static function doDelete($values, PropelPDO $con = null)
      {
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             // invalidate the cache for all objects of this type, since we have no
             // way of knowing (without running a query) what objects should be invalidated
             // from the cache based on this Criteria.
-            FeaturePeer::clearInstancePool();
+            FeatureSynonymPeer::clearInstancePool();
             // rename for clarity
             $criteria = clone $values;
-        } elseif ($values instanceof Feature) { // it's a model object
+        } elseif ($values instanceof FeatureSynonym) { // it's a model object
             // invalidate the cache for this single object
-            FeaturePeer::removeInstanceFromPool($values);
+            FeatureSynonymPeer::removeInstanceFromPool($values);
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(FeaturePeer::DATABASE_NAME);
-            $criteria->add(FeaturePeer::FEATURE_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(FeatureSynonymPeer::DATABASE_NAME);
+            $criteria->add(FeatureSynonymPeer::FEATURE_SYNONYM_ID, (array) $values, Criteria::IN);
             // invalidate the cache for this object(s)
             foreach ((array) $values as $singleval) {
-                FeaturePeer::removeInstanceFromPool($singleval);
+                FeatureSynonymPeer::removeInstanceFromPool($singleval);
             }
         }
 
         // Set the correct dbName
-        $criteria->setDbName(FeaturePeer::DATABASE_NAME);
+        $criteria->setDbName(FeatureSynonymPeer::DATABASE_NAME);
 
         $affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -1718,7 +1667,7 @@ abstract class BaseFeaturePeer
             $con->beginTransaction();
 
             $affectedRows += BasePeer::doDelete($criteria, $con);
-            FeaturePeer::clearRelatedInstancePool();
+            FeatureSynonymPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -1729,13 +1678,13 @@ abstract class BaseFeaturePeer
     }
 
     /**
-     * Validates all modified columns of given Feature object.
+     * Validates all modified columns of given FeatureSynonym object.
      * If parameter $columns is either a single column name or an array of column names
      * than only those columns are validated.
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param      Feature $obj The object to validate.
+     * @param      FeatureSynonym $obj The object to validate.
      * @param      mixed $cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -1745,8 +1694,8 @@ abstract class BaseFeaturePeer
         $columns = array();
 
         if ($cols) {
-            $dbMap = Propel::getDatabaseMap(FeaturePeer::DATABASE_NAME);
-            $tableMap = $dbMap->getTable(FeaturePeer::TABLE_NAME);
+            $dbMap = Propel::getDatabaseMap(FeatureSynonymPeer::DATABASE_NAME);
+            $tableMap = $dbMap->getTable(FeatureSynonymPeer::TABLE_NAME);
 
             if (! is_array($cols)) {
                 $cols = array($cols);
@@ -1762,7 +1711,7 @@ abstract class BaseFeaturePeer
 
         }
 
-        return BasePeer::doValidate(FeaturePeer::DATABASE_NAME, FeaturePeer::TABLE_NAME, $columns);
+        return BasePeer::doValidate(FeatureSynonymPeer::DATABASE_NAME, FeatureSynonymPeer::TABLE_NAME, $columns);
     }
 
     /**
@@ -1770,23 +1719,23 @@ abstract class BaseFeaturePeer
      *
      * @param      int $pk the primary key.
      * @param      PropelPDO $con the connection to use
-     * @return Feature
+     * @return FeatureSynonym
      */
     public static function retrieveByPK($pk, PropelPDO $con = null)
     {
 
-        if (null !== ($obj = FeaturePeer::getInstanceFromPool((string) $pk))) {
+        if (null !== ($obj = FeatureSynonymPeer::getInstanceFromPool((string) $pk))) {
             return $obj;
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria = new Criteria(FeaturePeer::DATABASE_NAME);
-        $criteria->add(FeaturePeer::FEATURE_ID, $pk);
+        $criteria = new Criteria(FeatureSynonymPeer::DATABASE_NAME);
+        $criteria->add(FeatureSynonymPeer::FEATURE_SYNONYM_ID, $pk);
 
-        $v = FeaturePeer::doSelect($criteria, $con);
+        $v = FeatureSynonymPeer::doSelect($criteria, $con);
 
         return !empty($v) > 0 ? $v[0] : null;
     }
@@ -1796,31 +1745,31 @@ abstract class BaseFeaturePeer
      *
      * @param      array $pks List of primary keys
      * @param      PropelPDO $con the connection to use
-     * @return Feature[]
+     * @return FeatureSynonym[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
     public static function retrieveByPKs($pks, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(FeaturePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(FeatureSynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         $objs = null;
         if (empty($pks)) {
             $objs = array();
         } else {
-            $criteria = new Criteria(FeaturePeer::DATABASE_NAME);
-            $criteria->add(FeaturePeer::FEATURE_ID, $pks, Criteria::IN);
-            $objs = FeaturePeer::doSelect($criteria, $con);
+            $criteria = new Criteria(FeatureSynonymPeer::DATABASE_NAME);
+            $criteria->add(FeatureSynonymPeer::FEATURE_SYNONYM_ID, $pks, Criteria::IN);
+            $objs = FeatureSynonymPeer::doSelect($criteria, $con);
         }
 
         return $objs;
     }
 
-} // BaseFeaturePeer
+} // BaseFeatureSynonymPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseFeaturePeer::buildTableMap();
+BaseFeatureSynonymPeer::buildTableMap();
 

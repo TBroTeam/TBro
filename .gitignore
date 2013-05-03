@@ -1,5 +1,6 @@
 *~
 /cli/build/
+/cli/src/propel-gen-config/build/
 /cli/etc/*.php
 /web/smarty/templates_c
 /web/smarty/cache

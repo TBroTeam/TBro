@@ -10,99 +10,62 @@ use \Propel;
 use \PropelException;
 use \PropelPDO;
 use cli_db\propel\CvtermPeer;
-use cli_db\propel\FeatureCvtermPeer;
-use cli_db\propel\FeatureCvtermPubPeer;
-use cli_db\propel\FeaturePubPeer;
 use cli_db\propel\FeatureSynonymPeer;
-use cli_db\propel\Pub;
-use cli_db\propel\PubDbxrefPeer;
-use cli_db\propel\PubPeer;
-use cli_db\propel\PubRelationshipPeer;
-use cli_db\propel\PubauthorPeer;
-use cli_db\propel\PubpropPeer;
-use cli_db\propel\map\PubTableMap;
+use cli_db\propel\Synonym;
+use cli_db\propel\SynonymPeer;
+use cli_db\propel\map\SynonymTableMap;
 
 /**
- * Base static class for performing query and update operations on the 'pub' table.
+ * Base static class for performing query and update operations on the 'synonym' table.
  *
  *
  *
  * @package propel.generator.cli_db.om
  */
-abstract class BasePubPeer
+abstract class BaseSynonymPeer
 {
 
     /** the default database name for this class */
     const DATABASE_NAME = 'cli_db';
 
     /** the table name for this class */
-    const TABLE_NAME = 'pub';
+    const TABLE_NAME = 'synonym';
 
     /** the related Propel class for this table */
-    const OM_CLASS = 'cli_db\\propel\\Pub';
+    const OM_CLASS = 'cli_db\\propel\\Synonym';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = 'PubTableMap';
+    const TM_CLASS = 'SynonymTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 14;
+    const NUM_COLUMNS = 4;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 14;
+    const NUM_HYDRATE_COLUMNS = 4;
 
-    /** the column name for the pub_id field */
-    const PUB_ID = 'pub.pub_id';
+    /** the column name for the synonym_id field */
+    const SYNONYM_ID = 'synonym.synonym_id';
 
-    /** the column name for the title field */
-    const TITLE = 'pub.title';
-
-    /** the column name for the volumetitle field */
-    const VOLUMETITLE = 'pub.volumetitle';
-
-    /** the column name for the volume field */
-    const VOLUME = 'pub.volume';
-
-    /** the column name for the series_name field */
-    const SERIES_NAME = 'pub.series_name';
-
-    /** the column name for the issue field */
-    const ISSUE = 'pub.issue';
-
-    /** the column name for the pyear field */
-    const PYEAR = 'pub.pyear';
-
-    /** the column name for the pages field */
-    const PAGES = 'pub.pages';
-
-    /** the column name for the miniref field */
-    const MINIREF = 'pub.miniref';
-
-    /** the column name for the uniquename field */
-    const UNIQUENAME = 'pub.uniquename';
+    /** the column name for the name field */
+    const NAME = 'synonym.name';
 
     /** the column name for the type_id field */
-    const TYPE_ID = 'pub.type_id';
+    const TYPE_ID = 'synonym.type_id';
 
-    /** the column name for the is_obsolete field */
-    const IS_OBSOLETE = 'pub.is_obsolete';
-
-    /** the column name for the publisher field */
-    const PUBLISHER = 'pub.publisher';
-
-    /** the column name for the pubplace field */
-    const PUBPLACE = 'pub.pubplace';
+    /** the column name for the synonym_sgml field */
+    const SYNONYM_SGML = 'synonym.synonym_sgml';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
 
     /**
-     * An identiy map to hold any loaded instances of Pub objects.
+     * An identiy map to hold any loaded instances of Synonym objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array Pub[]
+     * @var        array Synonym[]
      */
     public static $instances = array();
 
@@ -111,30 +74,30 @@ abstract class BasePubPeer
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. PubPeer::$fieldNames[PubPeer::TYPE_PHPNAME][0] = 'Id'
+     * e.g. SynonymPeer::$fieldNames[SynonymPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('PubId', 'Title', 'Volumetitle', 'Volume', 'SeriesName', 'Issue', 'Pyear', 'Pages', 'Miniref', 'Uniquename', 'TypeId', 'IsObsolete', 'Publisher', 'Pubplace', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('pubId', 'title', 'volumetitle', 'volume', 'seriesName', 'issue', 'pyear', 'pages', 'miniref', 'uniquename', 'typeId', 'isObsolete', 'publisher', 'pubplace', ),
-        BasePeer::TYPE_COLNAME => array (PubPeer::PUB_ID, PubPeer::TITLE, PubPeer::VOLUMETITLE, PubPeer::VOLUME, PubPeer::SERIES_NAME, PubPeer::ISSUE, PubPeer::PYEAR, PubPeer::PAGES, PubPeer::MINIREF, PubPeer::UNIQUENAME, PubPeer::TYPE_ID, PubPeer::IS_OBSOLETE, PubPeer::PUBLISHER, PubPeer::PUBPLACE, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('PUB_ID', 'TITLE', 'VOLUMETITLE', 'VOLUME', 'SERIES_NAME', 'ISSUE', 'PYEAR', 'PAGES', 'MINIREF', 'UNIQUENAME', 'TYPE_ID', 'IS_OBSOLETE', 'PUBLISHER', 'PUBPLACE', ),
-        BasePeer::TYPE_FIELDNAME => array ('pub_id', 'title', 'volumetitle', 'volume', 'series_name', 'issue', 'pyear', 'pages', 'miniref', 'uniquename', 'type_id', 'is_obsolete', 'publisher', 'pubplace', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        BasePeer::TYPE_PHPNAME => array ('SynonymId', 'Name', 'TypeId', 'SynonymSgml', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('synonymId', 'name', 'typeId', 'synonymSgml', ),
+        BasePeer::TYPE_COLNAME => array (SynonymPeer::SYNONYM_ID, SynonymPeer::NAME, SynonymPeer::TYPE_ID, SynonymPeer::SYNONYM_SGML, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('SYNONYM_ID', 'NAME', 'TYPE_ID', 'SYNONYM_SGML', ),
+        BasePeer::TYPE_FIELDNAME => array ('synonym_id', 'name', 'type_id', 'synonym_sgml', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
     );
 
     /**
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. PubPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. SynonymPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('PubId' => 0, 'Title' => 1, 'Volumetitle' => 2, 'Volume' => 3, 'SeriesName' => 4, 'Issue' => 5, 'Pyear' => 6, 'Pages' => 7, 'Miniref' => 8, 'Uniquename' => 9, 'TypeId' => 10, 'IsObsolete' => 11, 'Publisher' => 12, 'Pubplace' => 13, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('pubId' => 0, 'title' => 1, 'volumetitle' => 2, 'volume' => 3, 'seriesName' => 4, 'issue' => 5, 'pyear' => 6, 'pages' => 7, 'miniref' => 8, 'uniquename' => 9, 'typeId' => 10, 'isObsolete' => 11, 'publisher' => 12, 'pubplace' => 13, ),
-        BasePeer::TYPE_COLNAME => array (PubPeer::PUB_ID => 0, PubPeer::TITLE => 1, PubPeer::VOLUMETITLE => 2, PubPeer::VOLUME => 3, PubPeer::SERIES_NAME => 4, PubPeer::ISSUE => 5, PubPeer::PYEAR => 6, PubPeer::PAGES => 7, PubPeer::MINIREF => 8, PubPeer::UNIQUENAME => 9, PubPeer::TYPE_ID => 10, PubPeer::IS_OBSOLETE => 11, PubPeer::PUBLISHER => 12, PubPeer::PUBPLACE => 13, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('PUB_ID' => 0, 'TITLE' => 1, 'VOLUMETITLE' => 2, 'VOLUME' => 3, 'SERIES_NAME' => 4, 'ISSUE' => 5, 'PYEAR' => 6, 'PAGES' => 7, 'MINIREF' => 8, 'UNIQUENAME' => 9, 'TYPE_ID' => 10, 'IS_OBSOLETE' => 11, 'PUBLISHER' => 12, 'PUBPLACE' => 13, ),
-        BasePeer::TYPE_FIELDNAME => array ('pub_id' => 0, 'title' => 1, 'volumetitle' => 2, 'volume' => 3, 'series_name' => 4, 'issue' => 5, 'pyear' => 6, 'pages' => 7, 'miniref' => 8, 'uniquename' => 9, 'type_id' => 10, 'is_obsolete' => 11, 'publisher' => 12, 'pubplace' => 13, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+        BasePeer::TYPE_PHPNAME => array ('SynonymId' => 0, 'Name' => 1, 'TypeId' => 2, 'SynonymSgml' => 3, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('synonymId' => 0, 'name' => 1, 'typeId' => 2, 'synonymSgml' => 3, ),
+        BasePeer::TYPE_COLNAME => array (SynonymPeer::SYNONYM_ID => 0, SynonymPeer::NAME => 1, SynonymPeer::TYPE_ID => 2, SynonymPeer::SYNONYM_SGML => 3, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('SYNONYM_ID' => 0, 'NAME' => 1, 'TYPE_ID' => 2, 'SYNONYM_SGML' => 3, ),
+        BasePeer::TYPE_FIELDNAME => array ('synonym_id' => 0, 'name' => 1, 'type_id' => 2, 'synonym_sgml' => 3, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
     );
 
     /**
@@ -149,10 +112,10 @@ abstract class BasePubPeer
      */
     public static function translateFieldName($name, $fromType, $toType)
     {
-        $toNames = PubPeer::getFieldNames($toType);
-        $key = isset(PubPeer::$fieldKeys[$fromType][$name]) ? PubPeer::$fieldKeys[$fromType][$name] : null;
+        $toNames = SynonymPeer::getFieldNames($toType);
+        $key = isset(SynonymPeer::$fieldKeys[$fromType][$name]) ? SynonymPeer::$fieldKeys[$fromType][$name] : null;
         if ($key === null) {
-            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(PubPeer::$fieldKeys[$fromType], true));
+            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(SynonymPeer::$fieldKeys[$fromType], true));
         }
 
         return $toNames[$key];
@@ -169,11 +132,11 @@ abstract class BasePubPeer
      */
     public static function getFieldNames($type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists($type, PubPeer::$fieldNames)) {
+        if (!array_key_exists($type, SynonymPeer::$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
         }
 
-        return PubPeer::$fieldNames[$type];
+        return SynonymPeer::$fieldNames[$type];
     }
 
     /**
@@ -185,12 +148,12 @@ abstract class BasePubPeer
      *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
      * @param      string $alias The alias for the current table.
-     * @param      string $column The column name for current table. (i.e. PubPeer::COLUMN_NAME).
+     * @param      string $column The column name for current table. (i.e. SynonymPeer::COLUMN_NAME).
      * @return string
      */
     public static function alias($alias, $column)
     {
-        return str_replace(PubPeer::TABLE_NAME.'.', $alias.'.', $column);
+        return str_replace(SynonymPeer::TABLE_NAME.'.', $alias.'.', $column);
     }
 
     /**
@@ -208,35 +171,15 @@ abstract class BasePubPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PubPeer::PUB_ID);
-            $criteria->addSelectColumn(PubPeer::TITLE);
-            $criteria->addSelectColumn(PubPeer::VOLUMETITLE);
-            $criteria->addSelectColumn(PubPeer::VOLUME);
-            $criteria->addSelectColumn(PubPeer::SERIES_NAME);
-            $criteria->addSelectColumn(PubPeer::ISSUE);
-            $criteria->addSelectColumn(PubPeer::PYEAR);
-            $criteria->addSelectColumn(PubPeer::PAGES);
-            $criteria->addSelectColumn(PubPeer::MINIREF);
-            $criteria->addSelectColumn(PubPeer::UNIQUENAME);
-            $criteria->addSelectColumn(PubPeer::TYPE_ID);
-            $criteria->addSelectColumn(PubPeer::IS_OBSOLETE);
-            $criteria->addSelectColumn(PubPeer::PUBLISHER);
-            $criteria->addSelectColumn(PubPeer::PUBPLACE);
+            $criteria->addSelectColumn(SynonymPeer::SYNONYM_ID);
+            $criteria->addSelectColumn(SynonymPeer::NAME);
+            $criteria->addSelectColumn(SynonymPeer::TYPE_ID);
+            $criteria->addSelectColumn(SynonymPeer::SYNONYM_SGML);
         } else {
-            $criteria->addSelectColumn($alias . '.pub_id');
-            $criteria->addSelectColumn($alias . '.title');
-            $criteria->addSelectColumn($alias . '.volumetitle');
-            $criteria->addSelectColumn($alias . '.volume');
-            $criteria->addSelectColumn($alias . '.series_name');
-            $criteria->addSelectColumn($alias . '.issue');
-            $criteria->addSelectColumn($alias . '.pyear');
-            $criteria->addSelectColumn($alias . '.pages');
-            $criteria->addSelectColumn($alias . '.miniref');
-            $criteria->addSelectColumn($alias . '.uniquename');
+            $criteria->addSelectColumn($alias . '.synonym_id');
+            $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.type_id');
-            $criteria->addSelectColumn($alias . '.is_obsolete');
-            $criteria->addSelectColumn($alias . '.publisher');
-            $criteria->addSelectColumn($alias . '.pubplace');
+            $criteria->addSelectColumn($alias . '.synonym_sgml');
         }
     }
 
@@ -256,21 +199,21 @@ abstract class BasePubPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(PubPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(SynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            PubPeer::addSelectColumns($criteria);
+            SynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        $criteria->setDbName(PubPeer::DATABASE_NAME); // Set the correct dbName
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME); // Set the correct dbName
 
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         // BasePeer returns a PDOStatement
         $stmt = BasePeer::doCount($criteria, $con);
@@ -289,7 +232,7 @@ abstract class BasePubPeer
      *
      * @param      Criteria $criteria object used to create the SELECT statement.
      * @param      PropelPDO $con
-     * @return                 Pub
+     * @return                 Synonym
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -297,7 +240,7 @@ abstract class BasePubPeer
     {
         $critcopy = clone $criteria;
         $critcopy->setLimit(1);
-        $objects = PubPeer::doSelect($critcopy, $con);
+        $objects = SynonymPeer::doSelect($critcopy, $con);
         if ($objects) {
             return $objects[0];
         }
@@ -315,7 +258,7 @@ abstract class BasePubPeer
      */
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)
     {
-        return PubPeer::populateObjects(PubPeer::doSelectStmt($criteria, $con));
+        return SynonymPeer::populateObjects(SynonymPeer::doSelectStmt($criteria, $con));
     }
     /**
      * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -333,16 +276,16 @@ abstract class BasePubPeer
     public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         if (!$criteria->hasSelectClause()) {
             $criteria = clone $criteria;
-            PubPeer::addSelectColumns($criteria);
+            SynonymPeer::addSelectColumns($criteria);
         }
 
         // Set the correct dbName
-        $criteria->setDbName(PubPeer::DATABASE_NAME);
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME);
 
         // BasePeer returns a PDOStatement
         return BasePeer::doSelect($criteria, $con);
@@ -356,16 +299,16 @@ abstract class BasePubPeer
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param      Pub $obj A Pub object.
+     * @param      Synonym $obj A Synonym object.
      * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
     {
         if (Propel::isInstancePoolingEnabled()) {
             if ($key === null) {
-                $key = (string) $obj->getPubId();
+                $key = (string) $obj->getSynonymId();
             } // if key === null
-            PubPeer::$instances[$key] = $obj;
+            SynonymPeer::$instances[$key] = $obj;
         }
     }
 
@@ -377,7 +320,7 @@ abstract class BasePubPeer
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param      mixed $value A Pub object or a primary key value.
+     * @param      mixed $value A Synonym object or a primary key value.
      *
      * @return void
      * @throws PropelException - if the value is invalid.
@@ -385,17 +328,17 @@ abstract class BasePubPeer
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
-            if (is_object($value) && $value instanceof Pub) {
-                $key = (string) $value->getPubId();
+            if (is_object($value) && $value instanceof Synonym) {
+                $key = (string) $value->getSynonymId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Pub object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Synonym object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
                 throw $e;
             }
 
-            unset(PubPeer::$instances[$key]);
+            unset(SynonymPeer::$instances[$key]);
         }
     } // removeInstanceFromPool()
 
@@ -406,14 +349,14 @@ abstract class BasePubPeer
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return   Pub Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return   Synonym Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool($key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(PubPeer::$instances[$key])) {
-                return PubPeer::$instances[$key];
+            if (isset(SynonymPeer::$instances[$key])) {
+                return SynonymPeer::$instances[$key];
             }
         }
 
@@ -429,47 +372,23 @@ abstract class BasePubPeer
     {
       if ($and_clear_all_references)
       {
-        foreach (PubPeer::$instances as $instance)
+        foreach (SynonymPeer::$instances as $instance)
         {
           $instance->clearAllReferences(true);
         }
       }
-        PubPeer::$instances = array();
+        SynonymPeer::$instances = array();
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to pub
+     * Method to invalidate the instance pool of all tables related to synonym
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in FeatureCvtermPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeatureCvtermPeer::clearInstancePool();
-        // Invalidate objects in FeatureCvtermPubPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeatureCvtermPubPeer::clearInstancePool();
-        // Invalidate objects in FeaturePubPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        FeaturePubPeer::clearInstancePool();
         // Invalidate objects in FeatureSynonymPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         FeatureSynonymPeer::clearInstancePool();
-        // Invalidate objects in PubDbxrefPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        PubDbxrefPeer::clearInstancePool();
-        // Invalidate objects in PubRelationshipPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        PubRelationshipPeer::clearInstancePool();
-        // Invalidate objects in PubRelationshipPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        PubRelationshipPeer::clearInstancePool();
-        // Invalidate objects in PubauthorPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        PubauthorPeer::clearInstancePool();
-        // Invalidate objects in PubpropPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        PubpropPeer::clearInstancePool();
     }
 
     /**
@@ -519,11 +438,11 @@ abstract class BasePubPeer
         $results = array();
 
         // set the class once to avoid overhead in the loop
-        $cls = PubPeer::getOMClass();
+        $cls = SynonymPeer::getOMClass();
         // populate the object(s)
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key = PubPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj = PubPeer::getInstanceFromPool($key))) {
+            $key = SynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj = SynonymPeer::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
@@ -532,7 +451,7 @@ abstract class BasePubPeer
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                PubPeer::addInstanceToPool($obj, $key);
+                SynonymPeer::addInstanceToPool($obj, $key);
             } // if key exists
         }
         $stmt->closeCursor();
@@ -546,21 +465,21 @@ abstract class BasePubPeer
      * @param      int $startcol The 0-based offset for reading from the resultset row.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (Pub object, last column rank)
+     * @return array (Synonym object, last column rank)
      */
     public static function populateObject($row, $startcol = 0)
     {
-        $key = PubPeer::getPrimaryKeyHashFromRow($row, $startcol);
-        if (null !== ($obj = PubPeer::getInstanceFromPool($key))) {
+        $key = SynonymPeer::getPrimaryKeyHashFromRow($row, $startcol);
+        if (null !== ($obj = SynonymPeer::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $startcol, true); // rehydrate
-            $col = $startcol + PubPeer::NUM_HYDRATE_COLUMNS;
+            $col = $startcol + SynonymPeer::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = PubPeer::OM_CLASS;
+            $cls = SynonymPeer::OM_CLASS;
             $obj = new $cls();
             $col = $obj->hydrate($row, $startcol);
-            PubPeer::addInstanceToPool($obj, $key);
+            SynonymPeer::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -584,26 +503,26 @@ abstract class BasePubPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(PubPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(SynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            PubPeer::addSelectColumns($criteria);
+            SynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(PubPeer::DATABASE_NAME);
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(PubPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(SynonymPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -619,11 +538,11 @@ abstract class BasePubPeer
 
 
     /**
-     * Selects a collection of Pub objects pre-filled with their Cvterm objects.
+     * Selects a collection of Synonym objects pre-filled with their Cvterm objects.
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Pub objects.
+     * @return array           Array of Synonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -633,31 +552,31 @@ abstract class BasePubPeer
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(PubPeer::DATABASE_NAME);
+            $criteria->setDbName(SynonymPeer::DATABASE_NAME);
         }
 
-        PubPeer::addSelectColumns($criteria);
-        $startcol = PubPeer::NUM_HYDRATE_COLUMNS;
+        SynonymPeer::addSelectColumns($criteria);
+        $startcol = SynonymPeer::NUM_HYDRATE_COLUMNS;
         CvtermPeer::addSelectColumns($criteria);
 
-        $criteria->addJoin(PubPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(SynonymPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = PubPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = PubPeer::getInstanceFromPool($key1))) {
+            $key1 = SynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = SynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
 
-                $cls = PubPeer::getOMClass();
+                $cls = SynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                PubPeer::addInstanceToPool($obj1, $key1);
+                SynonymPeer::addInstanceToPool($obj1, $key1);
             } // if $obj1 already loaded
 
             $key2 = CvtermPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -672,8 +591,8 @@ abstract class BasePubPeer
                     CvtermPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 already loaded
 
-                // Add the $obj1 (Pub) to $obj2 (Cvterm)
-                $obj2->addPub($obj1);
+                // Add the $obj1 (Synonym) to $obj2 (Cvterm)
+                $obj2->addSynonym($obj1);
 
             } // if joined row was not null
 
@@ -702,26 +621,26 @@ abstract class BasePubPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(PubPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(SynonymPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            PubPeer::addSelectColumns($criteria);
+            SynonymPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        $criteria->setDbName(PubPeer::DATABASE_NAME);
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME);
 
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria->addJoin(PubPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(SynonymPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
 
         $stmt = BasePeer::doCount($criteria, $con);
 
@@ -736,12 +655,12 @@ abstract class BasePubPeer
     }
 
     /**
-     * Selects a collection of Pub objects pre-filled with all related objects.
+     * Selects a collection of Synonym objects pre-filled with all related objects.
      *
      * @param      Criteria  $criteria
      * @param      PropelPDO $con
      * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-     * @return array           Array of Pub objects.
+     * @return array           Array of Synonym objects.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -751,32 +670,32 @@ abstract class BasePubPeer
 
         // Set the correct dbName if it has not been overridden
         if ($criteria->getDbName() == Propel::getDefaultDB()) {
-            $criteria->setDbName(PubPeer::DATABASE_NAME);
+            $criteria->setDbName(SynonymPeer::DATABASE_NAME);
         }
 
-        PubPeer::addSelectColumns($criteria);
-        $startcol2 = PubPeer::NUM_HYDRATE_COLUMNS;
+        SynonymPeer::addSelectColumns($criteria);
+        $startcol2 = SynonymPeer::NUM_HYDRATE_COLUMNS;
 
         CvtermPeer::addSelectColumns($criteria);
         $startcol3 = $startcol2 + CvtermPeer::NUM_HYDRATE_COLUMNS;
 
-        $criteria->addJoin(PubPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
+        $criteria->addJoin(SynonymPeer::TYPE_ID, CvtermPeer::CVTERM_ID, $join_behavior);
 
         $stmt = BasePeer::doSelect($criteria, $con);
         $results = array();
 
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key1 = PubPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj1 = PubPeer::getInstanceFromPool($key1))) {
+            $key1 = SynonymPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = SynonymPeer::getInstanceFromPool($key1))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj1->hydrate($row, 0, true); // rehydrate
             } else {
-                $cls = PubPeer::getOMClass();
+                $cls = SynonymPeer::getOMClass();
 
                 $obj1 = new $cls();
                 $obj1->hydrate($row);
-                PubPeer::addInstanceToPool($obj1, $key1);
+                SynonymPeer::addInstanceToPool($obj1, $key1);
             } // if obj1 already loaded
 
             // Add objects for joined Cvterm rows
@@ -793,8 +712,8 @@ abstract class BasePubPeer
                     CvtermPeer::addInstanceToPool($obj2, $key2);
                 } // if obj2 loaded
 
-                // Add the $obj1 (Pub) to the collection in $obj2 (Cvterm)
-                $obj2->addPub($obj1);
+                // Add the $obj1 (Synonym) to the collection in $obj2 (Cvterm)
+                $obj2->addSynonym($obj1);
             } // if joined row not null
 
             $results[] = $obj1;
@@ -813,7 +732,7 @@ abstract class BasePubPeer
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(PubPeer::DATABASE_NAME)->getTable(PubPeer::TABLE_NAME);
+        return Propel::getDatabaseMap(SynonymPeer::DATABASE_NAME)->getTable(SynonymPeer::TABLE_NAME);
     }
 
     /**
@@ -821,9 +740,9 @@ abstract class BasePubPeer
      */
     public static function buildTableMap()
     {
-      $dbMap = Propel::getDatabaseMap(BasePubPeer::DATABASE_NAME);
-      if (!$dbMap->hasTable(BasePubPeer::TABLE_NAME)) {
-        $dbMap->addTableObject(new PubTableMap());
+      $dbMap = Propel::getDatabaseMap(BaseSynonymPeer::DATABASE_NAME);
+      if (!$dbMap->hasTable(BaseSynonymPeer::TABLE_NAME)) {
+        $dbMap->addTableObject(new SynonymTableMap());
       }
     }
 
@@ -835,13 +754,13 @@ abstract class BasePubPeer
      */
     public static function getOMClass($row = 0, $colnum = 0)
     {
-        return PubPeer::OM_CLASS;
+        return SynonymPeer::OM_CLASS;
     }
 
     /**
-     * Performs an INSERT on the database, given a Pub or Criteria object.
+     * Performs an INSERT on the database, given a Synonym or Criteria object.
      *
-     * @param      mixed $values Criteria or Pub object containing data that is used to create the INSERT statement.
+     * @param      mixed $values Criteria or Synonym object containing data that is used to create the INSERT statement.
      * @param      PropelPDO $con the PropelPDO connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -850,22 +769,22 @@ abstract class BasePubPeer
     public static function doInsert($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
         } else {
-            $criteria = $values->buildCriteria(); // build Criteria from Pub object
+            $criteria = $values->buildCriteria(); // build Criteria from Synonym object
         }
 
-        if ($criteria->containsKey(PubPeer::PUB_ID) && $criteria->keyContainsValue(PubPeer::PUB_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PubPeer::PUB_ID.')');
+        if ($criteria->containsKey(SynonymPeer::SYNONYM_ID) && $criteria->keyContainsValue(SynonymPeer::SYNONYM_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SynonymPeer::SYNONYM_ID.')');
         }
 
 
         // Set the correct dbName
-        $criteria->setDbName(PubPeer::DATABASE_NAME);
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME);
 
         try {
             // use transaction because $criteria could contain info
@@ -882,9 +801,9 @@ abstract class BasePubPeer
     }
 
     /**
-     * Performs an UPDATE on the database, given a Pub or Criteria object.
+     * Performs an UPDATE on the database, given a Synonym or Criteria object.
      *
-     * @param      mixed $values Criteria or Pub object containing data that is used to create the UPDATE statement.
+     * @param      mixed $values Criteria or Synonym object containing data that is used to create the UPDATE statement.
      * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
      * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException Any exceptions caught during processing will be
@@ -893,35 +812,35 @@ abstract class BasePubPeer
     public static function doUpdate($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        $selectCriteria = new Criteria(PubPeer::DATABASE_NAME);
+        $selectCriteria = new Criteria(SynonymPeer::DATABASE_NAME);
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(PubPeer::PUB_ID);
-            $value = $criteria->remove(PubPeer::PUB_ID);
+            $comparison = $criteria->getComparison(SynonymPeer::SYNONYM_ID);
+            $value = $criteria->remove(SynonymPeer::SYNONYM_ID);
             if ($value) {
-                $selectCriteria->add(PubPeer::PUB_ID, $value, $comparison);
+                $selectCriteria->add(SynonymPeer::SYNONYM_ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(PubPeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(SynonymPeer::TABLE_NAME);
             }
 
-        } else { // $values is Pub object
+        } else { // $values is Synonym object
             $criteria = $values->buildCriteria(); // gets full criteria
             $selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
         }
 
         // set the correct dbName
-        $criteria->setDbName(PubPeer::DATABASE_NAME);
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME);
 
         return BasePeer::doUpdate($selectCriteria, $criteria, $con);
     }
 
     /**
-     * Deletes all rows from the pub table.
+     * Deletes all rows from the synonym table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -930,19 +849,19 @@ abstract class BasePubPeer
     public static function doDeleteAll(PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         $affectedRows = 0; // initialize var to track total num of affected rows
         try {
             // use transaction because $criteria could contain info
             // for more than one table or we could emulating ON DELETE CASCADE, etc.
             $con->beginTransaction();
-            $affectedRows += BasePeer::doDeleteAll(PubPeer::TABLE_NAME, $con, PubPeer::DATABASE_NAME);
+            $affectedRows += BasePeer::doDeleteAll(SynonymPeer::TABLE_NAME, $con, SynonymPeer::DATABASE_NAME);
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            PubPeer::clearInstancePool();
-            PubPeer::clearRelatedInstancePool();
+            SynonymPeer::clearInstancePool();
+            SynonymPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -953,9 +872,9 @@ abstract class BasePubPeer
     }
 
     /**
-     * Performs a DELETE on the database, given a Pub or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Synonym or Criteria object OR a primary key value.
      *
-     * @param      mixed $values Criteria or Pub object or primary key or array of primary keys
+     * @param      mixed $values Criteria or Synonym object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param      PropelPDO $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -966,32 +885,32 @@ abstract class BasePubPeer
      public static function doDelete($values, PropelPDO $con = null)
      {
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             // invalidate the cache for all objects of this type, since we have no
             // way of knowing (without running a query) what objects should be invalidated
             // from the cache based on this Criteria.
-            PubPeer::clearInstancePool();
+            SynonymPeer::clearInstancePool();
             // rename for clarity
             $criteria = clone $values;
-        } elseif ($values instanceof Pub) { // it's a model object
+        } elseif ($values instanceof Synonym) { // it's a model object
             // invalidate the cache for this single object
-            PubPeer::removeInstanceFromPool($values);
+            SynonymPeer::removeInstanceFromPool($values);
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(PubPeer::DATABASE_NAME);
-            $criteria->add(PubPeer::PUB_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SynonymPeer::DATABASE_NAME);
+            $criteria->add(SynonymPeer::SYNONYM_ID, (array) $values, Criteria::IN);
             // invalidate the cache for this object(s)
             foreach ((array) $values as $singleval) {
-                PubPeer::removeInstanceFromPool($singleval);
+                SynonymPeer::removeInstanceFromPool($singleval);
             }
         }
 
         // Set the correct dbName
-        $criteria->setDbName(PubPeer::DATABASE_NAME);
+        $criteria->setDbName(SynonymPeer::DATABASE_NAME);
 
         $affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -1001,7 +920,7 @@ abstract class BasePubPeer
             $con->beginTransaction();
 
             $affectedRows += BasePeer::doDelete($criteria, $con);
-            PubPeer::clearRelatedInstancePool();
+            SynonymPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -1012,13 +931,13 @@ abstract class BasePubPeer
     }
 
     /**
-     * Validates all modified columns of given Pub object.
+     * Validates all modified columns of given Synonym object.
      * If parameter $columns is either a single column name or an array of column names
      * than only those columns are validated.
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param      Pub $obj The object to validate.
+     * @param      Synonym $obj The object to validate.
      * @param      mixed $cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -1028,8 +947,8 @@ abstract class BasePubPeer
         $columns = array();
 
         if ($cols) {
-            $dbMap = Propel::getDatabaseMap(PubPeer::DATABASE_NAME);
-            $tableMap = $dbMap->getTable(PubPeer::TABLE_NAME);
+            $dbMap = Propel::getDatabaseMap(SynonymPeer::DATABASE_NAME);
+            $tableMap = $dbMap->getTable(SynonymPeer::TABLE_NAME);
 
             if (! is_array($cols)) {
                 $cols = array($cols);
@@ -1045,7 +964,7 @@ abstract class BasePubPeer
 
         }
 
-        return BasePeer::doValidate(PubPeer::DATABASE_NAME, PubPeer::TABLE_NAME, $columns);
+        return BasePeer::doValidate(SynonymPeer::DATABASE_NAME, SynonymPeer::TABLE_NAME, $columns);
     }
 
     /**
@@ -1053,23 +972,23 @@ abstract class BasePubPeer
      *
      * @param      int $pk the primary key.
      * @param      PropelPDO $con the connection to use
-     * @return Pub
+     * @return Synonym
      */
     public static function retrieveByPK($pk, PropelPDO $con = null)
     {
 
-        if (null !== ($obj = PubPeer::getInstanceFromPool((string) $pk))) {
+        if (null !== ($obj = SynonymPeer::getInstanceFromPool((string) $pk))) {
             return $obj;
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria = new Criteria(PubPeer::DATABASE_NAME);
-        $criteria->add(PubPeer::PUB_ID, $pk);
+        $criteria = new Criteria(SynonymPeer::DATABASE_NAME);
+        $criteria->add(SynonymPeer::SYNONYM_ID, $pk);
 
-        $v = PubPeer::doSelect($criteria, $con);
+        $v = SynonymPeer::doSelect($criteria, $con);
 
         return !empty($v) > 0 ? $v[0] : null;
     }
@@ -1079,31 +998,31 @@ abstract class BasePubPeer
      *
      * @param      array $pks List of primary keys
      * @param      PropelPDO $con the connection to use
-     * @return Pub[]
+     * @return Synonym[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
     public static function retrieveByPKs($pks, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(PubPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SynonymPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         $objs = null;
         if (empty($pks)) {
             $objs = array();
         } else {
-            $criteria = new Criteria(PubPeer::DATABASE_NAME);
-            $criteria->add(PubPeer::PUB_ID, $pks, Criteria::IN);
-            $objs = PubPeer::doSelect($criteria, $con);
+            $criteria = new Criteria(SynonymPeer::DATABASE_NAME);
+            $criteria->add(SynonymPeer::SYNONYM_ID, $pks, Criteria::IN);
+            $objs = SynonymPeer::doSelect($criteria, $con);
         }
 
         return $objs;
     }
 
-} // BasePubPeer
+} // BaseSynonymPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BasePubPeer::buildTableMap();
+BaseSynonymPeer::buildTableMap();
 

@@ -19,6 +19,7 @@ use cli_db\propel\ProtocolPeer;
 use cli_db\propel\PubPeer;
 use cli_db\propel\PubRelationshipPeer;
 use cli_db\propel\PubpropPeer;
+use cli_db\propel\SynonymPeer;
 use cli_db\propel\map\CvtermTableMap;
 
 /**
@@ -428,6 +429,9 @@ abstract class BaseCvtermPeer
         // Invalidate objects in PubpropPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         PubpropPeer::clearInstancePool();
+        // Invalidate objects in SynonymPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        SynonymPeer::clearInstancePool();
     }
 
     /**
