@@ -94,18 +94,20 @@ class Publication extends AbstractTable {
         $xmlStr = curl_exec($curl);
         curl_close($curl);
 
+
+        //<editor-fold defaultstate="collapsed" desc="bibtexType xsd, see http://www.bibsonomy.org/help/doc/xmlschema.html">
         /**
-         * see http://www.bibsonomy.org/help/doc/xmlschema.html
+         * lines marked with * get stored to DB
           <xsd:complexType name="BibtexType">
-          <xsd:attribute name="title" type="xsd:string" use="required"/>
+         * <xsd:attribute name="title" type="xsd:string" use="required"/>
           <xsd:attribute name="bibtexKey" type="xsd:string" use="required"/>
           <xsd:attribute name="bKey" type="xsd:string"/>
           <xsd:attribute name="misc" type="xsd:string"/>
           <xsd:attribute name="bibtexAbstract" type="xsd:string"/>
-          <xsd:attribute name="entrytype" type="xsd:string" use="required"/>
+         * <xsd:attribute name="entrytype" type="xsd:string" use="required"/>
           <xsd:attribute name="address" type="xsd:string"/>
           <xsd:attribute name="annote" type="xsd:string"/>
-          <xsd:attribute name="author" type="xsd:string"/>
+         * <xsd:attribute name="author" type="xsd:string"/>
           <xsd:attribute name="booktitle" type="xsd:string"/>
           <xsd:attribute name="chapter" type="xsd:string"/>
           <xsd:attribute name="crossref" type="xsd:string"/>
@@ -114,17 +116,17 @@ class Publication extends AbstractTable {
           <xsd:attribute name="howpublished" type="xsd:string"/>
           <xsd:attribute name="institution" type="xsd:string"/>
           <xsd:attribute name="organization" type="xsd:string"/>
-          <xsd:attribute name="journal" type="xsd:string"/>
+         * <xsd:attribute name="journal" type="xsd:string"/>
           <xsd:attribute name="note" type="xsd:string"/>
-          <xsd:attribute name="number" type="xsd:string"/>
-          <xsd:attribute name="pages" type="xsd:string"/>
-          <xsd:attribute name="publisher" type="xsd:string"/>
+         * <xsd:attribute name="number" type="xsd:string"/>
+         * <xsd:attribute name="pages" type="xsd:string"/>
+         * <xsd:attribute name="publisher" type="xsd:string"/>
           <xsd:attribute name="school" type="xsd:string"/>
-          <xsd:attribute name="series" type="xsd:string"/>
-          <xsd:attribute name="volume" type="xsd:string"/>
+         * <xsd:attribute name="series" type="xsd:string"/>
+         * <xsd:attribute name="volume" type="xsd:string"/>
           <xsd:attribute name="day" type="xsd:string"/>
           <xsd:attribute name="month" type="xsd:string"/>
-          <xsd:attribute name="year" type="xsd:string" use="required"/>
+         * <xsd:attribute name="year" type="xsd:string" use="required"/>
           <xsd:attribute name="type" type="xsd:string"/>
           <!-- <xsd:attribute name="scraperId" type="xsd:positiveInteger"/>  -->
           <xsd:attribute name="url" type="xsd:string"/>
@@ -137,6 +139,8 @@ class Publication extends AbstractTable {
           <xsd:attribute name="href" type="xsd:anyURI"/>
           </xsd:complexType>
          */
+        //</editor-fold>
+
         $bibsonomy = new \SimpleXMLElement($xmlStr);
         if ($bibsonomy['stat'] == 'fail') {
             throw new \Exception($bibsonomy->error);
@@ -162,7 +166,7 @@ class Publication extends AbstractTable {
             $pub->setIssue($bibtex['number']);
             $pub->setPyear($bibtex['year']);
             $pub->setPages($bibtex['pages']);
-            $pub->setMiniref(sprintf('http://www.bibsonomy.org/%s/%s/%s', $matches['type'], $matches['resource'], $matches['user']));
+            $pub->setMiniref(sprintf('http://www.bibsonomy.org/bibtex/%s/%s', $bibtex['intrahash'], $matches['user']));
             $pub->setPublisher($bibtex['publisher']);
             $typequery = new propel\CvtermQuery();
             $type = $typequery->findOneByName($bibtex['entrytype']);
@@ -173,7 +177,7 @@ class Publication extends AbstractTable {
             }
 
             $authors = explode(' and ', $bibtex['author']);
-            $i=0;
+            $i = 0;
             foreach ($authors as $author) {
                 list ($surname, $givennames) = explode(',', $author, 2);
 
@@ -202,17 +206,17 @@ class Publication extends AbstractTable {
     protected static function command_delete($options, $keys) {
         $pubq = new propel\PubQuery();
         $pub = $pubq->findOneByPubId($options['id']);
-        if ($pub == null){
+        if ($pub == null) {
             printf("No Publication found for ID %d. Exiting.\n", $options['id']);
             return;
         }
         $featurepubs = $pub->getFeaturePubs();
         if (isset($options['unlink_feature_id']) && count($featurepubs) > 1) {
-            foreach ($featurepubs as $featurepub){
+            foreach ($featurepubs as $featurepub) {
                 if ($featurepub->getFeatureId() == $options['unlink_feature_id'])
                     break;
             }
-            if ($featurepub->getFeatureId() != $options['unlink_feature_id']){
+            if ($featurepub->getFeatureId() != $options['unlink_feature_id']) {
                 printf("No Link from Publication %d to Feature %d found. Exiting.\n", $options['id'], $options['unlink_feature_id']);
                 return;
             }
