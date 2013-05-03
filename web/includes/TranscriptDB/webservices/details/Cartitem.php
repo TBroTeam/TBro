@@ -16,8 +16,7 @@ class Cartitem extends \WebService {
 SELECT
     feature.feature_id, feature.name, type_id, dbxref.accession AS dataset, organism.common_name AS organism
     FROM feature
-        JOIN feature_dbxref ON (feature_dbxref.feature_id = feature.feature_id)
-        JOIN dbxref ON (feature_dbxref.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
+        JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
         JOIN organism ON (feature.organism_id = organism.organism_id)
 WHERE feature.feature_id = :feature_id
 LIMIT 1

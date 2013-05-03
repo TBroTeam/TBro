@@ -84,15 +84,16 @@ class Assay extends AbstractTable {
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list', 'link_biomaterial', 'unlink_biomaterial');
     }
+
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Assay';
     }
 
-    protected static function command_insert_set_defaults(propel\BaseObject $item){
+    protected static function command_insert_set_defaults(\BaseObject $item) {
         // satisfy NOT NULL constraint
-                    $item->setArraydesignId(1);
+        $item->setArraydesignId(1);
     }
-    
+
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 

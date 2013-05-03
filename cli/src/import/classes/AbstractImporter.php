@@ -68,7 +68,7 @@ abstract class AbstractImporter implements CLI_Command, Importer {
         
         foreach ($command_args['files'] as $filename) {
             printf("importing %s as %s\n", $filename, $command_name);
-            $ret_table = call_user_func(array(get_called_class, 'import'), array_merge($command_options, array('file' => $filename)));
+            $ret_table = call_user_func(array(get_called_class(), 'import'), array_merge($command_options, array('file' => $filename)));
             $tbl = new Console_Table();
             foreach ($ret_table as $key => $value)
                 $tbl->addRow(array($key, $value));

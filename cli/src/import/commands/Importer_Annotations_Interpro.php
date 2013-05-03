@@ -2,6 +2,7 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequences.php';
+require_once ROOT . 'commands/Importer_Map.php';
 
 #versions of databases for interpro import
 global $dbrefx_versions;
@@ -107,6 +108,8 @@ EOF;
 
         try {
             $db->beginTransaction();
+            $import_prefix_id = Importer_Map::get_import_dbxref();
+            
             #shared parameters
             $param_feature_uniq = null;
             $param_feature_domain_name = null;
@@ -122,20 +125,22 @@ EOF;
             $param_accession = null;
             $param_dbname = null;
 
-            $statement_insert_feature_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:feature_domain_name, :feature_domain_unique, :type_id, :organism_id)');
+            $statement_insert_feature_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:feature_domain_name, :feature_domain_unique, :type_id, :organism_id, :dbxref_id)');
             $statement_insert_feature_domain->bindValue('type_id', CV_ANNOTATION_INTERPRO, PDO::PARAM_INT);
             $statement_insert_feature_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
-
+            $statement_insert_feature_domain->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
+            
             $statement_insert_feature_domain->bindParam('feature_domain_name', $param_feature_domain_name, PDO::PARAM_STR);
             $statement_insert_feature_domain->bindParam('feature_domain_unique', $param_feature_domain_uniq, PDO::PARAM_STR);
 
             $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism  LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_domain_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_domain_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_feature_uniq, PDO::PARAM_STR);
-
+            $statement_insert_featureloc->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
+            
             $statement_insert_analysisfeature = $db->prepare('INSERT INTO analysisfeature (analysis_id, feature_id, significance) VALUES (get_or_insert_analysis(:name, :program, :version, :timeexecuted) ,currval(\'feature_feature_id_seq\'), :significance)');
             $statement_insert_analysisfeature->bindValue('name', 'Interpro Analysis', PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('program', $param_db_name, PDO::PARAM_STR);

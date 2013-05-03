@@ -132,7 +132,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Table manipulation commands">
-    protected static function command_insert_set_defaults(propel\BaseObject $item) {
+    protected static function command_insert_set_defaults(\BaseObject $item) {
         
     }
 
@@ -145,7 +145,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
             else if (@$data['actions']['insert'] == 'optional' && isset($options[$key]))
                 $item->{"set" . $data['colname']}($options[$key]);
         }
-        call_user_func(array(get_called_class(), 'command_insert_set_defaults', $item));
+        call_user_func(array(get_called_class(), 'command_insert_set_defaults'), $item);
 
         $lines = $item->save();
         if (isset($options['short']) && $options['short'])

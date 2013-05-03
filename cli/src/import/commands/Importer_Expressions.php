@@ -186,7 +186,7 @@ class Importer_Expressions extends AbstractImporter {
     }
 
     public static function CLI_commandName() {
-        return 'pooled-expressions';
+        return 'pooled_expressions';
     }
 
     public static function CLI_longHelp() {

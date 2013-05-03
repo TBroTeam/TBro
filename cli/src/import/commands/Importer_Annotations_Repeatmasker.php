@@ -1,6 +1,7 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
+require_once ROOT . 'commands/Importer_Map.php';
 
 class Importer_Annotations_Repeatmasker extends AbstractImporter {
 
@@ -60,6 +61,8 @@ EOF;
 
         try {
             $db->beginTransaction();
+            $import_prefix_id = Importer_Map::get_import_dbxref();
+            
             #shared parameters
             $param_name = null;
             $param_uniquename = null;
@@ -69,18 +72,20 @@ EOF;
             $param_fmax = null;
             $param_srcfeature_uniq = null;
 
-            $statement_insert_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id)');
+            $statement_insert_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id)');
             $statement_insert_domain->bindValue('type_id', CV_ANNOTATION_REPEATMASKER, PDO::PARAM_INT);
             $statement_insert_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $statement_insert_domain->bindParam('name', $param_name, PDO::PARAM_STR);
             $statement_insert_domain->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
+            $statement_insert_domain->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
             $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_srcfeature_uniq, PDO::PARAM_STR);
+            $statement_insert_featureloc->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
             $statement_annotate_domain = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :cvterm, :value)');
             $statement_annotate_domain->bindParam('cvterm', $param_cvterm, PDO::PARAM_INT);

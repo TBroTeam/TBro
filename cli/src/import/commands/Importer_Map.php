@@ -2,9 +2,18 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 
- 
-
 class Importer_Map extends AbstractImporter {
+
+    public static function get_import_dbxref() {
+        global $db;
+        # get import prefix id, insert into dbxref if neccessary
+        $stm_get_import_prefix_id = $db->prepare('SELECT get_or_insert_dbxref(?, ?)');
+        $stm_get_import_prefix_id->execute(array(DB_NAME_IMPORTS, IMPORT_PREFIX));
+        $import_prefix_id = $stm_get_import_prefix_id->fetchColumn();
+        unset($stm_get_import_prefix_id);
+
+        return $import_prefix_id;
+    }
 
     /**
      * loads a file containing "unigene\tisoform" lines into feature table
@@ -15,10 +24,10 @@ class Importer_Map extends AbstractImporter {
      */
     static function import($options) {
         $filename = $options['file'];
-                
+
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         self::setLineCount($lines_total);
-        
+
         global $db;
         if (false)
             $db = new PDO();
@@ -35,11 +44,7 @@ class Importer_Map extends AbstractImporter {
 
         try {
             $db->beginTransaction();
-            # get import prefix id, insert into dbxref if neccessary
-            $stm_get_import_prefix_id = $db->prepare('SELECT get_or_insert_dbxref(?, ?)');
-            $stm_get_import_prefix_id->execute(array(DB_NAME_IMPORTS, IMPORT_PREFIX));
-            $import_prefix_id = $stm_get_import_prefix_id->fetchColumn();
-            unset($stm_get_import_prefix_id);
+            $import_prefix_id = self::get_import_dbxref();
 
             # link import dbxref to organism if not already linked
             $stm_link_organism_import_dbxref = $db->prepare("SELECT * FROM organism_dbxref WHERE organism_id=? AND dbxref_id=?");
@@ -48,24 +53,21 @@ class Importer_Map extends AbstractImporter {
                 $db->prepare("INSERT INTO organism_dbxref (organism_id, dbxref_id) VALUES (?, ?)")->execute(array(DB_ORGANISM_ID, $import_prefix_id));
             unset($stm_link_organism_import_dbxref);
 
-            #link last inserted feature to current import. has to be called after every insert
-            $stm_lnk_feature_import = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), :dbxref_id)');
-            $stm_lnk_feature_import->bindValue('dbxref_id', $import_prefix_id);
-
             # we are working with RETURNING feature_id here because PGSQL does not support lastInsertId
-            $stm_ins_unigene = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id) RETURNING feature_id');
+            $stm_ins_unigene = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id) RETURNING feature_id');
             $stm_ins_unigene->bindValue('type_id', CV_UNIGENE, PDO::PARAM_INT);
             $stm_ins_unigene->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $stm_ins_unigene->bindParam('name', $param_unigene_name, PDO::PARAM_STR);
             $stm_ins_unigene->bindParam('uniquename', $param_unigene_uniq);
+            $stm_ins_unigene->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
 
-            $stm_ins_isoform = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id) VALUES (:name, :uniquename, :type_id, :organism_id)');
+            $stm_ins_isoform = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id)');
             $stm_ins_isoform->bindValue('type_id', CV_ISOFORM, PDO::PARAM_INT);
             $stm_ins_isoform->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $stm_ins_isoform->bindParam('name', $param_isoform_name, PDO::PARAM_STR);
             $stm_ins_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
-
+            $stm_ins_isoform->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
             $stm_ins_feature_rel = $db->prepare('INSERT INTO feature_relationship (subject_id, type_id, object_id) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :parent)');
             $stm_ins_feature_rel->bindValue('type_id', CV_RELATIONSHIP_UNIGENE_ISOFORM, PDO::PARAM_INT);
@@ -91,9 +93,6 @@ class Importer_Map extends AbstractImporter {
 
                     # set for test to skip this unigene in the future
                     $last_unigene = $param_unigene_name;
-
-                    #link unigene to import
-                    $stm_lnk_feature_import->execute();
                 }
 
                 # set last value, execute insert
@@ -102,9 +101,6 @@ class Importer_Map extends AbstractImporter {
 
                 # insert feature_relationship
                 $stm_ins_feature_rel->execute();
-
-                #link isoform to import
-                $stm_lnk_feature_import->execute();
 
                 self::updateProgress(++$lines_imported);
             }
@@ -120,11 +116,10 @@ class Importer_Map extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added);
     }
 
-    
     public static function CLI_commandName() {
         return 'map';
     }
-    
+
     public static function CLI_commandDescription() {
         return "Mapping File Importer";
     }
@@ -139,8 +134,7 @@ unigene1    isoform2
 unigene2    isoform3
 EOF;
     }
-  
-    
+
 }
 
 ?>

@@ -18,4 +18,8 @@ use cli_db\propel\om\BaseFeature;
  */
 class Feature extends BaseFeature
 {
+    
+    public function getImportName(){
+        
+    }
 }

@@ -22,10 +22,9 @@ class Searchbox extends \WebService {
 
         $query_get_features = <<<EOF
 SELECT feature.name, feature.feature_id, feature.type_id
-    FROM feature_dbxref
-    JOIN feature ON (feature.feature_id = feature_dbxref.feature_id)
+    FROM feature
     WHERE 
-    feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
+    feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
     AND feature.organism_id = ?
     AND feature.name LIKE ?
     AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})

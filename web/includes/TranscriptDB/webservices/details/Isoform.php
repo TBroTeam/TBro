@@ -23,8 +23,7 @@ class Isoform extends \WebService {
 SELECT DISTINCT ON (isoform.feature_id, dbxref.dbxref_id)
         isoform.*, dbxref.accession AS import, organism.common_name AS organism_name
     FROM feature AS isoform
-        JOIN feature_dbxref ON (feature_dbxref.feature_id = isoform.feature_id)
-        JOIN dbxref ON (feature_dbxref.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
+        JOIN dbxref ON (isoform.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
         JOIN organism ON (isoform.organism_id = organism.organism_id)
     WHERE isoform.feature_id = :isoform_id
         AND isoform.type_id = {$constant('CV_ISOFORM')}

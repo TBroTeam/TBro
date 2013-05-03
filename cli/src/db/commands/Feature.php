@@ -28,8 +28,7 @@ class Feature extends AbstractTable {
                 ),
                 'description' => 'search filter, may contain wildcards, e.g. "*comp21449*"'
             ),
-            'id' => array(
-                'colname' => 'alias',
+            'alias' => array(
                 'actions' => array(
                     'add_alias' => 'required',
                     'remove_alias' => 'required',
@@ -70,8 +69,28 @@ class Feature extends AbstractTable {
         self::printTable($table_keys, $results);
     }
 
-    protected static function command_add_alias($options, $keys) {
-        die('TODO'); //TODO
+    protected static function command_add_alias($options, $keys, $type='symbol') {
+        $alias_name = $options['alias'];
+        $feature_id = $options['feature_id'];
+        
+        $typeq = new propel\CvtermQuery();
+        $type=$typeq->findByName($type);
+        
+        $synonymq = new propel\SynonymQuery();
+        $synonymq->filterByTypeId($type->getCvtermId());
+        $synonymq->filterByName($alias_name);
+        
+        
+        $synonym = new propel\Synonym();
+        $synonym->setName($alias_name);
+        
+        
+        
+        $feature_synonym = new propel\FeatureSynonym();
+        $feature_synonym->setFeatureId($feature_id);
+        $feature_synonym->setSynonym($synonym);
+        
+        $feature_synonym->save();
     }
 
     protected static function command_remove_alias($options, $keys) {

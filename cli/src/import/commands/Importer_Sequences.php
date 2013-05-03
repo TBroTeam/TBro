@@ -1,6 +1,7 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
+require_once ROOT . 'commands/Importer_Map.php';
 
 class Importer_Sequences extends AbstractImporter {
 
@@ -80,13 +81,16 @@ class Importer_Sequences extends AbstractImporter {
 
         try {
             $db->beginTransaction();
+            $import_prefix_id = Importer_Map::get_import_dbxref();
+            
             # prepare statements
             #
         #isoform sequence
-            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE uniquename=:uniquename RETURNING feature_id');
+            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE uniquename=:uniquename AND organism_id=:organism RETURNING feature_id');
             $statement_update_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
             $statement_update_isoform->bindParam('seqlen', $param_isoform_seqlen, PDO::PARAM_INT);
             $statement_update_isoform->bindParam('residues', $param_isoform_residues, PDO::PARAM_STR);
+            $statement_update_isoform->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
             $statement_insert_isoform_path = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (:feature_id, :type_id, :value)');
             $statement_insert_isoform_path->bindValue('type_id', CV_ISOFORM_PATH, PDO::PARAM_INT);
@@ -94,17 +98,17 @@ class Importer_Sequences extends AbstractImporter {
             $statement_insert_isoform_path->bindParam('value', $param_isoform_path, PDO::PARAM_STR);
 
             #predicted peptide
-            $statement_insert_predpep = $db->prepare('INSERT INTO feature  (type_id, organism_id, name, uniquename, seqlen, residues) '
-                    . 'VALUES (:type_id, :organism_id, :name, :uniquename, :seqlen, :residues) RETURNING feature_id');
+            $statement_insert_predpep = $db->prepare('INSERT INTO feature  (type_id, organism_id, name, uniquename, seqlen, residues, dbxref_id) '
+                    . 'VALUES (:type_id, :organism_id, :name, :uniquename, :seqlen, :residues, :dbxref_id) RETURNING feature_id');
             $statement_insert_predpep->bindValue('type_id', CV_PREDPEP, PDO::PARAM_INT);
             $statement_insert_predpep->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $statement_insert_predpep->bindParam('name', $param_predpep_name, PDO::PARAM_STR);
             $statement_insert_predpep->bindParam('uniquename', $param_predpep_uniq, PDO::PARAM_STR);
             $statement_insert_predpep->bindParam('seqlen', $param_predpep_seqlen, PDO::PARAM_INT);
             $statement_insert_predpep->bindParam('residues', $param_predpep_residues, PDO::PARAM_STR);
+            $statement_insert_predpep->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
-            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
+            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
             $statement_insert_predpep_location->bindParam('fmin', $param_predpep_fmin, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('fmax', $param_predpep_fmax, PDO::PARAM_INT);
             $statement_insert_predpep_location->bindParam('strand', $param_predpep_strand, PDO::PARAM_INT);
@@ -138,8 +142,7 @@ class Importer_Sequences extends AbstractImporter {
                 }
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/',
-                                $description, $matches)) {
+                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
                     $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
                     $param_predpep_uniq = IMPORT_PREFIX . "_" . $param_predpep_name;
                     $param_predpep_seqlen = $matches['len'];

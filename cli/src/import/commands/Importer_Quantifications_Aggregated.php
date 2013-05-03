@@ -59,7 +59,7 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
 
             $statement_get_biomaterial_id = $db->prepare('SELECT biomaterial_id FROM biomaterial WHERE name=? LIMIT 1');
 
-            $statement_get_feature_id = $db->prepare('SELECT feature_id FROM feature WHERE uniquename=? LIMIT 1');
+            $statement_get_feature_id = $db->prepare('SELECT feature_id FROM feature WHERE uniquename=?  AND organism_id=? LIMIT 1');
 
             $file = fopen($filename, 'r');
             if (feof($file))
@@ -81,7 +81,7 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
                 if (count($line) == 0)
                     continue;
                 $feature_uniquename = IMPORT_PREFIX . "_" . $line[0];
-                $statement_get_feature_id->execute(array($feature_uniquename));
+                $statement_get_feature_id->execute(array($feature_uniquename, DB_ORGANISM_ID));
                 $param_feature_id = $statement_get_feature_id->fetchColumn();
 
                 for ($i = 1; $i < count($line); $i++) {

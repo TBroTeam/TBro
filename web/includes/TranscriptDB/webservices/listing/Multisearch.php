@@ -40,12 +40,10 @@ FROM
         AND i.type_id = {$constant('CV_ISOFORM')}
         AND fr.object_id = u.feature_id
         AND fr.subject_id = i.feature_id
+        AND u.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?) 
   ) AS unigene, 
-  feature_relationship, 
-  feature_dbxref  
+  feature_relationship
 WHERE 
-  unigene.feature_id = feature_dbxref.feature_id AND
-  feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?) AND
   unigene.organism_id = ? AND      
   feature_relationship.object_id = unigene.feature_id AND
   feature_relationship.subject_id = isoform.feature_id
@@ -56,12 +54,14 @@ SELECT
   unigene.name AS unigene_name, unigene.feature_id AS unigene_feature_id
 FROM 
   (SELECT feature_id, name FROM feature WHERE type_id = {$constant('CV_ISOFORM')} ) AS isoform, 
-  (SELECT feature_id, name, organism_id FROM feature WHERE type_id = {$constant('CV_UNIGENE')} AND name IN ($qmarks)) AS unigene, 
-  feature_relationship, 
-  feature_dbxref  
+  (SELECT feature_id, name, organism_id, dbxref_id 
+    FROM feature 
+    WHERE type_id = {$constant('CV_UNIGENE')} 
+        AND name IN ($qmarks)
+        AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
+    ) AS unigene, 
+  feature_relationship
 WHERE 
-  unigene.feature_id = feature_dbxref.feature_id AND
-  feature_dbxref.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?) AND
   unigene.organism_id = ? AND      
   feature_relationship.object_id = unigene.feature_id AND
   feature_relationship.subject_id = isoform.feature_id
