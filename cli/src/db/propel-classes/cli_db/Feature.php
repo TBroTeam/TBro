@@ -19,7 +19,7 @@ use cli_db\propel\om\BaseFeature;
 class Feature extends BaseFeature
 {
     
-    public function getImportName(){
-        
+    public function getReleaseName(){
+        return $this->getDbxref()->getAccession();
     }
 }

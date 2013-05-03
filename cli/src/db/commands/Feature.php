@@ -59,6 +59,7 @@ class Feature extends AbstractTable {
     }
 
     protected static function command_list($options, $keys) {
+        
         $featureq = new propel\FeatureQuery();
         $featureq->filterByUniquename($options['uniquename']);
 
@@ -69,32 +70,65 @@ class Feature extends AbstractTable {
         self::printTable($table_keys, $results);
     }
 
-    protected static function command_add_alias($options, $keys, $type='symbol') {
-        $alias_name = $options['alias'];
-        $feature_id = $options['feature_id'];
-        
+    protected static function command_add_alias($options, $keys) {
+        $featureq = new propel\FeatureQuery();
+        $feature = $featureq->findOneByFeatureId( $options['feature_id']);
+
+        if ($feature == null)
+            trigger_error(sprintf('No Feature found for id %d', $options['feature_id']), E_USER_ERROR);
+
         $typeq = new propel\CvtermQuery();
-        $type=$typeq->findByName($type);
-        
+        $type = $typeq->findByName($options['type']);
+
         $synonymq = new propel\SynonymQuery();
         $synonymq->filterByTypeId($type->getCvtermId());
-        $synonymq->filterByName($alias_name);
-        
-        
-        $synonym = new propel\Synonym();
-        $synonym->setName($alias_name);
-        
-        
-        
+        $synonymq->filterByName($options['alias']);
+
+        $synonym = $synonymq->findOne();
+        if ($synonym == null) {
+            $synonym = new propel\Synonym();
+            $synonym->setName($options['alias']);
+            $synonym->setType($type->getCvtermId());
+        }
+
+
+        $feature_synonyms = $synonym->getFeatureSynonymsJoinFeature();
+        foreach ($feature_synonyms as $feature_synonym) {
+            if ($feature_synonym->getFeature()->getReleaseName() == $feature->getReleaseName()) {
+                trigger_error('This release already contains a feature with this alias.'
+                        . ' You can\'t add the same alias twice to an assembly release.', E_USER_ERROR);
+            }
+        }
+
         $feature_synonym = new propel\FeatureSynonym();
         $feature_synonym->setFeatureId($feature_id);
         $feature_synonym->setSynonym($synonym);
-        
+
         $feature_synonym->save();
+        print 'Alias created successfully.';
     }
 
     protected static function command_remove_alias($options, $keys) {
-        die('TODO'); //TODO
+        $typeq = new propel\CvtermQuery();
+        $type = $typeq->findByName($options['type']);
+
+        $synonymq = new propel\SynonymQuery();
+        $synonymq->filterByTypeId($type->getCvtermId());
+        $synonymq->filterByName($options['alias']);
+
+        $synonym = $synonymq->findOne();
+        if ($synonym == null) {
+            trigger_error('Alias not found.', E_USER_ERROR);
+        }
+
+
+        $feature_synonyms = $synonym->getFeatureSynonymsJoinFeature();
+        foreach ($feature_synonyms as $feature_synonym) {
+            if ($feature_synonym->getFeature()->getReleaseName() == $feature->getReleaseName()) {
+                trigger_error('This release already contains a feature with this alias.'
+                        . ' You can\'t add the same alias twice to an assembly release.', E_USER_ERROR);
+            }
+        }
     }
 
 }

@@ -160,8 +160,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
         $item = $q->findOneBy($keys['id']['colname'], $options['id']);
         if ($item == null) {
-            printf("No contact found for id %d.\n", $options['id']);
-            return;
+            trigger_error(sprintf("No contact found for id %d.\n", $options['id']), E_USER_ERROR);
         }
 
         foreach ($keys as $key => $data) {
@@ -196,8 +195,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         $cmdname = call_user_func(array(get_called_class(), 'CLI_commandName'));
 
         if ($item == null) {
-            printf("No $cmdname found for id %d.\n", $options['id']);
-            return;
+            trigger_error(sprintf("No $cmdname found for id %d.\n", $options['id']), E_USER_ERROR);
         }
         if (self::command_delete_confirm($options)) {
             $item->delete();
@@ -212,8 +210,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         $item = $q->findOneBy($keys['id']['colname'], $options['id']);
         if ($item == null) {
             $cmdname = call_user_func(array(get_called_class(), 'CLI_commandName'));
-            printf("No $cmdname found for id %d.\n", $options['id']);
-            return;
+            trigger_error(sprintf("No $cmdname found for id %d.\n", $options['id']), E_USER_ERROR);
         }
 
         $table_keys = array_keys(array_filter($keys, function($val) {

@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
+        <!--meta name="viewport" content="width=device-width" /-->
         <title>Transcript Browser - dionaea muscipula</title>
 
         <link rel="stylesheet" href="{#$AppPath#}/css/normalize.css" />
@@ -21,7 +21,6 @@
         <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
         <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>        
         <script type="text/javascript" src="{#$AppPath#}/js/underscore-min.js"></script>
-
 
 
         <script type="text/javascript">

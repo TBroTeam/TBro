@@ -127,8 +127,7 @@ class Assay extends AbstractTable {
         $ass_b_q->filterByBiomaterialId($options['biomaterial_id']);
         $ass_b = $ass_b_q->findOne();
         if ($ass_b == null) {
-            printf("No relationship between assay %d and biomaterial %d found.\n", $options['id'], $options['biomaterial_id']);
-            return;
+            trigger_error(sprintf("No relationship between assay %d and biomaterial %d found.\n", $options['id'], $options['biomaterial_id']), E_USER_ERROR);
         }
         $ass_b->delete();
         printf("Relationship between assay %d and biomaterial %d deleted successfully.\n", $ass_b->getAssayId(), $ass_b->getBiomaterialId());

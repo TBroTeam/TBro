@@ -42,6 +42,8 @@ $parser = new \Console_CommandLine(array(
         ));
 $parser->subcommand_required = true;
 
+require_once SHARED.'/'.'cli_error_handler.php';
+
 $width_exec = exec('tput cols 2>&1');
 $width = is_int($width_exec) && $width_exec > 0 ? $width_exec : 200;
 $parser->renderer->line_width = $width;

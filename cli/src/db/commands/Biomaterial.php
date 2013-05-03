@@ -138,13 +138,10 @@ class Biomaterial extends AbstractTable {
         $brqp->filterByObjectId($options['parent_id']);
         $brp = $brqp->findOne();
         if ($brp == null) {
-            printf("No relationship between parent %d and child %d found.\n", $options['parent_id'], $options['id']);
-            return;
+            trigger_error(sprintf("No relationship between parent %d and child %d found.\n", $options['parent_id'], $options['id']), E_USER_ERROR);
         }
         $brp->delete();
         printf("Relationship between parent %d and child %d deleted successfully.\n", $brp->getObjectId(), $brp->getSubjectId());
-
-        return $brp;
     }
 
     protected static function command_remove_child($options, $keys) {
@@ -153,8 +150,7 @@ class Biomaterial extends AbstractTable {
         $brqc->filterByObjectId($options['id']);
         $brc = $brqc->findOne();
         if ($brc == null) {
-            printf("No relationship between parent %d and child %d found.\n", $options['id'], $options['child_id']);
-            return;
+            trigger_error(sprintf("No relationship between parent %d and child %d found.\n", $options['id'], $options['child_id']), E_USER_ERROR);
         }
         $brc->delete();
         printf("Relationship between parent %d and child %d deleted successfully.\n", $brc->getObjectId(), $brc->getSubjectId());

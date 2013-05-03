@@ -80,7 +80,7 @@ class Publication extends AbstractTable {
     public static function command_link_bibsonomy($options, $keys) {
         $matches = null;
         if (!preg_match('{^\[\[(?<type>.*)/(?<resource>.*)/(?<user>.*)\]\]$}', $options['bibsonomy_internal_link'], $matches)) {
-            throw new Exception('wrong format for option --bibsonomy_internal_link');
+            trigger_error('wrong format for option --bibsonomy_internal_link', E_USER_ERROR);
         }
 
         $url = sprintf('http://www.bibsonomy.org/api/posts?resource=%s&resourcetype=bibtex', $matches['resource']);
@@ -143,12 +143,12 @@ class Publication extends AbstractTable {
 
         $bibsonomy = new \SimpleXMLElement($xmlStr);
         if ($bibsonomy['stat'] == 'fail') {
-            throw new \Exception($bibsonomy->error);
+            trigger_error($bibsonomy->error, E_USER_ERROR);
         }
 
 
         if (count($bibsonomy->posts->post) != 1) {
-            throw new \Exception(sprintf('Bibsonomy post %s not found!', $options['bibsonomy_internal_link']));
+            trigger_error(sprintf('Bibsonomy post %s not found!', $options['bibsonomy_internal_link']), E_USER_ERROR);
         }
         $bibtex = $bibsonomy->posts->post->bibtex;
 
@@ -173,7 +173,7 @@ class Publication extends AbstractTable {
             if ($type != null) {
                 $pub->setTypeId($type->getPrimaryKey());
             } else {
-                printf('type %s not found in cvterm, proceeding without type', $bibtex['entrytype']);
+                trigger_error(sprintf('type %s not found in cvterm, proceeding without type', $bibtex['entrytype']), E_USER_WARNING);
             }
 
             $authors = explode(' and ', $bibtex['author']);
@@ -207,8 +207,7 @@ class Publication extends AbstractTable {
         $pubq = new propel\PubQuery();
         $pub = $pubq->findOneByPubId($options['id']);
         if ($pub == null) {
-            printf("No Publication found for ID %d. Exiting.\n", $options['id']);
-            return;
+            trigger_error(sprintf("No Publication found for ID %d. Exiting.\n", $options['id']), E_USER_ERROR);
         }
         $featurepubs = $pub->getFeaturePubs();
         if (isset($options['unlink_feature_id']) && count($featurepubs) > 1) {
@@ -217,8 +216,7 @@ class Publication extends AbstractTable {
                     break;
             }
             if ($featurepub->getFeatureId() != $options['unlink_feature_id']) {
-                printf("No Link from Publication %d to Feature %d found. Exiting.\n", $options['id'], $options['unlink_feature_id']);
-                return;
+                trigger_error(printf("No Link from Publication %d to Feature %d found. Exiting.\n", $options['id'], $options['unlink_feature_id']), E_USER_ERROR);
             }
             if (!self::command_delete_confirm($options, sprintf("Delete Link from Publication %d  to Feature %d.\n", $options['id'], $options['unlink_feature_id']))) {
                 return;
