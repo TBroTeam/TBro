@@ -15,7 +15,7 @@ class Feature extends AbstractTable {
                     'add_alias' => 'required',
                     'remove_alias' => 'required',
                 ),
-                'description' => 'feature id'
+                'description' => 'feature id',
             ),
             'name' => array(
                 'colname' => 'Name',
@@ -33,7 +33,16 @@ class Feature extends AbstractTable {
                     'add_alias' => 'required',
                     'remove_alias' => 'required',
                 ),
-                'description' => 'feature id'
+                'description' => 'alias to be created'
+            ),
+            'type' => array(
+                'actions' => array(
+                    'add_alias' => 'required',
+                    'remove_alias' => 'required',
+                ),
+                'description' => "'symbol' or 'fulltext'. defaults to 'symbol'",
+                'choices' => array('symbol', 'fullname'),
+                'default'=>'symbol'
             ),
         );
     }
@@ -72,13 +81,13 @@ class Feature extends AbstractTable {
 
     protected static function command_add_alias($options, $keys) {
         $featureq = new propel\FeatureQuery();
-        $feature = $featureq->findOneByFeatureId( $options['feature_id']);
+        $feature = $featureq->findOneByFeatureId( $options['id']);
 
         if ($feature == null)
-            trigger_error(sprintf('No Feature found for id %d', $options['feature_id']), E_USER_ERROR);
+            trigger_error(sprintf('No Feature found for id %d', $options['id']), E_USER_ERROR);
 
         $typeq = new propel\CvtermQuery();
-        $type = $typeq->findByName($options['type']);
+        $type = $typeq->findOneByName($options['type']);
 
         $synonymq = new propel\SynonymQuery();
         $synonymq->filterByTypeId($type->getCvtermId());
@@ -88,7 +97,8 @@ class Feature extends AbstractTable {
         if ($synonym == null) {
             $synonym = new propel\Synonym();
             $synonym->setName($options['alias']);
-            $synonym->setType($type->getCvtermId());
+            $synonym->setTypeId($type->getCvtermId());
+            $synonym->setSynonymSgml('');
         }
 
 
@@ -101,7 +111,8 @@ class Feature extends AbstractTable {
         }
 
         $feature_synonym = new propel\FeatureSynonym();
-        $feature_synonym->setFeatureId($feature_id);
+        //TODO link publication?!?
+        $feature_synonym->setFeatureId($options['id']);
         $feature_synonym->setSynonym($synonym);
 
         $feature_synonym->save();
@@ -110,25 +121,30 @@ class Feature extends AbstractTable {
 
     protected static function command_remove_alias($options, $keys) {
         $typeq = new propel\CvtermQuery();
-        $type = $typeq->findByName($options['type']);
+        $type = $typeq->findOneByName($options['type']);
 
         $synonymq = new propel\SynonymQuery();
         $synonymq->filterByTypeId($type->getCvtermId());
         $synonymq->filterByName($options['alias']);
-
+        
         $synonym = $synonymq->findOne();
         if ($synonym == null) {
             trigger_error('Alias not found.', E_USER_ERROR);
         }
 
 
-        $feature_synonyms = $synonym->getFeatureSynonymsJoinFeature();
+        $feature_synonyms = $synonym->getFeatureSynonyms();
         foreach ($feature_synonyms as $feature_synonym) {
-            if ($feature_synonym->getFeature()->getReleaseName() == $feature->getReleaseName()) {
-                trigger_error('This release already contains a feature with this alias.'
-                        . ' You can\'t add the same alias twice to an assembly release.', E_USER_ERROR);
+            if ($feature_synonym->getFeatureId() == $options['id']) {
+                if (count($feature_synonyms == 1))
+                    $synonym->delete();
+                else
+                    $feature_synonym->delete();
+                print 'Deleted successfully.';
             }
         }
+        
+        trigger_error('Combination of alias and feature not found!.', E_USER_ERROR);
     }
 
 }

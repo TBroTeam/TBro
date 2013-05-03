@@ -21,14 +21,13 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
         foreach ($keys as $key => $data) {
             if (isset($data['actions'][$subcommand_name])) {
-                $options = array(
+                $stdopts = array(
                     'long_name' => '--' . $key,
-                    'description' => sprintf('(%2$s) %1$s', $data['description'], $data['actions'][$subcommand_name]),
                     'help_name' => $key
                 );
-                if (isset($data['short_name'])) {
-                    $options['short_name'] = $data['short_name'];
-                }
+                $extraopts = array_diff_key($data, array('actions'=>null, 'colname'=>null));
+                $options = array_merge($stdopts, $extraopts);
+                $options['description'] = sprintf('(%2$s) %1$s', $data['description'], $data['actions'][$subcommand_name]);
                 $option = $submcd->addOption($key, $options);
             }
         }
