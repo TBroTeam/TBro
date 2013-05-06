@@ -43,8 +43,8 @@ $cvterms = array(
         'name' => 'annotation_interpro_analysis_match_description',
         'cv' => 'feature_property'
     ),
-    'CV_ANNOTATION_BLAST2GO' => array(
-        'name' => 'annotation_blast2go',
+    'CV_ANNOTATION_DESC' => array(
+        'name' => 'annotation_description',
         'cv' => 'feature_property'
     ),
     'CV_INTERPRO_ID' => array(

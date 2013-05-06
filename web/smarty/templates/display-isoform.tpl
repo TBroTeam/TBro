@@ -160,10 +160,10 @@
             <div id="isoform-annotations"> </div>
             <div class="row contains-tooltip">
                 <div class="large-12 columns">
-                    {#if isset($data.isoform.blast2go) #}
+                    {#if isset($data.isoform.description) #}
                         <h4>possible description:</h4>
-                        {#foreach $data.isoform.blast2go as $blast2go#}
-                            <h5> {#$blast2go.value#}</h5>
+                        {#foreach $data.isoform.description as $description#}
+                            <h5> {#$description.value#}</h5>
                         {#/foreach#}
                     {#/if#}
 

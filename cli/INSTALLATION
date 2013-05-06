@@ -2,6 +2,8 @@
 ###  build prerequisites  ###
 #############################
 
+install php5-cli, php-pear, php5-pgsql, php5-curl
+
 install phing
     $ pear channel-discover pear.phing.info
     $ pear install --alldeps phing/phing

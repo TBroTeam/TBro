@@ -2,14 +2,14 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 
-class Importer_Annotations_Blast2Go extends AbstractImporter {
+abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
     /**
      * @global PDO $db
      * @param string $filename
      * @throws ErrorException
      */
-    static function import($options) {
+    static function _import($options, $feature_pos=0, $dbxref_pos=1, $separator="\t") {
 
         $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
@@ -35,30 +35,15 @@ class Importer_Annotations_Blast2Go extends AbstractImporter {
             $statement_insert_feature_dbxref->bindParam('uniquename', $param_feature_uniq, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
-            $statement_insert_featureprop = $db->prepare(
-                    sprintf('INSERT INTO featureprop (feature_id, type_id, rank, value) VALUES ((%s), :type_id, 0, :description)', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism ')
-            );
-            $statement_insert_featureprop->bindValue('type_id', CV_ANNOTATION_BLAST2GO, PDO::PARAM_INT);
-            $statement_insert_featureprop->bindParam('uniquename', $param_feature_uniq, PDO::PARAM_STR);
-            $statement_insert_featureprop->bindParam('description', $description, PDO::PARAM_STR);
-            $statement_insert_featureprop->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
-
             $file = fopen($filename, 'r');
-            while (($line = fgetcsv($file, 0, "\t")) !== false) {
+            while (($line = fgetcsv($file, 0, $separator)) !== false) {
                 if (count($line) == 0)
                     continue;
-                $feature = $line[0];
-                $dbxref = $line[1];
+                $feature = $line[$feature_pos];
+                $dbxref = $line[$dbxref_pos];
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
                 $statement_insert_feature_dbxref->execute();
-
-                $description = isset($line[2]) ? $line[2] : null;
-                if ($description != null) {
-                    $statement_insert_featureprop->execute();
-                    $descriptions_added++;
-                }
-
 
                 self::updateProgress(++$lines_imported);
             }
@@ -74,17 +59,8 @@ class Importer_Annotations_Blast2Go extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
     }
 
-    public static function CLI_commandDescription() {
-        return "Blast2Go Output Importer";
-    }
-
-    public static function CLI_commandName() {
-        return 'annotation_blast2go';
-    }
-
     public static function CLI_longHelp() {
         return <<<EOF
-
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 \033[0;31mThis import requires a successful Sequence File Import!\033[0m
 EOF;

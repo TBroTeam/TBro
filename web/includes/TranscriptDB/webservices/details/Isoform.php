@@ -34,18 +34,18 @@ EOF;
 
         
         
-        $query_get_blast2go = <<<EOF
+        $query_get_desc = <<<EOF
 SELECT
   *
 FROM
   featureprop
 WHERE
   featureprop.feature_id = :isoform_id AND
-  featureprop.type_id = {$constant('CV_ANNOTATION_BLAST2GO')}
+  featureprop.type_id = {$constant('CV_ANNOTATION_DESC')}
 EOF;
 
-        $stm_get_blast2go = $db->prepare($query_get_blast2go);
-        $stm_get_blast2go->bindParam('isoform_id', $param_isoform_id);
+        $stm_get_desc = $db->prepare($query_get_desc);
+        $stm_get_desc->bindParam('isoform_id', $param_isoform_id);
 
 
         $query_get_unigene = <<<EOF
@@ -114,9 +114,9 @@ EOF;
             list($pub, $trash) = \WebService::factory('details/annotations/feature/pub');
             $isoform['pub'] = $pub->getById($isoform['feature_id']);
             
-            $stm_get_blast2go->execute();
-            while ($blast2go = $stm_get_blast2go->fetch(PDO::FETCH_ASSOC)) {
-                $isoform['blast2go'][] = $blast2go;
+            $stm_get_desc->execute();
+            while ($desc = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
+                $isoform['description'][] = $desc;
             }
 
             $stm_get_repeatmasker->execute();

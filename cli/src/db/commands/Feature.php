@@ -12,8 +12,8 @@ class Feature extends AbstractTable {
                 'colname' => 'FeatureId',
                 'actions' => array(
                     'details' => 'required',
-                    'add_alias' => 'required',
-                    'remove_alias' => 'required',
+                    'add_synonym' => 'required',
+                    'remove_synonym' => 'required',
                 ),
                 'description' => 'feature id',
             ),
@@ -28,17 +28,17 @@ class Feature extends AbstractTable {
                 ),
                 'description' => 'search filter, may contain wildcards, e.g. "*comp21449*"'
             ),
-            'alias' => array(
+            'synonym' => array(
                 'actions' => array(
-                    'add_alias' => 'required',
-                    'remove_alias' => 'required',
+                    'add_synonym' => 'required',
+                    'remove_synonym' => 'required',
                 ),
-                'description' => 'alias to be created'
+                'description' => 'synonym to be created'
             ),
             'type' => array(
                 'actions' => array(
-                    'add_alias' => 'required',
-                    'remove_alias' => 'required',
+                    'add_synonym' => 'required',
+                    'remove_synonym' => 'required',
                 ),
                 'description' => "'symbol' or 'fulltext'. defaults to 'symbol'",
                 'choices' => array('symbol', 'fullname'),
@@ -60,7 +60,7 @@ class Feature extends AbstractTable {
     }
 
     public static function getSubCommands() {
-        return array('details', 'list', 'add_alias', 'remove_alias');
+        return array('details', 'list', 'add_synonym', 'remove_synonym');
     }
 
     public static function getPropelClass() {
@@ -79,7 +79,7 @@ class Feature extends AbstractTable {
         self::printTable($table_keys, $results);
     }
 
-    protected static function command_add_alias($options, $keys) {
+    protected static function command_add_synonym($options, $keys) {
         $featureq = new propel\FeatureQuery();
         $feature = $featureq->findOneByFeatureId( $options['id']);
 
@@ -91,12 +91,12 @@ class Feature extends AbstractTable {
 
         $synonymq = new propel\SynonymQuery();
         $synonymq->filterByTypeId($type->getCvtermId());
-        $synonymq->filterByName($options['alias']);
+        $synonymq->filterByName($options['synonym']);
 
         $synonym = $synonymq->findOne();
         if ($synonym == null) {
             $synonym = new propel\Synonym();
-            $synonym->setName($options['alias']);
+            $synonym->setName($options['synonym']);
             $synonym->setTypeId($type->getCvtermId());
             $synonym->setSynonymSgml('');
         }
@@ -105,8 +105,8 @@ class Feature extends AbstractTable {
         $feature_synonyms = $synonym->getFeatureSynonymsJoinFeature();
         foreach ($feature_synonyms as $feature_synonym) {
             if ($feature_synonym->getFeature()->getReleaseName() == $feature->getReleaseName()) {
-                trigger_error('This release already contains a feature with this alias.'
-                        . ' You can\'t add the same alias twice to an assembly release.', E_USER_ERROR);
+                trigger_error('This release already contains a feature with this synonym.'
+                        . ' You can\'t add the same synonym twice to an assembly release.', E_USER_ERROR);
             }
         }
 
@@ -119,13 +119,13 @@ class Feature extends AbstractTable {
         print 'Alias created successfully.';
     }
 
-    protected static function command_remove_alias($options, $keys) {
+    protected static function command_remove_synonym($options, $keys) {
         $typeq = new propel\CvtermQuery();
         $type = $typeq->findOneByName($options['type']);
 
         $synonymq = new propel\SynonymQuery();
         $synonymq->filterByTypeId($type->getCvtermId());
-        $synonymq->filterByName($options['alias']);
+        $synonymq->filterByName($options['synonym']);
         
         $synonym = $synonymq->findOne();
         if ($synonym == null) {
@@ -144,7 +144,7 @@ class Feature extends AbstractTable {
             }
         }
         
-        trigger_error('Combination of alias and feature not found!.', E_USER_ERROR);
+        trigger_error('Combination of synonym and feature not found!.', E_USER_ERROR);
     }
 
 }
