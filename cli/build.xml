@@ -117,6 +117,7 @@
             <fileset dir="${srcdir}">
                 <include name="db-config.php.example" />
                 <include name="db-cvterms.php.example" />
+                <include name="interpro-db-versions.ini.example" />
             </fileset>
         </copy>
     </target>

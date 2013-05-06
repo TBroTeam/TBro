@@ -4,10 +4,6 @@ require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequences.php';
 require_once ROOT . 'commands/Importer_Map.php';
 
-#versions of databases for interpro import
-global $dbrefx_versions;
-$dbrefx_versions = array('HMMPIR' => '1.0');
-
 class Importer_Annotations_Interpro extends AbstractImporter {
 
     /**
@@ -44,6 +40,7 @@ EOF;
      * @throws ErrorException
      */
     static function import($options) {
+
 #SEQNAME    ?   ?   ?   CRC LENGTH  EVIDENCE    MATCHID MATCHNAME   START   END SCORE   STATUS  DATE    INTERPROID  INTERPRONAME
         /*
          * http://wiki.bioinformatics.ucdavis.edu/index.php/InterProScan#Iprscan_raw_output_explanation
@@ -97,10 +94,11 @@ EOF;
 
 
         $filename = $options['file'];
+        $interpro_version = $options['interpro_version'];
+
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         self::setLineCount($lines_total);
 
-        global $dbrefx_versions;
         global $db;
         $lines_imported = 0;
         $interpro_ids_added = 0;
@@ -109,15 +107,14 @@ EOF;
         try {
             $db->beginTransaction();
             $import_prefix_id = Importer_Map::get_import_dbxref();
-            
+
             #shared parameters
             $param_feature_uniq = null;
             $param_feature_domain_name = null;
             $param_feature_domain_uniq = null;
             $param_domain_fmin = null;
             $param_domain_fmax = null;
-            $param_db_ver = null;
-            $param_db_name = null;
+            $param_source_name = null;
             $param_evalue = null;
             $param_timeexecuted = null;
             $param_featureprop_type = null;
@@ -129,22 +126,22 @@ EOF;
             $statement_insert_feature_domain->bindValue('type_id', CV_ANNOTATION_INTERPRO, PDO::PARAM_INT);
             $statement_insert_feature_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $statement_insert_feature_domain->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
-            
+
             $statement_insert_feature_domain->bindParam('feature_domain_name', $param_feature_domain_name, PDO::PARAM_STR);
             $statement_insert_feature_domain->bindParam('feature_domain_unique', $param_feature_domain_uniq, PDO::PARAM_STR);
 
-            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism  LIMIT 1'));
+            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism  LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_domain_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_domain_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_feature_uniq, PDO::PARAM_STR);
             $statement_insert_featureloc->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
-            
-            $statement_insert_analysisfeature = $db->prepare('INSERT INTO analysisfeature (analysis_id, feature_id, significance) VALUES (get_or_insert_analysis(:name, :program, :version, :timeexecuted) ,currval(\'feature_feature_id_seq\'), :significance)');
+
+            $statement_insert_analysisfeature = $db->prepare('INSERT INTO analysisfeature (analysis_id, feature_id, significance) VALUES (get_or_insert_analysis(:name, :program, :version, :source, :timeexecuted) ,currval(\'feature_feature_id_seq\'), :significance)');
             $statement_insert_analysisfeature->bindValue('name', 'Interpro Analysis', PDO::PARAM_STR);
-            $statement_insert_analysisfeature->bindParam('program', $param_db_name, PDO::PARAM_STR);
-            $statement_insert_analysisfeature->bindParam('version', $param_db_ver, PDO::PARAM_STR);
+            $statement_insert_analysisfeature->bindParam('program', 'Interpro', PDO::PARAM_STR);
+            $statement_insert_analysisfeature->bindValue('version', $interpro_version, PDO::PARAM_STR);
+            $statement_insert_analysisfeature->bindParam('source', $param_source_name, PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('timeexecuted', $param_timeexecuted, PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('significance', $param_evalue, PDO::PARAM_STR);
 
@@ -167,7 +164,7 @@ EOF;
 
                 // set params for statements
                 // available matches, see RegEx
-                $param_db_name = $match['analysisMethod'];
+                $param_source_name = $match['analysisMethod'];
                 $param_domain_fmin = $match['domStart'];
                 $param_domain_fmax = $match['domEnd'];
                 $param_evalue = $match['eValue'];
@@ -184,7 +181,7 @@ EOF;
 
                 if ($param_evalue == 'NA')
                     $param_evalue = NULL;
-                $param_db_ver = isset($dbrefx_versions[$param_db_name]) ? $dbrefx_versions[$param_db_name] : 'unknown';
+
                 $statement_insert_analysisfeature->execute();
 
                 if ($match['interproID'] != "NULL") {
@@ -231,6 +228,22 @@ EOF;
         }
         return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added' => $dbxrefs_added);
     }
+    
+        public static function CLI_getCommand(Console_CommandLine $parser) {
+        $command = parent::CLI_getCommand($parser);
+        $command->addOption('interpro_version',
+                array(
+            'short_name' => '-i',
+            'long_name' => '--interpro_version',
+            'description' => 'interpro version'
+        ));
+    }
+
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        parent::CLI_checkRequiredOpts($command);
+        $options = $command->options;
+        AbstractImporter::dieOnMissingArg($options, 'interpro_version');
+    }
 
     public static function CLI_commandDescription() {
         return "Interpro Output Importer";
@@ -242,7 +255,7 @@ EOF;
 
     public static function CLI_longHelp() {
         return <<<EOF
-
+   
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 \033[0;31mThis import requires a successful Sequence File Import!\033[0m
 EOF;

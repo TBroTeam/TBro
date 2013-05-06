@@ -1,7 +1,7 @@
 <div class="row" id="predpep">
     <div class="large-12 columns">
         <div id="predpeps"> </div>
-        <h2>Predicted Peptides:</h2>
+        <h4>Predicted Peptides:</h4>
         <div class="row">
             <div class="large-12 columns panel">
                 <div class="tabs">

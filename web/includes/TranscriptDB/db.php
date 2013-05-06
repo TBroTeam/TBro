@@ -23,7 +23,7 @@ try {
         //$db->log_replace_params = false;
     }
     else {
-        $db = new PDO($connstr, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO($connstr, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_EMULATE_PREPARES=>false));
     }
     #usually stop execution on DB error
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -91,7 +91,6 @@ abstract class AbstractTable implements \CLI_Command, Table {
         if (!in_array($subcommand_name, $subcommands))
             return false;
 
-
         call_user_func(array(get_called_class(), 'command_' . $subcommand_name), $subcommand_options, $keys);
     }
 
@@ -104,7 +103,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         $keys = call_user_func(array(get_called_class(), 'getKeys'));
         $column_keys = array();
         foreach ($keys as $key => $val) {
-            if (@$val['colname'] != null)
+            if (isset($val['colname']) && $val['colname'] != null)
                 $column_keys[$key] = $val['colname'];
         }
 
@@ -139,9 +138,9 @@ abstract class AbstractTable implements \CLI_Command, Table {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
         $item = new $propel_class();
         foreach ($keys as $key => $data) {
-            if (@$data['actions']['insert'] == 'required')
+            if (isset($data['actions']) && isset($data['actions']['insert']) && $data['actions']['insert'] == 'required')
                 $item->{"set" . $data['colname']}($options[$key]);
-            else if (@$data['actions']['insert'] == 'optional' && isset($options[$key]))
+            else if (isset($data['actions']) && isset($data['actions']['insert']) && $data['actions']['insert'] == 'optional' && isset($options[$key]))
                 $item->{"set" . $data['colname']}($options[$key]);
         }
         call_user_func(array(get_called_class(), 'command_insert_set_defaults'), $item);

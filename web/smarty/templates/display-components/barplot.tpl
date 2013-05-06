@@ -1,6 +1,6 @@
 <div class="row">
     <div class="large-12 columns">
-        <h2>Barplot</h2>
+        <h4>Barplot</h4>
     </div>
 </div>
 

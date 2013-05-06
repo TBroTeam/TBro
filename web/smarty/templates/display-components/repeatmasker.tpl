@@ -1,7 +1,7 @@
 <div class="row" id="repeatmasker" class="contains-tooltip">
     <div class="large-12 columns">
         <div id="repeatmasker-annotations"> </div>
-        <h2>Repeatmasker Annotations:</h2>
+        <h4>Repeatmasker Annotations:</h4>
         <div class="row">
             <div class="large-12 columns panel">
                 <table style="width:100%">

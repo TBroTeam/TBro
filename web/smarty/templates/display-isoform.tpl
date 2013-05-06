@@ -64,7 +64,7 @@
                         var name = attr.nodeValue.substr(0,splitAt);
                         var value = attr.nodeValue.substr(splitAt+1);
                         $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
-                        }
+                    }
                 });
                 tooltip.foundation();
                 return tooltip;
@@ -113,17 +113,20 @@
                     <tr><td>organism</td><td>{#$data.isoform.organism_name#}</td></tr>
                 </tbody>
             </table>
-            <div id="isoform-browser"> </div>
-            <div class="row">
-                <div class="large-12 columns">
-                    <h4>Isoform Browser</h4>
-                </div>
-                <div class="large-12 columns">
-                    <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
-                    <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-                </div>
-            </div>
-
+        </div>
+    </div>                
+    <div id="isoform-browser"> </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h4>Isoform Browser</h4>
+        </div>
+        <div class="large-12 columns panel">
+            <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
+            <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
             <div class="row">
                 <div class="large-6 columns">
                     <h4>Sequence</h4>
@@ -152,70 +155,77 @@
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="large-12 columns">
-                    <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
-                </div>
+        </div>
+        <div class="large-12 columns panel">
+            <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
+        </div>
+    </div>
+    <div id="isoform-annotations"> </div>
+    {#if isset($data.isoform.description) #}
+        <div class="row">
+            <div class="large-12 columns panel">
+                <h4>possible description:</h4>
+                {#foreach $data.isoform.description as $description#}
+                    <h5> {#$description.value#}</h5>
+                {#/foreach#}
+
             </div>
-            <div id="isoform-annotations"> </div>
+        </div>
+    {#/if#}
+
+    {#if (isset($data.isoform.dbxref))#}                
+        {#if (isset($data.isoform.dbxref['GO']))#}
             <div class="row contains-tooltip">
-                <div class="large-12 columns">
-                    {#if isset($data.isoform.description) #}
-                        <h4>possible description:</h4>
-                        {#foreach $data.isoform.description as $description#}
-                            <h5> {#$description.value#}</h5>
-                        {#/foreach#}
-                    {#/if#}
-
-
-                    {#if (isset($data.isoform.dbxref))#}
-                        {#if (isset($data.isoform.dbxref['GO']))#}
-                            <h4>Gene Ontology</h4>
-                            {#foreach $data.isoform.dbxref['GO'] as $namespace=>$dbxarr#}
-                                <h5>{#$namespace#}</h5>
-                                <table style="width:100%">
-                                    <tbody>
-                                        {#foreach $dbxarr as $dbxref#}
-                                            <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
-                                        {#/foreach#}
-                                    </tbody>
-                                </table>
-                            {#/foreach#}
-                        {#/if#}
-
-                        {#if (isset($data.isoform.dbxref['EC']))#}
-                            <h4>Enzyme classifications</h4>
-                            {#foreach $data.isoform.dbxref['EC'] as $namespace=>$dbxarr#}
-                                <table style="width:100%">
-                                    <tbody>
-                                        {#foreach $dbxarr as $dbxref#}
-                                            <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
-                                        {#/foreach#}
-                                    </tbody>
-                                </table>
-                            {#/foreach#}
-
-                        {#/if#}
-                    {#/if#}
-                </div>
-            </div>
-            {#if isset($data.isoform.pub) && count($data.isoform.pub) > 0 #}
-                <div id="isoform-publications"> </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <h4>Publications</h4>                        
+                <div class="large-12 columns panel">                    
+                    <h4>Gene Ontology</h4>
+                    {#foreach $data.isoform.dbxref['GO'] as $namespace=>$dbxarr#}
+                        <h5>{#$namespace#}</h5>
                         <table style="width:100%">
-                            <tbody class="contains-tooltip">
-                                {#foreach $data.isoform.pub as $pub#}
-                                    {#publink pub=$pub#}
+                            <tbody>
+                                {#foreach $dbxarr as $dbxref#}
+                                    <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
                                 {#/foreach#}
                             </tbody>
                         </table>
-                    </div>
+                    {#/foreach#}
                 </div>
-            {#/if#}
+            </div>
+        {#/if#}
+
+
+        {#if (isset($data.isoform.dbxref['EC']))#}
+            <div class="row contains-tooltip">
+                <div class="large-12 columns panel">
+                    <h4>Enzyme classifications</h4>
+                    {#foreach $data.isoform.dbxref['EC'] as $namespace=>$dbxarr#}
+                        <table style="width:100%">
+                            <tbody>
+                                {#foreach $dbxarr as $dbxref#}
+                                    <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
+                                {#/foreach#}
+                            </tbody>
+                        </table>
+                    {#/foreach#}
+                </div>
+            </div>
+        {#/if#}
+    {#/if#}
+    {#if isset($data.isoform.pub) && count($data.isoform.pub) > 0 #}
+        <div id="isoform-publications"> </div>
+        <div class="row">
+            <div class="large-12 columns panel">
+                <h4>Publications</h4>                        
+                <table style="width:100%">
+                    <tbody class="contains-tooltip">
+                        {#foreach $data.isoform.pub as $pub#}
+                            {#publink pub=$pub#}
+                        {#/foreach#}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    {#/if#}
+
 
     {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}
         {#include file="display-components/repeatmasker.tpl" isoform=$data.isoform #}

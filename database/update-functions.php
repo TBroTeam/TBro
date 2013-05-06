@@ -13,16 +13,16 @@ global $db;
 $constant = 'constant';
 
 $stored_functions = array(
-    array('func_header' => 'get_or_insert_analysis (_name character varying(255), _program character varying(255), _version character varying(255), _timeexecuted timestamp)',
+    array('func_header' => 'get_or_insert_analysis (_name character varying(255), _program character varying(255), _programversion character varying(255), _sourcename character varying(255), _timeexecuted timestamp)',
         'func_returns' => 'integer',
         'func_body' => <<<EOF
 DECLARE
     _analysis_id integer;
 BEGIN
-    SELECT INTO _analysis_id analysis_id FROM analysis WHERE name=_name AND program=_program AND programversion=_version AND timeexecuted=_timeexecuted;
+    SELECT INTO _analysis_id analysis_id FROM analysis WHERE name=_name AND program=_program AND sourcename = _sourcename AND programversion=_programversion AND timeexecuted=_timeexecuted;
 
     IF _analysis_id IS NULL THEN
-        INSERT INTO analysis (name, program, programversion, timeexecuted) VALUES (_name, _program, _version, _timeexecuted);
+        INSERT INTO analysis (name, program, programversion, sourcename, timeexecuted) VALUES (_name, _program, _programversion, _sourcename, _timeexecuted);
         _analysis_id := currval(''analysis_analysis_id_seq'');
     END IF;
     
