@@ -160,7 +160,6 @@ class Importer_Sequences extends AbstractImporter {
         ));
     }
 
-    //TODO sequence map
     public static function CLI_commandName() {
         return 'sequences';
     }
@@ -169,7 +168,6 @@ class Importer_Sequences extends AbstractImporter {
         return "Mapping File Importer";
     }
 
-    //TODO --only-unigenes / --only-isoforms
     public static function CLI_longHelp() {
         return <<<EOF
 

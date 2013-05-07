@@ -36,14 +36,14 @@ class Quantifications extends \WebService {
 SELECT 
   feature.name AS feature_name, 
   biomaterial.name AS biomaterial_name, 
-  quantificationresult.value, 
-  quantificationresult.type_id,
+  expressionresult.value, 
+  expressionresult.type_id,
   parent_biomaterial.name AS parent_biomaterial_name,
   assay.name AS assay_name,
   analysis.analysis_id,
   analysis.name AS analysis_name
 FROM 
-  quantificationresult, 
+  expressionresult, 
   biomaterial,
   analysis,
   feature, 
@@ -53,14 +53,14 @@ FROM
   biomaterial_relationship, 
   biomaterial AS parent_biomaterial
 WHERE 
-  quantificationresult.biomaterial_id IN ({$query_subqueries['biomaterial']}) AND
-  quantificationresult.biomaterial_id = biomaterial.biomaterial_id AND
+  expressionresult.biomaterial_id IN ({$query_subqueries['biomaterial']}) AND
+  expressionresult.biomaterial_id = biomaterial.biomaterial_id AND
   
-  quantificationresult.feature_id IN ({$query_subqueries['parent']}) AND    
-  quantificationresult.feature_id = feature.feature_id AND
+  expressionresult.feature_id IN ({$query_subqueries['parent']}) AND    
+  expressionresult.feature_id = feature.feature_id AND
   
 
-  quantificationresult.quantification_id = quantification.quantification_id AND
+  expressionresult.quantification_id = quantification.quantification_id AND
   quantification.analysis_id IN ({$query_subqueries['analysis']}) AND
   quantification.analysis_id = analysis.analysis_id AND
   

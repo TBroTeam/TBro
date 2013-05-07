@@ -84,7 +84,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $param_pvaladj = null;
             $param_feature_uniquename = null;
 
-            $statement_insert_expressiondata = $db->prepare('INSERT INTO expressionresult(analysis_id, "baseMean", "baseMeanA", "baseMeanB", "foldChange", "log2foldChange", pval, pvaladj)'
+            $statement_insert_expressiondata = $db->prepare('INSERT INTO diffexpresult(analysis_id, "baseMean", "baseMeanA", "baseMeanB", "foldChange", "log2foldChange", pval, pvaladj)'
                     . 'VALUES (:analysis_id, :baseMean, :baseMeanA, :baseMeanB,'
                     . ' :foldChange, :log2foldChange, :pval, :pvaladj);');
             $statement_insert_expressiondata->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
@@ -97,8 +97,8 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $statement_insert_expressiondata->bindParam('pvaladj', $param_pvaladj, PDO::PARAM_STR);
 
 
-            $relationship_call = 'SELECT * FROM set_expressionresult_quantificationresult_relationships('
-                    . 'currval(\'expressionresult_expressionresult_id_seq\'),'
+            $relationship_call = 'SELECT * FROM set_diffexpresult_expressionresult_relationships('
+                    . 'currval(\'diffexpresult_diffexpresult_id_seq\'),'
                     . ':parent_biomaterial_id,'
                     . ':feature_uniquename,'
                     . ':samplegroup)';
@@ -182,10 +182,9 @@ class Importer_Differential_Expressions extends AbstractImporter {
     }
 
     public static function CLI_commandDescription() {
-        return "Importer for differential expression";
+        return "Importer for differential expression results";
     }
 
-    //TODO differential expression results
     public static function CLI_commandName() {
         return 'differential_expressions';
     }

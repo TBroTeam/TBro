@@ -32,16 +32,16 @@ SELECT
   biomaterial.biomaterial_id, biomaterial.name AS biomaterial_name, biomaterial.description AS biomaterial_description
 FROM 
   feature, 
-  quantificationresult, 
+  expressionresult, 
   quantification, 
   analysis,
   acquisition,
   assay,
   biomaterial
 WHERE 
-  quantificationresult.feature_id = feature.feature_id AND
-  quantificationresult.biomaterial_id = biomaterial.biomaterial_id AND
-  quantification.quantification_id = quantificationresult.quantification_id AND
+  expressionresult.feature_id = feature.feature_id AND
+  expressionresult.biomaterial_id = biomaterial.biomaterial_id AND
+  quantification.quantification_id = expressionresult.quantification_id AND
   quantification.analysis_id = analysis.analysis_id AND
   quantification.acquisition_id = acquisition.acquisition_id AND
   acquisition.assay_id = assay.assay_id AND

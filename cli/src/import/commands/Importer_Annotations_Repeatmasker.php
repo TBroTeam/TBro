@@ -61,7 +61,7 @@ EOF;
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Map::get_import_dbxref();
+            $import_prefix_id = Importer_Sequences::get_import_dbxref();
             
             #shared parameters
             $param_name = null;

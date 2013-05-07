@@ -2,7 +2,7 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequences.php';
-require_once ROOT . 'commands/Importer_Sequences.php';
+require_once ROOT . 'commands/Importer_Sequences_FASTA.php';
 
 class Importer_Annotations_Interpro extends AbstractImporter {
 
@@ -107,7 +107,7 @@ EOF;
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Map::get_import_dbxref();
+            $import_prefix_id = Importer_Sequences::get_import_dbxref();
 
             #shared parameters
             $param_feature_uniq = null;
@@ -168,7 +168,7 @@ EOF;
                 $param_evalue = $match['eValue'];
 
                 //more complex parameters
-                $param_feature = Importer_Sequences::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
+                $param_feature = Importer_Sequences_FASTA::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $param_feature;
                 $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
                 $param_feature_domain_uniq = IMPORT_PREFIX . "_" . $param_feature_domain_name;
@@ -194,7 +194,6 @@ EOF;
                     $param_featureprop_value = $match['analysisMatchID'];
                     $statement_insert_featureprop->execute();
 
-                    //TODO anzeigename
                     if (isset($match['analysisMatchDescription']) && !empty($match['analysisMatchDescription'])) {
                         $param_featureprop_type = CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION;
                         $param_featureprop_value = $match['analysisMatchDescription'];

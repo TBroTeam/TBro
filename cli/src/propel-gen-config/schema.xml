@@ -968,8 +968,8 @@
       <index-column name="value"/>
     </index>
   </table>
-  <table name="expressionresult" phpName="Expressionresult" idMethod="native">
-    <column name="expressionresult_id" phpName="ExpressionresultId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+  <table name="diffexpresult" phpName="Expressionresult" idMethod="native">
+    <column name="diffexpresult_id" phpName="ExpressionresultId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="analysis_id" phpName="AnalysisId" type="INTEGER" required="false"/>
     <column name="baseMean" phpName="Basemean" type="DOUBLE" required="false"/>
     <column name="baseMeanA" phpName="Basemeana" type="DOUBLE" required="false"/>
@@ -978,20 +978,20 @@
     <column name="log2foldChange" phpName="Log2foldchange" type="DOUBLE" required="false"/>
     <column name="pval" phpName="Pval" type="DOUBLE" required="false"/>
     <column name="pvaladj" phpName="Pvaladj" type="DOUBLE" required="false"/>
-    <foreign-key foreignTable="analysis" name="expressionresult_analysis_fkey" onUpdate="CASCADE">
+    <foreign-key foreignTable="analysis" name="diffexpresult_analysis_fkey" onUpdate="CASCADE">
       <reference local="analysis_id" foreign="analysis_id"/>
     </foreign-key>
   </table>
-  <table name="expressionresult_quantificationresult" phpName="ExpressionresultQuantificationresult" idMethod="native">
+  <table name="diffexpresult_expressionresult" phpName="ExpressionresultQuantificationresult" idMethod="native">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="expressionresult_id" phpName="ExpressionresultId" type="INTEGER" required="false"/>
-    <column name="quantificationresult_id" phpName="QuantificationresultId" type="INTEGER" required="false"/>
+    <column name="diffexpresult_id" phpName="ExpressionresultId" type="INTEGER" required="false"/>
+    <column name="expressionresult_id" phpName="QuantificationresultId" type="INTEGER" required="false"/>
     <column name="samplegroup" phpName="Samplegroup" type="VARCHAR" size="1" required="false"/>
-    <foreign-key foreignTable="expressionresult" name="expressionresult_quantificationresult_expressionresult_fkey" onUpdate="CASCADE">
-      <reference local="expressionresult_id" foreign="expressionresult_id"/>
+    <foreign-key foreignTable="diffexpresult" name="diffexpresult_expressionresult_diffexpresult_fkey" onUpdate="CASCADE">
+      <reference local="diffexpresult_id" foreign="diffexpresult_id"/>
     </foreign-key>
-    <foreign-key foreignTable="quantificationresult" name="expressionresult_quantificationresult_quantificationresult_fkey" onUpdate="CASCADE">
-      <reference local="quantificationresult_id" foreign="quantificationresult_id"/>
+    <foreign-key foreignTable="expressionresult" name="diffexpresult_expressionresult_expressionresult_fkey" onUpdate="CASCADE">
+      <reference local="expressionresult_id" foreign="expressionresult_id"/>
     </foreign-key>
   </table-->
   <table name="feature" phpName="Feature" idMethod="native">
@@ -1872,26 +1872,26 @@
       <index-column name="type_id"/>
     </index>
   </table>
-  <table name="quantificationresult" phpName="Quantificationresult" idMethod="native">
-    <column name="quantificationresult_id" phpName="QuantificationresultId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+  <table name="expressionresult" phpName="Quantificationresult" idMethod="native">
+    <column name="expressionresult_id" phpName="QuantificationresultId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="feature_id" phpName="FeatureId" type="INTEGER" required="true"/>
     <column name="biomaterial_id" phpName="BiomaterialId" type="INTEGER" required="true"/>
     <column name="quantification_id" phpName="QuantificationId" type="INTEGER" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
     <column name="value" phpName="Value" type="DOUBLE" required="true"/>
-    <foreign-key foreignTable="biomaterial" name="quantificationresult_biomaterial_fkey" onUpdate="CASCADE">
+    <foreign-key foreignTable="biomaterial" name="expressionresult_biomaterial_fkey" onUpdate="CASCADE">
       <reference local="biomaterial_id" foreign="biomaterial_id"/>
     </foreign-key>
-    <foreign-key foreignTable="cvterm" name="quantificationresult_cvterm_fkey" onUpdate="CASCADE">
+    <foreign-key foreignTable="cvterm" name="expressionresult_cvterm_fkey" onUpdate="CASCADE">
       <reference local="type_id" foreign="cvterm_id"/>
     </foreign-key>
-    <foreign-key foreignTable="feature" name="quantificationresult_feature_fkey" onUpdate="CASCADE">
+    <foreign-key foreignTable="feature" name="expressionresult_feature_fkey" onUpdate="CASCADE">
       <reference local="feature_id" foreign="feature_id"/>
     </foreign-key>
-    <foreign-key foreignTable="quantification" name="quantificationresult_quantification_fkey" onUpdate="CASCADE">
+    <foreign-key foreignTable="quantification" name="expressionresult_quantification_fkey" onUpdate="CASCADE">
       <reference local="quantification_id" foreign="quantification_id"/>
     </foreign-key>
-    <unique name="quantificationresult_feature_id_">
+    <unique name="expressionresult_feature_id_">
       <unique-column name="feature_id"/>
       <unique-column name="biomaterial_id"/>
       <unique-column name="quantification_id"/>

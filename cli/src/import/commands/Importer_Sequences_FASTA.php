@@ -3,7 +3,7 @@
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequences.php';
 
-class Importer_SequenceFASTA extends AbstractImporter {
+class Importer_Sequences_FASTA extends AbstractImporter {
 
     /**
      * reads the next fasta sequence from file handle $fasta_handle and returns a list of description and sequence (without whitespace and newlines)
@@ -81,7 +81,7 @@ class Importer_SequenceFASTA extends AbstractImporter {
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Map::get_import_dbxref();
+            $import_prefix_id = Importer_Sequences::get_import_dbxref();
             
             # prepare statements
             #
