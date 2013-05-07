@@ -1,7 +1,7 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
-require_once ROOT . 'commands/Importer_Sequences.php';
+require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 
 class Importer_Sequences_FASTA extends AbstractImporter {
 
@@ -81,7 +81,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Sequences::get_import_dbxref();
+            $import_prefix_id = Importer_Sequence_Ids::get_import_dbxref();
             
             # prepare statements
             #
@@ -188,7 +188,7 @@ File Format has to be a typical fasta file.
 Header line has to look like this:
 >id description
    
-\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
 EOF;
     }
 

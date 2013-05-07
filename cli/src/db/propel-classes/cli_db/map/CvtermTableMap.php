@@ -60,6 +60,7 @@ class CvtermTableMap extends TableMap
     {
         $this->addRelation('Cv', 'cli_db\\propel\\Cv', RelationMap::MANY_TO_ONE, array('cv_id' => 'cv_id', ), 'CASCADE', null);
         $this->addRelation('BiomaterialRelationship', 'cli_db\\propel\\BiomaterialRelationship', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), null, null, 'BiomaterialRelationships');
+        $this->addRelation('Biomaterialprop', 'cli_db\\propel\\Biomaterialprop', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Biomaterialprops');
         $this->addRelation('Contact', 'cli_db\\propel\\Contact', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), null, null, 'Contacts');
         $this->addRelation('Feature', 'cli_db\\propel\\Feature', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'type_id', ), 'CASCADE', null, 'Features');
         $this->addRelation('FeatureCvterm', 'cli_db\\propel\\FeatureCvterm', RelationMap::ONE_TO_MANY, array('cvterm_id' => 'cvterm_id', ), 'CASCADE', null, 'FeatureCvterms');

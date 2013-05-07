@@ -9,6 +9,7 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
+use cli_db\propel\BiomaterialpropPeer;
 use cli_db\propel\CvPeer;
 use cli_db\propel\Cvterm;
 use cli_db\propel\CvtermPeer;
@@ -408,6 +409,9 @@ abstract class BaseCvtermPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in BiomaterialpropPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        BiomaterialpropPeer::clearInstancePool();
         // Invalidate objects in FeaturePeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         FeaturePeer::clearInstancePool();

@@ -92,6 +92,24 @@ $cvterm_data = array (
     'cv' => 'relationship',
     'id' => 32,
   ),
+  'CV_BIOMATERIAL_BIOMATERIAL' => 
+  array (
+    'name' => 'biomaterial',
+    'cv' => 'feature_property',
+    'id' => 42850,
+  ),
+  'CV_BIOMATERIAL_CONDITION' => 
+  array (
+    'name' => 'condition',
+    'cv' => 'feature_property',
+    'id' => 42851,
+  ),
+  'CV_BIOMATERIAL_CONDITION_SAMPLE' => 
+  array (
+    'name' => 'condition_sample',
+    'cv' => 'feature_property',
+    'id' => 42852,
+  ),
   'WEBUSER_CART' => 
   array (
     'name' => 'webuser_data_cart',
@@ -248,6 +266,9 @@ define ('CV_RELATIONSHIP_UNIGENE_ISOFORM', '989');
 define ('CV_ISOFORM_PATH', '42826');
 define ('CV_PREDPEP', '219');
 define ('CV_BIOMATERIAL_ISA', '32');
+define ('CV_BIOMATERIAL_BIOMATERIAL', '42850');
+define ('CV_BIOMATERIAL_CONDITION', '42851');
+define ('CV_BIOMATERIAL_CONDITION_SAMPLE', '42852');
 define ('WEBUSER_CART', '42827');
 define ('QUANTIFICATION_TYPE_EXPECTED_COUNT', '42828');
 

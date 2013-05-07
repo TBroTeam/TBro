@@ -14,10 +14,6 @@ class Biomaterial extends AbstractTable {
                     'details' => 'required',
                     'update' => 'required',
                     'delete' => 'required',
-                    'add_parent' => 'required',
-                    'add_child' => 'required',
-                    'remove_parent' => 'required',
-                    'remove_child' => 'required',
                 ),
                 'description' => 'biomaterial id'
             ),
@@ -25,6 +21,8 @@ class Biomaterial extends AbstractTable {
                 'colname' => 'Name',
                 'actions' => array(
                     'insert' => 'required',
+                    'add_condition' => 'required',
+                    'add_condition_sample' => 'required',
                     'update' => 'optional',
                 ),
                 'description' => 'name'
@@ -33,6 +31,8 @@ class Biomaterial extends AbstractTable {
                 'colname' => 'Description',
                 'actions' => array(
                     'insert' => 'optional',
+                    'add_condition' => 'optional',
+                    'add_condition_sample' => 'optional',
                     'update' => 'optional',
                 ),
                 'description' => 'description'
@@ -41,6 +41,8 @@ class Biomaterial extends AbstractTable {
                 'colname' => 'TaxonId',
                 'actions' => array(
                     'insert' => 'optional',
+                    'add_condition' => 'optional',
+                    'add_condition_sample' => 'optional',
                     'update' => 'optional',
                 ),
                 'description' => 'organism id'
@@ -49,24 +51,26 @@ class Biomaterial extends AbstractTable {
                 'colname' => 'BiosourceproviderId',
                 'actions' => array(
                     'insert' => 'optional',
+                    'add_condition' => 'optional',
+                    'add_condition_sample' => 'optional',
                     'update' => 'optional',
                 ),
                 'description' => 'contact id'
             ),
-            'parent_id' => array(
+            'parent_biomaterial_name' => array(
                 'actions' => array(
-                    'add_parent' => 'required',
-                    'remove_parent' => 'required',
+                    'add_condition' => 'required',
                 ),
-                'description' => 'parent biomaterial id'
+                'description' => 'parent biomaterial name'
             ),
-            'child_id' => array(
+            'parent_condition_name' => array(
                 'actions' => array(
-                    'add_child' => 'required',
-                    'remove_child' => 'required',
+                    'add_condition_sample' => 'required',
                 ),
-                'description' => 'parent biomaterial id'
+                'description' => 'parent condition name'
             ),
+            'type' => array('colname' => 'Type'),
+            'parent' => array('colname' => 'Parent')
         );
     }
 
@@ -84,77 +88,66 @@ class Biomaterial extends AbstractTable {
     }
 
     public static function getSubCommands() {
-        return array('insert', 'update', 'delete', 'details', 'list', 'add_parent', 'add_child', 'remove_parent', 'remove_child');
+        return array('insert', 'update', 'delete', 'details', 'list', 'add_condition', 'add_condition_sample');
     }
 
+    protected static function command_insert($options, $keys) {
+        $biomat = new propel\Biomaterial();
+        self::setKeys($options, $keys, 'insert', $biomat);
+
+        $biomat->save();
+        $biomat->setType('condition');
+        $biomat->save();
+    }
+
+    protected static function command_add_condition($options, $keys) {
+        $parent = propel\BiomaterialQuery::create()->findOneByName($options['parent_biomaterial_name']);
+        if ($parent == null)
+            trigger_error('This parent Biomaterial does not exist!', E_USER_ERROR);
+        if ($parent->getType() != 'biomaterial')
+            trigger_error('Specified parent is of wrong type!', E_USER_ERROR);
+
+
+        $biomat = new propel\Biomaterial();
+        self::setKeys($options, $keys, 'insert', $biomat);
+
+        $biomat->save();
+        $biomat->setType('condition');
+        $biomat->setParent($parent);
+        $biomat->save();
+    }
+
+    protected static function command_add_condition_sample($options, $keys) {
+        $parent = propel\BiomaterialQuery::create()->findOneByName($options['parent_condition_name']);
+        if ($parent == null)
+            trigger_error('This parent Biomaterial does not exist!', E_USER_ERROR);
+        if ($parent->getType() != 'condition')
+            trigger_error('Specified parent is of wrong type!', E_USER_ERROR);
+
+        $biomat = new propel\Biomaterial();
+        self::setKeys($options, $keys, 'insert', $biomat);
+
+        $biomat->save();
+        $biomat->setType('condition_sample');
+        $biomat->setParent($parent);
+        $biomat->save();
+    }
 
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
         $references = array();
-        $brqp = new propel\BiomaterialRelationshipQuery();
-        $parent_relationships = $brqp->findBySubjectId($options['id']);
 
-        foreach ($parent_relationships as $parent_relationship) {
-            $parent = $parent_relationship->getBiomaterialRelatedByObjectId();
-            $references[] = array('Parent Biomaterial', sprintf("Id: %s\nName: %s", $parent->getBiomaterialId(), $parent->getName()));
-        }
-
-        $brqc = new propel\BiomaterialRelationshipQuery();
-        $child_relationships = $brqc->findByObjectId($options['id']);
+        $child_relationships = propel\BiomaterialRelationshipQuery::create()->findByObjectId($options['id']);
         foreach ($child_relationships as $child_relationship) {
             $child = $child_relationship->getBiomaterialRelatedBySubjectId();
-            $references[] = array('Child Biomaterial', sprintf("Id: %s\nName: %s", $child->getBiomaterialId(), $child->getName()));
+            $references[] = array($child->getType(), sprintf("Id: %s\nName: %s", $child->getBiomaterialId(), $child->getName()));
         }
 
         if (count($references) > 0) {
-            print "Has Child/Parent relationships:\n";
+            print "has relationships:\n";
             self::printTable(array('', 'Row'), $references);
         }
-    }
-
-    protected static function command_add_parent($options, $keys) {
-        $brp = new propel\BiomaterialRelationship();
-        $brp->setSubjectId($options['id']);
-        $brp->setTypeId(CV_BIOMATERIAL_ISA);
-        $brp->setObjectId($options['parent_id']);
-        $lines = $brp->save();
-        printf("%d line(s) inserted.\n", $lines);
-
-        return array($brp, $lines);
-    }
-
-    protected static function command_add_child($options, $keys) {
-        $brc = new propel\BiomaterialRelationship();
-        $brc->setSubjectId($options['child_id']);
-        $brc->setTypeId(CV_BIOMATERIAL_ISA);
-        $brc->setObjectId($options['id']);
-        $lines = $brc->save();
-        printf("%d line(s) inserted.\n", $lines);
-    }
-
-    protected static function command_remove_parent($options, $keys) {
-        $brqp = new propel\BiomaterialRelationshipQuery();
-        $brqp->filterBySubjectId($options['id']);
-        $brqp->filterByObjectId($options['parent_id']);
-        $brp = $brqp->findOne();
-        if ($brp == null) {
-            trigger_error(sprintf("No relationship between parent %d and child %d found.\n", $options['parent_id'], $options['id']), E_USER_ERROR);
-        }
-        $brp->delete();
-        printf("Relationship between parent %d and child %d deleted successfully.\n", $brp->getObjectId(), $brp->getSubjectId());
-    }
-
-    protected static function command_remove_child($options, $keys) {
-        $brqc = new propel\BiomaterialRelationshipQuery();
-        $brqc->filterBySubjectId($options['child_id']);
-        $brqc->filterByObjectId($options['id']);
-        $brc = $brqc->findOne();
-        if ($brc == null) {
-            trigger_error(sprintf("No relationship between parent %d and child %d found.\n", $options['id'], $options['child_id']), E_USER_ERROR);
-        }
-        $brc->delete();
-        printf("Relationship between parent %d and child %d deleted successfully.\n", $brc->getObjectId(), $brc->getSubjectId());
     }
 
     public static function getPropelClass() {

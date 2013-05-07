@@ -1,7 +1,7 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
-require_once ROOT . 'commands/Importer_Sequences.php';
+require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 
 class Importer_Annotations_Repeatmasker extends AbstractImporter {
 
@@ -61,7 +61,7 @@ EOF;
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Sequences::get_import_dbxref();
+            $import_prefix_id = Importer_Sequence_Ids::get_import_dbxref();
             
             #shared parameters
             $param_name = null;
@@ -163,8 +163,8 @@ EOF;
     public static function CLI_longHelp() {
         return <<<EOF
 
-\033[0;31mThis import requires a successful Map File Import!\033[0m
-\033[0;31mThis import requires a successful Sequence File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
+\033[0;31mThis import requires a successful Sequence FASTA Import!\033[0m
 EOF;
     }
 

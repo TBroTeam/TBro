@@ -471,7 +471,7 @@
     <index name="biomaterial_treatment_idx3">
       <index-column name="unittype_id"/>
     </index>
-  </table>
+  </table-->
   <table name="biomaterialprop" phpName="Biomaterialprop" idMethod="native">
     <column name="biomaterialprop_id" phpName="BiomaterialpropId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="biomaterial_id" phpName="BiomaterialId" type="INTEGER" required="true"/>
@@ -496,7 +496,7 @@
       <index-column name="type_id"/>
     </index>
   </table>
-  <table name="chadoprop" phpName="Chadoprop" idMethod="native">
+  <!--table name="chadoprop" phpName="Chadoprop" idMethod="native">
     <column name="chadoprop_id" phpName="ChadopropId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type_id" phpName="TypeId" type="INTEGER" required="true"/>
     <column name="value" phpName="Value" type="LONGVARCHAR" required="false"/>

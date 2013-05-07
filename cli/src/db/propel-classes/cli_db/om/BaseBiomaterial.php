@@ -20,6 +20,8 @@ use cli_db\propel\BiomaterialPeer;
 use cli_db\propel\BiomaterialQuery;
 use cli_db\propel\BiomaterialRelationship;
 use cli_db\propel\BiomaterialRelationshipQuery;
+use cli_db\propel\Biomaterialprop;
+use cli_db\propel\BiomaterialpropQuery;
 use cli_db\propel\Contact;
 use cli_db\propel\ContactQuery;
 use cli_db\propel\Organism;
@@ -118,6 +120,12 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
     protected $collBiomaterialRelationshipsRelatedBySubjectIdPartial;
 
     /**
+     * @var        PropelObjectCollection|Biomaterialprop[] Collection to store aggregation of Biomaterialprop objects.
+     */
+    protected $collBiomaterialprops;
+    protected $collBiomaterialpropsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      * @var        boolean
@@ -154,6 +162,12 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $biomaterialRelationshipsRelatedBySubjectIdScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $biomaterialpropsScheduledForDeletion = null;
 
     /**
      * Get the [biomaterial_id] column value.
@@ -471,6 +485,8 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
 
             $this->collBiomaterialRelationshipsRelatedBySubjectId = null;
 
+            $this->collBiomaterialprops = null;
+
         } // if (deep)
     }
 
@@ -659,6 +675,23 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
 
             if ($this->collBiomaterialRelationshipsRelatedBySubjectId !== null) {
                 foreach ($this->collBiomaterialRelationshipsRelatedBySubjectId as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->biomaterialpropsScheduledForDeletion !== null) {
+                if (!$this->biomaterialpropsScheduledForDeletion->isEmpty()) {
+                    BiomaterialpropQuery::create()
+                        ->filterByPrimaryKeys($this->biomaterialpropsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->biomaterialpropsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collBiomaterialprops !== null) {
+                foreach ($this->collBiomaterialprops as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -882,6 +915,14 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collBiomaterialprops !== null) {
+                    foreach ($this->collBiomaterialprops as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
 
             $this->alreadyInValidation = false;
         }
@@ -986,6 +1027,9 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
             }
             if (null !== $this->collBiomaterialRelationshipsRelatedBySubjectId) {
                 $result['BiomaterialRelationshipsRelatedBySubjectId'] = $this->collBiomaterialRelationshipsRelatedBySubjectId->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collBiomaterialprops) {
+                $result['Biomaterialprops'] = $this->collBiomaterialprops->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1180,6 +1224,12 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
                 }
             }
 
+            foreach ($this->getBiomaterialprops() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addBiomaterialprop($relObj->copy($deepCopy));
+                }
+            }
+
             //unflag object copy
             $this->startCopy = false;
         } // if ($deepCopy)
@@ -1353,6 +1403,9 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
         }
         if ('BiomaterialRelationshipRelatedBySubjectId' == $relationName) {
             $this->initBiomaterialRelationshipsRelatedBySubjectId();
+        }
+        if ('Biomaterialprop' == $relationName) {
+            $this->initBiomaterialprops();
         }
     }
 
@@ -2086,6 +2139,249 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collBiomaterialprops collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Biomaterial The current object (for fluent API support)
+     * @see        addBiomaterialprops()
+     */
+    public function clearBiomaterialprops()
+    {
+        $this->collBiomaterialprops = null; // important to set this to null since that means it is uninitialized
+        $this->collBiomaterialpropsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collBiomaterialprops collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialBiomaterialprops($v = true)
+    {
+        $this->collBiomaterialpropsPartial = $v;
+    }
+
+    /**
+     * Initializes the collBiomaterialprops collection.
+     *
+     * By default this just sets the collBiomaterialprops collection to an empty array (like clearcollBiomaterialprops());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initBiomaterialprops($overrideExisting = true)
+    {
+        if (null !== $this->collBiomaterialprops && !$overrideExisting) {
+            return;
+        }
+        $this->collBiomaterialprops = new PropelObjectCollection();
+        $this->collBiomaterialprops->setModel('Biomaterialprop');
+    }
+
+    /**
+     * Gets an array of Biomaterialprop objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Biomaterial is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Biomaterialprop[] List of Biomaterialprop objects
+     * @throws PropelException
+     */
+    public function getBiomaterialprops($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collBiomaterialpropsPartial && !$this->isNew();
+        if (null === $this->collBiomaterialprops || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collBiomaterialprops) {
+                // return empty collection
+                $this->initBiomaterialprops();
+            } else {
+                $collBiomaterialprops = BiomaterialpropQuery::create(null, $criteria)
+                    ->filterByBiomaterial($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collBiomaterialpropsPartial && count($collBiomaterialprops)) {
+                      $this->initBiomaterialprops(false);
+
+                      foreach($collBiomaterialprops as $obj) {
+                        if (false == $this->collBiomaterialprops->contains($obj)) {
+                          $this->collBiomaterialprops->append($obj);
+                        }
+                      }
+
+                      $this->collBiomaterialpropsPartial = true;
+                    }
+
+                    $collBiomaterialprops->getInternalIterator()->rewind();
+                    return $collBiomaterialprops;
+                }
+
+                if($partial && $this->collBiomaterialprops) {
+                    foreach($this->collBiomaterialprops as $obj) {
+                        if($obj->isNew()) {
+                            $collBiomaterialprops[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collBiomaterialprops = $collBiomaterialprops;
+                $this->collBiomaterialpropsPartial = false;
+            }
+        }
+
+        return $this->collBiomaterialprops;
+    }
+
+    /**
+     * Sets a collection of Biomaterialprop objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $biomaterialprops A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Biomaterial The current object (for fluent API support)
+     */
+    public function setBiomaterialprops(PropelCollection $biomaterialprops, PropelPDO $con = null)
+    {
+        $biomaterialpropsToDelete = $this->getBiomaterialprops(new Criteria(), $con)->diff($biomaterialprops);
+
+        $this->biomaterialpropsScheduledForDeletion = unserialize(serialize($biomaterialpropsToDelete));
+
+        foreach ($biomaterialpropsToDelete as $biomaterialpropRemoved) {
+            $biomaterialpropRemoved->setBiomaterial(null);
+        }
+
+        $this->collBiomaterialprops = null;
+        foreach ($biomaterialprops as $biomaterialprop) {
+            $this->addBiomaterialprop($biomaterialprop);
+        }
+
+        $this->collBiomaterialprops = $biomaterialprops;
+        $this->collBiomaterialpropsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Biomaterialprop objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Biomaterialprop objects.
+     * @throws PropelException
+     */
+    public function countBiomaterialprops(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collBiomaterialpropsPartial && !$this->isNew();
+        if (null === $this->collBiomaterialprops || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collBiomaterialprops) {
+                return 0;
+            }
+
+            if($partial && !$criteria) {
+                return count($this->getBiomaterialprops());
+            }
+            $query = BiomaterialpropQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByBiomaterial($this)
+                ->count($con);
+        }
+
+        return count($this->collBiomaterialprops);
+    }
+
+    /**
+     * Method called to associate a Biomaterialprop object to this object
+     * through the Biomaterialprop foreign key attribute.
+     *
+     * @param    Biomaterialprop $l Biomaterialprop
+     * @return Biomaterial The current object (for fluent API support)
+     */
+    public function addBiomaterialprop(Biomaterialprop $l)
+    {
+        if ($this->collBiomaterialprops === null) {
+            $this->initBiomaterialprops();
+            $this->collBiomaterialpropsPartial = true;
+        }
+        if (!in_array($l, $this->collBiomaterialprops->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddBiomaterialprop($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Biomaterialprop $biomaterialprop The biomaterialprop object to add.
+     */
+    protected function doAddBiomaterialprop($biomaterialprop)
+    {
+        $this->collBiomaterialprops[]= $biomaterialprop;
+        $biomaterialprop->setBiomaterial($this);
+    }
+
+    /**
+     * @param	Biomaterialprop $biomaterialprop The biomaterialprop object to remove.
+     * @return Biomaterial The current object (for fluent API support)
+     */
+    public function removeBiomaterialprop($biomaterialprop)
+    {
+        if ($this->getBiomaterialprops()->contains($biomaterialprop)) {
+            $this->collBiomaterialprops->remove($this->collBiomaterialprops->search($biomaterialprop));
+            if (null === $this->biomaterialpropsScheduledForDeletion) {
+                $this->biomaterialpropsScheduledForDeletion = clone $this->collBiomaterialprops;
+                $this->biomaterialpropsScheduledForDeletion->clear();
+            }
+            $this->biomaterialpropsScheduledForDeletion[]= clone $biomaterialprop;
+            $biomaterialprop->setBiomaterial(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Biomaterial is new, it will return
+     * an empty collection; or if this Biomaterial has previously
+     * been saved, it will retrieve related Biomaterialprops from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Biomaterial.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|Biomaterialprop[] List of Biomaterialprop objects
+     */
+    public function getBiomaterialpropsJoinCvterm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = BiomaterialpropQuery::create(null, $criteria);
+        $query->joinWith('Cvterm', $join_behavior);
+
+        return $this->getBiomaterialprops($query, $con);
+    }
+
+    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -2133,6 +2429,11 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collBiomaterialprops) {
+                foreach ($this->collBiomaterialprops as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->aContact instanceof Persistent) {
               $this->aContact->clearAllReferences($deep);
             }
@@ -2155,6 +2456,10 @@ abstract class BaseBiomaterial extends BaseObject implements Persistent
             $this->collBiomaterialRelationshipsRelatedBySubjectId->clearIterator();
         }
         $this->collBiomaterialRelationshipsRelatedBySubjectId = null;
+        if ($this->collBiomaterialprops instanceof PropelCollection) {
+            $this->collBiomaterialprops->clearIterator();
+        }
+        $this->collBiomaterialprops = null;
         $this->aContact = null;
         $this->aOrganism = null;
     }

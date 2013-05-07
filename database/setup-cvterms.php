@@ -75,6 +75,10 @@ $cvterms = array(
         'name' => 'is_a',
         'cv' => 'relationship'
     ),
+    'CV_BIOMATERIAL_TYPE' => array(
+        'name' => 'biomaterial_type',
+        'cv' => 'feature_property'
+    ),
     'WEBUSER_CART' => array(
         'name' => 'webuser_data_cart',
         'cv' => 'local'

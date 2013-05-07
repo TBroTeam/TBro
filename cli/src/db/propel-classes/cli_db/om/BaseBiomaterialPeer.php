@@ -12,6 +12,7 @@ use \PropelPDO;
 use cli_db\propel\AssayBiomaterialPeer;
 use cli_db\propel\Biomaterial;
 use cli_db\propel\BiomaterialPeer;
+use cli_db\propel\BiomaterialpropPeer;
 use cli_db\propel\ContactPeer;
 use cli_db\propel\OrganismPeer;
 use cli_db\propel\map\BiomaterialTableMap;
@@ -400,6 +401,9 @@ abstract class BaseBiomaterialPeer
         // Invalidate objects in AssayBiomaterialPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         AssayBiomaterialPeer::clearInstancePool();
+        // Invalidate objects in BiomaterialpropPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        BiomaterialpropPeer::clearInstancePool();
     }
 
     /**

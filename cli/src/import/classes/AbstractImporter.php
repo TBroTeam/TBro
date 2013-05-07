@@ -36,7 +36,7 @@ abstract class AbstractImporter implements CLI_Command, Importer {
             'description' => 'id of the organism this import is for'
         ));
         //TODO
-        $command->addOption('import_prefix',
+        $command->addOption('release',
                 array(
             'short_name' => '-r',
             'long_name' => '--release',
@@ -55,13 +55,13 @@ abstract class AbstractImporter implements CLI_Command, Importer {
         $options = $command->options;
         
         self::dieOnMissingArg($options, 'organism_id');
-        self::dieOnMissingArg($options, 'import_prefix');
+        self::dieOnMissingArg($options, 'release');
     }
     
     static function CLI_execute(Console_CommandLine_Result $command, Console_CommandLine $parser){
         define('LINES_IMPORTED', 'datasets_imported');
         define('DB_ORGANISM_ID', $command->options['organism_id']);
-        define('IMPORT_PREFIX', $command->options['import_prefix']);
+        define('IMPORT_PREFIX', $command->options['release']);
         $command_name = call_user_func(array(get_called_class(), 'CLI_commandName'));
         $command_options = $command->options;
         $command_args = $command->args;

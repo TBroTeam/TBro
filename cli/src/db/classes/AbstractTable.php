@@ -20,12 +20,13 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
 
         foreach ($keys as $key => $data) {
-            if (isset($data['actions'][$subcommand_name])) {
+            if (isset($data['actions'][$subcommand_name])
+                    && ($data['actions'][$subcommand_name] == 'optional' || $data['actions'][$subcommand_name] == 'required')) {
                 $stdopts = array(
                     'long_name' => '--' . $key,
                     'help_name' => $key
                 );
-                $extraopts = array_diff_key($data, array('actions'=>null, 'colname'=>null));
+                $extraopts = array_diff_key($data, array('actions' => null, 'colname' => null));
                 $options = array_merge($stdopts, $extraopts);
                 $options['description'] = sprintf('(%2$s) %1$s', $data['description'], $data['actions'][$subcommand_name]);
                 $option = $submcd->addOption($key, $options);
@@ -134,15 +135,20 @@ abstract class AbstractTable implements \CLI_Command, Table {
         
     }
 
+    protected static function setKeys($options, $keys, $cmdname, \BaseObject $propelitem){
+        foreach ($keys as $key => $data) {
+            if (isset($data['actions']) && isset($data['actions'][$cmdname]) && ($data['actions'][$cmdname] == 'required' || $data['actions'][$cmdname] == 'internal'))
+                $propelitem->{"set" . $data['colname']}($options[$key]);
+            else if (isset($data['actions']) && isset($data['actions'][$cmdname]) && $data['actions'][$cmdname] == 'optional' && isset($options[$key]))
+                $propelitem->{"set" . $data['colname']}($options[$key]);
+        }
+    }
+    
     protected static function command_insert($options, $keys) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
         $item = new $propel_class();
-        foreach ($keys as $key => $data) {
-            if (isset($data['actions']) && isset($data['actions']['insert']) && $data['actions']['insert'] == 'required')
-                $item->{"set" . $data['colname']}($options[$key]);
-            else if (isset($data['actions']) && isset($data['actions']['insert']) && $data['actions']['insert'] == 'optional' && isset($options[$key]))
-                $item->{"set" . $data['colname']}($options[$key]);
-        }
+        self::setKeys($options, $keys, 'insert', $item);
+        
         call_user_func(array(get_called_class(), 'command_insert_set_defaults'), $item);
 
         $lines = $item->save();

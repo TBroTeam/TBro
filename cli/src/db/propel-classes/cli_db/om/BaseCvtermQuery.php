@@ -13,6 +13,7 @@ use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
 use cli_db\propel\BiomaterialRelationship;
+use cli_db\propel\Biomaterialprop;
 use cli_db\propel\Contact;
 use cli_db\propel\Cv;
 use cli_db\propel\Cvterm;
@@ -59,6 +60,10 @@ use cli_db\propel\Synonym;
  * @method CvtermQuery leftJoinBiomaterialRelationship($relationAlias = null) Adds a LEFT JOIN clause to the query using the BiomaterialRelationship relation
  * @method CvtermQuery rightJoinBiomaterialRelationship($relationAlias = null) Adds a RIGHT JOIN clause to the query using the BiomaterialRelationship relation
  * @method CvtermQuery innerJoinBiomaterialRelationship($relationAlias = null) Adds a INNER JOIN clause to the query using the BiomaterialRelationship relation
+ *
+ * @method CvtermQuery leftJoinBiomaterialprop($relationAlias = null) Adds a LEFT JOIN clause to the query using the Biomaterialprop relation
+ * @method CvtermQuery rightJoinBiomaterialprop($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Biomaterialprop relation
+ * @method CvtermQuery innerJoinBiomaterialprop($relationAlias = null) Adds a INNER JOIN clause to the query using the Biomaterialprop relation
  *
  * @method CvtermQuery leftJoinContact($relationAlias = null) Adds a LEFT JOIN clause to the query using the Contact relation
  * @method CvtermQuery rightJoinContact($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Contact relation
@@ -723,6 +728,80 @@ abstract class BaseCvtermQuery extends ModelCriteria
         return $this
             ->joinBiomaterialRelationship($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'BiomaterialRelationship', '\cli_db\propel\BiomaterialRelationshipQuery');
+    }
+
+    /**
+     * Filter the query by a related Biomaterialprop object
+     *
+     * @param   Biomaterialprop|PropelObjectCollection $biomaterialprop  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 CvtermQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByBiomaterialprop($biomaterialprop, $comparison = null)
+    {
+        if ($biomaterialprop instanceof Biomaterialprop) {
+            return $this
+                ->addUsingAlias(CvtermPeer::CVTERM_ID, $biomaterialprop->getTypeId(), $comparison);
+        } elseif ($biomaterialprop instanceof PropelObjectCollection) {
+            return $this
+                ->useBiomaterialpropQuery()
+                ->filterByPrimaryKeys($biomaterialprop->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByBiomaterialprop() only accepts arguments of type Biomaterialprop or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Biomaterialprop relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return CvtermQuery The current query, for fluid interface
+     */
+    public function joinBiomaterialprop($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Biomaterialprop');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Biomaterialprop');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Biomaterialprop relation Biomaterialprop object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \cli_db\propel\BiomaterialpropQuery A secondary query class using the current class as primary query
+     */
+    public function useBiomaterialpropQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinBiomaterialprop($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Biomaterialprop', '\cli_db\propel\BiomaterialpropQuery');
     }
 
     /**

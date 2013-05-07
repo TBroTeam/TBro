@@ -62,6 +62,7 @@ class BiomaterialTableMap extends TableMap
         $this->addRelation('AssayBiomaterial', 'cli_db\\propel\\AssayBiomaterial', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'AssayBiomaterials');
         $this->addRelation('BiomaterialRelationshipRelatedByObjectId', 'cli_db\\propel\\BiomaterialRelationship', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'object_id', ), null, null, 'BiomaterialRelationshipsRelatedByObjectId');
         $this->addRelation('BiomaterialRelationshipRelatedBySubjectId', 'cli_db\\propel\\BiomaterialRelationship', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'subject_id', ), null, null, 'BiomaterialRelationshipsRelatedBySubjectId');
+        $this->addRelation('Biomaterialprop', 'cli_db\\propel\\Biomaterialprop', RelationMap::ONE_TO_MANY, array('biomaterial_id' => 'biomaterial_id', ), 'CASCADE', null, 'Biomaterialprops');
     } // buildRelations()
 
 } // BiomaterialTableMap

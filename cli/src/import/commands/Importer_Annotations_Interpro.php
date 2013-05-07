@@ -1,8 +1,8 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
-require_once ROOT . 'commands/Importer_Sequences.php';
-require_once ROOT . 'commands/Importer_Sequences_FASTA.php';
+require_once ROOT . 'commands/Importer_Sequence_Ids.php';
+require_once ROOT . 'commands/Importer_Sequence_Ids_FASTA.php';
 
 class Importer_Annotations_Interpro extends AbstractImporter {
 
@@ -107,7 +107,7 @@ EOF;
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Sequences::get_import_dbxref();
+            $import_prefix_id = Importer_Sequence_Ids::get_import_dbxref();
 
             #shared parameters
             $param_feature_uniq = null;
@@ -253,8 +253,8 @@ EOF;
     public static function CLI_longHelp() {
         return <<<EOF
    
-\033[0;31mThis import requires a successful Map File Import!\033[0m
-\033[0;31mThis import requires a successful Sequence File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
+\033[0;31mThis import requires a successful Sequence FASTA Import!\033[0m
 EOF;
     }
 

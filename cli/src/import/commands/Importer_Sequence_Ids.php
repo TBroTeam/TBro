@@ -2,7 +2,7 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 
-class Importer_Sequences extends AbstractImporter {
+class Importer_Sequence_Ids extends AbstractImporter {
 
     public static function get_import_dbxref() {
         global $db;
@@ -161,11 +161,11 @@ class Importer_Sequences extends AbstractImporter {
     }
 
     public static function CLI_commandName() {
-        return 'sequences';
+        return 'sequence_ids';
     }
 
     public static function CLI_commandDescription() {
-        return "Mapping File Importer";
+        return "Sequence ID Importer";
     }
 
     public static function CLI_longHelp() {

@@ -18,4 +18,38 @@ use cli_db\propel\om\BaseBiomaterial;
  */
 class Biomaterial extends BaseBiomaterial
 {
+    function getType(){
+        $props = $this->getBiomaterialprops(BiomaterialpropQuery::create()->filterByTypeId(CV_BIOMATERIAL_TYPE));
+            if (isset($props[0])) return $props[0]->getValue();
+        return "unknown";
+    }
+        
+    function setType($value){
+        $props = $this->getBiomaterialprops(BiomaterialpropQuery::create()->filterByTypeId(CV_BIOMATERIAL_TYPE));
+        if (count($props)>0)
+            $prop = $props[0];
+        else {
+            $prop = new Biomaterialprop();
+            $prop->setTypeId(CV_BIOMATERIAL_TYPE);
+            $this->addBiomaterialprop($prop);
+        }
+        $prop->setValue($value);
+    }
+    
+    function getParent(){
+        $parent_relationship = $this->getBiomaterialRelationshipsRelatedBySubjectId();
+        
+        if (isset($parent_relationship[0]))
+            return BiomaterialQuery::create()->findOneByBiomaterialId($parent_relationship[0]->getObjectId())->getName();
+    }
+
+    function setParent(Biomaterial $parent_biomaterial){
+        $parent_q = new BiomaterialRelationshipQuery();
+        $parent_q->filterBySubjectId($this->getBiomaterialId());
+        $parent_q->filterByTypeId(CV_BIOMATERIAL_ISA);
+        $parent_rel = $parent_q->findOneOrCreate();
+        
+        $parent_rel->setObjectId($parent_biomaterial->getBiomaterialId());
+        $this->addBiomaterialRelationshipRelatedBySubjectId($parent_rel);
+    }
 }

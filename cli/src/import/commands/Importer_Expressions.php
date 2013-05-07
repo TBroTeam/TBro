@@ -142,7 +142,7 @@ ID      flower_L1       flower_L2       flower_L3       coronatin_L1    coronati
 comp234711_c0_seq9      21.93   11.26   8.83    2.40    0.00    2.25
 
 The labels in the header have to match the condition sample names in the database
-\033[0;31mThis import requires a successful Map File Import!\033[0m
+\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
 EOF;
     }
 
