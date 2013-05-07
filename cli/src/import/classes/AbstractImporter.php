@@ -35,11 +35,11 @@ abstract class AbstractImporter implements CLI_Command, Importer {
             'long_name' => '--organism_id',
             'description' => 'id of the organism this import is for'
         ));
-
+        //TODO
         $command->addOption('import_prefix',
                 array(
-            'short_name' => '-p',
-            'long_name' => '--import_prefix',
+            'short_name' => '-r',
+            'long_name' => '--release',
             'description' => 'this will be used as prefix for all uniquenames and displayed in the "dataset" dropdown'
         ));
 

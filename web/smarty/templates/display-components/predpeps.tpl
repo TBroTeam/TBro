@@ -73,35 +73,37 @@
 
                                         <table style="width:100%" class="contains-tooltip">
                                             <thead>
-                                                <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>evalue</td><td>database match</td><td>time executed</td><td>dbxref</td></tr>
+                                                <tr><td>interpro id</td><td>fmin</td><td>fmax</td><td>evalue</td><td>database match</td><td>dbxref</td></tr>
                                             </thead>
                                             <tbody>
                                                 {#foreach $predpep.interpro as $interpro#}
                                                     <tr><td>{#interprolink id=$interpro.interpro_id#}</td><td>{#$interpro.fmin#}</td><td>{#$interpro.fmax#}</td>
                                                         <td>{#$interpro.evalue#}</td>
-                                                        <td>{#dbxreflink dbxref=['dbname'=>$interpro.program, 'accession'=>$interpro.analysis_match_id, 'name'=>'', 'definition'=>$interpro.analysis_match_description, 'dbversion'=>$interpro.programversion]#}</td>
-                                                        <td>{#$interpro.timeexecuted#}</td>
                                                         <td>
-                                                            {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
-                                                                <ul style="list-style: none">
-                                                                    {#foreach $interpro.dbxref as $dbxref#}
-                                                                        <li>{#dbxreflink dbxref=$dbxref#} </li>
-                                                                    {#/foreach#}
-                                                                </ul>
-                                                            {#/if#}
-                                                        </td>
-                                                    </tr>
-                                                {#/foreach#}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            {#/if#}
+                                                            <span class="has-tooltip" data-version="Interpro-Version|{#$interpro.programversion#}" data-src="Source|{#$interpro.sourcename#}" data-id="ID|{#$interpro.analysis_match_id#}" data-desc="Description|{#$interpro.analysis_match_description#}">
+                                                        {#if $interpro.analysis_match_description!=''#}{#$interpro.analysis_match_description#}{#else#}{#$interpro.sourcename#}:{#$interpro.analysis_match_id#}{#/if#}
+                                                    </span>
+                                                <td>
+                                                    {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
+                                                        <ul style="list-style: none">
+                                                            {#foreach $interpro.dbxref as $dbxref#}
+                                                                <li>{#dbxreflink dbxref=$dbxref#} </li>
+                                                            {#/foreach#}
+                                                        </ul>
+                                                    {#/if#}
+                                                </td>
+                                            </tr>
+                                        {#/foreach#}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    {#/foreach#}
+                    {#/if#}
                 </div>
-            </div>
-
+            {#/foreach#}
         </div>
     </div>
+
+</div>
+</div>
 </div>

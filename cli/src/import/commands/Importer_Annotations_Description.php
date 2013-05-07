@@ -39,7 +39,8 @@ class Importer_Annotations_Description extends AbstractImporter {
                     continue;
                 $feature = $line[0];
                 $description = $line[1];
-
+                $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
+                
                 $statement_insert_featureprop->execute();
                 $descriptions_added++;
 

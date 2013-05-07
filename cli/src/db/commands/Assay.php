@@ -73,6 +73,7 @@ class Assay extends AbstractTable {
         return 'Manipulate the database assay.';
     }
 
+    // TODO experiment; gathering of biomat in diff. conditions
     public static function CLI_commandName() {
         return 'assay';
     }

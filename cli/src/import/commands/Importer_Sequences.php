@@ -186,7 +186,7 @@ class Importer_Sequences extends AbstractImporter {
    
 File Format has to be a typical fasta file.
 Header line has to look like this:
->comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
+>id description
    
 \033[0;31mThis import requires a successful Map File Import!\033[0m
 EOF;

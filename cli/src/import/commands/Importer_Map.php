@@ -116,6 +116,7 @@ class Importer_Map extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added);
     }
 
+    //TODO sequence map
     public static function CLI_commandName() {
         return 'map';
     }
@@ -124,6 +125,8 @@ class Importer_Map extends AbstractImporter {
         return "Mapping File Importer";
     }
 
+    
+    //TODO --only-unigenes / --only-isoforms
     public static function CLI_longHelp() {
         return <<<EOF
 

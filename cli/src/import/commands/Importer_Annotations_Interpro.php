@@ -94,6 +94,7 @@ EOF;
 
 
         $filename = $options['file'];
+        
         $interpro_version = $options['interpro_version'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
@@ -116,7 +117,6 @@ EOF;
             $param_domain_fmax = null;
             $param_source_name = null;
             $param_evalue = null;
-            $param_timeexecuted = null;
             $param_featureprop_type = null;
             $param_featureprop_value = null;
             $param_accession = null;
@@ -137,12 +137,11 @@ EOF;
             $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_feature_uniq, PDO::PARAM_STR);
             $statement_insert_featureloc->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
-            $statement_insert_analysisfeature = $db->prepare('INSERT INTO analysisfeature (analysis_id, feature_id, significance) VALUES (get_or_insert_analysis(:name, :program, :version, :source, :timeexecuted) ,currval(\'feature_feature_id_seq\'), :significance)');
+            $statement_insert_analysisfeature = $db->prepare('INSERT INTO analysisfeature (analysis_id, feature_id, significance) VALUES (get_or_insert_analysis(:name, :program, :version, :source) ,currval(\'feature_feature_id_seq\'), :significance)');
             $statement_insert_analysisfeature->bindValue('name', 'Interpro Analysis', PDO::PARAM_STR);
-            $statement_insert_analysisfeature->bindParam('program', 'Interpro', PDO::PARAM_STR);
+            $statement_insert_analysisfeature->bindValue('program', 'Interpro', PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindValue('version', $interpro_version, PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('source', $param_source_name, PDO::PARAM_STR);
-            $statement_insert_analysisfeature->bindParam('timeexecuted', $param_timeexecuted, PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('significance', $param_evalue, PDO::PARAM_STR);
 
             $statement_insert_featureprop = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :value)');
@@ -168,7 +167,6 @@ EOF;
                 $param_domain_fmin = $match['domStart'];
                 $param_domain_fmax = $match['domEnd'];
                 $param_evalue = $match['eValue'];
-                $param_timeexecuted = $match['timeexecuted'];
 
                 //more complex parameters
                 $param_feature = Importer_Sequences::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
@@ -197,6 +195,7 @@ EOF;
                     $param_featureprop_value = $match['analysisMatchID'];
                     $statement_insert_featureprop->execute();
 
+                    //TODO anzeigename
                     if (isset($match['analysisMatchDescription']) && !empty($match['analysisMatchDescription'])) {
                         $param_featureprop_type = CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION;
                         $param_featureprop_value = $match['analysisMatchDescription'];

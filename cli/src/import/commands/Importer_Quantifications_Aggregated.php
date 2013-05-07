@@ -114,6 +114,8 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
             'long_name' => '--quantification_id',
             'description' => 'quantification id'
         ));
+        
+        //TODO statt dessen analysis
         $command->addOption('type_name',
                 array(
             'short_name' => '-t',
@@ -132,7 +134,7 @@ class Importer_Quantifications_Aggregated extends AbstractImporter {
     public static function CLI_commandDescription() {
         return "Aggregated Count File Importer";
     }
-
+//TODO expression results
     public static function CLI_commandName() {
         return 'count_matrix';
     }

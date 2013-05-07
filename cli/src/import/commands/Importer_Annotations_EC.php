@@ -13,7 +13,7 @@ class Importer_Annotations_EC extends Importer_Annotations_Dbxref {
     }
 
     public static function import($options) {
-        self::_import($options, 0, 1, "\t");
+        return self::_import($options, 0, 1, "\t");
     }
 
     public static function CLI_longHelp() {

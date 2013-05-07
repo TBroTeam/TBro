@@ -1,4 +1,4 @@
-{#extends file='layout.tpl'#}
+{#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
 {#call_webservice path="cart/getitems" data=["query1"=>$cartname] assign='cartitems'#}
 <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
@@ -342,7 +342,7 @@
         <h4>Analysis</h4>
     </div>
     <div class="large-3 columns">
-        <h4>Tissues</h4>
+        <h4>Samples</h4>
     </div>
 </div>
 
@@ -377,6 +377,6 @@
             </div>
         </div>
     </div>
-</div-->
+</div>
 
 {#/block#}

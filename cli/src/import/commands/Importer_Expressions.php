@@ -185,6 +185,7 @@ class Importer_Expressions extends AbstractImporter {
         return "Pooled Expression File Importer";
     }
 
+    //TODO differential expression results
     public static function CLI_commandName() {
         return 'pooled_expressions';
     }
