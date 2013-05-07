@@ -81,7 +81,7 @@
                                                         <td>{#$interpro.evalue#}</td>
                                                         <td>
                                                             <span class="has-tooltip" data-version="Interpro-Version|{#$interpro.programversion#}" data-src="Source|{#$interpro.sourcename#}" data-id="ID|{#$interpro.analysis_match_id#}" data-desc="Description|{#$interpro.analysis_match_description#}">
-                                                        {#if $interpro.analysis_match_description!=''#}{#$interpro.analysis_match_description#}{#else#}{#$interpro.sourcename#}:{#$interpro.analysis_match_id#}{#/if#}
+                                                        {#if $interpro.analysis_match_description!='no description'#}{#$interpro.analysis_match_description#}{#else#}{#$interpro.sourcename#}:{#$interpro.analysis_match_id#}{#/if#}
                                                     </span>
                                                 <td>
                                                     {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}

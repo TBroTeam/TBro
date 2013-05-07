@@ -1,7 +1,7 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
-require_once ROOT . 'commands/Importer_Map.php';
+require_once ROOT . 'commands/Importer_Sequences.php';
 
 class Importer_Annotations_Repeatmasker extends AbstractImporter {
 

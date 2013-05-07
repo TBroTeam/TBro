@@ -35,7 +35,8 @@ EOF;
             require_once 'TranscriptDB/webservices/listing/Isoforms.php';
             $service = new \webservices\listing\Isoforms();
             $isoforms = $service->execute($querydata);
-            $return['unigene']['isoforms'] = $isoforms['isoforms'];
+            if (isset($isoforms['isoforms']))
+                $return['unigene']['isoforms'] = $isoforms['isoforms'];
         }
 
         return $return;

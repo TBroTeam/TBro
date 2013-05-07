@@ -22,7 +22,6 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
             $db->beginTransaction();
             #shared parameters
             $param_accession = null;
-            $description = null;
             $param_dbname = null;
             $param_feature_uniq = null;
 

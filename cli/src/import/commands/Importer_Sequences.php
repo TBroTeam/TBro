@@ -1,162 +1,138 @@
 <?php
 
 require_once ROOT . 'classes/AbstractImporter.php';
-require_once ROOT . 'commands/Importer_Map.php';
 
 class Importer_Sequences extends AbstractImporter {
 
-    /**
-     * reads the next fasta sequence from file handle $fasta_handle and returns a list of description and sequence (without whitespace and newlines)
-     * @param resource $fasta_handle
-     * @return list ($description, $sequence)
-     * @throws ErrorException with ErrorMsg ERRCODE_ILLEGAL_FILE_FORMAT: next non-empty line has to start with '>'
-     */
-    static function read_fasta($fasta_handle) {
-        $description = '';
-        while (empty($description) && !feof($fasta_handle))
-            $description = trim(fgets($fasta_handle));
-        if (strpos($description, '>') !== 0)
-            throw new ErrorException(ERR_ILLEGAL_FILE_FORMAT);
+    public static function get_import_dbxref() {
+        global $db;
+        # get import prefix id, insert into dbxref if neccessary
+        $stm_get_import_prefix_id = $db->prepare('SELECT get_or_insert_dbxref(?, ?)');
+        $stm_get_import_prefix_id->execute(array(DB_NAME_IMPORTS, IMPORT_PREFIX));
+        $import_prefix_id = $stm_get_import_prefix_id->fetchColumn();
+        unset($stm_get_import_prefix_id);
 
-
-        $sequence = '';
-        while (!feof($fasta_handle)) {
-            $pos = ftell($fasta_handle);
-            $line = fgets($fasta_handle);
-            if (strpos($line, '>') === 0) {
-                fseek($fasta_handle, $pos, SEEK_SET);
-                break;
-            }
-            $sequence .= trim($line);
-        }
-        return array($description, $sequence);
+        return $import_prefix_id;
     }
 
     /**
-     * Converts values to String that would be stored as Name (Suffic of UniqueName) in DB
-     * @param string $isoform_name
-     * @param int $left
-     * @param int $right
-     * @param char $direction [+-]
-     * @return string
-     */
-    static function prepare_predpep_name($isoform_name, $left, $right, $direction) {
-        return $isoform_name . ':' . ($direction == '+' ? "$left-$right" : "$right-$left");
-    }
-
-    /**
-     * imports FASTA file. 
-     * isoform entries will be updated
-     * predicted peptide entries will be inserted & located on isoform
+     * loads a file containing "unigene\tisoform" lines into feature table
+     * THIS FILE HAS TO BE SORTED!
      * @global DBO $db
      * @param string $filename filename
      * @throws ErrorException
      */
     static function import($options) {
         $filename = $options['file'];
+        $file_type = $options['file_type'];
+
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         self::setLineCount($lines_total);
 
         global $db;
+        if (false)
+            $db = new PDO();
+
         $lines_imported = 0;
-        $isoforms_updated = 0;
-        $predpeps_added = 0;
+        $isoforms_added = 0;
+        $unigenes_added = 0;
 
         #pre-initialize variables to bind statement parameters
+        $param_unigene_name = null;
+        $param_unigene_uniq = null;
+        $param_isoform_name = null;
         $param_isoform_uniq = null;
-        $param_isoform_seqlen = null;
-        $param_isoform_residues = null;
-        $param_isoform_feature_id = null;
-        $param_isoform_path = null;
-
-        $param_predpep_name = null;
-        $param_predpep_uniq = null;
-        $param_predpep_seqlen = null;
-        $param_predpep_residues = null;
-        $param_predpep_feature_id = null;
-        $param_predpep_fmin = null;
-        $param_predpep_fmax = null;
-        $param_predpep_strand = null;
-        $param_predpep_srcfeature_uniq = null;
+        $param_unigene_lastid = null;
 
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Map::get_import_dbxref();
-            
-            # prepare statements
-            #
-        #isoform sequence
-            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE uniquename=:uniquename AND organism_id=:organism RETURNING feature_id');
-            $statement_update_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
-            $statement_update_isoform->bindParam('seqlen', $param_isoform_seqlen, PDO::PARAM_INT);
-            $statement_update_isoform->bindParam('residues', $param_isoform_residues, PDO::PARAM_STR);
-            $statement_update_isoform->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $import_prefix_id = self::get_import_dbxref();
 
-            $statement_insert_isoform_path = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (:feature_id, :type_id, :value)');
-            $statement_insert_isoform_path->bindValue('type_id', CV_ISOFORM_PATH, PDO::PARAM_INT);
-            $statement_insert_isoform_path->bindParam('feature_id', $param_isoform_feature_id, PDO::PARAM_INT);
-            $statement_insert_isoform_path->bindParam('value', $param_isoform_path, PDO::PARAM_STR);
+            # link import dbxref to organism if not already linked
+            $stm_link_organism_import_dbxref = $db->prepare("SELECT * FROM organism_dbxref WHERE organism_id=? AND dbxref_id=?");
+            $stm_link_organism_import_dbxref->execute(array(DB_ORGANISM_ID, $import_prefix_id));
+            if ($stm_link_organism_import_dbxref->rowCount() == 0)
+                $db->prepare("INSERT INTO organism_dbxref (organism_id, dbxref_id) VALUES (?, ?)")->execute(array(DB_ORGANISM_ID, $import_prefix_id));
+            unset($stm_link_organism_import_dbxref);
 
-            #predicted peptide
-            $statement_insert_predpep = $db->prepare('INSERT INTO feature  (type_id, organism_id, name, uniquename, seqlen, residues, dbxref_id) '
-                    . 'VALUES (:type_id, :organism_id, :name, :uniquename, :seqlen, :residues, :dbxref_id) RETURNING feature_id');
-            $statement_insert_predpep->bindValue('type_id', CV_PREDPEP, PDO::PARAM_INT);
-            $statement_insert_predpep->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
-            $statement_insert_predpep->bindParam('name', $param_predpep_name, PDO::PARAM_STR);
-            $statement_insert_predpep->bindParam('uniquename', $param_predpep_uniq, PDO::PARAM_STR);
-            $statement_insert_predpep->bindParam('seqlen', $param_predpep_seqlen, PDO::PARAM_INT);
-            $statement_insert_predpep->bindParam('residues', $param_predpep_residues, PDO::PARAM_STR);
-            $statement_insert_predpep->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
+            $stm_sel_unigene_byUniquename = $db->prepare('SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism_id');
+            $stm_sel_unigene_byUniquename->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $stm_sel_unigene_byUniquename->bindParam('uniquename', $param_unigene_uniq);
 
-            $statement_insert_predpep_location = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, :feature_id, (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename LIMIT 1'));
-            $statement_insert_predpep_location->bindParam('fmin', $param_predpep_fmin, PDO::PARAM_INT);
-            $statement_insert_predpep_location->bindParam('fmax', $param_predpep_fmax, PDO::PARAM_INT);
-            $statement_insert_predpep_location->bindParam('strand', $param_predpep_strand, PDO::PARAM_INT);
-            $statement_insert_predpep_location->bindParam('feature_id', $param_predpep_feature_id, PDO::PARAM_INT);
-            $statement_insert_predpep_location->bindParam('srcfeature_uniquename', $param_predpep_srcfeature_uniq, PDO::PARAM_STR);
 
-            #read file and execute statements
+            # we are working with RETURNING feature_id here because PGSQL does not support lastInsertId
+            $stm_ins_unigene = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id) RETURNING feature_id');
+            $stm_ins_unigene->bindValue('type_id', CV_UNIGENE, PDO::PARAM_INT);
+            $stm_ins_unigene->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $stm_ins_unigene->bindParam('name', $param_unigene_name, PDO::PARAM_STR);
+            $stm_ins_unigene->bindParam('uniquename', $param_unigene_uniq);
+            $stm_ins_unigene->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
+
+
+            $stm_ins_isoform = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id)');
+            $stm_ins_isoform->bindValue('type_id', CV_ISOFORM, PDO::PARAM_INT);
+            $stm_ins_isoform->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $stm_ins_isoform->bindParam('name', $param_isoform_name, PDO::PARAM_STR);
+            $stm_ins_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
+            $stm_ins_isoform->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
+
+            $stm_ins_feature_rel = $db->prepare('INSERT INTO feature_relationship (subject_id, type_id, object_id) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :parent)');
+            $stm_ins_feature_rel->bindValue('type_id', CV_RELATIONSHIP_UNIGENE_ISOFORM, PDO::PARAM_INT);
+            $stm_ins_feature_rel->bindParam('parent', $param_unigene_lastid, PDO::PARAM_INT);
+
 
             $file = fopen($filename, 'r');
-            while (!feof($file)) {
-                #remove newline, split into parts
-                list($description, $sequence) = self::read_fasta($file);
 
-                $matches = array();
+            $last_unigene = "";
+            while (($line = fgetcsv($file, 0, "\t")) !== false) {
+                switch ($file_type) {
+                    case 'only_isoforms':
+                        $param_isoform_name = $line[0];
+                        $param_isoform_uniq = IMPORT_PREFIX . "_" . $param_isoform_name;
+                        $stm_ins_isoform->execute();
+                        $isoforms_added++;
+                        break;
 
-                #isoform header like this:
-                #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
-                if (preg_match('/^>(?<name>\w+) len=(?<seqlen>\d+) path=(?<path>\[(?:\d+:\d+-\d+ ?)+\])$/', $description, $matches)) {
-                    $param_isoform_uniq = IMPORT_PREFIX . "_" . $matches['name'];
-                    $param_isoform_seqlen = $matches['seqlen'];
-                    $param_isoform_residues = $sequence;
+                    case 'only_unigenes':
+                        $param_unigene_name = $line[0];
+                        $param_unigene_uniq = IMPORT_PREFIX . "_" . $param_unigene_name;
+                        $stm_ins_unigene->execute();
+                        $unigenes_added++;
+                        break;
 
-                    $statement_update_isoform->execute();
+                    case 'map':
+                        #remove newline, split into parts
+                        list($param_unigene_name, $param_isoform_name) = $line;
 
-                    # get last insert id (see query: 'RETURNING feature_id'), set id for feature_relationship insert
-                    $param_isoform_feature_id = $statement_update_isoform->fetchColumn();
-                    $param_isoform_path = $matches['path'];
+                        if ($last_unigene != $param_unigene_name) {
+                            # set last value, execute insert
+                            $param_unigene_uniq = IMPORT_PREFIX . "_" . $param_unigene_name;
 
-                    $statement_insert_isoform_path->execute();
-                    $isoforms_updated++;
-                }
-                #predicted peptide header like this:
-                #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
-                    $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
-                    $param_predpep_uniq = IMPORT_PREFIX . "_" . $param_predpep_name;
-                    $param_predpep_seqlen = $matches['len'];
-                    $param_predpep_residues = $sequence;
+                            $stm_sel_unigene_byUniquename->execute();
+                            $param_unigene_lastid = $stm_sel_unigene_byUniquename->fetchColumn();
+                            if (!$param_unigene_lastid) {
 
-                    $statement_insert_predpep->execute();
 
-                    $param_predpep_feature_id = $statement_insert_predpep->fetchColumn();
-                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . "_" . $matches['name'];
-                    $param_predpep_fmin = min($matches['from'], $matches['to']);
-                    $param_predpep_fmax = max($matches['from'], $matches['to']);
-                    $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;
-                    $statement_insert_predpep_location->execute();
-                    $predpeps_added++;
+                                $stm_ins_unigene->execute();
+                                $unigenes_added++;
+
+                                # get last insert id (see query: 'RETURNING feature_id'), set id for feature_relationship insert
+                                $param_unigene_lastid = $stm_ins_unigene->fetchColumn();
+                            }
+                            # set for test to skip this unigene in the future
+                            $last_unigene = $param_unigene_name;
+                        }
+
+                        if (!empty($param_isoform_name)) {
+                            # set last value, execute insert
+                            $param_isoform_uniq = IMPORT_PREFIX . "_" . $param_isoform_name;
+                            $stm_ins_isoform->execute();
+                            $isoforms_added++;
+
+                            # insert feature_relationship
+                            $stm_ins_feature_rel->execute();
+                        }
+                        break;
                 }
 
                 self::updateProgress(++$lines_imported);
@@ -170,25 +146,51 @@ class Importer_Sequences extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated, 'predpeps_added' => $predpeps_added);
+        return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added, 'isoforms_added' => $isoforms_added);
     }
 
-    public static function CLI_commandDescription() {
-        return "Sequence File Importer";
+    public static function CLI_getCommand(Console_CommandLine $parser) {
+        $command = parent::CLI_getCommand($parser);
+        $command->addOption('file_type', array(
+            'short_name' => '-t',
+            'long_name' => '--file_type',
+            'description' => "file format description. one of ('map', 'only_isoforms', 'only_unigenes'). defaults to 'map'",
+            'choices' => array('map', 'only_isoforms', 'only_unigenes'),
+            'default' => 'map'
+        ));
     }
 
+    //TODO sequence map
     public static function CLI_commandName() {
         return 'sequences';
     }
 
+    public static function CLI_commandDescription() {
+        return "Mapping File Importer";
+    }
+
+    //TODO --only-unigenes / --only-isoforms
     public static function CLI_longHelp() {
         return <<<EOF
+
+This command creates the database features all other commands work with.
+You can either import a line-separated file with just the sequence ids you use throughout the files that will be imported or you can import a map, which maps isoforms on unigenes.
    
-File Format has to be a typical fasta file.
-Header line has to look like this:
->id description
-   
-\033[0;31mThis import requires a successful Map File Import!\033[0m
+File format "only_isoforms":
+isoform1
+isoform2
+isoform3
+
+File format "only_unigenes":
+unigene1
+unigene2
+unigene3
+
+File Format "map" (tab-separated):
+unigene1    isoform1
+unigene1    isoform2
+unigene2    isoform3
+unigene3    isoform4
 EOF;
     }
 

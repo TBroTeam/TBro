@@ -2,7 +2,7 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequences.php';
-require_once ROOT . 'commands/Importer_Map.php';
+require_once ROOT . 'commands/Importer_Sequences.php';
 
 class Importer_Annotations_Interpro extends AbstractImporter {
 
@@ -147,7 +147,6 @@ EOF;
             $statement_insert_featureprop = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :value)');
             $statement_insert_featureprop->bindParam(':type_id', $param_featureprop_type, PDO::PARAM_INT);
             $statement_insert_featureprop->bindParam(':value', $param_featureprop_value, PDO::PARAM_STR);
-
 
             $statement_insert_feature_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), get_or_insert_dbxref(:dbname, :accession))');
             $statement_insert_feature_dbxref->bindParam('accession', $param_accession, PDO::PARAM_STR);
