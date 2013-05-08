@@ -95,9 +95,14 @@ class Biomaterial extends AbstractTable {
         $biomat = new propel\Biomaterial();
         self::setKeys($options, $keys, 'insert', $biomat);
 
-        $biomat->save();
-        $biomat->setType('condition');
-        $biomat->save();
+        $lines = $biomat->save();
+        $biomat->setType('biomaterial');
+        $lines += $biomat->save();
+
+        if (isset($options['short']) && $options['short'])
+            print $biomat->getPrimaryKey();
+        else
+            printf("%d line(s) inserted.\n", $lines);
     }
 
     protected static function command_add_condition($options, $keys) {
@@ -105,16 +110,21 @@ class Biomaterial extends AbstractTable {
         if ($parent == null)
             trigger_error('This parent Biomaterial does not exist!', E_USER_ERROR);
         if ($parent->getType() != 'biomaterial')
-            trigger_error('Specified parent is of wrong type!', E_USER_ERROR);
+            trigger_error('Specified parent is of wrong type!'.$parent->getType(), E_USER_ERROR);
 
 
         $biomat = new propel\Biomaterial();
         self::setKeys($options, $keys, 'insert', $biomat);
 
-        $biomat->save();
+        $lines = $biomat->save();
         $biomat->setType('condition');
         $biomat->setParent($parent);
-        $biomat->save();
+        $lines += $biomat->save();
+
+        if (isset($options['short']) && $options['short'])
+            print $biomat->getPrimaryKey();
+        else
+            printf("%d line(s) inserted.\n", $lines);
     }
 
     protected static function command_add_condition_sample($options, $keys) {
@@ -127,10 +137,15 @@ class Biomaterial extends AbstractTable {
         $biomat = new propel\Biomaterial();
         self::setKeys($options, $keys, 'insert', $biomat);
 
-        $biomat->save();
+        $lines = $biomat->save();
         $biomat->setType('condition_sample');
         $biomat->setParent($parent);
-        $biomat->save();
+        $lines += $biomat->save();
+
+        if (isset($options['short']) && $options['short'])
+            print $biomat->getPrimaryKey();
+        else
+            printf("%d line(s) inserted.\n", $lines);
     }
 
     protected static function command_details($options, $keys) {
