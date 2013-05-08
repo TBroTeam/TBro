@@ -34,7 +34,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
                 'action' => 'StoreTrue'
             ),
                 ), $keys);
-
+        
         foreach ($keys as $key => $data) {
             if (isset($data['actions'][$subcommand_name])
                     && ($data['actions'][$subcommand_name] == 'optional' || $data['actions'][$subcommand_name] == 'required')) {
@@ -139,9 +139,11 @@ abstract class AbstractTable implements \CLI_Command, Table {
 
     protected static function setKeys($options, $keys, $cmdname, \BaseObject $propelitem) {
         foreach ($keys as $key => $data) {
-            if (isset($data['actions']) && isset($data['actions'][$cmdname]) && ($data['actions'][$cmdname] == 'required' || $data['actions'][$cmdname] == 'internal'))
+            if (!isset($data['colname']) || !isset($data['actions']) || !isset($data['actions'][$cmdname]))
+                continue;
+            if ($data['actions'][$cmdname] == 'required' || $data['actions'][$cmdname] == 'internal')
                 $propelitem->{"set" . $data['colname']}($options[$key]);
-            else if (isset($data['actions']) && isset($data['actions'][$cmdname]) && $data['actions'][$cmdname] == 'optional' && isset($options[$key]))
+            else if ($data['actions'][$cmdname] == 'optional' && isset($options[$key]))
                 $propelitem->{"set" . $data['colname']}($options[$key]);
         }
     }
