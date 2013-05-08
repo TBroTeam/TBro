@@ -35,6 +35,27 @@ class Feature extends AbstractTable {
                 ),
                 'description' => 'synonym to be created'
             ),
+            'bibsonomy_internal_link' => array(
+                'short_name' => '-b',
+                'actions' => array(
+                    'add_synonym' => 'required',
+                ),
+                'description' => 'bibsonomy "internal link", you can find this on the publication post page. looks like this: [[publication/<resource>/<username>]]'
+            ),
+            'bibsonomy_api_key' => array(
+                'short_name' => '-k',
+                'actions' => array(
+                    'add_synonym' => 'required',
+                ),
+                'description' => 'you can find your api key at http://www.bibsonomy.org/settings?selTab=1'
+            ),
+            'bibsonomy_username' => array(
+                'short_name' => '-u',
+                'actions' => array(
+                    'add_synonym' => 'required',
+                ),
+                'description' => 'bibsonomy user name'
+            ),
             'type' => array(
                 'actions' => array(
                     'add_synonym' => 'required',
@@ -86,6 +107,8 @@ class Feature extends AbstractTable {
         if ($feature == null)
             trigger_error(sprintf('No Feature found for id %d', $options['id']), E_USER_ERROR);
 
+        $pub = Publication::getPropelPubFromBibsonomy($options['bibsonomy_internal_link'], $options['bibsonomy_username'], $options['bibsonomy_api_key']);
+        
         $typeq = new propel\CvtermQuery();
         $type = $typeq->findOneByName($options['type']);
 
@@ -114,9 +137,11 @@ class Feature extends AbstractTable {
         //TODO link publication?!?
         $feature_synonym->setFeatureId($options['id']);
         $feature_synonym->setSynonym($synonym);
+        
+        $feature_synonym->setPub($pub);
 
         $feature_synonym->save();
-        print 'Alias created successfully.';
+        print "Alias created successfully.\n";
     }
 
     protected static function command_remove_synonym($options, $keys) {

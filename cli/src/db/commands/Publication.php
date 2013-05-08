@@ -26,19 +26,19 @@ class Publication extends AbstractTable {
                 ),
                 'description' => 'bibsonomy "internal link", you can find this on the publication post page. looks like this: [[publication/<resource>/<username>]]'
             ),
-            'api_key' => array(
+            'bibsonomy_api_key' => array(
                 'short_name' => '-k',
                 'actions' => array(
                     'link_bibsonomy' => 'required',
                 ),
-                'description' => 'only necessary to access private posts, in combination with --username. you can find your api key at http://www.bibsonomy.org/settings?selTab=1'
+                'description' => 'you can find your api key at http://www.bibsonomy.org/settings?selTab=1'
             ),
-            'username' => array(
+            'bibsonomy_username' => array(
                 'short_name' => '-u',
                 'actions' => array(
                     'link_bibsonomy' => 'required',
                 ),
-                'description' => 'only necessary to access private posts, in combination with --api_key.'
+                'description' => 'bibsonomy user name'
             ),
             'feature_id' => array(
                 'short_name' => '-f',
@@ -77,9 +77,9 @@ class Publication extends AbstractTable {
         return '\\cli_db\\propel\\Pub';
     }
 
-    public static function command_link_bibsonomy($options, $keys) {
+    public static function getPropelPubFromBibsonomy($bibsonomy_link, $username, $api_key) {
         $matches = null;
-        if (!preg_match('{^\[\[(?<type>.*)/(?<resource>.*)/(?<user>.*)\]\]$}', $options['bibsonomy_internal_link'], $matches)) {
+        if (!preg_match('{^\[\[(?<type>.*)/(?<resource>.*)/(?<user>.*)\]\]$}', $bibsonomy_link, $matches)) {
             trigger_error('wrong format for option --bibsonomy_internal_link', E_USER_ERROR);
         }
 
@@ -88,7 +88,7 @@ class Publication extends AbstractTable {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_USERPWD, sprintf('%s:%s', $options['username'], $options['api_key']));
+        curl_setopt($curl, CURLOPT_USERPWD, sprintf('%s:%s', $username, $api_key));
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
         $xmlStr = curl_exec($curl);
@@ -148,7 +148,7 @@ class Publication extends AbstractTable {
 
 
         if (count($bibsonomy->posts->post) != 1) {
-            trigger_error(sprintf('Bibsonomy post %s not found!', $options['bibsonomy_internal_link']), E_USER_ERROR);
+            trigger_error(sprintf('Bibsonomy post %s not found!', $bibsonomy_link), E_USER_ERROR);
         }
         $bibtex = $bibsonomy->posts->post->bibtex;
 
@@ -179,7 +179,9 @@ class Publication extends AbstractTable {
             $authors = explode(' and ', $bibtex['author']);
             $i = 0;
             foreach ($authors as $author) {
-                list ($surname, $givennames) = explode(',', $author, 2);
+                $authnames = explode(',', $author, 2);
+                @$surname = $authnames[0];
+                @$givennames = $authnames[1];
 
                 $pubauthor = new propel\Pubauthor();
                 $pubauthor->setGivennames($givennames);
@@ -189,6 +191,11 @@ class Publication extends AbstractTable {
                 $pub->addPubauthor($pubauthor);
             }
         }
+        return $pub;
+    }
+
+    public static function command_link_bibsonomy($options, $keys) {
+        $pub = self::getPropelPubFromBibsonomy($options['bibsonomy_internal_link'], $options['bibsonomy_username'], $options['bibsonomy_api_key']);
 
         $fq = new propel\FeatureQuery();
         $feature = $fq->findOneByFeatureId($options['feature_id']);

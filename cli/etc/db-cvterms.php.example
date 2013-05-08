@@ -58,15 +58,15 @@ $cvterm_data = array (
   ),
   'CV_UNIGENE' => 
   array (
-    'name' => 'predicted gene',
+    'name' => 'unigene',
     'cv' => 'sequence',
-    'id' => 42825,
+    'id' => 42857,
   ),
   'CV_ISOFORM' => 
   array (
-    'name' => 'alternatively_spliced_transcript',
+    'name' => 'isoform',
     'cv' => 'sequence',
-    'id' => 2218,
+    'id' => 42858,
   ),
   'CV_RELATIONSHIP_UNIGENE_ISOFORM' => 
   array (
@@ -248,8 +248,8 @@ define ('CV_INTERPRO_ANALYSIS_MATCH_ID', '42821');
 define ('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION', '42822');
 define ('CV_ANNOTATION_DESC', '42823');
 define ('CV_INTERPRO_ID', '42824');
-define ('CV_UNIGENE', '42825');
-define ('CV_ISOFORM', '2218');
+define ('CV_UNIGENE', '42857');
+define ('CV_ISOFORM', '42858');
 define ('CV_RELATIONSHIP_UNIGENE_ISOFORM', '989');
 define ('CV_ISOFORM_PATH', '42826');
 define ('CV_PREDPEP', '219');

@@ -52,11 +52,11 @@ $cvterms = array(
         'cv' => 'feature_property'
     ),
     'CV_UNIGENE' => array(
-        'name' => 'predicted gene',
+        'name' => 'unigene',
         'cv' => 'sequence'
     ),
     'CV_ISOFORM' => array(
-        'name' => 'alternatively_spliced_transcript',
+        'name' => 'isoform',
         'cv' => 'sequence'
     ),
     'CV_RELATIONSHIP_UNIGENE_ISOFORM' => array(
@@ -160,6 +160,7 @@ foreach ($cvterms as $cvterm_const => &$cvterm) {
     }
     //skip lines without const
     if (is_int($cvterm_const)) continue;
+    
     
     if (defined($cvterm_const) && constant($cvterm_const) != $cvterm['id']) {
         printf("-- constant %s has changed: %d => %d", $cvterm_const, constant($cvterm_const), $cvterm['id']);
