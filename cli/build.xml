@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="transciptome-cli" default="install">
+    <property file="./build.properties" />
+    
+    <property name="srcdir"   value="${project.basedir}/src/" override="true" />
+    <property name="builddir" value="${project.basedir}/build/" override="true" />
+
+
+    <property name="config_dir" value="./etc/" override="true" />
+    <property name="install_dir" value="." override="true" />
+    
+
+    <target name="prepare-db">
+        <mkdir dir="${builddir}"/>
+        <mkdir dir="${builddir}/db"/>
+        <copy todir="${builddir}/db" >
+            <fileset dir="${srcdir}/db/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <copy todir="${builddir}/db" >
+            <fileset dir="${srcdir}/shared/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <echo file="${builddir}/db/config.ini">config_dir=${config_dir}</echo>
+    </target>
+    
+    <target name="prepare-import">
+        <mkdir dir="${builddir}"/>
+        <mkdir dir="${builddir}/import"/>
+        <copy todir="${builddir}/import" >
+            <fileset dir="${srcdir}/import/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <copy todir="${builddir}/import" >
+            <fileset dir="${srcdir}/shared/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>        
+        <echo file="${builddir}/import/config.ini">config_dir=${config_dir}</echo>
+    </target>
+
+    <target name="build-db" depends="prepare-db">
+        <echo msg="Building phar package db.phar" />
+        <pharpackage basedir="${builddir}/db/" 
+                     destfile="${builddir}/db.phar"
+                     alias="db.phar"
+                     stub="${srcdir}/res/phar-stub-db.php"
+                     compression="bzip2"
+        >
+            <metadata>
+                <element name="version" value="${version}" />
+                <element name="authors">
+                    <element name="Lorenz Weber">
+                        <element name="e-mail" value="mail@lenzw.de" />
+                    </element>
+                </element>
+            </metadata>
+
+            <fileset dir="${builddir}/db/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </pharpackage>
+        
+    </target>
+        
+    <target name="build-import" depends="prepare-import">
+        <echo msg="Building phar package import.phar" />
+        <pharpackage basedir="${builddir}/import/" 
+                     destfile="${builddir}/import.phar"
+                     alias="import.phar"
+                     stub="${srcdir}/res/phar-stub-import.php"
+                     compression="bzip2"
+        >
+            <metadata>
+                <element name="version" value="${version}" />
+                <element name="authors">
+                    <element name="Lorenz Weber">
+                        <element name="e-mail" value="mail@lenzw.de" />
+                    </element>
+                </element>
+            </metadata>
+
+            <fileset dir="${builddir}/import/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </pharpackage>
+    
+    </target>
+    
+    <target name="build-all" depends="build-db,build-import">
+    </target>
+    
+    <target name="install" depends="build-all">
+        
+        <mkdir dir="${install_dir}"/>
+        <copy todir="${install_dir}" >
+            <fileset dir="${builddir}">
+                <include name="db.phar" />
+                <include name="import.phar" />
+            </fileset>
+        </copy>
+        <chmod file="${install_dir}/db.phar" mode="0755" />
+        <chmod file="${install_dir}/import.phar" mode="0755" />
+        
+        <mkdir dir="${config_dir}"/>
+        <copy todir="${config_dir}" >
+            <fileset dir="${srcdir}">
+                <include name="db-config.php.example" />
+                <include name="db-cvterms.php.example" />
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="clean">
+        <delete dir="${builddir}" includeemptydirs="true" verbose="true" failonerror="true" />
+    </target>
+</project>
