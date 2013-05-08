@@ -2,7 +2,7 @@
 
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';
-require_once ROOT . 'commands/Importer_Sequence_Ids_FASTA.php';
+require_once ROOT . 'commands/Importer_Sequences_FASTA.php';
 
 class Importer_Annotations_Interpro extends AbstractImporter {
 
