@@ -17,7 +17,7 @@ function cli_error_handler($err_code, $err_text, $err_file, $err_line) {
             break;
 
         default:
-            $parser->outputter->stderr(sprintf("Unknown Error: %s\n", $err_text));
+            $parser->outputter->stderr(sprintf("Unknown Error: %s in %s at %s\n", $err_text, $err_file, $err_line));
             /* let php handle this error */
             return false;
             break;
