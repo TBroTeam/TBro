@@ -18,6 +18,22 @@ abstract class AbstractTable implements \CLI_Command, Table {
     private static function processSubCommand($command, $subcommand_name, $keys) {
         $submcd = $command->addCommand($subcommand_name);
 
+        $keys = array_merge(array(
+            'short' => array(
+                'actions' => array(
+                    'insert' => 'optional',
+                ),
+                'description' => 'if set, will just output the ID of newly inserted line on success',
+                'action' => 'StoreTrue'
+            ),
+            'noconfirm' => array(
+                'actions' => array(
+                    'delete' => 'optional',
+                ),
+                'description' => 'if set, will not ask for confirmation on delete',
+                'action' => 'StoreTrue'
+            ),
+                ), $keys);
 
         foreach ($keys as $key => $data) {
             if (isset($data['actions'][$subcommand_name])
@@ -31,20 +47,6 @@ abstract class AbstractTable implements \CLI_Command, Table {
                 $options['description'] = sprintf('(%2$s) %1$s', $data['description'], $data['actions'][$subcommand_name]);
                 $option = $submcd->addOption($key, $options);
             }
-        }
-
-        if ($subcommand_name == 'insert') {
-            $submcd->addOption('short', array(
-                'long_name' => '--short',
-                'description' => 'if set, will just output the ID of newly inserted line on success',
-                'action' => 'StoreTrue'
-            ));
-        } else if ($subcommand_name == 'delete') {
-            $submcd->addOption('noconfirm', array(
-                'long_name' => '--noconfirm',
-                'description' => 'if set, will not ask for confirmation on delete',
-                'action' => 'StoreTrue'
-            ));
         }
     }
 
@@ -135,7 +137,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
         
     }
 
-    protected static function setKeys($options, $keys, $cmdname, \BaseObject $propelitem){
+    protected static function setKeys($options, $keys, $cmdname, \BaseObject $propelitem) {
         foreach ($keys as $key => $data) {
             if (isset($data['actions']) && isset($data['actions'][$cmdname]) && ($data['actions'][$cmdname] == 'required' || $data['actions'][$cmdname] == 'internal'))
                 $propelitem->{"set" . $data['colname']}($options[$key]);
@@ -143,12 +145,12 @@ abstract class AbstractTable implements \CLI_Command, Table {
                 $propelitem->{"set" . $data['colname']}($options[$key]);
         }
     }
-    
+
     protected static function command_insert($options, $keys) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
         $item = new $propel_class();
         self::setKeys($options, $keys, 'insert', $item);
-        
+
         call_user_func(array(get_called_class(), 'command_insert_set_defaults'), $item);
 
         $lines = $item->save();

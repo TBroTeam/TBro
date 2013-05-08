@@ -57,6 +57,15 @@ class Biomaterial extends AbstractTable {
                 ),
                 'description' => 'contact id'
             ),
+            'short' => array(
+                'actions' => array(
+                    'insert' => 'optional',
+                    'add_condition' => 'optional',
+                    'add_condition_sample' => 'optional',
+                ),
+                'description' => 'if set, will just output the ID of newly inserted line on success',
+                'action' => 'StoreTrue'
+            ),
             'parent_biomaterial_name' => array(
                 'actions' => array(
                     'add_condition' => 'required',
@@ -110,7 +119,7 @@ class Biomaterial extends AbstractTable {
         if ($parent == null)
             trigger_error('This parent Biomaterial does not exist!', E_USER_ERROR);
         if ($parent->getType() != 'biomaterial')
-            trigger_error('Specified parent is of wrong type!'.$parent->getType(), E_USER_ERROR);
+            trigger_error('Specified parent is of wrong type!' . $parent->getType(), E_USER_ERROR);
 
 
         $biomat = new propel\Biomaterial();
