@@ -361,9 +361,11 @@
             <select id="select-tissues" size="12" multiple="multiple"></select>
         </div>
     </div>
-    <div class="row large-12 columns panel">
+    <div class="row">
+        <div class="large-12 columns panel">
         <button type="button" id="button-barplot" value="barplot">Barplot</button>
         <button type="button" id="button-heatmap" value="heatmap">Heatmap</button>
+        </div>
     </div>
 </form>
 <div class="row" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">

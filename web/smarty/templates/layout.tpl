@@ -92,11 +92,23 @@
             textarea {
                 resize:vertical;
             }
-            .top-bar-section li div.has-select{
-                padding: 0 15px;
+            .top-bar-section .right li div{
+                padding: 0 5px;
                 line-height: 45px;
                 background: #111111; 
                 display:block;
+            }
+            
+            .top-bar-section .right li {
+                height:45px;
+            }
+            
+            .top-bar-section .right a {
+                text-decoration: underline;
+            }
+            
+            .top-bar-section .right label {
+                color: #fff;
             }
         </style>
 
@@ -114,11 +126,14 @@
                 <section class="top-bar-section">
                     <ul class="left">{#block name='header-nav'#}{#/block#}</ul>
                     <ul class="right">
-                        <li><a href='{#$AppPath#}/multisearch'>multisearch</a></li>
+                        <li><div><label for="select_organism">organism:</label></div></li>
+                        <li><div><select id="select_organism" style="display:inline"></select></div></li>
+                        <li><div><label for="select_dataset">release:</label></div></li>
+                        <li><div><select id="select_dataset"></select></div></li>
                         <li class="divider"></li>
-                        <li><a>quicksearch:</a></li>
-                        <li><div class="has-select"><select id="select_organism" style="display:inline"></select></div></li>
-                        <li><div class="has-select"><select id="select_dataset"></select></div></li>
+                        <li><a href='{#$AppPath#}/multisearch'>adv. search</a></li>
+                        <li class="divider"></li>
+                        <li><div><label for="search">quick search:</label></div></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
                     </ul>
                 </section>
