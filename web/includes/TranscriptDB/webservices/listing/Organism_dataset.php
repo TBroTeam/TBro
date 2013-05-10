@@ -30,8 +30,8 @@ EOF;
 
         $stm_get_organism_dataset->execute();
         while ($row = $stm_get_organism_dataset->fetch(PDO::FETCH_ASSOC)) {
-            $data['results']['organism'][] = array('organism_name'=>$row['organism_name'], 'organism_id'=>$row['organism_id']);
-            $data['results']['dataset'][$row['organism_id']][] = array('dataset'=>$row['dataset_name']);
+            $data['results']['organism'][$row['organism_id']] = array('organism_name'=>$row['organism_name'], 'organism_id'=>$row['organism_id']);
+            $data['results']['dataset'][$row['organism_id']][$row['dataset_name']] = array('dataset'=>$row['dataset_name']);
         }
 
         return $data;

@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS function_view_statistical_information() CASCADE;
 --NEWCMD--
 CREATE OR REPLACE FUNCTION function_view_statistical_information() RETURNS 
-    TABLE (total_sequences int, total_unigenes int, total_isoforms int, count_unigenes numeric, count_isoforms numeric, organism varchar, release varchar)
+    TABLE (total_sequences int, total_unigenes int, total_isoforms int, releases bigint, organisms bigint, count_unigenes numeric, count_isoforms numeric, organism varchar, release varchar)
  LANGUAGE plpgsql AS $BODY$
  DECLARE
      total_sequences bigint;
@@ -11,7 +11,7 @@ CREATE OR REPLACE FUNCTION function_view_statistical_information() RETURNS
  BEGIN
  
 	DROP TABLE IF EXISTS  tmp_feature_counts ;
-	CREATE TEMP TABLE tmp_feature_counts ON COMMIT DROP AS SELECT COUNT(*) AS count, dbxref_id, organism_id, type_id FROM feature GROUP BY dbxref_id, organism_id, type_id;
+	CREATE TEMP TABLE tmp_feature_counts ON COMMIT DROP  AS SELECT COUNT(*) AS count, dbxref_id, organism_id, type_id FROM feature GROUP BY dbxref_id, organism_id, type_id;
 
 	SELECT INTO total_unigenes SUM(count) FROM tmp_feature_counts WHERE type_id = 42858;
 	SELECT INTO total_isoforms SUM(count) FROM tmp_feature_counts WHERE type_id = 42857;
@@ -23,6 +23,8 @@ CREATE OR REPLACE FUNCTION function_view_statistical_information() RETURNS
 			$F$||total_sequences||$F$ AS total_sequences,
 			$F$||total_unigenes||$F$ AS total_unigenes,
 			$F$||total_isoforms||$F$ AS total_isoforms,
+			(SELECT COUNT(*) FROM  (SELECT 1 FROM tmp_feature_counts i GROUP BY (dbxref_id,organism_id)) x ) AS releases,
+			(SELECT COUNT(*) FROM  (SELECT 1 FROM tmp_feature_counts i GROUP BY (organism_id)) x ) AS organisms,
 			(SELECT SUM(count) FROM tmp_feature_counts i WHERE i.type_id = 42858 AND i.dbxref_id=c.dbxref_id AND i.organism_id = c.organism_id) AS count_unigenes,
 			(SELECT SUM(count) FROM tmp_feature_counts i WHERE i.type_id = 42857 AND i.dbxref_id=c.dbxref_id AND i.organism_id = c.organism_id) AS count_isoforms,
 			(SELECT common_name FROM organism WHERE organism_id = c.organism_id) AS organism,

@@ -1,13 +1,48 @@
 {#extends file='layout-with-cart.tpl'#}
+{#block name='head'#}
+<script type="text/javascript">
+    $(document).ready(function() {
+        dataset.change(function() {
+            $.ajax({
+                url: "{#$ServicePath#}/details/statistical_information/"+organism.find(':selected').text()+"/"+dataset.val(),
+                dataType: "json",
+                success: function(data) {
+                    $.each(data.results, function(key, val) {
+                        $('#stat_'+key).html(val);
+                    });
+                }
+            });
+        });
+        //http://bio.localhost/ajax/details/statistical_information/dmuscipula/test
+    });
+</script>
+{#/block#}
 {#block name='body'#}
 <div class="row">
     <div class="large-12 columns panel">
-            <h2>Welcome to the dionaea muscipula transcript browser</h2>
+        <h2>Welcome to the dionaea muscipula transcript browser</h2>
     </div>
 </div>
 <div class="row">
+    <div class="large-12 columns">
+        <h4>some statistics for your amusement</h4>
+    </div>
     <div class="large-12 columns panel">
-            <p>Try searching for comp231081_c0_seq1 or comp214244_c0_seq2 .</p>
+        <table>
+            <tr><th>Species in this database: </th><td id='stat_organisms'></td></tr>
+            <tr><th>Releases in this database: </th><td id='stat_releases'></td></tr>
+            <tr><th>Unigenes in this database: </th><td id='stat_total_unigenes'></td></tr>
+            <tr><th>Isoforms in this database: </th><td id='stat_total_isoforms'></td></tr>
+            <tr><td></td></tr>
+            <tr><th>Unigenes in the selected release: </th><td id='stat_count_unigenes'></td></tr>
+            <tr><th>Isoforms in the selected release: </th><td id='stat_count_isoforms'></td></tr>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns panel">
+        <p>Try searching for comp231081_c0_seq1 or comp214244_c0_seq2 .</p>
     </div>
 </div>
 {#/block#}

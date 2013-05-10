@@ -42,11 +42,11 @@
                             $('<option/>').val(this.organism_id).text(this.organism_name).appendTo(organism);
                         });
                         rel_dataset = data.results.dataset;
-                        organism.click();   
+                        organism.change();   
                     }
                 });
                 
-                organism.click(function(){
+                organism.change(function(){
                     dataset.empty();
                     dataset.removeAttr('disabled');
                     if (rel_dataset[organism.val()] == undefined){
@@ -57,6 +57,7 @@
                             $('<option/>').val(this.dataset).text(this.dataset).appendTo(dataset);
                         });
                     }
+                    dataset.change();
                 });
 
                 $("#search_unigene").autocomplete({

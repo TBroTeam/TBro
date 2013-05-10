@@ -90,12 +90,14 @@ CREATE FUNCTION update_materialized_views() RETURNS VOID
  DECLARE 
       row matviews%ROWTYPE;
       entry pg_proc%ROWTYPE;
+      my_query varchar;
  BEGIN
     FOR row IN SELECT * FROM matviews
     LOOP
         SELECT INTO entry * FROM pg_proc where proname = 'update_' || row.mv_name;
         IF FOUND THEN
-            PERFORM ' update_' || row.mv_name || '()';
+		my_query = 'SELECT update_' || row.mv_name || '()';
+		EXECUTE my_query;
         END IF;
     END LOOP;
     RETURN;
