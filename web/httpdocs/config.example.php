@@ -12,6 +12,9 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_DB', 'mydb');
 
+define('DEFAULT_ORGANISM', 1);
+define('DEFAULT_RELEASE', 'test');
+
 if (isset($_REQUEST['DEBUG']))
     define('DEBUG', true);
 

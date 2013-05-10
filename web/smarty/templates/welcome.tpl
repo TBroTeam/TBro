@@ -2,9 +2,9 @@
 {#block name='head'#}
 <script type="text/javascript">
     $(document).ready(function() {
-        dataset.change(function() {
+        release.change(function() {
             $.ajax({
-                url: "{#$ServicePath#}/details/statistical_information/"+organism.find(':selected').text()+"/"+dataset.val(),
+                url: "{#$ServicePath#}/details/statistical_information/"+organism.find(':selected').text()+"/"+release.val(),
                 dataType: "json",
                 success: function(data) {
                     $.each(data.results, function(key, val) {

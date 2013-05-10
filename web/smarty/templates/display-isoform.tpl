@@ -107,10 +107,10 @@
             </div>
             <table style="width:100%">
                 <tbody>
-                    <tr><td>last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
-                    <tr><td>corresponding unigene</td><td><a href="{#$AppPath#}/unigene-details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
-                    <tr><td>dataset</td><td>{#$data.isoform.import#}</td></tr>
-                    <tr><td>organism</td><td>{#$data.isoform.organism_name#}</td></tr>
+                    <tr><td>Last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
+                    <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                    <tr><td>Release</td><td>{#$data.isoform.import#}</td></tr>
+                    <tr><td>Organism</td><td>{#$data.isoform.organism_name#}</td></tr>
                 </tbody>
             </table>
         </div>

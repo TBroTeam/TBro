@@ -9,6 +9,7 @@ require_once 'TranscriptDB/WebService.php';
 require_once 'TranscriptDB/WebService.php';
 require_once 'smarty/Smarty.class.php';
 require_once 'lightopenid/openid.php';
+require_once 'TranscriptDB/db.php';
 
 $smarty = new Smarty();
 $smarty->setTemplateDir(CFG_SMARTY_DIR . '/templates');
@@ -24,6 +25,9 @@ $smarty->right_delimiter = '#}';
 
 require_once('TranscriptDB/webservices/cart/Sync.php');
 $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
+
+$smarty->assign('release', DEFAULT_RELEASE);
+$smarty->assign('organism', DEFAULT_ORGANISM);
 
 function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
     if (!isset($_REQUEST[$key]) || !preg_match($regexp, $_REQUEST[$key]))
@@ -49,7 +53,8 @@ try {
             header('Location: ' . $openid->authUrl());
             die();
         }
-    } else {
+    }
+    else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
             header('Location: ' . $redir_url);
@@ -74,29 +79,24 @@ switch ($page) {
     case 'advancedsearch':
         $smarty->display('advanced_search.tpl');
         die();
-    case 'unigene-details-byid':
-        if (display_unigene_by_id(requestVal('feature_id', '/^[0-9]+$/', '')))
+    case 'details-byid':
+        if (display_feature_by_id(requestVal('feature_id', '/^[0-9]+$/', '')))
             die();
         break;
-    case 'isoform-details':
+    case 'details':
         if (display_isoform(requestVal('organism', '/^[a-z0-9-_.]+$/i', ''), requestVal('uniquename', '/^[a-z0-9-_.]+$/', '')))
-            die();
-        break;
-    case 'isoform-details-byid':
-        if (display_isoform_by_id(requestVal('feature_id', '/^[0-9]+$/', '')))
             die();
         break;
     case 'graphs':
         $cartname = requestVal('query', \webservices\cart\Sync::$regexCartName, '');
         $smarty->assign('cartname', $cartname);
         $smarty->display('graphs.tpl');
-
         die();
 }
 $smarty->display('welcome.tpl');
 
-function display_isoform($organism, $uniquename) {
-    require_once 'TranscriptDB/db.php';
+function display_feature($organism, $uniquename) {
+
     global $db;
     $stm = $db->prepare(<<<EOF
 SELECT feature_id 
@@ -108,17 +108,36 @@ EOF
     $stm->execute(array($uniquename, $organism));
     if ($stm->rowCount() == 0)
         return false;
-    return display_isoform_by_id($stm->fetchColumn());
+    return display_feature_by_id($stm->fetchColumn());
+}
+
+function display_feature_by_id($feature_id) {
+    global $db;
+    global $smarty;
+    $stm = $db->prepare(<<<EOF
+SELECT type_id, dbxref.accession, organism_id FROM feature JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id) WHERE feature_id=?;
+EOF
+    );
+    $stm->execute(array($feature_id));
+    if ($stm->rowCount() == 0)
+        return false;
+    $row = $stm->fetch(PDO::FETCH_ASSOC);
+    $smarty->assign('release', $row['accession']);
+    $smarty->assign('organism', $row['organism_id']);    
+    switch ($row['type_id']) {
+        case CV_ISOFORM:
+            return display_isoform_by_id($feature_id);
+            break;
+        case CV_UNIGENE:
+            return display_unigene_by_id($feature_id);
+            break;
+    }
+    return false;
 }
 
 function display_unigene_by_id($unigene_feature_id) {
     global $smarty;
     $smarty->assign('unigene_feature_id', $unigene_feature_id);
-    list($service, $trash) = WebService::factory("details/unigene");
-    $data = $service->execute(array("query1" => $unigene_feature_id));
-    if ($data == array()) {
-        return false;
-    }
     $smarty->display('display-unigene.tpl');
     return true;
 }
@@ -126,11 +145,6 @@ function display_unigene_by_id($unigene_feature_id) {
 function display_isoform_by_id($isoform_feature_id) {
     global $smarty;
     $smarty->assign('isoform_feature_id', $isoform_feature_id);
-    list($service, $trash) = WebService::factory("details/isoform");
-    $data = $service->execute(array("query1" => $isoform_feature_id));
-    if ($data == array()) {
-        return false;
-    }
     $smarty->display('display-isoform.tpl');
     return true;
 }

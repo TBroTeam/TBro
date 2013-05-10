@@ -11,7 +11,7 @@ class Multisearch extends \WebService {
         $constant = 'constant';
 
         $species = intval($_REQUEST['species']);
-        $import = $_REQUEST['dataset'];
+        $import = $_REQUEST['release'];
         $longterm = $_REQUEST['longterm'];
         $terms = preg_split('/[,\s]+/m', $longterm, -1, PREG_SPLIT_NO_EMPTY);
         $qmarks = implode(',', array_fill(0, count($terms), '?'));

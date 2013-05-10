@@ -32,7 +32,7 @@
                 {#foreach $data.unigene.isoforms as $isoform#}
                     <tr>
                         <td>
-                            <a href='{#$AppPath#}/isoform-details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a>
+                            <a href='{#$AppPath#}/details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a>
                         </td><td>
                             <div class="right"><span class="small button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
                         </td>

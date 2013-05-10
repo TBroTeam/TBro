@@ -6,7 +6,7 @@
             $('.results').hide(500);
             $.ajax({
                 url: "{#$ServicePath#}/listing/multisearch/",
-                data: {species: organism.val(), dataset: dataset.val(), longterm: $('#multisearch').val()},
+                data: {species: organism.val(), release: release.val(), longterm: $('#multisearch').val()},
                 dataType: "json",
                 success: function(data) {
                     var res = $('#results');
