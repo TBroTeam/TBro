@@ -37,7 +37,6 @@ SELECT
   feature.name AS feature_name, 
   biomaterial.name AS biomaterial_name, 
   expressionresult.value, 
-  expressionresult.type_id,
   parent_biomaterial.name AS parent_biomaterial_name,
   assay.name AS assay_name,
   analysis.analysis_id,
