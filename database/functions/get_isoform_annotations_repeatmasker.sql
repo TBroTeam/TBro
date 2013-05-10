@@ -1,3 +1,6 @@
+DROP FUNCTION IF EXISTS
+    get_isoform_annotations_repeatmasker(_isoform_ids integer[]);
+--NEWCMD--
 CREATE FUNCTION
     get_isoform_annotations_repeatmasker(_isoform_ids integer[])
 RETURNS

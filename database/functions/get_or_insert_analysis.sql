@@ -1,3 +1,6 @@
+DROP FUNCTION IF EXISTS
+    get_or_insert_analysis (_name character varying(255), _program character varying(255), _programversion character varying(255), _sourcename character varying(255))
+--NEWCMD--
 CREATE FUNCTION
     get_or_insert_analysis (_name character varying(255), _program character varying(255), _programversion character varying(255), _sourcename character varying(255))
 RETURNS integer

@@ -120,7 +120,7 @@
             <nav class="top-bar" id="top">
                 <ul class="title-area">
                     <li class="name">
-                        <h1><a href="{#$AppPath#}">Transcript Browser</a></h1>
+                        <h1><a href="{#$AppPath#}/">Transcript Browser</a></h1>
                     </li>
                 </ul>
                 <section class="top-bar-section">

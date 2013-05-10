@@ -1,3 +1,6 @@
+DROP FUNCTION IF EXISTS
+    set_diffexpresult_expressionresult_relationships (_diffexpresult_id bigint, _parent_id integer, _feature_uniq character varying(255), _samplegroup character varying(255))
+--NEWCMD--
 CREATE FUNCTION
     set_diffexpresult_expressionresult_relationships (_diffexpresult_id bigint, _parent_id integer, _feature_uniq character varying(255), _samplegroup character varying(255))
 RETURNS integer

@@ -1,3 +1,6 @@
+DROP FUNCTION IF EXISTS
+    get_predpep_annotations_interpro(_predpep_ids integer[])
+--NEWCMD--
 CREATE FUNCTION
     get_predpep_annotations_interpro(_predpep_ids integer[])
 RETURNS
