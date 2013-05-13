@@ -4,7 +4,7 @@ namespace webservices\details;
 
 use \PDO as PDO;
 
-class Statistical_Information extends \WebService {
+class Statistical_information extends \WebService {
 
     public function execute($querydata) {
         global $db;
