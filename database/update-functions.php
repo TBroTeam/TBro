@@ -9,10 +9,11 @@ require_once __DIR__ . '/../web/httpdocs/config_cvterms.php';
 
 require_once 'TranscriptDB/db.php';
 
-if (in_array('--functions', $argv))
-    execute_query_dir('functions');
 if (in_array('--tables', $argv))
     execute_query_dir('tables');
+if (in_array('--functions', $argv))
+    execute_query_dir('functions');
+
 if (in_array('--mat_views', $argv))
     execute_query_dir('materialized_views');
 
