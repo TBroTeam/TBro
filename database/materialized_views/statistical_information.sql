@@ -13,25 +13,32 @@ CREATE OR REPLACE FUNCTION function_view_statistical_information() RETURNS
 	DROP TABLE IF EXISTS  tmp_feature_counts ;
 	CREATE TEMP TABLE tmp_feature_counts ON COMMIT DROP  AS SELECT COUNT(*) AS count, dbxref_id, organism_id, type_id FROM feature GROUP BY dbxref_id, organism_id, type_id;
 
-	SELECT INTO total_unigenes SUM(count) FROM tmp_feature_counts WHERE type_id = 42858;
-	SELECT INTO total_isoforms SUM(count) FROM tmp_feature_counts WHERE type_id = 42857;
+	SELECT INTO total_unigenes SUM(count) FROM tmp_feature_counts WHERE type_id = {PHPCONST('CV_UNIGENE')};
+	SELECT INTO total_isoforms SUM(count) FROM tmp_feature_counts WHERE type_id = {PHPCONST('CV_ISOFORM')};
+
+	IF total_unigenes IS NULL THEN 
+		total_unigenes:=0; 
+	END IF;
+	IF total_isoforms IS NULL THEN 
+		total_isoforms:=0; 
+	END IF;
 
 	total_sequences := total_unigenes + total_isoforms;
 
-	RETURN QUERY EXECUTE $F$
+	RETURN QUERY EXECUTE '
 		SELECT 
-			$F$||total_sequences||$F$ AS total_sequences,
-			$F$||total_unigenes||$F$ AS total_unigenes,
-			$F$||total_isoforms||$F$ AS total_isoforms,
+			'||total_sequences||' AS total_sequences,
+			'||total_unigenes||' AS total_unigenes,
+			'||total_isoforms||' AS total_isoforms,
 			(SELECT COUNT(*) FROM  (SELECT 1 FROM tmp_feature_counts i GROUP BY (dbxref_id,organism_id)) x ) AS releases,
 			(SELECT COUNT(*) FROM  (SELECT 1 FROM tmp_feature_counts i GROUP BY (organism_id)) x ) AS organisms,
-			(SELECT SUM(count) FROM tmp_feature_counts i WHERE i.type_id = 42858 AND i.dbxref_id=c.dbxref_id AND i.organism_id = c.organism_id) AS count_unigenes,
-			(SELECT SUM(count) FROM tmp_feature_counts i WHERE i.type_id = 42857 AND i.dbxref_id=c.dbxref_id AND i.organism_id = c.organism_id) AS count_isoforms,
+			(SELECT SUM(count) FROM tmp_feature_counts i WHERE i.type_id = {PHPCONST('CV_UNIGENE')} AND i.dbxref_id=c.dbxref_id AND i.organism_id = c.organism_id) AS count_unigenes,
+			(SELECT SUM(count) FROM tmp_feature_counts i WHERE i.type_id = {PHPCONST('CV_ISOFORM')} AND i.dbxref_id=c.dbxref_id AND i.organism_id = c.organism_id) AS count_isoforms,
 			(SELECT common_name FROM organism WHERE organism_id = c.organism_id) AS organism,
 			(SELECT accession FROM dbxref WHERE dbxref_id = c.dbxref_id) AS release
 		FROM tmp_feature_counts c
 		GROUP BY dbxref_id, organism_id;
-        $F$;
+        ';
  END
  $BODY$;
 --NEWCMD--
