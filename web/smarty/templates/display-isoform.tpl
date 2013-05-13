@@ -86,7 +86,7 @@
 <li class="has-dropdown"><a href="#">QuickNav</a>
     <ul class="dropdown">
         <li><a href="javascript:jumptoanchor('isoform-overview');">Isoform Overview</a></li>
-        <li><a href="javascript:jumptoanchor('isoform-browser');">Isoform Browser</a></li>
+        <li><a href="javascript:jumptoanchor('isoform-browser');">Sequence Annotation</a></li>
         <li><a href="javascript:jumptoanchor('isoform-annotations');">Isoform Annotations</a></li>
     {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}<li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li>{#/if#}
 {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}<li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li>{#/if#}
@@ -119,7 +119,7 @@
     <div id="isoform-browser"> </div>
     <div class="row">
         <div class="large-12 columns">
-            <h4>Isoform Browser</h4>
+            <h4>Sequence Annotation</h4>
         </div>
         <div class="large-12 columns panel">
             <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
@@ -161,11 +161,12 @@
             <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
         </div>
     </div>
+
     <div id="isoform-annotations"> </div>
     {#if isset($data.isoform.description) #}
         <div class="row">
             <div class="large-12 columns panel">
-                <h4>possible description:</h4>
+                <h4>Blast2go derived:</h4>
                 {#foreach $data.isoform.description as $description#}
                     <h5> {#$description.value#}</h5>
                 {#/foreach#}
@@ -174,54 +175,15 @@
         </div>
     {#/if#}
 
-    {#if (isset($data.isoform.dbxref))#}                
-        {#if (isset($data.isoform.dbxref['GO']))#}
-            <div class="row contains-tooltip">
-                <div class="large-12 columns panel">                    
-                    <h4>Gene Ontology</h4>
-                    {#foreach $data.isoform.dbxref['GO'] as $namespace=>$dbxarr#}
-                        <h5>{#$namespace#}</h5>
-                        <table style="width:100%">
-                            <tbody>
-                                {#foreach $dbxarr as $dbxref#}
-                                    <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
-                                {#/foreach#}
-                            </tbody>
-                        </table>
-                    {#/foreach#}
-                </div>
-            </div>
-        {#/if#}
+    {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
 
-
-        {#if (isset($data.isoform.dbxref['EC']))#}
-            <div class="row contains-tooltip">
-                <div class="large-12 columns panel">
-                    <h4>Enzyme classifications</h4>
-                    {#foreach $data.isoform.dbxref['EC'] as $namespace=>$dbxarr#}
-                        <table style="width:100%">
-                            <tbody>
-                                {#foreach $dbxarr as $dbxref#}
-                                    <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
-                                {#/foreach#}
-                            </tbody>
-                        </table>
-                    {#/foreach#}
-                </div>
-            </div>
-        {#/if#}
-    {#/if#}
     {#include file="display-components/publication.tpl" feature=$data.isoform #}
 
 
-    {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}
-        {#include file="display-components/repeatmasker.tpl" isoform=$data.isoform #}
-    {#/if#}
+    {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
 
 
-    {#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}
-        {#include file="display-components/predpeps.tpl" isoform=$data.isoform #}
-    {#/if#}
+    {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
 </div>
 
 {#include file="display-components/barplot.tpl"#}

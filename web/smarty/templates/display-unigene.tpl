@@ -16,7 +16,7 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">
-                <h1 class="left">{#$data.unigene.uniquename#}</h1>
+                <h1 class="left">Unigene {#$data.unigene.name#}</h1>
                 <div class="right"><span class="button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$data.unigene.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
             </div>
         </div>
@@ -28,7 +28,7 @@
     <div class="row">        
         <div class="large-12 columns panel">
             <p>known isoforms:</p>
-            <table>
+            <table width="100%">
                 {#foreach $data.unigene.isoforms as $isoform#}
                     <tr>
                         <td>

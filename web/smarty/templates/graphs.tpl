@@ -336,7 +336,7 @@
 
 <div class="row">
     <div class="large-3 columns">
-        <h4>Elements</h4>
+        <h4>Features</h4>
     </div>
     <div class="large-3 columns">
         <h4>Assay</h4>
