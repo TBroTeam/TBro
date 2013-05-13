@@ -34,6 +34,7 @@ EOF;
 
         
         
+
         $query_get_desc = <<<EOF
 SELECT
   *
@@ -113,6 +114,9 @@ EOF;
             
             list($pub, $trash) = \WebService::factory('details/annotations/feature/pub');
             $isoform['pub'] = $pub->getById($isoform['feature_id']);
+            
+            list($synonym, $trash) = \WebService::factory('details/annotations/feature/synonym');
+            $isoform['synonym'] = $synonym->getById($isoform['feature_id']);
             
             $stm_get_desc->execute();
             while ($desc = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {

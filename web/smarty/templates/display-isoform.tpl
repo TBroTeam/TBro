@@ -114,7 +114,8 @@
                 </tbody>
             </table>
         </div>
-    </div>                
+    </div>
+    {#include file="display-components/synonym.tpl" feature=$data.isoform #}
     <div id="isoform-browser"> </div>
     <div class="row">
         <div class="large-12 columns">
@@ -210,21 +211,7 @@
             </div>
         {#/if#}
     {#/if#}
-    {#if isset($data.isoform.pub) && count($data.isoform.pub) > 0 #}
-        <div id="isoform-publications"> </div>
-        <div class="row">
-            <div class="large-12 columns panel">
-                <h4>Publications</h4>                        
-                <table style="width:100%">
-                    <tbody class="contains-tooltip">
-                        {#foreach $data.isoform.pub as $pub#}
-                            {#publink pub=$pub#}
-                        {#/foreach#}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    {#/if#}
+    {#include file="display-components/publication.tpl" feature=$data.isoform #}
 
 
     {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}

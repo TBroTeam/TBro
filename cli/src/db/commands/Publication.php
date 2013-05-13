@@ -180,8 +180,8 @@ class Publication extends AbstractTable {
             $i = 0;
             foreach ($authors as $author) {
                 $authnames = explode(',', $author, 2);
-                @$surname = $authnames[0];
-                @$givennames = $authnames[1];
+                $surname = $authnames[0];
+                $givennames = isset($authnames[1])?$authnames[1]:'';
 
                 $pubauthor = new propel\Pubauthor();
                 $pubauthor->setGivennames($givennames);
