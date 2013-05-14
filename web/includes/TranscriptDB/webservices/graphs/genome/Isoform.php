@@ -42,7 +42,7 @@ class Isoform extends \WebService {
             switch ($row['type_id']) {
                 case CV_ISOFORM:
                     $max = $row['seqlen'];
-                    $return['isoform'] = array(
+                    $return[] = array(
                         #'name' => 'Isoform',
                         'type' => 'sequence',
                         'subtype' => 'DNA',
@@ -56,16 +56,19 @@ class Isoform extends \WebService {
                     );
                     break;
                 case CV_ANNOTATION_REPEATMASKER:
-                    if (!isset($return['repeatmasker'])) {
-                        $return['repeatmasker'] = array(
+                    // this would look better, but canvasXpress cuts datasets after 8 rows so each bar has to be it's own dataset
+                    //if (!isset($return['repeatmasker'])) {
+                        $return[] = array(
                             #'name' => 'Repeatmasker',
                             'type' => 'box',
                             'fill' => 'rgb(255,25,51)',
                             'outline' => 'rgb(0,0,0)',
                             'data' => array()
                         );
-                    }
-                    $return['repeatmasker']['data'][] = array(
+                        $current_repeatmasker = &$return[count($return)-1];
+                    //}
+                    
+                    $current_repeatmasker['data'][] = array(
                         'id' => $row['name'],
                         'data' => array(array($row['fmin'], $row['fmax'])),
                         'dir' => self::strand2dir($row['strand'])
@@ -89,16 +92,18 @@ class Isoform extends \WebService {
                     );
                     break;
                 case CV_ANNOTATION_INTERPRO:
-                    if ($last_row['type_id'] != CV_ANNOTATION_INTERPRO) {
-                        $current_interpro = array(
+                    // this would look better, but canvasXpress cuts datasets after 8 rows so each bar has to be it's own dataset
+                    //if ($last_row['type_id'] != CV_ANNOTATION_INTERPRO) {
+                        
+                        $return[] = array(
                             #'name' => 'Interpro Domain',
                             'type' => 'box',
                             'fill' => 'rgb(20,255,51)',
                             'outline' => 'rgb(0,0,0)',
                             'data' => array()
                         );
-                        $return[] = &$current_interpro;
-                    }
+                        $current_interpro = &$return[count($return)-1];
+                    //}
                     $left = $last_predpep_row['fmin'] + ($row['fmin'] - 1) * 3;
                     $right = $left + ($row['fmax'] - $row['fmin'] + 1) * 3;
                     $current_interpro['data'][] = array(
