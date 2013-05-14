@@ -53,8 +53,7 @@ try {
             header('Location: ' . $openid->authUrl());
             die();
         }
-    }
-    else {
+    } else {
         if ($openid->validate()) {
             $_SESSION['OpenID'] = $openid->identity;
             header('Location: ' . $redir_url);
@@ -92,6 +91,9 @@ switch ($page) {
         $smarty->assign('cartname', $cartname);
         $smarty->display('graphs.tpl');
         die();
+    case 'diffexpr':
+        $smarty->display('diffexpr.tpl');
+        die();
 }
 $smarty->display('welcome.tpl');
 
@@ -123,7 +125,7 @@ EOF
         return false;
     $row = $stm->fetch(PDO::FETCH_ASSOC);
     $smarty->assign('release', $row['accession']);
-    $smarty->assign('organism', $row['organism_id']);    
+    $smarty->assign('organism', $row['organism_id']);
     switch ($row['type_id']) {
         case CV_ISOFORM:
             return display_isoform_by_id($feature_id);

@@ -10,3 +10,5 @@ RewriteRule ^details/byId/(.*)?$  index.php?page=details-byid&feature_id=$1 [L,N
 RewriteRule ^details/byOrganismAndUniquename/(.*)/(.*)?$  index.php?page=details&organism=$1&uniquename=$2 [L,NC,QSA]
 
 RewriteRule ^graphs(?:/(.*))?$  index.php?page=graphs&query=$1 [L,NC,QSA]
+
+RewriteRule ^diffexpr(?:/(.*))?$  index.php?page=diffexpr&query=$1 [L,NC,QSA]
