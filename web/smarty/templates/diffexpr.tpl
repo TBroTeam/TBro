@@ -65,6 +65,9 @@
     <div class="large-12 column">
         <h1>Differential Expressions</h1>
     </div>
+    <div class="large-12 column">
+        <p>TODO: Infinity zu Inf; -Inf richtig sortieren. Export ermöglichen?; außerdem: verdammt nochmal, merk dir die Auswahl da oben rechts!</p>
+    </div>
 </div>
 <div class="row">
     <div class="large-12 column">
