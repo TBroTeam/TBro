@@ -18,7 +18,9 @@
                         var field;
                         var row = $("<tr/>");
                         $("<td/>").text(this.type).appendTo(row);
-                        $("<td/>").text(this.name).appendTo(row);
+                        var td = $("<td/>");
+                        $("<a/>").attr('href','{#$AppPath#}/details/byId/'+this.id).text(this.name).appendTo(td);
+                        td.appendTo(row);
                         $("<td/>").append(btn.clone().attr('data-id', this.id)).appendTo(row);
                         row.appendTo(res);
                         cnt++;
