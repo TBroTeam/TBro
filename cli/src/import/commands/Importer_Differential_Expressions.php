@@ -84,10 +84,16 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $param_pvaladj = null;
             $param_feature_uniquename = null;
 
-            $statement_insert_expressiondata = $db->prepare('INSERT INTO diffexpresult(analysis_id, "baseMean", "baseMeanA", "baseMeanB", "foldChange", "log2foldChange", pval, pvaladj)'
-                    . 'VALUES (:analysis_id, :baseMean, :baseMeanA, :baseMeanB,'
-                    . ' :foldChange, :log2foldChange, :pval, :pvaladj);');
+            $query_insert_expressiondata = <<<EOF
+INSERT INTO diffexpresult(analysis_id, feature_id, biomateriala_id, biomaterialb_id, "baseMean", "baseMeanA", "baseMeanB", "foldChange", "log2foldChange", pval, pvaladj)
+SELECT :analysis_id, feature_id, :biomaterialA_id, :biomaterialB_id, :baseMean, :baseMeanA, :baseMeanB, :foldChange, :log2foldChange, :pval, :pvaladj
+FROM feature WHERE uniquename = :feature_uniquename AND organism_id = :organism
+EOF;
+
+            $statement_insert_expressiondata = $db->prepare($query_insert_expressiondata);
             $statement_insert_expressiondata->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
+            $statement_insert_expressiondata->bindValue('biomaterialA_id', $biomaterial_parentA_id, PDO::PARAM_INT);
+            $statement_insert_expressiondata->bindValue('biomaterialB_id', $biomaterial_parentB_id, PDO::PARAM_INT);
             $statement_insert_expressiondata->bindParam('baseMean', $param_baseMean, PDO::PARAM_STR);
             $statement_insert_expressiondata->bindParam('baseMeanA', $param_baseMeanA, PDO::PARAM_STR);
             $statement_insert_expressiondata->bindParam('baseMeanB', $param_baseMeanB, PDO::PARAM_STR);
@@ -96,22 +102,8 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $statement_insert_expressiondata->bindParam('pval', $param_pval, PDO::PARAM_STR);
             $statement_insert_expressiondata->bindParam('pvaladj', $param_pvaladj, PDO::PARAM_STR);
 
-
-            $relationship_call = 'SELECT * FROM set_diffexpresult_expressionresult_relationships('
-                    . 'currval(\'diffexpresult_diffexpresult_id_seq\'),'
-                    . ':parent_biomaterial_id,'
-                    . ':feature_uniquename,'
-                    . ':samplegroup)';
-
-            $statement_set_relationshipA = $db->prepare($relationship_call);
-            $statement_set_relationshipA->bindValue('parent_biomaterial_id', $biomaterial_parentA_id, PDO::PARAM_INT);
-            $statement_set_relationshipA->bindValue('samplegroup', 'A', PDO::PARAM_STR);
-            $statement_set_relationshipA->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
-
-            $statement_set_relationshipB = $db->prepare($relationship_call);
-            $statement_set_relationshipB->bindValue('parent_biomaterial_id', $biomaterial_parentB_id, PDO::PARAM_INT);
-            $statement_set_relationshipB->bindValue('samplegroup', 'B', PDO::PARAM_STR);
-            $statement_set_relationshipB->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
+            $statement_insert_expressiondata->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
 
             $file = fopen($filename, 'r');
@@ -121,24 +113,17 @@ class Importer_Differential_Expressions extends AbstractImporter {
             fgets($file);
 
             while (($line = fgetcsv($file, 0, ",")) !== false) {
-                array_walk($line, array('Importer_Expressions', 'convertDbl'));
+                array_walk($line, array('Importer_Differential_Expressions', 'convertDbl'));
                 list($dummy, $feature_name, $param_baseMean, $param_baseMeanA, $param_baseMeanB, $param_foldChange, $param_log2foldChange, $param_pval, $param_pvaladj) = $line;
                 if ($feature_name == 'NaN') {
                     $lines_skipped++;
                     continue;
                 }
 
+                $param_feature_uniquename = IMPORT_PREFIX . "_" . $feature_name;
                 $statement_insert_expressiondata->execute();
 
-                $param_feature_uniquename = IMPORT_PREFIX . "_" . $feature_name;
-
-
-
-                $statement_set_relationshipA->execute();
-                $quantifications_linked +=$statement_set_relationshipA->fetchColumn();
-                $statement_set_relationshipB->execute();
-                $quantifications_linked+= $statement_set_relationshipB->fetchColumn();
-
+                $lines_no_insertion += ($statement_insert_expressiondata->rowCount() == 0) ? 1 : 0;
                 self::updateProgress(++$lines_imported);
             }
             self::preCommitMsg();
@@ -150,7 +135,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'quantifications_linked' => $quantifications_linked, 'lines_NA_skipped' => $lines_skipped);
+        return array(LINES_IMPORTED => $lines_imported, 'lines_featurenotfound_skipped' => $lines_no_insertion, 'lines_NA_skipped' => $lines_skipped);
     }
 
     public static function CLI_getCommand(Console_CommandLine $parser) {

@@ -11,7 +11,7 @@ class Searchbox extends \WebService {
         $constant = 'constant';
 
         $species = $_REQUEST['species'];
-        $import = $_REQUEST['dataset'];
+        $import = $_REQUEST['release'];
 
         $term = $_REQUEST['term'] . '%';
 

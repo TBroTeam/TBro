@@ -6,7 +6,7 @@
             $('.results').hide(500);
             $.ajax({
                 url: "{#$ServicePath#}/listing/multisearch/",
-                data: {species: organism.val(), dataset: dataset.val(), longterm: $('#multisearch').val()},
+                data: {species: organism.val(), release: release.val(), longterm: $('#multisearch').val()},
                 dataType: "json",
                 success: function(data) {
                     var res = $('#results');
@@ -18,7 +18,9 @@
                         var field;
                         var row = $("<tr/>");
                         $("<td/>").text(this.type).appendTo(row);
-                        $("<td/>").text(this.name).appendTo(row);
+                        var td = $("<td/>");
+                        $("<a/>").attr('href','{#$AppPath#}/details/byId/'+this.id).text(this.name).appendTo(td);
+                        td.appendTo(row);
                         $("<td/>").append(btn.clone().attr('data-id', this.id)).appendTo(row);
                         row.appendTo(res);
                         cnt++;
@@ -35,7 +37,16 @@
 {#block name='body'#}
 <div class="row">
     <div class="large-12 column">
-        <h1>Multisearch</h1>
+        <h1>Advanced Search</h1>
+    </div>
+    
+    <div class="large-12 column">
+        <p>
+        This field allows you to search for as many unigenes or isoforms as you want at once. <br/>
+        For every found isoform, corresponding unigene will be shown.</br>
+        For each found unigene, all isoforms will be shown.<br/>
+        <b>This search does not allow wildcards.</b>
+        </p>
     </div>
 </div>
 
@@ -62,6 +73,6 @@
 </div>
 
 <div style="display:none" id="btn_addToCart">
-    <span class="small button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/'+$(this).attr('data-id'), success: cart.addItemToAll});"> add to cart -> </span>
+    <span class="small button right" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/'+$(this).attr('data-id'), success: cart.addItemToAll});"> add to cart -> </span>
 </div>
 {#/block#}

@@ -6,9 +6,9 @@ RewriteRule ^multisearch$    index.php?page=multisearch [L,NC,QSA]
 
 RewriteRule ^advancedsearch$    index.php?page=advancedsearch [L,NC,QSA]
 
-RewriteRule ^unigene-details/byId/(.*)?$  index.php?page=unigene-details-byid&feature_id=$1 [L,NC,QSA]
-RewriteRule ^isoform-details/byId/(.*)?$  index.php?page=isoform-details-byid&feature_id=$1 [L,NC,QSA]
-
-RewriteRule ^isoform-details/byOrganismAndUniquename/(.*)/(.*)?$  index.php?page=isoform-details&organism=$1&uniquename=$2 [L,NC,QSA]
+RewriteRule ^details/byId/(.*)?$  index.php?page=details-byid&feature_id=$1 [L,NC,QSA]
+RewriteRule ^details/byOrganismAndUniquename/(.*)/(.*)?$  index.php?page=details&organism=$1&uniquename=$2 [L,NC,QSA]
 
 RewriteRule ^graphs(?:/(.*))?$  index.php?page=graphs&query=$1 [L,NC,QSA]
+
+RewriteRule ^diffexpr(?:/(.*))?$  index.php?page=diffexpr&query=$1 [L,NC,QSA]

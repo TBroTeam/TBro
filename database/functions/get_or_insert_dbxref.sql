@@ -1,3 +1,6 @@
+DROP FUNCTION IF EXISTS
+    get_or_insert_dbxref (_dbname character varying(255), _accession character varying(255))
+--NEWCMD--
 CREATE FUNCTION
     get_or_insert_dbxref (_dbname character varying(255), _accession character varying(255))
 RETURNS integer

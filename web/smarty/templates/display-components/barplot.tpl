@@ -20,7 +20,7 @@
                 <h5>Analysis</h5>
             </div>
             <div class="large-3 columns">
-                <h5>Tissues</h5>
+                <h5>Samples</h5>
             </div>
             <div class="large-3 columns">
             </div>

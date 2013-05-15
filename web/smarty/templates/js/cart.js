@@ -541,7 +541,7 @@ cart.buildCartItemDOM = function(item) {
     newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id));
     newEl.data('metadata', item);
     newEl.find('.cart-button-goto').click(function() {
-        window.location = '{#$AppPath#}/isoform-details/byId/' + item.feature_id;
+        window.location = '{#$AppPath#}/details/byId/' + item.feature_id;
     });
     newEl.find('.cart-button-edit').click(function() {
         cart.dialog_edit_open(item.feature_id);

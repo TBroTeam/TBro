@@ -22,57 +22,60 @@ class Isoform extends \WebService {
     }
 
     public function execute($querydata) {
-        require_once 'TranscriptDB//webservices/details/Isoform.php';
-        $service = new \webservices\details\Isoform();
-        $isoform_data = $service->execute($querydata);
+        global $db;
+
+        #UI hint
+        if (false)
+            $db = new \PDO();
+
+        $stm_get_features = $db->prepare('SELECT * FROM get_isoform_graph(?)');
+        $stm_get_features->execute(array($querydata['query1']));
 
         $return = array();
-
         $min = 0;
         $max = 0;
 
-        if (isset($isoform_data['isoform'])) {
-            $isoform = $isoform_data['isoform'];
-            $max = $isoform['seqlen'];
-            $return[] = array(
-                #'name' => 'Isoform',
-                'type' => 'sequence',
-                'subtype' => 'DNA',
-                'data' => array(array(
-                        'id' => $isoform['name'],
-                        'sequence' => $isoform['residues'],
-                        'translate' => array(-1, 3),
-                        'dir' => 'right',
-                        'offset' => 1
-                ))
-            );
+        $last_row = null;
 
-            if (isset($isoform['repeatmasker'])) {
-                $_data = array();
-                foreach ($isoform['repeatmasker'] as $repeatmasker) {
-                    $left = $repeatmasker['fmin'];
-                    $right = $repeatmasker['fmax'];
-
-                    $_data[] = array(
-                        'id' => sprintf('%s#%s(%s)', $repeatmasker['repeat_name'],$repeatmasker['repeat_class'],$repeatmasker['repeat_family']),
-                        'data' => array(array($left, $right)),
-                        'dir' => self::strand2dir($repeatmasker['strand'])
-                    );
-                }
-                if (count($_data) > 0)
+        //(feature_id int, type_id int, residues text, seqlen int, fmin int, fmax int, strand smallint);
+        while ($row = $stm_get_features->fetch(\PDO::FETCH_ASSOC)) {
+            switch ($row['type_id']) {
+                case CV_ISOFORM:
+                    $max = $row['seqlen'];
                     $return[] = array(
-                        #'name' => 'Interpro Domains',
-                        'type' => 'box',
-                        'fill' => 'rgb(255,25,51)',
-                        'outline' => 'rgb(0,0,0)',
-                        'data' => $_data
+                        #'name' => 'Isoform',
+                        'type' => 'sequence',
+                        'subtype' => 'DNA',
+                        'data' => array(array(
+                                'id' => $row['name'],
+                                'sequence' => $row['residues'],
+                                'translate' => array(-1, 3),
+                                'dir' => 'right',
+                                'offset' => 1
+                        ))
                     );
-                unset($_data);
-            }
-
-
-            if (isset($isoform['predpeps'])) {
-                foreach ($isoform['predpeps'] as $predpep) {
+                    break;
+                case CV_ANNOTATION_REPEATMASKER:
+                    // this would look better, but canvasXpress cuts datasets after 8 rows so each bar has to be it's own dataset
+                    //if (!isset($return['repeatmasker'])) {
+                        $return[] = array(
+                            #'name' => 'Repeatmasker',
+                            'type' => 'box',
+                            'fill' => 'rgb(255,25,51)',
+                            'outline' => 'rgb(0,0,0)',
+                            'data' => array()
+                        );
+                        $current_repeatmasker = &$return[count($return)-1];
+                    //}
+                    
+                    $current_repeatmasker['data'][] = array(
+                        'id' => $row['name'],
+                        'data' => array(array($row['fmin'], $row['fmax'])),
+                        'dir' => self::strand2dir($row['strand'])
+                    );
+                    break;
+                case CV_PREDPEP:
+                    $last_predpep_row = $row;
                     $return[] = array(
                         #'name' => 'Predicted Peptides',
                         'type' => 'sequence',
@@ -81,40 +84,38 @@ class Isoform extends \WebService {
                         'outline' => 'rgb(0,0,0)',
                         'data' => array(array(
                                 'id' => sprintf('predpep %d-%d'
-                                        ,$predpep['fmin'],$predpep['fmax']),
-                                'sequence' => self::rewinds(self::space($predpep['residues']), $predpep['strand']),
-                                'offset' => $predpep['fmin'],
+                                        , $row['fmin'], $row['fmax']),
+                                'sequence' => self::rewinds(self::space($row['residues']), $row['strand']),
+                                'offset' => $row['fmin'],
                                 'dir' => 'right'#strand2dir($predpep['strand'])
                         ))
                     );
-                    $_data = array();
-                    if (isset($predpep['interpro'])) {
-                        $_data = array();
-                        foreach ($predpep['interpro'] as $interpro) {
-                            $left = $predpep['fmin'] + ($interpro['fmin'] - 1) * 3;
-                            $right = $left + ($interpro['fmax'] - $interpro['fmin'] + 1) * 3;
-                            $_data[] = array(
-                                'id' => sprintf('%s %d-%d',
-                                        !empty($interpro['interpro_id'])?$interpro['interpro_id']:'IPR/anon     '
-                                        ,$interpro['fmin'],$interpro['fmax']),
-                                'data' => array(array($left, $right)),
-                                'dir' => self::strand2dir($interpro['strand'])
-                            );
-                        }
-                        if (count($_data) > 0)
-                            $return[] = array(
-                                #'name' => 'Interpro Domain',
-                                'type' => 'box',
-                                'fill' => 'rgb(20,255,51)',
-                                'outline' => 'rgb(0,0,0)',
-                                'data' => $_data
-                            );
-                    }
-                }
+                    break;
+                case CV_ANNOTATION_INTERPRO:
+                    // this would look better, but canvasXpress cuts datasets after 8 rows so each bar has to be it's own dataset
+                    //if ($last_row['type_id'] != CV_ANNOTATION_INTERPRO) {
+                        
+                        $return[] = array(
+                            #'name' => 'Interpro Domain',
+                            'type' => 'box',
+                            'fill' => 'rgb(20,255,51)',
+                            'outline' => 'rgb(0,0,0)',
+                            'data' => array()
+                        );
+                        $current_interpro = &$return[count($return)-1];
+                    //}
+                    $left = $last_predpep_row['fmin'] + ($row['fmin'] - 1) * 3;
+                    $right = $left + ($row['fmax'] - $row['fmin'] + 1) * 3;
+                    $current_interpro['data'][] = array(
+                        'id' => $row['name'],
+                        'data' => array(array($left, $right)),
+                        'dir' => self::strand2dir($row['strand'])
+                    );
+                    break;
             }
+            $last_row = $row;
         }
-
-        return array('tracks' => $return, 'min' => $min, 'max' => $max);
+        return array('tracks' => array_values($return), 'min' => $min, 'max' => $max);
     }
 
 }

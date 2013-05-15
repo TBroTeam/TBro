@@ -74,6 +74,11 @@ abstract class AbstractImporter implements CLI_Command, Importer {
                 $tbl->addRow(array($key, $value));
             echo $tbl->getTable();
         }
+        
+        echo "\nupdating materialized views...";
+        global $db;
+        $db->query('SELECT update_materialized_views()');
+        echo " done!\n";        
     }
     
     
