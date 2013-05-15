@@ -36,7 +36,7 @@ SELECT
 FROM 
   diffexpresult d JOIN 
   feature f ON (d.feature_id = f.feature_id)
-  
+  LIMIT 300
 EOF;
 
         $stm_get_diffexpr = $db->prepare($query_get_filters);
