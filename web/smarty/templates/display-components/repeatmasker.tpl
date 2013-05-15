@@ -1,5 +1,6 @@
 {#call_webservice path="details/annotations/feature/repeatmasker" data=["query1"=>$feature.feature_id] assign='repeatmaskers'#}
 {#if count($repeatmaskers) > 0 #}
+    <script type="text/javascript">addNavAnchor('repeatmasker-annotation','Repeatmasker Annotation');</script>
     <div class="row" id="repeatmasker" class="contains-tooltip">
         <div class="large-12 columns">
             <div id="repeatmasker-annotations"> </div>

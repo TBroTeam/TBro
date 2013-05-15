@@ -74,117 +74,102 @@
 
     
 
-    function jumptoanchor(name){
-        $(document.body).scrollTop($('#'+name).offset().top-45);
-        
-    }
+
     
 </script>
 <script type="text/javascript" src="{#$AppPath#}/js/feature/barplot.js"></script>
 {#/block#}
-{#block name='header-nav'#}
-<li class="has-dropdown"><a href="#">QuickNav</a>
-    <ul class="dropdown">
-        <li><a href="javascript:jumptoanchor('isoform-overview');">Isoform Overview</a></li>
-        <li><a href="javascript:jumptoanchor('isoform-browser');">Sequence Annotation</a></li>
-        <li><a href="javascript:jumptoanchor('isoform-annotations');">Isoform Annotations</a></li>
-    {#if isset($data.isoform.repeatmasker) && count($data.isoform.repeatmasker) > 0 #}<li><a href="javascript:jumptoanchor('repeatmasker-annotations');">Repeatmasker Annotations</a></li>{#/if#}
-{#if isset($data.isoform.predpeps) && count($data.isoform.predpeps) > 0 #}<li><a href="javascript:jumptoanchor('predpeps');">Predicted Peptides</a></li>{#/if#}
-</ul>
-</li>
-{#/block#}
 {#block name='body'#}
 
-<div>
-    <div class="row">
-        <div id="isoform-overview"> </div>
-        <div class="large-12 columns panel" id="description">
-            <div class="row">
-                <div class="large-12 columns">
-                    <h1 class="left">{#$data.isoform.name#}</h1>
-                    <div class="right"><span class="button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$data.isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
-                </div>
-            </div>
-            <table style="width:100%">
-                <tbody>
-                    <tr><td>Last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
-                    <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
-                    <tr><td>Release</td><td>{#$data.isoform.import#}</td></tr>
-                    <tr><td>Organism</td><td>{#$data.isoform.organism_name#}</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    {#include file="display-components/synonym.tpl" feature=$data.isoform #}
-    <div id="isoform-browser"> </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <h4>Sequence Annotation</h4>
-        </div>
-        <div class="large-12 columns panel">
-            <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
-            <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <div class="row">
-                <div class="large-6 columns">
-                    <h4>Sequence</h4>
-                </div>
-                <div class="large-6 columns" style="text-align: right">
-                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                        <input type="hidden" name='CMD' value='Web' />
-                        <input type="hidden" name='PROGRAM' value='blastx' />
-                        <input type="hidden" name='BLAST_PROGRAMS' value='blastx' />
-                        <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                        <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                        <input type="hidden" name='LINK' value='blasthome' />
-                        <input type="hidden" class="query" data-ref="#sequence-{#$data.isoform.uniquename|clean_id#}" name="QUERY" value="" />
-                        <input type="submit" class="small button" value="send to blastx">
-                    </form>
 
-                    <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                        <input type="hidden" name='CMD' value='Web' />
-                        <input type="hidden" name='PROGRAM' value='blastn' />
-                        <input type="hidden" name='BLAST_PROGRAMS' value='megaBlast' />
-                        <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                        <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                        <input type="hidden" name='LINK' value='blasthome' />
-                        <input type="hidden" class="query" data-ref="#sequence-{#$data.isoform.uniquename|clean_id#}" name="QUERY" value="" />
-                        <input type="submit" class="small button" value="send to blastn">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="large-12 columns panel">
-            <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
-        </div>
-    </div>
-
-    <div id="isoform-annotations"> </div>
-    {#if isset($data.isoform.description) #}
+<div class="row">
+    <script type="text/javascript">addNavAnchor('isoform-overview','Isoform Overwiev');</script>
+    <div class="large-12 columns panel" id="description">
         <div class="row">
-            <div class="large-12 columns panel">
-                <h4>Blast2go derived:</h4>
-                {#foreach $data.isoform.description as $description#}
-                    <h5> {#$description.value#}</h5>
-                {#/foreach#}
-
+            <div class="large-12 columns">
+                <h1 class="left">{#$data.isoform.name#}</h1>
+                <div class="right"><span class="button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$data.isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
             </div>
         </div>
-    {#/if#}
+        <table style="width:100%">
+            <tbody>
+                <tr><td>Last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
+                <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                <tr><td>Release</td><td>{#$data.isoform.import#}</td></tr>
+                <tr><td>Organism</td><td>{#$data.isoform.organism_name#}</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{#include file="display-components/synonym.tpl" feature=$data.isoform #}
+<script type="text/javascript">addNavAnchor('sequence-annotation','Sequence Annotation');</script>
+<div class="row">
+    <div class="large-12 columns">
+        <h4>Sequence Annotation</h4>
+    </div>
+    <div class="large-12 columns panel">
+        <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
+        <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        <div class="row">
+            <div class="large-6 columns">
+                <h4>Sequence</h4>
+            </div>
+            <div class="large-6 columns" style="text-align: right">
+                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
+                    <input type="hidden" name='CMD' value='Web' />
+                    <input type="hidden" name='PROGRAM' value='blastx' />
+                    <input type="hidden" name='BLAST_PROGRAMS' value='blastx' />
+                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                    <input type="hidden" name='LINK' value='blasthome' />
+                    <input type="hidden" class="query" data-ref="#sequence-{#$data.isoform.uniquename|clean_id#}" name="QUERY" value="" />
+                    <input type="submit" class="small button" value="send to blastx">
+                </form>
 
-    {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
-
-    {#include file="display-components/publication.tpl" feature=$data.isoform #}
-
-
-    {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
-
-
-    {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
+                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
+                    <input type="hidden" name='CMD' value='Web' />
+                    <input type="hidden" name='PROGRAM' value='blastn' />
+                    <input type="hidden" name='BLAST_PROGRAMS' value='megaBlast' />
+                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
+                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
+                    <input type="hidden" name='LINK' value='blasthome' />
+                    <input type="hidden" class="query" data-ref="#sequence-{#$data.isoform.uniquename|clean_id#}" name="QUERY" value="" />
+                    <input type="submit" class="small button" value="send to blastn">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="large-12 columns panel">
+        <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
+    </div>
 </div>
 
+{#if isset($data.isoform.description) #}
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Blast2go derived:</h4>
+            {#foreach $data.isoform.description as $description#}
+                <h5> {#$description.value#}</h5>
+            {#/foreach#}
+
+        </div>
+    </div>
+{#/if#}
+
+{#include file="display-components/dbxref.tpl" feature=$data.isoform #}
+
+{#include file="display-components/publication.tpl" feature=$data.isoform #}
+
+
+{#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
+
+
+{#include file="display-components/predpeps.tpl" feature=$data.isoform #}
+
+<script type="text/javascript">addNavAnchor('plot','Plot Expression Data');</script>
 {#include file="display-components/barplot.tpl"#}
 {#/block#}

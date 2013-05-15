@@ -89,11 +89,23 @@
                 });
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
                     var li = $("<li>")
-                            .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:100px'>" + item.type + "</span>" + item.name + "</a>")
-                            .appendTo(ul);
+                    .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:100px'>" + item.type + "</span>" + item.name + "</a>")
+                    .appendTo(ul);
                     return li;
                 };
             });</script>
+        <script type="text/javascript">
+            function jumptoanchor(name){
+                $(document.body).scrollTop($('#'+name).offset().top-45);
+        
+            }
+    
+            function addNavAnchor(name, linktext){
+                $('#quicknav-parent').show();
+                $('#quicknav').append('<li><a href="javascript:jumptoanchor(\'anchor-'+name+'\');">'+linktext+'</a></li>');
+                document.write('<div id="anchor-'+name+'"> </div>');
+            }
+        </script>
         <style>
             .ui-tooltip-content table{
                 margin-bottom: 0px;
@@ -133,7 +145,12 @@
                     </li>
                 </ul>
                 <section class="top-bar-section">
-                    <ul class="left">{#block name='header-nav'#}{#/block#}</ul>
+                    <ul class="left">{#block name='header-nav'#}
+                        <li class="has-dropdown"  id="quicknav-parent" style="display:none"><a href="#">QuickNav</a>
+                            <ul class="dropdown" id="quicknav">
+                            </ul>
+                        </li>
+                        {#/block#}</ul>
                     <ul class="right">
                         <li><div><label for="select_organism">organism:</label></div></li>
                         <li><div><select id="select_organism" style="display:inline"></select></div></li>

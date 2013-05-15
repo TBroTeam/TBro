@@ -17,7 +17,6 @@ class Repeatmasker extends \WebService {
         $stm_get_repeatmasker = $db->prepare('SELECT * FROM get_isoform_annotations_repeatmasker(ARRAY[:isoform_id::int])');
         $stm_get_repeatmasker->bindParam('isoform_id', $param_feature_id, PDO::PARAM_INT);
 
-
         $ret = array();
 
         $stm_get_repeatmasker->execute();
