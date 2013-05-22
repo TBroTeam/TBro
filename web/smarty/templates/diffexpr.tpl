@@ -32,28 +32,6 @@
             }
         } );
         
-        var oTable = $('#diffexp').dataTable( {
-            "oLanguage": {
-                "sSearch": "Search all columns:"
-            },
-            "bProcessing": true,
-            "sAjaxSource": '{#$AppPath#}/ajax/listing/differential_expressions',
-            "aoColumns": [
-                { "sType": "natural" },
-                { "sType": "scientific" },
-                { "sType": "scientific" },
-                { "sType": "scientific" },
-                { "sType": "scientific" },
-                { "sType": "scientific" },
-                { "sType": "scientific" },
-                { "sType": "scientific" },
-            ],
-            "sDom": 'T<"clear">lfrtip',
-            "oTableTools": {
-                "sSwfPath": "{#$AppPath#}/swf/copy_csv_xls_pdf.swf"
-            }
-        } );
-        
         $.fn.dataTableExt.afnFiltering.push(
         function( oSettings, aData, iDataIndex ) {
             for (var i=0; i<aData.length; i++){
@@ -79,7 +57,30 @@
             }
             return true;
         });
-     
+        
+        var oTable = $('#diffexp').dataTable( {
+            "oLanguage": {
+                "sSearch": "Search all columns:"
+            },
+            "bProcessing": true,
+            "sAjaxSource": '{#$AppPath#}/ajax/listing/differential_expressions',
+            "aoColumns": [
+                { "sType": "natural" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+            ],
+            "sDom": 'T<"clear">lfrtip',
+            "oTableTools": {
+                "sSwfPath": "{#$AppPath#}/swf/copy_csv_xls_pdf.swf"
+            }
+        } );
+        new FixedHeader( $('#diffexp') );
+        
         
         function update_filter() {
             /* Filter on the column (the index) of this element */
