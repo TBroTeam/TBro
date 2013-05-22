@@ -35,7 +35,6 @@ abstract class AbstractImporter implements CLI_Command, Importer {
             'long_name' => '--organism_id',
             'description' => 'id of the organism this import is for'
         ));
-        //TODO
         $command->addOption('release',
                 array(
             'short_name' => '-r',

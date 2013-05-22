@@ -1,8 +1,10 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
 <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="{#$AppPath#}/js/TableTools.min.js"></script>
 <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/alphanum.js"></script>
 <link rel="stylesheet" href="{#$AppPath#}/css/jquery.dataTables_themeroller.css" />
+<link rel="stylesheet" href="{#$AppPath#}/css/TableTools.css" />
 <script type="text/javascript">
     $(document).ready(function() {
         var filters = {};
@@ -45,7 +47,11 @@
                 { "sType": "scientific" },
                 { "sType": "scientific" },
                 { "sType": "scientific" },
-            ]
+            ],
+            "sDom": 'T<"clear">lfrtip',
+            "oTableTools": {
+                "sSwfPath": "{#$AppPath#}/swf/copy_csv_xls_pdf.swf"
+            }
         } );
         
         $.fn.dataTableExt.afnFiltering.push(
@@ -98,9 +104,6 @@
 <div class="row">
     <div class="large-12 column">
         <h1>Differential Expressions</h1>
-    </div>
-    <div class="large-12 column">
-        <p>TODO: Export ermöglichen?</p>
     </div>
 </div>
 <div class="row">

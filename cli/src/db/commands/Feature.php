@@ -134,7 +134,7 @@ class Feature extends AbstractTable {
         }
 
         $feature_synonym = new propel\FeatureSynonym();
-        //TODO link publication?!?
+
         $feature_synonym->setFeatureId($options['id']);
         $feature_synonym->setSynonym($synonym);
         

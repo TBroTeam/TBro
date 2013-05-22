@@ -87,7 +87,6 @@ class Biomaterial extends AbstractTable {
         return 'Manipulate the database biomaterial.';
     }
 
-    //TODO condition with parent_bioamterial_id
     public static function CLI_commandName() {
         return 'biomaterial';
     }

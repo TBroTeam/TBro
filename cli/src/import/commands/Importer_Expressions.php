@@ -108,7 +108,6 @@ class Importer_Expressions extends AbstractImporter {
             'description' => 'quantification id'
         ));
         
-        //TODO statt dessen analysis
         $command->addOption('analysis_id',
                 array(
             'short_name' => '-a',
@@ -127,7 +126,7 @@ class Importer_Expressions extends AbstractImporter {
     public static function CLI_commandDescription() {
         return "Importer for expression result \"count matrix\" files";
     }
-//TODO expression results
+
     public static function CLI_commandName() {
         return 'expressions';
     }
