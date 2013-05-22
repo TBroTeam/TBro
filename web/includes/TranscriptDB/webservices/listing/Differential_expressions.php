@@ -36,7 +36,7 @@ SELECT
 FROM 
   diffexpresult d JOIN 
   feature f ON (d.feature_id = f.feature_id)
-  --LIMIT 300
+  LIMIT 500
 EOF;
 
         $stm_get_diffexpr = $db->prepare($query_get_filters);
@@ -55,6 +55,11 @@ EOF;
     static function format(&$val, $key){
         if (is_numeric($val))
             $val = sprintf('%.5e',$val);
+        else if ($val == 'Infinity'){
+            $val = 'Inf';
+        } else if ($val == '-Infinity'){
+            $val = '-Inf';
+        }
     }
 
 }

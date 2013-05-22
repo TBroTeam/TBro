@@ -31,6 +31,14 @@
 
                 organism = $('#select_organism');
                 release = $('#select_release');
+                selected_organism_id = $.webStorage.session().getItem('selected_organism_id');
+                if (selected_organism_id == null){
+                    selected_organism_id = '{#$organism#}';
+                }
+                selected_release = $.webStorage.session().getItem('selected_release');
+                if (selected_release == null){
+                    selected_release = '{#$release#}';
+                }
                 var rel_release = null;
 
                 $.ajax({
@@ -40,7 +48,7 @@
                         organism.empty();
                         $.each(data.results.organism, function() {
                             var option = $('<option/>').val(this.organism_id).text(this.organism_name);
-                            if (this.organism_id == '{#$organism#}'){
+                            if (this.organism_id == selected_organism_id){
                                 option.attr('selected','selected');
                             }
                             option.appendTo(organism);
@@ -51,6 +59,8 @@
                 });
 
                 organism.change(function() {
+                    $.webStorage.session().setItem('selected_organism_id', organism.val());
+                    
                     release.empty();
                     release.removeAttr('disabled');
                     if (rel_release[organism.val()] == undefined) {
@@ -59,13 +69,17 @@
                     } else {
                         $.each(rel_release[organism.val()], function() {
                             var option = $('<option/>').val(this.release).text(this.release);
-                            if (this.release == '{#$release#}'){
+                            if (this.release == selected_release){
                                 option.attr('selected','selected');
                             }
                             option.appendTo(release);
                         });
                     }
                     release.change();
+                });
+                
+                release.change(function(){
+                    $.webStorage.session().setItem('selected_release', release.val());    
                 });
 
                 $("#search_unigene").autocomplete({

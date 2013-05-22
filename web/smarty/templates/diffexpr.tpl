@@ -1,17 +1,51 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
 <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="{#$AppPath#}/js/alphanum.js"></script>
 <link rel="stylesheet" href="{#$AppPath#}/css/jquery.dataTables_themeroller.css" />
 <script type="text/javascript">
     $(document).ready(function() {
         var filters = {};
+    
+        jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+            "natural-asc": function ( a, b ) {
+                return alphanum(a,b);
+            },
+ 
+            "natural-desc": function ( a, b ) {
+                return alphanum(a,b) * -1;
+            },
+            "scientific-pre": function ( a ) {
+                if (a=='Inf') return Infinity;
+                if (a=='-Inf') return -Infinity;
+                return parseFloat(a);
+            },
+ 
+            "scientific-asc": function ( a, b ) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+ 
+            "scientific-desc": function ( a, b ) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        } );
         
         var oTable = $('#diffexp').dataTable( {
             "oLanguage": {
                 "sSearch": "Search all columns:"
             },
             "bProcessing": true,
-            "sAjaxSource": '{#$AppPath#}/ajax/listing/differential_expressions'
+            "sAjaxSource": '{#$AppPath#}/ajax/listing/differential_expressions',
+            "aoColumns": [
+                { "sType": "natural" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+                { "sType": "scientific" },
+            ]
         } );
         
         $.fn.dataTableExt.afnFiltering.push(
@@ -66,7 +100,7 @@
         <h1>Differential Expressions</h1>
     </div>
     <div class="large-12 column">
-        <p>TODO: Infinity zu Inf; -Inf richtig sortieren. Export ermöglichen?; außerdem: verdammt nochmal, merk dir die Auswahl da oben rechts!</p>
+        <p>TODO: Export ermöglichen?</p>
     </div>
 </div>
 <div class="row">
