@@ -23,7 +23,7 @@ class Differential_expressions extends \WebService {
         }
 
         if (count($ids) == 0)
-            return array();
+            return array('aaData'=>array());
 
         $qmarks = implode(',', array_fill(0, count($ids), '?'));
 
@@ -46,7 +46,7 @@ EOF;
 
         $stm_get_diffexpr = $db->prepare($query_get_filters);
 
-        $data = array();
+        $data = array('aaData'=>array());
 
         $stm_get_diffexpr->execute($ids);
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {

@@ -5,11 +5,6 @@
 <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
 <!-- use chrome frame if installed and user is using IE -->
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<script type="text/javascript" language="javascript" src="{#$AppPath#}/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="{#$AppPath#}/js/TableTools.min.js"></script>
-<script type="text/javascript" language="javascript" src="{#$AppPath#}/js/alphanum.js"></script>
-<link rel="stylesheet" href="{#$AppPath#}/css/jquery.dataTables_themeroller.css" />
-<link rel="stylesheet" href="{#$AppPath#}/css/TableTools.css" />
 <script type="text/javascript">
     (function($){
         var cartitems = {#$cartitems|json_encode#};
