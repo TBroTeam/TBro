@@ -22,21 +22,26 @@ class Differential_expressions extends \WebService {
             $ids = array_merge($ids, $querydata['ids']);
         }
 
+        if (count($ids) == 0)
+            return array();
+
+        $qmarks = implode(',', array_fill(0, count($ids), '?'));
 
         $query_get_filters = <<<EOF
 SELECT 
-  name,
-  "baseMean",
-  "baseMeanA",
-  "baseMeanB",
-  "foldChange",
-  "log2foldChange",
-  pval,
-  pvaladj
+  f.name,
+  d."baseMean",
+  d."baseMeanA",
+  d."baseMeanB",
+  d."foldChange",
+  d."log2foldChange",
+  d.pval,
+  d.pvaladj
 FROM 
   diffexpresult d JOIN 
   feature f ON (d.feature_id = f.feature_id)
-  LIMIT 500
+WHERE
+   f.feature_id IN ($qmarks)
 EOF;
 
         $stm_get_diffexpr = $db->prepare($query_get_filters);
@@ -51,13 +56,13 @@ EOF;
 
         return $data;
     }
-    
-    static function format(&$val, $key){
+
+    static function format(&$val, $key) {
         if (is_numeric($val))
-            $val = sprintf('%.5e',$val);
-        else if ($val == 'Infinity'){
+            $val = sprintf('%.5e', $val);
+        else if ($val == 'Infinity') {
             $val = 'Inf';
-        } else if ($val == '-Infinity'){
+        } else if ($val == '-Infinity') {
             $val = '-Inf';
         }
     }

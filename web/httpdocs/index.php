@@ -89,10 +89,7 @@ switch ($page) {
     case 'graphs':
         $cartname = requestVal('query', \webservices\cart\Sync::$regexCartName, '');
         $smarty->assign('cartname', $cartname);
-        $smarty->display('graphs.tpl');
-        die();
-    case 'diffexpr':
-        $smarty->display('diffexpr.tpl');
+        $smarty->display('mav.tpl');
         die();
 }
 $smarty->display('welcome.tpl');
