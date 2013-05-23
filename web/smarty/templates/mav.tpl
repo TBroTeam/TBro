@@ -37,7 +37,7 @@
 
         <ul>
             <li><a href="#tabs-graphs">Graphs</a></li>
-            <li><a href="#tabs-diffexp">differential Expression</a></li>
+            <li><a href="#tabs-diffexp">differential Expressions</a></li>
         </ul>
         <div id="tabs-graphs">
             <div class="row">

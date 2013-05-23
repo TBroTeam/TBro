@@ -1,4 +1,4 @@
-{#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}
+/*{#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}*/
 $(document).ready(function() {
     $("#dialog-rename-cart-group").dialog({
         autoOpen: false,
@@ -70,7 +70,9 @@ $(document).ready(function() {
         modal: true,
         buttons: {
             "Delete all items": function() {
-                cart.resetCart({sync: true});
+                cart.resetCart({
+                    sync: true
+                });
                 $(this).dialog("close");
             },
             Cancel: function() {
@@ -84,8 +86,8 @@ $(document).ready(function() {
         $("#dialog-delete-all").dialog('open');
     });
 
-
-    cart.rebuildDOM({#$kickoff_cart['cart']|json_encode#}, true);
+    var tmpcart = {#$kickoff_cart['cart']|json_encode#};
+    cart.rebuildDOM(tmpcart, true);
     setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
 
     $('#cart').tooltip({

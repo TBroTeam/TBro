@@ -36,13 +36,6 @@
 
 
             <div style="display: none">
-                <div id="cartitem-tooltip">
-                    <table>
-                        <tr><td>Feature_id</td><td>#feature_id#</td></tr>
-                        <tr><td>Alias</td><td>#alias#</td></tr>
-                        <tr><td>Annotations</td><td>#annotations#</td></tr>
-                    </table>
-                </div>
 
                 <div id="dialog-rename-cart-group" title="rename cart">
                     <form>
@@ -75,13 +68,13 @@
 
             <div class="panel large-12 columns">
                 {#if (isset($smarty.session['OpenID'])) #}
-                <form action="?logout" method="post">
-                    <button>Logout</button>
-                </form>
+                    <form action="?logout" method="post">
+                        <button>Logout</button>
+                    </form>
                 {#else#}
-                <form action="?login" method="post">
-                    <button>Login with Google</button>
-                </form>
+                    <form action="?login" method="post">
+                        <button>Login with Google</button>
+                    </form>
                 {#/if#}
             </div>
 
@@ -101,35 +94,36 @@
                 </div>
             </div>
 
-            <div style="display: none">
-                <div id="cart-group-dummy"> 
-                    <div class='cart-group' data-group="#groupname#">
-                        <div class="large-12 columns">
-                            <div class="groupname left">#groupname#</div>
-                            <div class="right">
-                                <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
-                                <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                                <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
-                            </div>
+            <script type="text/template" id="cart-group-template"> 
+                <div class='cart-group' data-group="<%= groupname %>">
+                    <div class="large-12 columns">
+                        <div class="groupname left"><%= groupname %></div>
+                        <div class="right">
+                            <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
+                            <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                            <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
                         </div>
-                        <ul class="cart-target large-12 columns">
-                            <li class="placeholder">drag your items here</li>
-                        </ul>
                     </div>
+                    <ul class="cart-target large-12 columns">
+                        <li class="placeholder">drag your items here</li>
+                    </ul>
                 </div>
+                </script>
 
-                <ul id="cart-item-dummy"> 
+                <script type="text/template"  id="cart-item-template"> 
                     <li style="clear:both" class="large-12 cart-item">
-                        <div class="left"><img class="cart-button-goto" src="{#$AppPath#}/img/mimiGlyphs/47.png"/> <span class="displayname"></span></div>
+                        <div class="left"><img class="cart-button-goto" src="{#$AppPath#}/img/mimiGlyphs/47.png"/> <span class="displayname">
+                                <%= (item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id) %>
+                            </span>
+                        </div>
                         <div class="right">
                             <img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
                             <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
                         </div>
                     </li>
-                </ul>
+                    </script>
+                </div>
+                <div>&nbsp;</div>
             </div>
         </div>
-        <div>&nbsp;</div>
-    </div>
-</div>
-{#/block#}
+        {#/block#}

@@ -7,7 +7,7 @@ try
 catch (err) {
     var console = {}
     console.log = console.error = console.info = console.debug = console.warn = console.trace = console.dir = console.dirxml = console.group = console.groupEnd = console.time = console.timeEnd = console.assert = console.profile = function() {
-    };
+        };
 }
 
 
@@ -292,10 +292,10 @@ cart.addGroup = function(options) {
     }, options);
 
     // DOM manupulation
-    var newElStr = $('#cart-group-dummy').html();
-    newElStr = newElStr.replace(/#groupname#/g, groupname);
-    newEl = $('<div/>').html(newElStr).children();
-
+    var template_cartgroup = _.template($('#cart-group-template').html());
+    newEl = $($.parseHTML(template_cartgroup({
+        groupname: groupname
+    })));
     newEl.find('.cart-target').droppable({
         items: "li:not(.placeholder)",
         accept: ":not(.ui-sortable-helper)",
@@ -327,8 +327,8 @@ cart.addGroup = function(options) {
         event.stopPropagation();
         window.location = '{#$AppPath#}/graphs/'+$(this).parents('.cart-group').first().attr('data-group');
     });
-
-    newEl.appendTo(cart.cart_groups).hide(0).fadeIn(500);
+    newEl.appendTo(cart.cart_groups);
+    //newEl.hide(0).fadeIn(500);
     return groupname;
 };
 
@@ -346,7 +346,8 @@ cart.cleanUpGroup = function(newItem, group) {
 cart.renameGroup = function(oldname, newname, options) {
     if (newname === oldname)
         return "no rename neccessary. old name matches new name";
-    if (newname === "all" || !newname.match({#$regexCartName#})){
+    var regex = new RegExp('{#$regexCartName#}','i');
+    if (newname === "all" || !newname.match(regex)){
         return "this name is not valid"
     };
     var _group;
@@ -461,7 +462,8 @@ cart.addItemToGroup = function(item, groupname, options) {
             feature_id: item.feature_id
         }, group.attr('data-group'));
     });
-    newEl.appendTo(group).hide(0).fadeIn(500);
+    newEl.appendTo(group);
+    //.hide(0).fadeIn(500);
     cart.cleanUpGroup(item, group);
 };
 
@@ -535,8 +537,8 @@ cart.refresh_cart_group_all = function() {
 };
 
 cart.buildCartItemDOM = function(item) {
-    var newElStr = $('#cart-item-dummy').html();
-    newEl = $('<div/>').html(newElStr).children();
+    var template_item = _.template($('#cart-item-template').html());
+    newEl = $($.parseHTML(template_item({item: item})));
     newEl.attr('data-feature_id', item.feature_id);
     newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id));
     newEl.data('metadata', item);

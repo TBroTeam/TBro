@@ -6,7 +6,7 @@ require_once 'TranscriptDB//db.php';
 
 class Sync extends \WebService {
 
-    public static $regexCartName = '/^[a-z0-9._ ]+$/i';
+    public static $regexCartName = '^[a-z0-9._ ]+$';
 
     public static function &get_group($groupname) {
         foreach ($_SESSION['cart']['groups'] as &$group) {
@@ -117,7 +117,7 @@ class Sync extends \WebService {
                     $oldname = $querydata['action']['oldname'];
                     if ($newname == 'all')
                         break;
-                    if (!preg_match(self::$regexCartName, $newname))
+                    if (!preg_match('/'.self::$regexCartName.'/i', $newname))
                         break;
                     $group = &self::get_group($oldname);
                     if (self::get_group($newname) != null || $group == null)
