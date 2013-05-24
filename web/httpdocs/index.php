@@ -26,8 +26,8 @@ $smarty->right_delimiter = '#}';
 require_once('TranscriptDB/webservices/cart/Sync.php');
 $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
 
-$smarty->assign('release', DEFAULT_RELEASE);
-$smarty->assign('organism', DEFAULT_ORGANISM);
+$smarty->assign('default_release', DEFAULT_RELEASE);
+$smarty->assign('default_organism', DEFAULT_ORGANISM);
 
 function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
     if (!isset($_REQUEST[$key]) || !preg_match($regexp, $_REQUEST[$key]))

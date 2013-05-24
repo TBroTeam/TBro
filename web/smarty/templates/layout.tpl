@@ -35,83 +35,91 @@
 
                 organism = $('#select_organism');
                 release = $('#select_release');
-                selected_organism_id = $.webStorage.session().getItem('selected_organism_id');
-                if (selected_organism_id == null){
-                    selected_organism_id = '{#$organism#}';
-                }
-                selected_release = $.webStorage.session().getItem('selected_release');
-                if (selected_release == null){
-                    selected_release = '{#$release#}';
-                }
-                var rel_release = null;
-
-                $.ajax({
-                    url: "{#$ServicePath#}/listing/organism_release",
-                    dataType: "json",
-                    success: function(data) {
-                        organism.empty();
-                        $.each(data.results.organism, function() {
-                            var option = $('<option/>').val(this.organism_id).text(this.organism_name);
-                            if (this.organism_id == selected_organism_id){
-                                option.attr('selected','selected');
-                            }
-                            option.appendTo(organism);
-                        });
-                        rel_release = data.results.release;
-                        organism.change();
-                    }
-                });
-
-                organism.change(function() {
-                    $.webStorage.session().setItem('selected_organism_id', organism.val());
-                    
-                    release.empty();
-                    release.removeAttr('disabled');
-                    if (rel_release[organism.val()] == undefined) {
-                        release.attr('disabled', 'disabled');
-                        $('<option/>').val('').text('/').appendTo(release);
-                    } else {
-                        $.each(rel_release[organism.val()], function() {
-                            var option = $('<option/>').val(this.release).text(this.release);
-                            if (this.release == selected_release){
-                                option.attr('selected','selected');
-                            }
-                            option.appendTo(release);
-                        });
-                    }
-                    release.change();
-                });
                 
-                release.change(function(){
-                    $.webStorage.session().setItem('selected_release', release.val());    
-                });
-
-                $("#search_unigene").autocomplete({
-                    position: {
-                        my: "right top", at: "right bottom"
-                    },
-                    source: function(request, response) {
-                        $.ajax({
-                            url: "{#$ServicePath#}/listing/searchbox/",
-                            data: {species: organism.val(), release: release.val(), term: request.term},
-                            dataType: "json",
-                            success: function(data) {
-                                response(data.results);
-                            }
-                        });
-                    },
-                    minLength: 2,
-                    select: function(event, ui) {
-                        location.href = "{#$AppPath#}/details/byId/" + ui.item.id;
+            {#if isset($organism)#}
+                    selected_organism_id = '{#$organism#}';    
+                    selected_release = '{#$release#}';
+            {#else#}
+                    selected_organism_id = $.webStorage.session().getItem('selected_organism_id');
+                    if (selected_organism_id == null){
+                        selected_organism_id = '{#$default_organism#}';
                     }
-                });
-                $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
-                    var li = $("<li>")
-                    .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:100px'>" + item.type + "</span>" + item.name + "</a>")
-                    .appendTo(ul);
-                    return li;
-                };
-            });</script>
+                    selected_release = $.webStorage.session().getItem('selected_release');
+                    if (selected_release == null){
+                        selected_release = '{#$default_release#}';
+                    }
+            {#/if#}
+                
+                
+                    var rel_release = null;
+
+                    $.ajax({
+                        url: "{#$ServicePath#}/listing/organism_release",
+                        dataType: "json",
+                        success: function(data) {
+                            organism.empty();
+                            $.each(data.results.organism, function() {
+                                var option = $('<option/>').val(this.organism_id).text(this.organism_name);
+                                if (this.organism_id == selected_organism_id){
+                                    option.attr('selected','selected');
+                                }
+                                option.appendTo(organism);
+                            });
+                            rel_release = data.results.release;
+                            organism.change();
+                        }
+                    });
+
+                    organism.change(function() {
+                        $.webStorage.session().setItem('selected_organism_id', organism.val());
+                    
+                        release.empty();
+                        release.removeAttr('disabled');
+                        if (rel_release[organism.val()] == undefined) {
+                            release.attr('disabled', 'disabled');
+                            $('<option/>').val('').text('/').appendTo(release);
+                        } else {
+                            $.each(rel_release[organism.val()], function() {
+                                var option = $('<option/>').val(this.release).text(this.release);
+                                if (this.release == selected_release){
+                                    option.attr('selected','selected');
+                                }
+                                option.appendTo(release);
+                            });
+                        }
+                        release.change();
+                    });
+                
+                    release.change(function(){
+                        $.webStorage.session().setItem('selected_release', release.val());    
+                    });
+
+                    $("#search_unigene").autocomplete({
+                        position: {
+                            my: "right top", at: "right bottom"
+                        },
+                        source: function(request, response) {
+                            $.ajax({
+                                url: "{#$ServicePath#}/listing/searchbox/",
+                                data: {species: organism.val(), release: release.val(), term: request.term},
+                                dataType: "json",
+                                success: function(data) {
+                                    response(data.results);
+                                }
+                            });
+                        },
+                        minLength: 2,
+                        select: function(event, ui) {
+                            location.href = "{#$AppPath#}/details/byId/" + ui.item.id;
+                        }
+                    });
+                    $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
+                        var li = $("<li>")
+                        .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:100px'>" + item.type + "</span>" + item.name + "</a>")
+                        .appendTo(ul);
+                        return li;
+                    };
+                });</script>
         <script type="text/javascript">
             function jumptoanchor(name){
                 $(document.body).scrollTop($('#'+name).offset().top-45);

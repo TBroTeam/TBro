@@ -32,7 +32,7 @@ EOF;
             $data['results'][$feature['feature_id']] = array(
                 'name' => $feature['feature_name'].(!empty($feature['synonym_name'])?sprintf(' (%s)',$feature['synonym_name']):'')
                 , 'type' => $feature['type_id'] == CV_UNIGENE ? 'unigene' : 'isoform'
-                , 'id' => $feature['feature_id']
+                , 'feature_id' => $feature['feature_id']
             );
         }
 

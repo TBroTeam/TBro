@@ -9,6 +9,14 @@
     var feature_id = '{#$data.unigene.feature_id#}';
 </script>
 <script type="text/javascript" src="{#$AppPath#}/js/feature/barplot.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        displayFeatureTable({#$data.unigene.isoforms|json_encode#}, {
+            bFilter: false, 
+            sDom: 't'
+        });
+    });
+</script>
 {#/block#}
 {#block name='body'#}
 
@@ -28,17 +36,7 @@
     <div class="row">        
         <div class="large-12 columns panel">
             <p>known isoforms:</p>
-            <table width="100%">
-                {#foreach $data.unigene.isoforms as $isoform#}
-                    <tr>
-                        <td>
-                            <a href='{#$AppPath#}/details/byId/{#$isoform.feature_id#}'>{#$isoform.uniquename#}</a>
-                        </td><td>
-                            <div class="right"><span class="small button" onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/{#$isoform.feature_id#}', success: cart.addItemToAll});"> add to cart -> </span></div>
-                        </td>
-                    </tr>
-                {#/foreach#}
-            </table>
+            {#include file="display-components/feature_table.tpl"#}
         </div>
     </div>
 {#/if#}
