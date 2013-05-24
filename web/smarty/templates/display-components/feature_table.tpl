@@ -2,13 +2,17 @@
     var datatable = null;
     
     function displayFeatureTable(data, opts){
-        var options = $.extend({
+        var options = $.extend(true, {
             bAutoWidth:false, 
             bJQueryUI: true,
-            aoColumnDefs: [
-                { "bSortable": false, "aTargets": [ 0, 3 ] }
+            aoColumns: [
+                {bSortable: false},
+                {},
+                {},
+                {bSortable: false}
             ]
         }, opts);
+        console.log(options);
         var res = $('#results tbody');
         res.empty();
         var cnt=0;

@@ -9,14 +9,7 @@
     var feature_id = '{#$data.unigene.feature_id#}';
 </script>
 <script type="text/javascript" src="{#$AppPath#}/js/feature/barplot.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        displayFeatureTable({#$data.unigene.isoforms|json_encode#}, {
-            bFilter: false, 
-            sDom: 't'
-        });
-    });
-</script>
+
 {#/block#}
 {#block name='body'#}
 
@@ -33,9 +26,27 @@
 </div>
 
 {#if (isset($data.unigene.isoforms) && count($data.unigene.isoforms)>0)#}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            displayFeatureTable({#$data.unigene.isoforms|json_encode#}, {
+                bFilter: false, 
+                sDom: 't',
+                aoColumns: [
+                    {},
+                    {bVisible: false},
+                    {},
+                    {}
+                ]
+            });
+        });
+    </script>
+    <div class="row">
+        <div class="large-12 columns">
+            <h4>Known Isoforms:</h4>
+        </div>
+    </div>
     <div class="row">        
         <div class="large-12 columns panel">
-            <p>known isoforms:</p>
             {#include file="display-components/feature_table.tpl"#}
         </div>
     </div>
