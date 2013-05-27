@@ -50,21 +50,22 @@ EOF;
 
         $stm_get_filters = $db->prepare($query_get_filters);
 
-        $data = array('feature' => array(),
-            'assay' => array(), 'analysis' => array(), 'biomaterial' => array());
-
+        $data = array();
+        
         $stm_get_filters->execute($ids);
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
+            
             $data['data']['feature'][$filter['feature_id']] = self::getItem('feature', $filter);
             $data['data']['assay'][$filter['assay_id']] = self::getItem('assay', $filter);
             $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
-            $data['data']['biomaterial'][$filter['biomaterial_id']] = self::getItem('biomaterial', $filter);
+            $data['data']['sample'][$filter['biomaterial_id']] = self::getItem('biomaterial', $filter);
             
-            
-            self::addId($data['feature'], $filter['feature_id']);
-            self::addId($data['assay'][$filter['feature_id']], $filter['assay_id']);
-            self::addId($data['analysis'][$filter['feature_id']][$filter['assay_id']], $filter['analysis_id']);
-            self::addId($data['biomaterial'][$filter['feature_id']][$filter['analysis_id']][$filter['assay_id']], $filter['biomaterial_id']);
+            $data['values'][] = array(
+                'feature' => $filter['feature_id'],
+                'assay' => $filter['assay_id'],
+                'analysis' => $filter['analysis_id'],
+                'sample' => $filter['biomaterial_id'],
+            );
         }
 
         return $data;

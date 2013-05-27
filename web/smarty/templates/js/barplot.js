@@ -1,55 +1,19 @@
 $(document).ready(function() {
     var select_assay = $('#isoform-barplot-filter-assay');
     var select_analysis = $('#isoform-barplot-filter-analysis');
-    var select_tissue = $('#isoform-barplot-filter-tissue');
-    var filterdata;
-
-    select_assay.click(function() {
-        var assay = $(this).val();
-
-        var last_selected = $(this).attr('data-last-selected');
-        if (assay === last_selected)
-            return;
-        select_analysis.empty();
-        $.each(filterdata.analysis[feature_id][assay], function() {
-            var data = filterdata.data.analysis[this];
-            var opt = $("<option/>").val(data.id).text(data.id+"("+data.program+")").data('metadata', data);
-            opt.appendTo(select_analysis);
-        });
-
-        $(this).attr('data-last-selected', assay);
-
-        select_analysis.find('option').first().attr('selected', 'selected');
-        select_analysis.click();
+    var select_tissues = $('#isoform-barplot-filter-tissue');
+    
+    new filteredSelect(select_analysis, 'analysis', {
+        precedessorNode: select_assay
     });
-
-    select_analysis.click(function() {
-        var analysis = $(this).val();
-        var last_selected = $(this).attr('data-last-selected');
-        if (analysis === last_selected)
-            return;
-        select_tissue.empty();
-
-        $.each(filterdata.biomaterial[feature_id][analysis][select_assay.val()], function() {
-            var data = filterdata.data.biomaterial[this];
-            var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data).attr('selected', 'selected');
-            opt.appendTo(select_tissue);
-        });
-
-        $(this).attr('data-last-selected', analysis);
-    });
-
+    new filteredSelect(select_tissues, 'sample', {
+        precedessorNode: select_analysis
+    });            
     $.ajax('{#$ServicePath#}/listing/filters/' + feature_id, {
         success: function(data) {
-            filterdata = data;
-            select_assay.empty();
-            $.each(filterdata.assay[feature_id], function() {
-                var data = filterdata.data.assay[this];
-                var opt = $("<option/>").val(data.id).text(data.name).data('metadata', data);
-                opt.appendTo(select_assay);
-            });
-            select_assay.find('option').first().attr('selected', 'selected');
-            select_assay.click();
+            new filteredSelect(select_assay, 'assay', {
+                data: data
+            }).refill();
         }
     });
 

@@ -30,6 +30,8 @@ class Differential_expressions extends \WebService {
         $query_get_filters = <<<EOF
 SELECT 
   f.name,
+  ba.name AS "BiomaterialA",
+  bb.name AS "BiomaterialB",
   d."baseMean",
   d."baseMeanA",
   d."baseMeanB",
@@ -38,8 +40,10 @@ SELECT
   d.pval,
   d.pvaladj
 FROM 
-  diffexpresult d JOIN 
-  feature f ON (d.feature_id = f.feature_id)
+  diffexpresult d 
+  JOIN feature f ON (d.feature_id = f.feature_id)
+  JOIN biomaterial ba ON (d.biomateriala_id = ba.biomaterial_id)
+  JOIN biomaterial bb ON (d.biomaterialb_id = bb.biomaterial_id)
 WHERE
    f.feature_id IN ($qmarks)
 EOF;
@@ -51,7 +55,7 @@ EOF;
         $stm_get_diffexpr->execute($ids);
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
             array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
-            $data['aaData'][] = array_values($row);
+            $data['aaData'][] = $row;//array_values($row);
         }
 
         return $data;

@@ -3,15 +3,14 @@
 {#call_webservice path="cart/getitems" data=["query1"=>$cartname] assign='cartitems'#}
 <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
 <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+<script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
 <!-- use chrome frame if installed and user is using IE -->
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 <script type="text/javascript">
     (function($){
         var cartitems = {#$cartitems|json_encode#};
+    {#include file="js/mav-graphs.js"#}    
         (function(){
-    {#include file="js/mav-graphs.js"#}
-            })();
-            (function(){
     {#include file="js/mav-diffexpr.js"#}
             })();
             $(document).ready(function(){
@@ -62,7 +61,7 @@
                         <select id="select-analysis" size="12"></select>
                     </div>
                     <div class="large-3 columns panel">
-                        <select id="select-tissues" size="12" multiple="multiple"></select>
+                        <select id="select-sample" size="12" multiple="multiple"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -96,6 +95,8 @@
                         <thead>  
                             <tr>
                                 <th>feature</th>
+                                <th>biomaterial A</th>
+                                <th>biomaterial B</th>
                                 <th>baseMean</th>
                                 <th>baseMeanA</th>
                                 <th>baseMeanB</th>
@@ -107,12 +108,14 @@
                         </thead>  
                         <tfoot>
                             <tr>
+                                {#for $i=0; $i<3; $i++#}
                                 <td>
                                     <select>
                                         <option value="contains">contains</option>
                                     </select>
                                     <input type="text" />
                                 </td>
+                                {#/for#}
                                 {#for $i=0; $i<7; $i++#}
                                 <td>
                                     <select>

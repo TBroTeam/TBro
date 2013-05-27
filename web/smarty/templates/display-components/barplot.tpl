@@ -4,6 +4,8 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
+
 <div class="row">
     <div class="large-12 columns panel">
         <div class="row">

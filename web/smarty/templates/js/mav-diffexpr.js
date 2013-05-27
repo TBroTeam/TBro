@@ -68,28 +68,44 @@ $(document).ready(function() {
                 },
                 aoColumns: [
                 {
-                    sType: "natural"
+                    sType: "natural",
+                    mData: 'name'
                 },
                 {
-                    sType: "scientific"
+                    sType: "natural",
+                    mData: 'BiomaterialA'
                 },
                 {
-                    sType: "scientific"
+                    sType: "natural",
+                    mData: 'BiomaterialB'
                 },
                 {
-                    sType: "scientific"
+                    sType: "scientific",
+                    mData: 'baseMean'
                 },
                 {
-                    sType: "scientific"
+                    sType: "scientific",
+                    mData: 'baseMeanA'
                 },
                 {
-                    sType: "scientific"
+                    sType: "scientific",
+                    mData: 'baseMeanB'
                 },
                 {
-                    sType: "scientific"
+                    sType: "scientific",
+                    mData: 'foldChange'
                 },
                 {
-                    sType: "scientific"
+                    sType: "scientific",
+                    mData: 'log2foldChange'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'pval'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'pvaladj'
                 },
                 ],
                 sDom: 'T<"clear">lfrtip',

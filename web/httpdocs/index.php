@@ -68,7 +68,7 @@ try {
 $page = requestVal('page', '/^[a-z-\.]*$/', '');
 switch ($page) {
     case 'js':
-        $js = requestVal('js', '/^[a-z-\.]*$/', '');
+        $js = requestVal('js', '/^[a-zA-Z-\.]*$/', '');
         header('Content-type: application/javascript');
         $smarty->display(sprintf('js/%s.js', $js));
         die();
