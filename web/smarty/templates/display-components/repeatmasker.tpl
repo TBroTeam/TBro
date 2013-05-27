@@ -7,7 +7,7 @@
             <h4>Repeatmasker Annotations:</h4>
             <div class="row">
                 <div class="large-12 columns panel">
-                    <table style="width:100%">
+                    <table style="width:100%" id="repeatmasker-results">
                         <thead>
                             <tr><td>Name</td><td>Class</td><td>Family</td><td>Min</td><td>Max</td><td>Direction</td><td>Length</td></tr>
                         </thead>
@@ -25,6 +25,11 @@
                             {#/foreach#}
                         </tbody>
                     </table>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $('#repeatmasker-results').dataTable();
+                        });
+                    </script>
                 </div>
             </div>
         </div>

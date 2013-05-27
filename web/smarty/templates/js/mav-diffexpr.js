@@ -39,28 +39,7 @@ $(document).ready(function() {
     
     var filters = {};
     
-    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "natural-asc": function ( a, b ) {
-            return alphanum(a,b);
-        },
- 
-        "natural-desc": function ( a, b ) {
-            return alphanum(a,b) * -1;
-        },
-        "scientific-pre": function ( a ) {
-            if (a=='Inf') return Infinity;
-            if (a=='-Inf') return -Infinity;
-            return parseFloat(a);
-        },
- 
-        "scientific-asc": function ( a, b ) {
-            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-        },
- 
-        "scientific-desc": function ( a, b ) {
-            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-        }
-    } );
+    
         
     $.fn.dataTableExt.afnFiltering.push(
         function( oSettings, aData, iDataIndex ) {
@@ -103,7 +82,6 @@ $(document).ready(function() {
                 $('#div-dfxtable').show();
                 if (oTable == null){
                     oTable = $('#diffexp').dataTable( {
-                        bJQueryUI: true,
                         aaData: data.aaData,
                         bFilter: false, 
                         aoColumns: [

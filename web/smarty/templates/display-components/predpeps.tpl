@@ -74,7 +74,7 @@
                                         <div class="large-12 columns">
                                             <h4>Interpro Annotations:</h4>
 
-                                            <table style="width:100%" class="contains-tooltip">
+                                            <table style="width:100%" class="contains-tooltip dataTable">
                                                 <thead>
                                                     <tr><td>Interpro ID</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><td>GO</td></tr>
                                                 </thead>
@@ -99,6 +99,12 @@
                                             {#/foreach#}
                                         </tbody>
                                     </table>
+                                    <script type="text/javascript">
+                                        $(document).ready(function(){
+                                            console.log($('#{#$predpep.uniquename|clean_id#} table.dataTable').dataTable({}));
+                                        });
+                                        
+                                    </script>
                                 </div>
                             </div>
                         {#/if#}

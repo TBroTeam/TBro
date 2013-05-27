@@ -3,8 +3,6 @@
     
     function displayFeatureTable(data, opts){
         var options = $.extend(true, {
-            bAutoWidth:false, 
-            bJQueryUI: true,
             aoColumns: [
                 {bSortable: false},
                 {},
