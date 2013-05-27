@@ -1,4 +1,42 @@
 $(document).ready(function() {
+    
+    var select_features = $('#select-dfx-features');
+    var select_analysis = $('#select-dfx-analysis');
+    var select_sampleA = $('#select-dfx-sampleA');
+    var select_sampleB = $('#select-dfx-sampleB');
+    
+    new filteredSelect(select_analysis, 'analysis', {
+        precedessorNode: select_features
+    });
+    
+    new filteredSelect(select_sampleA, 'ba', {
+        precedessorNode: select_analysis
+    });
+    
+    new filteredSelect(select_sampleB, 'bb', {
+        precedessorNode: select_sampleA
+    });
+    
+    
+    $.ajax('{#$ServicePath#}/listing/filters_diffexp/', {
+        method: 'post',
+        data: {
+            ids: _.map(cartitems, function(item){
+                return item.feature_id;
+            })
+        },
+        success: function(data) {
+            filterdata = data;
+            _.each(cartitems, function(value, key, list){
+                filterdata.data.feature[value.feature_id] = value;
+            });
+            new filteredSelect(select_features, 'feature', {
+                data: filterdata
+            }).refill();
+        }
+    });
+    
+    
     var filters = {};
     
     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
@@ -49,72 +87,76 @@ $(document).ready(function() {
             }
             return true;
         });
+    
+    var oTable;    
         
-        
-        
-    $.ajax('{#$ServicePath#}/listing/differential_expressions', {
-        method: 'post',
-        data: {
-            ids: $.map(cartitems, function(v){
-                return v.feature_id;
-            })
-        },
-        success: function(data) {
-            var oTable = $('#diffexp').dataTable( {
-                bJQueryUI: true,
-                aaData: data.aaData,
-                oLanguage: {
-                    sSearch: "Search all columns:"
-                },
-                aoColumns: [
-                {
-                    sType: "natural",
-                    mData: 'name'
-                },
-                {
-                    sType: "natural",
-                    mData: 'BiomaterialA'
-                },
-                {
-                    sType: "natural",
-                    mData: 'BiomaterialB'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMean'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMeanA'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMeanB'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'foldChange'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'log2foldChange'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'pval'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'pvaladj'
-                },
-                ],
-                sDom: 'T<"clear">lfrtip',
-                oTableTools: {
-                    sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf"
-                }
-            } );
-        }
+    $('#button-dfx-table').click(function(){
+        $.ajax('{#$ServicePath#}/listing/differential_expressions', {
+            method: 'post',
+            data: {
+                ids: select_features.val() || [],
+                analysis: select_analysis.val(),
+                sampleA: select_sampleA.val(),
+                sampleB: select_sampleB.val()
+            },
+            success: function(data) {
+                $('#div-dfxtable').show();
+                if (oTable == null){
+                    oTable = $('#diffexp').dataTable( {
+                        bJQueryUI: true,
+                        aaData: data.aaData,
+                        bFilter: false, 
+                        aoColumns: [
+                        {
+                            sType: "natural",
+                            mData: 'name'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'baseMean'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'baseMeanA'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'baseMeanB'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'foldChange'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'log2foldChange'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'pval'
+                        },
+                        {
+                            sType: "scientific",
+                            mData: 'pvaladj'
+                        },
+                        ],
+                        sDom: 'T<"clear">lfrtip',
+                        oTableTools: {
+                            sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf"
+                        }
+                    } );
+                } else {
+                    /* Clear the old information from the table */
+                    oTable.fnClearTable();
+ 
+                    oTable.fnAddData( data.aaData );
+ 
+                    oTable.fnDraw();
+                 }
+            }
+        });
     });
+    
 
         
         

@@ -15,12 +15,14 @@ class Differential_expressions extends \WebService {
 
 
         $ids = array();
-        if (isset($querydata['query1']) && !empty($querydata['query1'])) {
-            $ids[] = $querydata['query1'];
-        }
         if (isset($querydata['ids'])) {
             $ids = array_merge($ids, $querydata['ids']);
         }
+        
+        $analysis = $querydata['analysis'];
+        $sampleA = $querydata['sampleA'];
+        $sampleB = $querydata['sampleB'];
+        
 
         if (count($ids) == 0)
             return array('aaData'=>array());
@@ -30,8 +32,6 @@ class Differential_expressions extends \WebService {
         $query_get_filters = <<<EOF
 SELECT 
   f.name,
-  ba.name AS "BiomaterialA",
-  bb.name AS "BiomaterialB",
   d."baseMean",
   d."baseMeanA",
   d."baseMeanB",
@@ -42,17 +42,18 @@ SELECT
 FROM 
   diffexpresult d 
   JOIN feature f ON (d.feature_id = f.feature_id)
-  JOIN biomaterial ba ON (d.biomateriala_id = ba.biomaterial_id)
-  JOIN biomaterial bb ON (d.biomaterialb_id = bb.biomaterial_id)
 WHERE
-   f.feature_id IN ($qmarks)
+   d.feature_id IN ($qmarks) AND
+   d.analysis_id = ? AND 
+   d.biomateriala_id = ? AND
+   d.biomaterialb_id = ?
 EOF;
 
         $stm_get_diffexpr = $db->prepare($query_get_filters);
 
         $data = array('aaData'=>array());
 
-        $stm_get_diffexpr->execute($ids);
+        $stm_get_diffexpr->execute(array_merge($ids, array($analysis, $sampleA, $sampleB)));
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
             array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
             $data['aaData'][] = $row;//array_values($row);

@@ -10,7 +10,7 @@
     (function($){
         var cartitems = {#$cartitems|json_encode#};
     {#include file="js/mav-graphs.js"#}    
-        (function(){
+            (function(){
     {#include file="js/mav-diffexpr.js"#}
             })();
             $(document).ready(function(){
@@ -89,14 +89,52 @@
         </div>
         <div id="tabs-diffexp">
             <div class="row">
+                <div class="large-3 columns">
+                    <h4>Features</h4>
+                </div>
+                <div class="large-3 columns">
+                    <h4>Analysis</h4>
+                </div>
+                <div class="large-3 columns">
+                    <h4>Sample A</h4>
+                </div>
+                <div class="large-3 columns">
+                    <h4>Sample B</h4>
+                </div>
+            </div>
+
+            <form id="filters">
+                <div class="row">
+                    <div class="large-3 columns panel">
+                        <select id="select-dfx-features" size="12" multiple="multiple"></select>
+                    </div>
+                    <div class="large-3 columns panel">
+                        <select id="select-dfx-analysis" size="12"></select>
+                    </div>
+                    <div class="large-3 columns panel">
+                        <select id="select-dfx-sampleA" size="12"></select>
+                    </div>
+                    <div class="large-3 columns panel">
+                        <select id="select-dfx-sampleB" size="12"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns panel">
+                        <div class="large-8 columns">
+                        </div>
+                        <div class="large-4 columns">
+                            <button type="button" id="button-dfx-table" value="table">display Table</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                <div class="row" id="div-dfxtable" style="display:none">
                 <div class="large-12 column">
 
                     <table id="diffexp">
                         <thead>  
                             <tr>
                                 <th>feature</th>
-                                <th>biomaterial A</th>
-                                <th>biomaterial B</th>
                                 <th>baseMean</th>
                                 <th>baseMeanA</th>
                                 <th>baseMeanB</th>
@@ -108,7 +146,7 @@
                         </thead>  
                         <tfoot>
                             <tr>
-                                {#for $i=0; $i<3; $i++#}
+                                {#for $i=0; $i<1; $i++#}
                                 <td>
                                     <select>
                                         <option value="contains">contains</option>

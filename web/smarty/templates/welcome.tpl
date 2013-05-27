@@ -20,7 +20,7 @@
 {#block name='body'#}
 <div class="row">
     <div class="large-12 columns panel">
-        <h2>Welcome to the dionaea muscipula transcript browser</h2>
+        <h2>welcome to the transcriptome browser</h2>
     </div>
 </div>
 <div class="row">
