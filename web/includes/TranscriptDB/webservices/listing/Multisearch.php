@@ -30,9 +30,10 @@ EOF;
         $stm_get_features->execute($values);
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][$feature['feature_id']] = array(
-                'name' => $feature['feature_name'].(!empty($feature['synonym_name'])?sprintf(' (%s)',$feature['synonym_name']):'')
+                'name' => $feature['feature_name']
                 , 'type' => $feature['type_id'] == CV_UNIGENE ? 'unigene' : 'isoform'
                 , 'feature_id' => $feature['feature_id']
+                , 'alias' => $feature['synonym_name']
             );
         }
 

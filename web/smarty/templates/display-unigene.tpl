@@ -35,6 +35,7 @@
                     {},
                     {bVisible: false},
                     {},
+                    {bVisible: false},
                     {}
                 ]
             });

@@ -7,10 +7,10 @@
                 {bSortable: false},
                 {},
                 {},
+                {},
                 {bSortable: false}
             ]
         }, opts);
-        console.log(options);
         var res = $('#results tbody');
         res.empty();
         var cnt=0;
@@ -56,7 +56,35 @@
             $('#check_all').click(function(){
                 $('#results tbody').find('input[type="checkbox"]').prop('checked',$(this).prop('checked')); 
             });
+            
+            
+            $('#results').tooltip({
+                items: ".has-tooltip",
+                open: function(event, ui) {
+                    /*ui.tooltip.offset({
+                top: event.pageY, 
+                left: event.pageX
+            });*/
+                    ui.tooltip.css("max-width", "600px");
+                },
+                content: function() {
+                    var that = this;
+                    var tooltip = $("<table/>");
+                    $.ajax({url:'{#$ServicePath#}/details/cartitem/'+$(that).attr('data-id'), success: function(data){
+                            $.each(data, function(name, value){
+                                $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
+                            });
+                            //console.log(data);
+                            //tooltip.foundation();
+                        }});
+                
+                    tooltip.foundation();
+                    return tooltip;
+                }
+            });
         });
+        
+        
     })(jQuery);
 
 </script>
@@ -71,7 +99,10 @@
             <span><%= type %></span>
         </td>
         <td data-id="<%= feature_id %>">
-            <a href="{#$AppPath#}/details/byId/<%= feature_id %>"><%= name %></a>
+            <a class="has-tooltip" data-id="<%= feature_id %>" href="{#$AppPath#}/details/byId/<%= feature_id %>"><%= name %></a>
+        </td>
+        <td data-id="<%= feature_id %>">
+            <span><% if (typeof alias != "undefined" ) print(alias) %></span>
         </td>
         <td>
             <span style="margin-bottom:0px" class="small button right"  onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/<%= feature_id %>', success: cart.addItemToAll});"> add to cart -> </span>
@@ -86,15 +117,17 @@
                     <td></td>
                     <td>Type</td>
                     <td>Name</td>
+                    <td>Alias</td>
                     <td></td>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <td><input type="checkbox" id="check_all"/></td>
-                    <td></td>
-                    <td><span style="margin-bottom:0px" class="small button right" id="compare_selected">compare selected</span></td>
-                    <td><span style="margin-bottom:0px" class="small button right" id="add_selected"> add selected to cart -> </span></td>
+                    <td colspan="4">
+                        <span style="margin-bottom:0px" class="small button right" id="compare_selected">compare selected</span>
+                        <span style="margin-bottom:0px" class="small button right" id="add_selected"> add selected to cart -> </span>
+                    </td>
                 </tr>
             </tfoot>
             <tbody>

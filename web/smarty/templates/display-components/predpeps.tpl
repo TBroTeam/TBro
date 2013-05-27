@@ -101,7 +101,7 @@
                                     </table>
                                     <script type="text/javascript">
                                         $(document).ready(function(){
-                                            console.log($('#{#$predpep.uniquename|clean_id#} table.dataTable').dataTable({}));
+                                            $('#{#$predpep.uniquename|clean_id#} table.dataTable').dataTable();
                                         });
                                         
                                     </script>
