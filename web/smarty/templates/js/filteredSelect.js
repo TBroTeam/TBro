@@ -48,12 +48,12 @@ filteredSelect.prototype.filteredData = function(){
         values: []
     };
     var selectedValues = _.map(this.jqNode.find(':selected'), function(jq){
-        return jq.value;
+        return jq.value+"";
     });
     
     var filterProperty = this.filterProperty;
     ret.values = _.filter(data['values'], function(value, key, list){
-        return _.indexOf(selectedValues, value[filterProperty]);
+        return _.indexOf(selectedValues, value[filterProperty]+"")>=0;
     });
     return ret;
 }

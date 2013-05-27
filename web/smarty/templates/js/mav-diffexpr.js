@@ -2,23 +2,24 @@ $(document).ready(function() {
     
     var select_features = $('#select-dfx-features');
     var select_analysis = $('#select-dfx-analysis');
-    var select_sampleA = $('#select-dfx-sampleA');
-    var select_sampleB = $('#select-dfx-sampleB');
+    var select_conditionA = $('#select-dfx-conditionA');
+    var select_conditionB = $('#select-dfx-conditionB');
     
-    new filteredSelect(select_analysis, 'analysis', {
-        precedessorNode: select_features
+    
+    new filteredSelect(select_conditionB, 'bb', {
+        precedessorNode: select_conditionA
     });
-    
-    new filteredSelect(select_sampleA, 'ba', {
+
+    new filteredSelect(select_analysis, 'analysis', {
+        precedessorNode: select_conditionB
+    });
+
+
+    new filteredSelect(select_features, 'feature', {
         precedessorNode: select_analysis
     });
     
-    new filteredSelect(select_sampleB, 'bb', {
-        precedessorNode: select_sampleA
-    });
-    
-    
-    $.ajax('{#$ServicePath#}/listing/filters_diffexp/', {
+    $.ajax('{#$ServicePath#}/listing/filters_diffexp/forCart', {
         method: 'post',
         data: {
             ids: _.map(cartitems, function(item){
@@ -30,7 +31,7 @@ $(document).ready(function() {
             _.each(cartitems, function(value, key, list){
                 filterdata.data.feature[value.feature_id] = value;
             });
-            new filteredSelect(select_features, 'feature', {
+            new filteredSelect(select_conditionA, 'ba', {
                 data: filterdata
             }).refill();
         }
@@ -70,13 +71,13 @@ $(document).ready(function() {
     var oTable;    
         
     $('#button-dfx-table').click(function(){
-        $.ajax('{#$ServicePath#}/listing/differential_expressions', {
+        $.ajax('{#$ServicePath#}/listing/differential_expressions/byIds', {
             method: 'post',
             data: {
                 ids: select_features.val() || [],
                 analysis: select_analysis.val(),
-                sampleA: select_sampleA.val(),
-                sampleB: select_sampleB.val()
+                sampleA: select_conditionA.val(),
+                sampleB: select_conditionB.val()
             },
             success: function(data) {
                 $('#div-dfxtable').show();
@@ -87,7 +88,7 @@ $(document).ready(function() {
                         aoColumns: [
                         {
                             sType: "natural",
-                            mData: 'name'
+                            mData: 'feature_name'
                         },
                         {
                             sType: "scientific",
@@ -120,7 +121,18 @@ $(document).ready(function() {
                         ],
                         sDom: 'T<"clear">lfrtip',
                         oTableTools: {
-                            sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf"
+                            sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf",
+                            aButtons: [
+                            "copy",
+                            "print",
+                            {
+                                sExtends:    "collection",
+                                sButtonText: "Save",
+                                aButtons:    [ "csv", "xls", "pdf" ],
+                                bFooter: false,
+                                bBomInc: false
+                            }
+                            ]
                         }
                     } );
                 } else {
@@ -130,7 +142,7 @@ $(document).ready(function() {
                     oTable.fnAddData( data.aaData );
  
                     oTable.fnDraw();
-                 }
+                }
             }
         });
     });

@@ -61,10 +61,6 @@
             $('#results').tooltip({
                 items: ".has-tooltip",
                 open: function(event, ui) {
-                    /*ui.tooltip.offset({
-                top: event.pageY, 
-                left: event.pageX
-            });*/
                     ui.tooltip.css("max-width", "600px");
                 },
                 content: function() {
@@ -74,8 +70,6 @@
                             $.each(data, function(name, value){
                                 $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
                             });
-                            //console.log(data);
-                            //tooltip.foundation();
                         }});
                 
                     tooltip.foundation();

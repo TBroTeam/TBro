@@ -86,8 +86,12 @@ switch ($page) {
         if (display_isoform(requestVal('organism', '/^[a-z0-9-_.]+$/i', ''), requestVal('uniquename', '/^[a-z0-9-_.]+$/', '')))
             die();
         break;
+    case 'diffexpr':
+        $smarty->display('diffexpr.tpl');
+        die();
+        break;
     case 'graphs':
-        $cartname = requestVal('query', sprintf('/%s/i',\webservices\cart\Sync::$regexCartName), '');
+        $cartname = requestVal('query', sprintf('/%s/i', \webservices\cart\Sync::$regexCartName), '');
         $smarty->assign('cartname', $cartname);
         $smarty->display('mav.tpl');
         die();

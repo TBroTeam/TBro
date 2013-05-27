@@ -6,20 +6,20 @@ use \PDO as PDO;
 
 class Filters_diffexp extends \WebService {
 
-    public function execute($querydata) {
+    public function forCart($querydata) {
         global $db;
-
 #UI hint
         if (false)
             $db = new PDO();
 
-        
+
+
         $ids = array();
         if (isset($querydata['ids'])) {
             $ids = array_merge($ids, $querydata['ids']);
         }
-        
-        
+
+
         $place_holders = implode(',', array_fill(0, count($ids), '?'));
 
         $query_get_filters = <<<EOF
@@ -40,15 +40,15 @@ EOF;
         $stm_get_filters = $db->prepare($query_get_filters);
 
         $data = array();
-        
+
         $stm_get_filters->execute($ids);
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
-            
+
             $data['data']['feature'][$filter['feature_id']] = self::getItem('feature', $filter);
             $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
             $data['data']['ba'][$filter['ba_id']] = self::getItem('ba', $filter);
             $data['data']['bb'][$filter['bb_id']] = self::getItem('bb', $filter);
-            
+
             $data['values'][] = array(
                 'feature' => $filter['feature_id'],
                 'analysis' => $filter['analysis_id'],
@@ -59,8 +59,71 @@ EOF;
 
         return $data;
     }
-    
-    private static function getItem($item_prefix, $row){
+
+    public function fullRelease($querydata) {
+        global $db;
+#UI hint
+        if (false)
+            $db = new PDO();
+
+        $organism = $querydata['organism'];
+        $release = $querydata['release'];
+        $constant = 'constant';
+
+//
+
+        $query_get_filters = <<<EOF
+SELECT 
+ba.name AS ba_name, ba_id, bb.name AS bb_name, bb_id, analysis.name AS analysis_name, ids.analysis_id FROM
+(SELECT 
+	d.biomateriala_id ba_id, d.biomaterialb_id bb_id, d.analysis_id
+    FROM 
+	diffexpresult d 
+	join feature f on d.feature_id=f.feature_id 
+    WHERE f.organism_id=? AND f.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)        
+    GROUP BY d.biomateriala_id, d.biomaterialb_id, d.analysis_id, f.organism_id, f.dbxref_id
+) AS ids
+JOIN biomaterial ba ON (ids.ba_id=ba.biomaterial_id)
+JOIN biomaterial bb ON (ids.bb_id=bb.biomaterial_id)
+JOIN analysis ON (ids.analysis_id=analysis.analysis_id)
+EOF;
+
+        $stm_get_filters = $db->prepare($query_get_filters);
+
+        $data = array();
+
+        $stm_get_filters->execute(array($organism, $release));
+        while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
+
+            $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
+            $data['data']['ba'][$filter['ba_id']] = self::getItem('ba', $filter);
+            $data['data']['ba'][$filter['bb_id']] = self::getItem('bb', $filter);
+
+            $data['values'][] = array(
+                'analysis' => $filter['analysis_id'],
+                'ba' => $filter['ba_id'],
+                'bb' => $filter['bb_id'],
+            );
+            // add flip
+            $data['values'][] = array(
+                'analysis' => $filter['analysis_id'],
+                'bb' => $filter['ba_id'],
+                'ba' => $filter['bb_id'],
+            );
+        }
+        $data['data']['bb'] = &$data['data']['ba'];
+        return $data;
+    }
+
+    public function execute($querydata) {
+        if ($querydata['query1'] == "forCart") {
+            return $this->forCart($querydata);
+        } else if ($querydata['query1'] == "fullRelease") {
+            return $this->fullRelease($querydata);
+        }
+    }
+
+    private static function getItem($item_prefix, $row) {
         $item = array();
         foreach ($row as $key => $val) {
             $match = null;

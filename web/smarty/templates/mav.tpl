@@ -90,32 +90,33 @@
         <div id="tabs-diffexp">
             <div class="row">
                 <div class="large-3 columns">
-                    <h4>Features</h4>
+                    <h4>Condition A</h4>
                 </div>
+                <div class="large-3 columns">
+                    <h4>Condition B</h4>
+                </div>
+                
                 <div class="large-3 columns">
                     <h4>Analysis</h4>
                 </div>
                 <div class="large-3 columns">
-                    <h4>Sample A</h4>
-                </div>
-                <div class="large-3 columns">
-                    <h4>Sample B</h4>
+                    <h4>Features</h4>
                 </div>
             </div>
 
             <form id="filters">
                 <div class="row">
                     <div class="large-3 columns panel">
-                        <select id="select-dfx-features" size="12" multiple="multiple"></select>
+                        <select id="select-dfx-conditionA" size="12"></select>
+                    </div>
+                    <div class="large-3 columns panel">
+                        <select id="select-dfx-conditionB" size="12"></select>
                     </div>
                     <div class="large-3 columns panel">
                         <select id="select-dfx-analysis" size="12"></select>
                     </div>
                     <div class="large-3 columns panel">
-                        <select id="select-dfx-sampleA" size="12"></select>
-                    </div>
-                    <div class="large-3 columns panel">
-                        <select id="select-dfx-sampleB" size="12"></select>
+                        <select id="select-dfx-features" size="12" multiple="multiple"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -128,9 +129,9 @@
                     </div>
                 </div>
             </form>
-                <div class="row" id="div-dfxtable" style="display:none">
+            <div class="row" id="div-dfxtable" style="display:none">
                 <div class="large-12 column">
-
+                    
                     <table id="diffexp">
                         <thead>  
                             <tr>
