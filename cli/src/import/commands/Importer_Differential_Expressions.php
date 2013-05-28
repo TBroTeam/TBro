@@ -85,7 +85,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $param_feature_uniquename = null;
 
             $query_insert_expressiondata = <<<EOF
-INSERT INTO diffexpresult(analysis_id, feature_id, biomateriala_id, biomaterialb_id, "baseMean", "baseMeanA", "baseMeanB", "foldChange", "log2foldChange", pval, pvaladj)
+INSERT INTO diffexpresult(analysis_id, feature_id, biomateriala_id, biomaterialb_id, baseMean, baseMeanA, baseMeanB, foldChange, log2foldChange, pval, pvaladj)
 SELECT :analysis_id, feature_id, :biomaterialA_id, :biomaterialB_id, :baseMean, :baseMeanA, :baseMeanB, :foldChange, :log2foldChange, :pval, :pvaladj
 FROM feature WHERE uniquename = :feature_uniquename AND organism_id = :organism
 EOF;
