@@ -86,8 +86,8 @@ EOF;
         $release = $querydata['release'];
         $constant = 'constant';
         $analysis = $querydata['analysis'];
-        $sampleA = $querydata['sampleA'];
-        $sampleB = $querydata['sampleB'];
+        $sampleA = $querydata['conditionA'];
+        $sampleB = $querydata['conditionB'];
 
         //dataTable variables:
 
@@ -161,8 +161,8 @@ EOF;
         $release = $querydata['release'];
         $constant = 'constant';
         $analysis = $querydata['analysis'];
-        $sampleA = $querydata['sampleA'];
-        $sampleB = $querydata['sampleB'];
+        $sampleA = $querydata['conditionA'];
+        $sampleB = $querydata['conditionB'];
 
 
         $query_get_filters = <<<EOF

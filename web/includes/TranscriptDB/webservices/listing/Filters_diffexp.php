@@ -103,12 +103,14 @@ EOF;
                 'analysis' => $filter['analysis_id'],
                 'ba' => $filter['ba_id'],
                 'bb' => $filter['bb_id'],
+                'dir' => 'ltr'
             );
             // add flip
             $data['values'][] = array(
                 'analysis' => $filter['analysis_id'],
                 'bb' => $filter['ba_id'],
                 'ba' => $filter['bb_id'],
+                'dir' => 'rtl'
             );
         }
         $data['data']['bb'] = &$data['data']['ba'];
