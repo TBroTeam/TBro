@@ -111,7 +111,7 @@ EOF;
                 $value = str_replace('Inf', 'Infinity', $filter_column['value']);
                 if (empty($value))
                     continue;
-                if (!in_array($type, array('lt', 'gt', 'eq')))
+                if (!in_array($type, array('lt', 'gt', 'eq', 'geq', 'leq')))
                     continue;
                 if (!is_numeric($value) && $value != 'Infinity' && $value != '-Infinity')
                     continue;
@@ -126,6 +126,12 @@ EOF;
                         break;
                     case 'lt':
                         array_push($where, sprintf('%s < ?', $keys[$key]));
+                        break;
+                    case 'geq':
+                        array_push($where, sprintf('%s >= ?', $keys[$key]));
+                        break;
+                    case 'leq':
+                        array_push($where, sprintf('%s <= ?', $keys[$key]));
                         break;
                 }
                 array_push($arguments, $value);
