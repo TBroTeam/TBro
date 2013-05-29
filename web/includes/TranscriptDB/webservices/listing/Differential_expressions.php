@@ -5,69 +5,67 @@ namespace webservices\listing;
 use \PDO as PDO;
 
 class Differential_expressions extends \WebService {
+    /* public function byIds($querydata) {
+      global $db;
 
-    public function byIds($querydata) {
-        global $db;
-
-#UI hint
-        if (false)
-            $db = new PDO();
+      #UI hint
+      if (false)
+      $db = new PDO();
 
 
-        $ids = array();
-        if (isset($querydata['ids'])) {
-            $ids = array_merge($ids, $querydata['ids']);
-        }
+      $ids = array();
+      if (isset($querydata['ids'])) {
+      $ids = array_merge($ids, $querydata['ids']);
+      }
 
-        $analysis = $querydata['analysis'];
-        $sampleA = $querydata['sampleA'];
-        $sampleB = $querydata['sampleB'];
-
+      $analysis = $querydata['analysis'];
+      $sampleA = $querydata['sampleA'];
+      $sampleB = $querydata['sampleB'];
 
 
 
 
 
-        if (count($ids) == 0)
-            return array('aaData' => array());
 
-        $qmarks = implode(',', array_fill(0, count($ids), '?'));
+      if (count($ids) == 0)
+      return array('aaData' => array());
 
-        $query_get_filters = <<<EOF
-SELECT 
-  f.name AS feature_name,
-  d.baseMean AS baseMean",
-  d.baseMeanA AS "baseMeanA",
-  d.baseMeanB AS "baseMeanB",
-  d.foldChange AS "foldChange",
-  d.log2foldChange AS "log2foldChange",
-  d.pval,
-  d.pvaladj
-FROM 
-  diffexpresult d 
-  JOIN feature f ON (d.feature_id = f.feature_id)
-WHERE
-   d.feature_id IN ($qmarks) AND
-   d.analysis_id = ? AND 
-   (d.biomateriala_id = ? AND
-   d.biomaterialb_id = ?)
-EOF;
+      $qmarks = implode(',', array_fill(0, count($ids), '?'));
 
-        $stm_get_diffexpr = $db->prepare($query_get_filters);
+      $query_get_filters = <<<EOF
+      SELECT
+      f.name AS feature_name,
+      d.baseMean AS baseMean",
+      d.baseMeanA AS "baseMeanA",
+      d.baseMeanB AS "baseMeanB",
+      d.foldChange AS "foldChange",
+      d.log2foldChange AS "log2foldChange",
+      d.pval,
+      d.pvaladj
+      FROM
+      diffexpresult d
+      JOIN feature f ON (d.feature_id = f.feature_id)
+      WHERE
+      d.feature_id IN ($qmarks) AND
+      d.analysis_id = ? AND
+      (d.biomateriala_id = ? AND
+      d.biomaterialb_id = ?)
+      EOF;
 
-        $data = array('aaData' => array());
+      $stm_get_diffexpr = $db->prepare($query_get_filters);
 
-        $stm_get_diffexpr->execute(array_merge($ids, array($analysis, $sampleA, $sampleB)));
-        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
-            array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
-            $data['aaData'][] = $row; //array_values($row);
-        }
+      $data = array('aaData' => array());
 
-        return $data;
-    }
+      $stm_get_diffexpr->execute(array_merge($ids, array($analysis, $sampleA, $sampleB)));
+      while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
+      array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
+      $data['aaData'][] = $row; //array_values($row);
+      }
+
+      return $data;
+      } */
 
     public static $columns = array(
-        "f.feature_id"=>'feature_id',
         'f.name' => '"feature_name"',
         'd.baseMean' => '"baseMean"',
         'd.baseMeanA' => '"baseMeanA"',
@@ -75,10 +73,11 @@ EOF;
         'd.foldChange' => '"foldChange"',
         'd.log2foldChange' => '"log2foldChange"',
         'd.pval' => 'pval',
-        'd.pvaladj' => 'pvaladj'
+        'd.pvaladj' => 'pvaladj',
+        "f.feature_id" => 'feature_id'
     );
 
-    public function fullRelease_getQueryDetails($querydata, $apply_filters = false, $apply_order = false, $apply_limit = false) {
+    public function fullRelease_getQueryDetails($querydata, $apply_filters = false) {
         $ret = array(
             'organism' => '',
             'release' => '',
@@ -123,7 +122,7 @@ EOF;
         foreach ($querydata['filter_column'] as $key => $filter_column) {
             $type = $filter_column['type'];
             $value = str_replace('Inf', 'Infinity', $filter_column['value']);
-            if (empty($value))
+            if ($value === "")
                 continue;
             if (!in_array($type, array('lt', 'gt', 'eq', 'geq', 'leq')))
                 continue;
@@ -179,6 +178,13 @@ EOF;
 
         array_push($where, 'f.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = ' . DB_ID_IMPORTS . ' AND accession = ?)');
         array_push($arguments, $querydata['release']);
+
+        if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
+            array_push($where, 'd.feature_id IN (' . implode(',', array_fill(0, count($querydata['ids']), '?')) . ')');
+            foreach ($querydata['ids'] as $id){
+                array_push($arguments, $id);
+            }
+        }
 
         if ($apply_filters) {
             $this->get_filters($querydata, $where, $arguments, $keys);
@@ -264,6 +270,7 @@ EOF;
 
         // output header
         echo "# Differential Expression Results\n";
+        printf("# you can reach the feature details via %s/details/byId/<feature_id>\n", APPPATH);
         foreach ($query_details as $mkey => $item) {
             echo "# $mkey";
 
@@ -314,7 +321,7 @@ EOF;
     }
 
     static function format(&$val, $key) {
-        if (is_numeric($val) && round($val)!=$val)
+        if (is_numeric($val) && round($val) != $val)
             $val = sprintf('%.5e', $val);
         else if ($val == 'Infinity') {
             $val = 'Inf';

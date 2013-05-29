@@ -6,12 +6,22 @@
 <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
 <!-- use chrome frame if installed and user is using IE -->
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+<script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
+<style type="text/css">
+    #filters tr td, #filters tr th {
+        padding: 1px !important;
+    }
+    #filters input {
+        margin: 0px !important;
+    }
+</style>
 <script type="text/javascript">
     (function($){
         var cartitems = {#$cartitems|json_encode#};
     {#include file="js/mav-graphs.js"#}    
             (function(){
-    {#include file="js/mav-diffexpr.js"#}
+    {#include file="js/diffexpr.js" cart_ids=true#}
             })();
             $(document).ready(function(){
                 $( "#tabs" ).tabs();
@@ -90,90 +100,7 @@
             </div>
         </div>
         <div id="tabs-diffexp">
-            <div class="row">
-                <div class="large-3 columns">
-                    <h4>Condition A</h4>
-                </div>
-                <div class="large-3 columns">
-                    <h4>Condition B</h4>
-                </div>
-
-                <div class="large-3 columns">
-                    <h4>Analysis</h4>
-                </div>
-                <div class="large-3 columns">
-                    <h4>Features</h4>
-                </div>
-            </div>
-
-            <form id="filters">
-                <div class="row">
-                    <div class="large-3 columns panel">
-                        <select id="select-dfx-conditionA" size="12"></select>
-                    </div>
-                    <div class="large-3 columns panel">
-                        <select id="select-dfx-conditionB" size="12"></select>
-                    </div>
-                    <div class="large-3 columns panel">
-                        <select id="select-dfx-analysis" size="12"></select>
-                    </div>
-                    <div class="large-3 columns panel">
-                        <select id="select-dfx-features" size="12" multiple="multiple"></select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns panel">
-                        <div class="large-8 columns">
-                        </div>
-                        <div class="large-4 columns">
-                            <button type="button" id="button-dfx-table" value="table">display Table</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="row" id="div-dfxtable" style="display:none">
-                <div class="large-12 column">
-
-                    <table id="diffexp">
-                        <thead>  
-                            <tr>
-                                <th>feature</th>
-                                <th>baseMean</th>
-                                <th>baseMeanA</th>
-                                <th>baseMeanB</th>
-                                <th>foldChange</th>
-                                <th>log2foldChange</th>
-                                <th>pval</th>
-                                <th>pvaladj</th>
-                            </tr>
-                        </thead>  
-                        <tfoot>
-                            <tr>
-                                {#for $i=0; $i<1; $i++#}
-                                <td>
-                                    <select>
-                                        <option value="contains">contains</option>
-                                    </select>
-                                    <input type="text" />
-                                </td>
-                                {#/for#}
-                                {#for $i=0; $i<7; $i++#}
-                                <td>
-                                    <select>
-                                        <option value="lt">&lt;</option>
-                                        <option value="gt">&gt;</option>
-                                        <option value="eq">=</option>
-                                        <option value="contains">contains</option>
-                                    </select>
-                                    <input type="text" />
-                                </td>
-                                {#/for#}
-                            </tr>
-                        </tfoot>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+            {#include file="display-components/diffexpr.tpl" cart_ids=true#}
         </div>
     </div>
 </div>
