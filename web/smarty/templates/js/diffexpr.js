@@ -162,6 +162,29 @@ $(document).ready(function(){
 
     } );
 
+    $(document).on('cart.addGroup', function(e){
+        $('#select-gdfx-cart').append($('<option/>').text(e.eventData.name).attr('value', e.eventData.name));
+    });
+    
+    $('#button-gdfx-addToCart').click(function(){
+        var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();
+        var group = $('#select-gdfx-cart').val();
+        if (group=='#new#'){
+            group = cart.addGroup();
+        }
+        
+        $.each(selectedItems, function(){
+            $.ajax({
+                url:'{#$ServicePath#}/details/cartitem/'+this.feature_id, 
+                success: function(item){
+                    cart.addItemToAll(item);
+                    if (group!='all')
+                        cart.addItemToGroup(item, group);
+                }
+            });
+        });
+        
+    });
 
     function update_query_details(data){
         var query_details= data.query_details;
@@ -175,16 +198,12 @@ $(document).ready(function(){
         $('.query_details').fadeIn(500);
     }
 
-    $('#filter-diffexpr-right').position({
-        my: 'left center ',
-        at: 'right center',
-        of: $('#filter-diffexpr-left')
-    });
-
     $('#diffexpr select').tooltip(metadata_tooltip_options({
         items: "option"
     }));
     $('#query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
+    
+    
 });

@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="large-5 columns panel" id='filter-diffexpr-left'>
+            <div class="large-5 columns panel">
 
                 <table id="filters" style="width:100%">
                     {#$i=1#}
@@ -60,7 +60,7 @@
                 </table>
             </div>
 
-            <div class="large-2 columns"id='filter-diffexpr-right'>
+            <div class="large-2 columns position" data-my="left center" data-at="right center" data-of="PREV">
                 <button type="button" id="button-gdfx-table" value="table">display Table</button>
             </div>
 
@@ -99,24 +99,32 @@
             <h4>Detailed Results</h4>
         </div>
         <div class="large-12 column panel">
-            <table id="diffexp_results">
-                <thead>  
-                    <tr>
-                        <th>feature</th>
-                        <th>baseMean</th>
-                        <th>baseMean1</th>
-                        <th>baseMean2</th>
-                        <th>foldChange</th>
-                        <th>log2foldChange</th>
-                        <th>pval</th>
-                        <th>pvaladj</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr><td colspan="8"></td></tr>
-                </tfoot>
-            </table>
+            <div class="large-12 column">
+                <table id="diffexp_results">
+                    <thead>  
+                        <tr>
+                            <th>feature</th>
+                            <th>baseMean</th>
+                            <th>baseMean1</th>
+                            <th>baseMean2</th>
+                            <th>foldChange</th>
+                            <th>log2foldChange</th>
+                            <th>pval</th>
+                            <th>pvaladj</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="large-12 column">
+                <span>
+                    click a row to select
+                </span>
+                <span class=" right">
+                    <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
+                    <select style="width:auto" id="select-gdfx-cart"><option value='#new#'>new</option><option value='all'>all</option></select>
+                </span>
+            </div>
         </div>
     </div>
 </div>

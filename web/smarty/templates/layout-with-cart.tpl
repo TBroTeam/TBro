@@ -1,7 +1,6 @@
 {#extends file='layout.tpl'#}
 {#block name='head'#}
 <script type="text/javascript" src="{#$AppPath#}/js/feature/cart.js"></script>
-<script type="text/javascript" src="{#$AppPath#}/js/feature/cart-init.js"></script>
 <style>
     .ui-accordion .ui-accordion-header {
         margin-bottom:0px;
@@ -25,6 +24,7 @@
     }
 </style>
 {#$smarty.block.child#}
+<script type="text/javascript" src="{#$AppPath#}/js/feature/cart-init.js"></script>
 {#/block#}
 {#block name='body'#}
 <div class="row">

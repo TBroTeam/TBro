@@ -88,6 +88,11 @@ cart.getItemByFeature_id = function(feature_id) {
  *&nbsp;@returns nothing
  *&nbsp;*/
 cart.syncAction = function(action, options) {
+    $.event.trigger({
+        type: 'cart.'+action.action,
+        eventData: action
+    });
+    
     if (options !== undefined && options.sync === false)
         return;
 
@@ -329,6 +334,7 @@ cart.addGroup = function(options) {
     });
     newEl.appendTo(cart.cart_groups);
     //newEl.hide(0).fadeIn(500);
+    
     return groupname;
 };
 
@@ -420,6 +426,7 @@ cart.addItemToAll = function(item, options) {
     });
     newEl.appendTo(cart.cart_group_all.find('ul'));
     cart.refresh_cart_group_all();
+        
 };
 
 cart.addItemToGroup = function(item, groupname, options) {
@@ -538,7 +545,9 @@ cart.refresh_cart_group_all = function() {
 
 cart.buildCartItemDOM = function(item) {
     var template_item = _.template($('#cart-item-template').html());
-    newEl = $($.parseHTML(template_item({item: item})));
+    newEl = $($.parseHTML(template_item({
+        item: item
+    })));
     newEl.attr('data-feature_id', item.feature_id);
     newEl.find('.displayname').html((item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id));
     newEl.data('metadata', item);

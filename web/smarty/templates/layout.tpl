@@ -121,7 +121,8 @@
                         .appendTo(ul);
                         return li;
                     };
-                });</script>
+                });
+        </script>
         <script type="text/javascript">
             function jumptoanchor(name){
                 $(document.body).scrollTop($('#'+name).offset().top-45);
@@ -160,6 +161,19 @@
                 color: #fff;
             }
         </style>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.position').each(function(){
+                    var that = $(this);
+                    var my = that.attr('data-my');
+                    var at = that.attr('data-at');
+                    var of = that.attr('data-of');
+                    of = of=='PREV'?that.prev():of;
+                    console.log(of);
+                    that.position({my: my, at: at, of: of});
+                });
+            });
+        </script>
 
         {#block name='head'#}{#/block#}
 
