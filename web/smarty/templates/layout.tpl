@@ -25,6 +25,7 @@
         <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/TableTools.min.js"></script>
         <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/alphanum.js"></script>
         <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/feature/datatable-init.js"></script>
+        <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/sprintf.min.js"></script>
         <link rel="stylesheet" href="{#$AppPath#}/css/jquery.dataTables_themeroller.css" />
         <link rel="stylesheet" href="{#$AppPath#}/css/TableTools.css" />
 

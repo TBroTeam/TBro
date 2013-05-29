@@ -67,6 +67,7 @@ EOF;
     }
 
     public static $columns = array(
+        "f.feature_id"=>'feature_id',
         'f.name' => '"feature_name"',
         'd.baseMean' => '"baseMean"',
         'd.baseMeanA' => '"baseMeanA"',
@@ -76,6 +77,80 @@ EOF;
         'd.pval' => 'pval',
         'd.pvaladj' => 'pvaladj'
     );
+
+    public function fullRelease_getQueryDetails($querydata, $apply_filters = false, $apply_order = false, $apply_limit = false) {
+        $ret = array(
+            'organism' => '',
+            'release' => '',
+            'conditionA' => '',
+            'conditionB' => '',
+            'analysis' => '',
+            'filters' => array()
+        );
+
+        global $db;
+        $query_biomat = $db->prepare('SELECT biomaterial_id AS id, name, description FROM biomaterial WHERE biomaterial_id=?');
+        $query_biomat->execute(array($querydata['conditionA']));
+        $ret['conditionA'] = $query_biomat->fetch(\PDO::FETCH_ASSOC);
+
+        $query_biomat->execute(array($querydata['conditionB']));
+        $ret['conditionB'] = $query_biomat->fetch(\PDO::FETCH_ASSOC);
+
+        $query_analysis = $db->prepare('SELECT analysis_id AS id, name, description, program, programversion, algorithm FROM analysis WHERE analysis_id=?');
+        $query_analysis->execute(array($querydata['analysis']));
+        $ret['analysis'] = $query_analysis->fetch(\PDO::FETCH_ASSOC);
+
+        $query_organism = $db->prepare('SELECT organism_id AS id, common_name AS name FROM organism WHERE organism_id=?');
+        $query_organism->execute(array($querydata['organism']));
+        $ret['organism'] = $query_organism->fetch(\PDO::FETCH_ASSOC);
+
+        $ret['release'] = $querydata['release'];
+
+        if ($apply_filters) {
+            $where = array();
+            $arguments = array();
+            $this->get_filters($querydata, $where, $arguments, array_values(self::$columns));
+
+            for ($i = 0; $i < count($where); $i++) {
+                array_push($ret['filters'], str_replace('"', '', str_replace('?', $arguments[$i], $where[$i])));
+            }
+        }
+
+        return $ret;
+    }
+
+    public function get_filters($querydata, &$where, &$arguments, $keys) {
+        foreach ($querydata['filter_column'] as $key => $filter_column) {
+            $type = $filter_column['type'];
+            $value = str_replace('Inf', 'Infinity', $filter_column['value']);
+            if (empty($value))
+                continue;
+            if (!in_array($type, array('lt', 'gt', 'eq', 'geq', 'leq')))
+                continue;
+            if (!is_numeric($value) && $value != 'Infinity' && $value != '-Infinity')
+                continue;
+            if ($key > count(self::$columns))
+                continue;
+            switch ($type) {
+                case 'eq':
+                    array_push($where, sprintf('%s = ?', $keys[$key]));
+                    break;
+                case 'gt':
+                    array_push($where, sprintf('%s > ?', $keys[$key]));
+                    break;
+                case 'lt':
+                    array_push($where, sprintf('%s < ?', $keys[$key]));
+                    break;
+                case 'geq':
+                    array_push($where, sprintf('%s >= ?', $keys[$key]));
+                    break;
+                case 'leq':
+                    array_push($where, sprintf('%s <= ?', $keys[$key]));
+                    break;
+            }
+            array_push($arguments, $value);
+        }
+    }
 
     public function fullRelease_buildQuery($querydata, $apply_filters = false, $apply_order = false, $apply_limit = false) {
         $keys = array_keys(self::$columns);
@@ -106,36 +181,7 @@ EOF;
         array_push($arguments, $querydata['release']);
 
         if ($apply_filters) {
-            foreach ($querydata['filter_column'] as $key => $filter_column) {
-                $type = $filter_column['type'];
-                $value = str_replace('Inf', 'Infinity', $filter_column['value']);
-                if (empty($value))
-                    continue;
-                if (!in_array($type, array('lt', 'gt', 'eq', 'geq', 'leq')))
-                    continue;
-                if (!is_numeric($value) && $value != 'Infinity' && $value != '-Infinity')
-                    continue;
-                if ($key > count(self::$columns))
-                    continue;
-                switch ($type) {
-                    case 'eq':
-                        array_push($where, sprintf('%s = ?', $keys[$key]));
-                        break;
-                    case 'gt':
-                        array_push($where, sprintf('%s > ?', $keys[$key]));
-                        break;
-                    case 'lt':
-                        array_push($where, sprintf('%s < ?', $keys[$key]));
-                        break;
-                    case 'geq':
-                        array_push($where, sprintf('%s >= ?', $keys[$key]));
-                        break;
-                    case 'leq':
-                        array_push($where, sprintf('%s <= ?', $keys[$key]));
-                        break;
-                }
-                array_push($arguments, $value);
-            }
+            $this->get_filters($querydata, $where, $arguments, $keys);
         }
         $wherestr = implode(" AND \n", $where);
 
@@ -197,10 +243,12 @@ EOF;
             $data['aaData'][] = $row; //array_values($row);
         }
 
+        $data['query_details'] = $this->fullRelease_getQueryDetails($querydata, true, true, true);
+
         return $data;
     }
 
-    public function releaseCsv($querydata) {
+    public function printCsv($querydata) {
         global $db;
 
 #UI hint
@@ -212,16 +260,27 @@ EOF;
         $stm_get_diffexpr = $db->prepare($query);
         $stm_get_diffexpr->execute($arguments);
 
+        $query_details = $this->fullRelease_getQueryDetails($querydata, true, true, true);
 
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private", false);
-        header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=\"diffexp_export.csv\";");
-        header("Content-Transfer-Encoding: binary");
+        // output header
+        echo "# Differential Expression Results\n";
+        foreach ($query_details as $mkey => $item) {
+            echo "# $mkey";
 
+            if (is_string($item)) {
+                echo "\n#\t$item\n";
+            } else if (is_array($item)) {
+                echo "\n";
+                foreach ($item as $ikey => $ivalue) {
+                    if (is_string($ikey))
+                        echo "#\t$ikey\t$ivalue\n";
+                    else
+                        echo "#\t$ivalue\n";
+                }
+            }
+        }
 
+        //output csv
         $out = fopen('php://output', 'w');
         $first = true;
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
@@ -233,7 +292,6 @@ EOF;
             fputcsv($out, array_values($row));
         }
         fclose($out);
-        die();
     }
 
     public function execute($querydata) {
@@ -242,12 +300,21 @@ EOF;
         } elseif ($querydata['query1'] == 'fullRelease') {
             return $this->fullRelease($querydata);
         } elseif ($querydata['query1'] == 'releaseCsv') {
-            return $this->releaseCsv($querydata);
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private", false);
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment; filename=\"diffexp_export.csv\";");
+            header("Content-Transfer-Encoding: binary");
+            $this->printCsv($querydata);
+            //die or WebService->output will attach return value to output (in our case: null)
+            die();
         }
     }
 
     static function format(&$val, $key) {
-        if (is_numeric($val))
+        if (is_numeric($val) && round($val)!=$val)
             $val = sprintf('%.5e', $val);
         else if ($val == 'Infinity') {
             $val = 'Inf';

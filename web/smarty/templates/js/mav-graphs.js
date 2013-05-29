@@ -31,26 +31,6 @@ $(document).ready(function(){
             }).refill();
         }
     });
-    $('#filters').tooltip({
-        items: "option",
-        open: function(event, ui) {
-            ui.tooltip.offset({
-                top: event.pageY, 
-                left: event.pageX
-            });
-            ui.tooltip.css("max-width", "600px");
-        },
-        content: function() {
-            var element = $(this);
-            var tooltip = $("<table />");
-            $.each(element.data('metadata'), function(key, val) {
-                $("<tr><td>" + key + "</td><td>" + (val !== null ? val : '') + "</td></tr>").appendTo(tooltip);
-            });
-            tooltip.foundation();
-            return tooltip;
-        }
-    });
-    
     
     
     function getFilterData() {

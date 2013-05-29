@@ -14,7 +14,9 @@
     {#include file="js/mav-diffexpr.js"#}
             })();
             $(document).ready(function(){
-                $( "#tabs" ).tabs();    
+                $( "#tabs" ).tabs();
+                
+                $('select').tooltip(metadata_tooltip_options({items: "option"}));
             });
         })(jQuery);
 </script>
@@ -95,7 +97,7 @@
                 <div class="large-3 columns">
                     <h4>Condition B</h4>
                 </div>
-                
+
                 <div class="large-3 columns">
                     <h4>Analysis</h4>
                 </div>
@@ -131,7 +133,7 @@
             </form>
             <div class="row" id="div-dfxtable" style="display:none">
                 <div class="large-12 column">
-                    
+
                     <table id="diffexp">
                         <thead>  
                             <tr>
