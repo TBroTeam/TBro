@@ -69,13 +69,14 @@ class PDOStatement extends \PDOStatement {
 
         if ($this->pdo->log_replace_params) {
             $query_type = self::$PDO_PLACEHOLDER_NONE;
-            if (preg_match('/[^:?][?][^:?]/', $query)) {
+            if (preg_match('/[^:?][?][^:?]/', $query) || preg_match('/[^:?][?]/', $query)) {
                 $query_type |= self::$PDO_PLACEHOLDER_POSITIONAL;
             }
 
             if (preg_match('/[^:?][:]([0-9A-Za-z]+)/', $query)) {
                 $query_type |= self::$PDO_PLACEHOLDER_NAMED;
             }
+            
 
             if ($query_type == (self::$PDO_PLACEHOLDER_NAMED | self::$PDO_PLACEHOLDER_POSITIONAL)) {
                 throw new \PDOException('mixed named and positional parameters');

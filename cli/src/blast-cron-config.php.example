@@ -1,0 +1,23 @@
+<?php
+//path to binary files
+define ('BLASTN', '/usr/bin/blastn');
+define ('BLASTP', '/usr/bin/blastp');
+define ('BLASTX', '/usr/bin/blastx');
+define ('TBLASTN', '/usr/bin/tblastn');
+define ('TBLASTP', '/usr/bin/tblastp');
+
+//database connection for the "blast-cron" database
+define('BLAST_CRON_DB_ADAPTER','pgsql');
+define('BLAST_CRON_DB_CONNSTR', 'pgsql:host=localhost;dbname=mydb');
+define('BLAST_CRON_DB_USERNAME', 'root');
+define('BLAST_CRON_DB_PASSWORD', '');
+
+//folder containing blast databases. databases have to be named <organism common name>_<release>.fasta
+define('BLAST_DATABASE_BASEDIR', '/usr/share/blast-databases/');
+
+//max amount of blast processes running at the same time.
+define('MAX_PARALLEL_BLAST_PROCS', 2);
+
+//debugging may be enabled here.
+define('DEBUG', false);
+?>

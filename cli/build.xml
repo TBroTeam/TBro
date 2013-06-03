@@ -3,13 +3,6 @@
 <project name="transciptome-cli" default="install">
     <property file="./build.properties" />
     
-    <property name="srcdir"   value="${project.basedir}/src/" override="true" />
-    <property name="builddir" value="${project.basedir}/build/" override="true" />
-
-
-    <property name="config_dir" value="./etc/" override="true" />
-    <property name="install_dir" value="." override="true" />
-    
 
     <target name="prepare-db">
         <mkdir dir="${builddir}"/>
@@ -95,6 +88,9 @@
             </fileset>
         </pharpackage>
     
+        <chmod file="${builddir}/db.phar" mode="0755" />
+        <chmod file="${builddir}/import.phar" mode="0755" />
+    
     </target>
     
     <target name="build-all" depends="build-db,build-import">
@@ -102,15 +98,14 @@
     
     <target name="install" depends="build-all">
         
-        <mkdir dir="${install_dir}"/>
-        <copy todir="${install_dir}" >
+        
+        <mkdir dir="${bin_dir}"/>
+        <copy todir="${bin_dir}" >
             <fileset dir="${builddir}">
                 <include name="db.phar" />
                 <include name="import.phar" />
             </fileset>
         </copy>
-        <chmod file="${install_dir}/db.phar" mode="0755" />
-        <chmod file="${install_dir}/import.phar" mode="0755" />
         
         <mkdir dir="${config_dir}"/>
         <copy todir="${config_dir}" >
