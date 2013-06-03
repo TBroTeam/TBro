@@ -46,18 +46,29 @@ class Importer_Differential_Expressions extends AbstractImporter {
         try {
             $db->beginTransaction();
 
-            $statement_get_biomaterial_id = $db->prepare('SELECT biomaterial_id FROM biomaterial WHERE name=:name LIMIT 1');
+            $statement_get_biomaterial_id = $db->prepare('SELECT b.biomaterial_id, bp.value AS type FROM biomaterial b JOIN biomaterialprop bp ON (b.biomaterial_id = bp.biomaterial_id) WHERE b.name=:name AND bp.type_id = ' . CV_BIOMATERIAL_TYPE . ' LIMIT 1');
             $statement_get_biomaterial_id->bindValue('name', $biomaterial_parentA_name);
             $statement_get_biomaterial_id->execute();
-            if (!($biomaterial_parentA_id = $statement_get_biomaterial_id->fetchColumn())) {
+            $rowa = $statement_get_biomaterial_id->fetch(\PDO::FETCH_ASSOC);
+            if ($statement_get_biomaterial_id->rowCount() == 0) {
                 throw new ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentA_name));
             }
+            if ($rowa['type'] != 'condition') {
+                throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentA_name));
+            }
+            $biomaterial_parentA_id = $rowa['biomaterial_id'];
 
             $statement_get_biomaterial_id->bindValue('name', $biomaterial_parentB_name);
             $statement_get_biomaterial_id->execute();
-            if (!($biomaterial_parentB_id = $statement_get_biomaterial_id->fetchColumn())) {
+            $rowb = $statement_get_biomaterial_id->fetch(\PDO::FETCH_ASSOC);
+            if ($statement_get_biomaterial_id->rowCount() == 0) {
                 throw new ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentB_name));
             }
+            if ($rowb['type'] != 'condition') {
+                throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentB_name));
+            }
+            $biomaterial_parentB_id = $rowb['biomaterial_id'];
+            
 
             $statement_test_biomaterial_children = $db->prepare('SELECT biomaterial_relationship_id FROM biomaterial_relationship WHERE object_id=:parent LIMIT 1');
             $statement_test_biomaterial_children->bindValue('parent', $biomaterial_parentA_id);
