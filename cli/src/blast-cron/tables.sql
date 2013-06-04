@@ -50,6 +50,7 @@ CREATE TABLE blast_cron_jobs_running_pids
   running_job_id serial NOT NULL,
   pid integer NOT NULL,
   job_id integer,
+  hostname character varying NOT NULL,
   CONSTRAINT blast_cron_jobs_running_pids_pkey PRIMARY KEY (running_job_id ),
   CONSTRAINT blast_cron_jobs_running_pids_job_id_fkey FOREIGN KEY (job_id)
       REFERENCES blast_cron_jobs (job_id) MATCH SIMPLE

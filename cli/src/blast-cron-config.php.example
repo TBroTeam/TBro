@@ -16,7 +16,16 @@ define('BLAST_CRON_DB_PASSWORD', '');
 define('BLAST_DATABASE_BASEDIR', '/usr/share/blast-databases/');
 
 //max amount of blast processes running at the same time.
-define('MAX_PARALLEL_BLAST_PROCS', 2);
+define('BLAST_CRON_MAX_PARALLEL_PROCS', 2);
+
+//lifetime for a cron-blast process until it exits and another process has to be started via cron.
+//can be set to -1 for infinite but this is not recommended
+define('BLAST_CRON_PARENT_LIFE_TIME', 600);
+//maximum time a parent waits for his children to exit until a SIGKILL is sent (should be at least as long as BLAST_MAX_EXECUTION_TIME)
+define('BLAST_CRON_MAX_GRACEFUL_EXIT_TIME', 60);
+//maximum time a child process waits for blast to return before it kills the blast process and quits with an error
+define('BLAST_CRON_BLAST_MAX_EXECUTION_TIME', 60);
+
 
 //debugging may be enabled here.
 define('DEBUG', false);
