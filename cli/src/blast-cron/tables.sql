@@ -9,6 +9,7 @@ CREATE TABLE blast_cron_jobs
   job_creation_time timestamp without time zone NOT NULL DEFAULT ('now'::text)::timestamp without time zone,
   job_processing_start_time timestamp without time zone,
   job_processing_finish_time timestamp without time zone,
+  job_md5 character varying,
   CONSTRAINT blast_cron_jobs_pkey PRIMARY KEY (job_id ),
   CONSTRAINT blast_cron_jobs_job_status_check CHECK (job_status::text = ANY (ARRAY['NOT PROCESSED'::character varying, 'PROCESSING'::character varying, 'PROCESSED'::character varying, 'ERROR'::character varying]::text[]))
 )

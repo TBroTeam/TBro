@@ -13,7 +13,7 @@ pcntl_signal(SIGINT, "child_sig_handler");
 
 register_shutdown_function(function() {
             global $db;
-            echo time() . ": exiting\n";
+            global $error_message;
 
             //don't leave any blast processes that won't get evaluated anyways
             global $process;
@@ -21,14 +21,18 @@ register_shutdown_function(function() {
                 $status = proc_get_status($process);
                 if ($status['running'] == true) {
                     proc_terminate($process);
-                    global $stdout_collected;
-                    global $job_id;
-                    $data = sprintf("---Process has received TERM signal or timeout, exiting.---\nResults so far are:\n %s", $stdout_collected);
-                    $db->prepare("UPDATE blast_cron_jobs SET job_status='ERROR' WHERE job_id = ?")->execute(array($job_id));
-                    $db->prepare("INSERT INTO blast_cron_jobs_results (job_id, results_xml) VALUES (?, ?)")->execute(array($job_id, $data));
+                    $error_message = 'Process has received TERM signal or timeout, exiting.';
                 }
             }
 
+            if (!empty($error_message)) {
+                global $job_id;
+                global $stdout_collected;
+
+                $data = sprintf("---Error Messages---\n%s\n---Results so far---\n %s", $error_message, $stdout_collected);
+                $db->prepare("UPDATE blast_cron_jobs SET job_status='ERROR' WHERE job_id = ?")->execute(array($job_id));
+                $db->prepare("INSERT INTO blast_cron_jobs_results (job_id, results_xml) VALUES (?, ?)")->execute(array($job_id, $data));
+            }
 
             $db->prepare('DELETE FROM blast_cron_jobs_running_pids WHERE pid=?')->execute(array(getmypid()));
         }
@@ -57,11 +61,11 @@ $cmd = prepare_job($jobdata);
 list($job_status, $job_stdout, $job_stderr) = handle_job($cmd, $jobdata);
 
 if ($job_status == 'PROCESSED') {
-    $db->prepare("UPDATE blast_cron_jobs SET job_status='PROCESSED' WHERE job_id = ?")->execute(array($jobdata['job_id']));
+    $db->prepare("UPDATE blast_cron_jobs SET job_status='PROCESSED', job_processing_finish_time=CURRENT_TIMESTAMP WHERE job_id = ?")->execute(array($jobdata['job_id']));
     $db->prepare("INSERT INTO blast_cron_jobs_results (job_id, results_xml) VALUES (?, ?)")->execute(array($jobdata['job_id'], $job_stdout));
 } else {
     $data = sprintf("---Exit Code: %s---\n---STDERR---\n%s\n\n\n---STDOUT---\n%s", $job_status, $job_stderr, $job_stdout);
-    $db->prepare("UPDATE blast_cron_jobs SET job_status='ERROR' WHERE job_id = ?")->execute(array($jobdata['job_id']));
+    $db->prepare("UPDATE blast_cron_jobs SET job_status='ERROR', job_processing_finish_time=CURRENT_TIMESTAMP WHERE job_id = ?")->execute(array($jobdata['job_id']));
     $db->prepare("INSERT INTO blast_cron_jobs_results (job_id, results_xml) VALUES (?, ?)")->execute(array($jobdata['job_id'], $data));
 }
 unregister_tick_function('tick_handler');
@@ -73,7 +77,7 @@ function acquire_job() {
     $db->exec('LOCK TABLE blast_cron_jobs');
     $stm = $db->query(<<<EOF
    UPDATE blast_cron_jobs 
-   SET job_status='PROCESSING' 
+   SET job_status='PROCESSING', job_processing_start_time=CURRENT_TIMESTAMP
    WHERE job_id = 
        (SELECT job_id FROM blast_cron_jobs WHERE job_status='NOT PROCESSED' ORDER BY job_creation_time ASC LIMIT 1) 
    RETURNING job_id, blast_type, organism_common_name, release_name, query
@@ -86,14 +90,11 @@ EOF
         exit(0);
     }
 
-
-
     $row = $stm->fetch(\PDO::FETCH_ASSOC);
     global $job_id;
     $job_id = $row['job_id'];
 
     $db->prepare('UPDATE blast_cron_jobs_running_pids SET job_id=? WHERE pid=?')->execute(array($row['job_id'], getmypid()));
-
 
     return $row;
 }
@@ -101,7 +102,9 @@ EOF
 function prepare_job($jobdata) {
     global $db, $blast_parameter_config;
     if (!in_array($jobdata['blast_type'], array_diff(array_keys($blast_parameter_config), array('general')))) {
-        die('illegal blast type');
+        global $error_message;
+        $error_message = 'illegal blast type';
+        exit(-1);
     }
 
     $paramconfig = array_merge($blast_parameter_config['general'], $blast_parameter_config[$jobdata['blast_type']]);
@@ -127,14 +130,22 @@ function prepare_job($jobdata) {
             //test via callback specified in $paramconfig if the specified value may override the default
             if (call_user_func_array($cfg_param['test'], array_merge(array($db_param['property_value']), $cfg_param['test_additional_parameters']))) {
                 $params[$db_param['property_name']] = $db_param['property_value'];
+            } else {
+                global $error_message;
+                $error_message = sprintf('illegal parameter or value specified: %s %s', $db_param['property_name'], $db_param['property_value']);
+                exit(-1);
             }
         }
     }
 
     $cmd = constant(strtoupper($jobdata['blast_type']));
 
-    if (!preg_match('{^\w+$}', $jobdata['organism_common_name']) || !preg_match('{^\w+$}', $jobdata['release_name']))
-        die('release name or organism name not valid');
+    if (!preg_match('{^\w+$}', $jobdata['organism_common_name']) || !preg_match('{^\w+$}', $jobdata['release_name'])) {
+        global $error_message;
+        $error_message = 'release name or organism name not valid';
+        exit(-1);
+    }
+
     $cmd .= sprintf(' -db %s/%s_%s.fasta', BLAST_DATABASE_BASEDIR, $jobdata['organism_common_name'], $jobdata['release_name']);
 
     foreach ($params as $param => $value) {
@@ -161,7 +172,6 @@ function handle_job($cmd, $jobdata) {
     $process = proc_open($cmd, $descriptorspec, $pipes, $cwd);
 
     if (is_resource($process)) {
-        echo 'starting write';
 
         fwrite($pipes[0], $jobdata['query']);
         fclose($pipes[0]);
@@ -170,7 +180,6 @@ function handle_job($cmd, $jobdata) {
         global $stdout_collected;
         $stdout_collected = '';
 
-        echo 'starting read';
 
 
         while (!feof($pipes[1])) {
