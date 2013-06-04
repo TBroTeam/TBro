@@ -28,7 +28,7 @@ pcntl_signal(SIGINT, "sig_handler");
 while (BLAST_CRON_PARENT_LIFE_TIME == -1 || $end_time > microtime(true)) {
     // after forking, commit unlocks the table but calling beginTransaction on the old $db object gives an SQL error.
     // => we need a new connection every cycle.
-    connect_db();
+    connect_blast_db();
     global $db;
     $stm_get_pids = $db->prepare('SELECT running_job_id, pid FROM blast_cron_jobs_running_pids WHERE hostname=?');
     $stm_delete_pid = $db->prepare('DELETE FROM blast_cron_jobs_running_pids WHERE running_job_id=?');
@@ -73,7 +73,7 @@ while (BLAST_CRON_PARENT_LIFE_TIME == -1 || $end_time > microtime(true)) {
             // we are the child.
             // this process needs a new PDO object, otherwise the first finishing process kills the database connection for all processes
             unset($db);
-            connect_db();
+            connect_blast_db();
             include 'run_blast.php';
             exit(0);
         }
@@ -160,7 +160,7 @@ function wait_for_child_exit($time_to_wait, &$status, $step_time_microseconds = 
     }
 }
 
-function connect_db() {
+function connect_blast_db() {
     try {
         global $db;
         if (defined('DEBUG') && DEBUG) {
