@@ -24,6 +24,9 @@ register_shutdown_function(function() {
                     $error_message = 'Process has received TERM signal or timeout, exiting.';
                 }
             }
+            global $errfile;
+            if (file_exists($errfile))
+                unlink($errfile);
 
             if (!empty($error_message)) {
                 global $job_id;
@@ -194,10 +197,12 @@ function handle_job($cmd, $jobdata) {
 
         $return_value = proc_close($process);
 
+        $errcontents = file_get_contents($errfile);
+        unlink($errfile);
+
         if ($return_value == 0) {
-            return array('PROCESSED', $stdout_collected, '');
+            return array('PROCESSED', $stdout_collected, $errcontents);
         } else {
-            $errcontents = file_get_contents($errfile);
             return array($return_value, $stdout_collected, $errcontents);
         }
         echo "command returned $return_value\n";
