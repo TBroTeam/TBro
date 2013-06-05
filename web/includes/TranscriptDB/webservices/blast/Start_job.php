@@ -16,9 +16,9 @@ class Start_job extends \WebService {
      *   )
      * );
      */
-    
-    public function start_job($querydata){
-         //TODO put BLAST_DB connection string into config
+
+    public function start_job($querydata) {
+        //TODO put BLAST_DB connection string into config
         global $db;
         $blast_db = connect_blast_db();
 
@@ -33,18 +33,19 @@ class Start_job extends \WebService {
 
         unset($blastjob['organism']);
         $blastjob['organism_name'] = $organism_name;
+        $blastjob['query'] = trim($blastjob['query']);
 
         ksort($blastjob['parameters']);
         $md5 = md5(var_export($blastjob, true));
 
 //TODO validation. not really necessary because it will be validated anyways on the blast host, but might be nice here too
 
-        
+
         $blast_db->beginTransaction();
+        //lock around all this to prevent multiple identical requests in very short time bypassing md5 test
         $blast_db->exec('LOCK TABLE blast_cron_jobs');
-        //lock around all this to prevent multiple identical requests in very short time?
-        
-        $existing_job_stm = $blast_db->prepare('SELECT job_id, blast_type, organism_common_name, release_name, query FROM blast_cron_jobs WHERE job_md5=? AND job_status!=\'ERROR\'');
+
+        $existing_job_stm = $blast_db->prepare('SELECT job_id, job_uuid, blast_type, organism_common_name, release_name, query FROM blast_cron_jobs WHERE job_md5=? AND job_status!=\'ERROR\'');
         $existing_job_stm->execute(array($md5));
         while ($existing_job = $existing_job_stm->fetch(\PDO::FETCH_ASSOC)) {
             $compObj = array(
@@ -62,15 +63,27 @@ class Start_job extends \WebService {
                 $compObj['parameters'][$parname] = $param['property_value'];
             }
 
-            if ($blastjob == $compObj){
+            if ($blastjob == $compObj) {
                 $blast_db->commit();
-                return $existing_job['job_id'];
+                return $existing_job['job_uuid'];
             }
         }
 
-        
-        $stm_insert_job = $blast_db->prepare('INSERT INTO blast_cron_jobs (blast_type, organism_common_name, release_name, query, job_md5) VALUES (?,?,?,?,?) RETURNING job_id');
-        $stm_insert_job->execute(array($blastjob['type'], $organism_name, $blastjob['release'], $blastjob['query'], $md5));
+
+
+        $stm_insert_job = $blast_db->prepare(<<<EOF
+INSERT INTO blast_cron_jobs (job_uuid, blast_type, organism_common_name, release_name, query, job_md5) 
+    (SELECT ?,?,?,?,?,? WHERE NOT EXISTS (
+        SELECT job_uuid FROM blast_cron_jobs WHERE job_uuid=?
+   )) RETURNING job_id
+EOF
+        );
+        do {
+            $uuid = uniqid();
+            $stm_insert_job->execute(array($uuid, $blastjob['type'], $organism_name, $blastjob['release'], $blastjob['query'], $md5, $uuid));
+        } while ($stm_insert_job->rowCount() == 0);
+
+
         $job_id = $stm_insert_job->fetchColumn();
 
         $stm_insert_param = $blast_db->prepare('INSERT INTO blast_cron_jobs_properties (job_id, property_name, property_value) VALUES (?,?,?)');
@@ -79,12 +92,12 @@ class Start_job extends \WebService {
         }
         $blast_db->commit();
 
-        return $job_id;
-        
+        return $uuid;
     }
 
     public function execute($querydata) {
-       return array('job_id' => $this->start_job($querydata));;
+        return array('job_id' => $this->start_job($querydata));
+        ;
     }
 
 }

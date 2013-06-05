@@ -42,26 +42,31 @@ CREATE OR REPLACE FUNCTION function_view_statistical_information() RETURNS
  END
  $BODY$;
 --NEWCMD--
-DROP VIEW IF EXISTS view_statistical_information;
+DROP TABLE IF EXISTS materialized_view_statistical_information;
 --NEWCMD--
-CREATE VIEW view_statistical_information AS SELECT * FROM function_view_statistical_information();
+CREATE TABLE materialized_view_statistical_information AS SELECT * FROM function_view_statistical_information();
+--NEWCMD--
+CREATE INDEX materialized_view_statistical_information_idx_1 ON materialized_view_statistical_information(organism, release);
 --NEWCMD--
 DROP FUNCTION IF EXISTS update_materialized_view_statistical_information();
 --NEWCMD--
 CREATE FUNCTION update_materialized_view_statistical_information() RETURNS VOID
  LANGUAGE plpgsql AS $$
  BEGIN
-        DROP INDEX IF EXISTS materialized_view_statistical_information_idx_1;
-        PERFORM refresh_matview('materialized_view_statistical_information');
-        CREATE INDEX materialized_view_statistical_information_idx_1 ON materialized_view_statistical_information(organism, release);
- 
-     RETURN;
+    DROP INDEX IF EXISTS materialized_view_statistical_information_idx_1;
+    EXECUTE 'DELETE FROM materialized_view_statistical_information';
+    EXECUTE 'INSERT INTO materialized_view_statistical_information SELECT * FROM function_view_statistical_information()';
+    CREATE INDEX materialized_view_statistical_information_idx_1 ON materialized_view_statistical_information(organism, release);
+    RETURN;
  END
  $$;
 --NEWCMD--
-SELECT drop_matview_if_exists('materialized_view_statistical_information');
+DROP FUNCTION IF EXISTS update_materialized_views();
 --NEWCMD--
-SELECT create_matview('materialized_view_statistical_information', 'view_statistical_information');
---NEWCMD--
---udpate, create indices
-SELECT update_materialized_view_statistical_information();
+CREATE FUNCTION update_materialized_views() RETURNS VOID
+ LANGUAGE plpgsql AS $$
+ BEGIN
+    EXECUTE 'SELECT update_materialized_view_statistical_information();';
+    RETURN;
+ END
+ $$;

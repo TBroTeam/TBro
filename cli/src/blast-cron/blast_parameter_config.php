@@ -13,12 +13,12 @@ $blast_parameter_config = array(
         '-num_descriptions' => array(
             'default' => 10,
             'test' => 'in_between',
-            'test_additional_parameters' => array(1, 500)
+            'test_additional_parameters' => array(1, 1000)
         ),
         '-num_alignments' => array(
             'default' => 10,
             'test' => 'in_between',
-            'test_additional_parameters' => array(1, 200)
+            'test_additional_parameters' => array(1, 1000)
         ),
         '-evalue'=>array(
             'default' => 0.1,

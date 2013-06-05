@@ -65,7 +65,7 @@ try {
 }
 
 // Page display
-$page = requestVal('page', '/^[a-z-\.]*$/', '');
+$page = requestVal('page', '/^[a-z-_\.]*$/', '');
 switch ($page) {
     case 'js':
         $js = requestVal('js', '/^[a-zA-Z-\.]*$/', '');
@@ -94,6 +94,13 @@ switch ($page) {
         $cartname = requestVal('query', sprintf('/%s/i', \webservices\cart\Sync::$regexCartName), '');
         $smarty->assign('cartname', $cartname);
         $smarty->display('mav.tpl');
+        die();
+    case 'blast':
+        $smarty->display('blast.tpl');
+        die();
+    case 'blast_results':
+        $smarty->assign('job_uuid', requestVal('job_uuid', '/^[0-9a-f]+$/', '-1'));
+        $smarty->display('blast_results.tpl');
         die();
 }
 $smarty->display('welcome.tpl');
