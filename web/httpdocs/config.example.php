@@ -15,6 +15,11 @@ define('DB_DB', 'mydb');
 define('DEFAULT_ORGANISM', 1);
 define('DEFAULT_RELEASE', 'test');
 
+//database connection for the "blast-cron" database
+define('BLAST_CRON_DB_CONNSTR', 'pgsql:host=127.0.0.1;dbname=blastdb');
+define('BLAST_CRON_DB_USERNAME', 'root');
+define('BLAST_CRON_DB_PASSWORD', '');
+
 if (isset($_REQUEST['DEBUG']))
     define('DEBUG', true);
 

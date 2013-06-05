@@ -16,31 +16,59 @@ class Start_job extends \WebService {
      *   )
      * );
      */
-
-    public function execute($querydata) {
-        //TODO connect BLAST_DB
+    
+    public function start_job($querydata){
+         //TODO put BLAST_DB connection string into config
         global $db;
         $blast_db = connect_blast_db();
 
         $blastjob = $querydata['blast_job'];
+
+        $stm_organism_name = $db->prepare('SELECT common_name FROM organism WHERE organism_id=?');
+        $stm_organism_name->execute(array($blastjob['organism']));
+
+        $organism_name = $stm_organism_name->fetchColumn();
+        if (!$organism_name)
+            return -1;
+
+        unset($blastjob['organism']);
+        $blastjob['organism_name'] = $organism_name;
+
         ksort($blastjob['parameters']);
         $md5 = md5(var_export($blastjob, true));
 
-        $existing_job_stm = $blast_db->prepare('SELECT job_id, blast_type, organism_common_name, release_name, query FROM blast_cron_jobs WHERE job_md5=? AND job_status!=\'ERROR\'')->execute(array($md5));
-        if ($existing_job_stm->row_count() > 0) {
-            $existing_job = $existing_job_stm->fetch(\PDO::FETCH_ASSOC);
+//TODO validation. not really necessary because it will be validated anyways on the blast host, but might be nice here too
 
-            //TODO verify if this is REALLY the correct job
-            return array('job_id' => $existing_job['job_id']);
+        
+        $blast_db->beginTransaction();
+        $blast_db->exec('LOCK TABLE blast_cron_jobs');
+        //lock around all this to prevent multiple identical requests in very short time?
+        
+        $existing_job_stm = $blast_db->prepare('SELECT job_id, blast_type, organism_common_name, release_name, query FROM blast_cron_jobs WHERE job_md5=? AND job_status!=\'ERROR\'');
+        $existing_job_stm->execute(array($md5));
+        while ($existing_job = $existing_job_stm->fetch(\PDO::FETCH_ASSOC)) {
+            $compObj = array(
+                'type' => $existing_job['blast_type'],
+                'organism_name' => $existing_job['organism_common_name'],
+                'release' => $existing_job['release_name'],
+                'parameters' => array(),
+                'query' => $existing_job['query']
+            );
+
+            $stm_params = $blast_db->prepare('SELECT property_name, property_value FROM blast_cron_jobs_properties WHERE job_id=?');
+            $stm_params->execute(array($existing_job['job_id']));
+            while ($param = $stm_params->fetch(\PDO::FETCH_ASSOC)) {
+                $parname = substr($param['property_name'], 1); //cut off the leading -
+                $compObj['parameters'][$parname] = $param['property_value'];
+            }
+
+            if ($blastjob == $compObj){
+                $blast_db->commit();
+                return $existing_job['job_id'];
+            }
         }
 
-        //TODO validation. not really necessary because it will be validated anyways on the blast host, but might be nice
-
-        $organism_name = $db->prepare('SELECT common_name FROM organism WHERE organism_id=?')->execute(array($blastjob['organism']))->fetchColumn();
-        if (!$organism_name)
-            return array('job_id' => -1);
-
-        $blast_db->beginTransaction();
+        
         $stm_insert_job = $blast_db->prepare('INSERT INTO blast_cron_jobs (blast_type, organism_common_name, release_name, query, job_md5) VALUES (?,?,?,?,?) RETURNING job_id');
         $stm_insert_job->execute(array($blastjob['type'], $organism_name, $blastjob['release'], $blastjob['query'], $md5));
         $job_id = $stm_insert_job->fetchColumn();
@@ -50,8 +78,13 @@ class Start_job extends \WebService {
             $stm_insert_param->execute(array($job_id, '-' . $parameter, $value));
         }
         $blast_db->commit();
-        
+
         return $job_id;
+        
+    }
+
+    public function execute($querydata) {
+       return array('job_id' => $this->start_job($querydata));;
     }
 
 }
