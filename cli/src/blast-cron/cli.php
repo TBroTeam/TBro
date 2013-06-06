@@ -147,7 +147,7 @@ function wait_for_child_exit($time_to_wait, &$status, $step_time_microseconds = 
     $sleep_until = microtime(true) + $time_to_wait;
     global $child_processes;
 
-    while (($time_left = $sleep_until - microtime(true)) > 0) {
+    while (($time_left = ($sleep_until - microtime(true))*1000*1000) > 0) {
         $process_exited = pcntl_wait($status, WNOHANG | WUNTRACED);
         //a child has finished, start another child
         if ($process_exited > 0) {

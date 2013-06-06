@@ -26,17 +26,17 @@ EOF
             $stm_job_status->execute(array($job_uuid));
             $job_status = $stm_job_status->fetch(\PDO::FETCH_ASSOC);
             switch ($job_status['job_status']) {
-                case 'ERROR':
                 case 'PROCESSING':
                     return array('job_status' => $job_status['job_status']);
                     break;
                 case 'NOT PROCESSED':
                     return $job_status;
                     break;
+                case 'ERROR':                
                 case 'PROCESSED':
                     $stm_job_results = $blast_db->prepare('SELECT results_xml FROM blast_cron_jobs LEFT JOIN blast_cron_jobs_results ON (blast_cron_jobs.job_id = blast_cron_jobs_results.job_id) WHERE job_uuid=?');
                     $stm_job_results->execute(array($job_uuid));
-                    return array('job_status' => 'PROCESSED',
+                    return array('job_status' => $job_status['job_status'],
                         'job_results' => $stm_job_results->fetchColumn(),
                         'organism_name' => $job_status['organism_common_name'],
                         'release' => $job_status['release_name'],

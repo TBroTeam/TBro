@@ -4,7 +4,7 @@ define ('BLASTN', '/usr/bin/blastn');
 define ('BLASTP', '/usr/bin/blastp');
 define ('BLASTX', '/usr/bin/blastx');
 define ('TBLASTN', '/usr/bin/tblastn');
-define ('TBLASTP', '/usr/bin/tblastp');
+define ('TBLASTX', '/usr/bin/tblastx');
 
 //database connection for the "blast-cron" database
 define('BLAST_CRON_DB_ADAPTER','pgsql');

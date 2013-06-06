@@ -149,7 +149,12 @@ function prepare_job($jobdata) {
         exit(-1);
     }
 
-    $cmd .= sprintf(' -db %s/%s_%s.fasta', BLAST_DATABASE_BASEDIR, $jobdata['organism_common_name'], $jobdata['release_name']);
+    $cmd .= sprintf(' -db %s/%s_%s%s.fasta'
+            , BLAST_DATABASE_BASEDIR
+            , $jobdata['organism_common_name']
+            , $jobdata['release_name']
+            , in_array($jobdata['blast_type'], array('blastp', 'blastx')) ? '_predpep' : ''
+    );
 
     foreach ($params as $param => $value) {
         $cmd.=sprintf(' %s %s', $param, $value);
@@ -159,7 +164,7 @@ function prepare_job($jobdata) {
 }
 
 function handle_job($cmd, $jobdata) {
-    echo "\033[43m" . "\nwill execute $cmd\n" . "\033[0m";
+    echo "\nwill execute $cmd\n";
 
     $errfile = tempnam('sys_get_temp_dir', 'runblast_pipe_stderr');
     $descriptorspec = array(
@@ -195,17 +200,20 @@ function handle_job($cmd, $jobdata) {
         }
         fclose($pipes[1]);
 
-        $return_value = proc_close($process);
 
+
+        $status = proc_get_status($process);
+        $return_value = $status['exitcode'];
+        proc_close($process);
         $errcontents = file_get_contents($errfile);
         unlink($errfile);
 
+        echo "\ncommand returned $return_value\n";
         if ($return_value == 0) {
             return array('PROCESSED', $stdout_collected, $errcontents);
         } else {
             return array($return_value, $stdout_collected, $errcontents);
         }
-        echo "command returned $return_value\n";
     }
 }
 

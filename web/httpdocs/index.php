@@ -83,7 +83,7 @@ switch ($page) {
             die();
         break;
     case 'details':
-        if (display_isoform(requestVal('organism', '/^[a-z0-9-_.]+$/i', ''), requestVal('uniquename', '/^[a-z0-9-_.]+$/', '')))
+        if (display_feature(requestVal('organism', '/^[a-z0-9-_.]+$/i', ''), requestVal('uniquename', '/^[a-z0-9-_.]+$/', '')))
             die();
         break;
     case 'diffexpr':
