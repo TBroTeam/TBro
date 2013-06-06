@@ -13,7 +13,7 @@ class Job_status extends \WebService {
             $job_uuid = $querydata['query1'];
 
             $stm_job_status = $blast_db->prepare(<<<EOF
-SELECT job_status, queue_position, queue_length
+SELECT organism_common_name, release_name, job_status, queue_position, queue_length
 FROM blast_cron_jobs j 
 LEFT JOIN (
 	SELECT job_id, row_number() OVER (PARTITION BY job_status ORDER BY job_creation_time ASC) AS queue_position
@@ -36,7 +36,11 @@ EOF
                 case 'PROCESSED':
                     $stm_job_results = $blast_db->prepare('SELECT results_xml FROM blast_cron_jobs LEFT JOIN blast_cron_jobs_results ON (blast_cron_jobs.job_id = blast_cron_jobs_results.job_id) WHERE job_uuid=?');
                     $stm_job_results->execute(array($job_uuid));
-                    return array('job_status' => 'PROCESSED', 'job_results' => $stm_job_results->fetchColumn());
+                    return array('job_status' => 'PROCESSED',
+                        'job_results' => $stm_job_results->fetchColumn(),
+                        'organism_name' => $job_status['organism_common_name'],
+                        'release' => $job_status['release_name'],
+                    );
                     break;
             }
 

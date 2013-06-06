@@ -88,7 +88,7 @@ GGGTTAATACTCGCCCTACTCCAACACGTTTGGAGCAAGAGCGGACCTGGCTGTCTCGGTGTTTGATTTTCGGATCAGAC
                                 {#/if#}
                                 {#if $blast|in_array:['blastp', 'blastx', 'tblastn', 'tblastx']#}
                                     <li>
-                                        <label for="blastform-{#$blast#}-matrix">Task:</label>
+                                        <label for="blastform-{#$blast#}-matrix">Matrix:</label>
                                         <select id="blastform-{#$blast#}-matrix" name="parameters[matrix]" style="width:auto">
                                             {#foreach $matrix as $matrix_option#}
                                                 <option {#if $matrix_option==$matrix_default#}selected="selected"{#/if#}>{#$matrix_option#}</option>
