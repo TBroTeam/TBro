@@ -34,10 +34,12 @@ EOF
                     break;
                 case 'ERROR':                
                 case 'PROCESSED':
-                    $stm_job_results = $blast_db->prepare('SELECT results_xml FROM blast_cron_jobs LEFT JOIN blast_cron_jobs_results ON (blast_cron_jobs.job_id = blast_cron_jobs_results.job_id) WHERE job_uuid=?');
+                    $stm_job_results = $blast_db->prepare('SELECT results_xml, error_text FROM blast_cron_jobs LEFT JOIN blast_cron_jobs_results ON (blast_cron_jobs.job_id = blast_cron_jobs_results.job_id) WHERE job_uuid=?');
                     $stm_job_results->execute(array($job_uuid));
+                    $results = $stm_job_results->fetch(\PDO::FETCH_ASSOC);
                     return array('job_status' => $job_status['job_status'],
-                        'job_results' => $stm_job_results->fetchColumn(),
+                        'job_results' => $results['results_xml'],
+                        'errors' => $results['error_text'],
                         'organism_name' => $job_status['organism_common_name'],
                         'release' => $job_status['release_name'],
                     );

@@ -69,7 +69,7 @@ if ($job_status == 'PROCESSED') {
 } else {
     $data = sprintf("---Exit Code: %s---\n---STDERR---\n%s\n\n\n---STDOUT---\n%s", $job_status, $job_stderr, $job_stdout);
     $db->prepare("UPDATE blast_cron_jobs SET job_status='ERROR', job_processing_finish_time=CURRENT_TIMESTAMP WHERE job_id = ?")->execute(array($jobdata['job_id']));
-    $db->prepare("INSERT INTO blast_cron_jobs_results (job_id, results_xml) VALUES (?, ?)")->execute(array($jobdata['job_id'], $data));
+    $db->prepare("INSERT INTO blast_cron_jobs_results (job_id, error_text) VALUES (?, ?)")->execute(array($jobdata['job_id'], $data));
 }
 unregister_tick_function('tick_handler');
 

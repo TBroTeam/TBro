@@ -30,7 +30,7 @@ while (BLAST_CRON_PARENT_LIFE_TIME == -1 || $end_time > microtime(true)) {
     // => we need a new connection every cycle.
     connect_blast_db();
     global $db;
-    $stm_get_pids = $db->prepare('SELECT running_job_id, pid FROM blast_cron_jobs_running_pids WHERE hostname=?');
+    $stm_get_pids = $db->prepare('SELECT running_job_id, pid, job_id FROM blast_cron_jobs_running_pids WHERE hostname=?');
     $stm_delete_pid = $db->prepare('DELETE FROM blast_cron_jobs_running_pids WHERE running_job_id=?');
     $stm_insert_pid = $db->prepare('INSERT INTO blast_cron_jobs_running_pids (pid, hostname) VALUES (?, ?)');
 
@@ -48,6 +48,16 @@ while (BLAST_CRON_PARENT_LIFE_TIME == -1 || $end_time > microtime(true)) {
         //delete rows from database for processes that aren't running any more.
         if (!file_exists(sprintf('/proc/%s', $row['pid']))) {
             //TODO: set to error
+            $jobstatus = $db->prepare("SELECT job_status FROM blast_cron_jobs WHERE job_id = ?");
+            $jobstatus->execute(array($row['job_id']));
+            if ($jobstatus->fetchColumn() == 'PROCESSING') {
+                $db->prepare("UPDATE blast_cron_jobs SET job_status='ERROR', job_processing_finish_time=CURRENT_TIMESTAMP WHERE job_id = ?")->execute(array($row['job_id']));
+                $db->prepare("INSERT INTO blast_cron_jobs_results (job_id,  error_text) VALUES (?, ?)")->execute(array($row['job_id']
+                    , 'queueing error: process got lost on the way'));
+            }
+
+
+
             $stm_delete_pid->execute(array($row['running_job_id']));
         }
         else
@@ -147,7 +157,7 @@ function wait_for_child_exit($time_to_wait, &$status, $step_time_microseconds = 
     $sleep_until = microtime(true) + $time_to_wait;
     global $child_processes;
 
-    while (($time_left = ($sleep_until - microtime(true))*1000*1000) > 0) {
+    while (($time_left = ($sleep_until - microtime(true)) * 1000 * 1000) > 0) {
         $process_exited = pcntl_wait($status, WNOHANG | WUNTRACED);
         //a child has finished, start another child
         if ($process_exited > 0) {

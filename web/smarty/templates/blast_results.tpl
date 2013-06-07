@@ -214,7 +214,7 @@
 <script type="text/template" id="template_error">
     <div class="large-12 columns panel">
         there has been an error processing your job. if this keeps happening, notify the the administrator.<br/><br/><br/>
-        <pre><%= job_results %></pre>
+        <pre><%= errors %></pre>
     </div>
 </script>
 <script type="text/template" id="template_processing">

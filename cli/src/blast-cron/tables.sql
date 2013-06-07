@@ -38,7 +38,8 @@ CREATE TABLE blast_cron_jobs_results
 (
   job_results_id serial NOT NULL,
   job_id integer NOT NULL,
-  results_xml text NOT NULL,
+  results_xml text,
+  error_text text,
   CONSTRAINT blast_cron_jobs_results_pkey PRIMARY KEY (job_results_id ),
   CONSTRAINT blast_cron_jobs_results_job_id_fkey FOREIGN KEY (job_id)
       REFERENCES blast_cron_jobs (job_id) MATCH SIMPLE
