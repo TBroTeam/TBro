@@ -94,7 +94,7 @@ while (BLAST_CRON_PARENT_LIFE_TIME == -1 || $end_time > microtime(true)) {
     // if we receive a SIGTERM, here would be a good point to exit
     pcntl_signal_dispatch();
 
-    wait_for_child_exit(10, $dummy);
+    wait_for_child_exit(5, $dummy);
 }
 echo 'time is up, waiting for graceful exit';
 wait_for_graceful_exit();

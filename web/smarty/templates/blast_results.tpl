@@ -1,5 +1,9 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
+<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
+<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+<!-- use chrome frame if installed and user is using IE -->
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <script type="text/javascript">
 
     var blast_results;
@@ -7,6 +11,14 @@
     var resultTable;
     var resultData;
     var parsedXml;
+    
+    var colorKey = {
+        40: 'rgb(0,0,0)',
+        50: 'rgb(0,0,255)',
+        80: 'rgb(127,255,0)',
+        200: 'rgb(255,20,147)',
+        Infinity: 'rgb(255,0,0)'
+    };
     
     function parse_children(skip_children, regexp, nodes){
         var ret = {};
@@ -135,11 +147,91 @@
         $('#iteration_select').change();
     }
     
+    function displayIterationGraph(iteration, canvasId){
+        var colorForScore = function(score){
+            for( var k in colorKey ) {
+                if(colorKey.hasOwnProperty(k)) {
+                    if (score<k)
+                        return colorKey[k];
+                }
+            }
+        };
+        var tracks = [];
+        var track = {
+            type: 'box',
+            data: [{
+                    id: iteration['query-ID'],
+                    fill: 'rgb(255,0,0)',
+                    outline: 'rgb(0,0,0)',
+                    data: [[1, iteration['query-len']]]
+                }]
+        };
+        tracks.push(track);
+        
+        _.each(iteration.hits, function(hit){
+            var track = {
+                hit: hit,
+                type: 'box',
+                data: [{
+                        id: hit['def_firstword'],
+                        fill: [],
+                        outline: 'rgb(0,0,0)',
+                        data: []
+                    }]
+            };
+            _.each(hit.hsps, function(hsp){
+                track.data[0].data.push([hsp['query-from'], hsp['query-to']]);
+                track.data[0].fill.push(colorForScore(hsp['score']));
+            });
+            tracks.push(track);
+        });
+        
+        canvas = $('#'+canvasId);
+        canvas.attr('width', canvas.parent().width() - 8);
+        console.log(canvas.parent());
+        new CanvasXpress(
+        canvasId,
+        {
+            min:0,
+            max:iteration['query-len']+1,
+            tracks: tracks
+        },{
+            graphType: 'Genome',
+            useFlashIE: true,
+            backgroundType: 'gradient',
+            backgroundGradient1Color: 'rgb(0,183,217)',
+            backgroundGradient2Color: 'rgb(4,112,174)',
+            oddColor: 'rgb(220,220,220)',
+            evenColor: 'rgb(250,250,250)',
+            missingDataColor: 'rgb(220,220,220)'            
+        },
+        {
+            click: function(o) {
+                var hit = o[0].hit;
+                if (typeof hit == "undefined") return;
+                var aSettings = resultTable.fnSettings();
+                $.each (aSettings.aoData, function (){
+                    var aData = this._aData;
+                    if (_.isEqual(aData, hit)){
+                        this.nTr.click();
+                        $(document.body).animate({scrollTop: $(this.nTr).offset().top-75}, 'fast');
+                        return false;
+                    }
+                });
+            }
+        }
+    );
+    }
+    
     function displayIteration(iteration){
+        console.log(iteration);
+        displayIterationGraph(iteration, 'alignmentGraph');
         if (typeof resultTable == "undefined"){
             resultTable = $('#blast_results_table').dataTable({
                 aaSorting: [[ 2, "desc" ]],
                 aaData: iteration.hits,
+                bPaginate: false,
+                bFilter: false,
                 aoColumns: [
                     /*{ mData: function(){return '<a href="javascript:triggerDetails(this);">details</a>';}, bSortable: false },*/
                     { mData: "def_firstword", sTitle:"id" },
@@ -236,50 +328,6 @@
     </div>
 </script>
 <script type="text/template" id="template_processed">
-    <pre>
-here will be a graph. in the meantime, picachu guards this space.
-
-
-quu..__
- $$$b  `---.__
-  "$$b        `--.                          ___.---uuudP
-   `$$b           `.__.------.__     __.---'      $$$$"              .
-     "$b          -'            `-.-'            $$$"              .'|
-       ".                                       d$"             _.'  |
-         `.   /                              ..."             .'     |
-           `./                           ..::-'            _.'       |
-            /                         .:::-'            .-'         .'
-           :                          ::''\          _.'            |
-          .' .-.             .-.           `.      .'               |
-          : /'$$|           .@"$\           `.   .'              _.-'
-         .'|$u$$|          |$$,$$|           |  <            _.-'
-         | `:$$:'          :$$$$$:           `.  `.       .-'
-         :                  `"--'             |    `-.     \
-        :##.       ==             .###.       `.      `.    `\
-        |##:                      :###:        |        >     >
-        |#'     `..'`..'          `###'        x:      /     /
-         \                                   xXX|     /    ./
-          \                                xXXX'|    /   ./
-          /`-.                                  `.  /   /
-         :    `-  ...........,                   | /  .'
-         |         ``:::::::'       .            |<    `.
-         |             ```          |           x| \ `.:``.
-         |                         .'    /'   xXX|  `:`M`M':.
-         |    |                    ;    /:' xXXX'|  -'MMMMM:'
-         `.  .'                   :    /:'       |-'MMMM.-'
-          |  |                   .'   /'        .'MMM.-'
-          `'`'                   :  ,'          |MMM<
-            |                     `'            |tbap\
-             \                                  :MM.-'
-              \                 |              .''
-               \.               `.            /
-                /     .:::::::.. :           /
-               |     .:::::::::::`.         /
-               |   .:::------------\       /
-              /   .''               >::'  /
-              `',:                 :    .'
-                                    
-    </pre>
     <div class="large-12 columns panel">
         <table>
             <tr><th>Program</th><td><%= execDetails.program %></td></tr>
@@ -301,10 +349,21 @@ quu..__
                 Select an Iteration: <br/>
                 <select id="iteration_select">
                     <% _.each(iterations, function(iteration, idx){ %>
-                        <option value="<%=idx%>"><%= iteration['query-ID'] %>: <%= iteration['query-def'] %></option>
+                    <option value="<%=idx%>"><%= iteration['query-ID'] %>: <%= iteration['query-def'] %></option>
                     <% }); %>
                 </select>
             </div>
+        </div>
+        <pre>
+insert color legend here
+
+|-----|-----|-----|-----|-----|
+|black|blue |green|purple| red|
+|-----|-----|-----|-----|-----|
+        </pre>
+
+        <div class="large-12 columns">
+            <canvas id="alignmentGraph"/>
         </div>
         <table id="blast_results_table"></table>
     </div>
