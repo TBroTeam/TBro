@@ -111,14 +111,18 @@
         jqR.find('BlastOutput_iterations Iteration').each(function(){
             var jqIt = $(this);
             var iteration = parse_children(['Iteration_hits', 'Iteration_stat'], iterRx, jqIt.children());
+            
             iteration.hits = [];
             
             jqIt.find('Iteration_hits Hit').each(function(){
                 var jqHit = $(this);
                 var hit = parse_children(['Hit_hsps'], hitRx, jqHit.children());
+                var hitcoverage = [];
+                for (var i=1; i<=iteration['query-len']; i++){
+                    hitcoverage[i]=false;
+                }
                 hit.hsps = [];
                 hit.def_firstword = hit.def.substr(0,hit.def.indexOf(' '));
-                hit.query_coverage = 0;
                 hit.max_score = 0;
                 hit.max_ident = 0;
                 hit.total_score = 0;
@@ -126,14 +130,16 @@
                 jqHit.find('Hsp').each(function(){
                     var jqHsp=$(this);
                     var hsp = parse_children([], hspRx, jqHsp.children());
-                    hit.query_coverage += hsp['align-len']/iteration['query-len'];
+                    for (var i=hsp['query-from']; i<=hsp['query-to']; i++){
+                        hitcoverage[i]=hsp.hseq[i-1]!=='-';
+                    }
                     hit.max_score = Math.max(hit.max_score, hsp.score);
-                    //this is wrong if chunks overlap. see http://wbbi170/httpdocs/blast_results/51b0c3e97c8be
                     hit.max_ident = Math.max(hit.max_ident, hsp.identity/(hsp['align-len']));
                     hit.total_score += hsp.score;
                     hit.evalue = Math.min(hit.evalue, hsp.evalue);
                     hit.hsps.push(hsp);
                 });                
+                hit.query_coverage = _.compact(hitcoverage).length/iteration['query-len'];
                 iteration.hits.push(hit);
             });
             iterations.push(iteration);
@@ -168,6 +174,7 @@
         };
         tracks.push(track);
         
+       
         _.each(iteration.hits, function(hit){
             var track = {
                 hit: hit,

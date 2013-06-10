@@ -82,9 +82,9 @@ $(document).ready(function(){
                         "y": val.y
                     },
                     {
-                        "graphType": "Bar",
-                        "showDataValues": true,
-                        "graphOrientation": "vertical"
+                        graphType: "Bar",
+                        showDataValues: true,
+                        graphOrientation: "vertical"
                     });
 
                 canvas.data('canvasxpress', cx);
@@ -127,9 +127,11 @@ $(document).ready(function(){
                         "y": val.y
                     },
                     {
-                        "graphType": "Heatmap",
-                        "showDataValues": true,
-                        "graphOrientation": "vertical"
+                        graphType: "Heatmap",
+                        showDataValues: true,
+                        graphOrientation: "vertical",
+                        zoomSamplesDisable: true,
+                        zoomVariablesDisable: true
                     });
 
                 canvas.data('canvasxpress', cx);

@@ -91,9 +91,9 @@ $(document).ready(function() {
                         "y": val.y
                     },
                     {
-                        "graphType": "Bar",
-                        "showDataValues": true,
-                        "graphOrientation": "vertical"
+                        graphType: "Bar",
+                        showDataValues: true,
+                        graphOrientation: "vertical"
                     });
 
                 canvas.data('canvasxpress', cx);
