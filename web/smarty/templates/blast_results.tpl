@@ -249,7 +249,7 @@
                     { mData: fnMDataScientific("max_ident"), sTitle:"max identity" }
                 ],
                 fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    $(nRow).find('td:eq(0)').html( '<a target="_blank" href="{#$AppPath#}/details/byOrganismAndUniquename/'+resultData.organism_name+'/'+resultData.release+'_'+aData.def_firstword+'">'+aData.def_firstword+'</a>' );
+                    $(nRow).find('td:eq(0)').html( '<a target="_blank" href="{#$AppPath#}/details/byOrganismReleaseName/'+resultData.additional.organism+'/'+resultData.additional.release+'/'+aData.def_firstword+'#'+aData.def_firstword.replace('.','_')+'">'+aData.def_firstword+'</a>' );
                     $(nRow).css( 'cursor', 'pointer' );
                 }
             });
@@ -312,26 +312,29 @@
 {#block name='body'#}
 <script type="text/template" id="template_error">
     <div class="large-12 columns panel">
-        there has been an error processing your job. if this keeps happening, notify the the administrator.<br/><br/><br/>
+        There has been an error processing your job.<br/>
+        Please review your job.<br/>
+        If this keeps happening, notify the the administrator.<br/><br/><br/>
+        These errors occured:<br/>
         <pre><%= errors %></pre>
     </div>
 </script>
 <script type="text/template" id="template_processing">
     <div class="large-12 columns panel">
-        your job is currently being processed. please wait a moment.<br/>
-        this page will refresh in 2 seconds.
+        Your job is currently being processed. Please wait a moment.<br/>
+        This page will refresh in 2 seconds.
     </div>
 </script>
 <script type="text/template" id="template_not_processed">
     <div class="large-12 columns panel">
-        still in queue (position <%=queue_position%> of <%=queue_length%>). you may bookmark this page for later use.<br/>
-        this page will refresh in 2 seconds.
+        Still in queue (position <%=queue_position%> of <%=queue_length%>). You may bookmark this page for later use.<br/>
+        This page will refresh in 2 seconds.
     </div>
 </script>
 <script type="text/template" id="template_unknown">
     <div class="large-12 columns panel">
-        job status can currently not be retreived. please bookmark this page and try again later.<br/>
-        this page will refresh in 2 seconds.
+        Job status can currently not be retreived. Please bookmark this page and try again later.<br/>
+        This page will refresh in 2 seconds.
     </div>
 </script>
 <script type="text/template" id="template_processed">
@@ -361,13 +364,23 @@
                 </select>
             </div>
         </div>
-        <pre>
-insert color legend here
 
-|-----|-----|-----|-----|-----|
-|black|blue |green|purple| red|
-|-----|-----|-----|-----|-----|
-        </pre>
+        <div class="large-centered large-6 columns ">
+            <table style="width:100%;">
+                <tr><th colspan="42">Color key for alignment scores</th></tr>
+                <tr>
+                    <% var lastMax; _.each(colorKey, function(color, maxVal){ %>
+                    <th style="background-color: <%= color %>; color: white"><% if (maxVal == Infinity) { 
+                        print('&gt;= '+lastMax);
+                        } else if (typeof lastMax === 'undefined') { 
+                        print('&lt; '+maxVal);
+                        } else { 
+                        print(lastMax+' - '+maxVal);
+                        } 
+                        lastMax = maxVal; }); %></th>
+                </tr>
+            </table>
+        </div>   
 
         <div class="large-12 columns">
             <canvas id="alignmentGraph"/>
@@ -387,6 +400,10 @@ insert color legend here
         <tr><th>Identities</th><td><%= hsp['identity'] %>/<%= hsp['align-len'] %></td></tr>
         <tr><th>Positives</th><td><%= hsp['positive'] %>/<%= hsp['align-len'] %></td></tr>
         <tr><th>Gaps</th><td><%= hsp['gaps'] %>/<%= hsp['align-len'] %></td></tr>
+        <% if (typeof hsp['query-frame'] !== 'undefined' ) { %>
+        <tr><th>Query Frame</th><td><%= hsp['query-frame'] %></td></tr>
+        <tr><th>Hit Frame</th><td><%= hsp['hit-frame'] %></td></tr>
+        <% } %>
         <tr><td colspan="2">
                 <pre>
 <% _.each(cut_alignment(hsp.qseq, hsp.hseq, hsp.midline, 100, hsp['query-from'], hsp['hit-from']), function(chunk){ %>
@@ -401,11 +418,11 @@ insert color legend here
 
 <div class="row">
     <div class="large-12 columns">
-        <h2>blast results</h2>
+        <h2>Blast Results</h2>
     </div>
     <div id="blast_results">
         <div class="large-12 columns panel">
-            loading, please wait...
+            <h4>loading, please wait...</h4>
         </div>
     </div>
 

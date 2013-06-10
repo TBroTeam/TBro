@@ -10,12 +10,12 @@
                     <div class="tabs">
                         <ul>
                             {#foreach $predpeps as $predpep#}
-                                <li><p><a href="#{#$predpep.uniquename|clean_id#}">{#if $predpep.strand gt 0#}{#$predpep.fmin#}{#else#}{#$predpep.fmax#}{#/if#}-{#if $predpep.strand gt 0#}{#$predpep.fmax#}{#else#}{#$predpep.fmin#}{#/if#}</a></p></li>
+                                <li><p><a href="#{#$predpep.name|clean_id#}">{#$predpep.name#}</a></p></li>
                             {#/foreach#}
                         </ul>
 
                         {#foreach $predpeps as $predpep#}
-                            <div id="{#$predpep.uniquename|clean_id#}">
+                            <div id="{#$predpep.name|clean_id#}">
                                 <div class="row">
                                     <div class="large-12 columns">
                                         <table style="width:100%">

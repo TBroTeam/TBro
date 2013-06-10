@@ -83,7 +83,7 @@ switch ($page) {
             die();
         break;
     case 'details':
-        if (display_feature(requestVal('organism', '/^[a-z0-9-_.]+$/i', ''), requestVal('uniquename', '/^[a-z0-9-_.]+$/', '')))
+        if (display_feature(requestVal('organism', '/^[0-9]+$/i', ''), requestVal('release', '/^[a-z0-9-_.]+$/', ''), requestVal('name', '/^[a-z0-9-_.]+$/', '')))
             die();
         break;
     case 'diffexpr':
@@ -105,19 +105,21 @@ switch ($page) {
 }
 $smarty->display('welcome.tpl');
 
-function display_feature($organism, $uniquename) {
+function display_feature($organism, $release, $name) {
 
     global $db;
     $stm = $db->prepare(<<<EOF
 SELECT feature_id 
-    FROM feature 
-        JOIN organism ON (feature.organism_id = organism.organism_id) 
-    WHERE feature.uniquename = :uniquename AND organism.common_name = :organism
+    FROM feature JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id)
+    WHERE organism_id = ? AND accession=? AND name=?
 EOF
     );
-    $stm->execute(array($uniquename, $organism));
+    
+    $stm->execute(array($organism, $release, $name));
+
     if ($stm->rowCount() == 0)
         return false;
+
     return display_feature_by_id($stm->fetchColumn());
 }
 
@@ -141,6 +143,11 @@ EOF
         case CV_UNIGENE:
             return display_unigene_by_id($feature_id);
             break;
+        case CV_PREDPEP:
+            $stm_parent_isoform = $db->prepare('SELECT srcfeature_id FROM featureloc WHERE feature_id=? ');
+            $stm_parent_isoform->execute(array($feature_id));
+            return display_feature_by_id($stm_parent_isoform->fetchColumn());
+            die();
     }
     return false;
 }

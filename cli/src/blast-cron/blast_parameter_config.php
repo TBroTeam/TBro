@@ -1,9 +1,25 @@
 <?php
+
 function in_between($val, $min, $max) {
     return $min <= $val && $val <= $max;
 }
 
-$blast_matrix_options = array('BLOSUM45','BLOSUM50','BLOSUM62','BLOSUM80','BLOSUM90','PAM30','PAM70','PAM250');
+$blast_matrix_options = array('BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250');
+
+function get_blastdb_path($blasttype, $targetdb_identifier) {
+    $db_files = array(
+        'blastn' => '%s.fasta',
+        'blastp' => '%s_predpep.fasta',
+        'blastx' => '%s_predpep.fasta',
+        'tblastn' => '%s.fasta',
+        'tblastx' => '%s.fasta',
+    );
+
+    return sprintf('%s/%s'
+                    , BLAST_DATABASE_BASEDIR
+                    , sprintf($db_files[$blasttype], $targetdb_identifier)
+    );
+}
 
 $blast_parameter_config = array(
     'general' => array(
@@ -20,7 +36,7 @@ $blast_parameter_config = array(
             'test' => 'in_between',
             'test_additional_parameters' => array(1, 1000)
         ),
-        '-evalue'=>array(
+        '-evalue' => array(
             'default' => 0.1,
             'test' => 'in_between',
             'test_additional_parameters' => array(0, 100)
@@ -51,19 +67,18 @@ $blast_parameter_config = array(
         )
     ),
     'tblastn' => array(
-         '-matrix' => array(
+        '-matrix' => array(
             'default' => 'BLOSUM62',
             'test' => 'in_array',
             'test_additional_parameters' => array($blast_matrix_options)
         )
     ),
     'tblastx' => array(
-         '-matrix' => array(
+        '-matrix' => array(
             'default' => 'BLOSUM62',
             'test' => 'in_array',
             'test_additional_parameters' => array($blast_matrix_options)
         )
     ),
 );
-
 ?>

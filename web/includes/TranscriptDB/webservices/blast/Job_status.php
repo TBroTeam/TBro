@@ -13,7 +13,7 @@ class Job_status extends \WebService {
             $job_uuid = $querydata['query1'];
 
             $stm_job_status = $blast_db->prepare(<<<EOF
-SELECT organism_common_name, release_name, job_status, queue_position, queue_length
+SELECT targetdb_identifier, job_status, additional_data, queue_position, queue_length
 FROM blast_cron_jobs j 
 LEFT JOIN (
 	SELECT job_id, row_number() OVER (PARTITION BY job_status ORDER BY job_creation_time ASC) AS queue_position
@@ -40,8 +40,7 @@ EOF
                     return array('job_status' => $job_status['job_status'],
                         'job_results' => $results['results_xml'],
                         'errors' => $results['error_text'],
-                        'organism_name' => $job_status['organism_common_name'],
-                        'release' => $job_status['release_name'],
+                        'additional' => json_decode($job_status['additional_data']) //organism (id), release (text)
                     );
                     break;
             }

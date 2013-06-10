@@ -83,7 +83,7 @@ function acquire_job() {
    SET job_status='PROCESSING', job_processing_start_time=CURRENT_TIMESTAMP
    WHERE job_id = 
        (SELECT job_id FROM blast_cron_jobs WHERE job_status='NOT PROCESSED' ORDER BY job_creation_time ASC LIMIT 1) 
-   RETURNING job_id, blast_type, organism_common_name, release_name, query
+   RETURNING job_id, blast_type, targetdb_identifier, query
 EOF
     );
     $db->commit();
@@ -143,18 +143,13 @@ function prepare_job($jobdata) {
 
     $cmd = constant(strtoupper($jobdata['blast_type']));
 
-    if (!preg_match('{^\w+$}', $jobdata['organism_common_name']) || !preg_match('{^\w+$}', $jobdata['release_name'])) {
+    if (!preg_match('{^[a-zA-Z0-9\._-]+$}', $jobdata['targetdb_identifier'])) {
         global $error_message;
-        $error_message = 'release name or organism name not valid';
+        $error_message = 'target database name not valid';
         exit(-1);
     }
 
-    $cmd .= sprintf(' -db %s/%s_%s%s.fasta'
-            , BLAST_DATABASE_BASEDIR
-            , $jobdata['organism_common_name']
-            , $jobdata['release_name']
-            , in_array($jobdata['blast_type'], array('blastp', 'blastx')) ? '_predpep' : ''
-    );
+    $cmd.= ' -db ' . get_blastdb_path($jobdata['blast_type'], $jobdata['targetdb_identifier']);
 
     foreach ($params as $param => $value) {
         $cmd.=sprintf(' %s %s', $param, $value);
@@ -207,12 +202,16 @@ function handle_job($cmd, $jobdata) {
         proc_close($process);
         $errcontents = file_get_contents($errfile);
         unlink($errfile);
-
+        // hotfix for a blast error in blast < 2.2.27 concerning * in the database, which will return a 0xff,
+        // which itself will break XML parsing
+        // https://github.com/yannickwurm/sequenceserver/issues/87
+        // more on this here: http://blastedbio.blogspot.co.uk/2012/08/stop-breaking-ncbi-blast-searches.html
+        $stdout_fixed = strtr($stdout_collected, sprintf('%c', 0xff), 'X');
         echo "\ncommand returned $return_value\n";
         if ($return_value == 0) {
-            return array('PROCESSED', $stdout_collected, $errcontents);
+            return array('PROCESSED', $stdout_fixed, $errcontents);
         } else {
-            return array($return_value, $stdout_collected, $errcontents);
+            return array($return_value, $stdout_fixed, $errcontents);
         }
     }
 }

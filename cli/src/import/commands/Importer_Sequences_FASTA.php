@@ -82,7 +82,6 @@ class Importer_Sequences_FASTA extends AbstractImporter {
         try {
             $db->beginTransaction();
             $import_prefix_id = Importer_Sequence_Ids::get_import_dbxref();
-            
             # prepare statements
             #
         #isoform sequence
@@ -92,10 +91,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
             $statement_update_isoform->bindParam('residues', $param_isoform_residues, PDO::PARAM_STR);
             $statement_update_isoform->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
-            $statement_insert_isoform_path = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (:feature_id, :type_id, :value)');
-            $statement_insert_isoform_path->bindValue('type_id', CV_ISOFORM_PATH, PDO::PARAM_INT);
-            $statement_insert_isoform_path->bindParam('feature_id', $param_isoform_feature_id, PDO::PARAM_INT);
-            $statement_insert_isoform_path->bindParam('value', $param_isoform_path, PDO::PARAM_STR);
+            $statement_insert_featureprop = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (:feature_id, :type_id, :value)');
 
             #predicted peptide
             $statement_insert_predpep = $db->prepare('INSERT INTO feature  (type_id, organism_id, name, uniquename, seqlen, residues, dbxref_id) '
@@ -127,9 +123,9 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                 #isoform header like this:
                 //TODO generalize
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
-                if (preg_match('/^>(?<name>\w+) len=(?<seqlen>\d+) path=(?<path>\[(?:\d+:\d+-\d+ ?)+\])$/', $description, $matches)) {
+                if (preg_match('/^>(?<name>\w+) .*$/', $description, $matches)) {
                     $param_isoform_uniq = IMPORT_PREFIX . "_" . $matches['name'];
-                    $param_isoform_seqlen = $matches['seqlen'];
+                    $param_isoform_seqlen = strlen($sequence);
                     $param_isoform_residues = $sequence;
 
                     $statement_update_isoform->execute();
@@ -138,15 +134,19 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                     $param_isoform_feature_id = $statement_update_isoform->fetchColumn();
                     $param_isoform_path = $matches['path'];
 
-                    $statement_insert_isoform_path->execute();
+                    $statement_insert_featureprop->execute(array(
+                        'type_id' => CV_ISOFORM_PATH,
+                        'feature_id' => $param_isoform_feature_id,
+                        'value' => $param_isoform_path
+                    ));
                     $isoforms_updated++;
                 }
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>m.\d+ g.\d+  ORF g.\d+ m.\d+ type:\w+ len:(?<len>\d+) \([+-]\) (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
-                    $param_predpep_name = self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
-                    $param_predpep_uniq = IMPORT_PREFIX . "_" . $param_predpep_name;
-                    $param_predpep_seqlen = $matches['len'];
+                else if (preg_match('/^>(?<id>m.\d+) .* (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
+                    $param_predpep_name = $matches['id'];
+                    $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
+                    $param_predpep_seqlen = strlen($sequence);
                     $param_predpep_residues = $sequence;
 
                     $statement_insert_predpep->execute();
@@ -186,10 +186,13 @@ class Importer_Sequences_FASTA extends AbstractImporter {
         return <<<EOF
    
 File Format has to be a typical fasta file.
-Header line has to look like this:
->id description
-   
-\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
+isoform headers have to look like
+>comp173079_c0_seq1 <comment>
+
+predpep headers have to look like
+>m.1812924 <comments> comp173079_c0_seq1:3-1130(+)
+
+\033[0;31mThis import requires a successful Sequence ID Import for the isoforms that should be imported!\033[0m
 EOF;
     }
 
