@@ -94,7 +94,7 @@ class PDOStatement extends \PDOStatement {
         $ex = null;
         try {
             $result = parent::execute($bound_input_params);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $ex = $e;
         }
         $time = microtime(true) - $start;
