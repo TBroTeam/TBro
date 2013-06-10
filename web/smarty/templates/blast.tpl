@@ -40,7 +40,7 @@
 
     <div class="row">
         <div class="large-12 columns">
-            <h2>blast against selected release</h2>
+            <h2>Blast against selected release</h2>
         </div>
         <div class="large-12 columns panel">
             <div id="blast-tabs">
@@ -60,10 +60,7 @@
                                 <div class="large-12 columns">
                                     <label for="blastform-{#$blast#}-query">FASTA sequence(s):</label>
                                     <textarea id="blastform-{#$blast#}-query" name="query" style="width:100%; height:200px; white-space: nowrap;">
-                            >Chlamydomonas phantasticum
-GGGTTAATACTCGCCCTACTCCAACACGTaaTGGAGCAAGAGCGGAatgaCTGTCTCGGTGTTTGATTTTCGGATCAGACGCCGGGTCAGCTGTACAGAGGTTGATGCATGGACCCGCTTATGcGGCCTCTACTGGGTAGGCAACTCGTTGCTAATGCTTTAGTAGATGGCaatGAGCTGTGCTTGTCGACCCAAACCAGGAACTTTGGCCCTGTGCCGAAGCAAACCCCTATTTTC
->Chlamydomonas reinhardtii
-GGGTTAATACTCGCCCTACTCCAACACGTTTGGAGCAAGAGCGGACCTGGCTGTCTCGGTGTTTGATTTTCGGATCAGACGCCGGGTCAGCTGAAGTACAGAGGTTGATGCATGGACCCGCTTATGGGCCTCTACTGGGTAGGCAACTCGTTGCTAATGCTTTAGTAGATGGCTTGGAGCTGTGCTTGTCGACCCAAACCAGGAACTTTGGCCCTGTGCCGAAGCAAACCCCTATTTTC
+
                                     </textarea>
                                 </div>
                             </div>

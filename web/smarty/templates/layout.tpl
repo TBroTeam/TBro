@@ -130,7 +130,9 @@
             }
     
             function addNavAnchor(name, linktext){
-                $('#quicknav-parent').show();
+                if ($('#quicknav-pageheader').length==0){
+                    $('#quicknav').append('<li class="divider" id="quicknav-pageheader"></li><li><a>on this page</a></li><li class="divider"></li>');
+                }
                 $('#quicknav').append('<li><a href="javascript:jumptoanchor(\'anchor-'+name+'\');">'+linktext+'</a></li>');
                 document.write('<div id="anchor-'+name+'"> </div>');
             }
@@ -188,8 +190,10 @@
                 </ul>
                 <section class="top-bar-section">
                     <ul class="left">{#block name='header-nav'#}
-                        <li class="has-dropdown"  id="quicknav-parent" style="display:none"><a href="#">QuickNav</a>
+                        <li class="has-dropdown"  id="quicknav-parent"><a href="#">QuickNav</a>
                             <ul class="dropdown" id="quicknav">
+                                <li><a href="{#$AppPath#}/diffexpr">differential expressions</a></li>
+                                <li><a href="{#$AppPath#}/blast">blast against this release</a></li>
                             </ul>
                         </li>
                         {#/block#}</ul>
