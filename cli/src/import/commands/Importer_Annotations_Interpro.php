@@ -23,7 +23,7 @@ class Importer_Annotations_Interpro extends AbstractImporter {
 (?:[\t]   (?<analysisMatchDescription>.*))?
 [\t]   (?<domStart>\d+)
 [\t]   (?<domEnd>\d+)
-[\t]   (?<eValue>(?:NA|\d+(?:\.\d+)?(?:e[+-]\d+)?))
+[\t]   (?<eValue>(?:NA|\d+(?:\.\d+)?(?:[Ee][+-]\d+)?))
 [\t]   (?<status>[T?])
 [\t]   (?<timeexecuted>[\w-]*)
 [\t]   (?<interproID>\w*)
@@ -156,8 +156,10 @@ EOF;
             while (($line = trim(fgets($file))) != false) {
                 $match = array();
                 preg_match(self::$regex, $line, $match);
-                if (count($match) == 0)
+                if (count($match) == 0){
                     self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
+                    continue;     
+                }
 
 
                 // set params for statements

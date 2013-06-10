@@ -40,10 +40,10 @@ class Importer_Annotations_Repeatmasker extends AbstractImporter {
 # (22462)  = no. of bases in query sequence past the ending position of match
 (?:[C+][ ])?
 # C        = match is with the Complement of the repeat consensus sequence
-(?<repeat_name>[\w()-]+)\#
+(?<repeat_name>[\w()-?]+)\#
 # MER7A    = name of the matching interspersed repeat
-(?<repeat_class>[\w()-]+)
-(?:/(?<repeat_family>[\w()-]+))?[ ]
+(?<repeat_class>[\w()-?]+)
+(?:/(?<repeat_family>[\w()-?]+))?[ ]
 # DNA/MER2_type = the class of the repeat, in this case a DNA transposon fossil of the MER2 group (see below for list and references)
 \(?\d+\)?[ ]
 # (0)      = no. of bases in (complement of) the repeat consensus sequence prior to beginning of the match (0 means that the match extended all the way to the end of the repeat consensus sequence)

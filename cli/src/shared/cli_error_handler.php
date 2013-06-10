@@ -13,7 +13,7 @@ function cli_error_handler($err_code, $err_text, $err_file, $err_line) {
             break;
 
         case E_USER_NOTICE:
-            $parser->outputter->stdout(sprintf("Notice: %s\n", $err_text));
+            $parser->outputter->stderr(sprintf("Notice: %s\n", $err_text));
             break;
 
         default:
