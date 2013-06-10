@@ -192,8 +192,8 @@
                     <ul class="left">{#block name='header-nav'#}
                         <li class="has-dropdown"  id="quicknav-parent"><a href="#">QuickNav</a>
                             <ul class="dropdown" id="quicknav">
-                                <li><a href="{#$AppPath#}/diffexpr">differential expressions</a></li>
-                                <li><a href="{#$AppPath#}/blast">blast against this release</a></li>
+                                <li><a href="{#$AppPath#}/diffexpr">Differential Expressions</a></li>
+                                <li><a href="{#$AppPath#}/blast">Blast</a></li>
                             </ul>
                         </li>
                         {#/block#}</ul>

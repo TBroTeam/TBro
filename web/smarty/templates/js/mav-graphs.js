@@ -5,14 +5,15 @@ $(document).ready(function(){
     var select_analysis = $('#select-analysis');
     var select_tissues = $('#select-sample');
     
-    new filteredSelect(select_assay, 'assay', {
-        precedessorNode: select_element
-    });
+    
     new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
-    new filteredSelect(select_tissues, 'sample', {
+    new filteredSelect(select_element, 'feature', {
         precedessorNode: select_analysis
+    });
+    new filteredSelect(select_tissues, 'sample', {
+        precedessorNode: select_element
     });            
     $.ajax('{#$ServicePath#}/listing/filters/', {
         method: 'post',
@@ -26,9 +27,10 @@ $(document).ready(function(){
             _.each(cartitems, function(value, key, list){
                 filterdata.data.feature[value.feature_id] = value;
             });
-            new filteredSelect(select_element, 'feature', {
+            new filteredSelect(select_assay, 'assay', {
                 data: filterdata
             }).refill();
+            
         }
     });
     

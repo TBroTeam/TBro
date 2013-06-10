@@ -39,12 +39,12 @@ FROM
   assay,
   biomaterial
 WHERE 
-  expressionresult.feature_id = feature.feature_id AND
-  expressionresult.biomaterial_id = biomaterial.biomaterial_id AND
-  quantification.quantification_id = expressionresult.quantification_id AND
-  quantification.analysis_id = analysis.analysis_id AND
-  quantification.acquisition_id = acquisition.acquisition_id AND
-  acquisition.assay_id = assay.assay_id AND
+  expressionresult.feature_id        = feature.feature_id AND
+  expressionresult.biomaterial_id    = biomaterial.biomaterial_id AND
+  expressionresult.analysis_id       = analysis.analysis_id AND
+  expressionresult.quantification_id = quantification.quantification_id AND
+  quantification.acquisition_id      = acquisition.acquisition_id AND
+  acquisition.assay_id               = assay.assay_id AND
   feature.feature_id IN ({$place_holders});
 EOF;
 

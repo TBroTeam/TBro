@@ -54,7 +54,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
      */
     static function import($options) {
         $filename = $options['file'];
-        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        $lines_total = trim(`grep -c '>' $filename`);
         self::setLineCount($lines_total);
 
         global $db;

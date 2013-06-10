@@ -59,11 +59,10 @@ WHERE
   expressionresult.feature_id = feature.feature_id AND
   
 
-  expressionresult.quantification_id = quantification.quantification_id AND
-  quantification.analysis_id IN ({$query_subqueries['analysis']}) AND
-  quantification.analysis_id = analysis.analysis_id AND
+  expressionresult.analysis_id IN ({$query_subqueries['analysis']}) AND
+  expressionresult.analysis_id = analysis.analysis_id AND
   
-  
+  expressionresult.quantification_id = quantification.quantification_id AND  
   quantification.acquisition_id = acquisition.acquisition_id AND
   acquisition.assay_id IN ({$query_subqueries['assay']}) AND
   acquisition.assay_id = assay.assay_id AND
