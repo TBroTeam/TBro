@@ -13,7 +13,7 @@ class Searchbox extends \WebService {
         $species = $_REQUEST['species'];
         $import = $_REQUEST['release'];
 
-        $term = $_REQUEST['term'] . '%';
+        $term = trim($_REQUEST['term']) . '%';
 
 
 #UI hint

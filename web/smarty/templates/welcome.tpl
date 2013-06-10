@@ -41,19 +41,6 @@
 </div>
 
 <div class="row">
-    <div class="large-12 columns">
-        <h4>functionality</h4>
-    </div>
-    <div class="large-12 columns panel">
-        <ul>
-        <li><a href="{#$AppPath#}/diffexpr">differential expressions</a></li>
-        <li><a href="{#$AppPath#}/blast">blast against this release</a></li>
-        
-        </ul>
-    </div>
-</div>
-
-<div class="row">
     <div class="large-12 columns panel">
         <p>Try searching for comp231081_c0_seq1 or comp214244_c0_seq2 .</p>
     </div>
