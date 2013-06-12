@@ -85,7 +85,7 @@ try {
         }
         else
             $db = new PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
     }

@@ -110,6 +110,24 @@ $cvterm_data = array (
     'cv' => 'Statistical Terms',
     'id' => 42830,
   ),
+  'CV_ANNOTATION_MAPMAN_PROP' => 
+  array (
+    'name' => 'annotation_mapman',
+    'cv' => 'feature_property',
+    'id' => 42852,
+  ),
+  'CV_ANNOTATION_MAPMAN_FEATURE' => 
+  array (
+    'name' => 'annoation_mapman_feature',
+    'cv' => 'sequence',
+    'id' => 42853,
+  ),
+  'CV_ANNOTATION_MAPMAN_RELATIONSHIP' => 
+  array (
+    'name' => 'mapman_is_a',
+    'cv' => 'relationship',
+    'id' => 42854,
+  ),
   0 => 
   array (
     'name' => 'article',
@@ -257,6 +275,9 @@ define ('CV_BIOMATERIAL_ISA', '32');
 define ('CV_BIOMATERIAL_TYPE', '42828');
 define ('WEBUSER_CART', '42829');
 define ('QUANTIFICATION_TYPE_EXPECTED_COUNT', '42830');
+define ('CV_ANNOTATION_MAPMAN_PROP', '42852');
+define ('CV_ANNOTATION_MAPMAN_FEATURE', '42853');
+define ('CV_ANNOTATION_MAPMAN_RELATIONSHIP', '42854');
 
 ?><?php
         define('DB_NAME_IMPORTS', 'local_imports');

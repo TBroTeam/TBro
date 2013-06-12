@@ -52,7 +52,7 @@ class Importer_Annotations_Description extends AbstractImporter {
                 $err = $db->errorInfo();
                 throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
             }
-        } catch (Exception $error) {
+        } catch (\Exception $error) {
             $db->rollback();
             throw $error;
         }

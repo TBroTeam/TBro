@@ -91,6 +91,18 @@ $cvterms = array(
         'name' => 'expected_count',
         'cv' => 'Statistical Terms'
     ),
+    'CV_ANNOTATION_MAPMAN_PROP' => array(
+        'name' => 'annotation_mapman',
+        'cv' => 'feature_property'
+    ),
+    'CV_ANNOTATION_MAPMAN_FEATURE' => array(
+        'name' => 'annoation_mapman_feature',
+        'cv' => 'sequence'
+    ),
+    'CV_ANNOTATION_MAPMAN_RELATIONSHIP' => array(
+        'name' => 'mapman_is_a',
+        'cv' => 'relationship'
+    ),
     array('name' => 'article', 'cv' => 'local'),
     array('name' => 'book', 'cv' => 'local'),
     array('name' => 'booklet', 'cv' => 'local'),

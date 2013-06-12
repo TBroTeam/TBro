@@ -145,7 +145,7 @@ function wait_for_graceful_exit() {
     return count($child_processes) == 0;
 }
 
-function kill_children($signal = SIGKILL) {
+function kill_children($signal = SIGTERM) {
     global $child_processes;
 
     foreach ($child_processes as $pid) {
@@ -180,7 +180,7 @@ function connect_blast_db() {
         }
         else
             $db = new PDO(BLAST_CRON_DB_CONNSTR, BLAST_CRON_DB_USERNAME, BLAST_CRON_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false));
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
     }

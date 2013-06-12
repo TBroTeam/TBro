@@ -33,7 +33,7 @@ function get_db_connection($connstr, $username, $password) {
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         return $db;
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
     }
