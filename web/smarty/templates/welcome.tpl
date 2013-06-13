@@ -42,7 +42,7 @@
 
 <div class="row">
     <div class="large-12 columns panel">
-        <p>Try searching for comp231081_c0_seq1 or comp214244_c0_seq2 .</p>
+        <p>Try searching for comp231081_c0_seq1, comp234627_c0_seq7 or comp214244_c0_seq2 .</p>
     </div>
 </div>
 {#/block#}
