@@ -162,6 +162,8 @@
 
 {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
 
+{#include file="display-components/mapman.tpl" feature=$data.isoform #}
+
 {#include file="display-components/publication.tpl" feature=$data.isoform #}
 
 

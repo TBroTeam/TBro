@@ -101,6 +101,9 @@ EOF
             $file = fopen($filename, 'r');
             //skip header line
             fgets($file);
+            $i = 0;
+            $last_start = 0;
+            $executions = array();
             while (($line = fgetcsv($file, 0, "\t")) != false) {
                 // header, looks like <BINCODE>\t<H_DESC>
                 if (count($line) == 2) {
@@ -127,8 +130,8 @@ EOF
                             ':organism_id' => DB_ORGANISM_ID,
                             ':dbxref_id' => $import_prefix_id
                         ));
-                        if ($stm_get_parentfeature->rowCount() == 0){
-                            self::updateProgress($lines_imported+(++$lines_skipped));
+                        if ($stm_get_parentfeature->rowCount() == 0) {
+                            self::updateProgress($lines_imported + (++$lines_skipped));
                             continue;
                         }
                         $parent_id = $stm_get_parentfeature->fetchColumn();
@@ -174,6 +177,7 @@ EOF
                 }
                 self::updateProgress((++$lines_imported) + $lines_skipped);
             }
+
             self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
