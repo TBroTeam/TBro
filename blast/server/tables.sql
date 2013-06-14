@@ -24,7 +24,7 @@ INSERT INTO programs (name) VALUES
 CREATE TABLE jobs
 (
 	job_id serial NOT NULL PRIMARY KEY,
-	uuid varchar NOT NULL UNIQUE,
+	uid varchar NOT NULL UNIQUE,
 	programname varchar NOT NULL REFERENCES programs(name),
 	target_db varchar NOT NULL,
 	additional_data text,
@@ -38,7 +38,8 @@ CREATE TABLE job_parameters
 	job_parameter_id serial NOT NULL PRIMARY KEY,
 	job_id integer NOT NULL REFERENCES jobs(job_id),
 	param_name varchar NOT NULL,
-	param_value varchar NOT NULL
+	param_value varchar NOT NULL,
+	UNIQUE (job_id, param_name)
 );
 
 CREATE TABLE job_queries
@@ -139,6 +140,9 @@ DECLARE
 	_param_constraints allowed_parameters%ROWTYPE;
 	_retval boolean;
 BEGIN
+	IF _parameters IS NULL THEN
+		RETURN TRUE;
+	END IF;
 	FOREACH _param SLICE 1 IN ARRAY _parameters
 	LOOP
 		SELECT * INTO _param_constraints FROM allowed_parameters WHERE programname=_programname AND param_name=_param[1];
@@ -196,7 +200,6 @@ BEGIN
 		RAISE NOTICE 'no jobs available';
 		RETURN;
 	END IF;
-	START TRANSACTION;
 	IF _max_jobs_running <> -1 THEN --check if this worker can start another job
 		LOCK TABLE running_queries; --locked until we are finished, either because we are already at max jobs for this worker or we have assigned a new task
 		IF _worker_identifier IS NULL THEN
@@ -207,12 +210,11 @@ BEGIN
 		RAISE NOTICE '% jobs are currently running for %', _jobs_running, _worker_identifier;
 		IF _jobs_running >= _max_jobs_running THEN
 			RAISE NOTICE 'already at full capacity, exiting';
-			ROLLBACK;
 			RETURN;
 		END IF;
 	END IF;
 	--assign a job
-	--while we do this, we don't want anyone else grab our job.
+	--while we do this, we don't want anyone else grab the same job.
 	LOCK TABLE job_queries;
 		SELECT job_query_id, job_id,  programname,  query 
 		INTO _job_query_id, _job_id, _programname, _query
@@ -226,7 +228,6 @@ BEGIN
 
 		UPDATE job_queries SET status='STARTING', max_lifetime=_max_lifetime WHERE job_query_id=_job_query_id;
 		INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier);
-	COMMIT;
 	RETURN QUERY SELECT _job_query_id, _programname, _parameters, _fasta_header, _query, _max_lifetime;
 END;
 $BODY$
@@ -257,15 +258,90 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _queries text[]) RETURNS varchar
+CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _queries text[]) 
+RETURNS varchar
 AS 
 $BODY$
+DECLARE 
+	_md5 varchar;
+	_uid varchar;
+	_job_id integer;
+	_param varchar[];
+	_query text;
+	_default_parameter allowed_parameters%ROWTYPE;
 BEGIN
+	IF NOT EXISTS (SELECT 1 FROM programs WHERE name=_programname) THEN
+		RAISE NOTICE 'program unknown: %', _programname;
+		RETURN NULL;
+	END IF;
+
+	IF NOT check_parameters(_programname, _parameters) THEN
+		RETURN NULL;
+	END IF;
+
+	IF _queries IS NULL THEN
+		RAISE NOTICE 'query is NULL';
+		RETURN NULL;
+	END IF;	
+
+
+	-- sort and remove duplicates
+	SELECT ARRAY(SELECT DISTINCT UNNEST(_queries) a ORDER BY a) INTO _queries;
+	
+	_md5 := md5((_programname, _target_db, _additional_data, _parameters::text, _queries::text)::text);
+
+	LOCK TABLE jobs;
+	
+	SELECT uid FROM jobs WHERE md5 = _md5 INTO _uid;
+	IF _uid IS NOT NULL THEN
+		--TODO complete check
+		RETURN _uid;
+	END IF;
+	
+	LOOP --generate a random 32-bit-uid until it is unique
+		_uid = to_hex((random()*power(2,32))::bigint);
+		EXIT WHEN NOT EXISTS (SELECT 1 FROM jobs WHERE uid=_uid);
+	END LOOP;
+
+	--insert job
+	INSERT INTO jobs ( programname,  target_db,  additional_data,  md5,  uid) 
+		VALUES   (_programname, _target_db, _additional_data, _md5, _uid)
+	RETURNING job_id INTO _job_id;
+	RAISE NOTICE 'inserted job id %', _job_id;
+
+	--insert default parameters
+	FOR _default_parameter IN SELECT * FROM allowed_parameters WHERE programname=_programname AND default_value IS NOT NULL LOOP
+		INSERT INTO job_parameters ( job_id,  param_name,  param_value) 
+		VALUES   (_job_id, _default_parameter.param_name, _default_parameter.default_value);
+	END LOOP;
+	
+	--override custom parameters
+	IF _parameters IS NOT NULL THEN
+		FOREACH _param SLICE 1 IN ARRAY _parameters LOOP
+			IF EXISTS (SELECT 1 FROM job_parameters WHERE job_id = _job_id AND param_name = _param[1]) THEN
+				UPDATE job_parameters SET param_value = _param[2]
+				WHERE job_id = _job_id AND param_name = _param[1];
+			ELSE
+				INSERT INTO job_parameters ( job_id,  param_name,  param_value) 
+				VALUES   (_job_id, _param[1], _param[2]);
+			END IF;
+		END LOOP;
+	END IF;
+
+	--insert queries
+	FOREACH _query IN ARRAY _queries LOOP
+		INSERT INTO job_queries ( job_id,  query) 
+		VALUES   (_job_id, _query);
+	END LOOP;
+
+	--done
+	RETURN _uid;
 END;
 $BODY$
 LANGUAGE plpgsql;
 
+--SELECT create_job('blastn', 'human', '', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']], ARRAY['TGC','TGAC','TGAC','TGAC']);
 
-SELECT request_job(0,NULL, ARRAY['blastp']);
+--SELECT request_job(0,NULL, ARRAY['blastp']);
 
-SELECT check_parameters('blastn', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']]);
+--SELECT check_parameters('blastn', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']]);
