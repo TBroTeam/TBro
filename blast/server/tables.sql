@@ -1,4 +1,5 @@
-﻿DROP TYPE IF EXISTS job_status CASCADE;
+﻿DROP TABLE IF EXISTS programs CASCADE;
+DROP TYPE IF EXISTS job_status CASCADE;
 DROP TABLE IF EXISTS jobs CASCADE;
 DROP TABLE IF EXISTS job_parameters CASCADE;
 DROP TABLE IF EXISTS job_queries CASCADE;
@@ -44,8 +45,7 @@ CREATE TABLE job_queries
 (
 	job_query_id serial NOT NULL PRIMARY KEY,
 	job_id integer NOT NULL REFERENCES jobs(job_id),
-	fasta_header varchar,
-	query_sequence text NOT NULL,
+	query text NOT NULL,
 	status job_status NOT NULL DEFAULT 'NOT_PROCESSED',
 	processing_start_time timestamp without time zone,
 	processing_end_time timestamp without time zone,
@@ -131,6 +131,33 @@ INSERT INTO allowed_parameters
 ('tblastx', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']);
 
+CREATE OR REPLACE FUNCTION check_parameters(_programname varchar, _parameters varchar[][]) RETURNS boolean
+AS 
+$BODY$
+DECLARE 
+	_param varchar[];
+	_param_constraints allowed_parameters%ROWTYPE;
+	_retval boolean;
+BEGIN
+	FOREACH _param SLICE 1 IN ARRAY _parameters
+	LOOP
+		SELECT * INTO _param_constraints FROM allowed_parameters WHERE programname=_programname AND param_name=_param[1];
+		IF _param_constraints IS NULL THEN
+			RAISE NOTICE 'Parameter % is not defined for Programname %', _param[1], _programname;
+			RETURN FALSE;
+		END IF;
+		EXECUTE 'SELECT ' || _param_constraints.constraint_function || '($1, $2)' 
+			INTO _retval USING _param[2], _param_constraints.constraint_function_parameters;
+		IF _retval = FALSE THEN
+			RAISE NOTICE 'Invalid argument for Parameter %: %', _param[1], _param[2];
+			RETURN FALSE;
+		END IF;
+	END LOOP;
+	RETURN TRUE;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION get_job_parameters(_job_id int)  RETURNS varchar
 AS
 $BODY$
@@ -187,8 +214,8 @@ BEGIN
 	--assign a job
 	--while we do this, we don't want anyone else grab our job.
 	LOCK TABLE job_queries;
-		SELECT job_query_id, job_id,  programname,  fasta_header,  query 
-		INTO _job_query_id, _job_id, _programname, _fasta_header, _query
+		SELECT job_query_id, job_id,  programname,  query 
+		INTO _job_query_id, _job_id, _programname, _query
 		FROM job_queries
 		WHERE status='NOT_PROCESSED' AND programname=any(_handled_programs)
 		ORDER BY job_query_id ASC
@@ -209,7 +236,7 @@ CREATE OR REPLACE FUNCTION report_job_pid(_job_query_id int,  _pid int) RETURNS 
 AS 
 $BODY$
 BEGIN
-	UPDATE job_queries     SET status='PROCESSING' WHERE  job_query_id=_job_query_id;
+	UPDATE job_queries SET     status='PROCESSING' WHERE  job_query_id=_job_query_id;
 	UPDATE running_queries SET pid=_pid            WHERE  job_query_id=_job_query_id;
 END;
 $BODY$
@@ -219,18 +246,18 @@ CREATE OR REPLACE FUNCTION report_job_result(_job_query_id int,  _return_code in
 AS 
 $BODY$
 BEGIN
-	UDPATE job_queries SET
+	UPDATE job_queries SET 
 		status = CASE WHEN _return_code = 0 THEN 'PROCESSED' ELSE 'PROCESSED_WITH_ERRORS' END,
-		return_code = _return_code,
-		stdout = _stdout,
-		stderr = _stderr
+		return_code = _return_code, 
+		stdout = _stdout, 
+		stderr = _stderr 
 	WHERE job_query_id=_job_query_id;
-	REMOVE FROM running_queries WHERE  job_query_id=_job_query_id;
+	DELETE FROM running_queries WHERE  job_query_id=_job_query_id;
 END;
 $BODY$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _full_fasta text) RETURNS varchar
+CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _queries text[]) RETURNS varchar
 AS 
 $BODY$
 BEGIN
@@ -240,3 +267,5 @@ LANGUAGE plpgsql;
 
 
 SELECT request_job(0,NULL, ARRAY['blastp']);
+
+SELECT check_parameters('blastn', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']]);
