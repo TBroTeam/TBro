@@ -1,4 +1,19 @@
 /**
+ * get GET parameter from querystring
+ */
+function getParameterByName(name) {
+    var uri = location.search;
+    var params = uri.substr(uri.indexOf('?')+1);
+    var splitParams = params.split(/(&amp;|&)/);
+    for (var i=0; i<splitParams.length; i++){
+        var matches = splitParams[i].match(/^(.*)=(.*)$/);
+        if (matches!=null && matches[1]==name){
+            return matches[2];
+        }
+    }
+}
+
+/**
  * parses Blast XML output into a Javascript Object
  */
 function parseBlastXml(job_results){

@@ -93,7 +93,7 @@
     
     
             function check_job_status() {
-                $.ajax('{#$ServicePath#}/blast/job_status/{#$job_uuid#}', {
+                $.ajax('ajax/blast_results.php?jobid='+getParameterByName('jobid'), {
                     success: function(ret) {
                         switch (ret.job_status) {
                             case 'ERROR':
