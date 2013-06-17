@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS job_queries CASCADE;
 DROP TABLE IF EXISTS running_queries CASCADE;
 DROP TABLE IF EXISTS allowed_parameters CASCADE;
 DROP TYPE blast_type;
-CREATE TYPE job_status AS ENUM('NOT_PROCESSED', 'STARTING', 'PROCESSING', 'PROCESSED', 'PROCESSED_WITH_ERRORS', 'ERROR');
+CREATE TYPE job_status AS ENUM('NOT_PROCESSED', 'STARTING', 'PROCESSING', 'PROCESSED','ERROR');
 CREATE TYPE blast_type AS ENUM('blastn', 'blastp', 'blastx', 'tblastn', 'tblastx');
 
 CREATE TABLE programs
@@ -248,7 +248,7 @@ AS
 $BODY$
 BEGIN
 	UPDATE job_queries SET 
-		status = CASE WHEN _return_code = 0 THEN 'PROCESSED' ELSE 'PROCESSED_WITH_ERRORS' END,
+		status = CASE WHEN _return_code = 0 THEN 'PROCESSED' ELSE 'ERROR' END,
 		return_code = _return_code, 
 		stdout = _stdout, 
 		stderr = _stderr 

@@ -143,3 +143,139 @@ function displayIterationGraph(iteration, canvasId, colorKey, elementClickCallba
         );
 }
 
+
+/**
+ * calls displayIterationGraph, fills Iteration Table
+ */    
+function displayIteration(iteration, resultTable, canvas){
+    function openRowOnHit(){
+        var hit = this;
+        if (typeof hit == "undefined") return;
+        var aSettings = resultTable.fnSettings();
+        $.each (aSettings.aoData, function (){
+            var aData = this._aData;
+            if (_.isEqual(aData, hit)){
+                this.nTr.click();
+                $(document.body).animate({
+                    scrollTop: $(this.nTr).offset().top-75
+                }, 'fast');
+                return false;
+            }
+        });
+    }
+        
+    function fnMDataScientific(storeValue){
+        return function ( data, type, val ) {
+            if (type === 'set') {
+                data[storeValue] = val;
+                return;
+            }
+            else if (type === 'display') {
+                return fmtScientific(data[storeValue]);
+            }
+            return data[storeValue];
+        }
+    };
+
+    function openCloseDetails(){
+        if ( resultTable.fnIsOpen(this) ) {
+            resultTable.fnClose( this );
+        } else {
+            var aData = resultTable.fnGetData( this );
+            resultTable.fnOpen( this, templates.PROCESSED_HIT({
+                hit: aData
+            }), 'details' );
+        }
+    }
+        
+    canvas.attr('width', canvas.parent().width() - 8);
+    displayIterationGraph(iteration, canvas, colorKey, openRowOnHit);
+    if (typeof resultTable == "undefined"){
+        resultTable = $('#blast_results_table').dataTable({
+            aaSorting: [[ 2, "desc" ]],
+            aaData: iteration.hits,
+            bPaginate: false,
+            bFilter: false,
+            aoColumns: [
+            {
+                mData: "def_firstword", 
+                sTitle:"id"
+            },
+            {
+                mData: "max_score", 
+                sTitle:"max score"
+            },
+            {
+                mData: "total_score", 
+                sTitle:"total score"
+            },
+            {
+                mData: fnMDataScientific("query_coverage"), 
+                sTitle:"coverage"
+            },
+            {
+                mData: fnMDataScientific("evalue"), 
+                sTitle:"evalue"
+            },
+            {
+                mData: fnMDataScientific("max_ident"), 
+                sTitle:"max identity"
+            }
+            ],
+            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                $(nRow).find('td:eq(0)').html( '<a target="_blank" href="/'+aData.def_firstword+'#'+aData.def_firstword.replace('.','_')+'">'+aData.def_firstword+'</a>' );
+                $(nRow).css( 'cursor', 'pointer' );
+            }
+        });
+        resultTable.on('click','tr',openCloseDetails);
+    } else {
+        resultTable.fnClearTable();
+        resultTable.fnAddData(iteration.hits);
+    }
+}
+    
+    
+/**
+ * formats a number. 0 will be output as 0, |values| less than 0.001 will be output as scientific numbers, others will be output with 3 significant numbers
+ */
+function fmtScientific(val){
+    if (val == 0)
+        return val;
+    if (Math.abs(val) < 0.001)
+        return sprintf('%.3e', val);
+    return sprintf('%.3f',val);
+}
+
+
+/**
+ * wordwraps the three lines hseq, qseq and midline  around line_length, prepends numbers and counts around gaps
+ */
+function cut_alignment(qseq, hseq, midline, line_length, qseq_start, hseq_start){
+    var ret = [];
+    var qseq_pos = qseq_start;
+    var hseq_pos = hseq_start;
+        
+    for (var i=0; i<qseq.length; i+=line_length){
+            
+        var qseq_sub = qseq.substring(i, i+line_length);
+        var qseq_gaps = (qseq_sub.match(/\-/g)||[]).length;
+        var hseq_sub = hseq.substring(i, i+line_length);
+        var hseq_gaps = (hseq_sub.match(/\-/g)||[]).length;
+            
+        var chunk = {
+            qseq:    qseq_sub,
+            qseq_start: qseq_pos,
+            qseq_end  : qseq_pos + qseq_sub.length - 1 - qseq_gaps,
+            hseq:    hseq_sub,
+            hseq_start: hseq_pos,
+            hseq_end  : hseq_pos + hseq_sub.length - 1 - hseq_gaps,
+            midline: midline.substring(i, i+line_length)
+        };
+            
+        qseq_pos += line_length - qseq_gaps;
+        hseq_pos += line_length - hseq_gaps;
+            
+        ret.push(chunk);
+    }
+    return ret;
+}
