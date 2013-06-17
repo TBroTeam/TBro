@@ -24,8 +24,6 @@ foreach ($job['parameters'] as $key => $value) {
 $additional_data = isset($job['additional_data']) ? $job['additional_data'] : array();
 $parameter_qmarks = count($parameters) == 0 ? 'ARRAY[]' : implode(',', array_fill(0, count($parameters) / 2, 'ARRAY[?,?]'));
 try {
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
     $pdo = new PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_EMULATE_PREPARES => false));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $statement_create_job = $pdo->prepare('SELECT * FROM create_job(?,  ?, ?, ARRAY[' . $parameter_qmarks . '], ARRAY[' . $query_qmarks . ']);');

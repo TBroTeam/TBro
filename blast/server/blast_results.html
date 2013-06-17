@@ -6,11 +6,11 @@
         <meta name="viewport" content="width=device-width" />
         <title>Blast</title>
         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css">
-        <script type="text/javascript" charset="utf-8" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/foundation.min.css" />
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/foundation.min.css" />
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js"></script>
         <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
         <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
         <!-- use chrome frame if installed and user is using IE -->
@@ -39,7 +39,7 @@
                 templates = {
                     ERROR: _.template($('#template_error').html()),
                     PROCESSING: _.template($('#template_processing').html()),
-                    "NOT PROCESSED": _.template($('#template_not_processed').html()),
+                    NOT_PROCESSED: _.template($('#template_not_processed').html()),
                     UNKNOWN: _.template($('#template_unknown').html()),
                     PROCESSED: _.template($('#template_processed').html()),
                     RESULTDETAILS: _.template($('#template_resultDetails').html()),
@@ -48,7 +48,6 @@
                 };
                 check_job_status();
             });
-
 
             /*
              * expects results in the following form:
@@ -59,6 +58,8 @@
              *     #recommended:#
              *     display_feature_link_sprintf: 'http://mydb.org/show_feature/%s'
              *   },
+             *   queue_position: (if NOT_PROCESSED)
+             *   queue_length: (if NOT_PROCESSED)
              *   blast_results: [
              *     {
              *       query: string, #original query
@@ -94,6 +95,7 @@
     
             function check_job_status() {
                 $.ajax('ajax/blast_results.php?jobid='+getParameterByName('jobid'), {
+                    dataType:'JSON',
                     success: function(ret) {
                         switch (ret.job_status) {
                             case 'ERROR':
@@ -115,6 +117,7 @@
                                 //should not happen, quit
                                 return;
                         };
+                        
                         div_blast_results.empty().html(templates[ret.job_status](ret));
                     }
                 });
