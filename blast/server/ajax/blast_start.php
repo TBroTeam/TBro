@@ -78,7 +78,7 @@ function split_fasta($query, $type) {
 
     $queries = array();
 
-    if (strpos($query, '>') == 0) {
+    if (strpos($query, '>') === FALSE) {
         //we have just one sequence without header
         $query = trim($query);
         if (preg_match('/^[0-9\\s' . $fasta_allowed[$type] . ']+$/im', $query))
@@ -94,7 +94,7 @@ function split_fasta($query, $type) {
         $lines = explode(PHP_EOL, $query);
         foreach ($lines as $nr => $line) {
             $line = trim($line);
-            if (strpos('>', $line) === 0) {
+            if (strpos($line, '>') === 0) {
 // header line
                 $require_next_line_header = false;
                 $queries [] = "";
@@ -106,7 +106,7 @@ function split_fasta($query, $type) {
                     error(sprintf('Missing FASTA Header at line number %d', $nr));
                 if (!preg_match('/^[' . $fasta_allowed[$type] . ']+$/i', $line))
                     error(sprintf('FASTA sequence invalid in line %d!', $nr));
-                $current.=$line;
+                $current.="\n".$line;
             } else {
 //empty line, require a new header
                 $require_next_line_header = true;

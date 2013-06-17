@@ -142,8 +142,8 @@ AS
 $BODY$
 BEGIN
 	UPDATE job_queries SET 
-		status = CASE WHEN _return_code = 0 THEN 'PROCESSED' ELSE 'ERROR' END,
-		return_code = _return_code, 
+		status = CASE WHEN _return_code = 0 THEN 'PROCESSED'::job_status ELSE 'ERROR'::job_status END,
+		return_value = _return_code, 
 		stdout = _stdout, 
 		stderr = _stderr 
 	WHERE job_query_id=_job_query_id;

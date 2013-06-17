@@ -13,13 +13,15 @@ require_once $configfile;
 $supported_programs = unserialize(SUPPORTED_PROGRAMS);
 $supported_programs_qmarks = implode(',', array_fill(0, count($supported_programs), '?'));
 
+//TODO get rid of DB orphans
+
 while (true) {
     $pdo = pdo_connect();
     $stm_get_job = $pdo->prepare('SELECT * FROM request_job(?, ?, ARRAY[' . $supported_programs_qmarks . '])');
     $stm_get_job->execute(array_merge(array(MAX_FORKS, HOSTNAME), array_keys($supported_programs)));
     if ($stm_get_job->rowCount() > 0) {
         $new_job = $stm_get_job->fetch(PDO::FETCH_ASSOC);
-        /*we don't want fork to mess with our pdo object. this will cause trouble.*/
+        /* we don't want fork to mess with our pdo object. this will cause trouble. */
         unset($pdo, $stm_get_job);
         $pid = pcntl_fork();
         if ($pid == -1) {
@@ -28,20 +30,16 @@ while (true) {
             //try if we can get another job
             continue;
         } else {
-            var_dump($new_job);
             execute_job($new_job);
+            global $return_value;
+            exit($return_value);
         }
     } else {
-        usleep(2.5 * 1000 * 1000);
+        usleep(5 * 1000 * 1000);
     }
 }
 
 function pdo_connect() {
-    require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
-        require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
-    $pdo = new \LoggedPDO\PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false),
-                    Log::factory('console', '', 'PDO'));
-    return $pdo;
     $pdo = new PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_PERSISTENT => false, PDO::ATTR_EMULATE_PREPARES => false));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
@@ -51,16 +49,24 @@ function pdo_connect() {
 function execute_job($job) {
     $pdo = pdo_connect();
     $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job['job_query_id'], posix_getpid()));
-    register_shutdown_function(function() {
-                finish_job($pdo, $job['job_query_id']);
+    global $job_id;
+    $job_id = $job['job_query_id'];
+    register_shutdown_function(finish_job);
+    global $end_time;
+    $end_time = microtime(true) + $job['max_lifetime'];
+    declare(ticks = 10); //every 10 microactions, call the tick handler to check for timeout
+    register_tick_function(function () {
+                global $end_time;
+                if ($end_time < microtime(true)) {
+                    exit(-1);
+                }
             });
-
     $supported_programs = unserialize(SUPPORTED_PROGRAMS);
     $cmd = $supported_programs[$job['programname']];
     $cmd.= ' ' . $job['parameters'];
     //TODO
-    $cmd .=' -db 13_test.fasta';
-    execute_command(BLAST_DATABASE_BASEDIR, $cmd, $job['query']);
+    $cmd .=" -db 13_test.fasta";
+    execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
 }
 
 function execute_command($cwd, $cmd, $query) {
@@ -69,7 +75,7 @@ function execute_command($cwd, $cmd, $query) {
     $descriptorspec = array(
         0 => array("pipe", "r"), // stdin 
         1 => array("pipe", "w"), // stdout
-        2 => array("pipe", "a")  // stderr
+        2 => array("pipe", "w")  // stderr
     );
 
     $pipes = array();
@@ -78,36 +84,38 @@ function execute_command($cwd, $cmd, $query) {
     $process = proc_open($cmd, $descriptorspec, $pipes, $cwd);
 
     if (is_resource($process)) {
-        $stdin = &$pipes[0];
-        $stdout = &$pipes[1];
-        $stderr = &$pipes[2];
-
-
-        fwrite($stdin, $query);
-        fclose($stdin);
-
-        //this is global so it can be accessed by signal handler on SIGTERM etc.
+        //this is global so it can be accessed by signal handler
         global $stdout_collected, $stderr_collected, $return_value;
-        $stdout_collected = '';
-        $stderr_collected = '';
+        $return_value = -1; //error, may be set to 0 on clean exit
+        $stdout_collected = $stderr_collected = '';
 
+        fwrite($pipes[0], $query);
+        fclose($pipes[0]);
 
-        while (!feof($stdout) || !feof($stderr)) {
-            $read = array($stdout, $stderr);
-            $write = NULL;
-            $except = NULL;
-            if (@stream_select($read, $write, $except, 0, 200000) > 0) {
-                if (in_array($stdout, $read))
-                    $stdout_collected .= fgets($stdout);
-                if (in_array($stderr, $read))
-                    $stderr_collected .= fgets($stderr);
+        while (true) {
+            $read = array($pipes[1], $pipes[2]);
+            if (($x = stream_select($read, $write = NULL, $except = NULL, 1, 200000)) > 0) {
+                foreach ($read as $pipe) {
+                    switch ($pipe) {
+                        case $pipes[1]:
+                            $stdout_collected .= fgets($pipe);
+                            break;
+                        case $pipes[2]:
+                            $stderr_collected .= fgets($pipe);
+                            break;
+                    }
+                }
             }
-        }
-        fclose($stdout);
-        fclose($stderr);
+            if (isset($status) && !$status['running']) {
+                $return_value = $status['exitcode'];
+                break;
+            }
 
-        $status = proc_get_status($process);
-        $return_value = $status['exitcode'];
+            $status = proc_get_status($process);
+        }
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+
         proc_close($process);
 
         if (strpos($cmd, 'blast') !== FALSE) {
@@ -120,8 +128,9 @@ function execute_command($cwd, $cmd, $query) {
     }
 }
 
-function finish_job($pdo, $job_id) {
-    global $stdout_collected, $stderr_collected, $return_value;
+function finish_job() {
+    global $job_id, $stdout_collected, $stderr_collected, $return_value;
+
     //don't leave any processes orphaned
     global $process;
     if (is_resource($process)) {
@@ -130,7 +139,6 @@ function finish_job($pdo, $job_id) {
             proc_terminate($process);
         }
     }
-
-    $pdo->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
+    pdo_connect()->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
 }
 ?>
