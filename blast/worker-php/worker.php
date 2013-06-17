@@ -1,5 +1,5 @@
+#!/usr/bin/php
 <?php
-
 if ($argc !== 2)
     die('This command has to be called with exactly one(!) parameter: the path to the config file.');
 
@@ -9,15 +9,18 @@ if (!stream_resolve_include_path($configfile))
     die(sprintf("Missing config file: %s\n", $configfile));
 require_once $configfile;
 
-$pdo = pdo_connect();
+
 $supported_programs = unserialize(SUPPORTED_PROGRAMS);
 $supported_programs_qmarks = implode(',', array_fill(0, count($supported_programs), '?'));
 
-$stm_get_job = $pdo->prepare('SELECT * FROM request_job(?, ?, ARRAY[' . $supported_programs_qmarks . '])');
 while (true) {
+    $pdo = pdo_connect();
+    $stm_get_job = $pdo->prepare('SELECT * FROM request_job(?, ?, ARRAY[' . $supported_programs_qmarks . '])');
     $stm_get_job->execute(array_merge(array(MAX_FORKS, HOSTNAME), array_keys($supported_programs)));
     if ($stm_get_job->rowCount() > 0) {
         $new_job = $stm_get_job->fetch(PDO::FETCH_ASSOC);
+        /*we don't want fork to mess with our pdo object. this will cause trouble.*/
+        unset($pdo, $stm_get_job);
         $pid = pcntl_fork();
         if ($pid == -1) {
             die('forking failed! quitting.');
@@ -25,18 +28,21 @@ while (true) {
             //try if we can get another job
             continue;
         } else {
-            //we are in another pid, database connections don't get carried over to forks,
-            //unset this so that we can't use it by accident.
-            unset($pdo);
+            var_dump($new_job);
             execute_job($new_job);
         }
     } else {
-        usleep(0.5 * 1000 * 1000);
+        usleep(2.5 * 1000 * 1000);
     }
 }
 
 function pdo_connect() {
-    $pdo = new PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_EMULATE_PREPARES => false));
+    require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
+        require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
+    $pdo = new \LoggedPDO\PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false),
+                    Log::factory('console', '', 'PDO'));
+    return $pdo;
+    $pdo = new PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_PERSISTENT => false, PDO::ATTR_EMULATE_PREPARES => false));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
 }
