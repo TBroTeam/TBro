@@ -71,8 +71,8 @@
              * }
              */
             function displayResults(results){
-                
-                parsedXml = parseBlastXml(results.job_results);
+                // 'cached' method call. google for memoization
+                parsedXml = _.memoize(parseBlastXml)(results.job_results);
                 div_blast_results.empty().html(templates['PROCESSED'](parsedXml));
         
                 $(document).off('change','#query_select').on('change','#query_select', function(){
@@ -91,8 +91,7 @@
                 $('#query_select').change();          
             }
     
-    
-    
+       
             function check_job_status() {
                 $.ajax('ajax/blast_results.php?jobid='+getParameterByName('jobid'), {
                     dataType:'JSON',
