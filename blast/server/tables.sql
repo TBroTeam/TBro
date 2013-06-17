@@ -147,13 +147,13 @@ BEGIN
 	LOOP
 		SELECT * INTO _param_constraints FROM allowed_parameters WHERE programname=_programname AND param_name=_param[1];
 		IF _param_constraints IS NULL THEN
-			RAISE NOTICE 'Parameter % is not defined for Programname %', _param[1], _programname;
+			RAISE EXCEPTION 'Parameter % is not defined for Programname %', _param[1], _programname;
 			RETURN FALSE;
 		END IF;
 		EXECUTE 'SELECT ' || _param_constraints.constraint_function || '($1, $2)' 
 			INTO _retval USING _param[2], _param_constraints.constraint_function_parameters;
 		IF _retval = FALSE THEN
-			RAISE NOTICE 'Invalid argument for Parameter %: %', _param[1], _param[2];
+			RAISE EXCEPTION 'Invalid argument for Parameter %: %', _param[1], _param[2];
 			RETURN FALSE;
 		END IF;
 	END LOOP;
@@ -271,7 +271,7 @@ DECLARE
 	_default_parameter allowed_parameters%ROWTYPE;
 BEGIN
 	IF NOT EXISTS (SELECT 1 FROM programs WHERE name=_programname) THEN
-		RAISE NOTICE 'program unknown: %', _programname;
+		RAISE EXCEPTION 'program unknown: %', _programname;
 		RETURN NULL;
 	END IF;
 
@@ -280,7 +280,7 @@ BEGIN
 	END IF;
 
 	IF _queries IS NULL THEN
-		RAISE NOTICE 'query is NULL';
+		RAISE EXCEPTION 'query is NULL';
 		RETURN NULL;
 	END IF;	
 
