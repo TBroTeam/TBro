@@ -179,7 +179,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
-RETURNS TABLE(job_query_id int, programname varchar, parameters varchar, fasta_header varchar, query text, max_lifetime int)
+RETURNS TABLE(job_query_id int, programname varchar, parameters varchar, query text, max_lifetime int)
 AS
 $BODY$
 DECLARE 
@@ -189,7 +189,6 @@ DECLARE
 	_job_id int;
 	_programname varchar;
 	_parameters varchar;
-	_fasta_header varchar;
 	_query text;
 	_max_lifetime int;
 	
@@ -228,7 +227,7 @@ BEGIN
 
 		UPDATE job_queries SET status='STARTING', max_lifetime=_max_lifetime WHERE job_query_id=_job_query_id;
 		INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier);
-	RETURN QUERY SELECT _job_query_id, _programname, _parameters, _fasta_header, _query, _max_lifetime;
+	RETURN QUERY SELECT _job_query_id, _programname, _parameters, _query, _max_lifetime;
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -336,6 +335,34 @@ BEGIN
 
 	--done
 	RETURN _uid;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_job_results(_job_uid varchar)
+RETURNS TABLE(status job_status, additional_data text, query text, query_status job_status, query_stdout text, query_stderr text)
+AS 
+$BODY$
+BEGIN
+	RETURN QUERY SELECT jobs.status, jobs.additional_data, jq.query, jq.status, jq.stdout, jq.stderr
+		FROM jobs LEFT JOIN job_queries jq ON (jobs.job_id = jq.job_id) WHERE jobs.uid = _job_uid;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_queue_position(_job_uid varchar)
+RETURNS TABLE(queue_position bigint, queue_length bigint)
+AS 
+$BODY$
+BEGIN
+	RETURN QUERY SELECT stats.queue_position, cnt.queue_length
+		FROM jobs 
+		LEFT JOIN (
+			SELECT job_id, row_number() OVER (PARTITION BY status ORDER BY queueing_time ASC) AS queue_position
+			FROM jobs WHERE status='NOT_PROCESSED'
+		) AS stats ON (jobs.job_id = stats.job_id),
+		(SELECT COUNT(*) AS queue_length FROM jobs WHERE status='NOT_PROCESSED') cnt
+		WHERE jobs.uid=_job_uid;
 END;
 $BODY$
 LANGUAGE plpgsql;
