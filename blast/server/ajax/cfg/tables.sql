@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS job_queries CASCADE;
 DROP TABLE IF EXISTS running_queries CASCADE;
 DROP TABLE IF EXISTS allowed_parameters CASCADE;
 DROP TYPE blast_type;
-CREATE TYPE job_status AS ENUM('NOT_PROCESSED', 'STARTING', 'PROCESSING', 'PROCESSED','ERROR');
+CREATE TYPE job_status AS ENUM('NOT_PROCESSED', 'STARTING', 'PROCESSING', 'PROCESSED','ERROR', 'PROCESSED_WITH_ERRORS');
 CREATE TYPE blast_type AS ENUM('blastn', 'blastp', 'blastx', 'tblastn', 'tblastx');
 
 CREATE TABLE programs

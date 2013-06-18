@@ -23,7 +23,7 @@ try {
                 $res['queue_length'] = $pos['queue_length'];
             }
         }
-        $res['blast_results'][] = array(
+        $res['processed_results'][] = array(
             'query' => $row['query'],
             'status' => $row['query_status'],
             'result' => $row['query_stdout'],
@@ -32,6 +32,6 @@ try {
     }
     die(json_encode($res));
 } catch (\PDOException $e) {
-    
+    throw $e;
 }
 ?>

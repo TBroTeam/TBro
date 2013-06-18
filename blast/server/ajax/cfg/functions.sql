@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION cfunc_in_array(val varchar, arr varchar[]) RETURNS boolean AS
 $BODY$
 DECLARE 
@@ -57,6 +56,8 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION check_parameters(varchar, varchar[][]) IS 
+'checks if all given parameters match the rules in the allowed_parameters table';
 
 CREATE OR REPLACE FUNCTION get_job_parameters(_job_id int)  RETURNS varchar
 AS
@@ -73,7 +74,9 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
-DROP FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) ;
+COMMENT ON FUNCTION get_job_parameters(int) IS 
+'assembles the jobs parameters to those resembling a command line call, e.g. "-a valuea -b valueb"';
+
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
 RETURNS TABLE(job_query_id int, programname varchar, parameters varchar, query text, max_lifetime int)
 AS
@@ -126,6 +129,12 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION request_job(int,  varchar, varchar[])  IS 
+'if the number of running jobs for the given hostname (or IP of the connection, if null given) 
+and there is a job waiting in the queue for one of the given handled programs,
+assign this job to the given hostname and return a row describing the job.
+otherwise, returns zero rows.
+';
 
 CREATE OR REPLACE FUNCTION report_job_pid(_job_query_id int,  _pid int) RETURNS VOID
 AS 
@@ -133,24 +142,38 @@ $BODY$
 BEGIN
 	UPDATE job_queries SET     status='PROCESSING' WHERE  job_query_id=_job_query_id;
 	UPDATE running_queries SET pid=_pid            WHERE  job_query_id=_job_query_id;
+        UPDATE jobs SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id=(SELECT job_id FROM job_queries WHERE job_query_id=_job_query_id);
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION report_job_pid(int, int) IS
+'set\s the job status to "PROCESSING" (is "STARTED" when request_job is called, but report_job_pid has not been called yet) and saves the pid to the DB';
 
 CREATE OR REPLACE FUNCTION report_job_result(_job_query_id int,  _return_code integer, _stdout text, _stderr text) RETURNS VOID
 AS 
 $BODY$
+DECLARE
+    _job_id int;
 BEGIN
 	UPDATE job_queries SET 
 		status = CASE WHEN _return_code = 0 THEN 'PROCESSED'::job_status ELSE 'ERROR'::job_status END,
 		return_value = _return_code, 
 		stdout = _stdout, 
 		stderr = _stderr 
-	WHERE job_query_id=_job_query_id;
-	DELETE FROM running_queries WHERE  job_query_id=_job_query_id;
+	WHERE job_query_id=_job_query_id RETURNING job_id INTO _job_id;
+	DELETE FROM running_queries WHERE job_query_id=_job_query_id;
+        -- set job to finished
+        UPDATE jobs SET status='PROCESSED' WHERE job_id=_job_id 
+            AND NOT EXISTS (SELECT 1 FROM job_queries WHERE job_id=_job_id AND NOT status='PROCESSED');
+        IF NOT FOUND THEN
+            UPDATE jobs SET status='PROCESSED_WITH_ERRORS' WHERE job_id=_job_id 
+                AND NOT EXISTS (SELECT 1 FROM job_queries WHERE job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR'));
+        END IF;
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
+'sets job final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the running_queries table';
 
 CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _queries text[]) 
 RETURNS varchar
@@ -233,6 +256,8 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION create_job(varchar,  varchar, text, varchar[][], text[]) IS
+'if an identical query has already been issued, returns that queries uid. if this is a new query, it will be added to the respective tables.';
 
 CREATE OR REPLACE FUNCTION get_job_results(_job_uid varchar)
 RETURNS TABLE(status job_status, additional_data text, query text, query_status job_status, query_stdout text, query_stderr text)
@@ -244,6 +269,8 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION  get_job_results(varchar) IS 
+'returns job details for the given job';
 
 CREATE OR REPLACE FUNCTION get_queue_position(_job_uid varchar)
 RETURNS TABLE(queue_position bigint, queue_length bigint)
@@ -261,3 +288,5 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
+COMMENT ON FUNCTION  get_queue_position(varchar) IS 
+'returns job queue position';

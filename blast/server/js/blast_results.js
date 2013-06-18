@@ -91,7 +91,7 @@ function parseBlastXml(job_results){
  * displays a CanvasXP 'Genome'-Type Graph for the given iteration in the given canvas
  */
 
-function displayIterationGraph(iteration, canvasId, colorKey, elementClickCallback){
+function displayIterationGraph(iteration, canvas, colorKey, elementClickCallback){
     var colorForScore = function(score){
         for( var k in colorKey ) {
             if(colorKey.hasOwnProperty(k)) {
@@ -131,10 +131,9 @@ function displayIterationGraph(iteration, canvasId, colorKey, elementClickCallba
         });
         tracks.push(track);
     });
-        
-    canvas = $('#'+canvasId);
+    
     return new CanvasXpress(
-        canvasId,
+        canvas.attr('id'),
         {
             min:0,
             max:iteration['query-len']+1,
@@ -205,8 +204,8 @@ function displayIteration(iteration, resultTable, canvas){
         
     canvas.attr('width', canvas.parent().width() - 8);
     displayIterationGraph(iteration, canvas, colorKey, openRowOnHit);
-    if (typeof resultTable == "undefined"){
-        resultTable = $('#blast_results_table').dataTable({
+    if (!$.fn.DataTable.fnIsDataTable(resultTable.get())){
+        resultTable.dataTable({
             aaSorting: [[ 2, "desc" ]],
             aaData: iteration.hits,
             bPaginate: false,

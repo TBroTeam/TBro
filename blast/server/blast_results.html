@@ -71,17 +71,18 @@
              * }
              */
             function displayResults(results){
+                console.log(results);
                 // 'cached' method call. google for memoization
-                parsedXml = _.memoize(parseBlastXml)(results.job_results);
-                div_blast_results.empty().html(templates['PROCESSED'](parsedXml));
+                div_blast_results.empty().html(templates['PROCESSED'](results));
         
                 $(document).off('change','#query_select').on('change','#query_select', function(){
                     var resultDetailDiv = $('#resultDetails');
                     resultDetailDiv.empty();
-                    var selectedResult = results.blast_results[$(this).val()];
+                    var selectedResult = results.processed_results[$(this).val()];
                     if (selectedResult.status=='PROCESSED'){
-                        var parsedXML = parseBlastXml(selectedResult.result)
-                        resultDetailDiv.html(templates[RESULTDETAILS](parsedXML));
+                        console.log(selectedResult);
+                        var parsedXML = _.memoize(parseBlastXml)(selectedResult.result)
+                        resultDetailDiv.html(templates['RESULTDETAILS'](parsedXML));
                         displayIteration(parsedXML.iterations[0], $('#blast_results_table'), $('#alignmentGraph'));
                     } else {
                         resultDetailDiv.html(templates[ret.job_status](selectedResult));
@@ -100,6 +101,7 @@
                             case 'ERROR':
                                 break;
                             case 'PROCESSING':
+                            case 'PARTIALLY_PROCESSED':
                                 setTimeout(check_job_status, 2000);
                                 break;
                             case 'NOT_PROCESSED':
@@ -109,6 +111,7 @@
                                 setTimeout(check_job_status, 2000);
                                 break;
                             case 'PROCESSED':
+                            case 'PROCESSED_WITH_ERRORS':
                                 displayResults(ret);
                                 return;
                                 break;
@@ -157,7 +160,7 @@
                     <div class="large-12 columns panel">
                         Select a Sequence: <br/>
                         <select id="query_select">
-                            <% _.each(blast_results, function(blast_result, idx){ var query=blast_result.query; %>
+                            <% _.each(processed_results, function(result, idx){ var query=result.query; %>
                             <option value="<%=idx%>"><%= query.substr(query.indexOf('>')==-1?0:1, Math.max(query.indexOf("\n"),20)) %></option>
                             <% }); %>
                         </select>
