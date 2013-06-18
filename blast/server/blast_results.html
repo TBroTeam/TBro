@@ -46,6 +46,7 @@
                     PROCESSED_HIT: _.template($('#template_hit').html()),
                     PROCESSED_HSP: _.template($('#template_hsp').html())                    
                 };
+                
                 check_job_status();
             });
 
@@ -71,8 +72,6 @@
              * }
              */
             function displayResults(results){
-                console.log(results);
-                // 'cached' method call. google for memoization
                 div_blast_results.empty().html(templates['PROCESSED'](results));
         
                 $(document).off('change','#query_select').on('change','#query_select', function(){
@@ -80,12 +79,11 @@
                     resultDetailDiv.empty();
                     var selectedResult = results.processed_results[$(this).val()];
                     if (selectedResult.status=='PROCESSED'){
-                        console.log(selectedResult);
+                        // 'cached' method call. google for memoization
                         var parsedXML = _.memoize(parseBlastXml)(selectedResult.result)
                         resultDetailDiv.html(templates['RESULTDETAILS'](parsedXML));
                         displayIteration(parsedXML.iterations[0], $('#blast_results_table'), $('#alignmentGraph'));
                     } else {
-                        console.log(selectedResult);
                         resultDetailDiv.html(templates[selectedResult.status](selectedResult));
                     }
                 });
