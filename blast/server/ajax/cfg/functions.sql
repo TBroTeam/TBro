@@ -77,7 +77,7 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION get_job_parameters(int) IS 
 'assembles the jobs parameters to those resembling a command line call, e.g. "-a valuea -b valueb"';
 
-DROP FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]);
+
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
 RETURNS TABLE(running_query_id int, programname varchar, parameters varchar, query text, max_lifetime int, target_db varchar, target_db_md5 varchar, target_db_download_uri varchar)
 AS
@@ -90,13 +90,16 @@ DECLARE
     _programname varchar;
     _parameters varchar;
     _query text;
-        _target_db varchar;
-        _running_query_id integer;
-    
+    _running_query_id integer;
+    _target_db varchar;
+    _target_db_md5 varchar;
+    _target_db_download_uri varchar;    
 BEGIN
-    LOCK TABLE job_queries; --while we do this, we don't want anyone else grab the same job.
+    LOCK TABLE jobs;
+    LOCK TABLE job_queries;
+    LOCK TABLE running_queries;
 
-        EXECUTE reset_timed_out_queries();
+    EXECUTE reset_timed_out_queries();
     
     --check for job availability
     SELECT COUNT(*) INTO _jobs_available FROM job_queries JOIN jobs ON (job_queries.job_id=jobs.job_id) WHERE job_queries.status='NOT_PROCESSED' AND jobs.programname = any(_handled_programs);
@@ -105,7 +108,6 @@ BEGIN
         RETURN;
     END IF;
     IF _max_jobs_running <> -1 THEN --check if this worker can start another job
-        LOCK TABLE running_queries; --locked until we are finished, either because we are already at max jobs for this worker or we have assigned a new task
         IF _worker_identifier IS NULL THEN
             RAISE NOTICE 'no worker identifier given, using ip address';
             _worker_identifier = inet_client_addr()::varchar;
@@ -126,10 +128,11 @@ BEGIN
     LIMIT 1;
 
     SELECT INTO _parameters get_job_parameters(_job_id);
+    SELECT md5, download_uri FROM database_files WHERE name=_target_db INTO _target_db_md5, _target_db_download_uri;
 
-    UPDATE job_queries SET status='STARTING', processing_start_time=NOW() WHERE job_queries.job_query_id=_job_query_id RETURNING running_query_id INTO _running_query_id;
-    INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier);
-    RETURN QUERY SELECT _running_query_id, _programname, _target_db, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer; --TODO
+    UPDATE job_queries SET status='STARTING', processing_start_time=NOW() WHERE job_queries.job_query_id=_job_query_id;
+    INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier)  RETURNING running_queries.running_query_id INTO _running_query_id;
+    RETURN QUERY SELECT _running_query_id, _programname, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer, _target_db, _target_db_md5, _target_db_download_uri ;
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -146,6 +149,11 @@ $BODY$
 DECLARE
     _job_query_id integer;
 BEGIN
+    LOCK TABLE jobs;
+    LOCK TABLE job_queries;
+    LOCK TABLE running_queries;
+
+
     SELECT INTO _job_query_id job_query_id FROM running_queries WHERE running_query_id=_running_query_id;
     IF FOUND THEN
         UPDATE job_queries     SET status='PROCESSING' WHERE  job_query_id=_job_query_id;
@@ -223,6 +231,7 @@ BEGIN
     _md5 := md5((_programname, _target_db, _additional_data, _parameters::text, _queries::text)::text);
 
     LOCK TABLE jobs;
+    LOCK TABLE job_queries;
     
     SELECT uid FROM jobs WHERE md5 = _md5 INTO _uid;
     IF _uid IS NOT NULL THEN
@@ -337,3 +346,16 @@ $BODY$
 LANGUAGE plpgsql;
 COMMENT ON FUNCTION  get_option(varchar) IS 
 'resets all queries that have started more than MAXIMUM_EXECUTION_TIME seconds ago to NOT_PROCESSED';
+
+CREATE OR REPLACE FUNCTION get_programname_database()
+RETURNS TABLE(program_name varchar, database_name varchar)
+AS 
+$BODY$
+DECLARE
+BEGIN
+    RETURN QUERY SELECT pgr.program_name, pgr.database_name FROM program_database_relationships pgr; 
+END;
+$BODY$
+LANGUAGE plpgsql;
+COMMENT ON FUNCTION  get_option(varchar) IS 
+'gets possible programname database combinations';

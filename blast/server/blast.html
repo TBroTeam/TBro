@@ -10,13 +10,15 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                var databases  = {
-                    blastn: ['13_test.fasta'],
-                    tblastn: ['13_test.fasta'],
-                    tblastx: ['13_test.fasta'],
-                    blastp: ['13_test.predpep.fasta'],
-                    blastx: ['13_test.predpep.fasta']
-                };
+                var databases;
+                    
+                $.ajax('ajax/program_databases.php', {
+                    dataType: 'JSON',
+                    success: function(data){
+                        databases = data;
+                        $('#blastform-type').change();
+                    }
+                });
                 
                 $('#blastform-type').change(function(){
                     var blasttype = $(this).val();
@@ -29,8 +31,6 @@
                     });
                     
                 });
-
-                $('#blastform-type').change();
 
                 $("#blastform").submit(function() {
                     var data = { additional_data: {} };

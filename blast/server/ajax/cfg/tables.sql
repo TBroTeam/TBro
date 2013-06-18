@@ -31,6 +31,14 @@ CREATE TABLE database_files
     download_uri varchar NOT NULL
 );
 
+CREATE TABLE program_database_relationships
+(
+    program_database_relationship serial NOT NULL PRIMARY KEY,
+    program_name varchar NOT NULL REFERENCES programs(name),
+    database_name varchar NOT NULL REFERENCES database_files(name),
+    UNIQUE (program_name,database_name)
+);
+
 CREATE TABLE jobs
 (
 	job_id serial NOT NULL PRIMARY KEY,
@@ -99,24 +107,25 @@ INSERT INTO allowed_parameters
 ('blastp',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastp',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastp',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastp',  'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('blastp',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
-('blastx',  'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('blastx',  'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('blastx',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastx',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastx',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('blastx',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
-('tblastn', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastn', 'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('tblastn', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastn', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastn', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('tblastn', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastn',  'db',              '$DBFILE',  'cfunc_default_only',  NULL),
-('tblastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastx', 'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('tblastx', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastx', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('tblastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastx',  'db',              '$DBFILE',  'cfunc_default_only',  NULL);
 
 CREATE TABLE options
@@ -146,4 +155,13 @@ make sure this value is big enough or some jobs will stay in the queue forever.'
 
 INSERT INTO database_files
 (name, md5, download_uri) VALUES
-('13_test.fasta', '81b096cd80be252fd7633d39b08d53d2', 'http://wbbi170/server/downloads/13_test.fasta.zip');
+('13_test.fasta', '81b096cd80be252fd7633d39b08d53d2', 'http://wbbi170/httpdocs/server/downloads/13_test.fasta.zip'),
+('13_test_predpep.fasta', 'de360c35e8719b36c19de387d8f77f18', 'http://wbbi170/httpdocs/server/downloads/13_test_predpep.fasta.zip');
+
+INSERT INTO program_database_relationships
+(program_name, database_name) VALUES
+('blastn','13_test.fasta'),
+('blastp','13_test_predpep.fasta'),
+('blastx','13_test_predpep.fasta'),
+('tblastn','13_test.fasta'),
+('tblastx','13_test.fasta');

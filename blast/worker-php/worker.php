@@ -40,10 +40,10 @@ while (true) {
 }
 
 function pdo_connect() {
-    require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
-    $pdo = new \LoggedPDO\PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false),
-                    Log::factory('console', '', 'PDO'));
-    return $pdo;
+    #require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
+    #$pdo = new \LoggedPDO\PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false),
+    #                Log::factory('console', '', 'PDO'));
+    #return $pdo;
     $pdo = new PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_PERSISTENT => false, PDO::ATTR_EMULATE_PREPARES => false));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
@@ -103,21 +103,31 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
     }
     touch($lockfile);
     $download_file = $db_dir . '.download';
-    download($target_db_download_uri, $download_file);
-    if ($target_db_md5 !== ($real_md5 = md5_file($download_file)))
-        throw new Exception(sprintf('download md5 could not be validated. should be %s but was %s', $target_db_md5, $real_md5));
-    mkdir($db_dir);
-    unzip($download_file, $db_dir);
+    echo 'will download ' . $download_file;
+    try {
+        download($target_db_download_uri, $download_file);
+        if ($target_db_md5 !== ($real_md5 = md5_file($download_file)))
+            throw new Exception(sprintf('download md5 could not be validated. should be %s but was %s', $target_db_md5, $real_md5));
+        mkdir($db_dir);
+        unzip($download_file, $db_dir);
+    } catch (Exception $e) {
+        rmdir($db_dir);
+        unlink($download_file);
+        unlink($lockfile);
+        throw $e;
+    }
+    unlink($download_file);
     unlink($lockfile);
     return $db_file;
 }
 
 function download($uri, $target_file) {
     $fp = fopen($target_file, 'w+');
-    $ch = curl_init(urlencode($uri));
+    $ch = curl_init($uri);
     curl_setopt($ch, CURLOPT_TIMEOUT, 50);
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
     curl_exec($ch);
     curl_close($ch);
     fclose($fp);

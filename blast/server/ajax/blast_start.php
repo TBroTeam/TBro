@@ -8,7 +8,7 @@ function error($msg) {
 
 $job = $_REQUEST['job'];
 
-$type = ($job['type'] == 'BLASTP' || $job['type'] == 'TBLASTN') ? 'prot' : 'nucl';
+$type = ($job['type'] == 'blastp' || $job['type'] == 'tblastn') ? 'prot' : 'nucl';
 $queries = split_fasta($job['query'], $type);
 
 if (count($queries) == 0)
