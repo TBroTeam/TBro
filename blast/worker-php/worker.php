@@ -40,10 +40,10 @@ while (true) {
 }
 
 function pdo_connect() {
-        require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
-      $pdo = new \LoggedPDO\PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false),
-      Log::factory('console', '', 'PDO'));
-      return $pdo; 
+    require_once '../../cli/src/shared/libs/loggedPDO/PDO.php';
+    $pdo = new \LoggedPDO\PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_PERSISTENT => false),
+                    Log::factory('console', '', 'PDO'));
+    return $pdo;
     $pdo = new PDO(JOB_DB_CONNSTR, JOB_DB_USERNAME, JOB_DB_PASSWORD, array(PDO::ATTR_PERSISTENT => false, PDO::ATTR_EMULATE_PREPARES => false));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
@@ -68,8 +68,7 @@ function execute_job($job) {
     $supported_programs = unserialize(SUPPORTED_PROGRAMS);
     $cmd = $supported_programs[$job['programname']];
     $cmd.= ' ' . $job['parameters'];
-    //TODO
-    $cmd .=" -db 13_test.fasta";
+    $cmd = str_replace('$DBFILE', '13_test.fasta', $cmd);
     execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
 }
 

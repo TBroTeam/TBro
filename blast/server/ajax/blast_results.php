@@ -27,7 +27,7 @@ try {
             'query' => $row['query'],
             'status' => $row['query_status'],
             'result' => $row['query_stdout'],
-            'error' => $row['query_stderr']
+            'errors' => $row['query_stderr']
         );
     }
     die(json_encode($res));

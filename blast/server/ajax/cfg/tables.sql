@@ -83,27 +83,31 @@ INSERT INTO allowed_parameters
 ('blastn',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastn',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastn',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastn',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
 ('blastp',  'task',             'blastp',    'cfunc_default_only',  NULL),
 ('blastp',  'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('blastp',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastp',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastp',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastp',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
 ('blastx',  'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('blastx',  'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('blastx',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastx',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('blastx',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastx',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
 ('tblastn', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastn', 'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('tblastn', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastn', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastn', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('tblastn',  'db',              '$DBFILE',  'cfunc_default_only',  NULL),
 ('tblastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastx', 'outfmt',           '5',         'cfunc_default_only',  NULL),
 ('tblastx', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
 ('tblastx', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']);
-
+('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('tblastx',  'db',              '$DBFILE',  'cfunc_default_only',  NULL);
 
 
 

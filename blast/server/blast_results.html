@@ -85,7 +85,8 @@
                         resultDetailDiv.html(templates['RESULTDETAILS'](parsedXML));
                         displayIteration(parsedXML.iterations[0], $('#blast_results_table'), $('#alignmentGraph'));
                     } else {
-                        resultDetailDiv.html(templates[ret.job_status](selectedResult));
+                        console.log(selectedResult);
+                        resultDetailDiv.html(templates[selectedResult.status](selectedResult));
                     }
                 });
         
