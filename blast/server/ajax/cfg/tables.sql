@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS job_parameters CASCADE;
 DROP TABLE IF EXISTS job_queries CASCADE;
 DROP TABLE IF EXISTS running_queries CASCADE;
 DROP TABLE IF EXISTS allowed_parameters CASCADE;
+DROP TABLE IF EXISTS database_files CASCADE;
+DROP TABLE IF EXISTS options CASCADE;
 DROP TYPE blast_type;
 CREATE TYPE job_status AS ENUM('NOT_PROCESSED', 'STARTING', 'PROCESSING', 'PROCESSED','ERROR', 'PROCESSED_WITH_ERRORS');
 CREATE TYPE blast_type AS ENUM('blastn', 'blastp', 'blastx', 'tblastn', 'tblastx');
@@ -21,12 +23,20 @@ INSERT INTO programs (name) VALUES
 ('tblastn'),
 ('tblastx');
 
+CREATE TABLE database_files
+(
+    database_file_id serial NOT NULL PRIMARY KEY,
+    name varchar NOT NULL UNIQUE,
+    md5 varchar NOT NULL,
+    download_uri varchar NOT NULL
+);
+
 CREATE TABLE jobs
 (
 	job_id serial NOT NULL PRIMARY KEY,
 	uid varchar NOT NULL UNIQUE,
 	programname varchar NOT NULL REFERENCES programs(name),
-	target_db varchar NOT NULL,
+	target_db varchar NOT NULL REFERENCES database_files(name),
 	additional_data text,
 	md5 varchar,
 	queueing_time timestamp without time zone NOT NULL DEFAULT now(),
@@ -63,13 +73,6 @@ CREATE TABLE running_queries
 	pid int
 );
 
-CREATE TABLE database_files
-(
-    database_file_id serial NOT NULL PRIMARY KEY,
-    name varchar NOT NULL UNIQUE,
-    md5 varchar NOT NULL,
-    download_link NOT NULL
-);
 
 CREATE TABLE allowed_parameters
 (
@@ -139,3 +142,8 @@ make sure this value is big enough or some jobs will stay in the queue forever.'
 --SELECT check_parameters('blastn', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']]);
 
 --SELECT * FROM request_job('2', 'wbbi170', ARRAY['blastn','blastp','blastx','tblastn','tblastx']);
+
+
+INSERT INTO database_files
+(name, md5, download_uri) VALUES
+('13_test.fasta', '81b096cd80be252fd7633d39b08d53d2', 'http://wbbi170/server/downloads/13_test.fasta.zip');

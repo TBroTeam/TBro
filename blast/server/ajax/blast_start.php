@@ -28,7 +28,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $statement_create_job = $pdo->prepare('SELECT * FROM create_job(?,  ?, ?, ARRAY[' . $parameter_qmarks . '], ARRAY[' . $query_qmarks . ']);');
     $statement_create_job->execute(array_merge(
-                    array($job['type'], 'targetDB', json_encode($additional_data)), $parameters, $queries
+                    array($job['type'], $job['database'], json_encode($additional_data)), $parameters, $queries
             ));
     if ($statement_create_job->rowCount() == 0) {
         error('Job could not be started! Please report this error including all parameters you used.');

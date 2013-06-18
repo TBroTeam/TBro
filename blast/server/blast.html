@@ -10,21 +10,36 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
+                var databases  = {
+                    blastn: ['13_test.fasta'],
+                    tblastn: ['13_test.fasta'],
+                    tblastx: ['13_test.fasta'],
+                    blastp: ['13_test.predpep.fasta'],
+                    blastx: ['13_test.predpep.fasta']
+                };
+                
                 $('#blastform-type').change(function(){
                     var blasttype = $(this).val();
-                    $('.type-switched').not('.'+blasttype).hide();
-                    $('.type-switched.'+blasttype).show();
+                    $('li:has(.type-switched)').not(':has(.'+blasttype+')').hide();
+                    $('li:has(.type-switched.'+blasttype+')').show();
+                    var db_select = $('#blastform-db');
+                    db_select.empty();
+                    $.each(databases[$(this).val()], function(){
+                        $('<option>'+this+'</option>').appendTo(db_select);
+                    });
+                    
                 });
 
                 $('#blastform-type').change();
 
                 $("#blastform").submit(function() {
-                    data = { additional_data: {} };
+                    var data = { additional_data: {} };
                     
                     var that = $(this);
                     $.each($(this).serializeArray(), function() {
-                        if (!$('#blastform [name="'+this.name+'"]').is(':visible')){
-                            return; //skip this parameter, it's input field is not visible'
+                        var input = $('[name="'+this.name+'"]');
+                        if (input.hasClass('type-switched') && !input.hasClass($('#blastform-type').val())){
+                            return; //skip this parameter
                         }
                         var matches = this.name.match(/^(\w+)\[(\w+)\]$/);
                         if ($.isArray(matches)) {
@@ -69,6 +84,7 @@
                         <div class="large-12 columns">
                             <label for="blastform-type">Blast type:</label>
                             <select id="blastform-type" name="type"><option>blastn</option><option>blastp</option><option>blastx</option><option>tblastn</option><option>tblastx</option></select>    
+                            <select id="blastform-db" name="database"></select>    
                         </div>
                     </div>
                     <div class="row">
@@ -93,13 +109,13 @@
                             <label for="blastform-evalue">Maximum E-value:</label>
                             <select id="blastform-evalue" name="parameters[evalue]" style="width:auto"><option>0.01</option><option selected="selected">0.1</option><option>1.0</option><option>10</option><option>100</option></select>
                         </li>
-                        <li class="type-switched blastn">
+                        <li>
                             <label for="blastform-task">Task:</label>
-                            <select id="blastform-task" name="parameters[task]" style="width:auto"><option>blastn</option><option>dc-megablast</option><option>megablast</option></select>
+                            <select id="blastform-task" name="parameters[task]" style="width:auto"  class="type-switched blastn"><option>blastn</option><option>dc-megablast</option><option>megablast</option></select>
                         </li>
-                        <li class="type-switched blastp blastx tblastn tblastx">
+                        <li>
                             <label for="blastform-matrix">Matrix:</label>
-                            <select id="blastform-matrix" name="parameters[matrix]" style="width:auto">
+                            <select id="blastform-matrix" name="parameters[matrix]" style="width:auto" class="type-switched blastp blastx tblastn tblastx">
                                 <option >BLOSUM45</option>
                                 <option >BLOSUM50</option>
                                 <option selected="selected">BLOSUM62</option>

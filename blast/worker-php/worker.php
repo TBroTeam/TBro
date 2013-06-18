@@ -49,27 +49,97 @@ function pdo_connect() {
     return $pdo;
 }
 
-//job: (job_query_id integer, programname varchar, parameters varchar, query text, max_lifetime integer)
+/* job: array(
+ *   job_query_id integer,
+ *   programname varchar, 
+ *   parameters varchar, 
+ *   query text, 
+ *   max_lifetime integer,
+ *   target_db varchar,
+ *   target_db_md5 varchar,
+ *   target_db_download_uri varchar
+ * ) */
+
 function execute_job($job) {
-    $pdo = pdo_connect();
-    $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job['job_query_id'], posix_getpid()));
     global $job_id;
-    $job_id = $job['job_query_id'];
+    $job_id = $job['running_query_id'];
+    $pdo = pdo_connect();
+    $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job_id, posix_getpid()));
     register_shutdown_function(finish_job);
     global $end_time;
     $end_time = microtime(true) + $job['max_lifetime'];
+
+    $dbfile = acquire_database($job['target_db'], $job['target_db_md5'], $job['target_db_download_uri']);
+    //register timeout after acquiring database file. even if this job times out, we want the download to complete for the next job
+    register_timeout();
+
+    $supported_programs = unserialize(SUPPORTED_PROGRAMS);
+    $cmd = $supported_programs[$job['programname']];
+    $cmd.= ' ' . $job['parameters'];
+    $cmd = str_replace('$DBFILE', $dbfile, $cmd);
+    execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
+}
+
+/**
+ * checks if database file already exists, if not downloads it from the server.
+ * returns full path to database file
+ * @param string $dbname "
+ */
+function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
+    $db_dir = sprintf('%s/%s.%s', DATABASE_BASEDIR, $target_db, $target_db_md5);
+    $db_file = sprintf('%s/%s', $db_dir, $target_db);
+    $lockfile = $db_dir . '.lock';
+    //database directory exists and lock file has been removed, e.g. this is ready to use
+    if (is_dir($db_dir) && !file_exists($lockfile)) {
+        return $db_file;
+    }
+    if (file_exists($lockfile)) {
+        //register timeout - we want to quit if we have been waiting too long for the lock. another process will finish the download
+        register_timeout();
+        //wait a sec
+        usleep(1000 * 1000);
+        //try again
+        return acquire_database($target_db, $target_db_md5, $target_db_download_uri);
+    }
+    touch($lockfile);
+    $download_file = $db_dir . '.download';
+    download($target_db_download_uri, $download_file);
+    if ($target_db_md5 !== ($real_md5 = md5_file($download_file)))
+        throw new Exception(sprintf('download md5 could not be validated. should be %s but was %s', $target_db_md5, $real_md5));
+    mkdir($db_dir);
+    unzip($download_file, $db_dir);
+    unlink($lockfile);
+    return $db_file;
+}
+
+function download($uri, $target_file) {
+    $fp = fopen($target_file, 'w+');
+    $ch = curl_init(urlencode($uri));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp);
+}
+
+function unzip($zipfile, $target_dir) {
+    $zip = new ZipArchive;
+    if ($zip->open($zipfile) === TRUE) {
+        $zip->extractTo($target_dir);
+        $zip->close();
+    } else
+        throw new Exception(sprintf('problems opening zipfile %s', $zipfile));
+}
+
+function register_timeout() {
     declare(ticks = 10); //every 10 microactions, call the tick handler to check for timeout
-    register_tick_function(function () {
+    register_tick_function(function() {
                 global $end_time;
                 if ($end_time < microtime(true)) {
                     exit(-1);
                 }
             });
-    $supported_programs = unserialize(SUPPORTED_PROGRAMS);
-    $cmd = $supported_programs[$job['programname']];
-    $cmd.= ' ' . $job['parameters'];
-    $cmd = str_replace('$DBFILE', '13_test.fasta', $cmd);
-    execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
 }
 
 function execute_command($cwd, $cmd, $query) {
