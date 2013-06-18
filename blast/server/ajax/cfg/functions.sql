@@ -93,6 +93,7 @@ DECLARE
 BEGIN
 	LOCK TABLE job_queries; --while we do this, we don't want anyone else grab the same job.
 
+        EXECUTE reset_timed_out_queries();
 	
 	--check for job availability
 	SELECT COUNT(*) INTO _jobs_available FROM job_queries JOIN jobs ON (job_queries.job_id=jobs.job_id) WHERE job_queries.status='NOT_PROCESSED' AND jobs.programname = any(_handled_programs);
@@ -125,7 +126,7 @@ BEGIN
 
 	UPDATE job_queries SET status='STARTING', processing_start_time=NOW() WHERE job_queries.job_query_id=_job_query_id;
 	INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier);
-	RETURN QUERY SELECT _job_query_id, _programname, _parameters, _query, 120; --TODO
+	RETURN QUERY SELECT _job_query_id, _programname, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer; --TODO
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -140,9 +141,9 @@ CREATE OR REPLACE FUNCTION report_job_pid(_job_query_id int,  _pid int) RETURNS 
 AS 
 $BODY$
 BEGIN
-	UPDATE job_queries SET     status='PROCESSING' WHERE  job_query_id=_job_query_id;
+	UPDATE job_queries     SET status='PROCESSING' WHERE  job_query_id=_job_query_id;
 	UPDATE running_queries SET pid=_pid            WHERE  job_query_id=_job_query_id;
-        UPDATE jobs SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id=(SELECT job_id FROM job_queries WHERE job_query_id=_job_query_id);
+        UPDATE jobs            SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id=(SELECT job_id FROM job_queries WHERE job_query_id=_job_query_id);
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -290,3 +291,35 @@ $BODY$
 LANGUAGE plpgsql;
 COMMENT ON FUNCTION  get_queue_position(varchar) IS 
 'returns job queue position';
+
+CREATE OR REPLACE FUNCTION get_option(_optionname varchar)
+RETURNS varchar
+AS 
+$BODY$
+DECLARE
+    _value varchar;
+BEGIN
+        SELECT value FROM options WHERE key=_optionname INTO _value;
+	RETURN _value; 
+END;
+$BODY$
+LANGUAGE plpgsql;
+COMMENT ON FUNCTION  get_option(varchar) IS 
+'gets configuration value';
+
+CREATE OR REPLACE FUNCTION reset_timed_out_queries()
+RETURNS void
+AS 
+$BODY$
+DECLARE
+    _job_query_id integer;
+BEGIN
+	FOR _job_query_id IN SELECT job_query_id FROM job_queries WHERE status='PROCESSING' AND (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second')<NOW()  LOOP
+		UPDATE job_queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE job_query_id=_job_query_id;
+                DELETE FROM running_queries WHERE job_query_id=_job_query_id;
+	END LOOP;
+END;
+$BODY$
+LANGUAGE plpgsql;
+COMMENT ON FUNCTION  get_option(varchar) IS 
+'resets all queries that have started more than MAXIMUM_EXECUTION_TIME seconds ago to NOT_PROCESSED';

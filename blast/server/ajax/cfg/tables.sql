@@ -109,7 +109,21 @@ INSERT INTO allowed_parameters
 ('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
 ('tblastx',  'db',              '$DBFILE',  'cfunc_default_only',  NULL);
 
-
+CREATE TABLE options
+(
+    option_id serial NOT NULL PRIMARY KEY,
+    key varchar NOT NULL,
+    value varchar,
+    description text,
+    UNIQUE (key)
+);
+COMMENT ON TABLE options IS 
+'contains configuration options, such as MAXIMUM_EXECUTION_TIME';
+INSERT INTO options
+(key, value, description) VALUES
+('MAXIMUM_EXECUTION_TIME', '120', 
+'time in seconds until a query job will be set from "PROCESSING" to "NOT_PROCESSED". 
+make sure this value is big enough or some jobs will stay in the queue forever.');
 
 --SELECT create_job('blastn', 'human', '', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']], ARRAY['TGC','TGAC','TGAC','TGAC']);
 
