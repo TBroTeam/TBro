@@ -24,7 +24,7 @@ while true do:
         if we are child then
             SQL: report_job_pid(job['job_query_id'], mypid)
             replace $DBFILE in job['parameters'] with path to DBFILE
-            (returncode, stdout, stderr) := execute job['programname'] job['parameters']
+            (returncode, stdout, stderr) := exec: job['programname'] job['parameters']
             SQL: report_job_result(job['job_query_id'], returncode, stdout, stderr)
             exit;
         else if we are parent then

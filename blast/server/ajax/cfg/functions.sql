@@ -77,8 +77,9 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION get_job_parameters(int) IS 
 'assembles the jobs parameters to those resembling a command line call, e.g. "-a valuea -b valueb"';
 
+DROP FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]);
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
-RETURNS TABLE(job_query_id int, programname varchar, parameters varchar, query text, max_lifetime int)
+RETURNS TABLE(job_query_id int, programname varchar, target_db varchar, parameters varchar, query text, max_lifetime int)
 AS
 $BODY$
 DECLARE 
@@ -89,6 +90,7 @@ DECLARE
 	_programname varchar;
 	_parameters varchar;
 	_query text;
+        _target_db varchar;
 	
 BEGIN
 	LOCK TABLE job_queries; --while we do this, we don't want anyone else grab the same job.
@@ -115,8 +117,8 @@ BEGIN
 		END IF;
 	END IF;
 	--assign a job
-	SELECT jq.job_query_id, j.job_id,  j.programname, jq.query 
-	INTO _job_query_id, _job_id, _programname, _query
+	SELECT jq.job_query_id, j.job_id,  j.programname, jq.query, j.target_db
+	INTO _job_query_id, _job_id, _programname, _query, _target_db
 	FROM job_queries jq JOIN jobs j ON (jq.job_id=j.job_id) 
 	WHERE jq.status='NOT_PROCESSED' AND j.programname = any(_handled_programs)
 	ORDER BY jq.job_query_id ASC
@@ -126,7 +128,7 @@ BEGIN
 
 	UPDATE job_queries SET status='STARTING', processing_start_time=NOW() WHERE job_queries.job_query_id=_job_query_id;
 	INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier);
-	RETURN QUERY SELECT _job_query_id, _programname, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer; --TODO
+	RETURN QUERY SELECT _job_query_id, _programname, _target_db, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer; --TODO
 END;
 $BODY$
 LANGUAGE plpgsql;

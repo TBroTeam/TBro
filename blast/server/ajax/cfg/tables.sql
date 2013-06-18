@@ -63,6 +63,13 @@ CREATE TABLE running_queries
 	pid int
 );
 
+CREATE TABLE database_files
+(
+    database_file_id serial NOT NULL PRIMARY KEY,
+    name varchar NOT NULL UNIQUE,
+    md5 varchar NOT NULL,
+    download_link NOT NULL
+);
 
 CREATE TABLE allowed_parameters
 (
