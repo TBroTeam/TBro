@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width" />
         <title>Blast</title>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/foundation.min.css" />
-        <script type="text/javascript" charset="utf-8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.2.min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 var databases;
-                    
+                //get possible databases from the WebService    
                 $.ajax('ajax/program_databases.php', {
                     dataType: 'JSON',
                     success: function(data){
@@ -20,6 +20,8 @@
                     }
                 });
                 
+                //if the user selects another blast type, hide and show input fields accordingly
+                //repopulate the database-select
                 $('#blastform-type').change(function(){
                     var blasttype = $(this).val();
                     $('li:has(.type-switched)').not(':has(.'+blasttype+')').hide();
@@ -32,10 +34,12 @@
                     
                 });
 
+                //on form submit
                 $("#blastform").submit(function() {
                     var data = { additional_data: {} };
-                    
                     var that = $(this);
+                    
+                    //copy all form fields that are currently not hidden into the data object
                     $.each($(this).serializeArray(), function() {
                         var input = $('[name="'+this.name+'"]');
                         if (input.hasClass('type-switched') && !input.hasClass($('#blastform-type').val())){
@@ -50,19 +54,23 @@
                             data[this.name] = this.value;
                         }
                     });
+                    //disable the submit button
                     that.find('input[type="submit"]').prop('disabled', true);
+                    //send the form data
                     $.ajax(that.attr('action'), {
                         data: {job: data},
                         type: that.attr('method'),
                         dataType: 'JSON',
                         complete: function() {
+                            //on complete, reenable the submit button
                             that.find('input[type="submit"]').prop('disabled', false);
                         },
                         success: function(ret) {
                             if (ret.status==='success'){
+                                //if the job could be planned, go to the url stored in the form's "data-togo"-attribute
                                 window.location = that.attr('data-goto')+ret.job_id;
                             } else {
-                                console.log(ret);
+                                //else, display the error message as received from the service
                                 alert(ret.message);
                             }
                         }
