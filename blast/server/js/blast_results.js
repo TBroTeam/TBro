@@ -11,6 +11,7 @@ function getParameterByName(name) {
             return matches[2];
         }
     }
+    return undefined;
 }
 
 /**

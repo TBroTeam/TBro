@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/cfg/config.php';
 
 try {
@@ -10,7 +11,7 @@ try {
     $stm = $pdo->prepare('SELECT * FROM get_programname_database()');
     $stm->execute();
     $ret = array();
-    while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
+    while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
         $ret[$row['program_name']][] = $row['database_name'];
     }
 

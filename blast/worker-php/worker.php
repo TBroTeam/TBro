@@ -122,15 +122,25 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
 }
 
 function download($uri, $target_file) {
-    $fp = fopen($target_file, 'w+');
-    $ch = curl_init($uri);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-    curl_setopt($ch, CURLOPT_FILE, $fp);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    if (function_exists('curl_version')) {
+        $fp = fopen($target_file, 'w+');
+        $ch = curl_init($uri);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-    curl_exec($ch);
-    curl_close($ch);
-    fclose($fp);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+    } else {
+        $out = "";
+        $retcode = -1;
+        exec('command -v wget', $out, $retcode);
+        if ($retcode!=0){
+            throw new Exception('could neither find php-curl nor wget, could not download file');
+        }
+        exec(sprintf('wget -o %2$s %1$s', escapeshellcmd($uri), escapeshellcmd($target_file)));
+    }
 }
 
 function unzip($zipfile, $target_dir) {

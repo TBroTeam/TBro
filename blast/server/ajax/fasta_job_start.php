@@ -7,7 +7,7 @@ function error($msg) {
 }
 
 $job = $_REQUEST['job'];
-
+//decide if we're going to query against a nucleotide database //TODO move info to DB
 $type = ($job['type'] == 'blastp' || $job['type'] == 'tblastn') ? 'prot' : 'nucl';
 $queries = split_fasta($job['query'], $type);
 
@@ -38,6 +38,8 @@ try {
 }
 
 die(json_encode(array('status' => 'success', 'job_id' => $statement_create_job->fetchColumn())));
+
+
 
 /*
  * splits fasta input to sequences for processing.
@@ -106,7 +108,7 @@ function split_fasta($query, $type) {
                     error(sprintf('Missing FASTA Header at line number %d', $nr));
                 if (!preg_match('/^[' . $fasta_allowed[$type] . ']+$/i', $line))
                     error(sprintf('FASTA sequence invalid in line %d!', $nr));
-                $current.="\n".$line;
+                $current.="\n" . $line;
             } else {
 //empty line, require a new header
                 $require_next_line_header = true;

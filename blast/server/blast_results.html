@@ -93,7 +93,7 @@
     
        
             function check_job_status() {
-                $.ajax('ajax/blast_results.php?jobid='+getParameterByName('jobid'), {
+                $.ajax('ajax/job_results.php?jobid='+getParameterByName('jobid'), {
                     dataType:'JSON',
                     success: function(ret) {
                         switch (ret.job_status) {
