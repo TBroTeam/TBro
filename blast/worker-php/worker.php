@@ -65,14 +65,14 @@ function execute_job($job) {
     $job_id = $job['running_query_id'];
     $pdo = pdo_connect();
     $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job_id, posix_getpid()));
-    register_shutdown_function(finish_job);
     global $end_time;
     $end_time = microtime(true) + $job['max_lifetime'];
 
     $dbfile = acquire_database($job['target_db'], $job['target_db_md5'], $job['target_db_download_uri']);
     //register timeout after acquiring database file. even if this job times out, we want the download to complete for the next job
     register_timeout();
-
+    register_shutdown_function(finish_job);
+    
     $supported_programs = unserialize(SUPPORTED_PROGRAMS);
     $cmd = $supported_programs[$job['programname']];
     $cmd.= ' ' . $job['parameters'];
@@ -103,7 +103,7 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
     }
     touch($lockfile);
     $download_file = $db_dir . '.download';
-    echo 'will download ' . $download_file;
+    printf('will download %s to %s', $target_db_download_uri, $download_file);
     try {
         download($target_db_download_uri, $download_file);
         if ($target_db_md5 !== ($real_md5 = md5_file($download_file)))
@@ -133,13 +133,14 @@ function download($uri, $target_file) {
         curl_close($ch);
         fclose($fp);
     } else {
-        $out = "";
+        $out = array();
         $retcode = -1;
         exec('command -v wget', $out, $retcode);
-        if ($retcode!=0){
+        if ($retcode != 0) {
             throw new Exception('could neither find php-curl nor wget, could not download file');
         }
-        exec(sprintf('wget -o %2$s %1$s', escapeshellcmd($uri), escapeshellcmd($target_file)));
+        $cmd = sprintf('command wget -O %2$s %1$s', escapeshellcmd($uri), escapeshellcmd($target_file));
+        exec($cmd, $out);
     }
 }
 

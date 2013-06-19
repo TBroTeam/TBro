@@ -32,7 +32,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //prepare the create_job statement
     $statement_create_job = $pdo->prepare('SELECT * FROM create_job(?,  ?, ?, ARRAY[' . $parameter_qmarks . '], ARRAY[' . $query_qmarks . ']);');
-    //and execute is
+    //and execute it
     $statement_create_job->execute(array_merge(
                     array($job['type'], $job['database'], json_encode($additional_data)), $parameters, $queries
             ));
