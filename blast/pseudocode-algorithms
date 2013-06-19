@@ -23,6 +23,9 @@ while true do:
         do_fork
         if we are child then
             SQL: report_job_pid(job['job_query_id'], mypid)
+            if local database with name job['target_db'] does not exist or does not have md5 job['target_db_md5'] then
+                download job['target_db_download_uri'], check md5 and unzip it
+            endif
             replace $DBFILE in job['parameters'] with path to DBFILE
             (returncode, stdout, stderr) := exec: job['programname'] job['parameters']
             SQL: report_job_result(job['job_query_id'], returncode, stdout, stderr)

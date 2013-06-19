@@ -71,7 +71,7 @@ function execute_job($job) {
     $dbfile = acquire_database($job['target_db'], $job['target_db_md5'], $job['target_db_download_uri']);
     //register timeout after acquiring database file. even if this job times out, we want the download to complete for the next job
     register_timeout();
-    register_shutdown_function(finish_job);
+    register_shutdown_function('finish_job');
     
     $supported_programs = unserialize(SUPPORTED_PROGRAMS);
     $cmd = $supported_programs[$job['programname']];
