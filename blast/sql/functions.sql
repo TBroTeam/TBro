@@ -60,24 +60,37 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION check_parameters(varchar, varchar[][]) IS 
 'checks if all given parameters match the rules in the allowed_parameters table';
 
-CREATE OR REPLACE FUNCTION get_job_parameters(_job_id int)  RETURNS varchar
+
+CREATE OR REPLACE FUNCTION get_param_set_id(parameters varchar[][], _programname varchar)  RETURNS integer
 AS
 $BODY$
 DECLARE
     _ret varchar;
+    _parameter_names varchar [];
     _row RECORD;
+    _param_set_id integer;
 BEGIN
-    LOCK TABLE job_parameters;
+    SELECT INTO _parameter_names ARRAY(SELECT UNNEST(p[array_lower(p, 1):array_upper(p, 1)][1:1]) FROM (SELECT parameters p) x);
+
     _ret := '';
-    FOR _row IN SELECT param_name, param_value FROM job_parameters WHERE job_id=_job_id LOOP
-        _ret := _ret || ' -' || _row.param_name || ' ' || _row.param_value;
+    FOR _row IN
+        SELECT param_name, default_value AS value FROM allowed_parameters WHERE programname=_programname AND default_value IS NOT NULL AND NOT param_name=ANY(_parameter_names)
+        UNION
+        SELECT UNNEST(p[array_lower(p, 1):array_upper(p, 1)][1:1]) AS param_name, UNNEST(p[array_lower(p, 1):array_upper(p, 1)][2:2]) AS value FROM (SELECT parameters p) x
+    LOOP
+        _ret := _ret || ' -' || _row.param_name || ' "' || _row.value || '"';
     END LOOP;
-    RETURN _ret;
+
+    SELECT INTO _param_set_id parameter_set_id FROM parameter_sets WHERE parameters_assembled = _ret;
+    IF NOT FOUND THEN
+        INSERT INTO parameter_sets (parameters_assembled) VALUES (_ret) RETURNING parameter_set_id INTO _param_set_id ;
+    END IF;
+    RETURN _param_set_id;
 END;
 $BODY$
 LANGUAGE plpgsql;
-COMMENT ON FUNCTION get_job_parameters(int) IS 
-'assembles the jobs parameters to those resembling a command line call, e.g. "-a valuea -b valueb"';
+COMMENT ON FUNCTION get_param_set_id(varchar[][], varchar) IS 
+'assemble command line parameters & add default values where none given to form a command line call, e.g. ''-a "valuea" -b "valueb"''';
 
 
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
@@ -87,8 +100,7 @@ $BODY$
 DECLARE 
     _jobs_available integer;
     _jobs_running integer;
-    _job_query_id int;
-    _job_id int;
+    _query_id int;
     _programname varchar;
     _parameters varchar;
     _query text;
@@ -97,14 +109,13 @@ DECLARE
     _target_db_md5 varchar;
     _target_db_download_uri varchar;    
 BEGIN
-    LOCK TABLE jobs;
-    LOCK TABLE job_queries;
+    LOCK TABLE queries;
     LOCK TABLE running_queries;
 
     EXECUTE reset_timed_out_queries();
     
     --check for job availability
-    SELECT COUNT(*) INTO _jobs_available FROM job_queries JOIN jobs ON (job_queries.job_id=jobs.job_id) WHERE job_queries.status='NOT_PROCESSED' AND jobs.programname = any(_handled_programs);
+    SELECT COUNT(*) INTO _jobs_available FROM queries WHERE queries.status='NOT_PROCESSED' AND queries.programname = any(_handled_programs);
     IF _jobs_available = 0 THEN
         RAISE NOTICE 'no jobs available';
         RETURN;
@@ -122,18 +133,17 @@ BEGIN
         END IF;
     END IF;
     --assign a job
-    SELECT jq.job_query_id, j.job_id,  j.programname, jq.query, j.target_db
-    INTO _job_query_id, _job_id, _programname, _query, _target_db
-    FROM job_queries jq JOIN jobs j ON (jq.job_id=j.job_id) 
-    WHERE jq.status='NOT_PROCESSED' AND j.programname = any(_handled_programs)
-    ORDER BY jq.job_query_id ASC
+    SELECT q.query_id,  q.programname, q.query, q.target_db, p.parameters_assembled
+    INTO _query_id, _programname, _query, _target_db, _parameters
+    FROM queries q JOIN parameter_sets p ON (q.parameter_set_id=p.parameter_set_id) 
+    WHERE q.status='NOT_PROCESSED' AND q.programname = any(_handled_programs)
+    ORDER BY q.query_id ASC
     LIMIT 1;
 
-    SELECT INTO _parameters get_job_parameters(_job_id);
     SELECT md5, download_uri FROM database_files WHERE name=_target_db INTO _target_db_md5, _target_db_download_uri;
 
-    UPDATE job_queries SET status='STARTING', processing_start_time=NOW() WHERE job_queries.job_query_id=_job_query_id;
-    INSERT INTO running_queries (job_query_id, processing_host_identifier) VALUES (_job_query_id, _worker_identifier)  RETURNING running_queries.running_query_id INTO _running_query_id;
+    UPDATE queries SET status='STARTING', processing_start_time=NOW() WHERE queries.query_id=_query_id;
+    INSERT INTO running_queries (query_id, processing_host_identifier) VALUES (_query_id, _worker_identifier)  RETURNING running_queries.running_query_id INTO _running_query_id;
     RETURN QUERY SELECT _running_query_id, _programname, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer, _target_db, _target_db_md5, _target_db_download_uri ;
 END;
 $BODY$
@@ -149,18 +159,18 @@ CREATE OR REPLACE FUNCTION report_job_pid(_running_query_id int,  _pid int) RETU
 AS 
 $BODY$
 DECLARE
-    _job_query_id integer;
+    _query_id integer;
 BEGIN
     LOCK TABLE jobs;
     LOCK TABLE job_queries;
     LOCK TABLE running_queries;
 
 
-    SELECT INTO _job_query_id job_query_id FROM running_queries WHERE running_query_id=_running_query_id;
+    SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
     IF FOUND THEN
-        UPDATE job_queries     SET status='PROCESSING' WHERE  job_query_id=_job_query_id;
-        UPDATE running_queries SET pid=_pid            WHERE  job_query_id=_job_query_id;
-        UPDATE jobs            SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id=(SELECT job_id FROM job_queries WHERE job_query_id=_job_query_id);
+        UPDATE job_queries     SET status='PROCESSING' WHERE  query_id=_query_id;
+        UPDATE running_queries SET pid=_pid            WHERE  query_id=_query_id;
+        UPDATE jobs            SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id=(SELECT job_id FROM job_queries WHERE query_id=_query_id);
     END IF;
 END;
 $BODY$
@@ -173,13 +183,13 @@ AS
 $BODY$
 DECLARE
     _job_id int;
-    _job_query_id integer;
+    _query_id integer;
 BEGIN
     LOCK TABLE jobs;
     LOCK TABLE job_queries;
     LOCK TABLE running_queries;
 
-    SELECT INTO _job_query_id job_query_id FROM running_queries WHERE running_query_id=_running_query_id;
+    SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
     IF NOT FOUND THEN
         RETURN;
     END IF;
@@ -189,15 +199,17 @@ BEGIN
         return_value = _return_code, 
         stdout = _stdout, 
         stderr = _stderr 
-    WHERE job_query_id=_job_query_id RETURNING job_id INTO _job_id;
-    DELETE FROM running_queries WHERE job_query_id=_job_query_id;
+    WHERE query_id=_query_id RETURNING job_id INTO _job_id;
+    DELETE FROM running_queries WHERE query_id=_query_id;
+/*
+TODO trigger
     -- set job to finished
     UPDATE jobs SET status='PROCESSED' WHERE job_id=_job_id 
         AND NOT EXISTS (SELECT 1 FROM job_queries WHERE job_id=_job_id AND NOT status='PROCESSED');
     IF NOT FOUND THEN
         UPDATE jobs SET status='PROCESSED_WITH_ERRORS' WHERE job_id=_job_id 
             AND NOT EXISTS (SELECT 1 FROM job_queries WHERE job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR'));
-    END IF;
+    END IF;*/
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -209,12 +221,11 @@ RETURNS varchar
 AS 
 $BODY$
 DECLARE 
-    _md5 varchar;
     _uid varchar;
     _job_id integer;
-    _param varchar[];
+    _parameter_set_id integer;
+    _query_id integer;
     _query text;
-    _default_parameter allowed_parameters%ROWTYPE;
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM programs WHERE name=_programname) THEN
         RAISE EXCEPTION 'program unknown: %', _programname;
@@ -228,57 +239,40 @@ BEGIN
     IF _queries IS NULL THEN
         RAISE EXCEPTION 'query is NULL';
         RETURN NULL;
-    END IF;    
-
+    END IF;
 
     -- sort and remove duplicates
     SELECT ARRAY(SELECT DISTINCT UNNEST(_queries) a ORDER BY a) INTO _queries;
-    
-    _md5 := md5((_programname, _target_db, _additional_data, _parameters::text, _queries::text)::text);
+
+    --assemble command line parameters & add default values where none given
+    _parameter_set_id := get_param_set_id(_parameters, _programname);
 
     LOCK TABLE jobs;
+    LOCK TABLE queries;
     LOCK TABLE job_queries;
-    
-    SELECT uid FROM jobs WHERE md5 = _md5 INTO _uid;
-    IF _uid IS NOT NULL THEN
-        --TODO complete check
-        RETURN _uid;
-    END IF;
-    
+        
+
     LOOP --generate a random 32-bit-uid until it is unique
         _uid = to_hex((random()*power(2,32))::bigint);
         EXIT WHEN NOT EXISTS (SELECT 1 FROM jobs WHERE uid=_uid);
     END LOOP;
 
     --insert job
-    INSERT INTO jobs ( programname,  target_db,  additional_data,  md5,  uid) 
-        VALUES   (_programname, _target_db, _additional_data, _md5, _uid)
+    INSERT INTO jobs (additional_data, uid) 
+        VALUES   (_additional_data, _uid)
     RETURNING job_id INTO _job_id;
     RAISE NOTICE 'inserted job id %', _job_id;
 
-    --insert default parameters
-    FOR _default_parameter IN SELECT * FROM allowed_parameters WHERE programname=_programname AND default_value IS NOT NULL LOOP
-        INSERT INTO job_parameters ( job_id,  param_name,  param_value) 
-        VALUES   (_job_id, _default_parameter.param_name, _default_parameter.default_value);
-    END LOOP;
-    
-    --override custom parameters
-    IF _parameters IS NOT NULL THEN
-        FOREACH _param SLICE 1 IN ARRAY _parameters LOOP
-            IF EXISTS (SELECT 1 FROM job_parameters WHERE job_id = _job_id AND param_name = _param[1]) THEN
-                UPDATE job_parameters SET param_value = _param[2]
-                WHERE job_id = _job_id AND param_name = _param[1];
-            ELSE
-                INSERT INTO job_parameters ( job_id,  param_name,  param_value) 
-                VALUES   (_job_id, _param[1], _param[2]);
-            END IF;
-        END LOOP;
-    END IF;
-
     --insert queries
     FOREACH _query IN ARRAY _queries LOOP
-        INSERT INTO job_queries ( job_id,  query) 
-        VALUES   (_job_id, _query);
+        SELECT INTO _query_id query_id FROM queries WHERE (programname, parameter_set_id, target_db, query) = (_programname, _parameter_set_id, _target_db, _query);
+        IF NOT FOUND THEN
+            INSERT INTO queries (programname, parameter_set_id, target_db, query) VALUES (_programname, _parameter_set_id, _target_db, _query) RETURNING query_id INTO _query_id;
+            RAISE NOTICE 'inserted query id %', _query_id;
+        END IF;
+
+        INSERT INTO job_queries ( job_id,  query_id) VALUES (_job_id, _query_id);
+        RAISE NOTICE 'inserted job_queries(%,%)',_job_id, _query_id;
     END LOOP;
 
     --done
@@ -287,7 +281,7 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 COMMENT ON FUNCTION create_job(varchar,  varchar, text, varchar[][], text[]) IS
-'if an identical query has already been issued, returns that queries uid. if this is a new query, it will be added to the respective tables.';
+'create a new job.';
 
 CREATE OR REPLACE FUNCTION get_job_results(_job_uid varchar)
 RETURNS TABLE(status job_status, additional_data text, query text, query_status job_status, query_stdout text, query_stderr text)
@@ -343,13 +337,13 @@ RETURNS void
 AS 
 $BODY$
 DECLARE
-    _job_query_id integer;
+    _query_id integer;
 BEGIN
     LOCK TABLE job_queries;
     LOCK TABLE running_queries;
-    FOR _job_query_id IN SELECT job_query_id FROM job_queries WHERE (status='PROCESSING' OR STATUS='STARTING') AND (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second')<NOW()  LOOP
-        UPDATE job_queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE job_query_id=_job_query_id;
-                DELETE FROM running_queries WHERE job_query_id=_job_query_id;
+    FOR _query_id IN SELECT query_id FROM queries WHERE (status='PROCESSING' OR status='STARTING') AND (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second')<NOW()  LOOP
+        UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE query_id=_query_id;
+                DELETE FROM running_queries WHERE query_id=_query_id;
     END LOOP;
 END;
 $BODY$
