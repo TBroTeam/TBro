@@ -162,15 +162,15 @@ DECLARE
     _query_id integer;
 BEGIN
     LOCK TABLE jobs;
-    LOCK TABLE job_queries;
+    LOCK TABLE queries;
     LOCK TABLE running_queries;
 
 
     SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
     IF FOUND THEN
-        UPDATE job_queries     SET status='PROCESSING' WHERE  query_id=_query_id;
+        UPDATE queries         SET status='PROCESSING' WHERE  query_id=_query_id;
         UPDATE running_queries SET pid=_pid            WHERE  query_id=_query_id;
-        UPDATE jobs            SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id=(SELECT job_id FROM job_queries WHERE query_id=_query_id);
+        UPDATE jobs            SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id IN (SELECT job_id FROM job_queries WHERE query_id=_query_id);
     END IF;
 END;
 $BODY$
@@ -182,11 +182,9 @@ CREATE OR REPLACE FUNCTION report_job_result(_running_query_id int,  _return_cod
 AS 
 $BODY$
 DECLARE
-    _job_id int;
     _query_id integer;
 BEGIN
-    LOCK TABLE jobs;
-    LOCK TABLE job_queries;
+    LOCK TABLE queries;
     LOCK TABLE running_queries;
 
     SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
@@ -194,27 +192,48 @@ BEGIN
         RETURN;
     END IF;
 
-    UPDATE job_queries SET 
+    UPDATE queries SET 
         status = CASE WHEN _return_code = 0 THEN 'PROCESSED'::job_status ELSE 'ERROR'::job_status END,
         return_value = _return_code, 
         stdout = _stdout, 
         stderr = _stderr 
-    WHERE query_id=_query_id RETURNING job_id INTO _job_id;
+    WHERE query_id=_query_id;
     DELETE FROM running_queries WHERE query_id=_query_id;
-/*
-TODO trigger
-    -- set job to finished
-    UPDATE jobs SET status='PROCESSED' WHERE job_id=_job_id 
-        AND NOT EXISTS (SELECT 1 FROM job_queries WHERE job_id=_job_id AND NOT status='PROCESSED');
-    IF NOT FOUND THEN
-        UPDATE jobs SET status='PROCESSED_WITH_ERRORS' WHERE job_id=_job_id 
-            AND NOT EXISTS (SELECT 1 FROM job_queries WHERE job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR'));
-    END IF;*/
 END;
 $BODY$
 LANGUAGE plpgsql;
 COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
-'sets job final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the running_queries table';
+'sets query final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the running_queries table';
+
+CREATE OR REPLACE FUNCTION updated_query_status() RETURNS TRIGGER
+AS 
+$BODY$
+DECLARE
+    _job_id int;
+BEGIN
+    LOCK TABLE jobs;
+
+    FOR _job_id IN SELECT job_id FROM job_queries WHERE job_queries.query_id=NEW.query_id LOOP
+        IF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT status='PROCESSED') THEN
+            UPDATE jobs SET status='PROCESSED' WHERE job_id = _job_id;
+        ELSEIF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR')) THEN
+            UPDATE jobs SET status='PROCESSED_WITH_ERRORS' WHERE job_id = _job_id;
+        END IF;
+    END LOOP;
+    RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
+'sets job final status "PROCESSED" or "PROCESSED_WITH_ERRORS", depending on the associated queries'' return codes';
+
+DROP TRIGGER IF EXISTS trigger_update_query_status ON queries;
+CREATE TRIGGER trigger_update_query_status
+    AFTER UPDATE ON queries
+    FOR EACH ROW
+    WHEN (OLD.status IS DISTINCT FROM NEW.status AND (NEW.status='PROCESSED' OR NEW.status='ERROR'))
+    EXECUTE PROCEDURE updated_query_status();
+
 
 CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _queries text[]) 
 RETURNS varchar
@@ -290,8 +309,8 @@ $BODY$
 BEGIN
     LOCK TABLE jobs;
     LOCK TABLE job_queries;
-    RETURN QUERY SELECT jobs.status, jobs.additional_data, jq.query, jq.status, jq.stdout, jq.stderr
-        FROM jobs LEFT JOIN job_queries jq ON (jobs.job_id = jq.job_id) WHERE jobs.uid = _job_uid;
+    RETURN QUERY SELECT jobs.status, jobs.additional_data, q.query, q.status, q.stdout, q.stderr
+        FROM jobs LEFT JOIN job_queries jq ON (jobs.job_id = jq.job_id) JOIN queries q ON (jq.query_id=q.query_id) WHERE jobs.uid = _job_uid;
 END;
 $BODY$
 LANGUAGE plpgsql;
