@@ -5,7 +5,7 @@ chdir(__DIR__);
 require_once('functions.php');
 
 if ($argc !== 2)
-    die('This command has to be called with exactly one(!) parameter: the path to the config file.');
+    die("This command has to be called with exactly one(!) parameter: the path to the config file.\n");
 
 $configfile = $argv[1];
 

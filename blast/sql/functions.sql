@@ -165,7 +165,6 @@ BEGIN
     LOCK TABLE queries;
     LOCK TABLE running_queries;
 
-
     SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
     IF FOUND THEN
         UPDATE queries         SET status='PROCESSING' WHERE  query_id=_query_id;
@@ -189,6 +188,7 @@ BEGIN
 
     SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
     IF NOT FOUND THEN
+        RAISE NOTICE 'this job does not belong to you(any more?)!';
         RETURN;
     END IF;
 
@@ -196,9 +196,26 @@ BEGIN
         status = CASE WHEN _return_code = 0 THEN 'PROCESSED'::job_status ELSE 'ERROR'::job_status END,
         return_value = _return_code, 
         stdout = _stdout, 
-        stderr = _stderr 
+        stderr = _stderr,
+        processing_end_time = NOW()
     WHERE query_id=_query_id;
     DELETE FROM running_queries WHERE query_id=_query_id;
+END;
+$BODY$
+LANGUAGE plpgsql;
+COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
+'sets query final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the running_queries table';
+
+CREATE OR REPLACE FUNCTION keepalive_ping(_running_query_id int) RETURNS integer
+AS 
+$BODY$
+DECLARE
+    _query_id integer;
+BEGIN
+    LOCK TABLE running_queries;
+
+    UPDATE running_queries SET last_keepalive=now() WHERE running_query_id=_running_query_id;
+    RETURN get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer;
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -360,9 +377,14 @@ DECLARE
 BEGIN
     LOCK TABLE job_queries;
     LOCK TABLE running_queries;
-    FOR _query_id IN SELECT query_id FROM queries WHERE (status='PROCESSING' OR status='STARTING') AND (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second')<NOW()  LOOP
+
+    FOR _query_id IN 
+            SELECT query_id FROM queries WHERE (status='PROCESSING' OR status='STARTING') AND (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second')<NOW()  
+        UNION
+            SELECT query_id FROM running_queries WHERE (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second')<NOW() 
+    LOOP
         UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE query_id=_query_id;
-                DELETE FROM running_queries WHERE query_id=_query_id;
+        DELETE FROM running_queries WHERE query_id=_query_id;
     END LOOP;
 END;
 $BODY$

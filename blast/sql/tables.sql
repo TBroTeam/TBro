@@ -73,6 +73,7 @@ CREATE TABLE running_queries
 	running_query_id serial NOT NULL PRIMARY KEY,
 	query_id integer NOT NULL REFERENCES queries(query_id) UNIQUE,
 	processing_host_identifier varchar NOT NULL,
+        last_keepalive timestamp without time zone NOT NULL DEFAULT now(),
 	pid int
 );
 
@@ -137,15 +138,9 @@ INSERT INTO options
 (key, value, description) VALUES
 ('MAXIMUM_EXECUTION_TIME', '120', 
 'time in seconds until a query job will be set from "PROCESSING" to "NOT_PROCESSED". 
-make sure this value is big enough or some jobs will stay in the queue forever.');
-
---SELECT create_job('blastn', 'human', '', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']], ARRAY['TGC','TGAC','TGAC','TGAC']);
-
---SELECT request_job(0,NULL, ARRAY['blastp']);
-
---SELECT check_parameters('blastn', ARRAY[ARRAY['task','dc-megablast'], ARRAY['evalue','3']]);
-
---SELECT * FROM request_job('2', 'wbbi170', ARRAY['blastn','blastp','blastx','tblastn','tblastx']);
+make sure this value is big enough or some jobs will stay in the queue forever.'),
+('MAXIMUM_KEEPALIVE_TIMEOUT', '15', 
+'time in seconds a worker has to send another keepalive_ping until a query job will be set from "PROCESSING" to "NOT_PROCESSED".');
 
 
 INSERT INTO database_files

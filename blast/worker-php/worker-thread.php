@@ -2,7 +2,7 @@
 
 chdir(__DIR__);
 //if job is set, we are forked via pcntl_fork()
-//else we forked some obscure way to work on windows and have to read our environment back
+//else we forked some obscure way to work on windows and have to read our job and configfile name back
 if (!isset($job)) {
     extract(unserialize(file_get_contents($argv[1])));
 }
@@ -26,17 +26,39 @@ exit($return_value);
  * ) */
 
 function execute_job($job) {
+    global $die_on_timeout;
+    //closure to die on timeout and regularly send a keepalive to the server. will be installed as tick_function later on
+    $die_or_keepalive = function() use (&$end_time, &$send_keepalive, &$die_on_timeout, &$pdo, &$job_id) {
+                //did we time out? if yes, die
+                if ($die_on_timeout && $end_time < microtime(true)) {
+                    exit(-1);
+                }
+                static $next_keepalive = 0; //static. will be created on first function execution and then the value will be kept between executions
+                //do we need to send another keepalive? go on!
+                if ($send_keepalive && $next_keepalive < microtime(true)) {
+                    //we don't want to prepare a statement on every execution, cache this as a function static
+                    static $keepalive_statement = null;
+                    if ($keepalive_statement == null)
+                        $keepalive_statement = $pdo->prepare('SELECT keepalive_ping(?)');
+
+                    $keepalive_statement->execute(array($job_id));
+                    $keepalive_timeout = $keepalive_statement->fetchColumn();
+                    //send a keepalive 3 seconds before neccessary
+                    $next_keepalive = microtime(true) + $keepalive_timeout - 3;
+                }
+            };
+
     global $job_id;
     $job_id = $job['running_query_id'];
     $pdo = pdo_connect();
     $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job_id, getmypid()));
-    global $end_time;
+    //intitalize "parameters" for the tick function
     $end_time = microtime(true) + $job['max_lifetime'];
-
+    $send_keepalive = true;
+    $die_on_timeout = true;
+    register_tick_function($die_or_keepalive);
+    declare(ticks = 10); //every 10 microactions, call the tick handler to check for timeout or the need of a keepalive
     $dbfile = acquire_database($job['target_db'], $job['target_db_md5'], $job['target_db_download_uri']);
-    //register timeout after acquiring database file. even if this job times out, we want the download to complete for the next job
-    register_timeout();
-    register_shutdown_function('finish_job');
 
     $supported_programs = unserialize(SUPPORTED_PROGRAMS);
     $program = $supported_programs[$job['programname']];
@@ -46,6 +68,7 @@ function execute_job($job) {
     $cmd.= ' ' . $job['parameters'];
     $cmd = str_replace('$DBFILE', '"' . $dbfile . '"', $cmd);
     execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
+    report_results_cleanup();
 }
 
 /**
@@ -58,7 +81,7 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
     $basedir = DATABASE_BASEDIR;
     if (strpos($basedir, DIRECTORY_SEPARATOR) !== 0)
         $basedir = __DIR__ . DIRECTORY_SEPARATOR . $basedir;
-    
+
     $db_dir = $basedir . DIRECTORY_SEPARATOR . $target_db . '.' . $target_db_md5;
     $db_file = $db_dir . DIRECTORY_SEPARATOR . $target_db;
     $lockfile = $db_dir . '.lock';
@@ -67,13 +90,15 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
         return $db_file;
     }
     if (file_exists($lockfile)) {
-        //register timeout - we want to quit if we have been waiting too long for the lock. another process will finish the download
-        register_timeout();
+        //we are just waiting, not downloading. this can timeout
         //wait a sec
         usleep(1000 * 1000);
         //try again
         return acquire_database($target_db, $target_db_md5, $target_db_download_uri);
     }
+    //we are downloading, do not die on timeout!
+    global $die_on_timeout;
+    $die_on_timeout = false;
     touch($lockfile);
     $download_file = $db_dir . '.download';
     printf('will download %s to %s', $target_db_download_uri, $download_file);
@@ -91,6 +116,9 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
     }
     unlink($download_file);
     unlink($lockfile);
+    //download is ready, now we can die if we timed out in the meantime
+    $die_on_timeout = true;
+
     return $db_file;
 }
 
@@ -126,16 +154,6 @@ function unzip($zipfile, $target_dir) {
         throw new Exception(sprintf('problems opening zipfile %s', $zipfile));
 }
 
-function register_timeout() {
-    declare(ticks = 10); //every 10 microactions, call the tick handler to check for timeout
-    register_tick_function(function() {
-                global $end_time;
-                if ($end_time < microtime(true)) {
-                    exit(-1);
-                }
-            });
-}
-
 function execute_command($cwd, $cmd, $query) {
     echo "\nwill execute $cmd\n";
     echo "query sequence is \n$query\n";
@@ -149,7 +167,7 @@ function execute_command($cwd, $cmd, $query) {
     $pipes = array();
 
     global $process;
-    $process = proc_open($cmd, $descriptorspec, $pipes, $cwd, NULL, array('bypass_shell'=>true));
+    $process = proc_open($cmd, $descriptorspec, $pipes, $cwd, NULL, array('bypass_shell' => true));
 
     if (is_resource($process)) {
         //this is global so it can be accessed by signal handler
@@ -196,9 +214,7 @@ function execute_command($cwd, $cmd, $query) {
     }
 }
 
-function finish_job() {
-    global $job_id, $stdout_collected, $stderr_collected, $return_value;
-
+function report_results_cleanup() {
     //don't leave any processes orphaned
     global $process;
     if (is_resource($process)) {
@@ -207,6 +223,8 @@ function finish_job() {
             proc_terminate($process);
         }
     }
+
+    global $job_id, $stdout_collected, $stderr_collected, $return_value;
     pdo_connect()->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
 }
 
