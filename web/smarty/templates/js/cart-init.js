@@ -1,6 +1,56 @@
 /*{#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}*/
 $(document).ready(function() {
-    $("#dialog-rename-cart-group").dialog({
+    var cart = new Cart({
+        templates: {
+            GroupAll: '#template_cart_all_group',
+            Group: '#template_cart_new_group',
+            Item: '#template_cart_new_item'
+        },
+        serviceNodes: {
+            itemDetails: '{#$ServicePath#}/cart/itemDetails'
+        },
+        parentNode: '#Cart',
+        groupNamePrefix: 'Group'
+    });
+    
+    cart.addGroup('test', {
+        afterDOMinsert:function(){
+            console.log(this);
+            this.find('.cart-target').droppable({
+                items: "li:not(.placeholder)",
+                accept: ":not(.ui-sortable-helper)",
+                drop: function(event, ui) {
+                    var item = {
+                        feature_id: ui.draggable.attr('data-feature_id')
+                    };
+                    //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
+                    cart.addItemToGroup(item, $(this).parent().attr('data-group'));
+                }
+            });
+            this.accordion({
+                collapsible: true,
+                heightStyle: "content"
+            });
+        /*newEl.find('.cart-button-delete').click(function(event) {
+            event.stopPropagation();
+            var group = $(this).parents('.cart-group').first();
+            cart.removeGroup(group.attr('data-group'));
+        });
+        newEl.find('.cart-button-rename').click(function(event) {
+            event.stopPropagation();
+            var group = $(this).parents('.cart-group').first();
+            var dialog = $('#dialog-rename-cart-group');
+            dialog.data('oldname', group.attr('data-group'));
+            dialog.dialog("open");
+        });
+        newEl.find('.cart-button-execute').click(function(event) {
+            event.stopPropagation();
+            window.location = '{#$AppPath#}/graphs/'+$(this).parents('.cart-group').first().attr('data-group');
+        });*/
+        }
+    });
+    
+/*$("#dialog-rename-cart-group").dialog({
         autoOpen: false,
         height: 300,
         width: 350,
@@ -105,5 +155,5 @@ $(document).ready(function() {
             return tooltip;
         }
     });
-
+         */
 });

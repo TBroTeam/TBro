@@ -80,50 +80,57 @@
 
             <div class="panel large-12 columns" id="cart">
                 <h4>Cart</h4>
-                <div id="cart-group-all" class='ui_accordion ui_collapsible'>
-                    <div class="large-12 columns"><div class="left">all</div><div class="right"><img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/><img class="cart-button-execute"  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
-                    <ul class="large-12 columns">
-                    </ul>
-                </div>
+
                 <div>
                     <a id="cart-add-group" class="button secondary right">add new cart</a>
                     <div style="clear:both">&nbsp;</div>
                 </div>
-                <div id="cart-groups">
+                <div id="Cart">
 
                 </div>
             </div>
 
-            <script type="text/template" id="cart-group-template"> 
-                <div class='cart-group' data-group="<%= groupname %>">
-                    <div class="large-12 columns">
-                        <div class="groupname left"><%= groupname %></div>
-                        <div class="right">
-                            <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
-                            <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                            <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
-                        </div>
-                    </div>
-                    <ul class="cart-target large-12 columns">
-                        <li class="placeholder">drag your items here</li>
+            <script type="text/template" id="template_cart_all_group"> 
+                <div id="cart-group-all" class='ui_accordion ui_collapsible'>
+                    <div class="large-12 columns"><div class="left">all</div><div class="right"><img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/><img class="cart-button-execute"  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
+                    <ul class="large-12 columns elements">
                     </ul>
                 </div>
                 </script>
 
-                <script type="text/template"  id="cart-item-template"> 
-                    <li style="clear:both" class="large-12 cart-item">
-                        <div class="left"><img class="cart-button-goto" src="{#$AppPath#}/img/mimiGlyphs/47.png"/> <span class="displayname">
-                                <%= (item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id) %>
-                            </span>
+                <script type="text/template" id="template_cart_new_group"> 
+                    <div class='cart-group' data-group="<%= groupname %>">
+                        <div class="large-12 columns">
+                            <div class="groupname left"><%= groupname %>
+                            </div>
+                            <div class="right">
+                                <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
+                                <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                                <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
+                            </div>
                         </div>
-                        <div class="right">
-                            <img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
-                            <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                        </div>
-                    </li>
+                        <ul class="large-12 columns elements drop-target">
+                            <li class="placeholder">
+                                drag your items here
+                            </li>
+                        </ul>
+                    </div>
                     </script>
+
+                    <script type="text/template"  id="template_cart_new_item"> 
+                        <li style="clear:both" class="large-12 cart-item">
+                            <div class="left"><img class="cart-button-goto" src="{#$AppPath#}/img/mimiGlyphs/47.png"/> <span class="displayname">
+                                    <%= (item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id) %>
+                                </span>
+                            </div>
+                            <div class="right">
+                                <img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
+                                <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
+                            </div>
+                        </li>
+                        </script>
+                    </div>
+                    <div>&nbsp;</div>
                 </div>
-                <div>&nbsp;</div>
             </div>
-        </div>
-        {#/block#}
+            {#/block#}
