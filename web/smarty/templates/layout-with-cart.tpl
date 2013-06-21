@@ -91,25 +91,30 @@
             </div>
 
             <script type="text/template" id="template_cart_all_group"> 
-                <div id="cart-group-all" class='ui_accordion ui_collapsible'>
-                    <div class="large-12 columns"><div class="left">all</div><div class="right"><img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/><img class="cart-button-execute"  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></div></div>
+                <div class="cartGroup" data-name="all">
+                    <div class="large-12 columns"><div class="left">all</div>
+                        <div class="right">
+                            <a href="javascript:$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+                            <a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
+                        </div>
+                    </div>
                     <ul class="large-12 columns elements">
                     </ul>
                 </div>
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
-                    <div class='cart-group' data-group="<%= groupname %>">
+                    <div class='cartGroup' data-name="<%= groupname %>">
                         <div class="large-12 columns">
-                            <div class="groupname left"><%= groupname %>
+                            <div class="left"><%= groupname %>
                             </div>
                             <div class="right">
-                                <img class="cart-button-rename" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>
-                                <img class="cart-button-delete" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>
-                                <img class="cart-button-execute" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>
+                                <a class="cart-button-rename" href="#"><img  src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>
+                                <a href="javascript:cart.removeGroup('<%= groupname %>');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+                                <a href="{#$AppPath#}/graphs/<%= groupname %>"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
                             </div>
                         </div>
-                        <ul class="large-12 columns elements drop-target">
+                        <ul class="large-12 columns elements">
                             <li class="placeholder">
                                 drag your items here
                             </li>
@@ -118,7 +123,7 @@
                     </script>
 
                     <script type="text/template"  id="template_cart_new_item"> 
-                        <li style="clear:both" class="large-12 cart-item">
+                        <li style="clear:both" class="large-12 cartItem" data-id="<%=item.feature_id%>">
                             <div class="left"><img class="cart-button-goto" src="{#$AppPath#}/img/mimiGlyphs/47.png"/> <span class="displayname">
                                     <%= (item.alias !== undefined && item.alias !== '') ? item.alias : ((item.name !== undefined && item.name !== '') ? item.name : item.feature_id) %>
                                 </span>

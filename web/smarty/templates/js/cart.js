@@ -6,7 +6,12 @@ function Cart(options){
             Item: '#template_cart_new_item'
         },
         serviceNodes: {
-            itemDetails: '{#$ServicePath#}/cart/itemDetails'
+            itemDetails: '{#$ServicePath#}/details/cartitem/'
+        },
+        callbacks: {
+            afterDOMinsert_groupAll:function(){},
+            afterDOMinsert_group:function(){},
+            afterDOMinsert_item:function(){}
         },
         parentNode: '#Cart',
         groupNamePrefix: 'Group'
@@ -44,17 +49,15 @@ Cart.prototype._getGroupNode = function(groupname){
 };
 
 Cart.prototype._getItemDetails = function(id, callback){
+    var that=this;
     if (typeof this.cartitems[id] !== 'undefined')
         callback(this.cartitems[id]);
     else
         $.ajax({
-            url:this.serviceNodes.itemDetails,
-            data: {
-                id: id
-            },
+            url:this.options.serviceNodes.itemDetails+id,
             dataType: 'JSON',
             success: function(itemDetails){
-                this.cartitems[id] = itemDetails;
+                that.cartitems[id] = itemDetails;
                 callback(itemDetails);
             }
         });
@@ -94,33 +97,39 @@ Cart.prototype._redraw = function(){
             sync: false
         });
         for (var i=0; i<group.length; i++)
-            that.addToCart(group[i], {
+            that.addItem(group[i], {
                 groupname: groupname,
                 sync: false
             });
     })
 }
 
-Cart.prototype.addToCart = function(id, options){
+Cart.prototype.addItem = function(id, options){
+    //make sure we don't have a string id'
+    id = parseInt(id);
+    console.log(arguments);
     options = $.extend({
         groupname: 'all',
-        sync: true,
-        afterDOMinsert: function(){}
+        addToDOM: true,
+        afterDOMinsert: this.options.callbacks.afterDOMinsert_item,
+        sync: true
     }, options);
+
+    
     var that = this;
     
     if (options.groupname != 'all' && _.indexOf(this._getCartForContext()['all'], id)==-1)
-        this.addToCart(id, $.extend({},options,{
+        this.addItem(id, $.extend({},options,{
             groupname:'all'
         }));
 
     this._getItemDetails(id, function(itemDetails){
-        if (addInternal.call(that, itemDetails))
+        if (addInternal.call(that, itemDetails) && options.addToDOM)
             addToDOM.call(that, itemDetails);
     });
     
     function addInternal (itemDetails){
-        var group = getGroup(options.groupname);
+        var group = this._getGroup(options.groupname);
         if (typeof group === undefined)
             group = this.addGroup(options.groupname);
         if (_.indexOf(group, id) >= 0)
@@ -130,8 +139,12 @@ Cart.prototype.addToCart = function(id, options){
     }
     
     function addToDOM(itemDetails){
-        var group$ = this._getGroupNode();
-        var item$ = this._executeTemplate$('Item', itemDetails);
+        var group$ = this._getGroupNode(options.groupname);
+        var item$ = this._executeTemplate$('Item', {
+            item:itemDetails
+        });
+        item$.data('afterDOMinsert', options.afterDOMinsert);
+        group$.find('.elements .placeholder').remove();
         group$.find('.elements').append(item$);
         options.afterDOMinsert.call(item$);
     }
@@ -157,12 +170,16 @@ Cart.prototype.updateItem = function(id, metadata, options){
         
     function updateDOM(itemDetails){
         var items$ = this._getItemNodes(id);
-        items$.replaceWith(this._executeTemplate$('Item',itemDetails));
+        var newItem$ = this._executeTemplate$('Item',itemDetails);
+        var afterDOMinsert = items$.data('afterDOMinsert');
+        newItem$.data('afterDOMinsert', afterDOMinsert);
+        items$.replaceWith(newItem$);
+        afterDOMinsert.apply(newItem$);
     }
     
 };
     
-Cart.prototype.removeFromCart = function(id, options){
+Cart.prototype.removeItem = function(id, options){
     options = $.extend({
         groupname: 'all',
         sync: true
@@ -195,9 +212,17 @@ Cart.prototype.removeFromCart = function(id, options){
 
 Cart.prototype.addGroup = function(groupname, options){
     options = $.extend({
-        sync: true,
-        afterDOMinsert: function(){}
+        sync: true
     }, options);
+    if (typeof options.afterDOMinsert == 'undefined'){
+        
+        if (groupname=='all')
+            options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
+        else 
+            options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
+    }
+    
+    
     var lastGroupNumber = 0;
     //if we did not recevie a group name, generate a new unused one
     if (typeof groupname === 'undefined')
@@ -226,6 +251,7 @@ Cart.prototype.addGroup = function(groupname, options){
                 groupname:groupname
             });
         }
+        group$.data('afterDOMinsert', options.afterDOMinsert);
         parent$.append(group$);
         options.afterDOMinsert.call(group$);
     }
@@ -236,7 +262,10 @@ Cart.prototype.renameGroup = function(oldname, newname, options){
         sync: true
     }, options);
     
-    if (this.getGroupByName(newname) !== undefined){
+    if (oldname == newname)
+        return;
+    
+    if (this._getGroup(newname) !== undefined){
         throw new Error("Cart with this name already exists!");
     }
     
@@ -253,9 +282,14 @@ Cart.prototype.renameGroup = function(oldname, newname, options){
     function renameInDOM(){
         var oldGroup$ = this._getGroupNode(oldname);
         var items$ = oldGroup$.find('.cartItem');
-        var newGroup$ = this._executeTemplate$('Group',newname);
-        newGroup$.append(items$);
+        var newGroup$ = this._executeTemplate$('Group',{
+            groupname:newname
+        });
+        var afterDOMinsert = oldGroup$.data('afterDOMinsert');
+        newGroup$.data('afterDOMinsert', afterDOMinsert);
+        newGroup$.find('.elements').append(items$);
         oldGroup$.replaceWith(newGroup$);
+        afterDOMinsert.call(newGroup$);
     }
 };
 
@@ -263,6 +297,7 @@ Cart.prototype.removeGroup = function(groupname, options){
     options = $.extend({
         sync: true
     }, options);
+
 
     removeInternal.call(this);
     removeFromDOM.call(this);

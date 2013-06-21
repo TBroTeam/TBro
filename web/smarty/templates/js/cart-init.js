@@ -1,56 +1,72 @@
 /*{#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}*/
+var cart;
 $(document).ready(function() {
-    var cart = new Cart({
-        templates: {
-            GroupAll: '#template_cart_all_group',
-            Group: '#template_cart_new_group',
-            Item: '#template_cart_new_item'
-        },
-        serviceNodes: {
-            itemDetails: '{#$ServicePath#}/cart/itemDetails'
-        },
-        parentNode: '#Cart',
-        groupNamePrefix: 'Group'
-    });
-    
-    cart.addGroup('test', {
-        afterDOMinsert:function(){
-            console.log(this);
-            this.find('.cart-target').droppable({
-                items: "li:not(.placeholder)",
-                accept: ":not(.ui-sortable-helper)",
-                drop: function(event, ui) {
-                    var item = {
-                        feature_id: ui.draggable.attr('data-feature_id')
-                    };
-                    //call addObjectToGroup, but tell it not to manipulate the DOM as that's already happened
-                    cart.addItemToGroup(item, $(this).parent().attr('data-group'));
-                }
-            });
-            this.accordion({
-                collapsible: true,
-                heightStyle: "content"
-            });
-        /*newEl.find('.cart-button-delete').click(function(event) {
-            event.stopPropagation();
-            var group = $(this).parents('.cart-group').first();
-            cart.removeGroup(group.attr('data-group'));
-        });
-        newEl.find('.cart-button-rename').click(function(event) {
-            event.stopPropagation();
-            var group = $(this).parents('.cart-group').first();
-            var dialog = $('#dialog-rename-cart-group');
-            dialog.data('oldname', group.attr('data-group'));
-            dialog.dialog("open");
-        });
-        newEl.find('.cart-button-execute').click(function(event) {
-            event.stopPropagation();
-            window.location = '{#$AppPath#}/graphs/'+$(this).parents('.cart-group').first().attr('data-group');
-        });*/
+    cart = new Cart({
+        callbacks: {
+            afterDOMinsert_groupAll : groupAllAfterDOM,
+            afterDOMinsert_group : groupAfterDOM,
+            afterDOMinsert_item : itemAfterDOM
         }
     });
     
-/*$("#dialog-rename-cart-group").dialog({
+    cart.addGroup('test');
+    cart.addItem(522151);
+
+    
+    function groupAllAfterDOM(){
+        this.accordion({
+            collapsible: true,
+            heightStyle: "content"
+        });
+            
+        this.find('a').click(function(event) {
+            event.stopPropagation();
+        });
+    }
+    
+    function groupAfterDOM(){
+        var that = this;
+            
+        this.find('.elements').droppable({
+            items: "li:not(.placeholder)",
+            accept: ":not(.ui-sortable-helper)",
+            drop: function(event, ui) {
+                console.log(this, ui.draggable);
+                
+                cart.addItem(ui.draggable.attr('data-id'), {
+                    groupname: that.attr('data-name'), 
+                    addToDOM: true
+                });
+            }
+        });
+        this.accordion({
+            collapsible: true,
+            heightStyle: "content"
+        });
+            
+        this.find('a').click(function(event) {
+            event.stopPropagation();
+        });
+
+        this.find('.cart-button-rename').click(function(event) {
+            var dialog = $('#dialog-rename-cart-group');
+            dialog.data('oldname', that.attr('data-name'));
+            dialog.dialog("open");
+        });
+    }
+
+    function itemAfterDOM(){
+        if (this.parents('.cartGroup').attr('data-name')=='all')
+            this.draggable({
+                appendTo: "body",
+                helper: function() {
+                    return $(this).clone().addClass('beingDragged');
+                }
+            });
+    }
+    
+    
+    $("#dialog-rename-cart-group").dialog({
         autoOpen: false,
         height: 300,
         width: 350,
@@ -59,9 +75,11 @@ $(document).ready(function() {
             "rename cart": function() {
                 var oldname = $(this).data('oldname');
                 var newname = $('#cartname').val();
-                var retval = cart.renameGroup(oldname, newname);
-                if (retval != null)
-                    alert(retval);
+                try { 
+                    cart.renameGroup(oldname, newname);
+                } catch (e) {
+                    alert(e);
+                }
                 $(this).dialog("close");
             },
             Cancel: function() {
@@ -103,16 +121,7 @@ $(document).ready(function() {
             $('#item-annotations').val(annotations);
         }
     });
-
-    var group_all = $("#cart-group-all");
-    group_all.accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
-    group_all.find('.cart-button-execute').click(function(event) {
-        event.stopPropagation();
-        window.location = '{#$AppPath#}/graphs/all';
-    });
+    
     $("#dialog-delete-all").dialog({
         resizable: false,
         autoOpen: false,
@@ -131,10 +140,19 @@ $(document).ready(function() {
         }
     });
 
-    group_all.find('.cart-button-delete').click(function(event) {
-        event.stopPropagation();
-        $("#dialog-delete-all").dialog('open');
+    
+/*
+
+    var group_all = $("#cart-group-all");
+    group_all.accordion({
+        collapsible: true,
+        heightStyle: "content"
     });
+    group_all.find('.cart-button-execute').click(function(event) {
+        event.stopPropagation();
+        window.location = '{#$AppPath#}/graphs/all';
+    });
+
 
     var tmpcart = {#$kickoff_cart['cart']|json_encode#};
     cart.rebuildDOM(tmpcart, true);
