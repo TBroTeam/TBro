@@ -21,7 +21,7 @@
         });
         if (cnt>0){
             $('.results').show(500);
-            if (datatable == null)
+            if (datatable === null)
                 datatable = $('#results').dataTable(options);
         }
     }
@@ -30,26 +30,27 @@
         $(document).ready(function(){
             $('#add_selected').click(function(){
                 $('#results tbody').find('input:checked').each(function(){
-                    $.ajax({url:'{#$ServicePath#}/details/cartitem/'+$(this).val(), success: cart.addItemToAll});
+                    cart.addItem($(this).val());
                 });
             });
             
             $('#compare_selected').click(function(){
-                var cartname = cart.addGroup({});
-                var calls = [];
+                var cartname = cart.addGroup();
                 var checkboxes = $('#results tbody').find('input:checked');
-                if (checkboxes.length==0) return;
+                if (checkboxes.length===0) return;
                 var count_finished = 0;
                 checkboxes.each(function(){
-                    calls.push(
-                    $.ajax({url:'{#$ServicePath#}/details/cartitem/'+$(this).val(), success: function(data){
-                            cart.addItemToAll(data);
-                            cart.addItemToGroup(data, cartname, {})
+                    cart.addItem($(this).val(), {
+                        groupname: cartname,
+                        afterDOMinsert: function(){
+                            cart.options.callbacks.afterDOMinsert_item.apply(this, arguments);
+
                             //all ajax calls & callbacks have finished, we can continue to the graph page
                             if (++count_finished == checkboxes.length){
                                 window.location = '{#$AppPath#}/graphs/'+cartname;
                             }
-                        }}));
+                        }
+                    });
                 });
             });
             $('#check_all').prop('checked',false);

@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
     var select_analysis = $('#select-gdfx-analysis');
     var select_conditionA = $('#select-gdfx-conditionA');
     var select_conditionB = $('#select-gdfx-conditionB');
@@ -40,158 +40,150 @@ $(document).ready(function(){
         $('#div-gdfxtable').show();
 
 
-        if (typeof dataTable == "undefined"){
-            var serverParams = function( aoData ) {
-                aoData.push( { 
-                    name:"organism",
-                    value:organism.val()
+        if (typeof dataTable == "undefined") {
+            var serverParams = function(aoData) {
+                aoData.push({
+                    name: "organism",
+                    value: organism.val()
                 });
-                aoData.push( { 
-                    name:"release",
+                aoData.push({
+                    name: "release",
                     value: release.val()
                 });
-                aoData.push( { 
-                    name:"analysis",
+                aoData.push({
+                    name: "analysis",
                     value: selectedItem.analysis
                 });
-                aoData.push( { 
-                    name:"conditionA",
+                aoData.push({
+                    name: "conditionA",
                     value: selectedItem.conditionA
                 });
-                aoData.push( { 
-                    name:"conditionB",
+                aoData.push({
+                    name: "conditionB",
                     value: selectedItem.conditionB
                 });
-                $.each($('#diffexp_filters').serializeArray(), function(){
+                $.each($('#diffexp_filters').serializeArray(), function() {
                     aoData.push(this);
                 });
                 /*{#if $cart_ids#}*/
-                $.each(cartitems, function(){
+                $.each(cartitems, function() {
                     aoData.push({
                         name: 'ids[]',
                         value: this.feature_id
                     });
                 });
-            /*{#/if#}*/
+                /*{#/if#}*/
             };
             var lastQueryData;
-            dataTable = $('#diffexp_results').dataTable( {
+            dataTable = $('#diffexp_results').dataTable({
                 bFilter: false,
                 bProcessing: true,
                 bServerSide: true,
-                fnServerData: function ( sSource, aoData, fnCallback, oSettings ) {
+                fnServerData: function(sSource, aoData, fnCallback, oSettings) {
                     lastQueryData = aoData;
-                    oSettings.jqXHR = $.ajax( {
+                    oSettings.jqXHR = $.ajax({
                         "dataType": 'json',
                         "type": oSettings.sServerMethod,
                         "url": sSource,
                         "data": aoData,
-                        "success": function(data){
+                        "success": function(data) {
                             update_query_details(data);
                             fnCallback(data);
                         }
-                    } );
+                    });
                 },
-                fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    $('td:first', nRow).html( sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData.feature_id, aData.feature_name) )
+                fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData.feature_id, aData.feature_name))
                 },
                 sServerMethod: "POST",
                 sAjaxSource: "{#$ServicePath#}/listing/differential_expressions/fullRelease",
                 fnServerParams: serverParams,
-                aaSorting: [[ 5, "asc" ]],
+                aaSorting: [[5, "asc"]],
                 aoColumns: [
-                {
-                    sType: "natural",
-                    mData: 'feature_name'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMean'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMeanA'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMeanB'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'foldChange'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'log2foldChange'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'pval'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'pvaladj'
-                },
+                    {
+                        sType: "natural",
+                        mData: 'feature_name'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'baseMean'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'baseMeanA'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'baseMeanB'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'foldChange'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'log2foldChange'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'pval'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'pvaladj'
+                    },
                 ],
                 sDom: 'T<"clear">lfrtip',
                 oTableTools: {
                     sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf",
-
                     aButtons: [
-                    "select_all", 
-                    "select_none",
-                    {
-                        "sExtends": "ajax",
-                        "sButtonText": "CSV Export All",
-                        "fnClick": function( nButton, oConfig ) {
-                            var iframe = document.createElement('iframe');
-                            iframe.style.height = "0px";
-                            iframe.style.width = "0px";
-                            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv"+"?"+$.param(lastQueryData);
-                            document.body.appendChild( iframe );
-                        }
-                    },                            
+                        "select_all",
+                        "select_none",
+                        {
+                            "sExtends": "ajax",
+                            "sButtonText": "CSV Export All",
+                            "fnClick": function(nButton, oConfig) {
+                                var iframe = document.createElement('iframe');
+                                iframe.style.height = "0px";
+                                iframe.style.width = "0px";
+                                iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
+                                document.body.appendChild(iframe);
+                            }
+                        },
                     ],
                     sRowSelect: "multi"
                 }
-            } );
+            });
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();
         }
 
-    } );
+    });
 
-    $(document).on('cart.addGroup', function(e){
+    $(document).on('cart.addGroup', function(e) {
         $('#select-gdfx-cart').append($('<option/>').text(e.eventData.name).attr('value', e.eventData.name));
     });
-    
-    $('#button-gdfx-addToCart').click(function(){
+
+    $('#button-gdfx-addToCart').click(function() {
         var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();
         var group = $('#select-gdfx-cart').val();
-        if (group=='#new#'){
+        if (group === '#new#')
             group = cart.addGroup();
-        }
-        
-        $.each(selectedItems, function(){
-            $.ajax({
-                url:'{#$ServicePath#}/details/cartitem/'+this.feature_id, 
-                success: function(item){
-                    cart.addItemToAll(item);
-                    if (group!='all')
-                        cart.addItemToGroup(item, group);
-                }
-            });
+
+
+        $.each(selectedItems, function() {
+            cart.addItem(this.feature_id, {groupname: group});
         });
-        
+
     });
 
-    function update_query_details(data){
-        var query_details= data.query_details;
+    function update_query_details(data) {
+        var query_details = data.query_details;
         var domQd = $('#query_details');
-        domQd.find('.conditionA').text(query_details.conditionA.name).data('metadata',query_details.conditionA);
-        domQd.find('.conditionB').text(query_details.conditionB.name).data('metadata',query_details.conditionB);
-        domQd.find('.analysis').text(query_details.analysis.name).data('metadata',query_details.analysis);
+        domQd.find('.conditionA').text(query_details.conditionA.name).data('metadata', query_details.conditionA);
+        domQd.find('.conditionB').text(query_details.conditionB.name).data('metadata', query_details.conditionB);
+        domQd.find('.analysis').text(query_details.analysis.name).data('metadata', query_details.analysis);
         domQd.find('.organism').text(query_details.organism.name);
         domQd.find('.release').text(query_details.release);
         domQd.find('.hits').text(data.iTotalRecords);
@@ -204,6 +196,6 @@ $(document).ready(function(){
     $('#query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
-    
-    
+
+
 });
