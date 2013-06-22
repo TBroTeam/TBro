@@ -40,15 +40,15 @@ class Sync extends \WebService {
         if (false)
             $db = new \PDO();
 
-        $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart');
+        $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart FOR UPDATE');
         $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
         $stm_retrieve_cart->bindValue('identity', $_SESSION['OpenID']);
+
         $stm_retrieve_cart->execute();
         if ($stm_retrieve_cart->rowCount() == 1) {
             $row = $stm_retrieve_cart->fetch(\PDO::FETCH_ASSOC);
             $_SESSION['cart'] = unserialize($row['value']);
-        }
-        else {
+        } else {
             $this->saveCart();
         }
     }
@@ -90,99 +90,71 @@ class Sync extends \WebService {
     }
 
     public function execute($querydata) {
+        global $db;
+        $db->beginTransaction();
         $this->init();
 
-        if (isset($querydata['action']) && isset($querydata['action']['action']))
-            switch ($querydata['action']['action']) {
-                case 'edit_item':
-                    foreach ($_SESSION['cart']['all'] as &$item) {
-                        if ($item['feature_id'] == $querydata['action']['name']) {
-                            foreach ($querydata['action']['values'] as $key => $value) {
-                                if ($key != 'feature_id')
-                                    $item[$key] = $value;
-                            }
-                            break;
-                        }
-                    }
-                    unset($item);
-                    break;
-                case 'addGroup':
-                    $newname = $querydata['action']['name'];
-                    if (self::get_group($newname) != null)
-                        break;
-                    $_SESSION['cart']['groups'][] = array('name' => $newname, 'items' => array());
-                    break;
-                case 'renameGroup':
-                    $newname = $querydata['action']['newname'];
-                    $oldname = $querydata['action']['oldname'];
-                    if ($newname == 'all')
-                        break;
-                    if (!preg_match('/'.self::$regexCartName.'/i', $newname))
-                        break;
-                    $group = &self::get_group($oldname);
-                    if (self::get_group($newname) != null || $group == null)
-                        break;
-                    $group['name'] = $newname;
-                    break;
-                case 'removeGroup':
-                    $groupname = $querydata['action']['groupname'];
-                    foreach ($_SESSION['cart']['groups'] as $key => $group) {
-                        if ($group['name'] == $groupname)
-                            unset($_SESSION['cart']['groups'][$key]);
-                    }
-                    $_SESSION['cart']['groups'] = array_values($_SESSION['cart']['groups']);
-                    break;
-                case 'addItemToAll':
-                    $item = $querydata['action']['item'];
-                    if (self::groupContainsItemByFeature_id($_SESSION['cart']['all'], $item['feature_id']))
-                        break;
-                    $_SESSION['cart']['all'][] = $item;
-                    break;
-                case 'addItemToGroup':
-                    $feature_id = $querydata['action']['item']['feature_id'];
-                    $groupname = $querydata['action']['groupname'];
-                    $group = &self::get_group($groupname);
-                    if (!self::groupContainsItemByFeature_id($_SESSION['cart']['all'], $feature_id))
-                        break;
-                    if (self::groupContainsItemByFeature_id($group, $feature_id))
-                        break;
-                    $group['items'][] = array('feature_id' => $feature_id);
-                    break;
-                case 'removeItemFromGroup':
-                    $feature_id = $querydata['action']['item']['feature_id'];
-                    $groupname = $querydata['action']['groupname'];
-                    $group = &self::get_group($groupname);
-                    foreach ($group['items'] as $key => $item) {
-                        if ($item['feature_id'] == $feature_id) {
-                            unset($group['items'][$key]);
-                        }
-                    }
-                    break;
-                case 'removeItemFromAll':
-                    $feature_id = $querydata['action']['item']['feature_id'];
-
-                    foreach ($_SESSION['cart']['all'] as $key => $item) {
-                        if ($item['feature_id'] == $feature_id) {
-                            unset($_SESSION['cart']['all'][$key]);
-                        }
-                    }
-                    foreach ($_SESSION['cart']['groups'] as &$group) {
-                        foreach ($group['items'] as $key => $item) {
-                            if ($item['feature_id'] == $feature_id) {
-                                unset($group['items'][$key]);
-                            }
-                        }
-                    }
-                    break;
-                case 'resetCart':
-                    $_SESSION['cart'] = array('all' => array(), 'groups' => array());
-                    break;
-            }
+        $this->syncActions($querydata['action'], $querydata['currentContext']);
 
         //if we are logged in: save our cart back to the DB
         $this->saveCart();
+        $db->commit();
+        return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart']);
+    }
 
-        return array('syncTime' => isset($querydata['syncRequestTime']) ? $querydata['syncRequestTime'] : -1, 'cart' => $_SESSION['cart']);
+    public function syncActions($parms, $currentContext){
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = array('cartitems' => array(), 'carts' => array());
+        }
+        if (!isset($_SESSION['cart']['carts'][$currentContext]))
+            $_SESSION['cart']['carts'][$currentContext] = array('all'=>array());
+
+        
+        $cartitems = &$_SESSION['cart']['cartitems'];
+        $currentCart = &$_SESSION['cart']['carts'][$currentContext];
+
+        switch ($parms['action']) {
+            case 'addItem':
+                // add item to $cartitems
+                if (!isset($cartitems[$parms['id']])) {
+                    list($service) = \WebService::factory('details/cartitem');
+                    $cartitems[$parms['id']] = $service->execute(array('query1' => $parms['id']));
+                }
+                // add item to $currentCart
+                if (!in_array($parms['id'], $currentCart[$parms['groupname']]))
+                    $currentCart[$parms['groupname']][] = $parms['id'];
+                break;
+            case 'udpateItem':
+                //update metadata
+                $cartitems[$parms['id']]['metadata'] = $parms['metadata'];
+                break;
+            case 'removeItem':
+                if ($parms['groupname'] == 'all') {
+                    //remove from all groups
+                    foreach ($currentCart as &$group)
+                        $pos = array_search($parms['id'], $group);
+                    if ($pos !== FALSE)
+                        array_splice($group, $pos, 1);
+                    //remove from $cartitems
+                    unset($cartitems[$parms['id']]);
+                } else {
+                    //remove from group
+                    $pos = array_search($parms['id'], $currentCart[$parms['groupname']]);
+                    if ($pos !== FALSE)
+                        array_splice($currentCart[$parms['groupname']], $pos, 1);
+                }
+                break;
+            case 'addGroup':
+                $currentCart[$parms['groupname']] = array();
+                break;
+            case 'renameGroup':
+                $currentCart[$parms['newname']] = $currentCart[$parms['groupname']];
+                unset($currentCart[$parms['groupname']]);
+                break;
+            case 'removeGroup':
+                unset($currentCart[$parms['groupname']]);
+                break;
+        }
     }
 
 }

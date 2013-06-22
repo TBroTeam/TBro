@@ -1,4 +1,4 @@
-/*{#call_webservice path="cart/sync" data=[] assign='kickoff_cart'#}*/
+/*{#*call_webservice path="cart/sync" data=[] assign='kickoff_cart'*#}*/
 var cart;
 
 $(document).ready(function() {

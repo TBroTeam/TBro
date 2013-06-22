@@ -22,12 +22,84 @@ function Cart(initialData, options) {
     $.extend(true, this.options, options);
 
     this.carts = initialData.carts || {};
-    this.cartitems = initialData.cartItems || {};
+    this.cartitems = initialData.cartitems || {};
     this.currentContext = 'unknown';
-    this.updateContext('unknown', true);
+    this.updateContext('unknown', {force: true, triggerEvent: false});
 }
 
+(function() {
+    //create own scope for private variables for sync
 
+    //current request. 
+    var currentRequest;
+
+    Cart.prototype.sync = function(syncaction, options) {
+        options = $.extend({
+            triggerEvent: true,
+            sync: true
+        }, options);
+
+        if (options.triggerEvent)
+            $.event.trigger({
+                type: 'cart.' + syncaction.action,
+                eventData: syncaction
+            });
+
+        if (options.sync === false)
+            return;
+
+        var that = this;
+
+        currentRequest = new Date().getTime();
+        console.log('sync', {
+            action: syncaction,
+            currentRequest: currentRequest,
+            currentContext: this.currentContext
+        });
+        $.ajax({
+            url: '{#$ServicePath#}/cart/sync',
+            type: 'post',
+            dataType: "json",
+            data: {
+                action: syncaction,
+                currentRequest: currentRequest,
+                currentContext: this.currentContext
+            },
+            success: responseHandler
+        });
+
+
+        function responseHandler(data) {
+            console.log('sync finished', syncaction, options, data);
+
+            //handle only the most recent request
+
+            if (parseInt(data.currentRequest) === currentRequest)
+                that._compareCarts(data.cart);
+        }
+    };
+})();
+
+Cart.prototype._compareCarts = function(newCart) {
+    console.log('comparing carts', {cartitems: this.cartitems, carts: this.carts}, newCart);
+    //no need to compare the cartitems, we will just use the latest from the server assuming they are equal or more up-to-date
+    this.cartitems = newCart.cartitems;
+
+    var cartsDiffer = _.isEqual(this.carts, newCart.carts);
+    var currentCartDiffers = _.isEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
+
+    //if carts differ, use the version from the server
+    if (cartsDiffer) {
+        console.log('carts differ');
+        this.carts = newCart.carts;
+    }
+    //if there were also differences in the currently displayed cart, redraw
+    if (currentCartDiffers) {
+        console.log('displayed cart differs, redrawing');
+        this._redraw();
+    }
+
+}
 
 Cart.prototype._getTemplate = _.memoize(function(templateName) {
     return _.template($(this.options.templates[templateName]).html());
@@ -74,8 +146,14 @@ Cart.prototype._getItemNodes = function(id, groupname) {
         return this._getGroupNode(groupname).find('.cartItem[data-id="' + id + '"]');
 };
 
-Cart.prototype.updateContext = function(newContext, force) {
-    if (this.currentContext === newContext && !force)
+Cart.prototype.updateContext = function(newContext, options) {
+    options = $.extend({
+        force: false,
+        triggerEvent: true
+    }, options);
+
+
+    if (this.currentContext === newContext && !options.force)
         //nothing to do
         return;
 
@@ -86,6 +164,11 @@ Cart.prototype.updateContext = function(newContext, force) {
         };
 
     this._redraw();
+    if (options.triggerEvent)
+        $.event.trigger({
+            type: 'cart.' + updateContext,
+            eventData: {}
+        });
 };
 
 Cart.prototype._redraw = function() {
@@ -124,14 +207,16 @@ Cart.prototype.addItem = function(id, options) {
 
     var that = this;
 
-    if (options.groupname !== 'all' && _.indexOf(this._getCartForContext()['all'], id) === -1)
-        this.addItem(id, $.extend({}, options, {
-            groupname: 'all'
-        }));
-
     this._getItemDetails(id, function(itemDetails) {
+        if (options.groupname !== 'all' && _.indexOf(that._getCartForContext()['all'], id) === -1)
+            that.addItem(id, $.extend({}, options, {
+                groupname: 'all'
+            }));
+
         if (addInternal.call(that, itemDetails) && options.addToDOM)
             addToDOM.call(that, itemDetails);
+
+        that.sync({action: 'addItem', id: id, groupname: options.groupname}, options);
     });
 
     function addInternal(itemDetails) {
@@ -168,6 +253,8 @@ Cart.prototype.updateItem = function(id, metadata, options) {
     this._getItemDetails(id, function(itemDetails) {
         if (updateInternal.call(that, itemDetails))
             updateDOM.call(that, itemDetails);
+
+        that.sync({action: 'updateItem', id: id, metadata: metadata}, options);
     });
 
     function updateInternal(itemDetails) {
@@ -201,6 +288,7 @@ Cart.prototype.removeItem = function(id, options) {
 
     removeInternal.call(this);
     removeFromDOM.call(this);
+    this.sync({action: 'removeItem', id: id, groupname: options.groupname}, options);
 
     function removeInternal() {
         var cart = this._getCartForContext();
@@ -248,6 +336,7 @@ Cart.prototype.addGroup = function(groupname, options) {
     if (typeof this._getGroup(groupname) === 'undefined') {
         addInternal.call(this);
         addToDOM.call(this);
+        this.sync({action: 'addGroup', groupname: groupname}, options);
     }
     return groupname;
 
@@ -285,6 +374,7 @@ Cart.prototype.renameGroup = function(oldname, newname, options) {
 
     renameInternal.call(this);
     renameInDOM.call(this);
+    this.sync({action: 'renameGroup', groupname: oldname, newname: newname}, options);
 
     function renameInternal() {
         var cart = this._getCartForContext();
@@ -315,6 +405,7 @@ Cart.prototype.removeGroup = function(groupname, options) {
 
     removeInternal.call(this);
     removeFromDOM.call(this);
+    this.sync({action: 'removeGroup', groupname: groupname}, options);
 
     function removeInternal() {
         delete this._getCartForContext()[groupname];
@@ -331,5 +422,5 @@ Cart.prototype.clear = function() {
     }, options);
 
     delete this.carts[this.currentContext];
-    this.updateContext(this.currentContext, true);
+    this.updateContext(this.currentContext, {force: true});
 };

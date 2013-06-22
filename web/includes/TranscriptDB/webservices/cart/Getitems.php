@@ -8,6 +8,7 @@ require_once __DIR__ . '/Sync.php';
 class Getitems extends \WebService {
 
     public function execute($querydata) {
+        die('deprecated');
         //make sure cart is in session
         $sync = new Sync();
         $sync->init();
