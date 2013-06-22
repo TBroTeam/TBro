@@ -215,7 +215,11 @@ BEGIN
     LOCK TABLE running_queries;
 
     UPDATE running_queries SET last_keepalive=now() WHERE running_query_id=_running_query_id;
-    RETURN get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer;
+    IF FOUND THEN
+        RETURN get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer;
+    ELSE
+        RETURN -1;
+    END IF;
 END;
 $BODY$
 LANGUAGE plpgsql;

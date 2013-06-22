@@ -43,8 +43,16 @@ function execute_job($job) {
 
                     $keepalive_statement->execute(array($job_id));
                     $keepalive_timeout = $keepalive_statement->fetchColumn();
-                    //send a keepalive 3 seconds before neccessary
-                    $next_keepalive = microtime(true) + $keepalive_timeout - 3;
+                    if ($keepalive_timeout == -1) {
+                        //this is no longer our job. maybe we timed out, maybe our keepalive was too late.
+                        //die the next time this gets executed and $die_on_timeout is set
+                        $end_time = 0;
+                        //no more keepalives
+                        $send_keepalive = false;
+                    } else {
+                        //send a keepalive 3 seconds before neccessary
+                        $next_keepalive = microtime(true) + $keepalive_timeout - 3;
+                    }
                 }
             };
 
@@ -150,7 +158,8 @@ function unzip($zipfile, $target_dir) {
     if ($zip->open($zipfile) === TRUE) {
         $zip->extractTo($target_dir);
         $zip->close();
-    } else
+    }
+    else
         throw new Exception(sprintf('problems opening zipfile %s', $zipfile));
 }
 
@@ -179,6 +188,8 @@ function execute_command($cwd, $cmd, $query) {
         fclose($pipes[0]);
 
         while (true) {
+            $status = proc_get_status($process);
+
             $read = array($pipes[1], $pipes[2]);
             if (($x = stream_select($read, $write = NULL, $except = NULL, 1, 200000)) > 0) {
                 foreach ($read as $pipe) {
@@ -196,8 +207,6 @@ function execute_command($cwd, $cmd, $query) {
                 $return_value = $status['exitcode'];
                 break;
             }
-
-            $status = proc_get_status($process);
         }
         fclose($pipes[1]);
         fclose($pipes[2]);
