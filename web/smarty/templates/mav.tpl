@@ -21,6 +21,8 @@
             var cartItems = null;
         
             $(document).on('cart.updateContext', function(e) {
+                //TODO
+            
                 cartItems = [];
             });
 
