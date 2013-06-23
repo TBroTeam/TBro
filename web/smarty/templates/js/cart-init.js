@@ -9,11 +9,11 @@ $(document).ready(function() {
             afterDOMinsert_item: itemAfterDOM
         }
     });
-    
+
     cart.sync({action: 'load'});
 
-    release.on('change', function(){
-        cart.updateContext(organism.val()+'_'+release.val());
+    release.on('change', function() {
+        cart.updateContext(organism.val() + '_' + release.val());
     });
 
     function groupAllAfterDOM() {
@@ -78,8 +78,8 @@ $(document).ready(function() {
         });
 
         this.find('.cart-button-delete').click(function(event) {
-            console.log('removeItem(%s,%s)',id, $(this).parents('.cartGroup').attr('data-name'));
-            cart.removeItem(id, {groupname:$(this).parents('.cartGroup').attr('data-name')});
+            console.log('removeItem(%s,%s)', id, $(this).parents('.cartGroup').attr('data-name'));
+            cart.removeItem(id, {groupname: $(this).parents('.cartGroup').attr('data-name')});
         });
     }
 
@@ -147,37 +147,27 @@ $(document).ready(function() {
     });
 
 
-    /*
-     
-     var group_all = $("#cart-group-all");
-     group_all.accordion({
-     collapsible: true,
-     heightStyle: "content"
-     });
-     group_all.find('.cart-button-execute').click(function(event) {
-     event.stopPropagation();
-     window.location = '{#$AppPath#}/graphs/all';
-     });
-     
-     
-     var tmpcart = {#$kickoff_cart['cart']|json_encode#};
-     cart.rebuildDOM(tmpcart, true);
-     setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
-     
-     $('#cart').tooltip({
-     items: ".cart-item",
-     open: function(event, ui) {
-     ui.tooltip.css("max-width", "500px");
-     },
-     content: function() {
-     var element = $(this);
-     var tooltip = $("<table />");
-     $.each(element.data('metadata'),function(key, val){
-     $("<tr><td>"+key+"</td><td>"+(val!==null?val:'')+"</td></tr>").appendTo(tooltip);
-     });
-     tooltip.foundation();
-     return tooltip;
-     }
-     });
-     */
+    $('#cart').tooltip({
+        items: ".cartItem",
+        open: function(event, ui) {
+            ui.tooltip.css("max-width", "500px");
+        },
+        content: function() {
+            var element = $(this);
+            itemdata = cart.cartitems[element.attr('data-id')];
+            var tooltip = $("<table />");
+            $.each(itemdata, function(key, val) {
+                if (_.isObject(val)) {
+                    $.each(val, function(k, v) {
+                        tooltip.append($('<tr/>').append($('<td/>').text(k)).append($('<td/>').append(v||'')));
+                    });
+                } else {
+                    //TODO secure this up
+                    tooltip.append($('<tr/>').append($('<td/>').text(key)).append($('<td/>').text(val||'')));
+                }
+            });
+            tooltip.foundation();
+            return tooltip;
+        }
+    });
 });
