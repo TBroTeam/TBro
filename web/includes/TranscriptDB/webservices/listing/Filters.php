@@ -21,6 +21,10 @@ class Filters extends \WebService {
         if (isset($querydata['ids'])) {
             $ids = array_merge($ids, $querydata['ids']);
         }
+        
+        if (count($ids)==0){
+            return array();
+        }
 
         $place_holders = implode(',', array_fill(0, count($ids), '?'));
 

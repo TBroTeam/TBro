@@ -23,6 +23,9 @@ function Cart(initialData, options) {
 
     this.carts = initialData.carts || {};
     this.cartitems = initialData.cartitems || {};
+    this.emptyCartPrototype = {
+        'all': []
+    };
     this.currentContext = 'unknown';
     this.updateContext('unknown', {force: true, triggerEvent: false});
 }
@@ -41,7 +44,7 @@ function Cart(initialData, options) {
 
         if (options.triggerEvent)
             $.event.trigger({
-                type: 'cart.' + syncaction.action,
+                type: 'cartEvent',
                 eventData: syncaction
             });
 
@@ -51,11 +54,6 @@ function Cart(initialData, options) {
         var that = this;
 
         currentRequest = new Date().getTime();
-        console.log('sync', {
-            action: syncaction,
-            currentRequest: currentRequest,
-            currentContext: this.currentContext
-        });
         $.ajax({
             url: '{#$ServicePath#}/cart/sync',
             type: 'post',
@@ -70,10 +68,7 @@ function Cart(initialData, options) {
 
 
         function responseHandler(data) {
-            console.log('sync finished', syncaction, options, data);
-
             //handle only the most recent request
-
             if (parseInt(data.currentRequest) === currentRequest)
                 that._compareCarts(data.cart);
         }
@@ -81,25 +76,29 @@ function Cart(initialData, options) {
 })();
 
 Cart.prototype._compareCarts = function(newCart) {
-    console.log('comparing carts', {cartitems: this.cartitems, carts: this.carts}, newCart);
     //no need to compare the cartitems, we will just use the latest from the server assuming they are equal or more up-to-date
-    this.cartitems = newCart.cartitems;
+    //one exception: php gives us back [] instead of {} as there is no difference in php between an empty array and an empty associative array(object)
+    //we want always {}.
+    if (_.isEqual([], newCart.cartitems))
+        this.cartitems = {};
+    else
+        this.cartitems = newCart.cartitems;
 
-    var cartsDiffer = _.isEqual(this.carts, newCart.carts);
-    var currentCartDiffers = _.isEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
+    var cartsDiffer = !_.isEqual(this.carts, newCart.carts);
+    var currentCartDiffers = !_.isEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
 
     //if carts differ, use the version from the server
     if (cartsDiffer) {
-        console.log('carts differ');
+        console.log('carts differ', this.carts, newCart.carts);
         this.carts = newCart.carts;
     }
     //if there were also differences in the currently displayed cart, redraw
     if (currentCartDiffers) {
-        console.log('displayed cart differs, redrawing');
+        console.log('displayed cart differs, redrawing', this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
         this._redraw();
     }
 
-}
+};
 
 Cart.prototype._getTemplate = _.memoize(function(templateName) {
     return _.template($(this.options.templates[templateName]).html());
@@ -112,6 +111,8 @@ Cart.prototype._executeTemplate$ = function(templateName) {
 };
 
 Cart.prototype._getCartForContext = function() {
+    if (typeof this.carts[this.currentContext] === 'undefined')
+        this.carts[this.currentContext] = this.emptyCartPrototype;
     return this.carts[this.currentContext];
 };
 
@@ -158,15 +159,11 @@ Cart.prototype.updateContext = function(newContext, options) {
         return;
 
     this.currentContext = newContext;
-    if (typeof this.carts[newContext] === 'undefined')
-        this.carts[newContext] = {
-            'all': []
-        };
 
     this._redraw();
     if (options.triggerEvent)
         $.event.trigger({
-            type: 'cart.' + updateContext,
+            type: 'cart.updateContext',
             eventData: {}
         });
 };
@@ -181,16 +178,20 @@ Cart.prototype._redraw = function() {
     }
     var that = this;
 
-    $.each(cart, function(groupname, group) {
+    for (var groupname in cart) {
+        if (!cart.hasOwnProperty(groupname))
+            continue;
+        var group = cart[groupname];
         that.addGroup(groupname, {
             sync: false
         });
-        for (var i = 0; i < group.length; i++)
+        for (var i = 0; i < group.length || 0; i++)
             that.addItem(group[i], {
                 groupname: groupname,
                 sync: false
             });
-    });
+    }
+
 };
 
 Cart.prototype.addItem = function(id, options) {

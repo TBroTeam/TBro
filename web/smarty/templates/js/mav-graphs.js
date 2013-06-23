@@ -1,11 +1,11 @@
-$(document).ready(function(){
-    
+$(document).ready(function() {
+
     var select_element = $('#select-elements');
     var select_assay = $('#select-assay');
     var select_analysis = $('#select-analysis');
     var select_tissues = $('#select-sample');
-    
-    
+
+
     new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
@@ -14,32 +14,51 @@ $(document).ready(function(){
     });
     new filteredSelect(select_tissues, 'sample', {
         precedessorNode: select_element
-    });            
-    $.ajax('{#$ServicePath#}/listing/filters/', {
-        method: 'post',
-        data: {
-            ids: _.map(cartitems, function(item){
-                return item.feature_id;
-            })
-        },
-        success: function(data) {
-            filterdata = data;
-            _.each(cartitems, function(value, key, list){
-                filterdata.data.feature[value.feature_id] = value;
-            });
-            new filteredSelect(select_assay, 'assay', {
-                data: filterdata
-            }).refill();
-            
-        }
     });
-    
-    
+
+
+    var lastItemEvent = 0;
+    $(document).on('cartEvent', function(event) {
+        if (!(event.eventData.action || '').match(/(add|remove)Item/) || event.eventData.groupname !== '{#$cartname#}')
+            return;
+
+        var myItemEvent = new Date().getTime();
+        lastItemEvent = myItemEvent;
+
+        setTimeout(function() {
+            //if another itemEvent has happened in the last 100ms, skip.
+            if (lastItemEvent !== myItemEvent)
+                return;
+
+            var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+
+            $.ajax('{#$ServicePath#}/listing/filters/', {
+                method: 'post',
+                data: {
+                    ids: cartitems
+                },
+                success: function(data) {
+                    var filterdata = data;
+                    $.each(cartitems, function() {
+                        filterdata.data.feature[this] = cart.cartitems[this];
+                    });
+                    new filteredSelect(select_assay, 'assay', {
+                        data: filterdata
+                    }).refill();
+
+                }
+            });
+        }, 100);
+
+    });
+
+
+
     function getFilterData() {
         var data = {
-            parents: [], 
-            analysis: [], 
-            assay: [], 
+            parents: [],
+            analysis: [],
+            assay: [],
             biomaterial: []
         };
         select_element.find(':selected').each(function() {
@@ -52,7 +71,7 @@ $(document).ready(function(){
         });
         return data;
     }
-    
+
     $('#button-barplot').click(function() {
 
         $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
@@ -78,16 +97,16 @@ $(document).ready(function(){
 
 
                 cx = new CanvasXpress(
-                    "isoform-barplot-canvas",
-                    {
-                        "x": val.x,
-                        "y": val.y
-                    },
-                    {
-                        graphType: "Bar",
-                        showDataValues: true,
-                        graphOrientation: "vertical"
-                    });
+                        "isoform-barplot-canvas",
+                        {
+                            "x": val.x,
+                            "y": val.y
+                        },
+                {
+                    graphType: "Bar",
+                    showDataValues: true,
+                    graphOrientation: "vertical"
+                });
 
                 canvas.data('canvasxpress', cx);
 
@@ -123,18 +142,18 @@ $(document).ready(function(){
 
 
                 cx = new CanvasXpress(
-                    "isoform-barplot-canvas",
-                    {
-                        "x": val.x,
-                        "y": val.y
-                    },
-                    {
-                        graphType: "Heatmap",
-                        showDataValues: true,
-                        graphOrientation: "vertical",
-                        zoomSamplesDisable: true,
-                        zoomVariablesDisable: true
-                    });
+                        "isoform-barplot-canvas",
+                        {
+                            "x": val.x,
+                            "y": val.y
+                        },
+                {
+                    graphType: "Heatmap",
+                    showDataValues: true,
+                    graphOrientation: "vertical",
+                    zoomSamplesDisable: true,
+                    zoomVariablesDisable: true
+                });
 
                 canvas.data('canvasxpress', cx);
                 groupByTissues();

@@ -66,10 +66,10 @@ $(document).ready(function() {
                     aoData.push(this);
                 });
                 /*{#if $cart_ids#}*/
-                $.each(cartitems, function() {
+                $.each(cart._getCartForContext()['{#$cartname#}'] || [], function() {
                     aoData.push({
                         name: 'ids[]',
-                        value: this.feature_id
+                        value: this
                     });
                 });
                 /*{#/if#}*/

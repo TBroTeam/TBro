@@ -1,6 +1,5 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
-    {#call_webservice path="cart/getitems" data=["query1"=>$cartname] assign='cartitems'#}
     <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
     <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
@@ -18,15 +17,6 @@
     </style>
     <script type="text/javascript">
         (function($) {
-            var cartItems = null;
-        
-            $(document).on('cart.updateContext', function(e) {
-                //TODO
-            
-                cartItems = [];
-            });
-
-
             
         {#include file="js/mav-graphs.js"#}
             (function() {
@@ -44,7 +34,7 @@
 
     <div class="row">
         <div class="large-12 columns">
-            <h2>Multi-Feature Actions</h2>
+            <h2>Multi-Feature Actions on Cart {#$cartname#}</h2>
         </div>
     </div>
     <div class="row">

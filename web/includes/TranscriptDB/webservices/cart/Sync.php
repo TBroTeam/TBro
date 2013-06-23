@@ -80,10 +80,6 @@ class Sync extends \WebService {
         if (!isset($_SESSION))
             session_start();
 
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = array('all' => array(), 'groups' => array());
-        }
-
         //if we are logged in, get our cart from the db. 
         //if we are logged in but have no cart in the db, BUT a cart in the session, this saves our session cart to the DB.
         $this->loadCart();
@@ -103,28 +99,33 @@ class Sync extends \WebService {
     }
 
     public function syncActions($parms, $currentContext){
+        //prepare empty values
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array('cartitems' => array(), 'carts' => array());
         }
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
             $_SESSION['cart']['carts'][$currentContext] = array('all'=>array());
 
+        //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
+        if (isset($parms['id'])) $parms['id'] = intval($parms['id']);
         
+        //refs for quicker access
         $cartitems = &$_SESSION['cart']['cartitems'];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
 
+        //manipulation
         switch ($parms['action']) {
             case 'addItem':
                 // add item to $cartitems
                 if (!isset($cartitems[$parms['id']])) {
                     list($service) = \WebService::factory('details/cartitem');
-                    $cartitems[$parms['id']] = $service->execute(array('query1' => $parms['id']));
+                    $cartitems[$parms['id']] = array_merge($service->execute(array('query1' => $parms['id'])), array('metadata'=>array()));
                 }
                 // add item to $currentCart
                 if (!in_array($parms['id'], $currentCart[$parms['groupname']]))
                     $currentCart[$parms['groupname']][] = $parms['id'];
                 break;
-            case 'udpateItem':
+            case 'updateItem':
                 //update metadata
                 $cartitems[$parms['id']]['metadata'] = $parms['metadata'];
                 break;

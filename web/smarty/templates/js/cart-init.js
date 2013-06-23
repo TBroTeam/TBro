@@ -9,10 +9,12 @@ $(document).ready(function() {
             afterDOMinsert_item: itemAfterDOM
         }
     });
+    
+    cart.sync({action: 'load'});
 
-    cart.addGroup('test');
-    cart.addItem(522151);
-
+    release.on('change', function(){
+        cart.updateContext(organism.val()+'_'+release.val());
+    });
 
     function groupAllAfterDOM() {
         this.accordion({
