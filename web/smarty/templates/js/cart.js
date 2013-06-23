@@ -86,18 +86,19 @@ Cart.prototype._compareCarts = function(newCart) {
 
     var cartsDiffer = !_.isEqual(this.carts, newCart.carts);
     var currentCartDiffers = !_.isEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
+    //log
+    cartsDiffer && console.log('carts differ', this.carts, newCart.carts);
+    currentCartDiffers && console.log('displayed cart differs, redrawing', this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
 
     //if carts differ, use the version from the server
     if (cartsDiffer) {
-        console.log('carts differ', this.carts, newCart.carts);
         this.carts = newCart.carts;
     }
+    
     //if there were also differences in the currently displayed cart, redraw
     if (currentCartDiffers) {
-        console.log('displayed cart differs, redrawing', this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
         this._redraw();
     }
-
 };
 
 Cart.prototype._getTemplate = _.memoize(function(templateName) {

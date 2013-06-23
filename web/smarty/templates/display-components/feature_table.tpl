@@ -100,7 +100,7 @@
             <span><% if (typeof alias != "undefined" ) print(alias) %></span>
         </td>
         <td>
-            <span style="margin-bottom:0px" class="small button right"  onclick="$.ajax({url:'{#$ServicePath#}/details/cartitem/<%= feature_id %>', success: cart.addItemToAll});"> add to cart -> </span>
+            <span style="margin-bottom:0px" class="small button right"  onclick="javascript:cart.addItem(<%= feature_id %>);"> add to cart -> </span>
         </td>
     </tr>
 </script>

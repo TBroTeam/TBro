@@ -33,8 +33,6 @@
         </div>
         <div class="large-3 columns" >
             <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
-
-
                 <div style="display: none">
 
                     <div id="dialog-rename-cart-group" title="rename cart">
@@ -79,10 +77,9 @@
                 </div>
 
                 <div class="panel large-12 columns" id="cart">
-                    <h4>Cart</h4>
-
                     <div>
-                        <a id="cart-add-group" class="button secondary right">add new cart</a>
+                        <h4 class="left">Cart</h4>                        
+                        <a class="button secondary right" href="javascript:cart.addGroup();">add new group</a>
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
