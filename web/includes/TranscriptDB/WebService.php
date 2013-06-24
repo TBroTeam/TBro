@@ -7,7 +7,7 @@ abstract class WebService {
     abstract public function execute($data);
 
     public static function output($dataArray) {
-        echo json_encode($dataArray, JSON_PRETTY_PRINT);
+        echo json_encode($dataArray, defined('JSON_PRETTY_PRINT')?JSON_PRETTY_PRINT:0);
     }
 
     public static function factory($servicePath) {

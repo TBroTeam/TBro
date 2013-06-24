@@ -18,8 +18,8 @@ $(document).ready(function() {
 
 
     var lastItemEvent = 0;
-    $(document).on('cartEvent', function(event) {
-        if (!(event.eventData.action || '').match(/(add|remove)Item/) || event.eventData.groupname !== '{#$cartname#}')
+    $('#Cart').on('cartEvent', function(event) {
+        if (!(event.eventData.action || '').match(/(add|remove)Item/) || event.eventData.groupname !== '{#$cartname#}' && !(event.eventData.action==='updateContext' ))
             return;
 
         var myItemEvent = new Date().getTime();
@@ -97,16 +97,16 @@ $(document).ready(function() {
 
 
                 cx = new CanvasXpress(
-                        "isoform-barplot-canvas",
-                        {
-                            "x": val.x,
-                            "y": val.y
-                        },
-                {
-                    graphType: "Bar",
-                    showDataValues: true,
-                    graphOrientation: "vertical"
-                });
+                    "isoform-barplot-canvas",
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
+                    {
+                        graphType: "Bar",
+                        showDataValues: true,
+                        graphOrientation: "vertical"
+                    });
 
                 canvas.data('canvasxpress', cx);
 
@@ -142,18 +142,18 @@ $(document).ready(function() {
 
 
                 cx = new CanvasXpress(
-                        "isoform-barplot-canvas",
-                        {
-                            "x": val.x,
-                            "y": val.y
-                        },
-                {
-                    graphType: "Heatmap",
-                    showDataValues: true,
-                    graphOrientation: "vertical",
-                    zoomSamplesDisable: true,
-                    zoomVariablesDisable: true
-                });
+                    "isoform-barplot-canvas",
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
+                    {
+                        graphType: "Heatmap",
+                        showDataValues: true,
+                        graphOrientation: "vertical",
+                        zoomSamplesDisable: true,
+                        zoomVariablesDisable: true
+                    });
 
                 canvas.data('canvasxpress', cx);
                 groupByTissues();

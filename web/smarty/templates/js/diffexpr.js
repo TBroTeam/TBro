@@ -23,6 +23,7 @@ $(document).ready(function() {
                 new filteredSelect(select_conditionA, 'ba', {
                     data: data
                 }).refill();
+                $('#button-gdfx-table').prop('disabled', false);
             }
         });
     });
@@ -65,7 +66,7 @@ $(document).ready(function() {
                 $.each($('#diffexp_filters').serializeArray(), function() {
                     aoData.push(this);
                 });
-                /*{#if $cart_ids#}*/
+                /*{#if isset($cart_ids)#}*/
                 $.each(cart._getCartForContext()['{#$cartname#}'] || [], function() {
                     aoData.push({
                         name: 'ids[]',
@@ -161,9 +162,7 @@ $(document).ready(function() {
 
     });
 
-    $(document).on('cart.addGroup', function(e) {
-        $('#select-gdfx-cart').append($('<option/>').text(e.eventData.name).attr('value', e.eventData.name));
-    });
+    new Groupselect($('#select-gdfx-cart'), cart);
 
     $('#button-gdfx-addToCart').click(function() {
         var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();

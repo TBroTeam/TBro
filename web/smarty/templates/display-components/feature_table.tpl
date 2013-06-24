@@ -4,60 +4,43 @@
     function displayFeatureTable(data, opts){
         var options = $.extend(true, {
             aoColumns: [
-                {bSortable: false},
-                {},
-                {},
-                {},
-                {bSortable: false}
-            ]
+                //{bSortable: false},
+                //{mData: 'feature_id'},
+                {mData: 'type'},
+                {mData: 'name'},
+                {mData: 'alias'},
+                //{bSortable: false}
+            ],
+            sDom: 'T<"clear">lfrtip',
+            oTableTools: {
+                sRowSelect: "multi",
+                aButtons: []
+            },
+            aaData: []
         }, opts);
-        var res = $('#results tbody');
-        res.empty();
-        var cnt=0;
-        var template = _.template($('#result-template').html());
         $.each(data, function(){
-            res.append(template(this));
-            cnt++;
+            options.aaData.push(this);
         });
-        if (cnt>0){
-            $('.results').show(500);
-            if (datatable === null)
-                datatable = $('#results').dataTable(options);
-        }
+        
+        console.log(options);
+        $('.results').show(500);
+        if (datatable === null)
+            datatable = $('#results').dataTable(options);
     }
     
     (function($){
         $(document).ready(function(){
             $('#add_selected').click(function(){
-                $('#results tbody').find('input:checked').each(function(){
-                    cart.addItem($(this).val());
-                });
+                var groupname = $('#select-group').val();
+                if (groupname=='#new#'){
+                    groupname = cart.addGroup();
+                }
+                
+                $.each(TableTools.fnGetInstance('results').fnGetSelectedData(), function(){
+                    cart.addItem(this.feature_id, {groupname: groupname});
+                    console.log('cart.addItem', this.feature_id, groupname);
+                });                
             });
-            
-            $('#compare_selected').click(function(){
-                var cartname = cart.addGroup();
-                var checkboxes = $('#results tbody').find('input:checked');
-                if (checkboxes.length===0) return;
-                var count_finished = 0;
-                checkboxes.each(function(){
-                    cart.addItem($(this).val(), {
-                        groupname: cartname,
-                        afterDOMinsert: function(){
-                            cart.options.callbacks.afterDOMinsert_item.apply(this, arguments);
-
-                            //all ajax calls & callbacks have finished, we can continue to the graph page
-                            if (++count_finished == checkboxes.length){
-                                window.location = '{#$AppPath#}/graphs/'+cartname;
-                            }
-                        }
-                    });
-                });
-            });
-            $('#check_all').prop('checked',false);
-            $('#check_all').click(function(){
-                $('#results tbody').find('input[type="checkbox"]').prop('checked',$(this).prop('checked')); 
-            });
-            
             
             $('#results').tooltip({
                 items: ".has-tooltip",
@@ -77,9 +60,9 @@
                     return tooltip;
                 }
             });
+            
+            new Groupselect($('#select-group'), cart);
         });
-        
-        
     })(jQuery);
 
 </script>
@@ -109,19 +92,22 @@
         <table style="width:100%" id="results">
             <thead>
                 <tr>
-                    <td></td>
                     <td>Type</td>
                     <td>Name</td>
                     <td>Alias</td>
-                    <td></td>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <td><input type="checkbox" id="check_all"/></td>
-                    <td colspan="4">
-                        <span style="margin-bottom:0px" class="small button right" id="compare_selected">compare selected</span>
-                        <span style="margin-bottom:0px" class="small button right" id="add_selected"> add selected to cart -> </span>
+                    <td colspan="3">
+                        <span class="left">
+                            <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('results').fnSelectAll();">select all</a>
+                            <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('results').fnSelectNone();">select none</a>
+                        </span>
+                        <span class="right">
+                            <span style="margin-bottom:0px" class="small button" id="add_selected"> add selected to cart -> </span>
+                            <select style="width:auto" id="select-group" ><option class="keep" value='#new#'>new</option></select>
+                        </span>
                     </td>
                 </tr>
             </tfoot>

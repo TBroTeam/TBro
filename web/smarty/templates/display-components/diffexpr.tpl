@@ -61,7 +61,7 @@
             </div>
 
             <div class="large-2 columns position" data-my="left center" data-at="right center" data-of="PREV">
-                <button type="button" id="button-gdfx-table" value="table">display Table</button>
+                <button type="button" id="button-gdfx-table" value="table" disabled="disabled">display Table</button>
             </div>
 
             <div class="large-5 columns  panel query_details" style="display:none" id="query_details">
@@ -122,7 +122,7 @@
                 </span>
                 <span class=" right">
                     <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
-                    <select style="width:auto" id="select-gdfx-cart"><option value='#new#'>new</option><option value='all'>all</option></select>
+                    <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
                 </span>
             </div>
         </div>

@@ -7,7 +7,8 @@ $(document).ready(function() {
             afterDOMinsert_groupAll: groupAllAfterDOM,
             afterDOMinsert_group: groupAfterDOM,
             afterDOMinsert_item: itemAfterDOM
-        }
+        },
+        rootNode: $('#Cart')
     });
 
     cart.sync({action: 'load'});
@@ -135,7 +136,7 @@ $(document).ready(function() {
         modal: true,
         buttons: {
             "Delete all items": function() {
-                cart.resetCart({
+                cart.clear({
                     sync: true
                 });
                 $(this).dialog("close");

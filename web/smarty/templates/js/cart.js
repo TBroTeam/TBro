@@ -16,18 +16,20 @@ function Cart(initialData, options) {
             afterDOMinsert_item: function() {
             }
         },
-        parentNode: '#Cart',
+        rootNode: null,
         groupNamePrefix: 'Group'
     };
     $.extend(true, this.options, options);
-
     this.carts = initialData.carts || {};
     this.cartitems = initialData.cartitems || {};
     this.emptyCartPrototype = {
         'all': []
     };
     this.currentContext = 'unknown';
-    this.updateContext('unknown', {force: true, triggerEvent: false});
+    this.updateContext('unknown', {
+        force: true, 
+        triggerEvent: false
+    });
 }
 
 (function() {
@@ -42,11 +44,12 @@ function Cart(initialData, options) {
             sync: true
         }, options);
 
-        if (options.triggerEvent)
-            $.event.trigger({
+        if (options.triggerEvent){
+            this.options.rootNode.trigger({
                 type: 'cartEvent',
                 eventData: syncaction
             });
+        }
 
         if (options.sync === false)
             return;
@@ -82,7 +85,7 @@ Cart.prototype._compareCarts = function(newCart) {
     if (_.isEqual([], newCart.cartitems))
         this.cartitems = {};
     else
-        this.cartitems = newCart.cartitems;
+        this.cartitems = newCart.cartitems || {};
 
     var cartsDiffer = !_.isEqual(this.carts, newCart.carts);
     var currentCartDiffers = !_.isEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
@@ -122,7 +125,7 @@ Cart.prototype._getGroup = function(groupname) {
 };
 
 Cart.prototype._getGroupNode = function(groupname) {
-    return $(this.options.parentNode).find('.cartGroup[data-name="' + groupname + '"]');
+    return this.options.rootNode.find('.cartGroup[data-name="' + groupname + '"]');
 };
 
 Cart.prototype._getItemDetails = function(id, callback) {
@@ -134,7 +137,9 @@ Cart.prototype._getItemDetails = function(id, callback) {
             url: this.options.serviceNodes.itemDetails + id,
             dataType: 'JSON',
             success: function(itemDetails) {
-                $.extend(true, itemDetails, {metadata: {}});
+                $.extend(true, itemDetails, {
+                    metadata: {}
+                });
                 that.cartitems[id] = itemDetails;
                 callback(itemDetails);
             }
@@ -143,7 +148,7 @@ Cart.prototype._getItemDetails = function(id, callback) {
 
 Cart.prototype._getItemNodes = function(id, groupname) {
     if (typeof groupname === 'undefined' || groupname === 'all')
-        return $(this.options.parentNode).find('.cartItem[data-id="' + id + '"]');
+        return this.options.rootNode.find('.cartItem[data-id="' + id + '"]');
     else
         return this._getGroupNode(groupname).find('.cartItem[data-id="' + id + '"]');
 };
@@ -162,15 +167,24 @@ Cart.prototype.updateContext = function(newContext, options) {
     this.currentContext = newContext;
 
     this._redraw();
-    if (options.triggerEvent)
-        $.event.trigger({
-            type: 'cart.updateContext',
-            eventData: {}
-        });
+    
+    this.sync({
+        action: 'updateContext'
+    }, {
+        sync:false, 
+        triggerEvent: options.triggerEvent
+    });
 };
 
 Cart.prototype._redraw = function() {
-    $(this.options.parentNode).empty();
+    this.options.rootNode.empty();
+    this.sync({
+        action: 'redraw'
+    }, {
+        sync:false, 
+        triggerEvent: true
+    });
+    
     var cart = _.clone(this._getCartForContext());
     var cartToEmpty = this._getCartForContext();
     for (var key in cartToEmpty) {
@@ -178,7 +192,7 @@ Cart.prototype._redraw = function() {
             delete cartToEmpty[key];
     }
     var that = this;
-
+    
     for (var groupname in cart) {
         if (!cart.hasOwnProperty(groupname))
             continue;
@@ -198,6 +212,8 @@ Cart.prototype._redraw = function() {
 Cart.prototype.addItem = function(id, options) {
     //make sure we don't have a string id'
     id = parseInt(id);
+    //this function is very asynchronous, this deferred object is a way to see if it finished ( via $.when(cart.addItem(id)).then(function) )
+    var dfd = $.Deferred();
 
     options = $.extend({
         groupname: 'all',
@@ -210,16 +226,31 @@ Cart.prototype.addItem = function(id, options) {
     var that = this;
 
     this._getItemDetails(id, function(itemDetails) {
+        function doWork(){
+            if (addInternal.call(that, itemDetails) && options.addToDOM)
+                addToDOM.call(that, itemDetails);
+
+            that.sync({
+                action: 'addItem', 
+                id: id, 
+                groupname: options.groupname
+            }, options);
+            dfd.resolve();
+        }
+
+        //if this item is not in the all-group, add it to the all-group, wait until that adding has finished and THEN add it to this group
         if (options.groupname !== 'all' && _.indexOf(that._getCartForContext()['all'], id) === -1)
-            that.addItem(id, $.extend({}, options, {
+            $.when(that.addItem(id, $.extend({}, options, {
                 groupname: 'all'
-            }));
+            }))).then(doWork);
+        else
+            //else, just add it now.
+            doWork();
 
-        if (addInternal.call(that, itemDetails) && options.addToDOM)
-            addToDOM.call(that, itemDetails);
-
-        that.sync({action: 'addItem', id: id, groupname: options.groupname}, options);
+        
     });
+    return dfd.promise();
+   
 
     function addInternal(itemDetails) {
         var group = this._getGroup(options.groupname);
@@ -244,7 +275,7 @@ Cart.prototype.addItem = function(id, options) {
 };
 
 Cart.prototype.updateItem = function(id, metadata, options) {
-//make sure we don't have a string id'
+    //make sure we don't have a string id'
     id = parseInt(id);
 
     options = $.extend({
@@ -256,7 +287,11 @@ Cart.prototype.updateItem = function(id, metadata, options) {
         if (updateInternal.call(that, itemDetails))
             updateDOM.call(that, itemDetails);
 
-        that.sync({action: 'updateItem', id: id, metadata: metadata}, options);
+        that.sync({
+            action: 'updateItem', 
+            id: id, 
+            metadata: metadata
+        }, options);
     });
 
     function updateInternal(itemDetails) {
@@ -290,7 +325,11 @@ Cart.prototype.removeItem = function(id, options) {
 
     removeInternal.call(this);
     removeFromDOM.call(this);
-    this.sync({action: 'removeItem', id: id, groupname: options.groupname}, options);
+    this.sync({
+        action: 'removeItem', 
+        id: id, 
+        groupname: options.groupname
+    }, options);
 
     function removeInternal() {
         var cart = this._getCartForContext();
@@ -338,7 +377,10 @@ Cart.prototype.addGroup = function(groupname, options) {
     if (typeof this._getGroup(groupname) === 'undefined') {
         addInternal.call(this);
         addToDOM.call(this);
-        this.sync({action: 'addGroup', groupname: groupname}, options);
+        this.sync({
+            action: 'addGroup', 
+            groupname: groupname
+        }, options);
     }
     return groupname;
 
@@ -347,7 +389,7 @@ Cart.prototype.addGroup = function(groupname, options) {
     }
 
     function addToDOM() {
-        var parent$ = $(this.options.parentNode);
+        var parent$ = this.options.rootNode;
         var group$;
         if (groupname === 'all') {
             group$ = this._executeTemplate$('GroupAll');
@@ -362,12 +404,12 @@ Cart.prototype.addGroup = function(groupname, options) {
     }
 };
 
-Cart.prototype.renameGroup = function(oldname, newname, options) {
+Cart.prototype.renameGroup = function(groupname, newname, options) {
     options = $.extend({
         sync: true
     }, options);
 
-    if (oldname === newname)
+    if (groupname === newname)
         return;
 
     if (this._getGroup(newname) !== undefined) {
@@ -376,17 +418,21 @@ Cart.prototype.renameGroup = function(oldname, newname, options) {
 
     renameInternal.call(this);
     renameInDOM.call(this);
-    this.sync({action: 'renameGroup', groupname: oldname, newname: newname}, options);
+    this.sync({
+        action: 'renameGroup', 
+        groupname: groupname, 
+        newname: newname
+    }, options);
 
     function renameInternal() {
         var cart = this._getCartForContext();
-        var group = cart[oldname];
+        var group = cart[groupname];
         cart[newname] = group;
-        delete cart[oldname];
+        delete cart[groupname];
     }
 
     function renameInDOM() {
-        var oldGroup$ = this._getGroupNode(oldname);
+        var oldGroup$ = this._getGroupNode(groupname);
         var items$ = oldGroup$.find('.cartItem');
         var newGroup$ = this._executeTemplate$('Group', {
             groupname: newname
@@ -407,7 +453,10 @@ Cart.prototype.removeGroup = function(groupname, options) {
 
     removeInternal.call(this);
     removeFromDOM.call(this);
-    this.sync({action: 'removeGroup', groupname: groupname}, options);
+    this.sync({
+        action: 'removeGroup', 
+        groupname: groupname
+    }, options);
 
     function removeInternal() {
         delete this._getCartForContext()[groupname];
@@ -418,11 +467,41 @@ Cart.prototype.removeGroup = function(groupname, options) {
     }
 };
 
-Cart.prototype.clear = function() {
+Cart.prototype.clear = function(options) {
     options = $.extend({
         sync: true
     }, options);
 
+    var that = this;
+    $.each(this._getCartForContext()['all'], function(){
+        delete that.cartitems[this];
+    });
+
     delete this.carts[this.currentContext];
-    this.updateContext(this.currentContext, {force: true});
+    this.sync({
+        action: 'clear'
+    }, options);
+
+    
+    this.updateContext(this.currentContext, {
+        force: true
+    });
 };
+
+function Groupselect(node$, cart){
+    this.node$ = node$;
+    this.cart = cart;
+    this.cart.options.rootNode.on('cartEvent', function(e) {
+        if (e.eventData.action == 'addGroup') {
+            node$.append($('<option/>').text(e.eventData.groupname).val(e.eventData.groupname));
+        }
+        else if (e.eventData.action == 'renameGroup') {
+            node$.find('option[value="'+e.eventData.groupname+'"]').text(e.eventData.newname).val(e.eventData.newname);
+        }
+        else if (e.eventData.action == 'removeGroup') {
+            node$.find('option[value="'+e.eventData.groupname+'"]').remove();
+        } else if (e.eventData.action == 'redraw'){
+            node$.find('option:not(.keep)').remove();
+        }        
+    });
+}

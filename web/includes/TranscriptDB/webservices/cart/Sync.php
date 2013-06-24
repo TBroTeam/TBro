@@ -155,6 +155,11 @@ class Sync extends \WebService {
             case 'removeGroup':
                 unset($currentCart[$parms['groupname']]);
                 break;
+            case 'clear':
+                foreach ($currentCart['all'] as $id)
+                    unset($cartitems[$id]);
+                $_SESSION['cart']['carts'][$currentContext] = array('all'=>array());
+                break;
         }
     }
 
