@@ -27,16 +27,17 @@
 
 {#if (isset($data.unigene.isoforms) && count($data.unigene.isoforms)>0)#}
     <script type="text/javascript">
+        var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function(elem){
+            return $.extend({alias:''}, elem);
+        });
         $(document).ready(function(){
-            displayFeatureTable({#$data.unigene.isoforms|json_encode#}, {
+            displayFeatureTable(isoform_data, {
+                bPaginate: false,
                 bFilter: false, 
-                sDom: 't',
                 aoColumns: [
-                    {},
                     {bVisible: false},
                     {},
                     {bVisible: false},
-                    {}
                 ]
             });
         });

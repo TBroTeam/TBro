@@ -240,7 +240,6 @@
                 bPaginate: false,
                 bFilter: false,
                 aoColumns: [
-                    /*{ mData: function(){return '<a href="javascript:triggerDetails(this);">details</a>';}, bSortable: false },*/
                     { mData: "def_firstword", sTitle:"id" },
                     { mData: "max_score", sTitle:"max score" },
                     { mData: "total_score", sTitle:"total score" },

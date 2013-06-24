@@ -1,16 +1,17 @@
 <script type="text/javascript">
-    var datatable = null;
+    var datatable;
     
     function displayFeatureTable(data, opts){
         var options = $.extend(true, {
             aoColumns: [
-                //{bSortable: false},
-                //{mData: 'feature_id'},
                 {mData: 'type'},
                 {mData: 'name'},
                 {mData: 'alias'},
-                //{bSortable: false}
             ],
+            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/'+aData.feature_id+'">'+aData.name+'</a>' );
+                $(nRow).css( 'cursor', 'pointer' );
+            },
             sDom: 'T<"clear">lfrtip',
             oTableTools: {
                 sRowSelect: "multi",
@@ -24,8 +25,13 @@
         
         console.log(options);
         $('.results').show(500);
-        if (datatable === null)
+        if (typeof datatable == "undefined") 
             datatable = $('#results').dataTable(options);
+        else {
+            //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
+            datatable.fnClearTable();
+            datatable.fnAddData(data);
+        }
     }
     
     (function($){
