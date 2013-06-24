@@ -4,7 +4,7 @@ RewriteRule ^js/feature/(.*).js$    index.php?page=js&js=$1 [L,NC]
 
 RewriteRule ^multisearch$    index.php?page=multisearch [L,NC,QSA]
 
-RewriteRule ^advancedsearch$    index.php?page=advancedsearch [L,NC,QSA]
+RewriteRule ^annotationsearch$    index.php?page=combisearch [L,NC,QSA]
 
 RewriteRule ^details/byId/(.*)?$  index.php?page=details-byid&feature_id=$1 [L,NC,QSA]
 RewriteRule ^details/byOrganismReleaseName/(.*)/(.*)/(.*)$  index.php?page=details&organism=$1&release=$2&name=$3 [L,NC,QSA]

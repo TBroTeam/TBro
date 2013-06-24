@@ -75,6 +75,9 @@ switch ($page) {
     case 'multisearch':
         $smarty->display('multisearch.tpl');
         die();
+    case 'combisearch':
+        $smarty->display('combisearch.tpl');
+        die();
     case 'advancedsearch':
         $smarty->display('advanced_search.tpl');
         die();
@@ -114,7 +117,7 @@ SELECT feature_id
     WHERE organism_id = ? AND accession=? AND name=?
 EOF
     );
-    
+
     $stm->execute(array($organism, $release, $name));
 
     if ($stm->rowCount() == 0)
