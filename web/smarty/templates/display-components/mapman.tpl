@@ -12,7 +12,7 @@
                                 <table style="width:100%">
                                     <tr><th>Annotation:</th><td>{#$hit['annotation']#}</td></tr>
                                     <tr><th>Bincode:</th><td>{#$hit['bin_accession']#}: {#$hit['bin_definition']#}</td></tr>
-                                    {#if count($hit['bin_annotations'])>0 #}
+                                    {#if isset($hit['bin_annotations']) && count($hit['bin_annotations'])>0 #}
                                         <tr><th>Bincode Annotations:</th><td>
                                                 <table style="width:100%">
                                                     {#foreach $hit['bin_annotations'] as $bin_annot#}
