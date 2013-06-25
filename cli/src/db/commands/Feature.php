@@ -61,7 +61,7 @@ class Feature extends AbstractTable {
                     'add_synonym' => 'required',
                     'remove_synonym' => 'required',
                 ),
-                'description' => "'symbol' or 'fulltext'. defaults to 'symbol'",
+                'description' => "'symbol' or 'fullname'. defaults to 'symbol'",
                 'choices' => array('symbol', 'fullname'),
                 'default'=>'symbol'
             ),

@@ -24,14 +24,39 @@ class Features extends \WebService {
 
         global $db;
 
-        $constant = 'constant';
-
         $query = <<<EOF
+    SELECT
+    feature.feature_id, feature.name, type_id, (
+    SELECT s.name 
+    FROM feature_synonym fs, synonym s 
+    WHERE fs.feature_id=feature.feature_id 
+    AND s.synonym_id=fs.synonym_id 
+    AND s.type_id=(SELECT type_id FROM cvterm WHERE name='symbol' LIMIT 1)
+    LIMIT 1
+    ) AS alias
+    FROM feature
+    WHERE feature.feature_id IN ($place_holders)
+EOF;
+        
+        /*
+
 SELECT
-    feature.feature_id, feature.name, type_id
+    feature.feature_id, feature.name, type_id, (SELECT * FROM )
     FROM feature
 WHERE feature.feature_id IN ($place_holders)
-EOF;
+         * 
+         * SELECT
+    feature.feature_id, feature.name, type_id, (
+    SELECT s.name 
+    FROM feature_synonym fs, synonym s 
+    WHERE fs.feature_id=feature.feature_id 
+    AND s.synonym_id=fs.synonym_id 
+    AND s.type_id=(SELECT type_id FROM cvterm WHERE name='symbol' LIMIT 1)
+    LIMIT 1
+    )
+    FROM feature
+WHERE feature.feature_id IN (152073, 538848)
+         */
 
         $stm = $db->prepare($query);
         $stm->execute($feature_ids);
@@ -47,7 +72,6 @@ EOF;
                     $row['type'] = 'unknown';
                     break;
             }
-            $row['alias'] = '';
             unset($row['type_id']);
             $ret['results'][] = $row;
         }

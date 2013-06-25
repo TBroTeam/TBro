@@ -65,13 +65,7 @@
                     type: 'POST',
                     datatype: 'JSON',
                     success: function(data){
-                        displayFeatureTable(data.results, {
-                            aoColumns: [
-                                {},
-                                {},
-                                {bVisible: false},
-                            ]
-                        });    
+                        displayFeatureTable(data.results, {});    
                     }
                 });
             });            
