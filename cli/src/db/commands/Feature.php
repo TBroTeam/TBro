@@ -63,7 +63,7 @@ class Feature extends AbstractTable {
                 ),
                 'description' => "'symbol' or 'fullname'. defaults to 'symbol'",
                 'choices' => array('symbol', 'fullname'),
-                'default'=>'symbol'
+                'default' => 'symbol'
             ),
         );
     }
@@ -89,7 +89,7 @@ class Feature extends AbstractTable {
     }
 
     protected static function command_list($options, $keys) {
-        
+
         $featureq = new propel\FeatureQuery();
         $featureq->filterByUniquename($options['uniquename']);
 
@@ -102,13 +102,13 @@ class Feature extends AbstractTable {
 
     protected static function command_add_synonym($options, $keys) {
         $featureq = new propel\FeatureQuery();
-        $feature = $featureq->findOneByFeatureId( $options['id']);
+        $feature = $featureq->findOneByFeatureId($options['id']);
 
         if ($feature == null)
             trigger_error(sprintf('No Feature found for id %d', $options['id']), E_USER_ERROR);
 
         $pub = Publication::getPropelPubFromBibsonomy($options['bibsonomy_internal_link'], $options['bibsonomy_username'], $options['bibsonomy_api_key']);
-        
+
         $typeq = new propel\CvtermQuery();
         $type = $typeq->findOneByName($options['type']);
 
@@ -132,12 +132,21 @@ class Feature extends AbstractTable {
                         . ' You can\'t add the same synonym twice to an assembly release.', E_USER_ERROR);
             }
         }
+        if ($options['type'] == 'symbol') {
+            $feature_synonyms2 = propel\FeatureSynonymQuery::create()->findByFeatureId($options['id']);
+            foreach ($feature_synonyms2 as $feature_synonym) {
+                if ($feature_synonym->getSynonym()->getTypeId() == $type->getCvtermId()) {
+                    trigger_error('This feature is already annotated a symbol.'
+                            . 'While you can as many fullname synonyms as you wish, each feature can only have one symbol!', E_USER_ERROR);
+                }
+            }
+        }
 
         $feature_synonym = new propel\FeatureSynonym();
 
         $feature_synonym->setFeatureId($options['id']);
         $feature_synonym->setSynonym($synonym);
-        
+
         $feature_synonym->setPub($pub);
 
         $feature_synonym->save();
@@ -151,7 +160,7 @@ class Feature extends AbstractTable {
         $synonymq = new propel\SynonymQuery();
         $synonymq->filterByTypeId($type->getCvtermId());
         $synonymq->filterByName($options['synonym']);
-        
+
         $synonym = $synonymq->findOne();
         if ($synonym == null) {
             trigger_error('Alias not found.', E_USER_ERROR);
@@ -168,7 +177,7 @@ class Feature extends AbstractTable {
                 print 'Deleted successfully.';
             }
         }
-        
+
         trigger_error('Combination of synonym and feature not found!.', E_USER_ERROR);
     }
 
