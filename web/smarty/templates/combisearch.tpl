@@ -5,9 +5,21 @@
         
         var searchNodes = {
             hasGO: {
-                name: 'hasGO',
+                name: 'has GO',
                 webservice: '{#$ServicePath#}/combisearch/hasgo/', 
                 template_search: '#template_search_hasGO',
+                fnPrepareData: function(){
+                    return {
+                        species: organism.val(),
+                        release: release.val(),
+                        term: $(this).find('input.GO').val()
+                    };
+                }
+            },
+            hasGO_or_children: {
+                name: 'has GO or children (slower!)',
+                webservice: '{#$ServicePath#}/combisearch/hasgo_or_children/', 
+                template_search: '#template_search_hasGO_or_children',
                 fnPrepareData: function(){
                     return {
                         species: organism.val(),
@@ -38,8 +50,9 @@
         });
         
         $('#start-combisearch').click(function(){
-            $('.results').hide(500);
-            console.log(this);
+            $.when($('.results').hide(500)).then(function(){
+                $('.loading').show();
+            });
             var filteredResults;
  
             var deferreds = $('#searchterms').children().map(function(){
@@ -59,12 +72,12 @@
             
             //when all deferred ajax calls have finished
             $.when.apply($, deferreds.get()).then(function(){
-            console.log(filteredResults);
                 $.ajax('{#$ServicePath#}/details/features',{
                     data: { terms: filteredResults },
                     type: 'POST',
                     datatype: 'JSON',
                     success: function(data){
+                        $('.loading').hide();
                         displayFeatureTable(data.results, {});    
                     }
                 });
@@ -87,6 +100,17 @@
     <div class="row">
         <div class="large-6 columns">
             has GO: 
+        </div>
+        <div class="large-3 columns" style="text-align: right">GO:</div>
+        <div class="large-3 columns">
+            <input type="text" class="GO" style="margin:0px"/>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="template_search_hasGO_or_children">
+    <div class="row">
+        <div class="large-6 columns">
+            has GO or children of GO: 
         </div>
         <div class="large-3 columns" style="text-align: right">GO:</div>
         <div class="large-3 columns">
@@ -127,7 +151,9 @@
         <a id="start-combisearch" class="button"/>search</a>
     </div>
 </div>
-
+<div class="loading alert-box" style="display:none;">
+    please wait, loading!
+</div>
 <div class="results" style="display:none">
     <div class="row" >
         <div class="large-12 column">

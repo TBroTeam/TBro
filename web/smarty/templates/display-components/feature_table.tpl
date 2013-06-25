@@ -23,7 +23,6 @@
             options.aaData.push(this);
         });
         
-        console.log(options);
         $('.results').show(500);
         if (typeof datatable == "undefined") 
             datatable = $('#results').dataTable(options);
@@ -44,7 +43,6 @@
                 
                 $.each(TableTools.fnGetInstance('results').fnGetSelectedData(), function(){
                     cart.addItem(this.feature_id, {groupname: groupname});
-                    console.log('cart.addItem', this.feature_id, groupname);
                 });                
             });
             
