@@ -8,7 +8,6 @@
                 name: 'hasGO',
                 webservice: '{#$ServicePath#}/combisearch/hasgo/', 
                 template_search: '#template_search_hasGO',
-                template_result: '#template_result_hasGO', 
                 fnPrepareData: function(){
                     return {
                         species: organism.val(),
@@ -40,7 +39,7 @@
         
         $('#start-combisearch').click(function(){
             $('.results').hide(500);
-            
+            console.log(this);
             var filteredResults;
  
             var deferreds = $('#searchterms').children().map(function(){
@@ -60,12 +59,19 @@
             
             //when all deferred ajax calls have finished
             $.when.apply($, deferreds.get()).then(function(){
+            console.log(filteredResults);
                 $.ajax('{#$ServicePath#}/details/features',{
                     data: { terms: filteredResults },
                     type: 'POST',
                     datatype: 'JSON',
                     success: function(data){
-                        displayFeatureTable(data.results);    
+                        displayFeatureTable(data.results, {
+                            aoColumns: [
+                                {},
+                                {},
+                                {bVisible: false},
+                            ]
+                        });    
                     }
                 });
             });            
@@ -74,8 +80,8 @@
 </script>
 <script type="text/template" id="template_row">
     <div class="row template_row" style="margin-bottom:5px">
-        <div class="large-1 columns">
-            <a class="delete_row"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+        <div class="large-1 columns" style="padding:15px">
+            <a class="delete_row"><img src="{#$AppPath#}/img/mimiGlyphs/51.png" /></a>
         </div>    
         <div class="large-11 columns ">
             <%= row %>
@@ -93,11 +99,6 @@
             <input type="text" class="GO" style="margin:0px"/>
         </div>
     </div>
-</script>
-<script type="text/template" id="template_result_hasGO">
-    <p>
-        GO: <%- GO %>
-    </p>
 </script>
 {#/block#}
 

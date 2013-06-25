@@ -118,29 +118,6 @@
             <div class="large-6 columns">
                 <h4>Sequence</h4>
             </div>
-            <div class="large-6 columns" style="text-align: right">
-                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                    <input type="hidden" name='CMD' value='Web' />
-                    <input type="hidden" name='PROGRAM' value='blastx' />
-                    <input type="hidden" name='BLAST_PROGRAMS' value='blastx' />
-                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                    <input type="hidden" name='LINK' value='blasthome' />
-                    <input type="hidden" class="query" data-ref="#sequence-{#$data.isoform.uniquename|clean_id#}" name="QUERY" value="" />
-                    <input type="submit" class="small button" value="send to blastx">
-                </form>
-
-                <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                    <input type="hidden" name='CMD' value='Web' />
-                    <input type="hidden" name='PROGRAM' value='blastn' />
-                    <input type="hidden" name='BLAST_PROGRAMS' value='megaBlast' />
-                    <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                    <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                    <input type="hidden" name='LINK' value='blasthome' />
-                    <input type="hidden" class="query" data-ref="#sequence-{#$data.isoform.uniquename|clean_id#}" name="QUERY" value="" />
-                    <input type="submit" class="small button" value="send to blastn">
-                </form>
-            </div>
         </div>
     </div>
     <div class="large-12 columns panel">

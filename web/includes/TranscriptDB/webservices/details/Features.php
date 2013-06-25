@@ -20,7 +20,7 @@ class Features extends \WebService {
             return $ret;
         }
 
-        $place_holders = implode(',', array_fill(0, count($feature_ids), '? ::int'));
+        $place_holders = implode(',', array_fill(0, count($feature_ids), '?'));
 
         global $db;
 
@@ -30,7 +30,7 @@ class Features extends \WebService {
 SELECT
     feature.feature_id, feature.name, type_id
     FROM feature
-WHERE feature.feature_id = ANY(ARRAY[$place_holders])
+WHERE feature.feature_id IN ($place_holders)
 EOF;
 
         $stm = $db->prepare($query);

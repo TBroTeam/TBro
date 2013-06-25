@@ -45,28 +45,6 @@
                                     <div class="large-9 columns">
                                         <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">{#$predpep.residues#}</textarea>
                                     </div>
-                                    <div class="large-3 columns" style="text-align: right">
-                                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                                            <input type="hidden" name='CMD' value='Web' />
-                                            <input type="hidden" name='PROGRAM' value='blastp' />
-                                            <input type="hidden" name='BLAST_PROGRAMS' value='blastp' />
-                                            <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                                            <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                                            <input type="hidden" name='LINK' value='blasthome' />
-                                            <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
-                                            <input type="submit" class="small button"  value="send to blastp" style="width:100%">
-                                        </form>
-                                        <form class="blast" action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="POST" target="_blank" style="display:inline">
-                                            <input type="hidden" name='CMD' value='Web' />
-                                            <input type="hidden" name='PROGRAM' value='tblastn' />
-                                            <input type="hidden" name='BLAST_PROGRAMS' value='tblastn' />
-                                            <input type="hidden" name='PAGE_TYPE' value='BlastSearch' />
-                                            <input type="hidden" name='SHOW_DEFAULTS' value='on' />
-                                            <input type="hidden" name='LINK' value='blasthome' />
-                                            <input type="hidden" class="query" data-ref="#sequence-{#$predpep.uniquename|clean_id#}" name="QUERY" value="" />
-                                            <input type="submit" class="small button"  value="send to tblastn" style="width:100%">
-                                        </form>
-                                    </div>
                                 </div>
 
                                 {#if isset($predpep.interpro) && count($predpep.interpro) > 0 #}
