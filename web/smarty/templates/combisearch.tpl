@@ -79,18 +79,18 @@
     });
 </script>
 <script type="text/template" id="template_row">
-    <div class="row template_row" style="margin-bottom:5px">
-        <div class="large-1 columns" style="padding:15px">
-            <a class="delete_row"><img src="{#$AppPath#}/img/mimiGlyphs/51.png" /></a>
-        </div>    
+    <div class="row template_row panel" style="margin-bottom:5px">
         <div class="large-11 columns ">
             <%= row %>
         </div>    
+        <div class="large-1 columns">
+            <a class="delete_row"><img src="{#$AppPath#}/img/mimiGlyphs/51.png" /></a>
+        </div>            
     </div>
 </script>
 
 <script type="text/template" id="template_search_hasGO">
-    <div class="row panel">
+    <div class="row">
         <div class="large-6 columns">
             has GO: 
         </div>

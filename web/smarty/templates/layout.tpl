@@ -154,6 +154,10 @@
             .top-bar-section .right li {
                 height:45px;
             }
+            
+            .top-bar-section .right .has-dropdown li {
+                height:auto;
+            }
 
             .top-bar-section .right a {
                 text-decoration: underline;
@@ -203,7 +207,12 @@
                         <li><div><label for="select_release">release:</label></div></li>
                         <li><div><select id="select_release"></select></div></li>
                         <li class="divider"></li>
-                        <li><a href='{#$AppPath#}/multisearch'>adv. search</a></li>
+                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">adv. search</a>
+                            <ul class="dropdown" id="searchnav">
+                                <li><a href='{#$AppPath#}/multisearch'>search for multiple features</a></li>
+                                <li><a href='{#$AppPath#}/annotationsearch'>search for annotations</a></li>
+                            </ul>
+                        </li>
                         <li class="divider"></li>
                         <li><div><label for="search">quick search:</label></div></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
