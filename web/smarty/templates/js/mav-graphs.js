@@ -19,16 +19,18 @@ $(document).ready(function() {
 
     var lastItemEvent = 0;
     $('#Cart').on('cartEvent', function(event) {
-        if (!(event.eventData.action || '').match(/(add|remove)Item/) || event.eventData.groupname !== '{#$cartname#}' && !(event.eventData.action==='updateContext' ))
+        if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action==='updateContext' ))
             return;
 
         var myItemEvent = new Date().getTime();
         lastItemEvent = myItemEvent;
 
         setTimeout(function() {
+
             //if another itemEvent has happened in the last 100ms, skip.
             if (lastItemEvent !== myItemEvent)
                 return;
+
 
             var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
 
