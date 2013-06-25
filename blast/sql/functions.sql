@@ -223,7 +223,7 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
-COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
+COMMENT ON FUNCTION keepalive_ping(_running_query_id int) IS
 'updates last_keepalive. returns max_keepalive_timeout or -1 if this job has already timed out.out';
 
 CREATE OR REPLACE FUNCTION updated_query_status() RETURNS TRIGGER

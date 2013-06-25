@@ -54,16 +54,14 @@ EOF;
 
         $stm_get_mapman_hits->execute();
         while ($row = $stm_get_mapman_hits->fetch(PDO::FETCH_ASSOC)) {
-            $bins[$row['dbxref_id']] = array('bin_accession' => '', 'bin_definition' => '', 'bin_annotations' => array());
-            $dbxref = $bins[$row['dbxref_id']];
+            $bins[$row['dbxref_id']] = array();
             $ret[$row['annotation_feature_id']]= array(
                     'annotation' => $row['feature_annotation'],
                     'dbxref' => $row['dbxref_id']
-                  
                 );
         }
 
-        if (count($dbxref) > 0) {
+        if (count($bins) > 0) {
             $lookfor = array_keys($bins);
             $place_holders = implode(',', array_fill(0, count($lookfor), '? ::int'));
 

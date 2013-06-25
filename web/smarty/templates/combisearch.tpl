@@ -6,11 +6,15 @@
         var searchNodes = {
             hasGO: {
                 name: 'hasGO',
-                webservice: '{#$ServicePath#}/combisearch/hasGO/', 
+                webservice: '{#$ServicePath#}/combisearch/hasgo/', 
                 template_search: '#template_search_hasGO',
                 template_result: '#template_result_hasGO', 
                 fnPrepareData: function(){
-                    return {GO: $(this).find('input.GO').val()};
+                    return {
+                        species: organism.val(),
+                        release: release.val(),
+                        term: $(this).find('input.GO').val()
+                    };
                 }
             }
         };
@@ -20,10 +24,16 @@
             select$.append($('<option/>').val(key).text(this.name));
         });
         
+        var row_template = _.template($('#template_row').html());
+        
         $('#add-term').click(function(){
             
             var searchNode = searchNodes[$('#select-terms').val()];
-            var elem$ = $('<div/>').append(_.template($(searchNode.template_search).html())(searchNode)).children();
+            var elem = _.template($(searchNode.template_search).html())(searchNode);
+            var elem$ = $('<div/>').append(row_template({row:elem})).children();
+            elem$.find('.delete_row').click(function(){
+                $(this).parents('.template_row').remove();
+            });
             elem$.data('searchNode', searchNode);            
             $('#searchterms').append(elem$);
         });
@@ -50,14 +60,38 @@
             
             //when all deferred ajax calls have finished
             $.when.apply($, deferreds.get()).then(function(){
-                displayFeatureTable(filteredResults);
+                $.ajax('{#$ServicePath#}/details/features',{
+                    data: { terms: filteredResults },
+                    type: 'POST',
+                    datatype: 'JSON',
+                    success: function(data){
+                        displayFeatureTable(data.results);    
+                    }
+                });
             });            
         });
     });
 </script>
+<script type="text/template" id="template_row">
+    <div class="row template_row" style="margin-bottom:5px">
+        <div class="large-1 columns">
+            <a class="delete_row"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+        </div>    
+        <div class="large-11 columns ">
+            <%= row %>
+        </div>    
+    </div>
+</script>
+
 <script type="text/template" id="template_search_hasGO">
-    <div>
-        has GO: <input type="text" class="GO"/>
+    <div class="row panel">
+        <div class="large-6 columns">
+            has GO: 
+        </div>
+        <div class="large-3 columns" style="text-align: right">GO:</div>
+        <div class="large-3 columns">
+            <input type="text" class="GO" style="margin:0px"/>
+        </div>
     </div>
 </script>
 <script type="text/template" id="template_result_hasGO">
@@ -76,7 +110,7 @@
 
     <div class="large-12 column">
         <p>
-            Some explanation text here.
+            Here you can search for annotations. All subsearches will be AND'ed.
         </p>
     </div>
 </div>
