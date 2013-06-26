@@ -41,9 +41,10 @@
                     groupname = cart.addGroup();
                 }
                 
-                $.each(TableTools.fnGetInstance('results').fnGetSelectedData(), function(){
-                    cart.addItem(this.feature_id, {groupname: groupname});
-                });                
+                cart.addItem($.map(TableTools.fnGetInstance('results').fnGetSelectedData(), function(val){
+                    return val.feature_id;
+                }), {groupname: groupname});
+                                
             });
             
             $('#results').tooltip({

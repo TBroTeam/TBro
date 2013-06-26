@@ -5,33 +5,6 @@ namespace webservices\cart;
 require_once 'TranscriptDB//db.php';
 
 class Sync extends \WebService {
-
-    public static $regexCartName = '^[a-z0-9._ ]+$';
-
-    public static function &get_group($groupname) {
-        foreach ($_SESSION['cart']['groups'] as &$group) {
-            if ($group['name'] == $groupname)
-                return $group;
-        }
-        $nullreference = null;
-        return $nullreference;
-    }
-
-    private static function groupContainsItemByFeature_id($group, $feature_id) {
-        if (isset($group['items']))
-        //we are a group
-            $walk = $group['items'];
-        else
-        //we are the 'all' cart
-            $walk = $group;
-
-        foreach ($walk as $item) {
-            if ($item['feature_id'] == $feature_id)
-                return true;
-        }
-        return false;
-    }
-
     private function loadCart() {
         if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
             return;
@@ -98,17 +71,14 @@ class Sync extends \WebService {
         return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart']);
     }
 
-    public function syncActions($parms, $currentContext){
+    public function syncActions($parms, $currentContext) {
         //prepare empty values
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array('cartitems' => array(), 'carts' => array());
         }
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
-            $_SESSION['cart']['carts'][$currentContext] = array('all'=>array());
+            $_SESSION['cart']['carts'][$currentContext] = array('all' => array());
 
-        //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
-        if (isset($parms['id'])) $parms['id'] = intval($parms['id']);
-        
         //refs for quicker access
         $cartitems = &$_SESSION['cart']['cartitems'];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
@@ -116,21 +86,35 @@ class Sync extends \WebService {
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
+                foreach ($parms['ids'] as $key=>$id)
+                    $parms['ids'][$key] = intval($id);
+
+                $missingIds = array_diff( $parms['ids'], array_keys($cartitems));
                 // add item to $cartitems
-                if (!isset($cartitems[$parms['id']])) {
-                    list($service) = \WebService::factory('details/cartitem');
-                    $cartitems[$parms['id']] = array_merge($service->execute(array('query1' => $parms['id'])), array('metadata'=>array()));
+                if (count($missingIds) > 0) {
+                    list($service) = \WebService::factory('details/features');
+                    $items = $service->execute(array('terms' => $missingIds));
+                    foreach ($items['results'] as $item) {
+                        $cartitems[intval($item['feature_id'])] = array_merge($item, array('metadata' => array()));
+                    }
                 }
                 // add item to $currentCart
-                if (!in_array($parms['id'], $currentCart[$parms['groupname']]))
-                    $currentCart[$parms['groupname']][] = $parms['id'];
+                foreach ($parms['ids'] as $id) {
+                    if (!in_array($id, $currentCart[$parms['groupname']]))
+                            $currentCart[$parms['groupname']][] = $id;
+                }
+
                 break;
             case 'updateItem':
+                //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
+                $parms['id'] = intval($parms['id']);
                 //update metadata
                 $cartitems[$parms['id']]['metadata'] = $parms['metadata'];
                 break;
             case 'removeItem':
                 if ($parms['groupname'] == 'all') {
+                    //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
+                    $parms['id'] = intval($parms['id']);
                     //remove from all groups
                     foreach ($currentCart as &$group)
                         $pos = array_search($parms['id'], $group);
@@ -158,7 +142,7 @@ class Sync extends \WebService {
             case 'clear':
                 foreach ($currentCart['all'] as $id)
                     unset($cartitems[$id]);
-                $_SESSION['cart']['carts'][$currentContext] = array('all'=>array());
+                $_SESSION['cart']['carts'][$currentContext] = array('all' => array());
                 break;
         }
     }

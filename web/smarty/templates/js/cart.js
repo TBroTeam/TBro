@@ -6,7 +6,7 @@ function Cart(initialData, options) {
             Item: '#template_cart_new_item'
         },
         serviceNodes: {
-            itemDetails: '{#$ServicePath#}/details/cartitem/'
+            itemDetails: '{#$ServicePath#}/details/features'
         },
         callbacks: {
             afterDOMinsert_groupAll: function() {
@@ -44,6 +44,7 @@ function Cart(initialData, options) {
             sync: true
         }, options);
 
+        
         if (options.triggerEvent){
             this.options.rootNode.trigger({
                 type: 'cartEvent',
@@ -60,7 +61,7 @@ function Cart(initialData, options) {
         $.ajax({
             url: '{#$ServicePath#}/cart/sync',
             type: 'post',
-            dataType: "json",
+            dataType: "JSON",
             data: {
                 action: syncaction,
                 currentRequest: currentRequest,
@@ -128,22 +129,44 @@ Cart.prototype._getGroupNode = function(groupname) {
     return this.options.rootNode.find('.cartGroup[data-name="' + groupname + '"]');
 };
 
-Cart.prototype._getItemDetails = function(id, callback) {
+Cart.prototype._getItemDetails = function(ids, callback) {
     var that = this;
-    if (typeof this.cartitems[id] !== 'undefined')
-        callback(this.cartitems[id]);
-    else
-        $.ajax({
-            url: this.options.serviceNodes.itemDetails + id,
-            dataType: 'JSON',
-            success: function(itemDetails) {
-                $.extend(true, itemDetails, {
+    var missingIDs = [];
+    var newCartitems = {};
+    var retArray = [];
+    $.each(ids, function(key, id){
+        if (typeof that.cartitems[id] !== 'undefined')
+            retArray.push(that.cartitems[id]);
+        else {
+            //add a reference that will be filled after the ajax call
+            newCartitems[id] = {};
+            retArray.push(newCartitems[id]);
+            missingIDs.push(id);
+        }
+    });
+    if (missingIDs.length==0)
+        callback(retArray);
+    
+    $.ajax({
+        url: this.options.serviceNodes.itemDetails,
+        data: {
+            terms: missingIDs
+        },
+        dataType: 'JSON',
+        success: function(data) {
+            console.log(data);
+            $.each(data.results, function(){
+                var itemDetails = $.extend(true, this, {
                     metadata: {}
                 });
+                var id =itemDetails.feature_id;
                 that.cartitems[id] = itemDetails;
-                callback(itemDetails);
-            }
-        });
+                $.extend(newCartitems[id], itemDetails);
+            });
+            console.log(retArray);
+            callback(retArray);
+        }
+    });
 };
 
 Cart.prototype._getItemNodes = function(id, groupname) {
@@ -200,21 +223,31 @@ Cart.prototype._redraw = function() {
         that.addGroup(groupname, {
             sync: false
         });
-        for (var i = 0; i < group.length || 0; i++)
-            that.addItem(group[i], {
-                groupname: groupname,
-                sync: false
-            });
+        that.addItem(group, {
+            groupname: groupname,
+            sync: false
+        });
     }
 
 };
 
-Cart.prototype.addItem = function(id, options) {
-    //make sure we don't have a string id'
-    id = parseInt(id);
+Cart.prototype.addItem = function(ids, options) {
+    //convert object values to array. keys will be lost
+    if (_.isObject(ids)){
+        ids = _.map(ids, function(value){
+            return value;
+        });
+    }
+    //if ids is still no array, it was passed as a single value. convert to array
+    if (!_.isArray(ids)){
+        ids = [ids];
+    }
+    //convert all array values to Int
+    for (var i=0; i<ids.length; i++){
+        ids[i] = parseInt(ids[i]);
+    }
     //this function is very asynchronous, this deferred object is a way to see if it finished ( via $.when(cart.addItem(id)).then(function) )
     var dfd = $.Deferred();
-
     options = $.extend({
         groupname: 'all',
         addToDOM: true,
@@ -222,55 +255,66 @@ Cart.prototype.addItem = function(id, options) {
         sync: true
     }, options);
 
-
+    console.log(ids, options.groupname);
+    
     var that = this;
+    var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
+    if (missingIds.length==0){
+        // we have nothing to do. return from here.
+        dfd.resolve();
+        return dfd.promise();
+    }
 
-    this._getItemDetails(id, function(itemDetails) {
-        function doWork(){
-            if (addInternal.call(that, itemDetails) && options.addToDOM)
-                addToDOM.call(that, itemDetails);
+    if (options.groupname !== 'all')
+        $.when(this.addItem(ids, $.extend({}, options, {
+            groupname: 'all'
+        }))).then(work);
+    else
+        work();
+
+    return dfd.promise();
+   
+    function work(){
+        that._getItemDetails(missingIds, function(aItemDetails) {
+
+            addInternal.call(that); 
+            if (options.addToDOM)
+                addToDOM.call(that, aItemDetails);
 
             that.sync({
                 action: 'addItem', 
-                id: id, 
+                ids: missingIds, 
                 groupname: options.groupname
             }, options);
-            dfd.resolve();
-        }
-
-        //if this item is not in the all-group, add it to the all-group, wait until that adding has finished and THEN add it to this group
-        if (options.groupname !== 'all' && _.indexOf(that._getCartForContext()['all'], id) === -1)
-            $.when(that.addItem(id, $.extend({}, options, {
-                groupname: 'all'
-            }))).then(doWork);
-        else
-            //else, just add it now.
-            doWork();
-
         
-    });
-    return dfd.promise();
-   
+            dfd.resolve();
+        });
+    }
 
-    function addInternal(itemDetails) {
+    function addInternal() {
         var group = this._getGroup(options.groupname);
         if (typeof group === undefined)
             group = this._getGroup(this.addGroup(options.groupname));
-        if (_.indexOf(group, id) >= 0)
-            return false;
-        group.push(id);
-        return true;
+        
+        for (var i=0; i<ids.length; i++)
+            if (_.indexOf(group, ids[i]) === -1)
+                group.push(ids[i]);
     }
 
-    function addToDOM(itemDetails) {
-        var group$ = this._getGroupNode(options.groupname);
-        var item$ = this._executeTemplate$('Item', {
-            item: itemDetails
+    function addToDOM(aItemDetails) {
+        $.each(aItemDetails, function(key, itemDetails){
+            var group$ = that._getGroupNode(options.groupname);
+            if (group$.is(':has(li.cartItem[data-id="'+itemDetails.feature_id+'"])')){
+                return;
+            }
+            var item$ = that._executeTemplate$('Item', {
+                item: itemDetails
+            });
+            item$.data('afterDOMinsert', options.afterDOMinsert);
+            group$.find('.elements .placeholder').remove();
+            group$.find('.elements').append(item$);
+            options.afterDOMinsert.call(item$);
         });
-        item$.data('afterDOMinsert', options.afterDOMinsert);
-        group$.find('.elements .placeholder').remove();
-        group$.find('.elements').append(item$);
-        options.afterDOMinsert.call(item$);
     }
 };
 
@@ -283,9 +327,9 @@ Cart.prototype.updateItem = function(id, metadata, options) {
     }, options);
     var that = this;
 
-    this._getItemDetails(id, function(itemDetails) {
-        if (updateInternal.call(that, itemDetails))
-            updateDOM.call(that, itemDetails);
+    this._getItemDetails([id], function(aItemDetails) {
+        if (updateInternal.call(that, aItemDetails[0]))
+            updateDOM.call(that, aItemDetails[0]);
 
         that.sync({
             action: 'updateItem', 
