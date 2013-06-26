@@ -73,7 +73,7 @@ $(document).ready(function() {
                         value: this
                     });
                 });
-                /*{#/if#}*/
+            /*{#/if#}*/
             };
             var lastQueryData;
             dataTable = $('#diffexp_results').dataTable({
@@ -101,56 +101,56 @@ $(document).ready(function() {
                 fnServerParams: serverParams,
                 aaSorting: [[5, "asc"]],
                 aoColumns: [
-                    {
-                        sType: "natural",
-                        mData: 'feature_name'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'baseMean'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'baseMeanA'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'baseMeanB'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'foldChange'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'log2foldChange'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'pval'
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'pvaladj'
-                    },
+                {
+                    sType: "natural",
+                    mData: 'feature_name'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'baseMean'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'baseMeanA'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'baseMeanB'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'foldChange'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'log2foldChange'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'pval'
+                },
+                {
+                    sType: "scientific",
+                    mData: 'pvaladj'
+                },
                 ],
                 sDom: 'T<"clear">lfrtip',
                 oTableTools: {
                     sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf",
                     aButtons: [
-                        "select_all",
-                        "select_none",
-                        {
-                            "sExtends": "ajax",
-                            "sButtonText": "CSV Export All",
-                            "fnClick": function(nButton, oConfig) {
-                                var iframe = document.createElement('iframe');
-                                iframe.style.height = "0px";
-                                iframe.style.width = "0px";
-                                iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
-                                document.body.appendChild(iframe);
-                            }
-                        },
+                    "select_all",
+                    "select_none",
+                    {
+                        "sExtends": "ajax",
+                        "sButtonText": "CSV Export All",
+                        "fnClick": function(nButton, oConfig) {
+                            var iframe = document.createElement('iframe');
+                            iframe.style.height = "0px";
+                            iframe.style.width = "0px";
+                            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
+                            document.body.appendChild(iframe);
+                        }
+                    },
                     ],
                     sRowSelect: "multi"
                 }
@@ -170,10 +170,12 @@ $(document).ready(function() {
         if (group === '#new#')
             group = cart.addGroup();
 
-
-        $.each(selectedItems, function() {
-            cart.addItem(this.feature_id, {groupname: group});
+        cart.addItem($.map(selectedItems, function(val){
+            return val.feature_id;
+        }), {
+            groupname: group
         });
+
 
     });
 

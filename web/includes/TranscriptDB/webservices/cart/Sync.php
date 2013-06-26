@@ -5,6 +5,10 @@ namespace webservices\cart;
 require_once 'TranscriptDB//db.php';
 
 class Sync extends \WebService {
+
+    public static $regexCartName = '^[a-z0-9._ ]+$';
+
+
     private function loadCart() {
         if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
             return;
