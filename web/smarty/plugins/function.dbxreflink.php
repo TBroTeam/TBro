@@ -25,7 +25,7 @@ function smarty_function_dbxreflink($params, &$smarty) {
             , $params['dbxref']['dbname']
             , $params['dbxref']['accession']
             , $params['dbxref']['name']
-            , !empty($params['dbxref']['dbversion']) ? $params['dbxref']['dbversion'] : 'unknown'
+            , !empty($params['dbxref']['dbversion']) ? $params['dbxref']['dbversion'] : ''
             , $params['dbxref']['definition']
         );
 
