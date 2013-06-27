@@ -63,7 +63,7 @@
                         var splitAt = attr.nodeValue.indexOf('|');
                         var name = attr.nodeValue.substr(0,splitAt);
                         var value = attr.nodeValue.substr(splitAt+1);
-                        if (value='')
+                        if (value==='')
                             return; //skip empty values
                         $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
                     }
