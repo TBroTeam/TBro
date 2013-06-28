@@ -41,8 +41,6 @@ class Biomaterial extends AbstractTable {
                 'colname' => 'TaxonId',
                 'actions' => array(
                     'insert' => 'optional',
-                    'add_condition' => 'optional',
-                    'add_condition_sample' => 'optional',
                     'update' => 'optional',
                 ),
                 'description' => 'organism id'
@@ -84,7 +82,7 @@ class Biomaterial extends AbstractTable {
     }
 
     public static function CLI_commandDescription() {
-        return 'Manipulate the database biomaterial.';
+        return 'Manipulate biomaterials, conditions and samples.';
     }
 
     public static function CLI_commandName() {

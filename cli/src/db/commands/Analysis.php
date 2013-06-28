@@ -93,7 +93,7 @@ class Analysis extends AbstractTable {
     }
 
     public static function CLI_commandDescription() {
-        return 'Manipulate the database analysis.';
+        return 'Manipulate analyses.';
     }
 
     public static function CLI_commandName() {

@@ -37,7 +37,7 @@ class Contact extends AbstractTable {
     }
 
     public static function CLI_commandDescription() {
-        return 'Manipulate the database contacts.';
+        return 'Manipulate contacts.';
     }
 
     public static function CLI_commandName() {

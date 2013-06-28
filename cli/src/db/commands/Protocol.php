@@ -4,18 +4,18 @@ namespace cli_db;
 
 require_once ROOT . 'classes/AbstractTable.php';
 
-class Quantification extends AbstractTable {
+class Protocol extends AbstractTable {
 
     public static function getKeys() {
         return array(
             'id' => array(
-                'colname' => 'QuantificationId',
+                'colname' => 'ProtocolId',
                 'actions' => array(
                     'details' => 'required',
                     'update' => 'required',
                     'delete' => 'required',
                 ),
-                'description' => 'quantification id'
+                'description' => 'protocol id'
             ),
             'name' => array(
                 'colname' => 'Name',
@@ -23,7 +23,7 @@ class Quantification extends AbstractTable {
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'name'
+                'description' => 'protocol name'
             ),
             'uri' => array(
                 'colname' => 'Uri',
@@ -33,55 +33,47 @@ class Quantification extends AbstractTable {
                 ),
                 'description' => 'uri'
             ),
-            'acquisition_id' => array(
-                'colname' => 'AcquisitionId',
-                'actions' => array(
-                    'insert' => 'required',
-                    'update' => 'optional',
-                ),
-                'description' => 'acquisition id'
-            ),
-            'operator_id' => array(
-                'colname' => 'OperatorId',
+            'protocol_description' => array(
+                'colname' => 'Protocoldescription',
                 'actions' => array(
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'contact id'
+                'description' => 'the protocol text',
+                'short_name' => '-p'
             ),
-            'protocol_id' => array(
-                'colname' => 'ProtocolId',
+            'hardware_description' => array(
+                'colname' => 'Hardwaredescription',
                 'actions' => array(
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'protocol id'
+                'description' => 'a description of hardware involved',
+                'short_name' => '-w'
             ),
-             'analysis_id' => array(
-                'colname' => 'AnalysisId',
-                'actions' => array(
-                    'insert' => 'required',
-                    'update' => 'optional',
-                ),
-                'description' => 'analysis id'
-            ),
-            'quantificationdate' => array(
-                'colname' => 'Quantificationdate',
+            'software_description' => array(
+                'colname' => 'Softwaredescription',
                 'actions' => array(
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'time of quantification'
-            ),
+                'description' => 'a description of software involved',
+                'short_name' => '-s'
+            )
         );
     }
 
+    protected static function command_insert_set_defaults(\BaseObject $item) {
+        // satisfy NOT NULL constraint
+        $item->setTypeId(1);
+    }
+
     public static function CLI_commandDescription() {
-        return 'Manipulate quantifications.';
+        return 'Manipulate protocols.';
     }
 
     public static function CLI_commandName() {
-        return 'quantification';
+        return 'protocol';
     }
 
     public static function CLI_longHelp() {
@@ -93,9 +85,9 @@ class Quantification extends AbstractTable {
     }
 
     public static function getPropelClass() {
-        return '\\cli_db\\propel\\Quantification';
+        return '\\cli_db\\propel\\Protocol';
     }
-    
+
 }
 
 ?>

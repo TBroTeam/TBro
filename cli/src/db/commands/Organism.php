@@ -61,7 +61,7 @@ class Organism extends AbstractTable {
     }
 
     public static function CLI_commandDescription() {
-        return 'Manipulate the database organism.';
+        return 'Manipulate organisms.';
     }
 
     public static function CLI_commandName() {

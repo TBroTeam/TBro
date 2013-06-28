@@ -61,7 +61,7 @@ class Acquisition extends AbstractTable {
     }
 
     public static function CLI_commandDescription() {
-        return 'Manipulate the database acquisition.';
+        return 'Manipulate acquisitions.';
     }
 
     public static function CLI_commandName() {
