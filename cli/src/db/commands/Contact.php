@@ -23,7 +23,7 @@ class Contact extends AbstractTable {
                     'insert' => 'required',
                     'update' => 'optional',
                 ),
-                'description' => 'name'
+                'description' => 'name (unique)'
             ),
             'description' => array(
                 'colname' => 'Description',

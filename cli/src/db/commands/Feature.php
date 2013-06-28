@@ -16,13 +16,10 @@ class Feature extends AbstractTable {
                     'remove_synonym' => 'required',
                 ),
                 'description' => 'feature id',
+                'short_name' => '-f'
             ),
             'name' => array(
                 'colname' => 'Name',
-                'description' => 'name'
-            ),
-            'uniquename' => array(
-                'colname' => 'Uniquename',
                 'actions' => array(
                     'list' => 'required',
                 ),
@@ -63,7 +60,8 @@ class Feature extends AbstractTable {
                 ),
                 'description' => "'symbol' or 'fullname'. defaults to 'symbol'",
                 'choices' => array('symbol', 'fullname'),
-                'default' => 'symbol'
+                'default' => 'symbol',
+                'short_name' => '-t'
             ),
         );
     }
@@ -91,7 +89,7 @@ class Feature extends AbstractTable {
     protected static function command_list($options, $keys) {
 
         $featureq = new propel\FeatureQuery();
-        $featureq->filterByUniquename($options['uniquename']);
+        $featureq->filterByName($options['name']);
 
         $table_keys = array_keys(array_filter($keys, function($val) {
                             return isset($val['colname']);
@@ -150,7 +148,7 @@ class Feature extends AbstractTable {
         $feature_synonym->setPub($pub);
 
         $feature_synonym->save();
-        print "Alias created successfully.\n";
+        print "Synonym created successfully.\n";
     }
 
     protected static function command_remove_synonym($options, $keys) {
@@ -163,7 +161,7 @@ class Feature extends AbstractTable {
 
         $synonym = $synonymq->findOne();
         if ($synonym == null) {
-            trigger_error('Alias not found.', E_USER_ERROR);
+            trigger_error('Synonym not found.', E_USER_ERROR);
         }
 
 

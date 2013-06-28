@@ -158,8 +158,9 @@ abstract class AbstractTable implements \CLI_Command, Table {
         $lines = $item->save();
         if (isset($options['short']) && $options['short'])
             print $item->getPrimaryKey();
-        else
-            printf("%d line(s) inserted.\n", $lines);
+        else {
+            printf("%d line(s) inserted.\nNew item ID is %d.\n", $lines, $item->getPrimaryKey());
+        }
     }
 
     protected static function command_update($options, $keys) {

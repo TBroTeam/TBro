@@ -39,7 +39,7 @@ class Organism extends AbstractTable {
                     'insert' => 'required',
                     'update' => 'required',
                 ),
-                'description' => 'e.g. sapiens'
+                'description' => "e.g. sapiens\nNote: the combination of genus and species need to be unique!"
             ),
             'common_name' => array(
                 'colname' => 'CommonName',

@@ -23,7 +23,7 @@ class Acquisition extends AbstractTable {
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'name'
+                'description' => 'name (unique)'
             ),
             'uri' => array(
                 'colname' => 'Uri',

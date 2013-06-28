@@ -23,7 +23,7 @@ class Protocol extends AbstractTable {
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'protocol name'
+                'description' => 'protocol name (unique)'
             ),
             'uri' => array(
                 'colname' => 'Uri',

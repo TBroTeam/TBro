@@ -39,7 +39,7 @@ class Analysis extends AbstractTable {
                     'insert' => 'required',
                     'update' => 'optional',
                 ),
-                'description' => 'Program name, e.g. blastx, blastp, sim4, genscan.'
+                'description' => "Program name, e.g. blastx, blastp, sim4, genscan. \nNote: The combination of program, programversion and sourcename has to be unique."
             ),
             'programversion' => array(
                 'colname' => 'Programversion',
@@ -101,7 +101,7 @@ class Analysis extends AbstractTable {
     }
 
     public static function CLI_longHelp() {
-        
+
     }
 
     public static function getSubCommands() {

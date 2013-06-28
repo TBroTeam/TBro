@@ -23,7 +23,7 @@ class Quantification extends AbstractTable {
                     'insert' => 'optional',
                     'update' => 'optional',
                 ),
-                'description' => 'name'
+                'description' => "name\nNote: the combination of quantification name and analysis id has to be unique!"
             ),
             'uri' => array(
                 'colname' => 'Uri',
