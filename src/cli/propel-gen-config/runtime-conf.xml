@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+ 
+  <propel>
+    <datasources default="transcript_db">
+      <datasource id="transcript_db">
+        <adapter>mysql</adapter> <!-- sqlite, mysql, mssql, oracle, or pgsql -->
+        <connection>
+          <dsn>mysql:host=localhost;dbname=my_db_name</dsn>
+          <user>my_db_user</user>
+          <password>my_db_password</password>
+        </connection>
+      </datasource>
+    </datasources>
+  </propel>
+</config>

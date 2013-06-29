@@ -1,11 +1,6 @@
 *~
-/cli/build/
-/cli/src/propel-gen-config/build/
-/cli/etc/*.php
-/web/smarty/templates_c
-/web/smarty/cache
-/web/httpdocs/config.php
-/web/httpdocs/config_cvterms.php
+/build/
+/etc/*.php
+*/smarty/templates_c
+*/smarty/cache
 /nbproject/private/
-/httpdocs/smarty/templates_c/*
-/httpdocs/smarty/cache/*

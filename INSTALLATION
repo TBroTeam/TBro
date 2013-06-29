@@ -1,0 +1,50 @@
+#############################
+###  build prerequisites  ###
+#############################
+
+install php5-cli, php-pear, php5-pgsql, php5-curl
+
+install phing
+    $ pear channel-discover pear.phing.info
+    $ pear install --alldeps phing/phing
+
+the extension php_phar.dll should be included and enabled in a standard php installation, otherwise see
+    http://www.php.net/manual/en/phar.setup.php
+
+in your php.ini, change phar.readonly to Off:
+    [Phar]
+    phar.readonly = Off
+
+#############################
+### building & installing ###
+#############################
+
+execute phing to build & deploy into this directory
+    $ phing
+
+alternatively, specify where to install (example for $HOME)
+    $ phing -D install_dir=$HOME/bin -D config_dir=$HOME/etc
+
+#############################
+###   edit configuration  ###
+#############################
+
+<filename>.example files have been copied to your $config_dir (./etc if run without parameters)
+db-config.php will need some editing
+db-cvterms.php should be ready to use if you use our prepared db
+
+#############################
+###  usage prerequisites  ###
+#############################
+
+you will need PEAR packages (install via pear install --alldeps <pkgname>)
+    Console_CommandLine
+    Console_Table
+    Console_Progressbar
+    Log
+and
+Propel::Runtime, installed via
+    $ pear channel-discover pear.propelorm.org
+    $ pear install -a propel/propel_runtime
+
+now you're set to go!

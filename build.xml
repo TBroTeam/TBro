@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project name="transciptome-cli" default="install">
+    <property file="./build.properties" />
+    
+    <import file="./src/cli/build-db.xml"/>
+    <import file="./src/cli/build-import.xml"/>
+    <import file="./src/web/build-web.xml"/>
+    
+    <target name="clean">
+        <delete dir="${builddir}" includeemptydirs="true" verbose="true" failonerror="true" />
+    </target>
+</project>

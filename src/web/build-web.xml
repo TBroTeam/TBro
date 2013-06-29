@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project name="transciptome-cli">
+    <target name="web-prepare">
+        <mkdir dir="${builddir}/web/wwwroot"/>
+        <copy todir="${builddir}/web/wwwroot" >
+            <fileset dir="${srcdir}/web/wwwroot">
+                <include name="**" />
+                <include name="**/**" />
+                <exclude name="config.php"/>
+            </fileset>
+        </copy>
+        <copy file="${srcdir}/web/wwwroot/config.php" todir="${builddir}/web/wwwroot" overwrite="true">
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+        
+        <mkdir dir="${builddir}/web/includes"/>
+        <copy todir="${builddir}/web/includes" >
+            <fileset dir="${srcdir}/web/includes">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+    </target>
+        
+    <target name="web-install" depends="web-prepare">
+        <mkdir dir="${www_root}"/>
+        <copy todir="${www_root}" >
+            <fileset dir="${builddir}/web/wwwroot">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <exec command="chown -R ${www_user}:${www_group} ${www_root}" escape="false" />
+        <exec command="chmod -R ${www_mode} ${www_root}" escape="false" />
+        
+        <mkdir dir="${share_path}"/>
+        <copy todir="${share_path}" >
+            <fileset dir="${builddir}/web/includes">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <exec command="chown -R ${www_user}:${www_group} ${share_path}" escape="false" />
+        <exec command="chmod -R ${www_mode} ${share_path}" escape="false" />
+        
+        <mkdir dir="${var_path}/smarty/templates_c"/>
+        <mkdir dir="${var_path}/smarty/cache"/>
+        <exec command="chown -R ${www_user}:${www_group} ${var_path}" escape="false" />
+        <exec command="chmod -R ${www_mode} ${var_path}" escape="false" />
+    </target>
+    
+    <target name="web-clean">
+        <delete dir="${builddir}/web" includeemptydirs="true" verbose="true" failonerror="true" />
+    </target>
+</project>

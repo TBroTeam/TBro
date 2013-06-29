@@ -1,0 +1,215 @@
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-22 01:07:36
+         compiled from "C:\Users\mail_000\Dropbox\uni\bio\s202139\web\smarty\templates\js\cart-init.js" */ ?>
+<?php /*%%SmartyHeaderCode:818518caf1ec8eed1-16058887%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    'dab8618c916569f3cf7c0375a82d86894e6fcffa' => 
+    array (
+      0 => 'C:\\Users\\mail_000\\Dropbox\\uni\\bio\\s202139\\web\\smarty\\templates\\js\\cart-init.js',
+      1 => 1371855900,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '818518caf1ec8eed1-16058887',
+  'function' => 
+  array (
+  ),
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_518caf1ecfe4d7_23397574',
+  'variables' => 
+  array (
+    'AppPath' => 0,
+    'kickoff_cart' => 0,
+  ),
+  'has_nocache_code' => false,
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_518caf1ecfe4d7_23397574')) {function content_518caf1ecfe4d7_23397574($_smarty_tpl) {?><?php if (!is_callable('smarty_function_call_webservice')) include 'C:\\Users\\mail_000\\Dropbox\\uni\\bio\\s202139\\web\\smarty\\/plugins\\function.call_webservice.php';
+?>/*<?php echo smarty_function_call_webservice(array('path'=>"cart/sync",'data'=>array(),'assign'=>'kickoff_cart'),$_smarty_tpl);?>
+*/
+var cart;
+
+$(document).ready(function() {
+    cart = new Cart({}, {
+        callbacks: {
+            afterDOMinsert_groupAll: groupAllAfterDOM,
+            afterDOMinsert_group: groupAfterDOM,
+            afterDOMinsert_item: itemAfterDOM
+        }
+    });
+
+    cart.addGroup('test');
+    cart.addItem(522151);
+
+
+    function groupAllAfterDOM() {
+        this.accordion({
+            collapsible: true,
+            heightStyle: "content"
+        });
+
+        this.find('a').click(function(event) {
+            event.stopPropagation();
+        });
+    }
+
+    function groupAfterDOM() {
+        var that = this;
+
+        this.find('.elements').droppable({
+            items: "li:not(.placeholder)",
+            accept: ":not(.ui-sortable-helper)",
+            drop: function(event, ui) {
+                cart.addItem(ui.draggable.attr('data-id'), {
+                    groupname: that.attr('data-name'),
+                    addToDOM: true
+                });
+            }
+        });
+        this.accordion({
+            collapsible: true,
+            heightStyle: "content"
+        });
+
+        this.find('a').click(function(event) {
+            event.stopPropagation();
+        });
+
+        this.find('.cart-button-rename').click(function(event) {
+            var dialog = $('#dialog-rename-cart-group');
+            dialog.data('oldname', that.attr('data-name'));
+            dialog.dialog("open");
+        });
+    }
+
+    function itemAfterDOM() {
+        var id = this.attr('data-id');
+
+        if (this.parents('.cartGroup').attr('data-name') === 'all')
+            this.draggable({
+                appendTo: "body",
+                helper: function() {
+                    return $(this).clone().addClass('beingDragged');
+                }
+            });
+
+        this.find('.cart-button-rename').click(function() {
+            cart._getItemDetails(id, function(data) {
+                $('#item-feature_id').val(id);
+                $('#item-alias').val(data.metadata.alias || '');
+                $('#item-annotations').val(data.metadata.annotations || '');
+                $("#dialog-edit-cart-item").dialog("open");
+            });
+
+        });
+
+        this.find('.cart-button-delete').click(function(event) {
+            cart.removeItem(id, $(this).parents('.cartGroup').attr('data-name'));
+        });
+    }
+
+
+    function dialog_editCartItem(id) {
+
+    }
+
+
+    $("#dialog-rename-cart-group").dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons: {
+            "rename cart": function() {
+                var oldname = $(this).data('oldname');
+                var newname = $('#cartname').val();
+                try {
+                    cart.renameGroup(oldname, newname);
+                } catch (e) {
+                    alert(e);
+                }
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function() {
+            var oldname = $(this).data('oldname');
+            $('#cartname').val(oldname);
+        }
+    });
+
+    $("#dialog-edit-cart-item").dialog({
+        autoOpen: false,
+        height: 500,
+        width: 500,
+        modal: true,
+        buttons: {
+            "save changes": function() {
+                cart.updateItem($('#item-feature_id').val(), {alias: $('#item-alias').val(), annotations: $('#item-annotations').val()});
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function(event, ui) {
+        }
+    });
+
+    $("#dialog-delete-all").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        buttons: {
+            "Delete all items": function() {
+                cart.resetCart({
+                    sync: true
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+
+    /*
+     
+     var group_all = $("#cart-group-all");
+     group_all.accordion({
+     collapsible: true,
+     heightStyle: "content"
+     });
+     group_all.find('.cart-button-execute').click(function(event) {
+     event.stopPropagation();
+     window.location = '<?php echo $_smarty_tpl->tpl_vars['AppPath']->value;?>
+/graphs/all';
+     });
+     
+     
+     var tmpcart = <?php echo json_encode($_smarty_tpl->tpl_vars['kickoff_cart']->value['cart']);?>
+;
+     cart.rebuildDOM(tmpcart, true);
+     setInterval(cart.checkRegularly, 5000); //sync over tabs if neccessary
+     
+     $('#cart').tooltip({
+     items: ".cart-item",
+     open: function(event, ui) {
+     ui.tooltip.css("max-width", "500px");
+     },
+     content: function() {
+     var element = $(this);
+     var tooltip = $("<table />");
+     $.each(element.data('metadata'),function(key, val){
+     $("<tr><td>"+key+"</td><td>"+(val!==null?val:'')+"</td></tr>").appendTo(tooltip);
+     });
+     tooltip.foundation();
+     return tooltip;
+     }
+     });
+     */
+});<?php }} ?>
