@@ -7,6 +7,17 @@ if (!defined('ROOT')) {
     define('CONFIG_DIR', __DIR__ . "/../../../etc/");
 }
 
+if (file_exists(CONFIG_DIR . 'config.php'))
+    include_once CONFIG_DIR . 'config.php';
+else
+    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'config.php'));
+
+
+if (file_exists(CONFIG_DIR . 'cvterms.php'))
+    include_once CONFIG_DIR . 'cvterms.php';
+else
+    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'cvterms.php'));
+
 if (stream_resolve_include_path('Console/CommandLine.php'))
     require_once 'Console/CommandLine.php';
 else

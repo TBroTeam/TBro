@@ -10,25 +10,22 @@
 
         <link rel="stylesheet" href="{#$AppPath#}/css/normalize.css" />
         <link rel="stylesheet" href="{#$AppPath#}/css/foundation.css" />
-        <!--link type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/minified/jquery-ui.min.css" rel="Stylesheet" /-->    
         <link type="text/css" href="{#$AppPath#}/css/custom-theme/jquery-ui-1.10.2.custom.css" rel="Stylesheet" />    
-
-        <!--script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script-->
-        <script type="text/javascript" src="{#$AppPath#}/js/jquery-1.9.1.min.js"></script>
-        <!--script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script-->
-        <script type="text/javascript" src="{#$AppPath#}/js/jquery-ui-1.10.2.custom.min.js"></script>
-        <script type="text/javascript" src="{#$AppPath#}/js/vendor/custom.modernizr.js"></script>
-        <script type="text/javascript" src="{#$AppPath#}/js/foundation.min.js"></script>        
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>        
         <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>        
-        <script type="text/javascript" src="{#$AppPath#}/js/underscore-min.js"></script>
-        <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/TableTools.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/js/TableTools.min.js"></script>
         <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/alphanum.js"></script>
         <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/feature/datatable-init.js"></script>
         <script type="text/javascript" language="javascript" src="{#$AppPath#}/js/sprintf.min.js"></script>
-        <link rel="stylesheet" href="{#$AppPath#}/css/jquery.dataTables_themeroller.css" />
-        <link rel="stylesheet" href="{#$AppPath#}/css/TableTools.css" />
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables_themeroller.min.css">
+        <link ref="stylesheet" type="text/css" href = "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/css/TableTools.min.css">
 
+        
         <script type="text/javascript">
             var organism;
             var release;

@@ -7,6 +7,17 @@ if (!defined('ROOT')) {
     define('CONFIG_DIR', __DIR__ . "/../../../etc/");
 }
 
+if (file_exists(CONFIG_DIR . 'config.php'))
+    include_once CONFIG_DIR . 'config.php';
+else
+    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'config.php'));
+
+
+if (file_exists(CONFIG_DIR . 'cvterms.php'))
+    include_once CONFIG_DIR . 'cvterms.php';
+else
+    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'cvterms.php'));
+
 if (stream_resolve_include_path('Console/CommandLine.php'))
     require_once 'Console/CommandLine.php';
 else
@@ -27,16 +38,13 @@ if (stream_resolve_include_path('Log.php'))
 else
     die("Failure including Log.php\nplease install PEAR::Log or check your include_path\n");
 
-if (!@include_once CONFIG_DIR . 'config.php')
-    die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'config.php'));
-
 if (!@include_once CONFIG_DIR . 'cvterms.php')
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'cvterms.php'));
 
 
 $parser = new Console_CommandLine(array(
-            'description' => 'importer for transcriptome browser!',
-            'version' => '0.1'
+    'description' => 'importer for transcriptome browser!',
+    'version' => '0.1'
         ));
 $parser->subcommand_required = true;
 
@@ -80,8 +88,7 @@ try {
         global $db;
         if (defined('DEBUG') && DEBUG) {
             require_once SHARED . '/libs/loggedPDO/PDO.php';
-            $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION),
-                            Log::factory('console', '', 'PDO'));
+            $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION), Log::factory('console', '', 'PDO'));
         }
         else
             $db = new PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -102,7 +109,8 @@ try {
         if ($ref->implementsInterface('\CLI_Command') && !$ref->isAbstract()) {
             call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command);
             call_user_func(array($class, 'CLI_execute'), $result->command, $parser);
-        } else
+        }
+        else
             die('command not implemented correctly!');
     } else {
         $parser->displayUsage();
