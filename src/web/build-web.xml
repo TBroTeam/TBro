@@ -26,7 +26,22 @@
                 <include name="**" />
                 <include name="**/**" />
             </fileset>
+            <fileset dir="${srcdir}/shared/libs">
+                <include name="loggedPDO" />
+                <include name="loggedPDO/**" />
+                <include name="smarty" />
+                <include name="smarty/**" />
+            </fileset>
         </copy>
+        
+        <!-- copy blast interface -->
+        <copy todir="${builddir}/web/includes/TranscriptDB/smarty/templates" >
+            <fileset dir="${srcdir}/queue/server/tpl">
+                <include name="blast.tpl" />
+                <include name="blast_results.tpl" />
+            </fileset>
+        </copy>
+        <copy file="${srcdir}/queue/server/js/blast_results.js" todir="${builddir}/web/wwwroot/js" />
     </target>
         
     <target name="web-install" depends="web-prepare">

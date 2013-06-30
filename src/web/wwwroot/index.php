@@ -100,12 +100,16 @@ switch ($page) {
         $smarty->assign('cartname', $cartname);
         $smarty->display('mav.tpl');
         die();
-    case 'blast':
-        $smarty->display('blast.tpl');
+    case 'blast':        
+        $smarty->assign('webservice_program_databases', SERVICEPATH.'/queue/job_program_databases');
+        $smarty->assign('webservice_job_start', SERVICEPATH.'/queue/job_start');
+        $smarty->assign('result_page', APPPATH.'/blast_results');
+        $smarty->display('extends:layout-with-cart.tpl|blast.tpl');
         die();
     case 'blast_results':
-        $smarty->assign('job_uuid', requestVal('job_uuid', '/^[0-9a-f]+$/', '-1'));
-        $smarty->display('blast_results.tpl');
+        $smarty->assign('webservice_job_results', SERVICEPATH.'/queue/job_results');
+        $smarty->assign('path_prefix', APPPATH.'/');
+        $smarty->display('extends:layout-with-cart.tpl|blast_results.tpl');
         die();
 }
 $smarty->display('welcome.tpl');

@@ -1,6 +1,6 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^js/feature/(.*).js$    index.php?page=js&js=$1 [L,NC]
+RewriteRule ^js/feature/(.*).js$    index.php?page=js&js=$1 [L,NC,QSA]
 
 RewriteRule ^multisearch$    index.php?page=multisearch [L,NC,QSA]
 
