@@ -154,7 +154,6 @@ Cart.prototype._getItemDetails = function(ids, callback) {
         },
         dataType: 'JSON',
         success: function(data) {
-            console.log(data);
             $.each(data.results, function(){
                 var itemDetails = $.extend(true, this, {
                     metadata: {}
@@ -163,7 +162,6 @@ Cart.prototype._getItemDetails = function(ids, callback) {
                 that.cartitems[id] = itemDetails;
                 $.extend(newCartitems[id], itemDetails);
             });
-            console.log(retArray);
             callback(retArray);
         }
     });
@@ -255,8 +253,6 @@ Cart.prototype.addItem = function(ids, options) {
         sync: true
     }, options);
 
-    console.log(ids, options.groupname);
-    
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
     if (missingIds.length==0){

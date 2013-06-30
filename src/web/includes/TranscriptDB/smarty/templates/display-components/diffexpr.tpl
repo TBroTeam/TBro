@@ -114,16 +114,23 @@
                         </tr>
                     </thead>
                     <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8">
+                                <span class="left" style="vertical-align: bottom">
+                                    <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">select all</a>
+                                    <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectNone();">select none</a>
+                                    <span>click a row to select</span>
+                                </span>
+
+                                <span class="right">
+                                    <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
+                                    <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
+                                </span>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
-            </div>
-            <div class="large-12 column">
-                <span>
-                    click a row to select
-                </span>
-                <span class=" right">
-                    <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
-                    <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
-                </span>
             </div>
         </div>
     </div>

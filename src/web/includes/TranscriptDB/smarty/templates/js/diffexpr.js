@@ -33,15 +33,15 @@ $(document).ready(function() {
     $('#button-gdfx-table').click(function() {
         var selected = finalSelect.filteredData();
         selectedItem = {
-            conditionA: selected.values[0].dir == 'ltr' ? selected.values[0].ba : selected.values[0].bb,
-            conditionB: selected.values[0].dir == 'ltr' ? selected.values[0].bb : selected.values[0].ba,
+            conditionA: selected.values[0].dir === 'ltr' ? selected.values[0].ba : selected.values[0].bb,
+            conditionB: selected.values[0].dir === 'ltr' ? selected.values[0].bb : selected.values[0].ba,
             analysis: selected.values[0].analysis
 
         };
         $('#div-gdfxtable').show();
 
 
-        if (typeof dataTable == "undefined") {
+        if (typeof dataTable === "undefined") {
             var serverParams = function(aoData) {
                 aoData.push({
                     name: "organism",
@@ -73,10 +73,10 @@ $(document).ready(function() {
                         value: this
                     });
                 });
-            /*{#/if#}*/
+                /*{#/if#}*/
             };
             var lastQueryData;
-            dataTable = $('#diffexp_results').dataTable({
+            var options = {
                 bFilter: false,
                 bProcessing: true,
                 bServerSide: true,
@@ -101,60 +101,59 @@ $(document).ready(function() {
                 fnServerParams: serverParams,
                 aaSorting: [[5, "asc"]],
                 aoColumns: [
-                {
-                    sType: "natural",
-                    mData: 'feature_name'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMean'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMeanA'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'baseMeanB'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'foldChange'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'log2foldChange'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'pval'
-                },
-                {
-                    sType: "scientific",
-                    mData: 'pvaladj'
-                },
+                    {
+                        sType: "natural",
+                        mData: 'feature_name'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'baseMean'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'baseMeanA'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'baseMeanB'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'foldChange'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'log2foldChange'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'pval'
+                    },
+                    {
+                        sType: "scientific",
+                        mData: 'pvaladj'
+                    }
                 ],
                 sDom: 'T<"clear">lfrtip',
                 oTableTools: {
                     sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf",
                     aButtons: [
-                    "select_all",
-                    "select_none",
-                    {
-                        "sExtends": "ajax",
-                        "sButtonText": "CSV Export All",
-                        "fnClick": function(nButton, oConfig) {
-                            var iframe = document.createElement('iframe');
-                            iframe.style.height = "0px";
-                            iframe.style.width = "0px";
-                            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
-                            document.body.appendChild(iframe);
+                        {
+                            "sExtends": "ajax",
+                            "sButtonText": "CSV Export All",
+                            "fnClick": function(nButton, oConfig) {
+                                var iframe = document.createElement('iframe');
+                                iframe.style.height = "0px";
+                                iframe.style.width = "0px";
+                                iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
+                                document.body.appendChild(iframe);
+                            }
                         }
-                    },
                     ],
                     sRowSelect: "multi"
                 }
-            });
+            };
+            dataTable = $('#diffexp_results').dataTable(options);
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();
@@ -170,7 +169,7 @@ $(document).ready(function() {
         if (group === '#new#')
             group = cart.addGroup();
 
-        cart.addItem($.map(selectedItems, function(val){
+        cart.addItem($.map(selectedItems, function(val) {
             return val.feature_id;
         }), {
             groupname: group
