@@ -10,7 +10,7 @@ define('DB_USERNAME', 's202139');
 define('DB_PASSWORD', 's202139');
 
 //database connection for the "blast-cron" database
-define('QUEUE_DB_CONNSTR', 'pgsql:host=localhost;port=6543;dbname=dionaea_transcript_db_dev_test3');
+define('QUEUE_DB_CONNSTR', 'pgsql:host=localhost;port=6543;dbname=dionaea_transcript_db_dev');
 define('QUEUE_DB_USERNAME', 's202139');
 define('QUEUE_DB_PASSWORD', 's202139');
 

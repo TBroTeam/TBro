@@ -1,4 +1,6 @@
 <?php
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'queue.lib.php';
 
 $job = $_REQUEST['job'];

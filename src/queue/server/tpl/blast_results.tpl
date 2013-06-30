@@ -4,7 +4,7 @@
     <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <script type="text/javascript" src="js/blast_results.js"></script>
+    <script type="text/javascript" src="{#$path_prefix#}js/blast_results.js"></script>
 
 
     <script type="text/javascript">

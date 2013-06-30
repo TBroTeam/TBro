@@ -42,6 +42,7 @@
             </fileset>
         </copy>
         <copy file="${srcdir}/queue/server/js/blast_results.js" todir="${builddir}/web/wwwroot/js" />
+        <copy file="${srcdir}/queue/server/ajax/queue.lib.php" todir="${builddir}/web/includes/TranscriptDB" />
     </target>
         
     <target name="web-install" depends="web-prepare">
