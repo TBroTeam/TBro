@@ -20,9 +20,22 @@
             release: release.val()
         };
     }
+    
+   
+    function get_filter_string(){
+        return organism.val()+'_'+release.val();
+    }
+    
+    $(document).ready(function(){
+        release.change(function() {
+            refreshProgramDatabases();
+        });
+    });
 </script>
 
+
 {#$smarty.block.child#}
+
 {#/block#}
 {#block name='body'#}
 {#$smarty.block.child#}

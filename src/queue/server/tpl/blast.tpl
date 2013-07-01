@@ -3,14 +3,20 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var databases;
-        //get possible databases from the WebService    
-        $.ajax('{#$webservice_program_databases#}', {
-            dataType: 'JSON',
-            success: function(data) {
-                databases = data;
-                $('#blastform-type').change();
-            }
-        });
+        
+        window.refreshProgramDatabases = function (){
+            //get possible databases from the WebService    
+            $.ajax('{#$webservice_program_databases#}', {
+                data: {filter_string: _.isFunction(get_filter_string)?get_filter_string():{}},
+                dataType: 'JSON',
+                success: function(data) {
+                    databases = data;
+                    $('#blastform-type').change();
+                }
+            });
+        }
+        
+        refreshProgramDatabases();
 
         //if the user selects another blast type, hide and show input fields accordingly
         //repopulate the database-select

@@ -78,14 +78,14 @@ function get_job_results($job_uid) {
     }
 }
 
-function get_program_databases() {
+function get_program_databases($filter_string=null) {
     try {
         //connect to the database
         $pdo = connect_queue_db();
         //prepare our get_programname_database statement
-        $stm = $pdo->prepare('SELECT * FROM get_programname_database()');
+        $stm = $pdo->prepare('SELECT * FROM get_programname_database(?)');
         //and execute it
-        $stm->execute();
+        $stm->execute(array($filter_string));
         $ret = array();
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             //put the rows into an array
