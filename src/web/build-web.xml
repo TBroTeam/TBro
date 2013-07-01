@@ -4,7 +4,7 @@
     type="application/xml" 
     schematypens="http://relaxng.org/ns/structure/1.0" ?>
 
-<project name="transciptome-cli">
+<project name="web">
     <target name="web-prepare">
         <mkdir dir="${builddir}/web/wwwroot"/>
         <copy todir="${builddir}/web/wwwroot" >
@@ -45,7 +45,7 @@
         <copy file="${srcdir}/queue/server/ajax/queue.lib.php" todir="${builddir}/web/includes/TranscriptDB" />
     </target>
         
-    <target name="web-install" depends="web-prepare">
+    <target name="web-install" depends="web-prepare" description="installs the tbro web interface to www_root, share_path and var_path and sets file permissions">
         <mkdir dir="${www_root}"/>
         <copy todir="${www_root}" >
             <fileset dir="${builddir}/web/wwwroot">

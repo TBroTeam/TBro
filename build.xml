@@ -4,12 +4,25 @@
     type="application/xml" 
     schematypens="http://relaxng.org/ns/structure/1.0" ?>
 
-<project name="transciptome-cli" default="install">
+<project name="transciptome-cli" default="dummy-notarget">
+   
+    <if>
+        <not>
+            <available file="./build.properties"/>
+        </not>
+        <then>
+            <fail message="Property file build.properties does not exist. Please copy build.properties.example and modify it to your needs." />
+        </then>
+    </if>
     <property file="./build.properties" />
     
     <import file="./src/cli/build-db.xml"/>
     <import file="./src/cli/build-import.xml"/>
     <import file="./src/web/build-web.xml"/>
+    
+    <target name="dummy-notarget">
+        <fail message="Please call phing with a target. To see all available targets, call 'phing -l'" />
+    </target>
     
     <target name="clean">
         <delete dir="${builddir}" includeemptydirs="true" verbose="true" failonerror="true" />

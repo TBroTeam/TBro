@@ -4,7 +4,7 @@
     type="application/xml" 
     schematypens="http://relaxng.org/ns/structure/1.0" ?>
 
-<project name="transciptome-cli">
+<project name="cli-db">
     <target name="cli-db-prepare">
         <mkdir dir="${builddir}/cli/db"/>
         <copy todir="${builddir}/cli/db" >
@@ -50,7 +50,7 @@
         </pharpackage>
     </target>
         
-    <target name="cli-db-install" depends="cli-db-build">
+    <target name="cli-db-install" depends="cli-db-build" description="installs tbro-db to bin_dir">
         <mkdir dir="${bin_dir}"/>
         <copy file ="${builddir}/cli/bin/tbro-db.phar" tofile="${bin_dir}/tbro-db"  overwrite="true"/>
     </target>

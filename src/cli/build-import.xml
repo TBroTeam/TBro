@@ -4,7 +4,7 @@
     type="application/xml" 
     schematypens="http://relaxng.org/ns/structure/1.0" ?>
 
-<project name="transciptome-cli">
+<project name="cli-import">
     <target name="cli-import-prepare">
         <mkdir dir="${builddir}/cli/import"/>
         <copy todir="${builddir}/cli/import" >
@@ -50,7 +50,7 @@
         </pharpackage>
     </target>
         
-    <target name="cli-import-install" depends="cli-import-build">
+    <target name="cli-import-install" depends="cli-import-build" description="installs tbro-import to bin_dir">
         <mkdir dir="${bin_dir}"/>
         <copy file ="${builddir}/cli/bin/tbro-import.phar" tofile="${bin_dir}/tbro-import"  overwrite="true"/>
     </target>

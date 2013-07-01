@@ -26,7 +26,8 @@ CREATE TABLE program_database_relationships
     program_database_relationship serial NOT NULL PRIMARY KEY,
     program_name varchar NOT NULL REFERENCES programs(name),
     database_name varchar NOT NULL REFERENCES database_files(name),
-    UNIQUE (program_name,database_name)
+    availability_filter varchar,
+    UNIQUE (program_name,database_name,availability_filter)
 );
 
 CREATE TABLE jobs

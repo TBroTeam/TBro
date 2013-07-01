@@ -415,13 +415,13 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION  get_option(varchar) IS 
 'resets all queries that have started more than MAXIMUM_EXECUTION_TIME seconds ago to NOT_PROCESSED';
 
-CREATE OR REPLACE FUNCTION get_programname_database()
+CREATE OR REPLACE FUNCTION get_programname_database(_availability_filter varchar)
 RETURNS TABLE(program_name varchar, database_name varchar)
 AS 
 $BODY$
 DECLARE
 BEGIN
-    RETURN QUERY SELECT pgr.program_name, pgr.database_name FROM program_database_relationships pgr; 
+    RETURN QUERY SELECT pgr.program_name, pgr.database_name FROM program_database_relationships pgr WHERE pgr.availability_filter=_availability_filter OR pgr.availability_filter IS NULL; 
 END;
 $BODY$
 LANGUAGE plpgsql;
