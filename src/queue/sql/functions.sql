@@ -226,26 +226,36 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION keepalive_ping(_running_query_id int) IS
 'updates last_keepalive. returns max_keepalive_timeout or -1 if this job has already timed out.out';
 
+CREATE OR REPLACE FUNCTION set_job_final_status(_job_id int) RETURNS VOID
+AS 
+$BODY$
+BEGIN
+    LOCK TABLE jobs;
+        IF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT status='PROCESSED') THEN
+            UPDATE jobs SET status='PROCESSED' WHERE job_id = _job_id;
+        ELSEIF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR')) THEN
+            UPDATE jobs SET status='PROCESSED_WITH_ERRORS' WHERE job_id = _job_id;
+        END IF;
+END;
+$BODY$
+LANGUAGE plpgsql;
+COMMENT ON FUNCTION set_job_final_status(_job_id int) IS
+'sets job final status "PROCESSED" or "PROCESSED_WITH_ERRORS", depending on the associated queries'' return codes';
+
 CREATE OR REPLACE FUNCTION updated_query_status() RETURNS TRIGGER
 AS 
 $BODY$
 DECLARE
     _job_id int;
 BEGIN
-    LOCK TABLE jobs;
-
     FOR _job_id IN SELECT job_id FROM job_queries WHERE job_queries.query_id=NEW.query_id LOOP
-        IF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT status='PROCESSED') THEN
-            UPDATE jobs SET status='PROCESSED' WHERE job_id = _job_id;
-        ELSEIF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR')) THEN
-            UPDATE jobs SET status='PROCESSED_WITH_ERRORS' WHERE job_id = _job_id;
-        END IF;
+        EXECUTE set_job_final_status(_job_id);
     END LOOP;
     RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
-COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
+COMMENT ON FUNCTION updated_query_status() IS
 'sets job final status "PROCESSED" or "PROCESSED_WITH_ERRORS", depending on the associated queries'' return codes';
 
 DROP TRIGGER IF EXISTS trigger_update_query_status ON queries;
@@ -266,6 +276,7 @@ DECLARE
     _parameter_set_id integer;
     _query_id integer;
     _query text;
+    _inserted_queries integer;
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM programs WHERE name=_programname) THEN
         RAISE EXCEPTION 'program unknown: %', _programname;
@@ -304,16 +315,24 @@ BEGIN
     RAISE NOTICE 'inserted job id %', _job_id;
 
     --insert queries
+    _inserted_queries := 0;
     FOREACH _query IN ARRAY _queries LOOP
         SELECT INTO _query_id query_id FROM queries WHERE (programname, parameter_set_id, target_db, query) = (_programname, _parameter_set_id, _target_db, _query);
         IF NOT FOUND THEN
             INSERT INTO queries (programname, parameter_set_id, target_db, query) VALUES (_programname, _parameter_set_id, _target_db, _query) RETURNING query_id INTO _query_id;
             RAISE NOTICE 'inserted query id %', _query_id;
+            _inserted_queries := _inserted_queries + 1;
         END IF;
 
         INSERT INTO job_queries ( job_id,  query_id) VALUES (_job_id, _query_id);
         RAISE NOTICE 'inserted job_queries(%,%)',_job_id, _query_id;
     END LOOP;
+    RAISE NOTICE 'queries: %', _inserted_queries;
+    if _inserted_queries = 0 THEN
+        -- will set job to processed when all queries have been processed earlier
+        RAISE NOTICE 'did not insert any queries for this job, computing final job status';
+        EXECUTE set_job_final_status(_job_id);
+    END IF;
 
     --done
     RETURN _uid;

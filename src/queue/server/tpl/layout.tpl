@@ -3,6 +3,7 @@
 {#$webservice_job_results="ajax/job_results.php"}
 {#$result_page="blast_results.html"#}
 {#$path_prefix=""#}
+{#$feature_prefix="/"#}
 
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
@@ -18,7 +19,7 @@
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
 
-    {#block name='head'#}{#/block#}
+{#block name='head'#}{#/block#}
 </head>
 <body>
 

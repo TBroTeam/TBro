@@ -162,7 +162,12 @@ function displayIterationGraph(iteration, canvas, colorKey, elementClickCallback
 /**
  * calls displayIterationGraph, fills Iteration Table
  */    
-function displayIteration(iteration, resultTable, canvas){
+function displayIteration(iteration, resultTable, canvas, options){
+    options = $.extend({
+        prepare_feature_url:function(featurename, options){
+            return '/'+featurename+'#'+featurename.replace('.','_');
+        }
+    }, options);
     function openRowOnHit(){
         var hit = this;
         if (typeof hit == "undefined") return;
@@ -238,7 +243,7 @@ function displayIteration(iteration, resultTable, canvas){
             }
             ],
             fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                $(nRow).find('td:eq(0)').html( '<a target="_blank" href="/'+aData.def_firstword+'#'+aData.def_firstword.replace('.','_')+'">'+aData.def_firstword+'</a>' );
+                $(nRow).find('td:eq(0)').html( '<a target="_blank" href="'+options.prepare_feature_url(aData.def_firstword, options)+'">'+aData.def_firstword+'</a>' );
                 $(nRow).css( 'cursor', 'pointer' );
             }
         });

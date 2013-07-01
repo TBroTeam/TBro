@@ -101,15 +101,10 @@ switch ($page) {
         $smarty->display('mav.tpl');
         die();
     case 'blast':        
-        $smarty->assign('webservice_program_databases', SERVICEPATH.'/queue/job_program_databases');
-        $smarty->assign('webservice_job_start', SERVICEPATH.'/queue/job_start');
-        $smarty->assign('result_page', APPPATH.'/blast_results');
-        $smarty->display('extends:layout-with-cart.tpl|blast.tpl');
+        $smarty->display('extends:blast-layout.tpl|blast.tpl');
         die();
     case 'blast_results':
-        $smarty->assign('webservice_job_results', SERVICEPATH.'/queue/job_results');
-        $smarty->assign('path_prefix', APPPATH.'/');
-        $smarty->display('extends:layout-with-cart.tpl|blast_results.tpl');
+        $smarty->display('extends:blast-layout.tpl|blast_results.tpl');
         die();
 }
 $smarty->display('welcome.tpl');

@@ -13,7 +13,7 @@ class Job_start extends \WebService {
         try {
 //split our fasta into single independent queries
             $queries = split_fasta($job['query'], $type);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return array('status' => 'error', 'message' => $e->getMessage());
         }
 
