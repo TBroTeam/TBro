@@ -26,11 +26,22 @@ exit($return_value);
  * ) */
 
 function execute_job($job) {
+    trigger_error(sprintf("starting job id: %d", $job['running_query_id']), E_USER_NOTICE);
     global $die_on_timeout;
+    global $job_id;
+    $job_id = $job['running_query_id'];
+    $pdo = pdo_connect();
+    $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job_id, getmypid()));
+    //intitalize "parameters" for the tick function
+    $end_time = microtime(true) + $job['max_lifetime'];
+    $send_keepalive = true;
+    $die_on_timeout = true;
+
     //closure to die on timeout and regularly send a keepalive to the server. will be installed as tick_function later on
     $die_or_keepalive = function() use (&$end_time, &$send_keepalive, &$die_on_timeout, &$pdo, &$job_id) {
                 //did we time out? if yes, die
                 if ($die_on_timeout && $end_time < microtime(true)) {
+                    trigger_error("timed out, exiting", E_USER_NOTICE);
                     exit(-1);
                 }
                 static $next_keepalive = 0; //static. will be created on first function execution and then the value will be kept between executions
@@ -41,6 +52,7 @@ function execute_job($job) {
                     if ($keepalive_statement == null)
                         $keepalive_statement = $pdo->prepare('SELECT keepalive_ping(?)');
 
+                    trigger_error("sending keepalive", E_USER_NOTICE);
                     $keepalive_statement->execute(array($job_id));
                     $keepalive_timeout = $keepalive_statement->fetchColumn();
                     if ($keepalive_timeout == -1) {
@@ -49,21 +61,14 @@ function execute_job($job) {
                         $end_time = 0;
                         //no more keepalives
                         $send_keepalive = false;
+                        trigger_error("returned -1, will die on next occasion", E_USER_NOTICE);
                     } else {
                         //send a keepalive 3 seconds before neccessary
                         $next_keepalive = microtime(true) + $keepalive_timeout - 3;
+                        trigger_error(sprintf("next keepalive in %d seconds", $keepalive_timeout - 3), E_USER_NOTICE);
                     }
                 }
             };
-
-    global $job_id;
-    $job_id = $job['running_query_id'];
-    $pdo = pdo_connect();
-    $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job_id, getmypid()));
-    //intitalize "parameters" for the tick function
-    $end_time = microtime(true) + $job['max_lifetime'];
-    $send_keepalive = true;
-    $die_on_timeout = true;
     register_tick_function($die_or_keepalive);
     declare(ticks = 10); //every 10 microactions, call the tick handler to check for timeout or the need of a keepalive
     $dbfile = acquire_database($job['target_db'], $job['target_db_md5'], $job['target_db_download_uri']);
@@ -72,7 +77,8 @@ function execute_job($job) {
     $program = $supported_programs[$job['programname']];
     if (strpos($program, DIRECTORY_SEPARATOR) !== 0)
         $program = __DIR__ . DIRECTORY_SEPARATOR . $program;
-    $cmd = '"' . $program . '"';
+    //escape unescaped spaces
+    $cmd = preg_replace('{([^\\\\]) }', '\\1\\\\ ', $program);
     $cmd.= ' ' . $job['parameters'];
     $cmd = str_replace('$DBFILE', $dbfile, $cmd);
     execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
@@ -164,8 +170,9 @@ function unzip($zipfile, $target_dir) {
 }
 
 function execute_command($cwd, $cmd, $query) {
-    echo "\nwill execute $cmd\n";
-    echo "query sequence is \n$query\n";
+    trigger_error("will execute $cmd", E_USER_NOTICE);
+    trigger_error("query sequence is \n$query", E_USER_NOTICE);
+
 
     $descriptorspec = array(
         0 => array("pipe", "r"), // stdin 
@@ -235,6 +242,8 @@ function report_results_cleanup() {
 
     global $job_id, $stdout_collected, $stderr_collected, $return_value;
     pdo_connect()->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
+    
+    trigger_error("reported processed job back", E_USER_NOTICE);
 }
 
 ?>

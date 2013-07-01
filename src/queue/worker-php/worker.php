@@ -9,6 +9,8 @@ if ($argc !== 2)
 
 $configfile = $argv[1];
 
+set_error_handler("myErrorHandler");
+
 if (!stream_resolve_include_path($configfile))
     die(sprintf("Missing config file: %s\n", $configfile));
 require_once $configfile;
@@ -47,5 +49,22 @@ while (true) {
     } else {
         usleep(5 * 1000 * 1000);
     }
+}
+
+
+//handles only E_USER_NOTICE, rest is still handled my php
+function myErrorHandler($errno, $errstr, $errfile, $errline)
+{
+    if (!(error_reporting() & $errno)) {
+        // This error code is not included in error_reporting
+        return;
+    }
+    if ($errno == E_USER_NOTICE){
+        printf("Notice: %s in %s on line %d\n", $errstr, $errfile, $errline);
+        //php should no more handle this
+        return true;
+    }
+    //let php handle this
+    return false;
 }
 ?>

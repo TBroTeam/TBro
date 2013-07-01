@@ -72,9 +72,10 @@ function execute_job($job) {
     $program = $supported_programs[$job['programname']];
     if (strpos($program, DIRECTORY_SEPARATOR) !== 0)
         $program = __DIR__ . DIRECTORY_SEPARATOR . $program;
-    $cmd = '"' . $program . '"';
+    //escape unescaped spaces
+    $cmd = preg_replace('{([^\\]) }', '\1\\ ', $program);
     $cmd.= ' ' . $job['parameters'];
-    $cmd = str_replace('$DBFILE', '"' . $dbfile . '"', $cmd);
+    $cmd = str_replace('$DBFILE', $dbfile, $cmd);
     execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
     report_results_cleanup();
 }
