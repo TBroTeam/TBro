@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project>
+    <target name="cli-db-prepare">
+        <mkdir dir="${builddir}/cli/db"/>
+        <copy todir="${builddir}/cli/db" >
+            <fileset dir="${srcdir}/cli/db/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/shared/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <mkdir dir="${builddir}/cli/db"/>
+        <copy file="${srcdir}/cli/res/phar-stub-db.php" todir="${builddir}/cli/" overwrite="true">
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+    </target>
+    
+    <target name="cli-db-build" depends="cli-db-prepare">
+        <echo msg="Building phar package tbro-db" />
+        <mkdir dir="${builddir}/cli/bin"/>
+        <pharpackage basedir="${builddir}/cli/db/" 
+                     destfile="${builddir}/cli/bin/tbro-db.phar"
+                     alias="db.phar"
+                     stub="${builddir}/cli/phar-stub-db.php"
+                     compression="bzip2"
+        >
+            <metadata>
+                <element name="version" value="${version}" />
+                <element name="authors">
+                    <element name="Lorenz Weber">
+                        <element name="e-mail" value="mail@lenzw.de" />
+                    </element>
+                </element>
+            </metadata>
+
+            <fileset dir="${builddir}/cli/db/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </pharpackage>
+    </target>
+        
+    <target name="cli-db-install" depends="cli-db-build" description="installs tbro-db to bin_dir">
+        <mkdir dir="${bin_dir}"/>
+        <copy file ="${builddir}/cli/bin/tbro-db.phar" tofile="${bin_dir}/tbro-db"  overwrite="true"/>
+        <exec command="chmod +x ${bin_dir}/tbro-db" escape="false" />
+    </target>
+    
+    <target name="cli-db-clean">
+        <delete dir="${builddir}/cli/db" includeemptydirs="true" verbose="true" failonerror="true" />
+    </target>
+</project>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project>
+    <target name="cli-import-prepare">
+        <mkdir dir="${builddir}/cli/import"/>
+        <copy todir="${builddir}/cli/import" >
+            <fileset dir="${srcdir}/cli/import/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/shared/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </copy>
+        <mkdir dir="${builddir}/cli/import"/>
+        <copy file="${srcdir}/cli/res/phar-stub-import.php" todir="${builddir}/cli/" overwrite="true">
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+    </target>
+    
+    <target name="cli-import-build" depends="cli-import-prepare">
+        <echo msg="Building phar package tbro-import" />
+        <mkdir dir="${builddir}/cli/bin"/>
+        <pharpackage basedir="${builddir}/cli/import/" 
+                     destfile="${builddir}/cli/bin/tbro-import.phar"
+                     alias="import.phar"
+                     stub="${builddir}/cli/phar-stub-import.php"
+                     compression="bzip2"
+        >
+            <metadata>
+                <element name="version" value="${version}" />
+                <element name="authors">
+                    <element name="Lorenz Weber">
+                        <element name="e-mail" value="mail@lenzw.de" />
+                    </element>
+                </element>
+            </metadata>
+
+            <fileset dir="${builddir}/cli/import/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+        </pharpackage>
+    </target>
+        
+    <target name="cli-import-install" depends="cli-import-build" description="installs tbro-import to bin_dir">
+        <mkdir dir="${bin_dir}"/>
+        <copy file ="${builddir}/cli/bin/tbro-import.phar" tofile="${bin_dir}/tbro-import"  overwrite="true"/>
+        <exec command="chmod +x ${bin_dir}/tbro-import" escape="false" />
+    </target>
+    
+    <target name="cli-import-clean">
+        <delete dir="${builddir}/cli/import" includeemptydirs="true" verbose="true" failonerror="true" />
+    </target>
+</project>

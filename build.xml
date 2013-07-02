@@ -4,7 +4,7 @@
     type="application/xml" 
     schematypens="http://relaxng.org/ns/structure/1.0" ?>
 
-<project name="transciptome-cli" default="dummy-notarget">
+<project name="tbro" default="dummy-notarget">
    
     <if>
         <not>
@@ -16,9 +16,10 @@
     </if>
     <property file="./build.properties" />
     
-    <import file="./src/cli/build-db.xml"/>
-    <import file="./src/cli/build-import.xml"/>
+    <import file="./src/cli/build-cli-db.xml"/>
+    <import file="./src/cli/build-cli-import.xml"/>
     <import file="./src/web/build-web.xml"/>
+    <import file="./src/database/build-database.xml"/>
     
     <target name="dummy-notarget">
         <fail message="Please call phing with a target. To see all available targets, call 'phing -l'" />

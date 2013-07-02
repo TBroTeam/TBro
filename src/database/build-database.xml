@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project>
+    <target name="database-initialize" description="initializes the chado db with some cvterms, generates config files">
+        <mkdir dir="${builddir}/database/cvterms"/>
+        <copy todir="${builddir}/database/cvterms" overwrite="true">
+            <fileset dir="${srcdir}/database/cvterms/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/web/includes/TranscriptDB/">
+                <include name="db.php" />
+            </fileset>
+            <fileset dir="${srcdir}/">
+                <include name="config.php" />
+            </fileset>
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+        <exec command="chmod +x ${builddir}/database/cvterms/setup-cvterms.php" escape="false" />
+        <exec command="php ${builddir}/database/cvterms/setup-cvterms.php" escape="false" />
+        <copy file="${builddir}/database/cvterms/cvterms.php.generated" todir="${config_dir}" overwrite="true"/>
+        <copy file="${builddir}/database/cvterms/config.php" tofile="${config_dir}/config.php.generated" overwrite="true"/>
+        <echo msg="Copied file cvterms.php.generated to ${config_dir}. Please rename to cvterms.php and proceed." />
+        <echo msg="Copied file config.php.generated to ${config_dir}. Please rename to config.php and customize it to your needs." />
+    </target>
+    
+    <target name="database-commit-modifications" description="adds own tables and functions to the chado_db. call after database-initialize.">
+        <mkdir dir="${builddir}/database/modifications"/>
+        <copy todir="${builddir}/database/modifications" overwrite="true">
+            <fileset dir="${srcdir}/database/modifications/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/web/includes/TranscriptDB/">
+                <include name="db.php" />
+            </fileset>
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+        <exec command="chmod +x ${builddir}/database/modifications/commit-modifications.php" escape="false" />
+        <exec command="php ${builddir}/database/modifications/commit-modifications.php --tables --functions --mat_views" escape="false" />
+    </target>
+    
+    <target name="database-clean">
+        <delete dir="${builddir}/database" includeemptydirs="true" verbose="true" failonerror="true" />
+    </target>
+</project>

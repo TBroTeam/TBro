@@ -4,7 +4,7 @@
     type="application/xml" 
     schematypens="http://relaxng.org/ns/structure/1.0" ?>
 
-<project name="web">
+<project>
     <target name="web-prepare">
         <mkdir dir="${builddir}/web/wwwroot"/>
         <copy todir="${builddir}/web/wwwroot" >
