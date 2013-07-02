@@ -44,7 +44,7 @@ abstract class AbstractImporter implements CLI_Command, Importer {
 
         $command->addArgument('files', array(
             'multiple' => true,
-            'description' => 'id of the organism this import is for'
+            'description' => 'files to be imported'
         ));
 
         return $command;

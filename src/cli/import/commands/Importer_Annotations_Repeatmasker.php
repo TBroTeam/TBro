@@ -164,7 +164,6 @@ EOF;
         return <<<EOF
 
 \033[0;31mThis import requires a successful Sequence ID Import!\033[0m
-\033[0;31mThis import requires a successful Sequence FASTA Import!\033[0m
 EOF;
     }
 

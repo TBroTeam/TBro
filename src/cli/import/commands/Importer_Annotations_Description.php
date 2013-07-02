@@ -64,7 +64,6 @@ class Importer_Annotations_Description extends AbstractImporter {
 Tab-Separated file with column 1: feature_id and column 2: feature description
    
 \033[0;31mThis import requires a successful Sequence ID Import!\033[0m
-\033[0;31mThis import requires a successful Sequence FASTA Import!\033[0m
 EOF;
     }
 

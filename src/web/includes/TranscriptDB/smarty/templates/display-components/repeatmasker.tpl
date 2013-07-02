@@ -9,7 +9,7 @@
                 <div class="large-12 columns panel">
                     <table style="width:100%" id="repeatmasker-results">
                         <thead>
-                            <tr><td>Name</td><td>Class</td><td>Family</td><td>Min</td><td>Max</td><td>Direction</td><td>Length</td></tr>
+                            <tr><td>Name</td><td>Class</td><td>Family</td><td>Start</td><td>End</td><td>Direction</td><td>Length</td></tr>
                         </thead>
                         <tbody>
                             {#foreach $repeatmaskers as $repeatmasker#}

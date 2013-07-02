@@ -194,7 +194,6 @@ File Format looks like this (\033[0;31mFirst line will be skipped\033[0m):
 9,comp234683_c0,1904.88401956508,1811.60920428892,1998.15883484125,1.10297454335664,0.141399493923902,0.000466092095479145,0.00137346251047776
    
 \033[0;31mThis import requires a successful Sequence ID Import!\033[0m
-\033[0;31mThis import requires a successful Expression import!\033[0m
 EOF;
     }
 

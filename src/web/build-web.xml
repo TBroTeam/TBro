@@ -53,8 +53,8 @@
                 <include name="**/**" />
             </fileset>
         </copy>
-        <exec command="chown -R ${www_user}:${www_group} ${www_root}" escape="false" />
         <exec command="chmod -R ${www_mode} ${www_root}" escape="false" />
+        <exec command="chown -R ${www_user}:${www_group} ${www_root}" escape="false" />
         
         <mkdir dir="${share_path}"/>
         <copy todir="${share_path}" >
@@ -63,13 +63,13 @@
                 <include name="**/**" />
             </fileset>
         </copy>
-        <exec command="chown -R ${www_user}:${www_group} ${share_path}" escape="false" />
         <exec command="chmod -R ${www_mode} ${share_path}" escape="false" />
+        <exec command="chown -R ${www_user}:${www_group} ${share_path}" escape="false" />
         
         <mkdir dir="${var_path}/smarty/templates_c"/>
         <mkdir dir="${var_path}/smarty/cache"/>
+        <exec command="chmod -R ${www_mode} ${var_path}" escape="false" />        
         <exec command="chown -R ${www_user}:${www_group} ${var_path}" escape="false" />
-        <exec command="chmod -R ${www_mode} ${var_path}" escape="false" />
     </target>
     
     <target name="web-clean">
