@@ -35,7 +35,7 @@
             <div class="row large-3 columns" style="position:fixed;top:45px;bottom:0;overflow-x:hidden;overflow-y:auto;">
                 <div style="display: none">
 
-                    <div id="dialog-rename-cart-group" title="rename cart">
+                    <div id="dialog-rename-cart-group" title="Rename Cart">
                         <form>
                             <fieldset>
                                 <label for="cartname">cart name</label>
@@ -48,7 +48,7 @@
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your cart items and groups. Are you sure?</p>
                     </div>
 
-                    <div id="dialog-edit-cart-item" title="edit item">
+                    <div id="dialog-edit-cart-item" title="Edit Item">
                         <form>
                             <fieldset>
                                 <label for="item-feature_id">feature_id</label>
@@ -59,6 +59,26 @@
                                 <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" />
                                 <label for="item-annotations">annotations</label>
                                 <textarea name="annotations" id="item-annotations" class="text ui-widget-content ui-corner-all"></textarea>
+                            </fieldset>
+                        </form>
+                    </div>
+                    
+                    <div id="dialog-paste-cart-group" title="Import Group">
+                        <form>
+                            <fieldset>
+                                <label for="paste-json">Data as created using the "Export Group" feature:</label>
+                                <textarea id="paste-json" class="text ui-widget-content ui-corner-all" style="height: 350px"></textarea>
+                                <label for="paste-conflict">Existing annotations should be:</label>
+                                <select id="paste-conflict"><option value="keep">kept</option><option value="merge">merged</option><option value="overwrite">overwritten</option></select>
+                            </fieldset>
+                        </form>
+                    </div>
+                    
+                    <div id="dialog-copy-cart-group" title="Export Group">
+                        <form>
+                            <fieldset>
+                                <label for="copy-json">You can copy the data below. It may be re-imported by anyone using the "Import Group" feature.</label>
+                                <textarea id="copy-json" class="text ui-widget-content ui-corner-all" style="height: 375px"></textarea>
                             </fieldset>
                         </form>
                     </div>
@@ -91,6 +111,7 @@
                     <div class="cartGroup" data-name="all">
                     <div class="large-12 columns"><div class="left">all</div>
                     <div class="right">
+                    <a href="javascript:$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/></a>
                     <a href="javascript:$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
                     <a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
                     </div>
@@ -106,9 +127,10 @@
                     <div class="left"><%= groupname %>
                     </div>
                     <div class="right">
-                    <a class="cart-button-rename" href="#"><img  src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>
-                    <a href="javascript:cart.removeGroup('<%= groupname %>');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
-                    <a href="{#$AppPath#}/graphs/<%= groupname %>"><img src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
+                    <a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>
+                    <a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/></a>
+                    <a href="javascript:cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+                    <a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
                     </div>
                     </div>
                     <ul class="large-12 columns elements">

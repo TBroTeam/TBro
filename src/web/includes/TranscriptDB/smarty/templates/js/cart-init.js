@@ -55,6 +55,12 @@ $(document).ready(function() {
             dialog.data('oldname', that.attr('data-name'));
             dialog.dialog("open");
         });
+        
+        this.find('.cart-button-copy').click(function(event){
+            var dialog = $('#dialog-copy-cart-group');
+            dialog.data('data', cart.exportGroup(that.attr('data-name')));
+            dialog.dialog("open");
+        });
     }
 
     function itemAfterDOM() {
@@ -69,10 +75,10 @@ $(document).ready(function() {
             });
 
         this.find('.cart-button-rename').click(function() {
-            cart._getItemDetails(id, function(data) {
+            cart._getItemDetails([id], function(data) {
                 $('#item-feature_id').val(id);
-                $('#item-alias').val(data.metadata.alias || '');
-                $('#item-annotations').val(data.metadata.annotations || '');
+                $('#item-alias').val(data[0].metadata.alias || '');
+                $('#item-annotations').val(data[0].metadata.annotations || '');
                 $("#dialog-edit-cart-item").dialog("open");
             });
 
@@ -110,6 +116,45 @@ $(document).ready(function() {
             $('#cartname').val(oldname);
         }
     });
+    
+    $("#dialog-copy-cart-group").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 700,
+        modal: true,
+        buttons: {
+            Close: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function() {
+            var data = $(this).data('data');
+            $('#copy-json').val(JSON.stringify(data));
+        }
+    });
+    
+    $("#dialog-paste-cart-group").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 700,
+        modal: true,
+        buttons: {
+            "rename cart": function() {
+                var data = JSON.parse($('#paste-json').val());
+                cart.importGroup(data,{metadata_conflict:$('#paste-conflict').val()});
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function() {
+            $('#paste-json').val('');
+        }
+    });
+    
+    
+    
 
     $("#dialog-edit-cart-item").dialog({
         autoOpen: false,

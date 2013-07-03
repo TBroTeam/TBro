@@ -27,7 +27,7 @@ function Cart(initialData, options) {
     };
     this.currentContext = 'unknown';
     this.updateContext('unknown', {
-        force: true, 
+        force: true,
         triggerEvent: false
     });
 }
@@ -44,8 +44,8 @@ function Cart(initialData, options) {
             sync: true
         }, options);
 
-        
-        if (options.triggerEvent){
+
+        if (options.triggerEvent) {
             this.options.rootNode.trigger({
                 type: 'cartEvent',
                 eventData: syncaction
@@ -98,7 +98,7 @@ Cart.prototype._compareCarts = function(newCart) {
     if (cartsDiffer) {
         this.carts = newCart.carts;
     }
-    
+
     //if there were also differences in the currently displayed cart, redraw
     if (currentCartDiffers) {
         this._redraw();
@@ -134,7 +134,8 @@ Cart.prototype._getItemDetails = function(ids, callback) {
     var missingIDs = [];
     var newCartitems = {};
     var retArray = [];
-    $.each(ids, function(key, id){
+    var dfd = $.Deferred();
+    $.each(ids, function(key, id) {
         if (typeof that.cartitems[id] !== 'undefined')
             retArray.push(that.cartitems[id]);
         else {
@@ -144,27 +145,31 @@ Cart.prototype._getItemDetails = function(ids, callback) {
             missingIDs.push(id);
         }
     });
-    if (missingIDs.length==0)
+    if (missingIDs.length === 0) {
         callback(retArray);
-    
-    $.ajax({
-        url: this.options.serviceNodes.itemDetails,
-        data: {
-            terms: missingIDs
-        },
-        dataType: 'JSON',
-        success: function(data) {
-            $.each(data.results, function(){
-                var itemDetails = $.extend(true, this, {
-                    metadata: {}
+        dfd.resolve();
+    } else {
+        $.ajax({
+            url: this.options.serviceNodes.itemDetails,
+            data: {
+                terms: missingIDs
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                $.each(data.results, function() {
+                    var itemDetails = $.extend(true, this, {
+                        metadata: {}
+                    });
+                    var id = itemDetails.feature_id;
+                    that.cartitems[id] = itemDetails;
+                    $.extend(newCartitems[id], itemDetails);
                 });
-                var id =itemDetails.feature_id;
-                that.cartitems[id] = itemDetails;
-                $.extend(newCartitems[id], itemDetails);
-            });
-            callback(retArray);
-        }
-    });
+                callback(retArray);
+                dfd.resolve();
+            }
+        });
+    }
+    return dfd.promise();
 };
 
 Cart.prototype._getItemNodes = function(id, groupname) {
@@ -188,11 +193,11 @@ Cart.prototype.updateContext = function(newContext, options) {
     this.currentContext = newContext;
 
     this._redraw();
-    
+
     this.sync({
         action: 'updateContext'
     }, {
-        sync:false, 
+        sync: false,
         triggerEvent: options.triggerEvent
     });
 };
@@ -202,10 +207,10 @@ Cart.prototype._redraw = function() {
     this.sync({
         action: 'redraw'
     }, {
-        sync:false, 
+        sync: false,
         triggerEvent: true
     });
-    
+
     var cart = _.clone(this._getCartForContext());
     var cartToEmpty = this._getCartForContext();
     for (var key in cartToEmpty) {
@@ -213,7 +218,7 @@ Cart.prototype._redraw = function() {
             delete cartToEmpty[key];
     }
     var that = this;
-    
+
     for (var groupname in cart) {
         if (!cart.hasOwnProperty(groupname))
             continue;
@@ -231,17 +236,17 @@ Cart.prototype._redraw = function() {
 
 Cart.prototype.addItem = function(ids, options) {
     //convert object values to array. keys will be lost
-    if (_.isObject(ids)){
-        ids = _.map(ids, function(value){
+    if (_.isObject(ids)) {
+        ids = _.map(ids, function(value) {
             return value;
         });
     }
     //if ids is still no array, it was passed as a single value. convert to array
-    if (!_.isArray(ids)){
+    if (!_.isArray(ids)) {
         ids = [ids];
     }
     //convert all array values to Int
-    for (var i=0; i<ids.length; i++){
+    for (var i = 0; i < ids.length; i++) {
         ids[i] = parseInt(ids[i]);
     }
     //this function is very asynchronous, this deferred object is a way to see if it finished ( via $.when(cart.addItem(id)).then(function) )
@@ -255,7 +260,7 @@ Cart.prototype.addItem = function(ids, options) {
 
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
-    if (missingIds.length==0){
+    if (missingIds.length == 0) {
         // we have nothing to do. return from here.
         dfd.resolve();
         return dfd.promise();
@@ -269,20 +274,20 @@ Cart.prototype.addItem = function(ids, options) {
         work();
 
     return dfd.promise();
-   
-    function work(){
+
+    function work() {
         that._getItemDetails(missingIds, function(aItemDetails) {
 
-            addInternal.call(that); 
+            addInternal.call(that);
             if (options.addToDOM)
                 addToDOM.call(that, aItemDetails);
 
             that.sync({
-                action: 'addItem', 
-                ids: missingIds, 
+                action: 'addItem',
+                ids: missingIds,
                 groupname: options.groupname
             }, options);
-        
+
             dfd.resolve();
         });
     }
@@ -291,16 +296,16 @@ Cart.prototype.addItem = function(ids, options) {
         var group = this._getGroup(options.groupname);
         if (typeof group === undefined)
             group = this._getGroup(this.addGroup(options.groupname));
-        
-        for (var i=0; i<ids.length; i++)
+
+        for (var i = 0; i < ids.length; i++)
             if (_.indexOf(group, ids[i]) === -1)
                 group.push(ids[i]);
     }
 
     function addToDOM(aItemDetails) {
-        $.each(aItemDetails, function(key, itemDetails){
+        $.each(aItemDetails, function(key, itemDetails) {
             var group$ = that._getGroupNode(options.groupname);
-            if (group$.is(':has(li.cartItem[data-id="'+itemDetails.feature_id+'"])')){
+            if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
                 return;
             }
             var item$ = that._executeTemplate$('Item', {
@@ -328,8 +333,8 @@ Cart.prototype.updateItem = function(id, metadata, options) {
             updateDOM.call(that, aItemDetails[0]);
 
         that.sync({
-            action: 'updateItem', 
-            id: id, 
+            action: 'updateItem',
+            id: id,
             metadata: metadata
         }, options);
     });
@@ -366,8 +371,8 @@ Cart.prototype.removeItem = function(id, options) {
     removeInternal.call(this);
     removeFromDOM.call(this);
     this.sync({
-        action: 'removeItem', 
-        id: id, 
+        action: 'removeItem',
+        id: id,
         groupname: options.groupname
     }, options);
 
@@ -418,7 +423,7 @@ Cart.prototype.addGroup = function(groupname, options) {
         addInternal.call(this);
         addToDOM.call(this);
         this.sync({
-            action: 'addGroup', 
+            action: 'addGroup',
             groupname: groupname
         }, options);
     }
@@ -459,8 +464,8 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
     renameInternal.call(this);
     renameInDOM.call(this);
     this.sync({
-        action: 'renameGroup', 
-        groupname: groupname, 
+        action: 'renameGroup',
+        groupname: groupname,
         newname: newname
     }, options);
 
@@ -494,7 +499,7 @@ Cart.prototype.removeGroup = function(groupname, options) {
     removeInternal.call(this);
     removeFromDOM.call(this);
     this.sync({
-        action: 'removeGroup', 
+        action: 'removeGroup',
         groupname: groupname
     }, options);
 
@@ -513,7 +518,7 @@ Cart.prototype.clear = function(options) {
     }, options);
 
     var that = this;
-    $.each(this._getCartForContext()['all'], function(){
+    $.each(this._getCartForContext()['all'], function() {
         delete that.cartitems[this];
     });
 
@@ -522,26 +527,75 @@ Cart.prototype.clear = function(options) {
         action: 'clear'
     }, options);
 
-    
+
     this.updateContext(this.currentContext, {
         force: true
     });
 };
 
-function Groupselect(node$, cart){
+Cart.prototype.exportGroup = function(groupname) {
+    var group = this._getGroup(groupname) || [];
+    var items = [];
+    for (var i = 0; i < group.length; i++) {
+        var item = {id: group[i]};
+        var metadata = (this.cartitems[group[i]] || {}).metadata || {};
+        if (!_.isEmpty(metadata)) {
+            item.metadata = metadata;
+        }
+        items.push(item);
+    }
+    return items;
+};
+
+/**
+ * Imports passed Array items as new Group to the cart. 
+ * @param {Array} items [{id: id, metadata:{alias: string, annotations:string}}, ...]
+ * @param {Collection} options {metadata_conflict: 'keep'|'merge'|'overwrite', defaults to 'keep'}
+ */
+Cart.prototype.importGroup = function(items, options) {
+    options = $.extend({metadata_conflict: 'keep'}, options);
+    console.log(items);
+    var groupname = this.addGroup();
+    var that = this;
+    $.when(that.addItem($.map(items, function(val) {
+        return val.id;
+    }), {groupname: groupname})).then(function() {
+        console.log(options.metadata_conflict);
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var cartitem = that.cartitems[item.id];
+            if (!_.isEmpty(item.metadata))
+                switch (options.metadata_conflict) {
+                    case 'keep':
+                        break;
+                    case 'merge':
+                        var new_metadata = $.extend({}, item.metadata, cartitem.metadata);
+                        if (!_.isEqual(new_metadata, cartitem.metadata))
+                            that.updateItem(item.id, new_metadata);
+                        break;
+                    case 'overwrite':
+                        if (!_.isEqual(item.metadata, cartitem.metadata))
+                            that.updateItem(item.id, item.metadata);
+                        break;
+                }
+        }
+    });
+};
+
+function Groupselect(node$, cart) {
     this.node$ = node$;
     this.cart = cart;
     this.cart.options.rootNode.on('cartEvent', function(e) {
-        if (e.eventData.action == 'addGroup') {
+        if (e.eventData.action === 'addGroup') {
             node$.append($('<option/>').text(e.eventData.groupname).val(e.eventData.groupname));
         }
-        else if (e.eventData.action == 'renameGroup') {
-            node$.find('option[value="'+e.eventData.groupname+'"]').text(e.eventData.newname).val(e.eventData.newname);
+        else if (e.eventData.action === 'renameGroup') {
+            node$.find('option[value="' + e.eventData.groupname + '"]').text(e.eventData.newname).val(e.eventData.newname);
         }
-        else if (e.eventData.action == 'removeGroup') {
-            node$.find('option[value="'+e.eventData.groupname+'"]').remove();
-        } else if (e.eventData.action == 'redraw'){
+        else if (e.eventData.action === 'removeGroup') {
+            node$.find('option[value="' + e.eventData.groupname + '"]').remove();
+        } else if (e.eventData.action === 'redraw') {
             node$.find('option:not(.keep)').remove();
-        }        
+        }
     });
 }
