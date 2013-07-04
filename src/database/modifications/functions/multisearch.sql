@@ -12,12 +12,12 @@ CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, 
 
      --create temp table with 'direct' search hits
      CREATE TEMP TABLE hits ON COMMIT DROP AS 
-	(SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name FROM feature f WHERE f.dbxref_id = _release_id AND f.organism_id = _organism_id AND name=ANY(_feature_names) LIMIT 20)
+	(SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name FROM feature f WHERE f.dbxref_id = _release_id AND f.organism_id = _organism_id AND name=ANY(_feature_names) LIMIT 50)
 		UNION
 	(SELECT f.name, f.feature_id, f.type_id, s.name AS synonym_name 
 		FROM synonym s JOIN feature_synonym fs ON (fs.synonym_id = s.synonym_id) JOIN feature f ON (fs.feature_id = f.feature_id)
 		WHERE s.name=ANY(_feature_names) AND f.organism_id = _organism_id AND f.dbxref_id = _release_id
-	LIMIT 20);
+	LIMIT 50);
 
      --for all these search hits:
      FOR t_ IN (SELECT * FROM hits) LOOP
