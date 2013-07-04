@@ -7,6 +7,7 @@
                 {mData: 'alias'}
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log($(nRow).find('td:eq(1)').html());
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
                 $(nRow).css('cursor', 'pointer');
             },
@@ -20,7 +21,7 @@
         $.each(data, function() {
             options.aaData.push(this);
         });
-
+        console.log(options);
         $('.results').show(500);
         var tbl = $('#results');
         if (!$.fn.DataTable.fnIsDataTable(tbl.get(0)))

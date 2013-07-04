@@ -42,7 +42,7 @@
 
                                 </div>
                                 <div class="row">
-                                    <div class="large-9 columns">
+                                    <div class="large-12 columns">
                                         <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">{#$predpep.residues#}</textarea>
                                     </div>
                                 </div>

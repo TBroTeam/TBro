@@ -20,7 +20,6 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.0.8/js/foundation.min.js"></script>        
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/TableTools.min.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/alphanum.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/feature/datatable-init.js"></script>

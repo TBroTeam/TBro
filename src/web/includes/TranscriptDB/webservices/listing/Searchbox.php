@@ -21,7 +21,7 @@ class Searchbox extends \WebService {
             $db = new PDO();
 
         $query_get_features = <<<EOF
-    SELECT 
+    (SELECT 
         synonym.name, 
         feature_synonym.feature_id, 
         cvterm.name AS type
@@ -37,9 +37,10 @@ class Searchbox extends \WebService {
         AND synonym.synonym_id = feature_synonym.synonym_id
         AND feature.organism_id = ?
         AND synonym.type_id=cvterm.cvterm_id
-
+    LIMIT 20
+)
 UNION 
-    SELECT feature.name, feature.feature_id, cvterm.name AS type
+    (SELECT feature.name, feature.feature_id, cvterm.name AS type
     FROM feature, cvterm
     WHERE 
         feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
@@ -47,7 +48,7 @@ UNION
         AND feature.organism_id = ?
         AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
         AND feature.type_id=cvterm.cvterm_id    
-    LIMIT 20
+    LIMIT 20)
 EOF;
 
         $stm_get_features = $db->prepare($query_get_features);

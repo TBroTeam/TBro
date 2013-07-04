@@ -33,12 +33,12 @@
         $(document).ready(function(){
             displayFeatureTable(isoform_data, {
                 bPaginate: false,
-                bFilter: false, 
-                aoColumns: [
+                bFilter: false 
+                /*aoColumns: [
                     {bVisible: false},
                     {},
                     {bVisible: false},
-                ]
+                ]*/
             });
         });
     </script>
