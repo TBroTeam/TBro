@@ -1,7 +1,16 @@
 {#extends file='layout.tpl'#}
 {#block name='head'#}
-    <script type="text/javascript" src="{#$AppPath#}/js/feature/cart.js"></script>
-    <script type="text/javascript" src="{#$AppPath#}/js/feature/cart-init.js"></script>
+    <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>
+    <script type="text/javascript">
+        var cartoptions = {
+        serviceNodes: {
+        itemDetails: '{#$ServicePath#}/details/features',
+        sync: '{#$ServicePath#}/cart/sync'
+        }
+        };
+    </script>
+    <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
+
     <style>
         .ui-accordion .ui-accordion-header {
             margin-bottom:0px;
@@ -62,7 +71,7 @@
                             </fieldset>
                         </form>
                     </div>
-                    
+
                     <div id="dialog-paste-cart-group" title="Import Group">
                         <form>
                             <fieldset>
@@ -73,7 +82,7 @@
                             </fieldset>
                         </form>
                     </div>
-                    
+
                     <div id="dialog-copy-cart-group" title="Export Group">
                         <form>
                             <fieldset>

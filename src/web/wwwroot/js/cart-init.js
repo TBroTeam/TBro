@@ -1,15 +1,14 @@
-/*{#*call_webservice path="cart/sync" data=[] assign='kickoff_cart'*#}*/
 var cart;
 
 $(document).ready(function() {
-    cart = new Cart({}, {
+    cart = new Cart({}, $.extend(true, {
         callbacks: {
             afterDOMinsert_groupAll: groupAllAfterDOM,
             afterDOMinsert_group: groupAfterDOM,
             afterDOMinsert_item: itemAfterDOM
         },
         rootNode: $('#Cart')
-    });
+    }, cartoptions));
 
     cart.sync({action: 'load'});
 
@@ -55,8 +54,8 @@ $(document).ready(function() {
             dialog.data('oldname', that.attr('data-name'));
             dialog.dialog("open");
         });
-        
-        this.find('.cart-button-copy').click(function(event){
+
+        this.find('.cart-button-copy').click(function(event) {
             var dialog = $('#dialog-copy-cart-group');
             dialog.data('data', cart.exportGroup(that.attr('data-name')));
             dialog.dialog("open");
@@ -116,7 +115,7 @@ $(document).ready(function() {
             $('#cartname').val(oldname);
         }
     });
-    
+
     $("#dialog-copy-cart-group").dialog({
         autoOpen: false,
         height: 600,
@@ -132,7 +131,7 @@ $(document).ready(function() {
             $('#copy-json').val(JSON.stringify(data));
         }
     });
-    
+
     $("#dialog-paste-cart-group").dialog({
         autoOpen: false,
         height: 600,
@@ -141,7 +140,7 @@ $(document).ready(function() {
         buttons: {
             "rename cart": function() {
                 var data = JSON.parse($('#paste-json').val());
-                cart.importGroup(data,{metadata_conflict:$('#paste-conflict').val()});
+                cart.importGroup(data, {metadata_conflict: $('#paste-conflict').val()});
                 $(this).dialog("close");
             },
             Cancel: function() {
@@ -152,9 +151,9 @@ $(document).ready(function() {
             $('#paste-json').val('');
         }
     });
-    
-    
-    
+
+
+
 
     $("#dialog-edit-cart-item").dialog({
         autoOpen: false,
@@ -205,11 +204,11 @@ $(document).ready(function() {
             $.each(itemdata, function(key, val) {
                 if (_.isObject(val)) {
                     $.each(val, function(k, v) {
-                        tooltip.append($('<tr/>').append($('<td/>').text(k)).append($('<td/>').append(v||'')));
+                        tooltip.append($('<tr/>').append($('<td/>').text(k)).append($('<td/>').append(v || '')));
                     });
                 } else {
                     //TODO secure this up
-                    tooltip.append($('<tr/>').append($('<td/>').text(key)).append($('<td/>').text(val||'')));
+                    tooltip.append($('<tr/>').append($('<td/>').text(key)).append($('<td/>').text(val || '')));
                 }
             });
             tooltip.foundation();

@@ -6,7 +6,8 @@ function Cart(initialData, options) {
             Item: '#template_cart_new_item'
         },
         serviceNodes: {
-            itemDetails: '{#$ServicePath#}/details/features'
+            itemDetails: '/details/features',
+            sync: '/cart/sync'
         },
         callbacks: {
             afterDOMinsert_groupAll: function() {
@@ -59,7 +60,7 @@ function Cart(initialData, options) {
 
         currentRequest = new Date().getTime();
         $.ajax({
-            url: '{#$ServicePath#}/cart/sync',
+            url: this.options.serviceNodes.sync,
             type: 'post',
             dataType: "JSON",
             data: {
