@@ -137,7 +137,7 @@ EOF
                         $parent_id = $stm_get_parentfeature->fetchColumn();
                         $stm_insert_feature->execute(array(
                             ':name' => $line[2] . '_MapMan_' . $line[0],
-                            ':uniquename' => IMPORT_PREFIX . '_MapMan_' . $line[2] . '_' . $line[0],
+                            ':uniquename' => IMPORT_PREFIX . '_' . $line[2]  . '_MapMan_' . $line[0],
                             ':type_id' => CV_ANNOTATION_MAPMAN_FEATURE,
                             ':organism_id' => DB_ORGANISM_ID,
                             ':dbxref_id' => $import_prefix_id
