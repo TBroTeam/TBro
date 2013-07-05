@@ -120,10 +120,29 @@ class Importer_Sequences_FASTA extends AbstractImporter {
 
                 $matches = array();
 
+                #predicted peptide header like this:
+                #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
+                if (preg_match('/^>(?<id>m.\d+) .* (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
+                    $param_predpep_name = $matches['id'];
+                    $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
+                    $param_predpep_seqlen = strlen($sequence);
+                    $param_predpep_residues = $sequence;
+
+                    $statement_insert_predpep->execute();
+
+                    $param_predpep_feature_id = $statement_insert_predpep->fetchColumn();
+                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . "_" . $matches['name'];
+                    $param_predpep_fmin = min($matches['from'], $matches['to']);
+                    $param_predpep_fmax = max($matches['from'], $matches['to']);
+                    $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;
+                    $statement_insert_predpep_location->execute();
+                    $predpeps_added++;
+                }
+                
                 #isoform header like this:
                 //TODO generalize
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
-                if (preg_match('/^>(?<name>\w+) .*$/', $description, $matches)) {
+                else if (preg_match('/^>(?<name>\w+) .*$/', $description, $matches)) {
                     $param_isoform_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_isoform_seqlen = strlen($sequence);
                     $param_isoform_residues = $sequence;
@@ -141,24 +160,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                     ));
                     $isoforms_updated++;
                 }
-                #predicted peptide header like this:
-                #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                else if (preg_match('/^>(?<id>m.\d+) .* (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
-                    $param_predpep_name = $matches['id'];
-                    $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
-                    $param_predpep_seqlen = strlen($sequence);
-                    $param_predpep_residues = $sequence;
-
-                    $statement_insert_predpep->execute();
-
-                    $param_predpep_feature_id = $statement_insert_predpep->fetchColumn();
-                    $param_predpep_srcfeature_uniq = IMPORT_PREFIX . "_" . $matches['name'];
-                    $param_predpep_fmin = min($matches['from'], $matches['to']);
-                    $param_predpep_fmax = max($matches['from'], $matches['to']);
-                    $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;
-                    $statement_insert_predpep_location->execute();
-                    $predpeps_added++;
-                }
+                
 
                 self::updateProgress(++$lines_imported);
             }

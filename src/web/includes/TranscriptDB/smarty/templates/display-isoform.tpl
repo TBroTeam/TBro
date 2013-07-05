@@ -130,7 +130,7 @@
 {#if isset($data.isoform.description) #}
     <div class="row">
         <div class="large-12 columns panel">
-            <h4>Blast2go derived:</h4>
+            <h4>Descriptions:</h4>
             {#foreach $data.isoform.description as $description#}
                 <h5> {#$description.value#}</h5>
             {#/foreach#}
