@@ -1,4 +1,29 @@
+/**
+ * Creates an instance of Cart
+ * 
+ * @constructor
+ * @this Cart
+ * @param {Collection|null} initialData data for the cart to be initialized with
+ * @param {Collection} [initialData.carts={}]
+ * @param {Array} [initialData.cartitems=[]]
+ * @param {Collection} options configuration options for the car
+ * @param {jQuery} options.rootNode jQuery node in which all cart DOM will take place
+ * @param {String} [options.templates.GroupAll='#template_cart_all_group'] template for the "All" Group
+ * @param {String} [options.templates.Group='#template_cart_new_group'] template for any other Group
+ * @param {String} [options.templates.Item='#template_cart_new_item'] template for all Items
+ * @param {String} [options.serviceNodes.itemDetails='/details/features'] web service for Item Features
+ * @param {String} [options.serviceNodes.sync='/cart/sync'] web service for Cart Sync
+ * @param {Function} [options.callbacks.afterDOMinsert_groupAll] callback on the new groupAll jQuery node after it has been inserted into the DOM
+ * @param {Function} [options.callbacks.afterDOMinsert_group] callback on a new group jQuery node after it has been inserted into the DOM
+ * @param {Function} [options.callbacks.afterDOMinsert_item] callback on a new item jQuery node after it has been inserted into the DOM
+ * @param {String} [options.groupNamePrefix]
+ * @returns {Cart}
+ */
 function Cart(initialData, options) {
+    /**
+     * See constructor Documentation
+     * @public
+     */
     this.options = {
         templates: {
             GroupAll: '#template_cart_all_group',
@@ -21,11 +46,15 @@ function Cart(initialData, options) {
         groupNamePrefix: 'Group'
     };
     $.extend(true, this.options, options);
+    /** @private */
     this.carts = initialData.carts || {};
+    /** @private */
     this.cartitems = initialData.cartitems || {};
+    /** @private */
     this.emptyCartPrototype = {
         'all': []
     };
+    /** @private */
     this.currentContext = 'unknown';
     this.updateContext('unknown', {
         force: true,
@@ -39,6 +68,13 @@ function Cart(initialData, options) {
     //current request. 
     var currentRequest;
 
+/**
+ * Syncronizes an Action with the options.serviceNodes.sync web service.
+ * @param {Collection} syncaction action to sync.
+ * @param {Collection} [options]
+ * @param {bool} [options.triggerEvent] determines if an event is to be triggered
+ * @param {bool} [options.sync] determines if this event should be synced to the WebService
+ */
     Cart.prototype.sync = function(syncaction, options) {
         options = $.extend({
             triggerEvent: true,
@@ -79,7 +115,7 @@ function Cart(initialData, options) {
         }
     };
 })();
-
+/** @private */
 Cart.prototype._compareCarts = function(newCart) {
     //no need to compare the cartitems, we will just use the latest from the server assuming they are equal or more up-to-date
     //one exception: php gives us back [] instead of {} as there is no difference in php between an empty array and an empty associative array(object)
@@ -105,31 +141,31 @@ Cart.prototype._compareCarts = function(newCart) {
         this._redraw();
     }
 };
-
+/** @private */
 Cart.prototype._getTemplate = _.memoize(function(templateName) {
     return _.template($(this.options.templates[templateName]).html());
 });
-
+/** @private */
 Cart.prototype._executeTemplate$ = function(templateName) {
     var template = this._getTemplate(templateName);
     var templateArguments = Array.prototype.slice.call(arguments, 1);
     return $('<div/>').append(template.apply(window, templateArguments)).children();
 };
-
+/** @private */
 Cart.prototype._getCartForContext = function() {
     if (typeof this.carts[this.currentContext] === 'undefined')
         this.carts[this.currentContext] = this.emptyCartPrototype;
     return this.carts[this.currentContext];
 };
-
+/** @private */
 Cart.prototype._getGroup = function(groupname) {
     return this._getCartForContext()[groupname];
 };
-
+/** @private */
 Cart.prototype._getGroupNode = function(groupname) {
     return this.options.rootNode.find('.cartGroup[data-name="' + groupname + '"]');
 };
-
+/** @private */
 Cart.prototype._getItemDetails = function(ids, callback) {
     var that = this;
     var missingIDs = [];
@@ -172,14 +208,20 @@ Cart.prototype._getItemDetails = function(ids, callback) {
     }
     return dfd.promise();
 };
-
+/** @private */
 Cart.prototype._getItemNodes = function(id, groupname) {
     if (typeof groupname === 'undefined' || groupname === 'all')
         return this.options.rootNode.find('.cartItem[data-id="' + id + '"]');
     else
         return this._getGroupNode(groupname).find('.cartItem[data-id="' + id + '"]');
 };
-
+/**
+ * sets a new context. if forced, or old context differs from new context, the cart will be redrawn with new items
+ * @param {String} newContext
+ * @param {Collection} [options]
+ * @param {bool} [options.triggerEvent] determines if an event is to be triggered
+ * @param {bool} [options.force] if this is set, context will be updated, even when oldContext==newContext
+ */
 Cart.prototype.updateContext = function(newContext, options) {
     options = $.extend({
         force: false,
@@ -202,7 +244,7 @@ Cart.prototype.updateContext = function(newContext, options) {
         triggerEvent: options.triggerEvent
     });
 };
-
+/** @private */
 Cart.prototype._redraw = function() {
     this.options.rootNode.empty();
     this.sync({
@@ -234,7 +276,18 @@ Cart.prototype._redraw = function() {
     }
 
 };
-
+/**
+ * Adds one or more Features to a given Cart Group. If the group does not exist, it is created.
+ * This method is asynchronous and if an event has to be executed after it has been finished, this can be done with the returned Deferred Promise:
+ * $.when(cart.add(...)).then(function(){});
+ * @param {Array|Number} ids ids of features to add to the cart
+ * @param {Collection} [options]
+ * @param {bool} [options.groupname='all'] Group to add to. Defaults to 'all'
+ * @param {bool} [options.addToDOM] should this only be added internally or to the DOM?
+ * @param {bool} [options.afterDOMinsert] callback
+ * @param {bool} [options.sync] sync?
+ * @returns {jQuery Deferred Promise}
+ */
 Cart.prototype.addItem = function(ids, options) {
     //convert object values to array. keys will be lost
     if (_.isObject(ids)) {
@@ -320,6 +373,13 @@ Cart.prototype.addItem = function(ids, options) {
     }
 };
 
+/**
+ * Updates Metadata for a cart Item
+ * @param {Number} id of features to add to the cart
+ * @param {Collection} metadata
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
 Cart.prototype.updateItem = function(id, metadata, options) {
     //make sure we don't have a string id'
     id = parseInt(id);
@@ -360,6 +420,13 @@ Cart.prototype.updateItem = function(id, metadata, options) {
 
 };
 
+/**
+ * Removes a feature from a group or all groups
+ * @param {Number} id of features to remove
+ * @param {Collection} [options]
+ * @param {bool} [options.groupname] defaults to 'all'
+ * @param {bool} [options.sync] sync?
+ */
 Cart.prototype.removeItem = function(id, options) {
     //make sure we don't have a string id'
     id = parseInt(id);
@@ -399,6 +466,12 @@ Cart.prototype.removeItem = function(id, options) {
     }
 };
 
+/**
+ * Adds a new group to the cart
+ * @param {String} groupname
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
 Cart.prototype.addGroup = function(groupname, options) {
     options = $.extend({
         sync: true
@@ -450,6 +523,13 @@ Cart.prototype.addGroup = function(groupname, options) {
     }
 };
 
+/**
+ * Renames a cart group
+ * @param {String} groupname
+ * @param {String} newname
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
 Cart.prototype.renameGroup = function(groupname, newname, options) {
     options = $.extend({
         sync: true
@@ -491,6 +571,12 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
     }
 };
 
+/**
+ * Removes a cart group
+ * @param {String} groupname
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
 Cart.prototype.removeGroup = function(groupname, options) {
     options = $.extend({
         sync: true
@@ -513,6 +599,11 @@ Cart.prototype.removeGroup = function(groupname, options) {
     }
 };
 
+/**
+ * Removes everything from the current context
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
 Cart.prototype.clear = function(options) {
     options = $.extend({
         sync: true
@@ -534,6 +625,11 @@ Cart.prototype.clear = function(options) {
     });
 };
 
+/**
+ * Get all items from a given group, in the format [{id: id[, metadata:{metadata}]}]
+ * @param {String} groupname
+ * @returns {Array}
+ */
 Cart.prototype.exportGroup = function(groupname) {
     var group = this._getGroup(groupname) || [];
     var items = [];
@@ -551,7 +647,8 @@ Cart.prototype.exportGroup = function(groupname) {
 /**
  * Imports passed Array items as new Group to the cart. 
  * @param {Array} items [{id: id, metadata:{alias: string, annotations:string}}, ...]
- * @param {Collection} options {metadata_conflict: 'keep'|'merge'|'overwrite', defaults to 'keep'}
+ * @param {Collection} options
+ * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep'] defaults to keep
  */
 Cart.prototype.importGroup = function(items, options) {
     options = $.extend({metadata_conflict: 'keep'}, options);
@@ -583,6 +680,13 @@ Cart.prototype.importGroup = function(items, options) {
     });
 };
 
+/**
+* Binds a select element to a cart, always keeping Groups synchronized as Select Options
+* @constructor
+ * @param {jQuery} node$ a Select
+ * @param {Cart} cart
+ * @returns {Groupselect} 
+ * */
 function Groupselect(node$, cart) {
     this.node$ = node$;
     this.cart = cart;
