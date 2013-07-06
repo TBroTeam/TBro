@@ -1,6 +1,6 @@
 /**
  * Creates an instance of Cart
- * 
+ * On actions, Events of type "cartEvent" will be triggered on the rootNode.
  * @constructor
  * @this Cart
  * @param {Collection|null} initialData data for the cart to be initialized with

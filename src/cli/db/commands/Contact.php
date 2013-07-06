@@ -52,7 +52,6 @@ class Contact extends AbstractTable {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
 
-
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
