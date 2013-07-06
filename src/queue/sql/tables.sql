@@ -23,11 +23,11 @@ CREATE TABLE database_files
 
 CREATE TABLE program_database_relationships
 (
-    program_database_relationship serial NOT NULL PRIMARY KEY,
-    program_name varchar NOT NULL REFERENCES programs(name),
+    program_database_relationship_id serial NOT NULL PRIMARY KEY,
+    programname varchar NOT NULL REFERENCES programs(name),
     database_name varchar NOT NULL REFERENCES database_files(name),
     availability_filter varchar,
-    UNIQUE (program_name,database_name,availability_filter)
+    UNIQUE (programname,database_name,availability_filter)
 );
 
 CREATE TABLE jobs
@@ -150,7 +150,7 @@ INSERT INTO database_files
 ('13_test_predpep.fasta', 'de360c35e8719b36c19de387d8f77f18', 'http://wbbi170/httpdocs/server/downloads/13_test_predpep.fasta.zip');
 
 INSERT INTO program_database_relationships
-(program_name, database_name) VALUES
+(programname, database_name) VALUES
 ('blastn','13_test.fasta'),
 ('blastp','13_test_predpep.fasta'),
 ('blastx','13_test_predpep.fasta'),

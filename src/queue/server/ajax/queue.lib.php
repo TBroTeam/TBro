@@ -89,7 +89,7 @@ function get_program_databases($filter_string=null) {
         $ret = array();
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             //put the rows into an array
-            $ret[$row['program_name']][] = $row['database_name'];
+            $ret[$row['programname']][] = $row['database_name'];
         }
         //and return it
         return $ret;

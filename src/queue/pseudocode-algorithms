@@ -22,7 +22,11 @@ while true do:
     if rowcount_returned == 1 then
         do_fork
         if we are child then
-            register repeating function: call SQL: keepalive_ping(job['job_query_id']) regularly. return value of this call determines the maximum time in seconds until we have to call again if -1 is returned, this job has been cancelled
+            register repeating function: 
+                call SQL: keepalive_ping(job['job_query_id']) regularly. 
+                    | return value of this call determines the maximum time in seconds until we have to call again. 
+                    | if -1 is returned, this job has been cancelled and the process can exit without further ado
+            set a timer: if this job runs for more than job['max_lifetime'] seconds, quit
 
             SQL: report_job_pid(job['job_query_id'], mypid)
             if local database with name job['target_db'] does not exist or does not have md5 job['target_db_md5'] then
