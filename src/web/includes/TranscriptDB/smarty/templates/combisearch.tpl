@@ -95,7 +95,6 @@
         </div>            
     </div>
 </script>
-
 <script type="text/template" id="template_search_hasGO">
     <div class="row">
         <div class="large-6 columns">
