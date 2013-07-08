@@ -68,7 +68,7 @@ function Cart(initialData, options) {
     //current request. 
     var currentRequest;
 
-/**
+    /**
  * Syncronizes an Action with the options.serviceNodes.sync web service.
  * @param {Collection} syncaction action to sync.
  * @param {Collection} [options]
@@ -115,32 +115,60 @@ function Cart(initialData, options) {
         }
     };
 })();
-/** @private */
-Cart.prototype._compareCarts = function(newCart) {
-    //no need to compare the cartitems, we will just use the latest from the server assuming they are equal or more up-to-date
-    //one exception: php gives us back [] instead of {} as there is no difference in php between an empty array and an empty associative array(object)
-    //we want always {}.
-    if (_.isEqual([], newCart.cartitems))
-        this.cartitems = {};
-    else
-        this.cartitems = newCart.cartitems || {};
 
-    var cartsDiffer = !_.isEqual(this.carts, newCart.carts);
-    var currentCartDiffers = !_.isEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
-    //log
-    cartsDiffer && console.log('carts differ', this.carts, newCart.carts);
-    currentCartDiffers && console.log('displayed cart differs, redrawing', this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
-
-    //if carts differ, use the version from the server
-    if (cartsDiffer) {
-        this.carts = newCart.carts;
+(function(){
+    function checkEqual(obj1, obj2){
+        if (obj1==obj2)
+            return true;
+        for (var key in obj1){
+            if (!obj1.hasOwnProperty(key))
+                continue;
+            if (typeof obj2[key] === "undefined")
+                return false;
+        }
+        
+        for (key in obj2){
+            if (!obj2.hasOwnProperty(key))
+                continue;
+            if (typeof obj1[key] === "undefined")
+                return false;
+            
+            if (!isEqual(obj1[key], obj2[key]))
+                return false;
+        }
+        
+        return true;
     }
 
-    //if there were also differences in the currently displayed cart, redraw
-    if (currentCartDiffers) {
-        this._redraw();
-    }
-};
+    /** @private */
+    Cart.prototype._compareCarts = function(newCart) {
+        //no need to compare the cartitems, we will just use the latest from the server assuming they are equal or more up-to-date
+        //one exception: php gives us back [] instead of {} as there is no difference in php between an empty array and an empty associative array(object)
+        //we want always {}.
+        if (_.isEqual([], newCart.cartitems))
+            this.cartitems = {};
+        else
+            this.cartitems = newCart.cartitems || {};
+
+        var cartsDiffer = !checkEqual(this.carts, newCart.carts);
+        var currentCartDiffers = !checkEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
+        //log
+        cartsDiffer && console.log('carts differ', this.carts, newCart.carts);
+        currentCartDiffers && console.log('displayed cart differs, redrawing', this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
+
+        //if carts differ, use the version from the server
+        if (cartsDiffer) {
+            this.carts = newCart.carts;
+        }
+
+        //if there were also differences in the currently displayed cart, redraw
+        if (currentCartDiffers) {
+            this._redraw();
+        }
+    };
+
+})();
+
 /** @private */
 Cart.prototype._getTemplate = _.memoize(function(templateName) {
     return _.template($(this.options.templates[templateName]).html());
@@ -634,7 +662,9 @@ Cart.prototype.exportGroup = function(groupname) {
     var group = this._getGroup(groupname) || [];
     var items = [];
     for (var i = 0; i < group.length; i++) {
-        var item = {id: group[i]};
+        var item = {
+            id: group[i]
+            };
         var metadata = (this.cartitems[group[i]] || {}).metadata || {};
         if (!_.isEmpty(metadata)) {
             item.metadata = metadata;
@@ -651,13 +681,17 @@ Cart.prototype.exportGroup = function(groupname) {
  * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep'] defaults to keep
  */
 Cart.prototype.importGroup = function(items, options) {
-    options = $.extend({metadata_conflict: 'keep'}, options);
+    options = $.extend({
+        metadata_conflict: 'keep'
+    }, options);
     console.log(items);
     var groupname = this.addGroup();
     var that = this;
     $.when(that.addItem($.map(items, function(val) {
         return val.id;
-    }), {groupname: groupname})).then(function() {
+    }), {
+        groupname: groupname
+    })).then(function() {
         console.log(options.metadata_conflict);
         for (var i = 0; i < items.length; i++) {
             var item = items[i];

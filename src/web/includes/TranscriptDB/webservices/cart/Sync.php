@@ -120,10 +120,11 @@ class Sync extends \WebService {
                     //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
                     $parms['id'] = intval($parms['id']);
                     //remove from all groups
-                    foreach ($currentCart as &$group)
+                    foreach ($currentCart as &$group){
                         $pos = array_search($parms['id'], $group);
-                    if ($pos !== FALSE)
-                        array_splice($group, $pos, 1);
+                        if ($pos !== FALSE)
+                            array_splice($group, $pos, 1);
+                    }
                     //remove from $cartitems
                     unset($cartitems[$parms['id']]);
                 } else {

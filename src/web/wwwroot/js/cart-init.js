@@ -15,6 +15,15 @@ $(document).ready(function() {
     release.on('change', function() {
         cart.updateContext(organism.val() + '_' + release.val());
     });
+    
+    setInterval(function(){
+        cart.sync({
+            action: 'refreshCart'
+        }, {
+            sync: true,
+            triggerEvent: false
+        });
+    }, 5000); //sync over tabs if neccessary
 
     function groupAllAfterDOM() {
         this.accordion({
@@ -71,7 +80,7 @@ $(document).ready(function() {
                 helper: function() {
                     return $(this).clone().addClass('beingDragged');
                 }
-            });
+        });
 
         this.find('.cart-button-rename').click(function() {
             cart._getItemDetails([id], function(data) {
