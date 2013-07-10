@@ -2,10 +2,9 @@
 {#block name='head'#}
     <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
     <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
-    <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
+
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
     <style type="text/css">
         #filters tr td, #filters tr th {

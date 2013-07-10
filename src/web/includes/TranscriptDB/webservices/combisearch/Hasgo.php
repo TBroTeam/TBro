@@ -4,16 +4,26 @@ namespace webservices\combisearch;
 
 use \PDO as PDO;
 
+/**
+ * WebService.
+ * Searches for Features with specified GO.
+ */
 class Hasgo extends \WebService {
 
+    /**
+     * @param $querydata[species] organism id
+     * @param $querydata[release] release name
+     * @param $querydata[term] GO to search for
+     * @returns array of feature ids
+     */
     public function execute($querydata) {
         global $db;
         $constant = 'constant';
 
-        $species = $_REQUEST['species'];
-        $release = $_REQUEST['release'];
+        $species = $querydata['species'];
+        $release = $querydata['release'];
 
-        $term = trim($_REQUEST['term']);
+        $term = trim($querydata['term']);
 
         $query_get_features = <<<EOF
 SELECT fd.feature_id 

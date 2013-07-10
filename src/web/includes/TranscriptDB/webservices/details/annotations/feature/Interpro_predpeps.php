@@ -4,6 +4,10 @@ namespace webservices\details\annotations\feature;
 
 use \PDO as PDO;
 
+/**
+ * Web Service.
+ * Returns all Interpro Annotations for requested isoform feature.
+ */
 class Interpro_predpeps extends \WebService {
 
     public function getById($param_feature_id) {

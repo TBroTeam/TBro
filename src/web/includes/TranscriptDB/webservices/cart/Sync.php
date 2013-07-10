@@ -4,11 +4,24 @@ namespace webservices\cart;
 
 require_once 'TranscriptDB//db.php';
 
+
+/**
+ * Web Service.
+ * Replicates cart functionality on server side, syncing client-side cart with server-side cart in SESSION.
+ * If the user is logged in, data is loaded/changed/stored to database.
+ * Always returns state of the current cart.
+ */
 class Sync extends \WebService {
 
     public static $regexCartName = '^[a-z0-9._ ]+$';
 
 
+    /**
+     * Loads cart from database, if logged in.
+     * Locks row for update to prevent concurrent changes.
+     * @global \PDO $db
+     * @return nothing
+     */
     private function loadCart() {
         if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
             return;
@@ -30,6 +43,11 @@ class Sync extends \WebService {
         }
     }
 
+    /**
+     * Saves cart if logged in & ends transaction, i.e. releases row lock.
+     * @global \PDO $db
+     * @return nothing
+     */
     private function saveCart() {
         if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
             return;
@@ -53,19 +71,14 @@ class Sync extends \WebService {
         $stm_insert_cart->execute();
     }
 
-    public function init() {
-        if (!isset($_SESSION))
-            session_start();
-
-        //if we are logged in, get our cart from the db. 
-        //if we are logged in but have no cart in the db, BUT a cart in the session, this saves our session cart to the DB.
-        $this->loadCart();
-    }
-
     public function execute($querydata) {
         global $db;
         $db->beginTransaction();
-        $this->init();
+        
+        if (!isset($_SESSION))
+            session_start();
+
+        $this->loadCart();
 
         $this->syncActions($querydata['action'], $querydata['currentContext']);
 
@@ -75,6 +88,11 @@ class Sync extends \WebService {
         return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart']);
     }
 
+    /**
+     * replicates client-side action in the session stored cart.
+     * @param type $parms contains action to be executed & parameters
+     * @param type $currentContext current context (release-organism-combination)
+     */
     public function syncActions($parms, $currentContext) {
         //prepare empty values
         if (!isset($_SESSION['cart'])) {

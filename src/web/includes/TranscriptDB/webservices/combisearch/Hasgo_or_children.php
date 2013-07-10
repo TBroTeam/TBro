@@ -4,16 +4,26 @@ namespace webservices\combisearch;
 
 use \PDO as PDO;
 
+/**
+ * WebService.
+ * Searches for features containing submitted GO or a child GO
+ */
 class Hasgo_or_children extends \WebService {
 
+    /**
+     * @param $querydata[species] organism id
+     * @param $querydata[release] release name
+     * @param $querydata[term] GO to search for
+     * @returns array of feature ids
+     */
     public function execute($querydata) {
         global $db;
         $constant = 'constant';
 
-        $species = $_REQUEST['species'];
-        $release = $_REQUEST['release'];
+        $species = $querydata['species'];
+        $release = $querydata['release'];
 
-        $term = trim($_REQUEST['term']);
+        $term = trim($querydata['term']);
 
         $query_get_parent_cvterm = <<<EOF
 SELECT cvterm.cvterm_id
@@ -50,7 +60,7 @@ EOF;
         $parent = $stm_get_parent->fetchColumn();
         if ($parent == null)
             return $data;
-        
+
         $stm_get_features->execute(array(
             'parent' => $parent,
             'species' => $species,

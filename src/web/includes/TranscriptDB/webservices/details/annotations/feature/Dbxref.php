@@ -4,11 +4,13 @@ namespace webservices\details\annotations\feature;
 
 use \PDO as PDO;
 
+/**
+ * Web Service.
+ * Returns all Dbxrefs associated with specified feature, grouped by GO namespaces if GO.
+ */
 class Dbxref extends \WebService {
 
     public function getById($param_isoform_id) {
-
-
         global $db;
 #UI hint
         if (false)

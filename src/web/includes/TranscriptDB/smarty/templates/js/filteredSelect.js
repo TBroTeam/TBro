@@ -1,3 +1,14 @@
+
+/**
+ * Created over a select item, this allows multiple selects to be coupled to each other's selections.
+ * @constructor
+ * @param {jQuery} jqNode html select element as jQuery node
+ * @param {String} filterNode propertie this select works on
+ * @param {Collection} options options
+ * @param {jQuery} [options.precedessorNode] select this node depends on. either this value or options.data have to be set
+ * @param {Array} [options.data] data as returned from web service /listing/filters/
+ * @param {function(obj)} [options.getDisplayString] returns value to be displayed
+ */
 filteredSelect = function(jqNode, filterProperty, options){
     this.options = $.extend({
         precedessorNode: null,
@@ -23,7 +34,7 @@ filteredSelect = function(jqNode, filterProperty, options){
     });
 }
 
-filteredSelect.prototype.getPrecedessor =function(){
+filteredSelect.prototype.getPrecedessor = function(){
     if (this.options.precedessorNode == null)
         return null;
     return this.options.precedessorNode.data('filteredSelect');
