@@ -1,0 +1,25 @@
+prefix = /opt
+config_dir = ${prefix}/etc/tbro
+bin_dir = ${prefix}/bin
+www_root = ${prefix}/var/www/tbro
+share_path = ${prefix}/share/tbro
+var_path = ${prefix}/var/tbro
+www_user = www-data
+www_group = www-data
+www_mode = 0777
+
+chado_db_host = localhost
+chado_db_name = test_chado
+chado_db_port = 5432
+chado_db_username = testuser
+chado_db_password = testpass
+
+queue_db_host = localhost
+queue_db_name = queue_db
+queue_db_port = 5432
+queue_db_username = testuser
+queue_db_password = testpass
+
+srcdir = ${project.basedir}/src
+builddir = /tmp/build/tbro
+

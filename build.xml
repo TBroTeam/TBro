@@ -18,6 +18,9 @@
     
     <import file="./src/cli/build-cli-db.xml"/>
     <import file="./src/cli/build-cli-import.xml"/>
+    <target name="cli-install" depends="cli-db-install,cli-import-install" description="install cli tools to bin_dir">
+    </target>
+    
     <import file="./src/web/build-web.xml"/>
     <import file="./src/database/build-database.xml"/>
     
