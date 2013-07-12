@@ -122,7 +122,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
 
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                if (preg_match('/^>(?<id>m.\d+) .* (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
+                if (preg_match('/^>(?<id>[^\s]+) .* (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
                     $param_predpep_name = $matches['id'];
                     $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
                     $param_predpep_seqlen = strlen($sequence);
@@ -136,29 +136,19 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                     $param_predpep_fmax = max($matches['from'], $matches['to']);
                     $param_predpep_strand = $matches['dir'] == '+' ? 1 : -1;
                     $statement_insert_predpep_location->execute();
-                    $predpeps_added++;
+                    $predpeps_added+=$statement_insert_predpep->rowCount();
                 }
                 
                 #isoform header like this:
-                //TODO generalize
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
-                else if (preg_match('/^>(?<name>\w+) .*$/', $description, $matches)) {
+                else if (preg_match('/^>(?<name>[^\s]+) .*$/', $description, $matches)) {
                     $param_isoform_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_isoform_seqlen = strlen($sequence);
                     $param_isoform_residues = $sequence;
 
                     $statement_update_isoform->execute();
 
-                    # get last insert id (see query: 'RETURNING feature_id'), set id for feature_relationship insert
-                    $param_isoform_feature_id = $statement_update_isoform->fetchColumn();
-                    $param_isoform_path = $matches['path'];
-
-                    $statement_insert_featureprop->execute(array(
-                        'type_id' => CV_ISOFORM_PATH,
-                        'feature_id' => $param_isoform_feature_id,
-                        'value' => $param_isoform_path
-                    ));
-                    $isoforms_updated++;
+                    $isoforms_updated+=$statement_update_isoform->rowCount();
                 }
                 
 
