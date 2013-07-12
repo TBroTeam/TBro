@@ -6,6 +6,9 @@ require_once SHARED . '/classes/CLI_Command.php';
 
 class Publication extends AbstractTable {
 
+    /**
+     * @inheritDoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -57,26 +60,48 @@ class Publication extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return 'Add or remove publications.';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'publication';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getSubCommands() {
         return array('link_bibsonomy', 'delete', 'details', 'list');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Pub';
     }
 
+    /**
+     * reads from given bibsonomy link, using username and api key. returns <b>unsaved</b> \cli_db\propel\Pub instance
+     * @param String $bibsonomy_link
+     * @param String $username
+     * @param String $api_key
+     * @return \cli_db\propel\Pub unsaved instance
+     */
     public static function getPropelPubFromBibsonomy($bibsonomy_link, $username, $api_key) {
         $matches = null;
         if (!preg_match('{^\[\[(?<type>.*)/(?<resource>.*)/(?<user>.*)\]\]$}', $bibsonomy_link, $matches)) {
@@ -181,7 +206,7 @@ class Publication extends AbstractTable {
             foreach ($authors as $author) {
                 $authnames = explode(',', $author, 2);
                 $surname = $authnames[0];
-                $givennames = isset($authnames[1])?$authnames[1]:'';
+                $givennames = isset($authnames[1]) ? $authnames[1] : '';
 
                 $pubauthor = new propel\Pubauthor();
                 $pubauthor->setGivennames($givennames);
@@ -194,6 +219,11 @@ class Publication extends AbstractTable {
         return $pub;
     }
 
+    /**
+     * links a publication against this feature
+     * @param type $options
+     * @param type $keys
+     */
     public static function command_link_bibsonomy($options, $keys) {
         $pub = self::getPropelPubFromBibsonomy($options['bibsonomy_internal_link'], $options['bibsonomy_username'], $options['bibsonomy_api_key']);
 
@@ -210,6 +240,12 @@ class Publication extends AbstractTable {
         printf("successfully added Pub '%s' to Feature '%s'\n", $pub->getTitle(), $feature->getUniquename());
     }
 
+    /**
+     * removes given publication from this feature
+     * @param type $options
+     * @param type $keys
+     * @return nothing
+     */
     protected static function command_delete($options, $keys) {
         $pubq = new propel\PubQuery();
         $pub = $pubq->findOneByPubId($options['id']);

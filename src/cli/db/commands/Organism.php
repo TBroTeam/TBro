@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractTable.php';
 
 class Organism extends AbstractTable {
 
+    /**
+     * @inheritDoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -60,22 +63,37 @@ class Organism extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return 'Manipulate organisms.';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'organism';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Organism';
     }

@@ -55,7 +55,7 @@ class Console_CommandLine_Action_ExtendedHelp extends Console_CommandLine_Action
 
 }
 
-//overwrite CommandLine Help function... ouch!
+//overwrite CommandLine Help function to provide longHelp support... ouch!
 Console_CommandLine::$actions['Help'] = array('Console_CommandLine_Action_ExtendedHelp', false);
 
 

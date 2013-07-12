@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractTable.php';
 
 class Quantification extends AbstractTable {
 
+    /**
+     * @inheritDoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -57,7 +60,7 @@ class Quantification extends AbstractTable {
                 ),
                 'description' => 'protocol id'
             ),
-             'analysis_id' => array(
+            'analysis_id' => array(
                 'colname' => 'AnalysisId',
                 'actions' => array(
                     'insert' => 'required',
@@ -76,26 +79,41 @@ class Quantification extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return 'Manipulate quantifications.';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'quantification';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Quantification';
     }
-    
+
 }
 
 ?>

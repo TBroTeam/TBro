@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractTable.php';
 
 class Contact extends AbstractTable {
 
+    /**
+     * @inheritDoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -36,22 +39,38 @@ class Contact extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return 'Manipulate contacts.';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'contact';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
 
+    /**
+     * @inheritDoc
+     * overwritten to show linked biomaterials, assays, quantifications
+     */
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
@@ -74,6 +93,9 @@ class Contact extends AbstractTable {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Contact';
     }

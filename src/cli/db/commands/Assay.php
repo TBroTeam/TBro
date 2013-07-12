@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractTable.php';
 
 class Assay extends AbstractTable {
 
+    /**
+     * @inheritdoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -69,32 +72,53 @@ class Assay extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function CLI_commandDescription() {
         return 'Manipulate assays.';
     }
 
-    // TODO experiment; gathering of biomat in diff. conditions
+    /**
+     * @inheritdoc
+     */
     public static function CLI_commandName() {
         return 'assay';
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list', 'link_biomaterial_sample', 'unlink_biomaterial_sample');
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Assay';
     }
 
+    /**
+     * @inheritdoc
+     */
     protected static function command_insert_set_defaults(\BaseObject $item) {
         // satisfy NOT NULL constraint
         $item->setArraydesignId(1);
     }
 
+    /**
+     * @inheritdoc
+     * overwritten to show linked samples
+     */
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
@@ -112,6 +136,12 @@ class Assay extends AbstractTable {
         }
     }
 
+    /**
+     * links given biomaterial sample against this assay
+     * @param Array $options user-specified command line parameters
+     * @param type $keys result from self::getKeys()
+     * @return type
+     */
     protected static function command_link_biomaterial_sample($options, $keys) {
         $ass_b = new propel\AssayBiomaterial();
         $ass_b->setAssayId($options['id']);
@@ -122,6 +152,12 @@ class Assay extends AbstractTable {
         return array($ass_b, $lines);
     }
 
+    /**
+     * unlinks given biomaterial sample from this assay
+     * @param Array $options user-specified command line parameters
+     * @param type $keys result from self::getKeys()
+     * @return type
+     */
     protected static function command_unlink_biomaterial_sample($options, $keys) {
         $ass_b_q = new propel\AssayBiomaterialQuery();
         $ass_b_q->filterByAssayId($options['id']);

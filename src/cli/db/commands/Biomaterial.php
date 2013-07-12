@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractTable.php';
 
 class Biomaterial extends AbstractTable {
 
+    /**
+     * @inheritdoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -81,22 +84,38 @@ class Biomaterial extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function CLI_commandDescription() {
         return 'Manipulate biomaterials, conditions and samples.';
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function CLI_commandName() {
         return 'biomaterial';
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list', 'add_condition', 'add_condition_sample');
     }
 
+    /**
+     * @inheritdoc
+     * overwritten to set type to biomaterial
+     */
     protected static function command_insert($options, $keys) {
         $biomat = new propel\Biomaterial();
         self::setKeys($options, $keys, 'insert', $biomat);
@@ -111,6 +130,11 @@ class Biomaterial extends AbstractTable {
             printf("%d line(s) inserted.\n", $lines);
     }
 
+    /**
+     * command to add condition. checks for parent biomaterial & parent type, links against parent
+     * @param Array $options
+     * @param type $keys
+     */
     protected static function command_add_condition($options, $keys) {
         $parent = propel\BiomaterialQuery::create()->findOneByName($options['parent_biomaterial_name']);
         if ($parent == null)
@@ -133,6 +157,11 @@ class Biomaterial extends AbstractTable {
             printf("%d line(s) inserted.\n", $lines);
     }
 
+    /**
+     * command to add sample. checks for parent biomaterial & parent type, links against parent
+     * @param Array $options
+     * @param type $keys
+     */
     protected static function command_add_condition_sample($options, $keys) {
         $parent = propel\BiomaterialQuery::create()->findOneByName($options['parent_condition_name']);
         if ($parent == null)
@@ -154,6 +183,10 @@ class Biomaterial extends AbstractTable {
             printf("%d line(s) inserted.\n", $lines);
     }
 
+    /**
+     * @inheritDoc
+     * overwritten to display additional information
+     */
     protected static function command_details($options, $keys) {
         parent::command_details($options, $keys);
 
@@ -171,6 +204,9 @@ class Biomaterial extends AbstractTable {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Biomaterial';
     }

@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractTable.php';
 
 class Feature extends AbstractTable {
 
+    /**
+     * @inheritDoc
+     */
     public static function getKeys() {
         return array(
             'id' => array(
@@ -66,29 +69,49 @@ class Feature extends AbstractTable {
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return 'Manipulate Features.';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'feature';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getSubCommands() {
         return array('details', 'list', 'add_synonym', 'remove_synonym');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Feature';
     }
 
+    /**
+     * @inheritdoc
+     * overwritten to make use of required parameter name (see parameter help). lists only a subset, not the complete table
+     */
     protected static function command_list($options, $keys) {
 
         $featureq = new propel\FeatureQuery();
+        // filterByName allows for wildcards
         $featureq->filterByName($options['name']);
 
         $table_keys = array_keys(array_filter($keys, function($val) {
@@ -98,6 +121,11 @@ class Feature extends AbstractTable {
         self::printTable($table_keys, $results);
     }
 
+    /**
+     * adds synonym to this feature. requires bibsonomy link to be passed
+     * @param type $options
+     * @param type $keys
+     */
     protected static function command_add_synonym($options, $keys) {
         $featureq = new propel\FeatureQuery();
         $feature = $featureq->findOneByFeatureId($options['id']);
@@ -151,6 +179,11 @@ class Feature extends AbstractTable {
         print "Synonym created successfully.\n";
     }
 
+    /**
+     * removes synonym from this feature.
+     * @param type $options
+     * @param type $keys
+     */
     protected static function command_remove_synonym($options, $keys) {
         $typeq = new propel\CvtermQuery();
         $type = $typeq->findOneByName($options['type']);
