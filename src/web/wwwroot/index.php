@@ -44,7 +44,7 @@ $redir_url = isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : $_SERV
 
 if (isset($_GET['logout'])) {
     session_destroy();
-    header('Location: ' . $redir_url);
+    header('Location: ' . preg_replace('/([?&])logout(=[^&]+)?(&|$)/', '$1', $redir_url));
     die();
 }
 try {
@@ -100,7 +100,7 @@ switch ($page) {
         $smarty->assign('cartname', $cartname);
         $smarty->display('mav.tpl');
         die();
-    case 'blast':        
+    case 'blast':
         $smarty->display('extends:blast-layout.tpl|blast.tpl');
         die();
     case 'blast_results':
