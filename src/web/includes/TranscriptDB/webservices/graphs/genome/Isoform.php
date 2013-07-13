@@ -1,13 +1,27 @@
 <?php
 
 namespace webservices\graphs\genome;
-
+/**
+ * Return tracks for canvasXpress genome browser
+ * go to http://canvasxpress.org/documentation.html#data , scroll down to "tracks"
+ */
 class Isoform extends \WebService {
 
+    /**
+     * returns "right" or "left" depending on $strand>0
+     * @param int $strand
+     * @return String
+     */
     private static function strand2dir($strand) {
         return $strand > 0 ? 'right' : 'left';
     }
 
+    /**
+     * fill up with two spaces between each char to align protein and nucleotide sequences
+     * canvasXpress SHOULD be able to do that on its own, but fails in its current version
+     * @param String $sequence
+     * @return string
+     */
     private static function space($sequence) {
         $ret = "";
         for ($i = 0; $i < strlen($sequence); $i++)
@@ -15,12 +29,21 @@ class Isoform extends \WebService {
         return $ret;
     }
 
+    /**
+     * if strand is left, rewind string
+     * @param string $sequence
+     * @param int $strand
+     * @return string
+     */
     private static function rewinds($sequence, $strand) {
         if ($strand < 0)
             return strrev($sequence);
         return $sequence;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
         global $db;
 
@@ -36,6 +59,8 @@ class Isoform extends \WebService {
         $max = 0;
 
         $last_row = null;
+        
+        //before reading this code, read the canvasXpress documentation!
 
         //(feature_id int, type_id int, residues text, seqlen int, fmin int, fmax int, strand smallint);
         while ($row = $stm_get_features->fetch(\PDO::FETCH_ASSOC)) {

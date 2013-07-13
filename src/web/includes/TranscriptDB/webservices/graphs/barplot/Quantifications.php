@@ -3,9 +3,14 @@
 namespace webservices\graphs\barplot;
 
 use \PDO as PDO;
-
+/**
+ * returns Quantification data as y/x canvasxpress data, see http://canvasxpress.org/documentation.html#data
+ */
 class Quantifications extends \WebService {
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
         global $db;
 
@@ -14,10 +19,10 @@ class Quantifications extends \WebService {
             $db = new PDO();
 
 
-        $parents = $querydata['parents'];
-        $analysises = $querydata['analysis'];
-        $assays = $querydata['assay'];
-        $biomaterials = $querydata['biomaterial'];
+        $parents = $querydata['parents']; //feature ids
+        $analysises = $querydata['analysis']; //one or more analysises
+        $assays = $querydata['assay']; //one or more assays
+        $biomaterials = $querydata['biomaterial']; //one or more biomaterial samples
 
 
         $query_values = array();
@@ -90,6 +95,7 @@ EOF;
         $smps = array();
         $x = array();
         $row = null;
+        //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
             if ($cell['feature_name'] != $lastcell_name) {
                 #featue-specific actions, only once per featue
