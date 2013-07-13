@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 
 class Importer_Sequence_Ids extends AbstractImporter {
@@ -149,7 +151,7 @@ class Importer_Sequence_Ids extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added, 'isoforms_added' => $isoforms_added);
     }
 
-    public static function CLI_getCommand(Console_CommandLine $parser) {
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
         $command->addOption('file_type', array(
             'short_name' => '-t',
@@ -158,6 +160,7 @@ class Importer_Sequence_Ids extends AbstractImporter {
             'choices' => array('map', 'only_isoforms', 'only_unigenes'),
             'default' => 'map'
         ));
+        return $command;
     }
 
     public static function CLI_commandName() {

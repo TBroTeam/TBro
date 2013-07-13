@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 
 class Importer_Annotations_Description extends AbstractImporter {
@@ -40,7 +42,7 @@ class Importer_Annotations_Description extends AbstractImporter {
                 $feature = $line[0];
                 $description = $line[1];
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
-                
+
                 $statement_insert_featureprop->execute();
                 $descriptions_added++;
 

@@ -132,8 +132,8 @@ class Biomaterial extends AbstractTable {
 
     /**
      * command to add condition. checks for parent biomaterial & parent type, links against parent
-     * @param Array $options
-     * @param type $keys
+     * @param Array $options user-specified command line parameters
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_add_condition($options, $keys) {
         $parent = propel\BiomaterialQuery::create()->findOneByName($options['parent_biomaterial_name']);
@@ -159,8 +159,8 @@ class Biomaterial extends AbstractTable {
 
     /**
      * command to add sample. checks for parent biomaterial & parent type, links against parent
-     * @param Array $options
-     * @param type $keys
+     * @param Array $options user-specified command line parameters
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_add_condition_sample($options, $keys) {
         $parent = propel\BiomaterialQuery::create()->findOneByName($options['parent_condition_name']);

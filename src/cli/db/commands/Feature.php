@@ -124,7 +124,7 @@ class Feature extends AbstractTable {
     /**
      * adds synonym to this feature. requires bibsonomy link to be passed
      * @param type $options
-     * @param type $keys
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_add_synonym($options, $keys) {
         $featureq = new propel\FeatureQuery();
@@ -182,7 +182,7 @@ class Feature extends AbstractTable {
     /**
      * removes synonym from this feature.
      * @param type $options
-     * @param type $keys
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_remove_synonym($options, $keys) {
         $typeq = new propel\CvtermQuery();

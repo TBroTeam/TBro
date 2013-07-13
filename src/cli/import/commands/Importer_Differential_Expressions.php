@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 
 class Importer_Differential_Expressions extends AbstractImporter {
@@ -68,7 +70,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
                 throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentB_name));
             }
             $biomaterial_parentB_id = $rowb['biomaterial_id'];
-            
+
 
             $statement_test_biomaterial_children = $db->prepare('SELECT biomaterial_relationship_id FROM biomaterial_relationship WHERE object_id=:parent LIMIT 1');
             $statement_test_biomaterial_children->bindValue('parent', $biomaterial_parentA_id);
@@ -149,7 +151,7 @@ EOF;
         return array(LINES_IMPORTED => $lines_imported, 'lines_featurenotfound_skipped' => $lines_no_insertion, 'lines_NA_skipped' => $lines_skipped);
     }
 
-    public static function CLI_getCommand(Console_CommandLine $parser) {
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
 
         $command->addOption('analysis_id', array(
@@ -167,6 +169,7 @@ EOF;
             'long_name' => '--conditionB',
             'description' => 'condition B name'
         ));
+        return $command;
     }
 
     public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {

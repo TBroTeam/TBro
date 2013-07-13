@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/Importer_Annotations_Dbxref.php';
 
 class Importer_Annotations_GO extends Importer_Annotations_Dbxref {

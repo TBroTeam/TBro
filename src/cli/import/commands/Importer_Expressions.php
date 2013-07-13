@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 
 class Importer_Expressions extends AbstractImporter {
@@ -33,7 +35,7 @@ class Importer_Expressions extends AbstractImporter {
         $inserts_executed = 0;
 
         try {
-            
+
             $db->beginTransaction();
 
             #shared parameters
@@ -99,21 +101,20 @@ class Importer_Expressions extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'inserts executed' => $inserts_executed);
     }
 
-    public static function CLI_getCommand(Console_CommandLine $parser) {
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
-        $command->addOption('quantification_id',
-                array(
+        $command->addOption('quantification_id', array(
             'short_name' => '-q',
             'long_name' => '--quantification_id',
             'description' => 'quantification id'
         ));
-        
-        $command->addOption('analysis_id',
-                array(
+
+        $command->addOption('analysis_id', array(
             'short_name' => '-a',
             'long_name' => '--analysis_id',
             'description' => 'analysis_id.'
         ));
+        return $command;
     }
 
     public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {

@@ -7,6 +7,7 @@ if (!defined('ROOT')) {
     define('CONFIG_DIR', __DIR__ . "/../../../etc/");
 }
 
+//include configuration
 if (file_exists(CONFIG_DIR . 'config.php'))
     include_once CONFIG_DIR . 'config.php';
 else
@@ -18,6 +19,7 @@ if (file_exists(CONFIG_DIR . 'cvterms.php'))
 else
     die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'cvterms.php'));
 
+//include requirements
 if (stream_resolve_include_path('Console/CommandLine.php'))
     require_once 'Console/CommandLine.php';
 else
@@ -47,7 +49,7 @@ $parser = new Console_CommandLine(array(
     'version' => '0.1'
         ));
 $parser->subcommand_required = true;
-
+//determine console width
 $width_exec = exec('tput cols 2>&1');
 $width = is_int($width_exec) && $width_exec > 0 ? $width_exec : 200;
 $parser->renderer->line_width = $width;
@@ -58,7 +60,7 @@ $parser->addOption('debug', array(
     'action' => 'StoreTrue',
     'description' => 'enables debug mode (queries will be output to console)'
 ));
-
+//include command files
 $old_classes = get_declared_classes();
 foreach (new DirectoryIterator(ROOT . 'commands') as $file) {
     if (strpos($file, '.php') !== FALSE)
@@ -67,11 +69,14 @@ foreach (new DirectoryIterator(ROOT . 'commands') as $file) {
 $new_classes = array_diff(get_declared_classes(), $old_classes);
 
 $command_classes = array();
+//for all newly included classes
 foreach ($new_classes as $class) {
     $ref = new ReflectionClass($class);
-
+//if it implements \CLI_Command
     if ($ref->implementsInterface('CLI_Command') && !$ref->isAbstract()) {
+        //call $class::CLI_getCommand to create new command on parser
         call_user_func(array($class, 'CLI_getCommand'), $parser);
+        //create mapping "commandname" => "classname"
         $command_classes[call_user_func(array($class, 'CLI_commandName'))] = $class;
     }
 }
@@ -101,13 +106,16 @@ try {
         if (!file_exists($filename))
             throw new Exception(sprintf('input file %s does not exist!', $filename));
     }
-
+//have we been called with a command?
     if (is_object($result->command)) {
+        //map command back to class
         $class = $command_classes[$result->command_name];
-
+//if class is CLI_Command and not abstract
         $ref = new ReflectionClass($class);
         if ($ref->implementsInterface('\CLI_Command') && !$ref->isAbstract()) {
+            //$class::CLI_checkRequiredOpts
             call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command);
+            //$class::CLI_execute
             call_user_func(array($class, 'CLI_execute'), $result->command, $parser);
         }
         else

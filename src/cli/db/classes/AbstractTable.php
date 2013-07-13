@@ -221,7 +221,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     /**
      * default insert row command
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_insert($options, $keys) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass'));
@@ -241,7 +241,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     /**
      * default update row command
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_update($options, $keys) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
@@ -283,7 +283,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     /**
      * default delete row command
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_delete($options, $keys) {
 
@@ -306,7 +306,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     /**
      * default show details for row command
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_details($options, $keys) {
         $propel_class = call_user_func(array(get_called_class(), 'getPropelClass')) . 'Query';
@@ -328,7 +328,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     /**
      * default list rows command
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      */
     protected static function command_list($options, $keys) {
 

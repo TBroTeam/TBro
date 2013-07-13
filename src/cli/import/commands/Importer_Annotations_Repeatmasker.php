@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 
@@ -62,7 +64,7 @@ EOF;
         try {
             $db->beginTransaction();
             $import_prefix_id = Importer_Sequence_Ids::get_import_dbxref();
-            
+
             #shared parameters
             $param_name = null;
             $param_uniquename = null;
@@ -79,8 +81,7 @@ EOF;
             $statement_insert_domain->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
             $statement_insert_domain->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
-            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))',
-                            'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism LIMIT 1'));
+            $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_fmax, PDO::PARAM_INT);
             $statement_insert_featureloc->bindValue('strand', 1, PDO::PARAM_INT);
@@ -131,8 +132,7 @@ EOF;
 
 
                     self::updateProgress(++$lines_imported);
-                }
-                else {
+                } else {
                     echo "WARNING: Line does not match:\n\t$line\n";
                 }
             }

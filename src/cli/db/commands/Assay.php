@@ -139,7 +139,7 @@ class Assay extends AbstractTable {
     /**
      * links given biomaterial sample against this assay
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      * @return type
      */
     protected static function command_link_biomaterial_sample($options, $keys) {
@@ -155,7 +155,7 @@ class Assay extends AbstractTable {
     /**
      * unlinks given biomaterial sample from this assay
      * @param Array $options user-specified command line parameters
-     * @param type $keys result from self::getKeys()
+     * @param Array $keys result from self::getKeys()
      * @return type
      */
     protected static function command_unlink_biomaterial_sample($options, $keys) {

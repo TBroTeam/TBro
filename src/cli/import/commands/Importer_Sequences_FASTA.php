@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 
@@ -138,7 +140,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                     $statement_insert_predpep_location->execute();
                     $predpeps_added+=$statement_insert_predpep->rowCount();
                 }
-                
+
                 #isoform header like this:
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
                 else if (preg_match('/^>(?<name>[^\s]+) .*$/', $description, $matches)) {
@@ -150,7 +152,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
 
                     $isoforms_updated+=$statement_update_isoform->rowCount();
                 }
-                
+
 
                 self::updateProgress(++$lines_imported);
             }

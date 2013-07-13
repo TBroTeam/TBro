@@ -1,15 +1,26 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 
+/**
+ * abstract database crossreference importer
+ */
 abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
     /**
-     * @global PDO $db
-     * @param string $filename
+     * takes a CSV as $options['file']
+     * @global \PDO $db
+     * @param Array $options
+     * @param int $feature_pos column with feature name
+     * @param int $dbxref_pos column with crossref
+     * @param String $separator column separator, defaults to TAB
+     * @return array to be displayed as table
+     * @throws Exception
      * @throws ErrorException
      */
-    static function _import($options, $feature_pos=0, $dbxref_pos=1, $separator="\t") {
+    static function _import($options, $feature_pos = 0, $dbxref_pos = 1, $separator = "\t") {
 
         $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);

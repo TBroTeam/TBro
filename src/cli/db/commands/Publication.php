@@ -221,8 +221,8 @@ class Publication extends AbstractTable {
 
     /**
      * links a publication against this feature
-     * @param type $options
-     * @param type $keys
+     * @param Array $options user-specified command line parameters
+     * @param Array $keys result from self::getKeys()
      */
     public static function command_link_bibsonomy($options, $keys) {
         $pub = self::getPropelPubFromBibsonomy($options['bibsonomy_internal_link'], $options['bibsonomy_username'], $options['bibsonomy_api_key']);
@@ -242,8 +242,8 @@ class Publication extends AbstractTable {
 
     /**
      * removes given publication from this feature
-     * @param type $options
-     * @param type $keys
+     * @param Array $options user-specified command line parameters
+     * @param Array $keys result from self::getKeys()
      * @return nothing
      */
     protected static function command_delete($options, $keys) {

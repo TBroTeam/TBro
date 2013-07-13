@@ -1,5 +1,7 @@
 <?php
 
+namespace cli_import;
+
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 require_once ROOT . 'commands/Importer_Sequences_FASTA.php';
@@ -94,7 +96,7 @@ EOF;
 
 
         $filename = $options['file'];
-        
+
         $interpro_version = $options['interpro_version'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
@@ -156,9 +158,9 @@ EOF;
             while (($line = trim(fgets($file))) != false) {
                 $match = array();
                 preg_match(self::$regex, $line, $match);
-                if (count($match) == 0){
+                if (count($match) == 0) {
                     self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
-                    continue;     
+                    continue;
                 }
 
 
@@ -227,11 +229,10 @@ EOF;
         }
         return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added' => $dbxrefs_added);
     }
-    
-        public static function CLI_getCommand(Console_CommandLine $parser) {
+
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
-        $command->addOption('interpro_version',
-                array(
+        $command->addOption('interpro_version', array(
             'short_name' => '-i',
             'long_name' => '--interpro_version',
             'description' => 'interpro version'
