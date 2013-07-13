@@ -3,7 +3,10 @@
 namespace webservices\details\annotations\feature;
 
 use \PDO as PDO;
-
+/**
+ * Web Service.
+ * Get all publications associated with feature
+ */
 class Pub extends \WebService {
 
     public function getById($param_feature_id) {
@@ -38,6 +41,9 @@ EOF;
         return $ret;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
 
         return $this->getById($querydata['query1']);

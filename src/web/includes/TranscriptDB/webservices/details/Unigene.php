@@ -3,7 +3,10 @@
 namespace webservices\details;
 
 use \PDO as PDO;
-
+/**
+ * Web Service.
+ * Get unigene details.
+ */
 class Unigene extends \WebService {
 
     public function execute($querydata) {
@@ -21,7 +24,7 @@ SELECT *
     FROM feature AS unigene
     WHERE unigene.feature_id = :feature_id
     AND unigene.type_id = {$constant('CV_UNIGENE')}
-    LIMIT 20
+    LIMIT 1
 EOF;
 
         $stm_get_unigenes = $db->prepare($query_get_unigenes);

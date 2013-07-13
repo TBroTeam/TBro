@@ -3,9 +3,15 @@
 namespace webservices\details;
 
 use \PDO as PDO;
-
+/**
+ * Web Service.
+ * Returns isoform details (feature.*, import, organism_name), parent unigene and textual annotations
+ */
 class Isoform extends \WebService {
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
         global $db;
         $constant = 'constant';
@@ -14,6 +20,7 @@ class Isoform extends \WebService {
         if (false)
             $db = new PDO();
 
+        //isoform details (feature.*, import, organism_name)
         $param_isoform_feature_id = $querydata['query1'];
         $param_isoform_id = null;
         $query_get_isoforms = <<<EOF
@@ -31,7 +38,7 @@ EOF;
 
         
         
-
+//all textual annotations
         $query_get_desc = <<<EOF
 SELECT
   *
@@ -45,24 +52,18 @@ EOF;
         $stm_get_desc = $db->prepare($query_get_desc);
         $stm_get_desc->bindParam('isoform_id', $param_isoform_id);
 
-
+//parent unigene
         $query_get_unigene = <<<EOF
 SELECT unigene.*
     FROM feature_relationship, feature AS unigene
     WHERE unigene.feature_id = feature_relationship.object_id
     AND :isoform_id = feature_relationship.subject_id    
     AND unigene.type_id = {$constant('CV_UNIGENE')}
+    LIMIT 1
 EOF;
 
         $stm_get_unigene = $db->prepare($query_get_unigene);
         $stm_get_unigene->bindParam('isoform_id', $param_isoform_id);
-
-
-
-
-
-
-
         $return = array();
 
         $stm_get_isoforms->execute();
@@ -71,12 +72,13 @@ EOF;
 
 
             $stm_get_unigene->execute();
-
+            //set $isoform['unigene'] to parent
             if (($unigene = $stm_get_unigene->fetch(PDO::FETCH_ASSOC)) !== false) {
                 $isoform['unigene'] = $unigene;
             }
 
             $stm_get_desc->execute();
+            //add all descriptions to array $isoform['description']
             while ($desc = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
                 $isoform['description'][] = $desc;
             }

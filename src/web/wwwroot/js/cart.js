@@ -133,7 +133,7 @@ function Cart(initialData, options) {
             if (typeof obj1[key] === "undefined")
                 return false;
             
-            if (!isEqual(obj1[key], obj2[key]))
+            if (!checkEqual(obj1[key], obj2[key]))
                 return false;
         }
         

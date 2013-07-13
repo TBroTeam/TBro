@@ -35,6 +35,8 @@ SELECT cvterm.cvterm_id
 EOF;
         $stm_get_parent = $db->prepare($query_get_parent_cvterm);
 
+        // selects all child GOs (actually containing the parent as well), join this with a pre-filtered feature table
+        // get_cvterm_children can return duplicate rows, so it is grouped by cvterm_id, dbxref_id
         $query_get_features = <<<EOF
 SELECT fd.feature_id 
 FROM 

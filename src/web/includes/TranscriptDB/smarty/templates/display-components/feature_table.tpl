@@ -51,51 +51,12 @@
 
             });
 
-            $('#results').tooltip({
-                items: ".has-tooltip",
-                open: function(event, ui) {
-                    ui.tooltip.css("max-width", "600px");
-                },
-                content: function() {
-                    var that = this;
-                    var tooltip = $("<table/>");
-                    $.ajax({url: '{#$ServicePath#}/details/cartitem/' + $(that).attr('data-id'), success: function(data) {
-                            $.each(data, function(name, value) {
-                                $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
-                            });
-                        }});
-
-                    tooltip.foundation();
-                    return tooltip;
-                }
-            });
-
             new Groupselect($('#select-group'), cart);
         });
     })(jQuery);
 
 </script>
 
-
-<script type="text/template" id="result-template">
-    <tr>
-    <td>
-    <input type="checkbox" value="<%= feature_id %>"/>
-    </td>
-    <td>
-    <span><%= type %></span>
-    </td>
-    <td data-id="<%= feature_id %>">
-    <a class="has-tooltip" data-id="<%= feature_id %>" href="{#$AppPath#}/details/byId/<%= feature_id %>"><%= name %></a>
-    </td>
-    <td data-id="<%= feature_id %>">
-    <span><% if (typeof alias != "undefined" ) print(alias) %></span>
-    </td>
-    <td>
-    <span style="margin-bottom:0px" class="small button right"  onclick="javascript:cart.addItem(<%= feature_id %>);"> add to cart -> </span>
-    </td>
-    </tr>
-</script>
 <div class="row">
     <div class="large-12 column">
         <table style="width:100%" id="results">

@@ -25,6 +25,7 @@ class Hasgo extends \WebService {
 
         $term = trim($querydata['term']);
 
+// this query ignores leading zeroes in accession string
         $query_get_features = <<<EOF
 SELECT fd.feature_id 
 FROM 
@@ -34,8 +35,6 @@ FROM
 WHERE 
 feature.feature_id = fd.feature_id
 AND fd.dbxref_id = dbxref.dbxref_id
-
-
 EOF;
 
         $stm_get_features = $db->prepare($query_get_features);

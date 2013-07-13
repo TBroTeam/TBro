@@ -4,6 +4,10 @@ namespace webservices\details\annotations\feature;
 
 use \PDO as PDO;
 
+/**
+ * WebService.
+ * get all Repeatmasker annotations for feature id.
+ */
 class Repeatmasker extends \WebService {
 
     public function getById($param_feature_id) {
@@ -14,6 +18,11 @@ class Repeatmasker extends \WebService {
         if (false)
             $db = new PDO();
 
+        /*
+         *     get_isoform_annotations_repeatmasker(_isoform_ids integer[])
+         * RETURNS
+         *   TABLE (isoform_id int, uniquename text, fmin integer, fmax integer, strand smallint, repeat_name text, repeat_family text, repeat_class text)
+         */
         $stm_get_repeatmasker = $db->prepare('SELECT * FROM get_isoform_annotations_repeatmasker(ARRAY[:isoform_id::int])');
         $stm_get_repeatmasker->bindParam('isoform_id', $param_feature_id, PDO::PARAM_INT);
 
@@ -27,6 +36,9 @@ class Repeatmasker extends \WebService {
         return $ret;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
 
         return $this->getById($querydata['query1']);

@@ -3,7 +3,10 @@
 namespace webservices\details\annotations\feature;
 
 use \PDO as PDO;
-
+/**
+ * Web Service.
+ * Get all synonyms and acssociated publications for a feature
+ */
 class Synonym extends \WebService {
 
     public function getById($param_feature_id) {
@@ -43,6 +46,9 @@ EOF
         return $ret;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
 
         return $this->getById($querydata['query1']);

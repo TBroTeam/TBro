@@ -3,7 +3,11 @@
 namespace webservices\details;
 
 use \PDO as PDO;
-
+/**
+ * WebService.
+ * Returns statistical information on given release.
+ * called /ajax/details/statistical_information/&lt;organism&gt;/&lt;release&gt;
+ */
 class Statistical_information extends \WebService {
 
     public function execute($querydata) {

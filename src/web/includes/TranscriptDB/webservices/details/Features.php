@@ -3,9 +3,17 @@
 namespace webservices\details;
 
 require_once 'TranscriptDB//db.php';
-
+/**
+ * Web Service.
+ * Get details on all passed feature_ids. Takes either one url parameter or an array as POST variable "terms"
+ */
 class Features extends \WebService {
 
+    /**
+     * @inheritDoc
+     * @param int $querydata['query1'] one id
+     * @param Array[int] $querydata['terms'] multiple ids
+     */
     public function execute($querydata) {
         $feature_ids = array();
 
