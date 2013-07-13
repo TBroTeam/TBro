@@ -4,12 +4,14 @@ namespace cli_import;
 
 require_once ROOT . 'classes/AbstractImporter.php';
 
+/**
+ * importer for textual descriptions
+ */
 class Importer_Annotations_Description extends AbstractImporter {
 
     /**
-     * @global PDO $db
-     * @param string $filename
-     * @throws ErrorException
+     * @inheritDoc
+     * @param String $separator defaults to TAB
      */
     static function import($options, $separator = "\t") {
 
@@ -26,7 +28,7 @@ class Importer_Annotations_Description extends AbstractImporter {
             $description = null;
             $param_feature_uniq = null;
 
-
+            //statement to add featureprop to feature
             $statement_insert_featureprop = $db->prepare(
                     sprintf('INSERT INTO featureprop (feature_id, type_id, rank, value) VALUES ((%s), :type_id, 0, :description)', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism ')
             );
@@ -44,7 +46,7 @@ class Importer_Annotations_Description extends AbstractImporter {
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
 
                 $statement_insert_featureprop->execute();
-                $descriptions_added++;
+                $descriptions_added+=$statement_insert_featureprop->rowCount();
 
 
                 self::updateProgress(++$lines_imported);
@@ -52,7 +54,7 @@ class Importer_Annotations_Description extends AbstractImporter {
             self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
-                throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
+                throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
             }
         } catch (\Exception $error) {
             $db->rollback();
@@ -61,6 +63,9 @@ class Importer_Annotations_Description extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
 Tab-Separated file with column 1: feature_id and column 2: feature description
@@ -69,10 +74,16 @@ Tab-Separated file with column 1: feature_id and column 2: feature description
 EOF;
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return 'import feature descriptions';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'annotation_description';
     }

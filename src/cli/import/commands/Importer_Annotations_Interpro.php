@@ -6,6 +6,9 @@ require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 require_once ROOT . 'commands/Importer_Sequences_FASTA.php';
 
+/**
+ * importer for interpro Annotations
+ */
 class Importer_Annotations_Interpro extends AbstractImporter {
 
     /**
@@ -36,10 +39,7 @@ EOF;
 
     /**
      * 
-     * @global array $dbrefx_versions array mapping databases to their versions, e.g. array('HMMPFam'=>'1.0')
-     * @global PDO $db Database
-     * @param string $filename
-     * @throws ErrorException
+     * @inheritDoc
      */
     static function import($options) {
 
@@ -72,26 +72,6 @@ EOF;
          * param 2,3 and 4 are inserted: 
          * derived from "comp214244_c0_seq2:2137-2445(+)" in predpep sequence file, which gets stored as comp214244_c0_seq2:2137-2445 in the feature table
          * 
-         * 
-         * feature: comp214244_c0_seq2:252-1718 # EXISTIERT BEREITS
-         * feature: comp214244_c0_seq2:252-1718_PR00724_150_162 #DOMAIN
-         * featureloc:
-         *  start=1
-         *  stop=270
-         *  subject: comp214244_c0_seq2:2137-2445
-         *  object: comp214244_c0_seq2:252-1718_PR00724_150_162
-         * 
-         * analysis: 
-         *  program=FPrintScan
-         *  version (manuell)
-         *  timeexecuted=08-Nov-2012
-         * analysisfeature:
-         *  significance=1e-25
-         * featureprop:
-         *   type=(CVTERM)interproID
-         *   value=IPR001563
-         * dbxref: (evtl. mehrere)
-         *    (GO:0004185), (GO:0006508)
          */
 
 
@@ -124,14 +104,15 @@ EOF;
             $param_accession = null;
             $param_dbname = null;
 
+            //statement to create subfeature of type CV_ANNOTATION_INTERPRO
             $statement_insert_feature_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:feature_domain_name, :feature_domain_unique, :type_id, :organism_id, :dbxref_id)');
             $statement_insert_feature_domain->bindValue('type_id', CV_ANNOTATION_INTERPRO, PDO::PARAM_INT);
             $statement_insert_feature_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $statement_insert_feature_domain->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
-
             $statement_insert_feature_domain->bindParam('feature_domain_name', $param_feature_domain_name, PDO::PARAM_STR);
             $statement_insert_feature_domain->bindParam('feature_domain_unique', $param_feature_domain_uniq, PDO::PARAM_STR);
 
+            //statement to insert featureloc to link parent feature with newly inserted Domain
             $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism  LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_domain_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_domain_fmax, PDO::PARAM_INT);
@@ -139,6 +120,9 @@ EOF;
             $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_feature_uniq, PDO::PARAM_STR);
             $statement_insert_featureloc->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
+            /**
+             * link domain feature to analysis with evalue. create analysis if non-existant
+             */
             $statement_insert_analysisfeature = $db->prepare('INSERT INTO analysisfeature (analysis_id, feature_id, significance) VALUES (get_or_insert_analysis(:name, :program, :version, :source) ,currval(\'feature_feature_id_seq\'), :significance)');
             $statement_insert_analysisfeature->bindValue('name', 'Interpro Analysis', PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindValue('program', 'Interpro', PDO::PARAM_STR);
@@ -146,10 +130,16 @@ EOF;
             $statement_insert_analysisfeature->bindParam('source', $param_source_name, PDO::PARAM_STR);
             $statement_insert_analysisfeature->bindParam('significance', $param_evalue, PDO::PARAM_STR);
 
+            /**
+             * add textual domain feature annotations
+             */
             $statement_insert_featureprop = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :value)');
             $statement_insert_featureprop->bindParam(':type_id', $param_featureprop_type, PDO::PARAM_INT);
             $statement_insert_featureprop->bindParam(':value', $param_featureprop_value, PDO::PARAM_STR);
 
+            /**
+             * link domain to GO
+             */
             $statement_insert_feature_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (currval(\'feature_feature_id_seq\'), get_or_insert_dbxref(:dbname, :accession))');
             $statement_insert_feature_dbxref->bindParam('accession', $param_accession, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindParam('dbname', $param_dbname, PDO::PARAM_STR);
@@ -157,6 +147,7 @@ EOF;
             $file = fopen($filename, 'r');
             while (($line = trim(fgets($file))) != false) {
                 $match = array();
+                // see if line matches RegExp, else skip
                 preg_match(self::$regex, $line, $match);
                 if (count($match) == 0) {
                     self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
@@ -177,14 +168,18 @@ EOF;
                 $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
                 $param_feature_domain_uniq = IMPORT_PREFIX . "_" . $param_feature_domain_name;
 
+                //insert domain feature
                 $statement_insert_feature_domain->execute();
+                //link with parent feature
                 $statement_insert_featureloc->execute();
 
                 if ($param_evalue == 'NA')
                     $param_evalue = NULL;
 
+                //link domain to analysis with evalue
                 $statement_insert_analysisfeature->execute();
 
+                //add interpro ID as textual annoation of type CV_INTERPRO_ID
                 if ($match['interproID'] != "NULL") {
                     $param_featureprop_type = CV_INTERPRO_ID;
                     $param_featureprop_value = $match['interproID'];
@@ -193,11 +188,13 @@ EOF;
                     $interpro_ids_added++;
                 }
 
+                //add analysis match id as textual annotation of type CV_INTERPRO_ANALYSIS_MATCH_ID
                 if ($match['analysisMatchID'] != null) {
                     $param_featureprop_type = CV_INTERPRO_ANALYSIS_MATCH_ID;
                     $param_featureprop_value = $match['analysisMatchID'];
                     $statement_insert_featureprop->execute();
 
+                    //add analysis match description as textual annotation of type CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION
                     if (isset($match['analysisMatchDescription']) && !empty($match['analysisMatchDescription'])) {
                         $param_featureprop_type = CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION;
                         $param_featureprop_value = $match['analysisMatchDescription'];
@@ -205,12 +202,15 @@ EOF;
                     }
                 }
 
+                // if line contains GOs
                 if (isset($match['interproGOs']) && $match['interproGOs'] != "NULL") {
                     $go_matches = array();
                     preg_match_all('/[\s,]*(?<description>.*?)\((?<dbname>\w+):(?<accession>\w+)\)/', $match['interproGOs'], $go_matches);
+                    //for all GO matches
                     for ($i = 0; $i < count($go_matches[0]); $i++) {
                         $param_dbname = $go_matches['dbname'][$i];
                         $param_accession = $go_matches['accession'][$i];
+                        // link domain to dbxref
                         $statement_insert_feature_dbxref->execute();
                         $dbxrefs_added++;
                     }
@@ -230,6 +230,9 @@ EOF;
         return array(LINES_IMPORTED => $lines_imported, 'interpro_ids_added' => $interpro_ids_added, 'dbxrefs_added' => $dbxrefs_added);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
         $command->addOption('interpro_version', array(
@@ -239,20 +242,32 @@ EOF;
         ));
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
         parent::CLI_checkRequiredOpts($command);
         $options = $command->options;
         AbstractImporter::dieOnMissingArg($options, 'interpro_version');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return "Interpro Output Importer";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'annotation_interpro';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
    

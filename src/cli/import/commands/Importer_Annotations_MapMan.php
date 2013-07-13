@@ -6,14 +6,26 @@ require_once ROOT . 'classes/Importer_Annotations_Dbxref.php';
 
 class Importer_Annotations_MapMan extends Importer_Annotations_Dbxref {
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return "annotation_mapman";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return "import MapMan annotations";
     }
 
+    /**
+     * add entry to DB table if non-existant and return DB id in any case
+     * @global \PDO $db
+     * @param String $dbname name of DB to add
+     * @return DB id
+     */
     public static function get_or_create_DB($dbname) {
         global $db;
         $stm = $db->prepare(<<<EOF
@@ -29,8 +41,15 @@ EOF
         return $stm->fetchColumn();
     }
 
+    /**
+     * imported Mapman BINs will be linked as dbxref to a DB with this name
+     * @var String
+     */
     static $db_name = 'MapMan';
 
+    /**
+     * @inheritDoc
+     */
     public static function import($options) {
         $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
@@ -47,35 +66,46 @@ EOF
 
 
             /**
+             * get parent feature id
              * parameters: :object_name, :organism_id, :dbxref_id
              */
             $stm_get_parentfeature = $db->prepare('SELECT feature_id FROM feature WHERE name=:object_name AND organism_id=:organism_id AND dbxref_id=:dbxref_id');
 
             /**
+             * insert new feature for hit
              * parameters: :name, :uniquename, :type_id, :organism_id, :dbxref_id
              * returns: feature_id
              */
             $stm_insert_feature = $db->prepare("INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id) RETURNING feature_id");
 
             /**
+             * link new feature with parent feature
              * parameters:  :subject_id, :type_id, :object_id
              */
             $stm_link_feature = $db->prepare("INSERT INTO feature_relationship (subject_id, type_id, object_id) VALUES (:subject_id, :type_id, :object_id)");
+
             /**
-             * feature_id, type_id, value
+             * add textual annoation
+             * parameters:  feature_id, type_id, value
              */
             $stm_insert_featureprop = $db->prepare("INSERT INTO featureprop (feature_id, type_id, value) VALUES (?,?,?)");
+
             /**
+             * link new feature to dbxref
              * parameters: feature_id, cvterm_id
              */
             $stm_link_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (?,?)');
+
             /**
+             * get dbxref id. if non-existant, create
              * parameters: :dbname, :accession
              * returns: dbxref_id
              */
             $stm_try_insert_dbxref_id = $db->prepare("SELECT * FROM get_or_insert_dbxref(:dbname, :accession)");
+
             /**
-             * parameters: name, defintion, dbxref_id dbxref_id, dbxref_id
+             * get cvterm_id. if non-existant, create
+             * parameters: name, definition, dbxref_id dbxref_id, dbxref_id
              * returns: cvterm_id
              */
             $stm_try_insert_cvterm = $db->prepare(<<<EOF
@@ -88,6 +118,7 @@ SELECT cvterm_id FROM cvterm WHERE dbxref_id = ?;
 EOF
             );
             /**
+             * insert cvtermprop if non-existant with these values
              * parameters: cvterm_id, type_id, value, cvterm_id, type_id, cvterm_id, type_id, value
              */
             $stm_try_insert_cvtermprop = $db->prepare(
@@ -103,19 +134,21 @@ EOF
             $file = fopen($filename, 'r');
             //skip header line
             fgets($file);
-            $i = 0;
-            $last_start = 0;
-            $executions = array();
             while (($line = fgetcsv($file, 0, "\t")) != false) {
+                //if..elseif..else: check which section we are in
                 // header, looks like <BINCODE>\t<H_DESC>
                 if (count($line) == 2) {
                     $stm_try_insert_dbxref_id->execute(array(
+                        // parameters: :dbname, :accession
+                        // returns: dbxref_id
                         self::$db_name,
                         $line[0]
                     ));
                     $dbxref_id = $stm_try_insert_dbxref_id->fetchColumn();
                     $dbxrefs[$line[0]] = $dbxref_id;
                     $stm_try_insert_cvterm->execute(array(
+                        // parameters: name, definition, dbxref_id dbxref_id, dbxref_id
+                        // returns: cvterm_id
                         $line[0],
                         $line[1],
                         $dbxref_id,
@@ -127,7 +160,6 @@ EOF
                     //mapping, looks like <BINCODE>, <H_DESC>, <srcfeature_name>, <feature_description>, "T"
                     if ($line[4] == 'T') {
                         $stm_get_parentfeature->execute(array(
-                            //:object_name, :organism_id, :dbxref_id
                             ':object_name' => $line[2],
                             ':organism_id' => DB_ORGANISM_ID,
                             ':dbxref_id' => $import_prefix_id
@@ -151,11 +183,13 @@ EOF
                             ':object_id' => $parent_id
                         ));
                         $stm_insert_featureprop->execute(array(
+                            //parameters:  feature_id, type_id, value
                             $feature_id,
                             CV_ANNOTATION_MAPMAN_PROP,
                             $line[3]
                         ));
                         $stm_link_dbxref->execute(array(
+                            // parameters: feature_id, cvterm_id
                             $feature_id,
                             $dbxrefs[$line[0]]
                         ));
@@ -192,6 +226,9 @@ EOF
         return array(LINES_IMPORTED => $lines_imported);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
    \033[0;31mThis import requires a successful Sequence ID Import!\033[0m

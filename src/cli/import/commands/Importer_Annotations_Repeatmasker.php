@@ -5,14 +5,13 @@ namespace cli_import;
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 
+/**
+ * importer for repeatmasker results
+ */
 class Importer_Annotations_Repeatmasker extends AbstractImporter {
 
     /**
-     * 
-     * @global PDO $db db
-     * @param string $filename filename
-     * @throws Exception on DB Error
-     * @throws ErrorException on DB Error
+     * @inheritDoc
      */
     static function import($options) {
 
@@ -74,13 +73,15 @@ EOF;
             $param_fmax = null;
             $param_srcfeature_uniq = null;
 
-            $statement_insert_domain = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id)');
-            $statement_insert_domain->bindValue('type_id', CV_ANNOTATION_REPEATMASKER, PDO::PARAM_INT);
-            $statement_insert_domain->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
-            $statement_insert_domain->bindParam('name', $param_name, PDO::PARAM_STR);
-            $statement_insert_domain->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
-            $statement_insert_domain->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
+            //adds new feature
+            $statement_insert_repeat = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id)');
+            $statement_insert_repeat->bindValue('type_id', CV_ANNOTATION_REPEATMASKER, PDO::PARAM_INT);
+            $statement_insert_repeat->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $statement_insert_repeat->bindParam('name', $param_name, PDO::PARAM_STR);
+            $statement_insert_repeat->bindParam('uniquename', $param_uniquename, PDO::PARAM_STR);
+            $statement_insert_repeat->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
+            //binds repeat feature to parent feature
             $statement_insert_featureloc = $db->prepare(sprintf('INSERT INTO featureloc (fmin, fmax, strand, feature_id, srcfeature_id) VALUES (:fmin, :fmax, :strand, currval(\'feature_feature_id_seq\'), (%s))', 'SELECT feature_id FROM feature WHERE uniquename=:srcfeature_uniquename AND organism_id=:organism LIMIT 1'));
             $statement_insert_featureloc->bindParam('fmin', $param_fmin, PDO::PARAM_INT);
             $statement_insert_featureloc->bindParam('fmax', $param_fmax, PDO::PARAM_INT);
@@ -88,6 +89,7 @@ EOF;
             $statement_insert_featureloc->bindParam('srcfeature_uniquename', $param_srcfeature_uniq, PDO::PARAM_STR);
             $statement_insert_featureloc->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
+            //adds textual annotation
             $statement_annotate_domain = $db->prepare('INSERT INTO featureprop (feature_id, type_id, value) VALUES (currval(\'feature_feature_id_seq\'), :cvterm, :value)');
             $statement_annotate_domain->bindParam('cvterm', $param_cvterm, PDO::PARAM_INT);
             $statement_annotate_domain->bindParam('value', $param_value, PDO::PARAM_STR);
@@ -95,7 +97,12 @@ EOF;
             $file = fopen($filename, 'r');
             while (($line = trim(fgets($file))) != false) {
                 $matches = null;
-                if (preg_match($regex, $line, $matches)) {
+
+                // see if line matches RegExp, else skip
+                if (preg_match($regex, $line, $matches) !== 1) {
+                    self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
+                    continue;
+                } else {
                     $param_name = sprintf("%s(%d-%d):%s#%s(%s)"
                             , $matches['name']
                             , $matches['start']
@@ -105,24 +112,27 @@ EOF;
                             , (isset($matches['repeat_family']) ? $matches['repeat_family'] : '')
                     );
                     $param_uniquename = IMPORT_PREFIX . "_" . $param_name;
-
-                    $statement_insert_domain->execute();
+                    //insert feature
+                    $statement_insert_repeat->execute();
 
 
                     $param_srcfeature_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_fmin = $matches['start'];
                     $param_fmax = $matches['end'];
+                    //link to parent feature
                     $statement_insert_featureloc->execute();
 
+                    //add repeat name annotation
                     $param_cvterm = CV_REPEAT_NAME;
                     $param_value = $matches['repeat_name'];
                     $statement_annotate_domain->execute();
 
+                    //add repeat class annotation
                     $param_cvterm = CV_REPEAT_CLASS;
                     $param_value = $matches['repeat_class'];
                     $statement_annotate_domain->execute();
 
-
+                    //if existant, add repeat family annotation
                     if (!empty($matches['repeat_family'])) {
                         $param_cvterm = CV_REPEAT_FAMILY;
                         $param_value = $matches['repeat_family'];
@@ -132,8 +142,6 @@ EOF;
 
 
                     self::updateProgress(++$lines_imported);
-                } else {
-                    echo "WARNING: Line does not match:\n\t$line\n";
                 }
             }
             self::preCommitMsg();
@@ -148,18 +156,23 @@ EOF;
         return array(LINES_IMPORTED => $lines_imported, 'families_added' => $families_added);
     }
 
-    protected function calledFromShell() {
-        return self::import(self::options);
-    }
-
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return "Repeatmasker Output Importer";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return "annotation_repeatmasker";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
 

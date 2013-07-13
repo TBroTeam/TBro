@@ -12,7 +12,7 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
     /**
      * takes a CSV as $options['file']
      * @global \PDO $db
-     * @param Array $options
+     * @param Array $options user-specified command-line options
      * @param int $feature_pos column with feature name
      * @param int $dbxref_pos column with crossref
      * @param String $separator column separator, defaults to TAB
@@ -28,7 +28,7 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
         global $db;
         $lines_imported = 0;
-        $descriptions_added = 0;
+        $dbxref_inserted = 0;
         try {
             $db->beginTransaction();
             #shared parameters
@@ -36,7 +36,7 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
             $param_dbname = null;
             $param_feature_uniq = null;
 
-
+            //statement inserts feature_dbxref connection. creates dbxref if non-existant.
             $statement_insert_feature_dbxref = $db->prepare(
                     sprintf('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES ((%s), get_or_insert_dbxref(:dbname, :accession))', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism')
             );
@@ -47,14 +47,17 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
             $file = fopen($filename, 'r');
             while (($line = fgetcsv($file, 0, $separator)) !== false) {
+                //skip empty lines
                 if (count($line) == 0)
                     continue;
                 $feature = $line[$feature_pos];
                 $dbxref = $line[$dbxref_pos];
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
+                //execute insert statement
                 $statement_insert_feature_dbxref->execute();
-
+                $dbxref_inserted += $statement_insert_feature_dbxref->rowCount();
+                //update progress bar
                 self::updateProgress(++$lines_imported);
             }
             self::preCommitMsg();
@@ -66,9 +69,12 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
+        return array(LINES_IMPORTED => $lines_imported, 'references_linked' => $dbxref_inserted);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
 \033[0;31mThis import requires a successful Map File Import!\033[0m

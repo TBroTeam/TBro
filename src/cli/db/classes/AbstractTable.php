@@ -84,6 +84,7 @@ abstract class AbstractTable implements \CLI_Command, Table {
     /**
      * adds a command representing this class to $parser
      * @param \Console_CommandLine $parser
+     * @return \Console_CommandLine_Command
      */
     public static function CLI_getCommand(\Console_CommandLine $parser) {
         //create command
@@ -100,6 +101,8 @@ abstract class AbstractTable implements \CLI_Command, Table {
         foreach ($subcommands as $cmd) {
             self::processSubCommand($command, $cmd, $keys);
         }
+        
+        return $command;
     }
 
     /**
