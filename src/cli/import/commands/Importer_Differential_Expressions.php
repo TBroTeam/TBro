@@ -4,17 +4,16 @@ namespace cli_import;
 
 require_once ROOT . 'classes/AbstractImporter.php';
 
+/**
+ * importer for differential expressions
+ */
 class Importer_Differential_Expressions extends AbstractImporter {
-    /*
-      /storage/genomics/projects/dmuscipula/transcriptome/diffexpr/testing/quant/res.quant.pooled.sig.csv
 
-
-      /**
-     * use for array_walk. converts 'NA', 'Inf' and '-Inf' to their postgres coutnerparts
-     * @param string $value will be changed in-place
+    /**
+     * use for array_walk. converts 'NA', 'Inf' and '-Inf' to their postgres counterparts
+     * @param in:string,out:float $value will be changed in-place
      * @param string $key neccessary for array_walk. will not be used
      */
-
     static function convertDbl(&$value, $key) {
         if ($value == '-Inf')
             $value = '-Infinity';
@@ -27,6 +26,9 @@ class Importer_Differential_Expressions extends AbstractImporter {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     static function import($options) {
 
         $filename = $options['file'];
@@ -39,7 +41,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
 
         global $db;
         $lines_imported = 0;
-        $quantifications_linked = 0;
+
         $lines_skipped = 0;
 #IDE type hint
         if (false)
@@ -48,6 +50,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
         try {
             $db->beginTransaction();
 
+            //get biomaterial A id
             $statement_get_biomaterial_id = $db->prepare('SELECT b.biomaterial_id, bp.value AS type FROM biomaterial b JOIN biomaterialprop bp ON (b.biomaterial_id = bp.biomaterial_id) WHERE b.name=:name AND bp.type_id = ' . CV_BIOMATERIAL_TYPE . ' LIMIT 1');
             $statement_get_biomaterial_id->bindValue('name', $biomaterial_parentA_name);
             $statement_get_biomaterial_id->execute();
@@ -55,23 +58,27 @@ class Importer_Differential_Expressions extends AbstractImporter {
             if ($statement_get_biomaterial_id->rowCount() == 0) {
                 throw new ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentA_name));
             }
+            //is it a condition?
             if ($rowa['type'] != 'condition') {
                 throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentA_name));
             }
             $biomaterial_parentA_id = $rowa['biomaterial_id'];
 
+            //get biomaterial B id
             $statement_get_biomaterial_id->bindValue('name', $biomaterial_parentB_name);
             $statement_get_biomaterial_id->execute();
             $rowb = $statement_get_biomaterial_id->fetch(\PDO::FETCH_ASSOC);
             if ($statement_get_biomaterial_id->rowCount() == 0) {
                 throw new ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentB_name));
             }
+            //is it a condition?
             if ($rowb['type'] != 'condition') {
                 throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentB_name));
             }
             $biomaterial_parentB_id = $rowb['biomaterial_id'];
 
 
+            //does A have samples?
             $statement_test_biomaterial_children = $db->prepare('SELECT biomaterial_relationship_id FROM biomaterial_relationship WHERE object_id=:parent LIMIT 1');
             $statement_test_biomaterial_children->bindValue('parent', $biomaterial_parentA_id);
             $statement_test_biomaterial_children->execute();
@@ -79,6 +86,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
                 throw new ErrorException(sprintf('Biomaterial has no children (%s)', $biomaterial_parentA_name));
             }
 
+            //does B have samples?
             $statement_test_biomaterial_children->bindValue('parent', $biomaterial_parentB_id);
             $statement_test_biomaterial_children->execute();
             if (!($statement_test_biomaterial_children->fetchColumn())) {
@@ -97,26 +105,27 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $param_pvaladj = null;
             $param_feature_uniquename = null;
 
-            $query_insert_expressiondata = <<<EOF
+            //query for insertion of diffexp
+            $query_insert_diffexp = <<<EOF
 INSERT INTO diffexpresult(analysis_id, feature_id, biomateriala_id, biomaterialb_id, baseMean, baseMeanA, baseMeanB, foldChange, log2foldChange, pval, pvaladj)
 SELECT :analysis_id, feature_id, :biomaterialA_id, :biomaterialB_id, :baseMean, :baseMeanA, :baseMeanB, :foldChange, :log2foldChange, :pval, :pvaladj
 FROM feature WHERE uniquename = :feature_uniquename AND organism_id = :organism
 EOF;
 
-            $statement_insert_expressiondata = $db->prepare($query_insert_expressiondata);
-            $statement_insert_expressiondata->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
-            $statement_insert_expressiondata->bindValue('biomaterialA_id', $biomaterial_parentA_id, PDO::PARAM_INT);
-            $statement_insert_expressiondata->bindValue('biomaterialB_id', $biomaterial_parentB_id, PDO::PARAM_INT);
-            $statement_insert_expressiondata->bindParam('baseMean', $param_baseMean, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('baseMeanA', $param_baseMeanA, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('baseMeanB', $param_baseMeanB, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('foldChange', $param_foldChange, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('log2foldChange', $param_log2foldChange, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('pval', $param_pval, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindParam('pvaladj', $param_pvaladj, PDO::PARAM_STR);
+            $statement_insert_diffexp = $db->prepare($query_insert_diffexp);
+            $statement_insert_diffexp->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
+            $statement_insert_diffexp->bindValue('biomaterialA_id', $biomaterial_parentA_id, PDO::PARAM_INT);
+            $statement_insert_diffexp->bindValue('biomaterialB_id', $biomaterial_parentB_id, PDO::PARAM_INT);
+            $statement_insert_diffexp->bindParam('baseMean', $param_baseMean, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindParam('baseMeanA', $param_baseMeanA, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindParam('baseMeanB', $param_baseMeanB, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindParam('foldChange', $param_foldChange, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindParam('log2foldChange', $param_log2foldChange, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindParam('pval', $param_pval, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindParam('pvaladj', $param_pvaladj, PDO::PARAM_STR);
 
-            $statement_insert_expressiondata->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
-            $statement_insert_expressiondata->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
+            $statement_insert_diffexp->bindParam('feature_uniquename', $param_feature_uniquename, PDO::PARAM_STR);
+            $statement_insert_diffexp->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
 
             $file = fopen($filename, 'r');
@@ -128,15 +137,17 @@ EOF;
             while (($line = fgetcsv($file, 0, ",")) !== false) {
                 array_walk($line, array('Importer_Differential_Expressions', 'convertDbl'));
                 list($dummy, $feature_name, $param_baseMean, $param_baseMeanA, $param_baseMeanB, $param_foldChange, $param_log2foldChange, $param_pval, $param_pvaladj) = $line;
+                //this importer may encounter lines of NA NA NA NA (...batman!). skip these
                 if ($feature_name == 'NaN') {
                     $lines_skipped++;
                     continue;
                 }
 
+                //insert diffexp
                 $param_feature_uniquename = IMPORT_PREFIX . "_" . $feature_name;
-                $statement_insert_expressiondata->execute();
+                $statement_insert_diffexp->execute();
 
-                $lines_no_insertion += ($statement_insert_expressiondata->rowCount() == 0) ? 1 : 0;
+                $lines_feature_skipped += ($statement_insert_diffexp->rowCount() == 0) ? 1 : 0;
                 self::updateProgress(++$lines_imported);
             }
             self::preCommitMsg();
@@ -148,9 +159,12 @@ EOF;
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'lines_featurenotfound_skipped' => $lines_no_insertion, 'lines_NA_skipped' => $lines_skipped);
+        return array(LINES_IMPORTED => $lines_imported, 'lines_featurenotfound_skipped' => $lines_feature_skipped, 'lines_NA_skipped' => $lines_skipped);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
 
@@ -172,6 +186,9 @@ EOF;
         return $command;
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
         parent::CLI_checkRequiredOpts($command);
         $options = $command->options;
@@ -180,14 +197,23 @@ EOF;
         AbstractImporter::dieOnMissingArg($options, 'conditionGroupB');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return "Importer for differential expression results";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'differential_expressions';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
 

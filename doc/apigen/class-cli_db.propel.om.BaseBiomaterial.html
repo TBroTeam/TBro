@@ -1,0 +1,4869 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseBiomaterial | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?414348780"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseBiomaterial</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a row from the 'biomaterial' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+BaseObject
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseBiomaterial</span></b>			
+			 implements 
+<span>Persistent</span>
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseBiomaterial.html#30-2487" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseBiomaterial.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="getBiomaterialId" id="_getBiomaterialId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#172-180" title="Go to source code">getBiomaterialId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [biomaterial_id] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [biomaterial_id] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTaxonId" id="_getTaxonId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTaxonId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#182-190" title="Go to source code">getTaxonId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [taxon_id] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [taxon_id] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiosourceproviderId" id="_getBiosourceproviderId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiosourceproviderId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#192-200" title="Go to source code">getBiosourceproviderId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [biosourceprovider_id] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [biosourceprovider_id] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getDbxrefId" id="_getDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#202-210" title="Go to source code">getDbxrefId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [dbxref_id] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [dbxref_id] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getName" id="_getName">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#212-220" title="Go to source code">getName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [name] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [name] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getDescription" id="_getDescription">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#222-230" title="Go to source code">getDescription</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [description] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [description] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBiomaterialId" id="_setBiomaterialId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBiomaterialId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#232-251" title="Go to source code">setBiomaterialId</a>( <span>integer <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [biomaterial_id] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [biomaterial_id] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>integer</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setTaxonId" id="_setTaxonId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setTaxonId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#253-276" title="Go to source code">setTaxonId</a>( <span>integer <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [taxon_id] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [taxon_id] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>integer</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBiosourceproviderId" id="_setBiosourceproviderId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBiosourceproviderId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#278-301" title="Go to source code">setBiosourceproviderId</a>( <span>integer <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [biosourceprovider_id] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [biosourceprovider_id] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>integer</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDbxrefId" id="_setDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#303-322" title="Go to source code">setDbxrefId</a>( <span>integer <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [dbxref_id] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [dbxref_id] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>integer</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setName" id="_setName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#324-343" title="Go to source code">setName</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [name] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [name] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDescription" id="_setDescription">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#345-364" title="Go to source code">setDescription</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [description] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [description] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hasOnlyDefaultValues" id="_hasOnlyDefaultValues">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_hasOnlyDefaultValues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#366-378" title="Go to source code">hasOnlyDefaultValues</a>( )</code>
+
+		<div class="description short">
+			
+<p>Indicates whether the columns in this object are only set to default
+values.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Indicates whether the columns in this object are only set to default
+values.</p>
+
+<p>This method can be used in conjunction with isModified() to indicate whether
+an object is both modified _and_ has some values set which are non-default.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>Whether the columns in this object are only been set with default values.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hydrate" id="_hydrate">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_hydrate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#380-417" title="Go to source code">hydrate</a>( <span>array <var>$row</var></span>, <span>integer <var>$startcol</var> = <span class="php-num">0</span></span>, <span>boolean <var>$rehydrate</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Hydrates (populates) the object variables with values from the database
+resultset.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Hydrates (populates) the object variables with values from the database
+resultset.</p>
+
+<p>An offset (0-based "start column") is specified so that objects can be
+hydrated with a subset of the columns in the resultset rows. This is needed, for
+example, for results of JOIN queries where the resultset row includes columns
+from two or more tables.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$row</var></dt>
+					<dd><code>array</code><br>$row The row returned by PDOStatement-&gt;fetch(PDO::FETCH_NUM)</dd>
+					<dt><var>$startcol</var></dt>
+					<dd><code>integer</code><br>$startcol 0-based offset column which indicates which restultset column to start
+with.</dd>
+					<dt><var>$rehydrate</var></dt>
+					<dd><code>boolean</code><br>$rehydrate Whether this object is being re-hydrated from the database.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>next starting column<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- Any caught Exception will be rewrapped as a PropelException.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="ensureConsistency" id="_ensureConsistency">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_ensureConsistency">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#419-441" title="Go to source code">ensureConsistency</a>( )</code>
+
+		<div class="description short">
+			
+<p>Checks and repairs the internal consistency of the object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Checks and repairs the internal consistency of the object.</p>
+
+<p>This method is executed after an already-instantiated object is re-hydrated
+from the database. It exists to check any foreign keys to make sure that the
+objects related to the current object are correct based on foreign key.</p>
+
+<p>You can override this method in the stub class, but you should always invoke
+the base method from the overridden method (i.e. parent::ensureConsistency()),
+in case your model changes.</p>
+
+
+
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="reload" id="_reload">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_reload">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#443-491" title="Go to source code">reload</a>( <span>boolean <var>$deep</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Reloads this object from datastore based on primary key and (optionally)
+resets all associated objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Reloads this object from datastore based on primary key and (optionally)
+resets all associated objects.</p>
+
+<p>This will only work if the object has been saved and has a valid primary key
+set.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$deep</var></dt>
+					<dd><code>boolean</code><br>$deep (optional) Whether to also de-associated any related objects.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con (optional) The PropelPDO connection to use.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if this object is deleted, unsaved or doesn't have pk match in db<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="delete" id="_delete">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_delete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#493-530" title="Go to source code">delete</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Removes this object from datastore and sets delete attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Removes this object from datastore and sets delete attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+					<code><code><a href="class-Exception.html">Exception</a></code></code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						BaseObject::setDeleted()<br />
+						BaseObject::isDeleted()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="save" id="_save">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_save">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#532-584" title="Go to source code">save</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Persists this object to the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Persists this object to the database.</p>
+
+<p>If the object is new, it inserts it; otherwise an update is performed. All
+modified related objects will also be persisted in the doSave() method. This
+method wraps all precipitate database operations in a single transaction.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>The number of rows affected by this insert/update and any referring fk objects'
+save() operations.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+					<code><code><a href="class-Exception.html">Exception</a></code></code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_doSave">cli_db\propel\om\BaseBiomaterial::doSave()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doSave" id="_doSave">
+
+		<td class="attributes"><code>
+			 protected 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doSave">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#586-706" title="Go to source code">doSave</a>( <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Performs the work of inserting or updating the row in the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Performs the work of inserting or updating the row in the database.</p>
+
+<p>If the object is new, it inserts it; otherwise an update is performed. All
+related objects are also updated in this method.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>The number of rows affected by this insert/update and any referring fk objects'
+save() operations.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_save">cli_db\propel\om\BaseBiomaterial::save()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doInsert" id="_doInsert">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doInsert">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#708-793" title="Go to source code">doInsert</a>( <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Insert the row in the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Insert the row in the database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_doSave">cli_db\propel\om\BaseBiomaterial::doSave()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doUpdate" id="_doUpdate">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doUpdate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#795-807" title="Go to source code">doUpdate</a>( <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Update the row in the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Update the row in the database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_doSave">cli_db\propel\om\BaseBiomaterial::doSave()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getValidationFailures" id="_getValidationFailures">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getValidationFailures">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#815-825" title="Go to source code">getValidationFailures</a>( )</code>
+
+		<div class="description short">
+			
+<p>Gets any ValidationFailed objects that resulted from last call to
+validate().</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets any ValidationFailed objects that resulted from last call to
+validate().</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br>ValidationFailed[]<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_validate">cli_db\propel\om\BaseBiomaterial::validate()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="validate" id="_validate">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_validate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#827-850" title="Go to source code">validate</a>( <span>mixed <var>$columns</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Validates the objects modified field values and all objects related to this
+table.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Validates the objects modified field values and all objects related to this
+table.</p>
+
+<p>If $columns is either a column name or an array of column names only those
+columns are validated.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$columns</var></dt>
+					<dd><code>mixed</code><br>$columns Column name or an array of column names.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>Whether all columns pass validation.<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_doValidate">cli_db\propel\om\BaseBiomaterial::doValidate()</a></code></code><br />
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterial.html#_getValidationFailures">cli_db\propel\om\BaseBiomaterial::getValidationFailures()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doValidate" id="_doValidate">
+
+		<td class="attributes"><code>
+			 protected 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doValidate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#852-931" title="Go to source code">doValidate</a>( <span>array <var>$columns</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>This function performs the validation work for complex object models.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>This function performs the validation work for complex object models.</p>
+
+<p>In addition to checking the current object, all related objects will also be
+validated. If all pass then <code>&lt;span
+class="php-keyword1"&gt;true&lt;/span&gt;</code> is returned; otherwise an
+aggreagated array of ValidationFailed objects will be returned.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$columns</var></dt>
+					<dd><code>array</code><br>$columns Array of column names to validate.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br><code>&lt;span class="php-keyword1"&gt;true&lt;/span&gt;</code> if all
+validations pass; array of <code>ValidationFailed</code> objets otherwise.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getByName" id="_getByName">
+
+		<td class="attributes"><code>
+			 public 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#933-949" title="Go to source code">getByName</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span> )</code>
+
+		<div class="description short">
+			
+<p>Retrieves a field from the object by name passed in as a string.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Retrieves a field from the object by name passed in as a string.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name name</dd>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type The type of fieldname the $name is of: one of the class type constants
+BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME BasePeer::TYPE_COLNAME,
+BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. Defaults to BasePeer::TYPE_PHPNAME</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Value of field.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getByPosition" id="_getByPosition">
+
+		<td class="attributes"><code>
+			 public 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getByPosition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#951-983" title="Go to source code">getByPosition</a>( <span>integer <var>$pos</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Retrieves a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Retrieves a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pos</var></dt>
+					<dd><code>integer</code><br>$pos position in xml schema</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Value of field at $pos<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="toArray" id="_toArray">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_toArray">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#985-1037" title="Go to source code">toArray</a>( <span>string <var>$keyType</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span>, <span>boolean <var>$includeLazyLoadColumns</var> = <span class="php-keyword1">true</span></span>, <span>array <var>$alreadyDumpedObjects</var> = <span class="php-keyword1">array</span>()</span>, <span>boolean <var>$includeForeignObjects</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exports the object as an array.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exports the object as an array.</p>
+
+<p>You can specify the key type of the array by passing one of the class type
+constants.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keyType</var></dt>
+					<dd><code>string</code><br>$keyType (optional) One of the class type constants BasePeer::TYPE_PHPNAME,
+BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME,
+BasePeer::TYPE_NUM. Defaults to BasePeer::TYPE_PHPNAME.</dd>
+					<dt><var>$includeLazyLoadColumns</var></dt>
+					<dd><code>boolean</code><br>$includeLazyLoadColumns (optional) Whether to include lazy loaded columns.
+Defaults to true.</dd>
+					<dt><var>$alreadyDumpedObjects</var></dt>
+					<dd><code>array</code><br>$alreadyDumpedObjects List of objects to skip to avoid recursion</dd>
+					<dt><var>$includeForeignObjects</var></dt>
+					<dd><code>boolean</code><br>$includeForeignObjects (optional) Whether to include hydrated related objects.
+Default to FALSE.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br>an associative array containing the field names (as keys) and field values<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setByName" id="_setByName">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1039-1055" title="Go to source code">setByName</a>( <span>string <var>$name</var></span>, <span>mixed <var>$value</var></span>, <span>string <var>$type</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a field from the object by name passed in as a string.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a field from the object by name passed in as a string.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name peer name</dd>
+					<dt><var>$value</var></dt>
+					<dd><code>mixed</code><br>$value field value</dd>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type The type of fieldname the $name is of: one of the class type constants
+BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME BasePeer::TYPE_COLNAME,
+BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. Defaults to BasePeer::TYPE_PHPNAME</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setByPosition" id="_setByPosition">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setByPosition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1057-1087" title="Go to source code">setByPosition</a>( <span>integer <var>$pos</var></span>, <span>mixed <var>$value</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pos</var></dt>
+					<dd><code>integer</code><br>$pos position in xml schema</dd>
+					<dt><var>$value</var></dt>
+					<dd><code>mixed</code><br>$value field value</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="fromArray" id="_fromArray">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_fromArray">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1089-1116" title="Go to source code">fromArray</a>( <span>array <var>$arr</var></span>, <span>string <var>$keyType</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span> )</code>
+
+		<div class="description short">
+			
+<p>Populates the object using an array.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Populates the object using an array.</p>
+
+<p>This is particularly useful when populating an object from one of the request
+arrays (e.g. $_POST). This method goes through the column names, checking to see
+whether a matching key exists in populated array. If so the setByName() method
+is called for that column.</p>
+
+<p>You can specify the key type of the array by additionally passing one of the
+class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME,
+BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. The
+default key type is the column's BasePeer::TYPE_PHPNAME</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$arr</var></dt>
+					<dd><code>array</code><br>$arr An array to populate the object from.</dd>
+					<dt><var>$keyType</var></dt>
+					<dd><code>string</code><br>$keyType The type of keys the array uses.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="buildCriteria" id="_buildCriteria">
+
+		<td class="attributes"><code>
+			 public 
+			Criteria
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildCriteria">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1118-1135" title="Go to source code">buildCriteria</a>( )</code>
+
+		<div class="description short">
+			
+<p>Build a Criteria object containing the values of all modified columns in this
+object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Build a Criteria object containing the values of all modified columns in this
+object.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Criteria</code><br>The Criteria object containing all modified values.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="buildPkeyCriteria" id="_buildPkeyCriteria">
+
+		<td class="attributes"><code>
+			 public 
+			Criteria
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildPkeyCriteria">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1137-1151" title="Go to source code">buildPkeyCriteria</a>( )</code>
+
+		<div class="description short">
+			
+<p>Builds a Criteria object containing the primary key for this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Builds a Criteria object containing the primary key for this object.</p>
+
+<p>Unlike buildCriteria() this method includes the primary key values regardless
+of whether or not they have been modified.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Criteria</code><br>The Criteria object containing value(s) for primary key(s).<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPrimaryKey" id="_getPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1153-1160" title="Go to source code">getPrimaryKey</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns the primary key for this object (row).</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the primary key for this object (row).</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setPrimaryKey" id="_setPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1162-1171" title="Go to source code">setPrimaryKey</a>( <span>integer <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Generic method to set the primary key (biomaterial_id column).</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Generic method to set the primary key (biomaterial_id column).</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>integer</code><br>$key Primary key.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isPrimaryKeyNull" id="_isPrimaryKeyNull">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isPrimaryKeyNull">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1173-1181" title="Go to source code">isPrimaryKeyNull</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns true if the primary key for this object is null.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns true if the primary key for this object is null.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="copyInto" id="_copyInto">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_copyInto">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1183-1241" title="Go to source code">copyInto</a>( <span>object <var>$copyObj</var></span>, <span>boolean <var>$deepCopy</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$makeNew</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets contents of passed object to values from current object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets contents of passed object to values from current object.</p>
+
+<p>If desired, this method can also make copies of all associated (fkey
+referrers) objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$copyObj</var></dt>
+					<dd><code>object</code><br>$copyObj An object of Biomaterial (or compatible) type.</dd>
+					<dt><var>$deepCopy</var></dt>
+					<dd><code>boolean</code><br>$deepCopy Whether to also copy all rows that refer (by fkey) to the current row.</dd>
+					<dt><var>$makeNew</var></dt>
+					<dd><code>boolean</code><br>$makeNew Whether to reset autoincrement PKs and make the object new.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="copy" id="_copy">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_copy">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1243-1263" title="Go to source code">copy</a>( <span>boolean <var>$deepCopy</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Makes a copy of this object that will be inserted as a new row in table when
+saved. It creates a new object filling in the simple attributes, but skipping
+any primary keys that are defined for the table.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Makes a copy of this object that will be inserted as a new row in table when
+saved. It creates a new object filling in the simple attributes, but skipping
+any primary keys that are defined for the table.</p>
+
+<p>If desired, this method can also make copies of all associated (fkey
+referrers) objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$deepCopy</var></dt>
+					<dd><code>boolean</code><br>$deepCopy Whether to also copy all rows that refer (by fkey) to the current row.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>Clone of current object.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPeer" id="_getPeer">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialPeer.html">cli_db\propel\BiomaterialPeer</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPeer">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1265-1281" title="Go to source code">getPeer</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns a peer instance associated with this om.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a peer instance associated with this om.</p>
+
+<p>Since Peer classes are not to have any instance attributes, this method
+returns the same instance for all member of this class. The method could
+therefore be static, but this would prevent one from overriding the
+behavior.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialPeer.html">cli_db\propel\BiomaterialPeer</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setContact" id="_setContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1283-1308" title="Go to source code">setContact</a>( <span><code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code> <var>$v</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Declares an association between this object and a Contact object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Declares an association between this object and a Contact object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code></code><br>$v</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getContact" id="_getContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1311-1333" title="Go to source code">getContact</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>mixed <var>$doQuery</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Get the associated Contact object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the associated Contact object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional Connection object.</dd>
+					<dt><var>$doQuery</var></dt>
+					<dd><code>mixed</code><br>$doQuery Executes a query to get the object if required</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code></code><br>The associated Contact object.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setOrganism" id="_setOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1335-1360" title="Go to source code">setOrganism</a>( <span><code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code> <var>$v</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Declares an association between this object and a Organism object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Declares an association between this object and a Organism object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code></code><br>$v</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOrganism" id="_getOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1363-1385" title="Go to source code">getOrganism</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>mixed <var>$doQuery</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Get the associated Organism object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the associated Organism object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional Connection object.</dd>
+					<dt><var>$doQuery</var></dt>
+					<dd><code>mixed</code><br>$doQuery Executes a query to get the object if required</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code></code><br>The associated Organism object.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initRelation" id="_initRelation">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initRelation">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1388-1410" title="Go to source code">initRelation</a>( <span>string <var>$relationName</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes a collection based on the name of a relation. Avoids crafting an
+'init[$relationName]s' method name that wouldn't work when
+StandardEnglishPluralizer is used.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes a collection based on the name of a relation. Avoids crafting an
+'init[$relationName]s' method name that wouldn't work when
+StandardEnglishPluralizer is used.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationName</var></dt>
+					<dd><code>string</code><br>$relationName The name of the relation to initialize</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearAssayBiomaterials" id="_clearAssayBiomaterials">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearAssayBiomaterials">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1412-1427" title="Go to source code">clearAssayBiomaterials</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears out the collAssayBiomaterials collection</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears out the collAssayBiomaterials collection</p>
+
+<p>This does not modify the database; however, it will remove any associated
+objects, causing them to be refetched by subsequent calls to accessor
+method.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						addAssayBiomaterials()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resetPartialAssayBiomaterials" id="_resetPartialAssayBiomaterials">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resetPartialAssayBiomaterials">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1429-1437" title="Go to source code">resetPartialAssayBiomaterials</a>( <span>mixed <var>$v</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>reset is the collAssayBiomaterials collection loaded partially</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>reset is the collAssayBiomaterials collection loaded partially</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initAssayBiomaterials" id="_initAssayBiomaterials">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initAssayBiomaterials">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1439-1458" title="Go to source code">initAssayBiomaterials</a>( <span>boolean <var>$overrideExisting</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes the collAssayBiomaterials collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes the collAssayBiomaterials collection.</p>
+
+<p>By default this just sets the collAssayBiomaterials collection to an empty
+array (like clearcollAssayBiomaterials()); however, you may wish to override
+this method in your stub class to provide setting appropriate to your
+application -- for example, setting the initial array to the values stored in
+database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$overrideExisting</var></dt>
+					<dd><code>boolean</code><br>$overrideExisting If set to true, the method call initializes the collection
+even if it is not empty</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAssayBiomaterials" id="_getAssayBiomaterials">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAssayBiomaterials">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1460-1516" title="Go to source code">getAssayBiomaterials</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets an array of AssayBiomaterial objects which contain a foreign key that
+references this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets an array of AssayBiomaterial objects which contain a foreign key that
+references this object.</p>
+
+<p>If the $criteria is not null, it is used to always fetch the results from the
+database. Otherwise the results are fetched from the database the first time,
+then cached. Next time the same method is called without $criteria, the cached
+collection is returned. If this Biomaterial is new, it will return an empty
+collection or the current collection; the criteria is ignored on a new
+object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a>[]</code></code><br>List of AssayBiomaterial objects<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setAssayBiomaterials" id="_setAssayBiomaterials">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setAssayBiomaterials">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1518-1547" title="Go to source code">setAssayBiomaterials</a>( <span>PropelCollection <var>$assayBiomaterials</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a collection of AssayBiomaterial objects related by a one-to-many
+relationship to the current object. It will also schedule objects for deletion
+based on a diff between old objects (aka persisted) and new objects from the
+given Propel collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a collection of AssayBiomaterial objects related by a one-to-many
+relationship to the current object. It will also schedule objects for deletion
+based on a diff between old objects (aka persisted) and new objects from the
+given Propel collection.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assayBiomaterials</var></dt>
+					<dd><code>PropelCollection</code><br>$assayBiomaterials A Propel collection.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="countAssayBiomaterials" id="_countAssayBiomaterials">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_countAssayBiomaterials">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1549-1580" title="Go to source code">countAssayBiomaterials</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$distinct</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns the number of related AssayBiomaterial objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the number of related AssayBiomaterial objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria</dd>
+					<dt><var>$distinct</var></dt>
+					<dd><code>boolean</code><br>$distinct</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>Count of related AssayBiomaterial objects.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addAssayBiomaterial" id="_addAssayBiomaterial">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addAssayBiomaterial">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1582-1600" title="Go to source code">addAssayBiomaterial</a>( <span><code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a></code> <var>$l</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Method called to associate a AssayBiomaterial object to this object through
+the AssayBiomaterial foreign key attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Method called to associate a AssayBiomaterial object to this object through
+the AssayBiomaterial foreign key attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$l</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a></code></code><br>$l AssayBiomaterial</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doAddAssayBiomaterial" id="_doAddAssayBiomaterial">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doAddAssayBiomaterial">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1602-1609" title="Go to source code">doAddAssayBiomaterial</a>( <span><code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a></code> <var>$assayBiomaterial</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assayBiomaterial</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a></code></code><br>$assayBiomaterial The assayBiomaterial object to add.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeAssayBiomaterial" id="_removeAssayBiomaterial">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeAssayBiomaterial">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1611-1628" title="Go to source code">removeAssayBiomaterial</a>( <span><code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a></code> <var>$assayBiomaterial</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assayBiomaterial</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a></code></code><br>$assayBiomaterial The assayBiomaterial object to remove.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAssayBiomaterialsJoinAssay" id="_getAssayBiomaterialsJoinAssay">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAssayBiomaterialsJoinAssay">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1631-1653" title="Go to source code">getAssayBiomaterialsJoinAssay</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related AssayBiomaterials from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related AssayBiomaterials from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Biomaterial.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a>[]</code></code><br>List of AssayBiomaterial objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearBiomaterialRelationshipsRelatedByObjectId" id="_clearBiomaterialRelationshipsRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearBiomaterialRelationshipsRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1655-1670" title="Go to source code">clearBiomaterialRelationshipsRelatedByObjectId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears out the collBiomaterialRelationshipsRelatedByObjectId collection</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears out the collBiomaterialRelationshipsRelatedByObjectId collection</p>
+
+<p>This does not modify the database; however, it will remove any associated
+objects, causing them to be refetched by subsequent calls to accessor
+method.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						addBiomaterialRelationshipsRelatedByObjectId()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resetPartialBiomaterialRelationshipsRelatedByObjectId" id="_resetPartialBiomaterialRelationshipsRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resetPartialBiomaterialRelationshipsRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1672-1680" title="Go to source code">resetPartialBiomaterialRelationshipsRelatedByObjectId</a>( <span>mixed <var>$v</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>reset is the collBiomaterialRelationshipsRelatedByObjectId collection loaded
+partially</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>reset is the collBiomaterialRelationshipsRelatedByObjectId collection loaded
+partially</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initBiomaterialRelationshipsRelatedByObjectId" id="_initBiomaterialRelationshipsRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initBiomaterialRelationshipsRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1682-1701" title="Go to source code">initBiomaterialRelationshipsRelatedByObjectId</a>( <span>boolean <var>$overrideExisting</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes the collBiomaterialRelationshipsRelatedByObjectId collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes the collBiomaterialRelationshipsRelatedByObjectId collection.</p>
+
+<p>By default this just sets the collBiomaterialRelationshipsRelatedByObjectId
+collection to an empty array (like
+clearcollBiomaterialRelationshipsRelatedByObjectId()); however, you may wish to
+override this method in your stub class to provide setting appropriate to your
+application -- for example, setting the initial array to the values stored in
+database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$overrideExisting</var></dt>
+					<dd><code>boolean</code><br>$overrideExisting If set to true, the method call initializes the collection
+even if it is not empty</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiomaterialRelationshipsRelatedByObjectId" id="_getBiomaterialRelationshipsRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialRelationshipsRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1703-1759" title="Go to source code">getBiomaterialRelationshipsRelatedByObjectId</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets an array of BiomaterialRelationship objects which contain a foreign key
+that references this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets an array of BiomaterialRelationship objects which contain a foreign key
+that references this object.</p>
+
+<p>If the $criteria is not null, it is used to always fetch the results from the
+database. Otherwise the results are fetched from the database the first time,
+then cached. Next time the same method is called without $criteria, the cached
+collection is returned. If this Biomaterial is new, it will return an empty
+collection or the current collection; the criteria is ignored on a new
+object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code></code><br>List of BiomaterialRelationship objects<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBiomaterialRelationshipsRelatedByObjectId" id="_setBiomaterialRelationshipsRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBiomaterialRelationshipsRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1761-1790" title="Go to source code">setBiomaterialRelationshipsRelatedByObjectId</a>( <span>PropelCollection <var>$biomaterialRelationshipsRelatedByObjectId</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a collection of BiomaterialRelationshipRelatedByObjectId objects related
+by a one-to-many relationship to the current object. It will also schedule
+objects for deletion based on a diff between old objects (aka persisted) and new
+objects from the given Propel collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a collection of BiomaterialRelationshipRelatedByObjectId objects related
+by a one-to-many relationship to the current object. It will also schedule
+objects for deletion based on a diff between old objects (aka persisted) and new
+objects from the given Propel collection.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipsRelatedByObjectId</var></dt>
+					<dd><code>PropelCollection</code><br>$biomaterialRelationshipsRelatedByObjectId A Propel collection.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="countBiomaterialRelationshipsRelatedByObjectId" id="_countBiomaterialRelationshipsRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_countBiomaterialRelationshipsRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1792-1823" title="Go to source code">countBiomaterialRelationshipsRelatedByObjectId</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$distinct</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns the number of related BiomaterialRelationship objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the number of related BiomaterialRelationship objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria</dd>
+					<dt><var>$distinct</var></dt>
+					<dd><code>boolean</code><br>$distinct</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>Count of related BiomaterialRelationship objects.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addBiomaterialRelationshipRelatedByObjectId" id="_addBiomaterialRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addBiomaterialRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1825-1843" title="Go to source code">addBiomaterialRelationshipRelatedByObjectId</a>( <span><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code> <var>$l</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Method called to associate a BiomaterialRelationship object to this object
+through the BiomaterialRelationship foreign key attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Method called to associate a BiomaterialRelationship object to this object
+through the BiomaterialRelationship foreign key attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$l</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br>$l BiomaterialRelationship</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doAddBiomaterialRelationshipRelatedByObjectId" id="_doAddBiomaterialRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doAddBiomaterialRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1845-1852" title="Go to source code">doAddBiomaterialRelationshipRelatedByObjectId</a>( <span>BiomaterialRelationshipRelatedByObjectId <var>$biomaterialRelationshipRelatedByObjectId</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipRelatedByObjectId</var></dt>
+					<dd><code>BiomaterialRelationshipRelatedByObjectId</code><br>$biomaterialRelationshipRelatedByObjectId The
+biomaterialRelationshipRelatedByObjectId object to add.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeBiomaterialRelationshipRelatedByObjectId" id="_removeBiomaterialRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeBiomaterialRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1854-1871" title="Go to source code">removeBiomaterialRelationshipRelatedByObjectId</a>( <span>BiomaterialRelationshipRelatedByObjectId <var>$biomaterialRelationshipRelatedByObjectId</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipRelatedByObjectId</var></dt>
+					<dd><code>BiomaterialRelationshipRelatedByObjectId</code><br>$biomaterialRelationshipRelatedByObjectId The
+biomaterialRelationshipRelatedByObjectId object to remove.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiomaterialRelationshipsRelatedByObjectIdJoinCvterm" id="_getBiomaterialRelationshipsRelatedByObjectIdJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialRelationshipsRelatedByObjectIdJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1874-1896" title="Go to source code">getBiomaterialRelationshipsRelatedByObjectIdJoinCvterm</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related BiomaterialRelationshipsRelatedByObjectId from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related BiomaterialRelationshipsRelatedByObjectId from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Biomaterial.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code></code><br>List of BiomaterialRelationship objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearBiomaterialRelationshipsRelatedBySubjectId" id="_clearBiomaterialRelationshipsRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearBiomaterialRelationshipsRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1898-1913" title="Go to source code">clearBiomaterialRelationshipsRelatedBySubjectId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears out the collBiomaterialRelationshipsRelatedBySubjectId collection</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears out the collBiomaterialRelationshipsRelatedBySubjectId collection</p>
+
+<p>This does not modify the database; however, it will remove any associated
+objects, causing them to be refetched by subsequent calls to accessor
+method.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						addBiomaterialRelationshipsRelatedBySubjectId()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resetPartialBiomaterialRelationshipsRelatedBySubjectId" id="_resetPartialBiomaterialRelationshipsRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resetPartialBiomaterialRelationshipsRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1915-1923" title="Go to source code">resetPartialBiomaterialRelationshipsRelatedBySubjectId</a>( <span>mixed <var>$v</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>reset is the collBiomaterialRelationshipsRelatedBySubjectId collection loaded
+partially</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>reset is the collBiomaterialRelationshipsRelatedBySubjectId collection loaded
+partially</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initBiomaterialRelationshipsRelatedBySubjectId" id="_initBiomaterialRelationshipsRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initBiomaterialRelationshipsRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1925-1944" title="Go to source code">initBiomaterialRelationshipsRelatedBySubjectId</a>( <span>boolean <var>$overrideExisting</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes the collBiomaterialRelationshipsRelatedBySubjectId
+collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes the collBiomaterialRelationshipsRelatedBySubjectId
+collection.</p>
+
+<p>By default this just sets the collBiomaterialRelationshipsRelatedBySubjectId
+collection to an empty array (like
+clearcollBiomaterialRelationshipsRelatedBySubjectId()); however, you may wish to
+override this method in your stub class to provide setting appropriate to your
+application -- for example, setting the initial array to the values stored in
+database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$overrideExisting</var></dt>
+					<dd><code>boolean</code><br>$overrideExisting If set to true, the method call initializes the collection
+even if it is not empty</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiomaterialRelationshipsRelatedBySubjectId" id="_getBiomaterialRelationshipsRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialRelationshipsRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#1946-2002" title="Go to source code">getBiomaterialRelationshipsRelatedBySubjectId</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets an array of BiomaterialRelationship objects which contain a foreign key
+that references this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets an array of BiomaterialRelationship objects which contain a foreign key
+that references this object.</p>
+
+<p>If the $criteria is not null, it is used to always fetch the results from the
+database. Otherwise the results are fetched from the database the first time,
+then cached. Next time the same method is called without $criteria, the cached
+collection is returned. If this Biomaterial is new, it will return an empty
+collection or the current collection; the criteria is ignored on a new
+object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code></code><br>List of BiomaterialRelationship objects<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBiomaterialRelationshipsRelatedBySubjectId" id="_setBiomaterialRelationshipsRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBiomaterialRelationshipsRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2004-2033" title="Go to source code">setBiomaterialRelationshipsRelatedBySubjectId</a>( <span>PropelCollection <var>$biomaterialRelationshipsRelatedBySubjectId</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a collection of BiomaterialRelationshipRelatedBySubjectId objects
+related by a one-to-many relationship to the current object. It will also
+schedule objects for deletion based on a diff between old objects (aka
+persisted) and new objects from the given Propel collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a collection of BiomaterialRelationshipRelatedBySubjectId objects
+related by a one-to-many relationship to the current object. It will also
+schedule objects for deletion based on a diff between old objects (aka
+persisted) and new objects from the given Propel collection.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipsRelatedBySubjectId</var></dt>
+					<dd><code>PropelCollection</code><br>$biomaterialRelationshipsRelatedBySubjectId A Propel collection.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="countBiomaterialRelationshipsRelatedBySubjectId" id="_countBiomaterialRelationshipsRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_countBiomaterialRelationshipsRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2035-2066" title="Go to source code">countBiomaterialRelationshipsRelatedBySubjectId</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$distinct</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns the number of related BiomaterialRelationship objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the number of related BiomaterialRelationship objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria</dd>
+					<dt><var>$distinct</var></dt>
+					<dd><code>boolean</code><br>$distinct</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>Count of related BiomaterialRelationship objects.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addBiomaterialRelationshipRelatedBySubjectId" id="_addBiomaterialRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addBiomaterialRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2068-2086" title="Go to source code">addBiomaterialRelationshipRelatedBySubjectId</a>( <span><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code> <var>$l</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Method called to associate a BiomaterialRelationship object to this object
+through the BiomaterialRelationship foreign key attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Method called to associate a BiomaterialRelationship object to this object
+through the BiomaterialRelationship foreign key attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$l</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br>$l BiomaterialRelationship</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doAddBiomaterialRelationshipRelatedBySubjectId" id="_doAddBiomaterialRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doAddBiomaterialRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2088-2095" title="Go to source code">doAddBiomaterialRelationshipRelatedBySubjectId</a>( <span>BiomaterialRelationshipRelatedBySubjectId <var>$biomaterialRelationshipRelatedBySubjectId</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipRelatedBySubjectId</var></dt>
+					<dd><code>BiomaterialRelationshipRelatedBySubjectId</code><br>$biomaterialRelationshipRelatedBySubjectId The
+biomaterialRelationshipRelatedBySubjectId object to add.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeBiomaterialRelationshipRelatedBySubjectId" id="_removeBiomaterialRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeBiomaterialRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2097-2114" title="Go to source code">removeBiomaterialRelationshipRelatedBySubjectId</a>( <span>BiomaterialRelationshipRelatedBySubjectId <var>$biomaterialRelationshipRelatedBySubjectId</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipRelatedBySubjectId</var></dt>
+					<dd><code>BiomaterialRelationshipRelatedBySubjectId</code><br>$biomaterialRelationshipRelatedBySubjectId The
+biomaterialRelationshipRelatedBySubjectId object to remove.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiomaterialRelationshipsRelatedBySubjectIdJoinCvterm" id="_getBiomaterialRelationshipsRelatedBySubjectIdJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialRelationshipsRelatedBySubjectIdJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2117-2139" title="Go to source code">getBiomaterialRelationshipsRelatedBySubjectIdJoinCvterm</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related BiomaterialRelationshipsRelatedBySubjectId from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related BiomaterialRelationshipsRelatedBySubjectId from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Biomaterial.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code></code><br>List of BiomaterialRelationship objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearBiomaterialprops" id="_clearBiomaterialprops">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearBiomaterialprops">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2141-2156" title="Go to source code">clearBiomaterialprops</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears out the collBiomaterialprops collection</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears out the collBiomaterialprops collection</p>
+
+<p>This does not modify the database; however, it will remove any associated
+objects, causing them to be refetched by subsequent calls to accessor
+method.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						addBiomaterialprops()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resetPartialBiomaterialprops" id="_resetPartialBiomaterialprops">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resetPartialBiomaterialprops">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2158-2166" title="Go to source code">resetPartialBiomaterialprops</a>( <span>mixed <var>$v</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>reset is the collBiomaterialprops collection loaded partially</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>reset is the collBiomaterialprops collection loaded partially</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initBiomaterialprops" id="_initBiomaterialprops">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initBiomaterialprops">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2168-2187" title="Go to source code">initBiomaterialprops</a>( <span>boolean <var>$overrideExisting</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes the collBiomaterialprops collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes the collBiomaterialprops collection.</p>
+
+<p>By default this just sets the collBiomaterialprops collection to an empty
+array (like clearcollBiomaterialprops()); however, you may wish to override this
+method in your stub class to provide setting appropriate to your application --
+for example, setting the initial array to the values stored in database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$overrideExisting</var></dt>
+					<dd><code>boolean</code><br>$overrideExisting If set to true, the method call initializes the collection
+even if it is not empty</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiomaterialprops" id="_getBiomaterialprops">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialprops">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2189-2245" title="Go to source code">getBiomaterialprops</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets an array of Biomaterialprop objects which contain a foreign key that
+references this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets an array of Biomaterialprop objects which contain a foreign key that
+references this object.</p>
+
+<p>If the $criteria is not null, it is used to always fetch the results from the
+database. Otherwise the results are fetched from the database the first time,
+then cached. Next time the same method is called without $criteria, the cached
+collection is returned. If this Biomaterial is new, it will return an empty
+collection or the current collection; the criteria is ignored on a new
+object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a>[]</code></code><br>List of Biomaterialprop objects<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBiomaterialprops" id="_setBiomaterialprops">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBiomaterialprops">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2247-2276" title="Go to source code">setBiomaterialprops</a>( <span>PropelCollection <var>$biomaterialprops</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a collection of Biomaterialprop objects related by a one-to-many
+relationship to the current object. It will also schedule objects for deletion
+based on a diff between old objects (aka persisted) and new objects from the
+given Propel collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a collection of Biomaterialprop objects related by a one-to-many
+relationship to the current object. It will also schedule objects for deletion
+based on a diff between old objects (aka persisted) and new objects from the
+given Propel collection.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialprops</var></dt>
+					<dd><code>PropelCollection</code><br>$biomaterialprops A Propel collection.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="countBiomaterialprops" id="_countBiomaterialprops">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_countBiomaterialprops">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2278-2309" title="Go to source code">countBiomaterialprops</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$distinct</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns the number of related Biomaterialprop objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the number of related Biomaterialprop objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria</dd>
+					<dt><var>$distinct</var></dt>
+					<dd><code>boolean</code><br>$distinct</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>Count of related Biomaterialprop objects.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addBiomaterialprop" id="_addBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2311-2329" title="Go to source code">addBiomaterialprop</a>( <span><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code> <var>$l</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Method called to associate a Biomaterialprop object to this object through
+the Biomaterialprop foreign key attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Method called to associate a Biomaterialprop object to this object through
+the Biomaterialprop foreign key attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$l</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code></code><br>$l Biomaterialprop</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doAddBiomaterialprop" id="_doAddBiomaterialprop">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doAddBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2331-2338" title="Go to source code">doAddBiomaterialprop</a>( <span><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code> <var>$biomaterialprop</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialprop</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code></code><br>$biomaterialprop The biomaterialprop object to add.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeBiomaterialprop" id="_removeBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2340-2357" title="Go to source code">removeBiomaterialprop</a>( <span><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code> <var>$biomaterialprop</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialprop</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code></code><br>$biomaterialprop The biomaterialprop object to remove.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBiomaterialpropsJoinCvterm" id="_getBiomaterialpropsJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBiomaterialpropsJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2360-2382" title="Go to source code">getBiomaterialpropsJoinCvterm</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related Biomaterialprops from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Biomaterial is new, it will return
+an empty collection; or if this Biomaterial has previously been saved, it will
+retrieve related Biomaterialprops from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Biomaterial.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a>[]</code></code><br>List of Biomaterialprop objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clear" id="_clear">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2384-2402" title="Go to source code">clear</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears the current object and sets all attributes to their default values</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears the current object and sets all attributes to their default values</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearAllReferences" id="_clearAllReferences">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearAllReferences">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2404-2465" title="Go to source code">clearAllReferences</a>( <span>boolean <var>$deep</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Resets all references to other model objects or collections of model
+objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Resets all references to other model objects or collections of model
+objects.</p>
+
+<p>This method is a user-space workaround for PHP's inability to garbage collect
+objects with circular references (even in PHP 5.3). This is currently necessary
+when using Propel in certain daemon or large-volumne/high-memory operations.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$deep</var></dt>
+					<dd><code>boolean</code><br>$deep Whether to also clear the references on all referrer objects.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__toString" id="___toString">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___toString">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2467-2475" title="Go to source code">__toString</a>( )</code>
+
+		<div class="description short">
+			
+<p>return the string representation of this object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>return the string representation of this object</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isAlreadyInSave" id="_isAlreadyInSave">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAlreadyInSave">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterial.html#2477-2485" title="Go to source code">isAlreadyInSave</a>( )</code>
+
+		<div class="description short">
+			
+<p>return true is the object is in saving state</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>return true is the object is in saving state</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="PEER" id="PEER">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name"><code>
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#39-42" title="Go to source code"><b>PEER</b></a>
+		</code></td>
+		<td class="value"><code><span class="php-quote">'cli_db\\propel\\BiomaterialPeer'</span></code></td>
+		<td class="description"><div>
+			<a href="#PEER" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Peer class name</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Peer class name</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="peer" id="$peer">
+		<td class="attributes"><code>
+			protected static 
+			<code><a href="class-cli_db.propel.BiomaterialPeer.html">cli_db\propel\BiomaterialPeer</a></code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#44-50" title="Go to source code"><var>$peer</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$peer" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The Peer class. Instance provides a convenient way of calling static methods
+on a class that calling code may not be able to identify.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The Peer class. Instance provides a convenient way of calling static methods
+on a class that calling code may not be able to identify.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="startCopy" id="$startCopy">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#52-56" title="Go to source code"><var>$startCopy</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$startCopy" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The flag var to prevent infinit loop in deep copy</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The flag var to prevent infinit loop in deep copy</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="biomaterial_id" id="$biomaterial_id">
+		<td class="attributes"><code>
+			protected  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#58-62" title="Go to source code"><var>$biomaterial_id</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$biomaterial_id" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the biomaterial_id field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the biomaterial_id field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="taxon_id" id="$taxon_id">
+		<td class="attributes"><code>
+			protected  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#64-68" title="Go to source code"><var>$taxon_id</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$taxon_id" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the taxon_id field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the taxon_id field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="biosourceprovider_id" id="$biosourceprovider_id">
+		<td class="attributes"><code>
+			protected  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#70-74" title="Go to source code"><var>$biosourceprovider_id</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$biosourceprovider_id" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the biosourceprovider_id field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the biosourceprovider_id field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="dbxref_id" id="$dbxref_id">
+		<td class="attributes"><code>
+			protected  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#76-80" title="Go to source code"><var>$dbxref_id</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$dbxref_id" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the dbxref_id field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the dbxref_id field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="name" id="$name">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#82-86" title="Go to source code"><var>$name</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$name" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the name field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the name field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="description" id="$description">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#88-92" title="Go to source code"><var>$description</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$description" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the description field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the description field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="aContact" id="$aContact">
+		<td class="attributes"><code>
+			protected  
+			<code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#94-97" title="Go to source code"><var>$aContact</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$aContact" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="aOrganism" id="$aOrganism">
+		<td class="attributes"><code>
+			protected  
+			<code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#99-102" title="Go to source code"><var>$aOrganism</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$aOrganism" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collAssayBiomaterials" id="$collAssayBiomaterials">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection|<code><a href="class-cli_db.propel.AssayBiomaterial.html">cli_db\propel\AssayBiomaterial</a>[]</code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#104-107" title="Go to source code"><var>$collAssayBiomaterials</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collAssayBiomaterials" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Collection to store aggregation of AssayBiomaterial objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Collection to store aggregation of AssayBiomaterial objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collAssayBiomaterialsPartial" id="$collAssayBiomaterialsPartial">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#108" title="Go to source code"><var>$collAssayBiomaterialsPartial</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collAssayBiomaterialsPartial" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collBiomaterialRelationshipsRelatedByObjectId" id="$collBiomaterialRelationshipsRelatedByObjectId">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#110-113" title="Go to source code"><var>$collBiomaterialRelationshipsRelatedByObjectId</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collBiomaterialRelationshipsRelatedByObjectId" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Collection to store aggregation of BiomaterialRelationship objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Collection to store aggregation of BiomaterialRelationship objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collBiomaterialRelationshipsRelatedByObjectIdPartial" id="$collBiomaterialRelationshipsRelatedByObjectIdPartial">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#114" title="Go to source code"><var>$collBiomaterialRelationshipsRelatedByObjectIdPartial</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collBiomaterialRelationshipsRelatedByObjectIdPartial" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collBiomaterialRelationshipsRelatedBySubjectId" id="$collBiomaterialRelationshipsRelatedBySubjectId">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#116-119" title="Go to source code"><var>$collBiomaterialRelationshipsRelatedBySubjectId</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collBiomaterialRelationshipsRelatedBySubjectId" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Collection to store aggregation of BiomaterialRelationship objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Collection to store aggregation of BiomaterialRelationship objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collBiomaterialRelationshipsRelatedBySubjectIdPartial" id="$collBiomaterialRelationshipsRelatedBySubjectIdPartial">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#120" title="Go to source code"><var>$collBiomaterialRelationshipsRelatedBySubjectIdPartial</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collBiomaterialRelationshipsRelatedBySubjectIdPartial" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collBiomaterialprops" id="$collBiomaterialprops">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a>[]</code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#122-125" title="Go to source code"><var>$collBiomaterialprops</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collBiomaterialprops" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Collection to store aggregation of Biomaterialprop objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Collection to store aggregation of Biomaterialprop objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collBiomaterialpropsPartial" id="$collBiomaterialpropsPartial">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#126" title="Go to source code"><var>$collBiomaterialpropsPartial</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collBiomaterialpropsPartial" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="alreadyInSave" id="$alreadyInSave">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#128-133" title="Go to source code"><var>$alreadyInSave</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$alreadyInSave" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Flag to prevent endless save loop, if this object is referenced by another
+object which falls in this transaction.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Flag to prevent endless save loop, if this object is referenced by another
+object which falls in this transaction.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="alreadyInValidation" id="$alreadyInValidation">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#135-140" title="Go to source code"><var>$alreadyInValidation</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$alreadyInValidation" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Flag to prevent endless validation loop, if this object is referenced by
+another object which falls in this transaction.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Flag to prevent endless validation loop, if this object is referenced by
+another object which falls in this transaction.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="alreadyInClearAllReferencesDeep" id="$alreadyInClearAllReferencesDeep">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#142-146" title="Go to source code"><var>$alreadyInClearAllReferencesDeep</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$alreadyInClearAllReferencesDeep" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Flag to prevent endless clearAllReferences($deep=true) loop, if this object
+is referenced</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Flag to prevent endless clearAllReferences($deep=true) loop, if this object
+is referenced</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="assayBiomaterialsScheduledForDeletion" id="$assayBiomaterialsScheduledForDeletion">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#148-152" title="Go to source code"><var>$assayBiomaterialsScheduledForDeletion</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$assayBiomaterialsScheduledForDeletion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="biomaterialRelationshipsRelatedByObjectIdScheduledForDeletion" id="$biomaterialRelationshipsRelatedByObjectIdScheduledForDeletion">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#154-158" title="Go to source code"><var>$biomaterialRelationshipsRelatedByObjectIdScheduledForDeletion</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$biomaterialRelationshipsRelatedByObjectIdScheduledForDeletion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="biomaterialRelationshipsRelatedBySubjectIdScheduledForDeletion" id="$biomaterialRelationshipsRelatedBySubjectIdScheduledForDeletion">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#160-164" title="Go to source code"><var>$biomaterialRelationshipsRelatedBySubjectIdScheduledForDeletion</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$biomaterialRelationshipsRelatedBySubjectIdScheduledForDeletion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="biomaterialpropsScheduledForDeletion" id="$biomaterialpropsScheduledForDeletion">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#166-170" title="Go to source code"><var>$biomaterialpropsScheduledForDeletion</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$biomaterialpropsScheduledForDeletion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="validationFailures" id="$validationFailures">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseBiomaterial.html#809-813" title="Go to source code"><var>$validationFailures</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>()</code></td>
+		<td class="description"><div>
+			<a href="#$validationFailures" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Array of ValidationFailed objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Array of ValidationFailed objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

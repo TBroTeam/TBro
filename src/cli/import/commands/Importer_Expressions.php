@@ -8,17 +8,8 @@ class Importer_Expressions extends AbstractImporter {
 
     /**
      * This function will import Quantification data from a tab-separated file.
-     * First line will be skiped ad header.
-     * Which column will be used for value is specified with $value_column
-     * @global PDO $db database
-     * @param string $filename file name
-     * @param int $quantification_id quantification id
-     * @param string $biomaterial_name biomaterial name
-     * @param string $type_name type name (=>cvterm)
-     * @param int $value_column csv column with "value". this numbering starts at 1!
-     * @return count of imported lines
-     * @throws Exception
-     * @throws ErrorException
+     * First line will be skiped as header.
+     * @inheritDoc
      */
     static function import($options) {
 
@@ -26,7 +17,7 @@ class Importer_Expressions extends AbstractImporter {
         $quantification_id = $options['quantification_id'];
         $analysis_id = $options['analysis_id'];
 
-        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
+        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`) - 1; //-1 for header line
         self::setLineCount($lines_total);
 
         global $db;
@@ -43,7 +34,7 @@ class Importer_Expressions extends AbstractImporter {
             $param_value = null;
             $param_biomaterial_id = null;
 
-
+            // statement for insertion of expressionresult
             $statement_insert_quant = $db->prepare('INSERT INTO expressionresult (feature_id, quantification_id, biomaterial_id, analysis_id, value) '
                     . 'VALUES (:feature_id, :quantification_id, :biomaterial_id, :analysis_id, :value)');
             $statement_insert_quant->bindParam('feature_id', $param_feature_id, PDO::PARAM_STR);
@@ -52,14 +43,16 @@ class Importer_Expressions extends AbstractImporter {
             $statement_insert_quant->bindValue('quantification_id', $quantification_id, PDO::PARAM_INT);
             $statement_insert_quant->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
 
+            //statement to get biomaterial ids
             $statement_get_biomaterial_id = $db->prepare('SELECT biomaterial_id FROM biomaterial WHERE name=? LIMIT 1');
 
+            //statement for feature ids
             $statement_get_feature_id = $db->prepare('SELECT feature_id FROM feature WHERE uniquename=?  AND organism_id=? LIMIT 1');
 
             $file = fopen($filename, 'r');
             if (feof($file))
                 return;
-            #process header line, get biomaterial_ids for names
+            //process header line, get biomaterial_ids for names
             $biomaterial_names = fgetcsv($file, 0, "\t");
             $biomaterial_ids = array();
             for ($i = 1; $i < count($biomaterial_names); $i++) {
@@ -70,15 +63,16 @@ class Importer_Expressions extends AbstractImporter {
                 }
             }
 
-
-
+            //process count lines
             while (($line = fgetcsv($file, 0, "\t")) !== false) {
                 if (count($line) == 0)
                     continue;
+                //get feature id once per line
                 $feature_uniquename = IMPORT_PREFIX . "_" . $line[0];
                 $statement_get_feature_id->execute(array($feature_uniquename, DB_ORGANISM_ID));
                 $param_feature_id = $statement_get_feature_id->fetchColumn();
 
+                //for all columns >1, insert counts based on feature_id and biomaterial_id
                 for ($i = 1; $i < count($line); $i++) {
                     $param_value = $line[$i];
                     $param_biomaterial_id = $biomaterial_ids[$i];
@@ -101,6 +95,9 @@ class Importer_Expressions extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'inserts executed' => $inserts_executed);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
         $command->addOption('quantification_id', array(
@@ -117,6 +114,9 @@ class Importer_Expressions extends AbstractImporter {
         return $command;
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
         parent::CLI_checkRequiredOpts($command);
         $options = $command->options;
@@ -124,14 +124,23 @@ class Importer_Expressions extends AbstractImporter {
         AbstractImporter::dieOnMissingArg($options, 'analysis_id');
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return "Importer for expression result \"count matrix\" files";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'expressions';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
    

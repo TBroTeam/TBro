@@ -4,11 +4,20 @@ namespace cli_import;
 
 require_once ROOT . 'classes/AbstractImporter.php';
 
+/**
+ * importer for sequence ids and mapping
+ */
 class Importer_Sequence_Ids extends AbstractImporter {
 
+    /**
+     * get import prefix id, insert into dbxref if neccessary
+     * @global \PDO $db
+     * @global String DB_NAME_IMPORTS
+     * @global String IMPORT_PREFIX
+     * @return int
+     */
     public static function get_import_dbxref() {
         global $db;
-        # get import prefix id, insert into dbxref if neccessary
         $stm_get_import_prefix_id = $db->prepare('SELECT get_or_insert_dbxref(?, ?)');
         $stm_get_import_prefix_id->execute(array(DB_NAME_IMPORTS, IMPORT_PREFIX));
         $import_prefix_id = $stm_get_import_prefix_id->fetchColumn();
@@ -18,11 +27,7 @@ class Importer_Sequence_Ids extends AbstractImporter {
     }
 
     /**
-     * loads a file containing "unigene\tisoform" lines into feature table
-     * THIS FILE HAS TO BE SORTED!
-     * @global DBO $db
-     * @param string $filename filename
-     * @throws ErrorException
+     * @inheritDoc
      */
     static function import($options) {
         $filename = $options['file'];
@@ -57,12 +62,13 @@ class Importer_Sequence_Ids extends AbstractImporter {
                 $db->prepare("INSERT INTO organism_dbxref (organism_id, dbxref_id) VALUES (?, ?)")->execute(array(DB_ORGANISM_ID, $import_prefix_id));
             unset($stm_link_organism_import_dbxref);
 
+            #get unigene id for existing unigene
             $stm_sel_unigene_byUniquename = $db->prepare('SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism_id');
             $stm_sel_unigene_byUniquename->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
             $stm_sel_unigene_byUniquename->bindParam('uniquename', $param_unigene_uniq);
 
 
-            # we are working with RETURNING feature_id here because PGSQL does not support lastInsertId
+            # insert unigene
             $stm_ins_unigene = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id) RETURNING feature_id');
             $stm_ins_unigene->bindValue('type_id', CV_UNIGENE, PDO::PARAM_INT);
             $stm_ins_unigene->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
@@ -70,7 +76,7 @@ class Importer_Sequence_Ids extends AbstractImporter {
             $stm_ins_unigene->bindParam('uniquename', $param_unigene_uniq);
             $stm_ins_unigene->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
-
+            #insert feature
             $stm_ins_isoform = $db->prepare('INSERT INTO feature (name, uniquename, type_id, organism_id, dbxref_id) VALUES (:name, :uniquename, :type_id, :organism_id, :dbxref_id)');
             $stm_ins_isoform->bindValue('type_id', CV_ISOFORM, PDO::PARAM_INT);
             $stm_ins_isoform->bindValue('organism_id', DB_ORGANISM_ID, PDO::PARAM_INT);
@@ -78,6 +84,7 @@ class Importer_Sequence_Ids extends AbstractImporter {
             $stm_ins_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
             $stm_ins_isoform->bindValue('dbxref_id', $import_prefix_id, PDO::PARAM_INT);
 
+            #link isoform to unigene
             $stm_ins_feature_rel = $db->prepare('INSERT INTO feature_relationship (subject_id, type_id, object_id) VALUES (currval(\'feature_feature_id_seq\'), :type_id, :parent)');
             $stm_ins_feature_rel->bindValue('type_id', CV_RELATIONSHIP_UNIGENE_ISOFORM, PDO::PARAM_INT);
             $stm_ins_feature_rel->bindParam('parent', $param_unigene_lastid, PDO::PARAM_INT);
@@ -103,21 +110,19 @@ class Importer_Sequence_Ids extends AbstractImporter {
                         break;
 
                     case 'map':
-                        #remove newline, split into parts
+                        #split into parts
                         list($param_unigene_name, $param_isoform_name) = $line;
 
+                        #this lines unigene is not the cached unigene from last line.
                         if ($last_unigene != $param_unigene_name) {
-                            # set last value, execute insert
                             $param_unigene_uniq = IMPORT_PREFIX . "_" . $param_unigene_name;
-
+                            #check if unigene exists
                             $stm_sel_unigene_byUniquename->execute();
                             $param_unigene_lastid = $stm_sel_unigene_byUniquename->fetchColumn();
+                            #if it does not exist, insert it
                             if (!$param_unigene_lastid) {
-
-
                                 $stm_ins_unigene->execute();
                                 $unigenes_added++;
-
                                 # get last insert id (see query: 'RETURNING feature_id'), set id for feature_relationship insert
                                 $param_unigene_lastid = $stm_ins_unigene->fetchColumn();
                             }
@@ -151,6 +156,9 @@ class Importer_Sequence_Ids extends AbstractImporter {
         return array(LINES_IMPORTED => $lines_imported, 'unigenes_added' => $unigenes_added, 'isoforms_added' => $isoforms_added);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_getCommand(\Console_CommandLine $parser) {
         $command = parent::CLI_getCommand($parser);
         $command->addOption('file_type', array(
@@ -163,14 +171,23 @@ class Importer_Sequence_Ids extends AbstractImporter {
         return $command;
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandName() {
         return 'sequence_ids';
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_commandDescription() {
         return "Sequence ID Importer";
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function CLI_longHelp() {
         return <<<EOF
 

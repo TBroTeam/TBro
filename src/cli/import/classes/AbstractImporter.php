@@ -11,8 +11,8 @@ interface Importer {
      * @global \PDO $db
      * @param Array $options user-provided command-line options
      * @return Array results
-     * @throws \Exception
-     * @throws \ErrorException
+     * @throws \Exception on error
+     * @throws \ErrorException on error
      */
     static function import($options);
 }

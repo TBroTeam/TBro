@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseBiomaterialRelationshipQuery | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?414348780"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseBiomaterialRelationshipQuery</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a query for the 'biomaterial_relationship'
+table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+ModelCriteria
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseBiomaterialRelationshipQuery</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#21-673" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseBiomaterialRelationshipQuery.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#68-78" title="Go to source code">__construct</a>( <span>string <var>$dbName</var> = <span class="php-quote">'cli_db'</span></span>, <span>string <var>$modelName</var> = <span class="php-quote">'cli_db\\propel\\BiomaterialRelationship'</span></span>, <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BaseBiomaterialRelationshipQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BaseBiomaterialRelationshipQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbName</var></dt>
+					<dd><code>string</code><br>$dbName The dabase name</dd>
+					<dt><var>$modelName</var></dt>
+					<dd><code>string</code><br>$modelName The phpName of a model, e.g. 'Book'</dd>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias for the model in this query, e.g. 'b'</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			 public static
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#80-102" title="Go to source code">create</a>( <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>|Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns a new BiomaterialRelationshipQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a new BiomaterialRelationshipQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias of a model in the query</dd>
+					<dt><var>$criteria</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>|Criteria</code><br>$criteria Optional Criteria to build the query from</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPk" id="_findPk">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPk">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#104-138" title="Go to source code">findPk</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+<pre>
+<span class="php-var">$obj</span>  = <span
+class="php-var">$c</span>-&gt;findPk(<span class="php-num">12</span>, <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByBiomaterialRelationshipId" id="_findOneByBiomaterialRelationshipId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findOneByBiomaterialRelationshipId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#140-152" title="Go to source code">findOneByBiomaterialRelationshipId</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkSimple" id="_findPkSimple">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkSimple">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#154-184" title="Go to source code">findPkSimple</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkComplex" id="_findPkComplex">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkComplex">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#186-203" title="Go to source code">findPkComplex</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPks" id="_findPks">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPks">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#205-227" title="Go to source code">findPks</a>( <span>array <var>$keys</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys Primary keys to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a>[]</code>|mixed</code><br>the list of results, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKey" id="_filterByPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#229-240" title="Go to source code">filterByPrimaryKey</a>( <span>mixed <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by primary key</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by primary key</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKeys" id="_filterByPrimaryKeys">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKeys">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#242-253" title="Go to source code">filterByPrimaryKeys</a>( <span>array <var>$keys</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a list of primary keys</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a list of primary keys</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys The list of primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByBiomaterialRelationshipId" id="_filterByBiomaterialRelationshipId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByBiomaterialRelationshipId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#255-295" title="Go to source code">filterByBiomaterialRelationshipId</a>( <span>mixed <var>$biomaterialRelationshipId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the biomaterial_relationship_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the biomaterial_relationship_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span
+class="php-var">$query</span>-&gt;filterByBiomaterialRelationshipId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE biomaterial_relationship_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByBiomaterialRelationshipId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE biomaterial_relationship_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByBiomaterialRelationshipId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE biomaterial_relationship_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByBiomaterialRelationshipId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE biomaterial_relationship_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationshipId</var></dt>
+					<dd><code>mixed</code><br>$biomaterialRelationshipId The value to use as filter. Use scalar values for
+equality. Use array values for in_array() equivalent. Use associative
+array('min' =&gt; $minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySubjectId" id="_filterBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#297-339" title="Go to source code">filterBySubjectId</a>( <span>mixed <var>$subjectId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the subject_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the subject_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterBySubjectId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE subject_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterBySubjectId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE subject_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterBySubjectId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE subject_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterBySubjectId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE subject_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$subjectId</var></dt>
+					<dd><code>mixed</code><br>$subjectId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#_filterByBiomaterialRelatedBySubjectId">cli_db\propel\om\BaseBiomaterialRelationshipQuery::filterByBiomaterialRelatedBySubjectId()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTypeId" id="_filterByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#341-383" title="Go to source code">filterByTypeId</a>( <span>mixed <var>$typeId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the type_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE type_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE type_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE type_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE type_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$typeId</var></dt>
+					<dd><code>mixed</code><br>$typeId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#_filterByCvterm">cli_db\propel\om\BaseBiomaterialRelationshipQuery::filterByCvterm()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByObjectId" id="_filterByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#385-427" title="Go to source code">filterByObjectId</a>( <span>mixed <var>$objectId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the object_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the object_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByObjectId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE object_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByObjectId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE object_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByObjectId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE object_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByObjectId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE object_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$objectId</var></dt>
+					<dd><code>mixed</code><br>$objectId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#_filterByBiomaterialRelatedByObjectId">cli_db\propel\om\BaseBiomaterialRelationshipQuery::filterByBiomaterialRelatedByObjectId()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByBiomaterialRelatedByObjectId" id="_filterByBiomaterialRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByBiomaterialRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#429-453" title="Go to source code">filterByBiomaterialRelatedByObjectId</a>( <span><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>|PropelObjectCollection <var>$biomaterial</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Biomaterial object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Biomaterial object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterial</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>|PropelObjectCollection</code><br>$biomaterial The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinBiomaterialRelatedByObjectId" id="_joinBiomaterialRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinBiomaterialRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#455-485" title="Go to source code">joinBiomaterialRelatedByObjectId</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useBiomaterialRelatedByObjectIdQuery" id="_useBiomaterialRelatedByObjectIdQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialQuery.html">cli_db\propel\BiomaterialQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useBiomaterialRelatedByObjectIdQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#487-503" title="Go to source code">useBiomaterialRelatedByObjectIdQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the BiomaterialRelatedByObjectId relation Biomaterial object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the BiomaterialRelatedByObjectId relation Biomaterial object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialQuery.html">cli_db\propel\BiomaterialQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByBiomaterialRelatedBySubjectId" id="_filterByBiomaterialRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByBiomaterialRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#505-529" title="Go to source code">filterByBiomaterialRelatedBySubjectId</a>( <span><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>|PropelObjectCollection <var>$biomaterial</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Biomaterial object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Biomaterial object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterial</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Biomaterial.html">cli_db\propel\Biomaterial</a></code>|PropelObjectCollection</code><br>$biomaterial The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinBiomaterialRelatedBySubjectId" id="_joinBiomaterialRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinBiomaterialRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#531-561" title="Go to source code">joinBiomaterialRelatedBySubjectId</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useBiomaterialRelatedBySubjectIdQuery" id="_useBiomaterialRelatedBySubjectIdQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialQuery.html">cli_db\propel\BiomaterialQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useBiomaterialRelatedBySubjectIdQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#563-579" title="Go to source code">useBiomaterialRelatedBySubjectIdQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the BiomaterialRelatedBySubjectId relation Biomaterial object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the BiomaterialRelatedBySubjectId relation Biomaterial object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialQuery.html">cli_db\propel\BiomaterialQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByCvterm" id="_filterByCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#581-605" title="Go to source code">filterByCvterm</a>( <span><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|PropelObjectCollection <var>$cvterm</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Cvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Cvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|PropelObjectCollection</code><br>$cvterm The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinCvterm" id="_joinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#607-637" title="Go to source code">joinCvterm</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useCvtermQuery" id="_useCvtermQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useCvtermQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#639-655" title="Go to source code">useCvtermQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Cvterm relation Cvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Cvterm relation Cvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prune" id="_prune">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prune">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#657-671" title="Go to source code">prune</a>( <span><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code> <var>$biomaterialRelationship</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exclude object from result</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exclude object from result</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationship</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br>$biomaterialRelationship Object to remove from the list of results</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="orderByBiomaterialRelationshipId" id="m_orderByBiomaterialRelationshipId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByBiomaterialRelationshipId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#26" title="Go to source code">orderByBiomaterialRelationshipId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the biomaterial_relationship_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the biomaterial_relationship_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderBySubjectId" id="m_orderBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#27" title="Go to source code">orderBySubjectId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the subject_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the subject_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTypeId" id="m_orderByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#28" title="Go to source code">orderByTypeId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByObjectId" id="m_orderByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#29" title="Go to source code">orderByObjectId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the object_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the object_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByBiomaterialRelationshipId" id="m_groupByBiomaterialRelationshipId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByBiomaterialRelationshipId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#31" title="Go to source code">groupByBiomaterialRelationshipId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the biomaterial_relationship_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the biomaterial_relationship_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupBySubjectId" id="m_groupBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#32" title="Go to source code">groupBySubjectId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the subject_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the subject_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTypeId" id="m_groupByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#33" title="Go to source code">groupByTypeId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the type_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByObjectId" id="m_groupByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#34" title="Go to source code">groupByObjectId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the object_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the object_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoin" id="m_leftJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#36" title="Go to source code">leftJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoin" id="m_rightJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#37" title="Go to source code">rightJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoin" id="m_innerJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#38" title="Go to source code">innerJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinBiomaterialRelatedByObjectId" id="m_leftJoinBiomaterialRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinBiomaterialRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#40" title="Go to source code">leftJoinBiomaterialRelatedByObjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinBiomaterialRelatedByObjectId" id="m_rightJoinBiomaterialRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinBiomaterialRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#41" title="Go to source code">rightJoinBiomaterialRelatedByObjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinBiomaterialRelatedByObjectId" id="m_innerJoinBiomaterialRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinBiomaterialRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#42" title="Go to source code">innerJoinBiomaterialRelatedByObjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the BiomaterialRelatedByObjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinBiomaterialRelatedBySubjectId" id="m_leftJoinBiomaterialRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinBiomaterialRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#44" title="Go to source code">leftJoinBiomaterialRelatedBySubjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinBiomaterialRelatedBySubjectId" id="m_rightJoinBiomaterialRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinBiomaterialRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#45" title="Go to source code">rightJoinBiomaterialRelatedBySubjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinBiomaterialRelatedBySubjectId" id="m_innerJoinBiomaterialRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinBiomaterialRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#46" title="Go to source code">innerJoinBiomaterialRelatedBySubjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the BiomaterialRelatedBySubjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinCvterm" id="m_leftJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#48" title="Go to source code">leftJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinCvterm" id="m_rightJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#49" title="Go to source code">rightJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinCvterm" id="m_innerJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#50" title="Go to source code">innerJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOne" id="m_findOne">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOne">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#52" title="Go to source code">findOne</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first BiomaterialRelationship matching the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first BiomaterialRelationship matching the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneOrCreate" id="m_findOneOrCreate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneOrCreate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#53" title="Go to source code">findOneOrCreate</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first BiomaterialRelationship matching the query, or a new
+BiomaterialRelationship object populated from the query conditions when no match
+is found</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first BiomaterialRelationship matching the query, or a new
+BiomaterialRelationship object populated from the query conditions when no match
+is found</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneBySubjectId" id="m_findOneBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#55" title="Go to source code">findOneBySubjectId</a>( <span>integer <var>$subject_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first BiomaterialRelationship filtered by the subject_id
+column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first BiomaterialRelationship filtered by the subject_id
+column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$subject_id</var></dt>
+					<dd><code>integer</code><br>$subject_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTypeId" id="m_findOneByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#56" title="Go to source code">findOneByTypeId</a>( <span>integer <var>$type_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first BiomaterialRelationship filtered by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first BiomaterialRelationship filtered by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type_id</var></dt>
+					<dd><code>integer</code><br>$type_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByObjectId" id="m_findOneByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#57" title="Go to source code">findOneByObjectId</a>( <span>integer <var>$object_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first BiomaterialRelationship filtered by the object_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first BiomaterialRelationship filtered by the object_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$object_id</var></dt>
+					<dd><code>integer</code><br>$object_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByBiomaterialRelationshipId" id="m_findByBiomaterialRelationshipId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByBiomaterialRelationshipId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#59" title="Go to source code">findByBiomaterialRelationshipId</a>( <span>integer <var>$biomaterial_relationship_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return BiomaterialRelationship objects filtered by the
+biomaterial_relationship_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return BiomaterialRelationship objects filtered by the
+biomaterial_relationship_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterial_relationship_id</var></dt>
+					<dd><code>integer</code><br>$biomaterial_relationship_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findBySubjectId" id="m_findBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#60" title="Go to source code">findBySubjectId</a>( <span>integer <var>$subject_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return BiomaterialRelationship objects filtered by the subject_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return BiomaterialRelationship objects filtered by the subject_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$subject_id</var></dt>
+					<dd><code>integer</code><br>$subject_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTypeId" id="m_findByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#61" title="Go to source code">findByTypeId</a>( <span>integer <var>$type_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return BiomaterialRelationship objects filtered by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return BiomaterialRelationship objects filtered by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type_id</var></dt>
+					<dd><code>integer</code><br>$type_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByObjectId" id="m_findByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html#62" title="Go to source code">findByObjectId</a>( <span>integer <var>$object_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return BiomaterialRelationship objects filtered by the object_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return BiomaterialRelationship objects filtered by the object_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$object_id</var></dt>
+					<dd><code>integer</code><br>$object_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

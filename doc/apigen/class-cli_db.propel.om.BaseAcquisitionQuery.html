@@ -1,0 +1,3330 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseAcquisitionQuery | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?414348780"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseAcquisitionQuery</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a query for the 'acquisition' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+ModelCriteria
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseAcquisitionQuery</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#22-783" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseAcquisitionQuery.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#81-91" title="Go to source code">__construct</a>( <span>string <var>$dbName</var> = <span class="php-quote">'cli_db'</span></span>, <span>string <var>$modelName</var> = <span class="php-quote">'cli_db\\propel\\Acquisition'</span></span>, <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BaseAcquisitionQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BaseAcquisitionQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbName</var></dt>
+					<dd><code>string</code><br>$dbName The dabase name</dd>
+					<dt><var>$modelName</var></dt>
+					<dd><code>string</code><br>$modelName The phpName of a model, e.g. 'Book'</dd>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias for the model in this query, e.g. 'b'</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			 public static
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#93-115" title="Go to source code">create</a>( <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>|Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns a new AcquisitionQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a new AcquisitionQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias of a model in the query</dd>
+					<dt><var>$criteria</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>|Criteria</code><br>$criteria Optional Criteria to build the query from</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPk" id="_findPk">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>|<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPk">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#117-151" title="Go to source code">findPk</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+<pre>
+<span class="php-var">$obj</span>  = <span
+class="php-var">$c</span>-&gt;findPk(<span class="php-num">12</span>, <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>|<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByAcquisitionId" id="_findOneByAcquisitionId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findOneByAcquisitionId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#153-165" title="Go to source code">findOneByAcquisitionId</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkSimple" id="_findPkSimple">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkSimple">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#167-197" title="Go to source code">findPkSimple</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkComplex" id="_findPkComplex">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>|<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkComplex">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#199-216" title="Go to source code">findPkComplex</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>|<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPks" id="_findPks">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPks">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#218-240" title="Go to source code">findPks</a>( <span>array <var>$keys</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys Primary keys to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a>[]</code>|mixed</code><br>the list of results, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKey" id="_filterByPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#242-253" title="Go to source code">filterByPrimaryKey</a>( <span>mixed <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by primary key</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by primary key</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKeys" id="_filterByPrimaryKeys">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKeys">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#255-266" title="Go to source code">filterByPrimaryKeys</a>( <span>array <var>$keys</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a list of primary keys</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a list of primary keys</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys The list of primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByAcquisitionId" id="_filterByAcquisitionId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByAcquisitionId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#268-308" title="Go to source code">filterByAcquisitionId</a>( <span>mixed <var>$acquisitionId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the acquisition_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the acquisition_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByAcquisitionId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE acquisition_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByAcquisitionId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE acquisition_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByAcquisitionId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE acquisition_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByAcquisitionId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE acquisition_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$acquisitionId</var></dt>
+					<dd><code>mixed</code><br>$acquisitionId The value to use as filter. Use scalar values for equality. Use
+array values for in_array() equivalent. Use associative array('min' =&gt;
+$minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByAssayId" id="_filterByAssayId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByAssayId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#310-352" title="Go to source code">filterByAssayId</a>( <span>mixed <var>$assayId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the assay_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the assay_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByAssayId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE assay_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByAssayId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE assay_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByAssayId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE assay_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByAssayId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE assay_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assayId</var></dt>
+					<dd><code>mixed</code><br>$assayId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html#_filterByAssay">cli_db\propel\om\BaseAcquisitionQuery::filterByAssay()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByProtocolId" id="_filterByProtocolId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByProtocolId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#354-396" title="Go to source code">filterByProtocolId</a>( <span>mixed <var>$protocolId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the protocol_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the protocol_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByProtocolId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE protocol_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByProtocolId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE protocol_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByProtocolId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE protocol_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByProtocolId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE protocol_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$protocolId</var></dt>
+					<dd><code>mixed</code><br>$protocolId The value to use as filter. Use scalar values for equality. Use
+array values for in_array() equivalent. Use associative array('min' =&gt;
+$minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html#_filterByProtocol">cli_db\propel\om\BaseAcquisitionQuery::filterByProtocol()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByChannelId" id="_filterByChannelId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByChannelId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#398-438" title="Go to source code">filterByChannelId</a>( <span>mixed <var>$channelId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the channel_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the channel_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByChannelId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE channel_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByChannelId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE channel_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByChannelId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE channel_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByChannelId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE channel_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$channelId</var></dt>
+					<dd><code>mixed</code><br>$channelId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByAcquisitiondate" id="_filterByAcquisitiondate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByAcquisitiondate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#440-481" title="Go to source code">filterByAcquisitiondate</a>( <span>mixed <var>$acquisitiondate</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the acquisitiondate column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the acquisitiondate column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByAcquisitiondate(<span
+class="php-quote">'2011-03-14'</span>); <span
+class="php-comment">// WHERE acquisitiondate = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByAcquisitiondate(<span
+class="php-quote">'now'</span>); <span
+class="php-comment">// WHERE acquisitiondate = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByAcquisitiondate(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span
+class="php-quote">'yesterday'</span>)); <span
+class="php-comment">// WHERE acquisitiondate &gt; '2011-03-13'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$acquisitiondate</var></dt>
+					<dd><code>mixed</code><br>$acquisitiondate The value to use as filter. Values can be integers (unix
+timestamps), DateTime objects, or strings. Empty strings are treated as NULL.
+Use scalar values for equality. Use array values for in_array() equivalent. Use
+associative array('min' =&gt; $minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByName" id="_filterByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#483-510" title="Go to source code">filterByName</a>( <span>string <var>$name</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the name column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE name = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE name LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByUri" id="_filterByUri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByUri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#512-539" title="Go to source code">filterByUri</a>( <span>string <var>$uri</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the uri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the uri column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByUri(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE uri = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByUri(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE uri LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uri</var></dt>
+					<dd><code>string</code><br>$uri The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByAssay" id="_filterByAssay">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByAssay">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#541-565" title="Go to source code">filterByAssay</a>( <span><code><a href="class-cli_db.propel.Assay.html">cli_db\propel\Assay</a></code>|PropelObjectCollection <var>$assay</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Assay object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Assay object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assay</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Assay.html">cli_db\propel\Assay</a></code>|PropelObjectCollection</code><br>$assay The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinAssay" id="_joinAssay">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinAssay">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#567-597" title="Go to source code">joinAssay</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Assay relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Assay relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useAssayQuery" id="_useAssayQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AssayQuery.html">cli_db\propel\AssayQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useAssayQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#599-615" title="Go to source code">useAssayQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Assay relation Assay object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Assay relation Assay object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AssayQuery.html">cli_db\propel\AssayQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByProtocol" id="_filterByProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#617-641" title="Go to source code">filterByProtocol</a>( <span><code><a href="class-cli_db.propel.Protocol.html">cli_db\propel\Protocol</a></code>|PropelObjectCollection <var>$protocol</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Protocol object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Protocol object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$protocol</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Protocol.html">cli_db\propel\Protocol</a></code>|PropelObjectCollection</code><br>$protocol The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinProtocol" id="_joinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#643-673" title="Go to source code">joinProtocol</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useProtocolQuery" id="_useProtocolQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.ProtocolQuery.html">cli_db\propel\ProtocolQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useProtocolQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#675-691" title="Go to source code">useProtocolQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Protocol relation Protocol object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Protocol relation Protocol object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.ProtocolQuery.html">cli_db\propel\ProtocolQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByQuantification" id="_filterByQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#693-715" title="Go to source code">filterByQuantification</a>( <span><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code>|PropelObjectCollection <var>$quantification</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Quantification object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Quantification object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$quantification</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code>|PropelObjectCollection</code><br>$quantification the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinQuantification" id="_joinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#717-747" title="Go to source code">joinQuantification</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useQuantificationQuery" id="_useQuantificationQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.QuantificationQuery.html">cli_db\propel\QuantificationQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useQuantificationQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#749-765" title="Go to source code">useQuantificationQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Quantification relation Quantification object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Quantification relation Quantification object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.QuantificationQuery.html">cli_db\propel\QuantificationQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prune" id="_prune">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prune">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#767-781" title="Go to source code">prune</a>( <span><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code> <var>$acquisition</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exclude object from result</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exclude object from result</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$acquisition</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br>$acquisition Object to remove from the list of results</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="orderByAcquisitionId" id="m_orderByAcquisitionId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByAcquisitionId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#27" title="Go to source code">orderByAcquisitionId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the acquisition_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the acquisition_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByAssayId" id="m_orderByAssayId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByAssayId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#28" title="Go to source code">orderByAssayId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the assay_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the assay_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByProtocolId" id="m_orderByProtocolId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByProtocolId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#29" title="Go to source code">orderByProtocolId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the protocol_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the protocol_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByChannelId" id="m_orderByChannelId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByChannelId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#30" title="Go to source code">orderByChannelId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the channel_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the channel_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByAcquisitiondate" id="m_orderByAcquisitiondate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByAcquisitiondate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#31" title="Go to source code">orderByAcquisitiondate</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the acquisitiondate column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the acquisitiondate column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByName" id="m_orderByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#32" title="Go to source code">orderByName</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByUri" id="m_orderByUri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByUri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#33" title="Go to source code">orderByUri</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the uri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the uri column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByAcquisitionId" id="m_groupByAcquisitionId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByAcquisitionId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#35" title="Go to source code">groupByAcquisitionId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the acquisition_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the acquisition_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByAssayId" id="m_groupByAssayId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByAssayId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#36" title="Go to source code">groupByAssayId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the assay_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the assay_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByProtocolId" id="m_groupByProtocolId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByProtocolId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#37" title="Go to source code">groupByProtocolId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the protocol_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the protocol_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByChannelId" id="m_groupByChannelId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByChannelId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#38" title="Go to source code">groupByChannelId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the channel_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the channel_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByAcquisitiondate" id="m_groupByAcquisitiondate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByAcquisitiondate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#39" title="Go to source code">groupByAcquisitiondate</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the acquisitiondate column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the acquisitiondate column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByName" id="m_groupByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#40" title="Go to source code">groupByName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the name column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByUri" id="m_groupByUri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByUri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#41" title="Go to source code">groupByUri</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the uri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the uri column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoin" id="m_leftJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#43" title="Go to source code">leftJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoin" id="m_rightJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#44" title="Go to source code">rightJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoin" id="m_innerJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#45" title="Go to source code">innerJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinAssay" id="m_leftJoinAssay">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinAssay">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#47" title="Go to source code">leftJoinAssay</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Assay relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Assay relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinAssay" id="m_rightJoinAssay">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinAssay">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#48" title="Go to source code">rightJoinAssay</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Assay relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Assay relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinAssay" id="m_innerJoinAssay">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinAssay">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#49" title="Go to source code">innerJoinAssay</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Assay relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Assay relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinProtocol" id="m_leftJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#51" title="Go to source code">leftJoinProtocol</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinProtocol" id="m_rightJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#52" title="Go to source code">rightJoinProtocol</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinProtocol" id="m_innerJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#53" title="Go to source code">innerJoinProtocol</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinQuantification" id="m_leftJoinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#55" title="Go to source code">leftJoinQuantification</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinQuantification" id="m_rightJoinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#56" title="Go to source code">rightJoinQuantification</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinQuantification" id="m_innerJoinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#57" title="Go to source code">innerJoinQuantification</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AcquisitionQuery.html">cli_db\propel\AcquisitionQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOne" id="m_findOne">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOne">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#59" title="Go to source code">findOne</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition matching the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition matching the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneOrCreate" id="m_findOneOrCreate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneOrCreate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#60" title="Go to source code">findOneOrCreate</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition matching the query, or a new Acquisition object
+populated from the query conditions when no match is found</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition matching the query, or a new Acquisition object
+populated from the query conditions when no match is found</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByAssayId" id="m_findOneByAssayId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByAssayId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#62" title="Go to source code">findOneByAssayId</a>( <span>integer <var>$assay_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition filtered by the assay_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition filtered by the assay_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assay_id</var></dt>
+					<dd><code>integer</code><br>$assay_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByProtocolId" id="m_findOneByProtocolId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByProtocolId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#63" title="Go to source code">findOneByProtocolId</a>( <span>integer <var>$protocol_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition filtered by the protocol_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition filtered by the protocol_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$protocol_id</var></dt>
+					<dd><code>integer</code><br>$protocol_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByChannelId" id="m_findOneByChannelId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByChannelId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#64" title="Go to source code">findOneByChannelId</a>( <span>integer <var>$channel_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition filtered by the channel_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition filtered by the channel_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$channel_id</var></dt>
+					<dd><code>integer</code><br>$channel_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByAcquisitiondate" id="m_findOneByAcquisitiondate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByAcquisitiondate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#65" title="Go to source code">findOneByAcquisitiondate</a>( <span>string <var>$acquisitiondate</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition filtered by the acquisitiondate column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition filtered by the acquisitiondate column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$acquisitiondate</var></dt>
+					<dd><code>string</code><br>$acquisitiondate</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByName" id="m_findOneByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#66" title="Go to source code">findOneByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByUri" id="m_findOneByUri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByUri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#67" title="Go to source code">findOneByUri</a>( <span>string <var>$uri</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Acquisition filtered by the uri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Acquisition filtered by the uri column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uri</var></dt>
+					<dd><code>string</code><br>$uri</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Acquisition.html">cli_db\propel\Acquisition</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByAcquisitionId" id="m_findByAcquisitionId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByAcquisitionId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#69" title="Go to source code">findByAcquisitionId</a>( <span>integer <var>$acquisition_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the acquisition_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the acquisition_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$acquisition_id</var></dt>
+					<dd><code>integer</code><br>$acquisition_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByAssayId" id="m_findByAssayId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByAssayId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#70" title="Go to source code">findByAssayId</a>( <span>integer <var>$assay_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the assay_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the assay_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$assay_id</var></dt>
+					<dd><code>integer</code><br>$assay_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByProtocolId" id="m_findByProtocolId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByProtocolId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#71" title="Go to source code">findByProtocolId</a>( <span>integer <var>$protocol_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the protocol_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the protocol_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$protocol_id</var></dt>
+					<dd><code>integer</code><br>$protocol_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByChannelId" id="m_findByChannelId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByChannelId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#72" title="Go to source code">findByChannelId</a>( <span>integer <var>$channel_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the channel_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the channel_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$channel_id</var></dt>
+					<dd><code>integer</code><br>$channel_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByAcquisitiondate" id="m_findByAcquisitiondate">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByAcquisitiondate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#73" title="Go to source code">findByAcquisitiondate</a>( <span>string <var>$acquisitiondate</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the acquisitiondate column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the acquisitiondate column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$acquisitiondate</var></dt>
+					<dd><code>string</code><br>$acquisitiondate</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByName" id="m_findByName">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#74" title="Go to source code">findByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByUri" id="m_findByUri">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByUri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAcquisitionQuery.html#75" title="Go to source code">findByUri</a>( <span>string <var>$uri</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Acquisition objects filtered by the uri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Acquisition objects filtered by the uri column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uri</var></dt>
+					<dd><code>string</code><br>$uri</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>
