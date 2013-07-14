@@ -4,8 +4,15 @@ namespace webservices\listing;
 
 use \PDO as PDO;
 
+/**
+ * Web Service.
+ * Returns Isoforms for Unigene
+ */
 class Isoforms extends \WebService {
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
 
         global $db;

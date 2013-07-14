@@ -3,9 +3,15 @@
 namespace webservices\listing;
 
 use \PDO as PDO;
-
+/**
+ * Web Service.
+ * Returns all Organism-Release combinations
+ */
 class Organism_release extends \WebService {
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
         global $db;
         $constant = 'constant';

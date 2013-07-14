@@ -6,6 +6,10 @@ use \PDO as PDO;
 
 class Filters_diffexp extends \WebService {
 
+    /**
+     * filters for diffexp for specified ids
+     * @see \webservices\listing\Filters::execute
+     */
     public function forCart($querydata) {
         global $db;
 #UI hint
@@ -60,6 +64,10 @@ EOF;
         return $data;
     }
 
+    /**
+     * filters for diffexp for full release
+     * @see \webservices\listing\Filters::execute
+     */
     public function fullRelease($querydata) {
         global $db;
 #UI hint
@@ -117,6 +125,10 @@ EOF;
         return $data;
     }
 
+    /**
+     * different behaviour for query1= "forCart" or "fullRelease"
+     * @inheritDoc
+     */
     public function execute($querydata) {
         if ($querydata['query1'] == "forCart") {
             return $this->forCart($querydata);
@@ -125,6 +137,12 @@ EOF;
         }
     }
 
+    /**
+     * returns an Array of all $row values whose key begins with $item_prefix (removing prefix)
+     * @param String $item_prefix
+     * @param Array $row
+     * @return Array item
+     */
     private static function getItem($item_prefix, $row) {
         $item = array();
         foreach ($row as $key => $val) {
@@ -134,14 +152,6 @@ EOF;
             }
         }
         return $item;
-    }
-
-    private static function addId(&$ref, $id) {
-        if ($ref == null)
-            $ref = array();
-        if (!in_array($id, $ref))
-            $ref[] = $id;
-        unset($ref);
     }
 
 }

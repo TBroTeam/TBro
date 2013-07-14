@@ -3,7 +3,7 @@
  * Created over a select item, this allows multiple selects to be coupled to each other's selections.
  * @constructor
  * @param {jQuery} jqNode html select element as jQuery node
- * @param {String} filterNode propertie this select works on
+ * @param {String} filterProperty property this select works on
  * @param {Collection} options options
  * @param {jQuery} [options.precedessorNode] select this node depends on. either this value or options.data have to be set
  * @param {Array} [options.data] data as returned from web service /listing/filters/
@@ -32,17 +32,17 @@ filteredSelect = function(jqNode, filterProperty, options){
     jqNode.click(function(){
         jqNode.trigger('selectionChanged');
     });
-}
+};
 
 filteredSelect.prototype.getPrecedessor = function(){
     if (this.options.precedessorNode == null)
         return null;
     return this.options.precedessorNode.data('filteredSelect');
-}
+};
 
 filteredSelect.prototype.getNode =function(){
     return this.jqNode;
-}
+};
 
 filteredSelect.prototype.getData = function(){
     if (this.getPrecedessor()!=null){
@@ -50,7 +50,7 @@ filteredSelect.prototype.getData = function(){
     } else {
         return this.options.data;
     }
-}
+};
 
 filteredSelect.prototype.filteredData = function(){
     var data = this.getData();
@@ -67,7 +67,7 @@ filteredSelect.prototype.filteredData = function(){
         return _.indexOf(selectedValues, value[filterProperty]+"")>=0;
     });
     return ret;
-}
+};
 
 filteredSelect.prototype.refill = function(){
     var jqNode = this.jqNode;
@@ -89,5 +89,5 @@ filteredSelect.prototype.refill = function(){
         jqNode.append(item);
     });
     jqNode.trigger('selectionChanged');
-}
+};
     

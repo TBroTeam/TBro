@@ -4,16 +4,23 @@ namespace webservices\listing;
 
 use \PDO as PDO;
 
+/**
+ * Web Service.
+ * returns up to 20+20 features, searching by start of featurename or synonym
+ */
 class Searchbox extends \WebService {
 
+    /**
+     * @inheritDoc
+     */
     public function execute($querydata) {
         global $db;
         $constant = 'constant';
 
-        $species = $_REQUEST['species'];
-        $import = $_REQUEST['release'];
+        $species = $querydata['species'];
+        $import = $querydata['release'];
 
-        $term = trim($_REQUEST['term']) . '%';
+        $term = trim($querydata['term']) . '%';
 
 
 #UI hint

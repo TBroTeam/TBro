@@ -3,8 +3,17 @@
 namespace webservices\listing;
 
 use \PDO as PDO;
-
+/**
+ * Web Service.
+ * Returns Differential Expressions for dataTable Server-Side processing.
+ * See http://www.datatables.net/release-datatables/examples/server_side/server_side.html
+ */
 class Differential_expressions extends \WebService {
+    /**
+     * mapping for dataTable columns to database columns.
+     * only these are allowed for filtering
+     * @var Array 
+     */
     public static $columns = array(
         'f.name' => '"feature_name"',
         'd.baseMean' => '"baseMean"',
@@ -17,6 +26,13 @@ class Differential_expressions extends \WebService {
         "f.feature_id" => 'feature_id'
     );
 
+    /**
+     * get query details for Results overview/csv header
+     * @global \PDO $db
+     * @param Array $querydata
+     * @param boolean $apply_filters
+     * @return Array
+     */
     public function fullRelease_getQueryDetails($querydata, $apply_filters = false) {
         $ret = array(
             'organism' => '',
@@ -62,6 +78,13 @@ class Differential_expressions extends \WebService {
         return $ret;
     }
 
+    /**
+     * Evaluates $querydata and stores filter expressions for SQL WHERE in $where, values in $arguments
+     * @param Array $querydata
+     * @param outArray &$where
+     * @param outArray &$arguments
+     * @param Array $keys array_keys(self::$columns)
+     */
     public function get_filters($querydata, &$where, &$arguments, $keys) {
         foreach ($querydata['filter_column'] as $key => $filter_column) {
             $type = $filter_column['type'];
@@ -95,6 +118,14 @@ class Differential_expressions extends \WebService {
         }
     }
 
+    /**
+     * Builds full SQL query with $querydata applied
+     * @param Array $querydata
+     * @param boolean $apply_filters
+     * @param boolean $apply_order
+     * @param boolean $apply_limit
+     * @return list($query, $arguments)
+     */
     public function fullRelease_buildQuery($querydata, $apply_filters = false, $apply_order = false, $apply_limit = false) {
         $keys = array_keys(self::$columns);
         $arguments = array();
@@ -166,6 +197,12 @@ EOF;
         return array($query, $arguments);
     }
 
+    /**
+     * returns data in format for dataTable
+     * @global \PDO $db
+     * @param Array $querydata
+     * @return Array
+     */
     public function fullRelease($querydata) {
         global $db;
 
@@ -198,6 +235,11 @@ EOF;
         return $data;
     }
 
+    /**
+     * outputs data as csv
+     * @global \PDO $db
+     * @param Array $querydata
+     */
     public function printCsv($querydata) {
         global $db;
 
@@ -245,10 +287,15 @@ EOF;
         fclose($out);
     }
 
+    /**
+     * @inheritDoc
+     * Switches behaviour based on $querydata['query1']: "fullRelease" or "releaseCsv"
+     * even though the name indicates differently, feature ids for a full release subset can be passed
+     * @param Array $querydata
+     * @return Array
+     */
     public function execute($querydata) {
-        if ($querydata['query1'] == 'byIds') {
-            return $this->byIds($querydata);
-        } elseif ($querydata['query1'] == 'fullRelease') {
+        if ($querydata['query1'] == 'fullRelease') {
             return $this->fullRelease($querydata);
         } elseif ($querydata['query1'] == 'releaseCsv') {
             header("Pragma: public");
