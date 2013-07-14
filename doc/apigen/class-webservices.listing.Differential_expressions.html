@@ -7,7 +7,7 @@
 	<title>Class webservices\listing\Differential_expressions | tbro</title>
 
 	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
-	<script type="text/javascript" src="elementlist.js?414348780"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -79,7 +79,6 @@
 				<li><a href="class-webservices.listing.Multisearch.html">Multisearch</a></li>
 				<li><a href="class-webservices.listing.Organism_release.html">Organism_release</a></li>
 				<li><a href="class-webservices.listing.Searchbox.html">Searchbox</a></li>
-				<li><a href="class-webservices.listing.Unigenes.html">Unigenes</a></li>
 			</ul>
 
 
@@ -125,6 +124,13 @@
 	<h1>Class Differential_expressions</h1>
 
 
+	<div class="description">
+	
+<p>Web Service. Returns Differential Expressions for dataTable Server-Side
+processing. See <a
+href="http://www.datatables.net/release-datatables/examples/server_side/server_side.html">http://www.datatables.net/release-datatables/examples/server_side/server_side.html</a></p>
+
+	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
@@ -154,7 +160,7 @@
 		<b>Namespace:</b> <a href="namespace-webservices.html">webservices</a>\<a href="namespace-webservices.listing.html">listing</a><br />
 		
 
-		<b>Located at</b> <a href="source-class-webservices.listing.Differential_expressions.html#7-277" title="Go to source code">src/web/includes/TranscriptDB/webservices/listing/Differential_expressions.php</a><br />
+		<b>Located at</b> <a href="source-class-webservices.listing.Differential_expressions.html#6-324" title="Go to source code">src/web/includes/TranscriptDB/webservices/listing/Differential_expressions.php</a><br />
 	</div>
 
 
@@ -165,24 +171,39 @@
 
 		<td class="attributes"><code>
 			 public 
-			
+			Array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_fullRelease_getQueryDetails">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#20-63" title="Go to source code">fullRelease_getQueryDetails</a>( <span>mixed <var>$querydata</var></span>, <span>mixed <var>$apply_filters</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#29-79" title="Go to source code">fullRelease_getQueryDetails</a>( <span>Array <var>$querydata</var></span>, <span>boolean <var>$apply_filters</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			
+<p>get query details for Results overview/csv header</p>
+
 		</div>
 
 		<div class="description detailed hidden">
 			
+<p>get query details for Results overview/csv header</p>
 
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$querydata</var></dt>
+					<dd><code>Array</code><br>$querydata</dd>
+					<dt><var>$apply_filters</var></dt>
+					<dd><code>boolean</code><br>$apply_filters</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Array</code><br />
+				</div>
 
 
 
@@ -201,16 +222,33 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get_filters">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#65-96" title="Go to source code">get_filters</a>( <span>mixed <var>$querydata</var></span>, <span>mixed <var>&amp; $where</var></span>, <span>mixed <var>&amp; $arguments</var></span>, <span>mixed <var>$keys</var></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#81-119" title="Go to source code">get_filters</a>( <span>Array <var>$querydata</var></span>, <span>outArray <var>&amp; $where</var></span>, <span>outArray <var>&amp; $arguments</var></span>, <span>Array <var>$keys</var></span> )</code>
 
 		<div class="description short">
 			
+<p>Evaluates $querydata and stores filter expressions for SQL WHERE in $where,
+values in $arguments</p>
+
 		</div>
 
 		<div class="description detailed hidden">
 			
+<p>Evaluates $querydata and stores filter expressions for SQL WHERE in $where,
+values in $arguments</p>
 
 
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$querydata</var></dt>
+					<dd><code>Array</code><br>$querydata</dd>
+					<dt><var>$where</var></dt>
+					<dd><code>outArray</code><br>&amp;$where</dd>
+					<dt><var>$arguments</var></dt>
+					<dd><code>outArray</code><br>&amp;$arguments</dd>
+					<dt><var>$keys</var></dt>
+					<dd><code>Array</code><br>$keys array_keys(self::$columns)</dd>
+				</dl></div>
 
 
 
@@ -223,24 +261,43 @@
 
 		<td class="attributes"><code>
 			 public 
-			
+			list($query,
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_fullRelease_buildQuery">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#98-167" title="Go to source code">fullRelease_buildQuery</a>( <span>mixed <var>$querydata</var></span>, <span>mixed <var>$apply_filters</var> = <span class="php-keyword1">false</span></span>, <span>mixed <var>$apply_order</var> = <span class="php-keyword1">false</span></span>, <span>mixed <var>$apply_limit</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#121-198" title="Go to source code">fullRelease_buildQuery</a>( <span>Array <var>$querydata</var></span>, <span>boolean <var>$apply_filters</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$apply_order</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$apply_limit</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			
+<p>Builds full SQL query with $querydata applied</p>
+
 		</div>
 
 		<div class="description detailed hidden">
 			
+<p>Builds full SQL query with $querydata applied</p>
 
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$querydata</var></dt>
+					<dd><code>Array</code><br>$querydata</dd>
+					<dt><var>$apply_filters</var></dt>
+					<dd><code>boolean</code><br>$apply_filters</dd>
+					<dt><var>$apply_order</var></dt>
+					<dd><code>boolean</code><br>$apply_order</dd>
+					<dt><var>$apply_limit</var></dt>
+					<dd><code>boolean</code><br>$apply_limit</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>list($query,</code><br>$query, $arguments)<br />
+				</div>
 
 
 
@@ -252,24 +309,37 @@
 
 		<td class="attributes"><code>
 			 public 
-			
+			Array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_fullRelease">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#169-199" title="Go to source code">fullRelease</a>( <span>mixed <var>$querydata</var></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#200-236" title="Go to source code">fullRelease</a>( <span>Array <var>$querydata</var></span> )</code>
 
 		<div class="description short">
 			
+<p>returns data in format for dataTable</p>
+
 		</div>
 
 		<div class="description detailed hidden">
 			
+<p>returns data in format for dataTable</p>
 
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$querydata</var></dt>
+					<dd><code>Array</code><br>$querydata</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Array</code><br />
+				</div>
 
 
 
@@ -288,16 +358,25 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_printCsv">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#201-246" title="Go to source code">printCsv</a>( <span>mixed <var>$querydata</var></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#238-288" title="Go to source code">printCsv</a>( <span>Array <var>$querydata</var></span> )</code>
 
 		<div class="description short">
 			
+<p>outputs data as csv</p>
+
 		</div>
 
 		<div class="description detailed hidden">
 			
+<p>outputs data as csv</p>
 
 
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$querydata</var></dt>
+					<dd><code>Array</code><br>$querydata</dd>
+				</dl></div>
 
 
 
@@ -310,14 +389,14 @@
 
 		<td class="attributes"><code>
 			 public 
-			
+			Array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_execute">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#248-265" title="Go to source code">execute</a>( <span>mixed <var>$querydata</var></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#290-312" title="Go to source code">execute</a>( <span>Array <var>$querydata</var></span> )</code>
 
 		<div class="description short">
 			
@@ -327,9 +406,24 @@
 			
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$querydata</var></dt>
+					<dd><code>Array</code><br>$querydata</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Array</code><br />
+				</div>
 
 
-
+				<h4>InheritDoc</h4>
+				<div class="list">
+						Switches behaviour based on $querydata['query1']: "fullRelease" or "releaseCsv"
+even though the name indicates differently, feature ids for a full release
+subset can be passed<br />
+				</div>
 
 
 		</div>
@@ -346,7 +440,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_format">#</a>
-		<code><a href="source-class-webservices.listing.Differential_expressions.html#267-275" title="Go to source code">format</a>( <span>mixed <var>&amp; $val</var></span>, <span>mixed <var>$key</var></span> )</code>
+		<code><a href="source-class-webservices.listing.Differential_expressions.html#314-322" title="Go to source code">format</a>( <span>mixed <var>&amp; $val</var></span>, <span>mixed <var>$key</var></span> )</code>
 
 		<div class="description short">
 			
@@ -391,11 +485,11 @@
 	<tr data-order="columns" id="$columns">
 		<td class="attributes"><code>
 			public static 
-			array
+			Array
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-webservices.listing.Differential_expressions.html#8-18" title="Go to source code"><var>$columns</var></a>
+				<a href="source-class-webservices.listing.Differential_expressions.html#12-27" title="Go to source code"><var>$columns</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">array</span>(
     <span class="php-quote">'f.name'</span> =&gt; <span class="php-quote">'&quot;feature_name&quot;'</span>,
@@ -413,10 +507,16 @@
 
 			<div class="description short">
 				
+<p>mapping for dataTable columns to database columns. only these are allowed for
+filtering</p>
+
 			</div>
 
 			<div class="description detailed hidden">
 				
+<p>mapping for dataTable columns to database columns. only these are allowed for
+filtering</p>
+
 
 			</div>
 		</div></td>

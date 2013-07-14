@@ -3,11 +3,10 @@
 namespace webservices\listing;
 
 use \PDO as PDO;
-/*
+/**
  * Web Service.
  * Splits $querydata['longterm'] into words and searches for matching features and their associated features
  */
-
 class Multisearch extends \WebService {
 
     /**

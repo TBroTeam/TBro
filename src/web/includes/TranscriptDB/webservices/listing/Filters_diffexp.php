@@ -4,6 +4,11 @@ namespace webservices\listing;
 
 use \PDO as PDO;
 
+/**
+ * Web Service.
+ *  returns possible filters to display differential expressions
+ * Designed for use with filteredSelect javascript class
+ */
 class Filters_diffexp extends \WebService {
 
     /**
