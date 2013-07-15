@@ -2,6 +2,7 @@
 {#block name='head'#}
 <script type="text/javascript">
     $(document).ready(function(){
+        //start search
         $('#start-multisearch').click(function(){
             $('.results').hide(500);
             $.ajax({

@@ -2,6 +2,7 @@
 {#block name='head'#}
 <script type="text/javascript">
     $(document).ready(function() {
+        //load statistical information
         release.change(function() {
             $.ajax({
                 url: "{#$ServicePath#}/details/statistical_information/"+organism.find(':selected').text()+"/"+release.val(),
@@ -13,7 +14,6 @@
                 }
             });
         });
-        //http://bio.localhost/ajax/details/statistical_information/dmuscipula/test
     });
 </script>
 {#/block#}
@@ -37,12 +37,6 @@
             <tr><th>Unigenes in the selected release: </th><td id='stat_count_unigenes'></td></tr>
             <tr><th>Isoforms in the selected release: </th><td id='stat_count_isoforms'></td></tr>
         </table>
-    </div>
-</div>
-
-<div class="row">
-    <div class="large-12 columns panel">
-        <p>Try searching for comp231081_c0_seq1, comp234627_c0_seq7 or comp214244_c0_seq2 .</p>
     </div>
 </div>
 {#/block#}

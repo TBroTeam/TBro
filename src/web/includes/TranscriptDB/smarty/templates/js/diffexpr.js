@@ -4,6 +4,7 @@ $(document).ready(function() {
     var select_conditionB = $('#select-gdfx-conditionB');
 
 
+    //filteredSelect: select_conditionA => select_conditionB => select_analysis
     new filteredSelect(select_conditionB, 'bb', {
         precedessorNode: select_conditionA
     });
@@ -32,16 +33,19 @@ $(document).ready(function() {
     var dataTable;
     $('#button-gdfx-table').click(function() {
         var selected = finalSelect.filteredData();
+        //conditionA and conditionB have to be re-ordered (are shown both directions but sotred internally only one diferction)
         selectedItem = {
             conditionA: selected.values[0].dir === 'ltr' ? selected.values[0].ba : selected.values[0].bb,
             conditionB: selected.values[0].dir === 'ltr' ? selected.values[0].bb : selected.values[0].ba,
             analysis: selected.values[0].analysis
 
         };
+        //show result table
         $('#div-gdfxtable').show();
 
 
         if (typeof dataTable === "undefined") {
+            //build server request filters
             var serverParams = function(aoData) {
                 aoData.push({
                     name: "organism",
@@ -76,6 +80,7 @@ $(document).ready(function() {
                 /*{#/if#}*/
             };
             var lastQueryData;
+            //dataTable options
             var options = {
                 bFilter: false,
                 bProcessing: true,
@@ -153,6 +158,7 @@ $(document).ready(function() {
                     sRowSelect: "multi"
                 }
             };
+            //execute dataTable
             dataTable = $('#diffexp_results').dataTable(options);
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
@@ -163,6 +169,7 @@ $(document).ready(function() {
 
     new Groupselect($('#select-gdfx-cart'), cart);
 
+    //add selected to cart $('#select-gdfx-cart').val()
     $('#button-gdfx-addToCart').click(function() {
         var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();
         var group = $('#select-gdfx-cart').val();
@@ -178,6 +185,7 @@ $(document).ready(function() {
 
     });
 
+    //updates table displaying query details
     function update_query_details(data) {
         var query_details = data.query_details;
         var domQd = $('#query_details');

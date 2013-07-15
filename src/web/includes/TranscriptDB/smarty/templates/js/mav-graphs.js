@@ -5,7 +5,7 @@ $(document).ready(function() {
     var select_analysis = $('#select-analysis');
     var select_tissues = $('#select-sample');
 
-
+    //filteredSelect: select_assay => select_analysis => select_element => select_tissues
     new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
@@ -18,6 +18,7 @@ $(document).ready(function() {
 
 
     var lastItemEvent = 0;
+    //if selected cart group changes (adding/removing items or context switch), update  filters accordingly
     $('#Cart').on('cartEvent', function(event) {
         if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action==='updateContext' ))
             return;
@@ -56,6 +57,9 @@ $(document).ready(function() {
 
 
 
+ 
+    //get selected filters as collection
+ 
     function getFilterData() {
         var data = {
             parents: [],
@@ -74,6 +78,7 @@ $(document).ready(function() {
         return data;
     }
 
+    //display barplot
     $('#button-barplot').click(function() {
 
         $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
@@ -120,6 +125,7 @@ $(document).ready(function() {
         return false;
     });
 
+//display heatmap
     $('#button-heatmap').click(function() {
         $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
             data: getFilterData(),
@@ -166,6 +172,7 @@ $(document).ready(function() {
         return false;
     });
 
+    //group by tissues button clicked
     function groupByTissues() {
         var checkbox = $('#isoform-barplot-groupByTissues');
         var cx = $('#isoform-barplot-canvas').data('canvasxpress');

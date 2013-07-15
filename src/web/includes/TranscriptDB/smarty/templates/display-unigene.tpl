@@ -34,11 +34,6 @@
             displayFeatureTable(isoform_data, {
                 bPaginate: false,
                 bFilter: false 
-                /*aoColumns: [
-                    {bVisible: false},
-                    {},
-                    {bVisible: false},
-                ]*/
             });
         });
     </script>
