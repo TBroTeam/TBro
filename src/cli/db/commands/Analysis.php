@@ -7,7 +7,7 @@ require_once ROOT . 'classes/AbstractTable.php';
 class Analysis extends AbstractTable {
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getKeys() {
         return array(
@@ -96,35 +96,35 @@ class Analysis extends AbstractTable {
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_commandDescription() {
         return 'Manipulate analyses.';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_commandName() {
         return 'analysis';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_longHelp() {
         
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list');
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Analysis';

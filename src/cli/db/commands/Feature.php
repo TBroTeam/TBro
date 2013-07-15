@@ -105,7 +105,7 @@ class Feature extends AbstractTable {
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      * overwritten to make use of required parameter name (see parameter help). lists only a subset, not the complete table
      */
     protected static function command_list($options, $keys) {

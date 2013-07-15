@@ -51,7 +51,7 @@ class PDOStatement extends \PDOStatement {
     private static $PDO_PLACEHOLDER_POSITIONAL = 2;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * When execute is called record the time it takes and then log the query
      * Parameters will be replaced and logged, but if your query is really weird, this might fail.
      * in this case
@@ -108,7 +108,7 @@ class PDOStatement extends \PDOStatement {
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function bindParam($parameter, &$variable, $data_type = PDO::PARAM_STR, $length = null, $driver_options = null) {
         if (is_string($parameter) && strpos($parameter, ':') === false)
@@ -120,7 +120,7 @@ class PDOStatement extends \PDOStatement {
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function bindValue($parameter, $value, $data_type = PDO::PARAM_STR) {
         if (is_string($parameter) && strpos($parameter, ':') === false)

@@ -56,7 +56,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'PDOStatement.php';
  * </code>
  * 
  * 
- * {@inheritdoc}
+ * {@inheritDoc}
  */
 class PDO extends \PDO {
 
@@ -80,7 +80,7 @@ class PDO extends \PDO {
     public $log_replace_params = true;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * 
      * @param \Log $log a PEAR Log object that will be used for logging
      * @throws \Exception if there is no PEAR Log object specified
@@ -98,7 +98,7 @@ class PDO extends \PDO {
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function prepare($statement, $driver_options = array()) {
         $pdostatement = parent::prepare($statement, $driver_options);
@@ -108,7 +108,7 @@ class PDO extends \PDO {
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function query($statement) {
         $start = microtime(true);
@@ -121,7 +121,7 @@ class PDO extends \PDO {
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function exec($statement) {
         $start = microtime(true);

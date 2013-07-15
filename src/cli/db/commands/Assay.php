@@ -7,7 +7,7 @@ require_once ROOT . 'classes/AbstractTable.php';
 class Assay extends AbstractTable {
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getKeys() {
         return array(
@@ -73,42 +73,42 @@ class Assay extends AbstractTable {
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_commandDescription() {
         return 'Manipulate assays.';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_commandName() {
         return 'assay';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_longHelp() {
         
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list', 'link_biomaterial_sample', 'unlink_biomaterial_sample');
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getPropelClass() {
         return '\\cli_db\\propel\\Assay';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function command_insert_set_defaults(\BaseObject $item) {
         // satisfy NOT NULL constraint
@@ -116,7 +116,7 @@ class Assay extends AbstractTable {
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      * overwritten to show linked samples
      */
     protected static function command_details($options, $keys) {

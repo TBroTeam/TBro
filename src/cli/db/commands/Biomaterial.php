@@ -7,7 +7,7 @@ require_once ROOT . 'classes/AbstractTable.php';
 class Biomaterial extends AbstractTable {
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getKeys() {
         return array(
@@ -85,35 +85,35 @@ class Biomaterial extends AbstractTable {
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_commandDescription() {
         return 'Manipulate biomaterials, conditions and samples.';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_commandName() {
         return 'biomaterial';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function CLI_longHelp() {
         
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getSubCommands() {
         return array('insert', 'update', 'delete', 'details', 'list', 'add_condition', 'add_condition_sample');
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      * overwritten to set type to biomaterial
      */
     protected static function command_insert($options, $keys) {
