@@ -1,6 +1,14 @@
 <?php
-
-function create_job($type, $database, $additional_data = array(), $paramters = array(), $queries = array()) {
+/**
+ * Creates a new job.
+ * @param String $programname
+ * @param String $database
+ * @param Array $additional_data will be passed through 'till results
+ * @param Array $paramters as $key=>$value
+ * @param Array $queries
+ * @return String UID
+ */
+function create_job($programname, $database, $additional_data = array(), $paramters = array(), $queries = array()) {
     try {
         //connect to the database
         $pdo = connect_queue_db();
@@ -26,7 +34,7 @@ function create_job($type, $database, $additional_data = array(), $paramters = a
         $statement_create_job = $pdo->prepare('SELECT * FROM create_job(?,  ?, ?, ARRAY[' . $parameter_qmarks . '], ARRAY[' . $query_qmarks . ']);');
         //and execute it
         $statement_create_job->execute(array_merge(
-                        array($type, $database, json_encode($additional_data)), $parameters_prepared, $queries
+                        array($programname, $database, json_encode($additional_data)), $parameters_prepared, $queries
         ));
         //rowcount should be 1 if job was started, else report an error
         if ($statement_create_job->rowCount() == 0) {
@@ -40,6 +48,11 @@ function create_job($type, $database, $additional_data = array(), $paramters = a
     }
 }
 
+/**
+ * gets job results.
+ * @param String $job_uid
+ * @return Array
+ */
 function get_job_results($job_uid) {
     try {
         //connect to the database
@@ -78,6 +91,11 @@ function get_job_results($job_uid) {
     }
 }
 
+/**
+ *  Returns possible program/database combinations, based on $filter_string
+ * @param String $filter_string might be an unique identifier for a release. If just one release exists, set to null-
+ * @return Array
+ */
 function get_program_databases($filter_string=null) {
     try {
         //connect to the database

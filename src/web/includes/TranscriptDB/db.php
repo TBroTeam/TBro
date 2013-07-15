@@ -7,6 +7,14 @@ function connect_queue_db() {
     return get_db_connection(QUEUE_DB_CONNSTR, QUEUE_DB_USERNAME, QUEUE_DB_PASSWORD);
 }
 
+/**
+ * connects to databse using $connstr, $username, $password
+ * if DEBUG is set to true, use loggedPDO, not PDO
+ * @param String $connstr
+ * @param String $username
+ * @param String $password
+ * @return \PDO
+ */
 function get_db_connection($connstr, $username, $password) {
     try {
         if (defined('DEBUG') && DEBUG) {

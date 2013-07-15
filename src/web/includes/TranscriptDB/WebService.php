@@ -36,6 +36,7 @@ abstract class WebService {
     public static function factory($servicePath) {
         $serviceBasePath = __DIR__ . DIRECTORY_SEPARATOR . 'webservices';
 
+        //search in ./$path[0]/.../($path[x])/ for ucfirst($path[x+1]).php.
         $path = explode('/', $servicePath);
         $filepath = $serviceBasePath . DIRECTORY_SEPARATOR . $path[0];
         $serviceNamespace = '\\webservices\\' . $path[0];

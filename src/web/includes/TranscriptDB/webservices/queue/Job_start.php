@@ -4,8 +4,22 @@ namespace webservices\queue;
 
 require_once 'TranscriptDB/queue.lib.php';
 
+/**
+ * Web Service.
+ * Creates a new job.
+ */
 class Job_start extends \WebService {
 
+    /**
+     * @inheritDoc
+     * @param Array $querydata
+     * @param Array $querydata['job']
+     * @param String $querydata['job']['type']
+     * @param String $querydata['job']['query']
+     * @param String $querydata['job']['additional_data']
+     * @param String $querydata['job']['database']
+     * @param Array $querydata['job']['parameters']
+     */
     public function execute($querydata) {
         $job = $querydata['job'];
 //decide if we're going to query against a protein or nucleotide database 

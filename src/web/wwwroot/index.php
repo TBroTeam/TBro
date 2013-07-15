@@ -2,35 +2,45 @@
 
 session_start();
 
+//config file
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
 
-require_once 'TranscriptDB/WebService.php';
+//requiremend libs
 require_once 'TranscriptDB/WebService.php';
 require_once 'smarty/Smarty.class.php';
 require_once 'lightopenid/openid.php';
 require_once 'TranscriptDB/db.php';
 
+//get path for TranscriptDB folder, store in CFG_SMARTY_DIR
 $dbpath = stream_resolve_include_path('TranscriptDB/db.php');
 define('CFG_SMARTY_DIR', substr($dbpath, 0, strlen($dbpath) - 7));
 
+//initialize smarty
 $smarty = new Smarty();
 $smarty->setTemplateDir(CFG_SMARTY_DIR . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR . 'templates');
 $smarty->setCompileDir(VAR_DIR . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR . 'templates_c');
 $smarty->setCacheDir(VAR_DIR . DIRECTORY_SEPARATOR . 'cache');
 $smarty->setConfigDir(CFG_SMARTY_DIR . DIRECTORY_SEPARATOR . 'configs');
 $smarty->addPluginsDir(CFG_SMARTY_DIR . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR . 'plugins');
-
 $smarty->assign('AppPath', APPPATH);
 $smarty->assign('ServicePath', SERVICEPATH);
 $smarty->left_delimiter = '{#';
 $smarty->right_delimiter = '#}';
 
+//cart name regexp
 require_once('TranscriptDB/webservices/cart/Sync.php');
 $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
 
 $smarty->assign('default_release', DEFAULT_RELEASE);
 $smarty->assign('default_organism', DEFAULT_ORGANISM);
 
+/**
+ * returns $_REQUEST[$key] value if it matches $regexp, else return $defaultvalue
+ * @param String $key
+ * @param String $regexp
+ * @param String $defaultvalue
+ * @return String
+ */
 function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
     if (!isset($_REQUEST[$key]) || !preg_match($regexp, $_REQUEST[$key]))
         return $defaultvalue;
@@ -39,14 +49,15 @@ function requestVal($key, $regexp = "/^.*$/", $defaultvalue = "") {
 }
 
 // OpenID stuff
-
 $redir_url = isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI'];
-
+//log out?
 if (isset($_GET['logout'])) {
     session_destroy();
+    //redirect to same page without logout parameter
     header('Location: ' . preg_replace('/([?&])logout(=[^&]+)?(&|$)/', '$1', $redir_url));
     die();
 }
+//standard LightOpenID login code, see LightOpenID documentation 
 try {
     $openid = new LightOpenID($_SERVER['HTTP_HOST']);
     if (!$openid->mode) {
@@ -109,6 +120,14 @@ switch ($page) {
 }
 $smarty->display('welcome.tpl');
 
+/**
+ * displays feature identified by $organism, $release and $name
+ * @global \PDO $db
+ * @param type $organism
+ * @param type $release
+ * @param type $name
+ * @return boolean false on failure
+ */
 function display_feature($organism, $release, $name) {
 
     global $db;
@@ -127,6 +146,13 @@ EOF
     return display_feature_by_id($stm->fetchColumn());
 }
 
+/**
+ * displays feature based on $feature_id
+ * @global \PDO $db
+ * @global Smarty $smarty
+ * @param int $feature_id
+ * @return fasle on failure
+ */
 function display_feature_by_id($feature_id) {
     global $db;
     global $smarty;
@@ -156,6 +182,12 @@ EOF
     return false;
 }
 
+/**
+ * displays unigene based on $unigene_feature_id
+ * @global Smarty $smarty
+ * @param type $unigene_feature_id
+ * @return boolean false on failure
+ */
 function display_unigene_by_id($unigene_feature_id) {
     global $smarty;
     $smarty->assign('unigene_feature_id', $unigene_feature_id);
@@ -163,6 +195,12 @@ function display_unigene_by_id($unigene_feature_id) {
     return true;
 }
 
+/**
+ * displays isoform based on $isoform_feature_id
+ * @global Smarty $smarty
+ * @param type $isoform_feature_id
+ * @return boolean false on failure
+ */
 function display_isoform_by_id($isoform_feature_id) {
     global $smarty;
     $smarty->assign('isoform_feature_id', $isoform_feature_id);
