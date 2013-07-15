@@ -27,6 +27,18 @@
                         term: $(this).find('input.GO').val()
                     };
                 }
+            },
+            descriptionContains: {
+                name: 'description contains',
+                webservice: '{#$ServicePath#}/combisearch/description_contains/', 
+                template_search: '#template_search_description_contains',
+                fnPrepareData: function(){
+                    return {
+                        species: organism.val(),
+                        release: release.val(),
+                        term: $(this).find('input.GO').val()
+                    };
+                }
             }
         };
         
@@ -113,6 +125,17 @@
         </div>
         <div class="large-3 columns" style="text-align: right">GO:</div>
         <div class="large-3 columns">
+            <input type="text" class="GO" style="margin:0px"/>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="template_search_description_contains">
+    <div class="row">
+        <div class="large-6 columns">
+            description contains: 
+        </div>
+        <div class="large-2 columns" style="text-align: right">Term:</div>
+        <div class="large-4 columns">
             <input type="text" class="GO" style="margin:0px"/>
         </div>
     </div>
