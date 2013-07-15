@@ -1,6 +1,7 @@
 <?php
 
 namespace cli_import;
+use \PDO;
 
 require_once ROOT . 'classes/AbstractImporter.php';
 require_once ROOT . 'commands/Importer_Sequence_Ids.php';

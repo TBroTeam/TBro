@@ -2,6 +2,8 @@
 
 namespace cli_import;
 
+use \PDO;
+
 require_once SHARED . 'classes/CLI_Command.php';
 
 interface Importer {
@@ -103,7 +105,7 @@ abstract class AbstractImporter implements \CLI_Command, Importer {
             //call self::import
             $ret_table = call_user_func(array(get_called_class(), 'import'), array_merge($command_options, array('file' => $filename)));
             //output results from import
-            $tbl = new Console_Table();
+            $tbl = new \Console_Table();
             foreach ($ret_table as $key => $value)
                 $tbl->addRow(array($key, $value));
             echo $tbl->getTable();
