@@ -69,6 +69,9 @@ filteredSelect.prototype.filteredData = function(){
     return ret;
 };
 
+/**
+ * refills this table, triggers selectionChanged event (which will trigger on child selects)
+ */
 filteredSelect.prototype.refill = function(){
     var jqNode = this.jqNode;
     

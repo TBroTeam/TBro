@@ -2,6 +2,7 @@
 {#block name='head'#}
     <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>
     <script type="text/javascript">
+        //will be used by cart-init.js
         var cartoptions = {
         serviceNodes: {
         itemDetails: '{#$ServicePath#}/details/features',

@@ -12,6 +12,7 @@
     $(document).ready(function() {
         $('.tabs').tabs();
 
+        // "genome browser" graph
         $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + feature_id, {
             success: function(val) {
                 canvas = $('#canvas_{#$data.isoform.uniquename|clean_id#}');
@@ -38,19 +39,10 @@
             );
             }
         });
-        $('form.blast').submit(function(event) {
-            queryInput = $(this).find('.query');
-            query = $(queryInput.data('ref')).html();
-            queryInput.val(query);
-        });
         
         $('.contains-tooltip').tooltip({
             items: ".has-tooltip",
             open: function(event, ui) {
-                /*ui.tooltip.offset({
-                top: event.pageY, 
-                left: event.pageX
-            });*/
                 ui.tooltip.css("max-width", "600px");
             },
             content: function() {
@@ -58,16 +50,20 @@
                 var tooltip = $("<table/>");
                 console.log(this.attributes);
                 
+                //build a table over all "data-" attributes.
                 $.each(this.attributes, function(key,attr) {
                     if (attr.name.substr(0,5)=='data-'){
                         var splitAt = attr.nodeValue.indexOf('|');
+                        //everything left from the first | is row name
                         var name = attr.nodeValue.substr(0,splitAt);
+                        //everything right of it is row value
                         var value = attr.nodeValue.substr(splitAt+1);
                         if (value==='')
                             return; //skip empty values
                         $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
                     }
                 });
+                //apply styles
                 tooltip.foundation();
                 return tooltip;
             }
@@ -145,9 +141,7 @@
 
 {#include file="display-components/publication.tpl" feature=$data.isoform #}
 
-
 {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
-
 
 {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
 

@@ -17,7 +17,7 @@
  * @param {Function} [options.callbacks.afterDOMinsert_group] callback on a new group jQuery node after it has been inserted into the DOM
  * @param {Function} [options.callbacks.afterDOMinsert_item] callback on a new item jQuery node after it has been inserted into the DOM
  * @param {String} [options.groupNamePrefix]
- * @returns {Cart}
+ * @return {Cart}
  */
 function Cart(initialData, options) {
     /**

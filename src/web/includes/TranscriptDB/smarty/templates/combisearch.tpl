@@ -2,7 +2,7 @@
 {#block name='head'#}
 <script type="text/javascript">
     $(document).ready(function(){
-        
+        //different allowed search methods
         var searchNodes = {
             hasGO: {
                 name: 'has GO',
@@ -30,6 +30,7 @@
             }
         };
         
+        //fill up #select-terms with searchNodes
         var select$ = $('#select-terms');
         $.each(searchNodes, function(key){
             select$.append($('<option/>').val(key).text(this.name));
@@ -37,8 +38,8 @@
         
         var row_template = _.template($('#template_row').html());
         
+        //adds a term for selected searchNode using template searchNode.template_search
         $('#add-term').click(function(){
-            
             var searchNode = searchNodes[$('#select-terms').val()];
             var elem = _.template($(searchNode.template_search).html())(searchNode);
             var elem$ = $('<div/>').append(row_template({row:elem})).children();
@@ -50,11 +51,13 @@
         });
         
         $('#start-combisearch').click(function(){
+            //gui animationi
             $.when($('.results').hide(500)).then(function(){
                 $('.loading').show();
             });
             var filteredResults;
  
+            //start all searches, add them to the array deferreds
             var deferreds = $('#searchterms').children().map(function(){
                 var searchNode = $(this).data('searchNode');
                 return $.ajax(searchNode.webservice, {
@@ -70,7 +73,7 @@
                 });
             });
             
-            //when all deferred ajax calls have finished
+            //when all deferred ajax calls have finished, display feature table
             $.when.apply($, deferreds.get()).then(function(){
                 $.ajax('{#$ServicePath#}/details/features',{
                     data: { terms: filteredResults },

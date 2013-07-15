@@ -3,6 +3,7 @@ $(document).ready(function() {
     var select_analysis = $('#isoform-barplot-filter-analysis');
     var select_tissues = $('#isoform-barplot-filter-tissue');
     
+    //applies filteredSelect. select_assay => select_analysis => select_tissues
     new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
@@ -17,6 +18,7 @@ $(document).ready(function() {
         }
     });
 
+    //tooltip
     $('#isoform-barplot-filter-form').tooltip({
         items: "option",
         open: function(event, ui) {
@@ -37,6 +39,7 @@ $(document).ready(function() {
         }
     });
     
+    //groupByTissues button
     function isoform_barplot_groupByTissues() {
         var checkbox = $(this);
         var cx = $('#isoform-barplot-canvas').data('canvasxpress');
@@ -49,6 +52,7 @@ $(document).ready(function() {
     
     $('#isoform-barplot-groupByTissues').click(isoform_barplot_groupByTissues);
     
+    //get data & display graph
     $('#isoform-barplot-filter-form').submit(function() {
         var data = {
             parents: [feature_id], 
@@ -78,6 +82,7 @@ $(document).ready(function() {
 
                 canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
                 parent.append(canvas);
+                //optical fix. set width to ~parent width
                 canvas.attr('width', parent.width() - 8);
                 canvas.attr('height', 500);
 
