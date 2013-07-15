@@ -36,7 +36,7 @@
                     return {
                         species: organism.val(),
                         release: release.val(),
-                        term: $(this).find('input.GO').val()
+                        term: $(this).find('input.term').val()
                     };
                 }
             }
@@ -139,7 +139,7 @@
         </div>
         <div class="large-2 columns" style="text-align: right">Term:</div>
         <div class="large-4 columns">
-            <input type="text" class="GO" style="margin:0px"/>
+            <input type="text" class="term" style="margin:0px"/>
         </div>
     </div>
 </script>
