@@ -46,7 +46,7 @@ EOF;
         $data = array('results' => array());
 
         $stm_get_features->execute(array(
-            'accession' => $term,
+            'term' => $term,
             'species' => $species,
             'release' => $release
         ));
