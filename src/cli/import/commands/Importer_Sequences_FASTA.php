@@ -120,7 +120,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                 $matches = array();
                 #predicted peptide header like this:
                 #>m.1812924 g.1812924  ORF g.1812924 m.1812924 type:5prime_partial len:376 (+) comp224705_c0_seq18:3-1130(+)
-                if (preg_match('/^>(?<id>[^\s]+) .* (?<name>\w+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
+                if (preg_match('/^>(?<id>[^\s]+) .* (?<name>[^\s]+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $description, $matches)) {
                     $param_predpep_name = $matches['id'];
                     $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($matches['name'], $matches['from'], $matches['to'], $matches['dir']);
                     $param_predpep_seqlen = strlen($sequence);
