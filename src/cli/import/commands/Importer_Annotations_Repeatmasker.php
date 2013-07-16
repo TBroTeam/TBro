@@ -32,7 +32,7 @@ class Importer_Annotations_Repeatmasker extends AbstractImporter {
 # 6.2      = % of bases opposite a gap in the query sequence (deleted bp)
 \d+\.\d+[ ]
 # 0.0      = % of bases opposite a gap in the repeat consensus (inserted bp)
-(?<name>\w+)[ ]
+(?<name>[^\s]+)[ ]
 # HSU08988 = name of query sequence
 (?<start>\d+)[ ]
 # 6563     = starting position of match in query sequence
