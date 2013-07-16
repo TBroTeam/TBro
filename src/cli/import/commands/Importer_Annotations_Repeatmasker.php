@@ -42,7 +42,7 @@ class Importer_Annotations_Repeatmasker extends AbstractImporter {
 # (22462)  = no. of bases in query sequence past the ending position of match
 (?:[C+][ ])?
 # C        = match is with the Complement of the repeat consensus sequence
-(?<repeat_name>[\w()-?]+)\#
+(?<repeat_name>[\w()-?]+)[\s#]
 # MER7A    = name of the matching interspersed repeat
 (?<repeat_class>[\w()-?]+)
 (?:/(?<repeat_family>[\w()-?]+))?[ ]
@@ -58,6 +58,11 @@ class Importer_Annotations_Repeatmasker extends AbstractImporter {
 $}x
 EOF;
 
+        
+        //Kommentar an Markus: Fehler ist in Zeile 45:
+        //das mir bekannte Format ist name#klasse(familie)
+        //hier wohl name klasse(familie)
+        // => \# wird zu [ ]
         $lines_imported = 0;
         $families_added = 0;
 
