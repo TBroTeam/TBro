@@ -55,6 +55,7 @@ class Importer_Annotations_Repeatmasker extends AbstractImporter {
 # 104      = ending position of match in repeat consensus sequence
 \d+
 # 20       = unique identifier for individual insertions    
+(?[ ]\*)?
 $}x
 EOF;
 
