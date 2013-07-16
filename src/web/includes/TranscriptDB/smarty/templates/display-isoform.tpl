@@ -15,12 +15,12 @@
         // "genome browser" graph
         $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + feature_id, {
             success: function(val) {
-                canvas = $('#canvas_{#$data.isoform.uniquename|clean_id#}');
+                canvas = $('#canvas_isoform');
                 canvas.attr('width', canvas.parent().width() - 8);
                 if (val.tracks.length == 0)
                     return;
                 new CanvasXpress(
-                "canvas_{#$data.isoform.uniquename|clean_id#}",
+                "canvas_isoform",
                 {
                     "tracks": val.tracks
                 },
@@ -108,7 +108,7 @@
         <h4>Sequence Annotation</h4>
     </div>
     <div class="large-12 columns panel">
-        <canvas id="canvas_{#$data.isoform.uniquename|clean_id#}" width="600"></canvas>
+        <canvas id="canvas_isoform" width="600"></canvas>
         <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
     </div>
 </div>
@@ -121,7 +121,7 @@
         </div>
     </div>
     <div class="large-12 columns panel">
-        <textarea style="height:100px;" id="sequence-{#$data.isoform.uniquename|clean_id#}">{#$data.isoform.residues#}</textarea>
+        <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
     </div>
 </div>
 
