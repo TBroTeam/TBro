@@ -1,0 +1,65 @@
+-- programs that the user is allowed to execute
+INSERT INTO programs (name) VALUES
+('blastn'),
+('blastp'),
+('blastx'),
+('tblastn'),
+('tblastx');
+
+-- allowed parameters to be passed for each of these programs
+-- if a parameter is omited by create_job, the default_value will be used. can contain the variable $DBFILE
+-- the constraint_function will be executed on the parameter value, together with constraint_function_parameters
+-- available constraints function are (but can be extended):
+--   cfunc_in_array - takes an array of values as constraint_function_parameters
+--   cfunc_within_bounds - takes an array of {min,max} as constraint_function_parameters
+--   cfunc_default_only - user can not change it, always use default parameter
+INSERT INTO allowed_parameters
+(programname, param_name, default_value, constraint_function, constraint_function_parameters) VALUES
+('blastn',  'task',             'megablast', 'cfunc_in_array',      ARRAY['blastn', 'dc-megablast', 'megablast']),
+('blastn',  'outfmt',           '5',         'cfunc_default_only',  NULL),
+('blastn',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('blastn',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('blastn',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastn',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
+('blastp',  'task',             'blastp',    'cfunc_default_only',  NULL),
+('blastp',  'outfmt',           '5',         'cfunc_default_only',  NULL),
+('blastp',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('blastp',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('blastp',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastp',  'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
+('blastp',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
+('blastx',  'outfmt',           '5',         'cfunc_default_only',  NULL),
+('blastx',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('blastx',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('blastx',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('blastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
+('blastx',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
+('tblastn', 'outfmt',           '5',         'cfunc_default_only',  NULL),
+('tblastn', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('tblastn', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('tblastn', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('tblastn', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
+('tblastn',  'db',              '$DBFILE',  'cfunc_default_only',  NULL),
+('tblastx', 'outfmt',           '5',         'cfunc_default_only',  NULL),
+('tblastx', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('tblastx', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
+('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
+('tblastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
+('tblastx',  'db',              '$DBFILE',  'cfunc_default_only',  NULL);
+
+-- database files available. name is the name it will be referenced by, md5 is the zip file's sum, download_uri specifies where the file can be retreived
+INSERT INTO database_files
+(name, md5, download_uri) VALUES
+('13_test.fasta', '81b096cd80be252fd7633d39b08d53d2', 'http://wbbi170/httpdocs/server/downloads/13_test.fasta.zip'),
+('13_test_predpep.fasta', 'de360c35e8719b36c19de387d8f77f18', 'http://wbbi170/httpdocs/server/downloads/13_test_predpep.fasta.zip');
+
+
+-- contains information which program is available for which program.
+-- additionally, 'availability_filter' can be used to e.g. restrict use for a organism-release combination
+INSERT INTO program_database_relationships
+(programname, database_name, availability_filter) VALUES
+('blastn','13_test.fasta', '13_test'),
+('blastp','13_test_predpep.fasta', '13_test'),
+('blastx','13_test_predpep.fasta', '13_test'),
+('tblastn','13_test.fasta', '13_test'),
+('tblastx','13_test.fasta', '13_test');
