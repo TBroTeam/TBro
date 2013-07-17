@@ -16,6 +16,8 @@
     </if>
     <property file="./build.properties" />
     
+    <import file="./src/queue/build-queue.xml"/>
+    
     <import file="./src/cli/build-cli-db.xml"/>
     <import file="./src/cli/build-cli-import.xml"/>
     <target name="cli-install" depends="cli-db-install,cli-import-install" description="install cli tools to bin_dir">

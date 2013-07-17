@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project>
+    <target name="queue-install-db">
+        <exec command='export PGPASSWORD="${queue_db_password}"; psql -h ${queue_db_host} -U ${queue_db_username} -p ${queue_db_port} -f ${srcdir}/queue/sql/tables.sql ${queue_db_name}' escape="false" />
+        <exec command='export PGPASSWORD="${queue_db_password}"; psql -h ${queue_db_host} -U ${queue_db_username} -p ${queue_db_port} -f ${srcdir}/queue/sql/functions.sql ${queue_db_name}' escape="false" />
+        <copy file ="${srcdir}/queue/sql/queue_config.example.sql" tofile="${project.basedir}/queue_config.example.sql"  overwrite="true"/>
+        <echo>an example configuration has been copied to ${project.basedir}/queue_config.example.sql!</echo>
+        <echo>modify it to your needs and load it into your blast database</echo>
+    </target>
+    
+    <target name="queue-build-worker">
+        <zip destfile="${project.basedir}/unix-worker.zip" basedir="${srcdir}/queue/worker-php"/>
+        <zip destfile="${project.basedir}/win-worker.zip" basedir="${srcdir}/queue/worker-php-win"/>
+    </target>
+</project>

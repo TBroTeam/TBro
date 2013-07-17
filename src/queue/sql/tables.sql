@@ -6,13 +6,6 @@ CREATE TABLE programs
 	program_id serial NOT NULL PRIMARY KEY,
 	name varchar NOT NULL UNIQUE
 );
-INSERT INTO programs (name) VALUES
-('blastn'),
-('blastp'),
-('blastx'),
-('tblastn'),
-('tblastx');
-
 CREATE TABLE database_files
 (
     database_file_id serial NOT NULL PRIMARY KEY,
@@ -91,40 +84,6 @@ CREATE TABLE allowed_parameters
 );
 COMMENT ON COLUMN allowed_parameters.constraint_function IS 'name of a function with the signature "constraint_function(val varchar, arr varchar[]) RETURNS boolean"';
 
-INSERT INTO allowed_parameters
-(programname, param_name, default_value, constraint_function, constraint_function_parameters) VALUES
-('blastn',  'task',             'megablast', 'cfunc_in_array',      ARRAY['blastn', 'dc-megablast', 'megablast']),
-('blastn',  'outfmt',           '5',         'cfunc_default_only',  NULL),
-('blastn',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('blastn',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('blastn',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
-('blastn',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
-('blastp',  'task',             'blastp',    'cfunc_default_only',  NULL),
-('blastp',  'outfmt',           '5',         'cfunc_default_only',  NULL),
-('blastp',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('blastp',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('blastp',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
-('blastp',  'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
-('blastp',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
-('blastx',  'outfmt',           '5',         'cfunc_default_only',  NULL),
-('blastx',  'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('blastx',  'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('blastx',  'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
-('blastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
-('blastx',  'db',               '$DBFILE',  'cfunc_default_only',  NULL),
-('tblastn', 'outfmt',           '5',         'cfunc_default_only',  NULL),
-('tblastn', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('tblastn', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('tblastn', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
-('tblastn', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
-('tblastn',  'db',              '$DBFILE',  'cfunc_default_only',  NULL),
-('tblastx', 'outfmt',           '5',         'cfunc_default_only',  NULL),
-('tblastx', 'num_descriptions', '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('tblastx', 'num_alignments',   '10',        'cfunc_within_bounds', ARRAY['1','1000']),
-('tblastx', 'evalue',           '0.1',       'cfunc_within_bounds', ARRAY['0','100']),
-('tblastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
-('tblastx',  'db',              '$DBFILE',  'cfunc_default_only',  NULL);
-
 CREATE TABLE options
 (
     option_id serial NOT NULL PRIMARY KEY,
@@ -142,17 +101,3 @@ INSERT INTO options
 make sure this value is big enough or some jobs will stay in the queue forever.'),
 ('MAXIMUM_KEEPALIVE_TIMEOUT', '15', 
 'time in seconds a worker has to send another keepalive_ping until a query job will be set from "PROCESSING" to "NOT_PROCESSED".');
-
-
-INSERT INTO database_files
-(name, md5, download_uri) VALUES
-('13_test.fasta', '81b096cd80be252fd7633d39b08d53d2', 'http://wbbi170/httpdocs/server/downloads/13_test.fasta.zip'),
-('13_test_predpep.fasta', 'de360c35e8719b36c19de387d8f77f18', 'http://wbbi170/httpdocs/server/downloads/13_test_predpep.fasta.zip');
-
-INSERT INTO program_database_relationships
-(programname, database_name) VALUES
-('blastn','13_test.fasta'),
-('blastp','13_test_predpep.fasta'),
-('blastx','13_test_predpep.fasta'),
-('tblastn','13_test.fasta'),
-('tblastx','13_test.fasta');
