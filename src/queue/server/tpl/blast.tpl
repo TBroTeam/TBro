@@ -7,7 +7,7 @@
         window.refreshProgramDatabases = function (){
             //get possible databases from the WebService    
             $.ajax('{#$webservice_program_databases#}', {
-                data: {filter_string: _.isFunction(get_filter_string)?get_filter_string():{}},
+                data: {filter_string: get_filter_string()},
                 dataType: 'JSON',
                 success: function(data) {
                     databases = data;

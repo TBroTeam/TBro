@@ -63,3 +63,9 @@ INSERT INTO program_database_relationships
 ('blastx','13_test_predpep.fasta', '13_test'),
 ('tblastn','13_test.fasta', '13_test'),
 ('tblastx','13_test.fasta', '13_test');
+
+
+--time in seconds until a query job will be set from "PROCESSING" to "NOT_PROCESSED". make sure this value is big enough or some jobs will stay in the queue forever.
+UPDATE options SET value=120 WHERE key='MAXIMUM_EXECUTION_TIME';
+--time in seconds a worker has to send another keepalive_ping until a query job will be set from "PROCESSING" to "NOT_PROCESSED".
+UPDATE options SET value=15 WHERE key='MAXIMUM_EXECUTION_TIME';

@@ -14,7 +14,44 @@
     </target>
     
     <target name="queue-build-worker" description="build workers for worker nodes">
-        <zip destfile="${project.basedir}/unix-worker.zip" basedir="${srcdir}/queue/worker-php"/>
-        <zip destfile="${project.basedir}/win-worker.zip" basedir="${srcdir}/queue/worker-php-win"/>
+        <mkdir dir="${builddir}/queue/workers"/>
+        <copy todir="${builddir}/queue/workers" >
+            <fileset dir="${srcdir}/queue">
+                <include name="worker-php**" />
+                <include name="worker-php**/**" />
+            </fileset>
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+        <zip destfile="${project.basedir}/unix-worker.zip" basedir="${builddir}/queue/workers/worker-php"/>
+        <zip destfile="${project.basedir}/win-worker.zip" basedir="${builddir}/queue/workers/worker-php-win"/>
+    </target>
+    
+    <target name="queue-build-standalone" description="builds a standalone version of the queue web interface">
+        <mkdir dir="${builddir}/queue/standalone"/>
+        <copy todir="${builddir}/queue/standalone" >
+            <fileset dir="${srcdir}/queue/server">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/shared/libs">
+                <include name="smarty" />
+                <include name="smarty/**" />
+            </fileset>
+        </copy>
+        <exec command='php ${builddir}/queue/standalone/build-html.php blast' escape="false" />
+        <exec command='php ${builddir}/queue/standalone/build-html.php blast_results' escape="false" />
+        <zip destfile="${project.basedir}/queue-standalone.zip">
+            <fileset dir="${builddir}/queue/standalone">
+                <include name="ajax" />
+                <include name="ajax/**" />
+                <include name="downloads" />
+                <include name="downloads/**" />
+                <include name="js" />
+                <include name="js/**" />
+                <include name="**.html" />
+            </fileset>
+        </zip>
     </target>
 </project>
