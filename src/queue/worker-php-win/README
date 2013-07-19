@@ -1,0 +1,2 @@
+This tool requires the Sysinternals tool PsExec.exe to be available in PATH.
+If it isn't, you can download it at http://technet.microsoft.com/de-de/sysinternals/bb897553.aspx and simply copy it into this directory.

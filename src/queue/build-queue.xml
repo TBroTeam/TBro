@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?xml-model 
+    href="/usr/share/php5/PEAR/data/phing/etc/phing-grammar.rng" 
+    type="application/xml" 
+    schematypens="http://relaxng.org/ns/structure/1.0" ?>
+
+<project>
+    <target name="queue-install-db" description="intialize database for the queue">
+        <exec command='export PGPASSWORD="${queue_db_password}"; psql -h ${queue_db_host} -U ${queue_db_username} -p ${queue_db_port} -f ${srcdir}/queue/sql/tables.sql ${queue_db_name}' escape="false" />
+        <exec command='export PGPASSWORD="${queue_db_password}"; psql -h ${queue_db_host} -U ${queue_db_username} -p ${queue_db_port} -f ${srcdir}/queue/sql/functions.sql ${queue_db_name}' escape="false" />
+        <copy file ="${srcdir}/queue/sql/queue_config.example.sql" tofile="${project.basedir}/queue_config.example.sql"  overwrite="true"/>
+        <echo>an example configuration has been copied to ${project.basedir}/queue_config.example.sql!</echo>
+        <echo>modify it to your needs and load it into your blast database</echo>
+    </target>
+    
+    <target name="queue-build-worker" description="build workers for worker nodes">
+        <mkdir dir="${builddir}/queue/workers"/>
+        <copy todir="${builddir}/queue/workers" >
+            <fileset dir="${srcdir}/queue">
+                <include name="worker-php**" />
+                <include name="worker-php**/**" />
+            </fileset>
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+        <zip destfile="${project.basedir}/unix-worker.zip" basedir="${builddir}/queue/workers/worker-php"/>
+        <zip destfile="${project.basedir}/win-worker.zip" basedir="${builddir}/queue/workers/worker-php-win"/>
+    </target>
+    
+    <target name="queue-build-standalone" description="builds a standalone version of the queue web interface">
+        <mkdir dir="${builddir}/queue/standalone"/>
+        <copy todir="${builddir}/queue/standalone" >
+            <fileset dir="${srcdir}/queue/server">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/shared/libs">
+                <include name="smarty" />
+                <include name="smarty/**" />
+            </fileset>
+        </copy>
+        <exec command='php ${builddir}/queue/standalone/build-html.php blast' escape="false" />
+        <exec command='php ${builddir}/queue/standalone/build-html.php blast_results' escape="false" />
+        <zip destfile="${project.basedir}/queue-standalone.zip">
+            <fileset dir="${builddir}/queue/standalone">
+                <include name="ajax" />
+                <include name="ajax/**" />
+                <include name="downloads" />
+                <include name="downloads/**" />
+                <include name="js" />
+                <include name="js/**" />
+                <include name="**.html" />
+            </fileset>
+        </zip>
+    </target>
+</project>

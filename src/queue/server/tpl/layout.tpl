@@ -1,6 +1,6 @@
 {#$webservice_program_databases="ajax/program_databases.php"#}
-{#$webservice_job_start="ajax/fasta_job_start.php"}
-{#$webservice_job_results="ajax/job_results.php"}
+{#$webservice_job_start="ajax/fasta_job_start.php"#}
+{#$webservice_job_results="ajax/job_results.php"#}
 {#$result_page="blast_results.html"#}
 {#$path_prefix=""#}
 {#$feature_prefix="/"#}
@@ -18,8 +18,17 @@
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+        <script type="text/javascript">
+            function get_additional_data() {
+                return  {};
+            }
 
-{#block name='head'#}{#/block#}
+
+            function get_filter_string() {
+                return null;
+            }
+        </script>
+    {#block name='head'#}{#/block#}
 </head>
 <body>
 
