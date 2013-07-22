@@ -56,7 +56,9 @@ class transdecoderToProteinTable implements \CLI_Command {
                 } else
                     continue; //fasta content here, no header
             }
+            fclose($infile);
         }
+        fclose($out);
     }
 
 }
