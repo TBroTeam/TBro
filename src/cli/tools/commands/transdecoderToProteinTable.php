@@ -41,7 +41,7 @@ class transdecoderToProteinTable implements \CLI_Command {
         if (isset($command->options['outfile'])) {
             $out = fopen($command->options['outfile'], 'w');
         } else {
-            $out = fopen('php://stdout', 'w');
+            $out = STDOUT;
         }
 
         foreach ($command->args['input_files'] as $infilename) {
@@ -49,8 +49,8 @@ class transdecoderToProteinTable implements \CLI_Command {
             while (!feof($infile)) {
                 $line = fgets($infile);
                 $matches = array();
-                if (preg_match('/^>(?<id>[^\s]+) .* (?<name>[^\s]+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $line, $matches)) {
-                    fputcsv($out, array($matches['id'], $matches['name'], $matches['from'], $matches['to'], $matches['dir']), "\t");
+                if (preg_match('/^>(?<id>[^\s]+) .* (?<parent>[^\s]+):(?<from>\d+)-(?<to>\d+)\((?<dir>[+-])\)$/', $line, $matches)) {
+                    fputcsv($out, array($matches['id'], $matches['parent'], $matches['from'], $matches['to'], $matches['dir']), "\t");
                 } else if ($line[0] == '>') {
                     trigger_error(sprintf('line does not match: %s', $line), E_USER_ERROR);
                 } else
