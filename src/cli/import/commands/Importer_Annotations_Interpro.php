@@ -170,7 +170,7 @@ EOF;
                 //link with parent feature
                 $statement_insert_featureloc->execute();
 
-                if ($param_evalue == 'NA')
+                if ($param_evalue == '-')
                     $param_evalue = NULL;
 
                 //link domain to analysis with evalue
