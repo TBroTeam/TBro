@@ -26,7 +26,7 @@ class Importer_Annotations_Interpro extends AbstractImporter {
 (?:[\t]   (?<analysisMatchDescription>.*))?
 [\t]   (?<domStart>\d+)
 [\t]   (?<domEnd>\d+)
-[\t]   (?<eValue>(?:NA|\d+(?:\.\d+)?(?:[Ee][+-]\d+)?))
+[\t]   (?<eValue>(?:-|\d+(?:\.\d+)?(?:[Ee][+-]\d+)?))
 [\t]   (?<status>[T?])
 [\t]   (?<timeexecuted>[\w-]*)
 (?:[\t]   (?<interproID>\w*))?
