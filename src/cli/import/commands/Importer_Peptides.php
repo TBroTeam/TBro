@@ -21,7 +21,7 @@ class Importer_Peptides extends AbstractImporter {
      * @return string
      */
     static function prepare_predpep_name($isoform_name, $left, $right, $direction) {
-        return $isoform_name . ':' . ($direction == '+' ? "$left-$right" : "$right-$left");
+        return sprintf('%s:%d-%d(%s)', $isoform_name, min($left, $right), max($left,$right), $direction);
     }
 
     /**
