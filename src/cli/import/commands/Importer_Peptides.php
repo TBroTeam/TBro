@@ -80,7 +80,6 @@ class Importer_Peptides extends AbstractImporter {
             while (!feof($file)) {
 
                 $line = fgetcsv($file, 0, "\t");
-                var_dump($line);die();
                 list($param_predpep_name, $isoform_name, $predpep_start, $predpep_end, $predpep_dir) = $line;
 
                 $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($isoform_name, $predpep_start, $predpep_end, $predpep_dir);
