@@ -51,35 +51,23 @@ class Importer_Sequences_FASTA extends AbstractImporter {
         global $db;
         $lines_imported = 0;
         $isoforms_updated = 0;
-        $predpeps_added = 0;
 
         #pre-initialize variables to bind statement parameters
         $param_isoform_name = null;
         $param_isoform_seqlen = null;
         $param_isoform_residues = null;
 
-        $param_predpep_name = null;
-        $param_predpep_uniq = null;
-        $param_predpep_seqlen = null;
-        $param_predpep_residues = null;
-        $param_predpep_feature_id = null;
-        $param_predpep_fmin = null;
-        $param_predpep_fmax = null;
-        $param_predpep_strand = null;
-        $param_predpep_srcfeature_uniq = null;
-
         try {
             $db->beginTransaction();
-            $import_prefix_id = Importer_Sequence_Ids::get_import_dbxref();
             # prepare statements
             #
             #insert sequence into existing isoform
-            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE name=:name AND organism_id=:organism AND type_id=:type_id RETURNING feature_id');
+            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE name=:name AND organism_id=:organism AND dbxref_id=:release RETURNING feature_id');
             $statement_update_isoform->bindParam('name', $param_isoform_name, PDO::PARAM_STR);
             $statement_update_isoform->bindParam('seqlen', $param_isoform_seqlen, PDO::PARAM_INT);
             $statement_update_isoform->bindParam('residues', $param_isoform_residues, PDO::PARAM_STR);
             $statement_update_isoform->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
-            $statement_update_isoform->bindValue('type_id', Importer_Sequence_Ids::get_import_dbxref(), PDO::PARAM_INT);
+            $statement_update_isoform->bindValue('release', Importer_Sequence_Ids::get_import_dbxref(), PDO::PARAM_INT);
 
             #read file and execute statements
 
@@ -114,7 +102,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated, 'predpeps_added' => $predpeps_added);
+        return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated);
     }
 
     /**

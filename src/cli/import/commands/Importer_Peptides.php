@@ -107,7 +107,7 @@ class Importer_Peptides extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'isoforms_updated' => $isoforms_updated, 'predpeps_added' => $predpeps_added);
+        return array(LINES_IMPORTED => $lines_imported, 'predpeps_added' => $predpeps_added);
     }
 
     /**
