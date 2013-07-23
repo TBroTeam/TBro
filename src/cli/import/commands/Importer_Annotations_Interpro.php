@@ -151,7 +151,6 @@ EOF;
                     self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
                     continue;
                 }
-var_dump($match);die();
 
                 // set params for statements
                 // available matches, see RegEx
@@ -178,7 +177,7 @@ var_dump($match);die();
                 $statement_insert_analysisfeature->execute();
 
                 //add interpro ID as textual annoation of type CV_INTERPRO_ID
-                if (!empty($match['interproID']) && $match['interproID'] != "NULL") {
+                if (isset($match['interproID']) && $match['interproID'] != "NULL") {
                     $param_featureprop_type = CV_INTERPRO_ID;
                     $param_featureprop_value = $match['interproID'];
 
