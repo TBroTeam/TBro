@@ -39,7 +39,6 @@ class Importer_Sequences_FASTA extends AbstractImporter {
     }
 
 
-
     /**
      * @inheritDoc
      */
@@ -51,23 +50,24 @@ class Importer_Sequences_FASTA extends AbstractImporter {
         global $db;
         $lines_imported = 0;
         $isoforms_updated = 0;
+        $predpeps_added = 0;
 
         #pre-initialize variables to bind statement parameters
-        $param_isoform_name = null;
+        $param_isoform_uniq = null;
         $param_isoform_seqlen = null;
         $param_isoform_residues = null;
+
 
         try {
             $db->beginTransaction();
             # prepare statements
             #
             #insert sequence into existing isoform
-            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE name=:name AND organism_id=:organism AND dbxref_id=:release RETURNING feature_id');
-            $statement_update_isoform->bindParam('name', $param_isoform_name, PDO::PARAM_STR);
+            $statement_update_isoform = $db->prepare('UPDATE feature SET (seqlen, residues) = (:seqlen, :residues) WHERE uniquename=:uniquename AND organism_id=:organism RETURNING feature_id');
+            $statement_update_isoform->bindParam('uniquename', $param_isoform_uniq, PDO::PARAM_STR);
             $statement_update_isoform->bindParam('seqlen', $param_isoform_seqlen, PDO::PARAM_INT);
             $statement_update_isoform->bindParam('residues', $param_isoform_residues, PDO::PARAM_STR);
             $statement_update_isoform->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
-            $statement_update_isoform->bindValue('release', Importer_Sequence_Ids::get_import_dbxref(), PDO::PARAM_INT);
 
             #read file and execute statements
 
@@ -81,7 +81,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
                 #isoform header like this:
                 #>comp173079_c0_seq1 len=2161 path=[2139:0-732 2872:733-733 2873:734-1159 3299:1160-1160 3300:1161-1513 3653:1514-1517 3657:1518-2160]
                 if (preg_match('/^>(?<name>[^\s]+) .*$/', $description, $matches)) {
-                    $param_isoform_name = $matches['name'];
+                    $param_isoform_uniq = IMPORT_PREFIX . "_" . $matches['name'];
                     $param_isoform_seqlen = strlen($sequence);
                     $param_isoform_residues = $sequence;
                     //update isoform with values

@@ -13,18 +13,6 @@ require_once ROOT . 'commands/Importer_Sequence_Ids.php';
 class Importer_Peptides extends AbstractImporter {
 
     /**
-     * Converts values to String that would be stored as Name (Suffix of UniqueName) in DB
-     * @param string $isoform_name
-     * @param int $left
-     * @param int $right
-     * @param char $direction [+-]
-     * @return string
-     */
-    static function prepare_predpep_name($isoform_name, $left, $right, $direction) {
-        return sprintf('%s:%d-%d(%s)', $isoform_name, min($left, $right), max($left,$right), $direction);
-    }
-
-    /**
      * @inheritDoc
      */
     static function import($options) {
@@ -37,14 +25,10 @@ class Importer_Peptides extends AbstractImporter {
         $predpeps_added = 0;
 
         #pre-initialize variables to bind statement parameters
-        $param_isoform_uniq = null;
-        $param_isoform_seqlen = null;
-        $param_isoform_residues = null;
 
         $param_predpep_name = null;
         $param_predpep_uniq = null;
         $param_predpep_seqlen = null;
-        $param_predpep_residues = null;
         $param_predpep_feature_id = null;
         $param_predpep_fmin = null;
         $param_predpep_fmax = null;
@@ -82,7 +66,7 @@ class Importer_Peptides extends AbstractImporter {
                 $line = fgetcsv($file, 0, "\t");
                 list($param_predpep_name, $isoform_name, $predpep_start, $predpep_end, $predpep_dir) = $line;
 
-                $param_predpep_uniq = IMPORT_PREFIX . "_" . self::prepare_predpep_name($isoform_name, $predpep_start, $predpep_end, $predpep_dir);
+                $param_predpep_uniq = IMPORT_PREFIX . "_" . $param_predpep_name;
                 $param_predpep_seqlen = abs($predpep_end - $predpep_start) + 1;
                 // $param_predpep_residues = $sequence;
                 //create predpep

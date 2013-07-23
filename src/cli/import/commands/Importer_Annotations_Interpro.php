@@ -19,9 +19,6 @@ class Importer_Annotations_Interpro extends AbstractImporter {
     private static $regex = <<<EOF
 {^
    (?<feature>[^\s]+)
-[\t]   (?<pepStart>\d+)
-[\t]   (?<pepEnd>\d+)
-[\t]   (?<pepStrand>[+-])
 [\t]   (?<checksum>\w+)
 [\t]   (?<length>\d+)
 [\t]   (?<analysisMethod>\w+)
@@ -164,7 +161,7 @@ EOF;
                 $param_evalue = $match['eValue'];
 
                 //more complex parameters
-                $param_feature = Importer_Peptides::prepare_predpep_name($match['feature'], $match['pepStart'], $match['pepEnd'], $match['pepStrand']);
+                $param_feature = $match['feature'];
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $param_feature;
                 $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
                 $param_feature_domain_uniq = IMPORT_PREFIX . "_" . $param_feature_domain_name;
