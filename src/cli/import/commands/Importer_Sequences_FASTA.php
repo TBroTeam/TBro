@@ -38,17 +38,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
         return array($description, $sequence);
     }
 
-    /**
-     * Converts values to String that would be stored as Name (Suffix of UniqueName) in DB
-     * @param string $isoform_name
-     * @param int $left
-     * @param int $right
-     * @param char $direction [+-]
-     * @return string
-     */
-    static function prepare_predpep_name($isoform_name, $left, $right, $direction) {
-        return $isoform_name . ':' . ($direction == '+' ? "$left-$right" : "$right-$left");
-    }
+
 
     /**
      * @inheritDoc
