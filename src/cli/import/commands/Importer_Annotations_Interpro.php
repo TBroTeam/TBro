@@ -29,8 +29,8 @@ class Importer_Annotations_Interpro extends AbstractImporter {
 [\t]   (?<eValue>(?:NA|\d+(?:\.\d+)?(?:[Ee][+-]\d+)?))
 [\t]   (?<status>[T?])
 [\t]   (?<timeexecuted>[\w-]*)
-[\t]   (?<interproID>\w*)
-[\t]   (?<interproDesc>.*?)
+(?:[\t]   (?<interproID>\w*))?
+(?:[\t]   (?<interproDesc>.*?))?
 (?:[\t]   (?<interproGOs>.*))?
 $}x
 EOF;
@@ -151,7 +151,7 @@ EOF;
                     self::$log->log(sprintf("line does not match, skipping:\n\t" . $line), PEAR_LOG_NOTICE);
                     continue;
                 }
-
+var_dump($match);die();
 
                 // set params for statements
                 // available matches, see RegEx
@@ -178,7 +178,7 @@ EOF;
                 $statement_insert_analysisfeature->execute();
 
                 //add interpro ID as textual annoation of type CV_INTERPRO_ID
-                if ($match['interproID'] != "NULL") {
+                if (!empty($match['interproID']) && $match['interproID'] != "NULL") {
                     $param_featureprop_type = CV_INTERPRO_ID;
                     $param_featureprop_value = $match['interproID'];
 
