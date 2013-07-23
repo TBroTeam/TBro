@@ -18,7 +18,7 @@ class Importer_Annotations_Interpro extends AbstractImporter {
      */
     private static $regex = <<<EOF
 {^
-   (?<feature>\w+)
+   (?<feature>[^\s]+)
 [\t]   (?<pepStart>\d+)
 [\t]   (?<pepEnd>\d+)
 [\t]   (?<pepStrand>[+-])
