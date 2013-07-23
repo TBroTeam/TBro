@@ -29,7 +29,7 @@ class Importer_Peptides extends AbstractImporter {
      */
     static function import($options) {
         $filename = $options['file'];
-        $lines_total = trim(`grep -c '>' $filename`);
+        $lines_total = trim(`wc -l $filename`);
         self::setLineCount($lines_total);
 
         global $db;
