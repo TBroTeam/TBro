@@ -207,7 +207,7 @@ EOF;
                 }
 
                 // if line contains GOs
-                if (isset($match['interproGOs']) && $match['interproGOs'] != "NULL") {
+                if (isset($match['interproGOs']) && !empty($match['interproGOs'])) {
                     $go_matches = array();
                     preg_match_all('/(?<dbname>GO):(?<accession>\d+)/', $match['interproGOs'], $go_matches);
                     //for all GO matches
