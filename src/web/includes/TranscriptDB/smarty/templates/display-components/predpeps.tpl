@@ -1,8 +1,5 @@
 {#call_webservice path="details/annotations/feature/interpro_predpeps" data=["query1"=>$feature.feature_id] assign='predpeps'#}
 {#if count($predpeps) > 0 #}
-    <pre>
-        {#$predpeps|var_dump#}
-    </pre>
     <script type="text/javascript">addNavAnchor('interpro-annotation', 'Interpro Annotation');</script>
     <div class="row" id="predpep">
         <div class="large-12 columns">
