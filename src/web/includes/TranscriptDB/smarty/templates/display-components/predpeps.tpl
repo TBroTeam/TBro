@@ -1,9 +1,9 @@
 {#call_webservice path="details/annotations/feature/interpro_predpeps" data=["query1"=>$feature.feature_id] assign='predpeps'#}
 {#if count($predpeps) > 0 #}
     <pre>
-    {#$predpeps|var_dump#}
+        {#$predpeps|var_dump#}
     </pre>
-    <script type="text/javascript">addNavAnchor('interpro-annotation','Interpro Annotation');</script>
+    <script type="text/javascript">addNavAnchor('interpro-annotation', 'Interpro Annotation');</script>
     <div class="row" id="predpep">
         <div class="large-12 columns">
             <div id="predpeps"> </div>
@@ -14,7 +14,7 @@
                         <ul>
                             {#foreach $predpeps as $predpep#}
                                 <li><p><a href="#{#$predpep.name|clean_id#}">{#$predpep.name#}</a></p></li>
-                            {#/foreach#}
+                                        {#/foreach#}
                         </ul>
 
                         {#foreach $predpeps as $predpep#}
@@ -57,43 +57,52 @@
 
                                             <table style="width:100%" class="contains-tooltip dataTable">
                                                 <thead>
-                                                    <tr><td>Interpro ID</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><td>GO</td></tr>
+                                                    <tr><td>Interpro ID</td><td>Interpro Description</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><td>GO</td></tr>
                                                 </thead>
                                                 <tbody>
                                                     {#foreach $predpep.interpro as $interpro#}
-                                                        <tr><td>{#interprolink id=$interpro.interpro_id#}</td><td>{#$interpro.fmin#}</td><td>{#$interpro.fmax#}</td>
+                                                        <tr>
+                                                            <td><a href="http://www.ebi.ac.uk/interpro/entry/{#$interpro.interpro_id#}">{#$interpro.interpro_id#}</a></td>
+                                                            <td>{#$interpro.interpro_description#}</td>
+                                                            <td>{#$interpro.fmin#}</td>
+                                                            <td>{#$interpro.fmax#}</td>
                                                             <td>{#$interpro.evalue#}</td>
                                                             <td>
                                                                 <span class="has-tooltip" data-version="Interpro-Version|{#$interpro.programversion#}" data-src="Source|{#$interpro.sourcename#}" data-id="ID|{#$interpro.analysis_match_id#}" data-desc="Description|{#$interpro.analysis_match_description#}" style="display:inline-block;width:100%">
-                                                            {#if $interpro.analysis_match_description!='no description' && $interpro.analysis_match_description && !empty($interpro.analysis_match_description)#}{#$interpro.analysis_match_description#}{#else#}{#$interpro.sourcename#}:{#$interpro.analysis_match_id#}{#/if#}
-                                                        </span>
-                                                    <td>
-                                                        {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
-                                                            <ul style="list-style: none">
-                                                                {#foreach $interpro.dbxref as $dbxref#}
-                                                                    <li>{#dbxreflink dbxref=$dbxref#} </li>
-                                                                {#/foreach#}
-                                                            </ul>
-                                                        {#/if#}
-                                                    </td>
-                                                </tr>
-                                            {#/foreach#}
-                                        </tbody>
-                                    </table>
-                                    <script type="text/javascript">
-                                        $(document).ready(function(){
-                                            $('#{#$predpep.uniquename|clean_id#} table.dataTable').dataTable();
-                                        });
-                                        
-                                    </script>
-                                </div>
+                                                                    {#if $interpro.analysis_match_description!='no description' && $interpro.analysis_match_description && !empty($interpro.analysis_match_description)#}
+                                                                        {#$interpro.analysis_match_description#}
+                                                                    {#else#}
+                                                                        {#$interpro.sourcename#}:{#$interpro.analysis_match_id#}
+                                                                    {#/if#}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
+                                                                    <ul style="list-style: none">
+                                                                        {#foreach $interpro.dbxref as $dbxref#}
+                                                                            <li>{#dbxreflink dbxref=$dbxref#} </li>
+                                                                            {#/foreach#}
+                                                                    </ul>
+                                                                {#/if#}
+                                                            </td>
+                                                        </tr>
+                                                    {#/foreach#}
+                                                </tbody>
+                                            </table>
+                                            <script type="text/javascript">
+                                                $(document).ready(function() {
+                                                    $('#{#$predpep.uniquename|clean_id#} table.dataTable').dataTable();
+                                                });
+
+                                            </script>
+                                        </div>
+                                    </div>
+                                {#/if#}
                             </div>
-                        {#/if#}
+                        {#/foreach#}
                     </div>
-                {#/foreach#}
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 {#/if#}
