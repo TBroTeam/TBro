@@ -218,7 +218,8 @@ EOF;
                         $statement_insert_feature_dbxref->execute();
                         $dbxrefs_added++;
                     }
-                }
+                    die(var_dump($go_matches));
+                } else if (strpos($line, 'GO:')!==FALSE) die($line);
 
                 self::updateProgress(++$lines_imported);
             }
