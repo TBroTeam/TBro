@@ -184,6 +184,13 @@ EOF;
                     $statement_insert_featureprop->execute();
                     $interpro_ids_added++;
                 }
+                
+                if (isset($match['interproDesc'])){
+                    $param_featureprop_type = CV_INTERPRO_DESCRIPTION;
+                    $param_featureprop_value = $match['interproDesc'];
+
+                    $statement_insert_featureprop->execute();
+                }
 
                 //add analysis match id as textual annotation of type CV_INTERPRO_ANALYSIS_MATCH_ID
                 if ($match['analysisMatchID'] != null) {
