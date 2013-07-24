@@ -49,6 +49,10 @@ $cvterms = array(
         'name' => 'annotation_interpro_id',
         'cv' => 'feature_property'
     ),
+    'CV_INTERPRO_DESCRIPTION' => array(
+        'name' => 'annotation_interpro_description',
+        'cv' => 'feature_property'
+    ),
     'CV_UNIGENE' => array(
         'name' => 'unigene',
         'cv' => 'sequence'
