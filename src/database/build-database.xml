@@ -30,6 +30,24 @@
         <echo msg="Copied file config.php.generated to ${config_dir}. Please rename to config.php and customize it to your needs." />
     </target>
     
+    <target name="database-update-modifications" description="updated functions in the chado_db. call on upgrade">
+        <mkdir dir="${builddir}/database/modifications"/>
+        <copy todir="${builddir}/database/modifications" overwrite="true">
+            <fileset dir="${srcdir}/database/modifications/">
+                <include name="**" />
+                <include name="**/**" />
+            </fileset>
+            <fileset dir="${srcdir}/web/includes/TranscriptDB/">
+                <include name="db.php" />
+            </fileset>
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+        </copy>
+        <exec command="chmod +x ${builddir}/database/modifications/commit-modifications.php" escape="false" />
+        <exec command="php ${builddir}/database/modifications/commit-modifications.php --functions --mat_views" escape="false" />
+    </target>
+    
     <target name="database-commit-modifications" description="adds own tables and functions to the chado_db. call after database-initialize.">
         <mkdir dir="${builddir}/database/modifications"/>
         <copy todir="${builddir}/database/modifications" overwrite="true">
