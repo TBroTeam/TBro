@@ -31,7 +31,7 @@ class Importer_Annotations_Interpro extends AbstractImporter {
 [\t]   (?<timeexecuted>[\w-]*)
 (?:[\t]   (?<interproID>\w*))?
 (?:[\t]   (?<interproDesc>.*?))?
-(?:[\t]   (?<interproGOs>.*))?
+(?:[\t]   (?<interproGOs>[GO:0-9|]*))?
 (?:[\t]   (?<pathway>.*))?
 $}x
 EOF;
