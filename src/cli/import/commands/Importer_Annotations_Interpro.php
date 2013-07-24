@@ -32,6 +32,7 @@ class Importer_Annotations_Interpro extends AbstractImporter {
 (?:[\t]   (?<interproID>\w*))?
 (?:[\t]   (?<interproDesc>.*?))?
 (?:[\t]   (?<interproGOs>.*))?
+(?:[\t]   (?<pathway>.*))?
 $}x
 EOF;
 
