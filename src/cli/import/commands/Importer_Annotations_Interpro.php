@@ -209,7 +209,7 @@ EOF;
                 // if line contains GOs
                 if (isset($match['interproGOs']) && $match['interproGOs'] != "NULL") {
                     $go_matches = array();
-                    preg_match_all('/[\s,]*(?<description>.*?)\((?<dbname>\w+):(?<accession>\w+)\)/', $match['interproGOs'], $go_matches);
+                    preg_match_all('/(?<dbname>GO):(?<accession>\d+)/', $match['interproGOs'], $go_matches);
                     //for all GO matches
                     for ($i = 0; $i < count($go_matches[0]); $i++) {
                         $param_dbname = $go_matches['dbname'][$i];
