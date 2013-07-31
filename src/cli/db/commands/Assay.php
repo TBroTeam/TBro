@@ -1,6 +1,6 @@
 <?php
-
 namespace cli_db;
+use \cli_import\Importer_Differential_Expressions;
 
 require_once ROOT . 'classes/AbstractTable.php';
 
