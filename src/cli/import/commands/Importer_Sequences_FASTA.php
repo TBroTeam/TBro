@@ -22,7 +22,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
         while (empty($description) && !feof($fasta_handle))
             $description = trim(fgets($fasta_handle));
         if (strpos($description, '>') !== 0)
-            throw new ErrorException(ERR_ILLEGAL_FILE_FORMAT);
+            throw new \ErrorException(ERR_ILLEGAL_FILE_FORMAT);
 
 
         $sequence = '';
@@ -96,7 +96,7 @@ class Importer_Sequences_FASTA extends AbstractImporter {
             self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
-                throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
+                throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
             }
         } catch (\Exception $error) {
             $db->rollback();

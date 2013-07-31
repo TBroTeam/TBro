@@ -154,7 +154,7 @@ EOF;
             self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
-                throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
+                throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
             }
         } catch (\Exception $error) {
             $db->rollback();

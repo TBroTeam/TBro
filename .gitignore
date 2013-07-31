@@ -5,3 +5,4 @@
 */smarty/cache
 /nbproject/private/
 build.properties
+pdo_test.php

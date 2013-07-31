@@ -60,7 +60,7 @@ class Importer_Expressions extends AbstractImporter {
                 $statement_get_biomaterial_id->execute(array($biomaterial_names[$i]));
                 $biomaterial_ids[$i] = $statement_get_biomaterial_id->fetchColumn();
                 if (!$biomaterial_ids[$i]) {
-                    throw new ErrorException('Biomaterial with this name not defined');
+                    throw new \ErrorException('Biomaterial with this name not defined');
                 }
             }
 
@@ -87,7 +87,7 @@ class Importer_Expressions extends AbstractImporter {
             self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
-                throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
+                throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
             }
         } catch (\Exception $error) {
             $db->rollback();

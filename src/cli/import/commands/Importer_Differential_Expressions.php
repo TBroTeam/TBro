@@ -45,6 +45,9 @@ class Importer_Differential_Expressions extends AbstractImporter {
         $lines_imported = 0;
 
         $lines_skipped = 0;
+        
+        $lines_feature_skipped = 0;
+        
 #IDE type hint
         if (false)
             $db = new PDO ();
@@ -58,11 +61,11 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $statement_get_biomaterial_id->execute();
             $rowa = $statement_get_biomaterial_id->fetch(\PDO::FETCH_ASSOC);
             if ($statement_get_biomaterial_id->rowCount() == 0) {
-                throw new ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentA_name));
+                throw new \ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentA_name));
             }
             //is it a condition?
             if ($rowa['type'] != 'condition') {
-                throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentA_name));
+                throw new \ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentA_name));
             }
             $biomaterial_parentA_id = $rowa['biomaterial_id'];
 
@@ -71,11 +74,11 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $statement_get_biomaterial_id->execute();
             $rowb = $statement_get_biomaterial_id->fetch(\PDO::FETCH_ASSOC);
             if ($statement_get_biomaterial_id->rowCount() == 0) {
-                throw new ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentB_name));
+                throw new \ErrorException(sprintf('Biomaterial with this name not defined (%s)', $biomaterial_parentB_name));
             }
             //is it a condition?
             if ($rowb['type'] != 'condition') {
-                throw new ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentB_name));
+                throw new \ErrorException(sprintf('This biomaterial is not of type condition! (%s)', $biomaterial_parentB_name));
             }
             $biomaterial_parentB_id = $rowb['biomaterial_id'];
 
@@ -85,14 +88,14 @@ class Importer_Differential_Expressions extends AbstractImporter {
             $statement_test_biomaterial_children->bindValue('parent', $biomaterial_parentA_id);
             $statement_test_biomaterial_children->execute();
             if (!($statement_test_biomaterial_children->fetchColumn())) {
-                throw new ErrorException(sprintf('Biomaterial has no children (%s)', $biomaterial_parentA_name));
+                throw new \ErrorException(sprintf('Biomaterial has no children (%s)', $biomaterial_parentA_name));
             }
 
             //does B have samples?
             $statement_test_biomaterial_children->bindValue('parent', $biomaterial_parentB_id);
             $statement_test_biomaterial_children->execute();
             if (!($statement_test_biomaterial_children->fetchColumn())) {
-                throw new ErrorException(sprintf('Biomaterial has no children (%s)', $biomaterial_parentB_name));
+                throw new \ErrorException(sprintf('Biomaterial has no children (%s)', $biomaterial_parentB_name));
             }
 
 
@@ -135,7 +138,7 @@ EOF;
                 return;
 #just skipping header
             fgets($file);
-
+           
             while (($line = fgetcsv($file, 0, ",")) !== false) {
                 array_walk($line, function(&$value, $key) {
                             if ($value == '-Inf')
@@ -165,7 +168,7 @@ EOF;
             self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
-                throw new ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
+                throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
             }
         } catch (\Exception $error) {
             $db->rollback();
