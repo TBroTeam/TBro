@@ -1,6 +1,7 @@
 <?php
 
 namespace cli_import;
+use \cli_import\Importer_Differential_Expressions;
 use \PDO;
 
 require_once ROOT . 'classes/AbstractImporter.php';
