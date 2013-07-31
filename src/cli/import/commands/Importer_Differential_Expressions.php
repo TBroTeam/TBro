@@ -1,7 +1,7 @@
 <?php
 
 namespace cli_import;
-use \cli_import\Importer_Differential_Expressions;
+
 use \PDO;
 
 require_once ROOT . 'classes/AbstractImporter.php';
@@ -137,7 +137,17 @@ EOF;
             fgets($file);
 
             while (($line = fgetcsv($file, 0, ",")) !== false) {
-                array_walk($line, array('Importer_Differential_Expressions', 'convertDbl'));
+                array_walk($line, function(&$value, $key) {
+                            if ($value == '-Inf')
+                                $value = '-Infinity';
+                            else if ($value == 'Inf')
+                                $value = 'Infinity';
+                            else if ($value == 'NA')
+                                $value = 'NaN';
+                            else if (floatval($value) > 0 && floatval($value) < 1e-307) {
+                                $value = 0;
+                            }
+                        });
                 list($dummy, $feature_name, $param_baseMean, $param_baseMeanA, $param_baseMeanB, $param_foldChange, $param_log2foldChange, $param_pval, $param_pvaladj) = $line;
                 //this importer may encounter lines of NA NA NA NA (...batman!). skip these
                 if ($feature_name == 'NaN') {
