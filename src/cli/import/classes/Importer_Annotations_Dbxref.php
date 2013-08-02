@@ -41,10 +41,12 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
 //statement inserts feature_dbxref connection. creates dbxref if non-existant.
             $statement_insert_feature_dbxref = $db->prepare(
-                    sprintf('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES ((%s), get_or_insert_dbxref(:dbname, :accession))', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism')
+                    'INSERT INTO feature_dbxref (feature_id, dbxref_id) SELECT f.feature_id, get_or_insert_dbxref(:dbname, :accession) FROM feature f WHERE uniquename=:uniquename AND organism_id=:organism AND NOT EXISTS (SELECT 1 FROM feature_dbxref x WHERE f.feature_id=x.feature_id AND x.dbxref_id=get_or_insert_dbxref(:dbname2, :accession2)'
             );
             $statement_insert_feature_dbxref->bindParam('accession', $param_accession, PDO::PARAM_STR);
+            $statement_insert_feature_dbxref->bindParam('accession2', $param_accession, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindParam('dbname', $param_dbname, PDO::PARAM_STR);
+            $statement_insert_feature_dbxref->bindParam('dbname2', $param_dbname, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindParam('uniquename', $param_feature_uniq, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
 
@@ -58,18 +60,11 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
 //execute insert statement
-                try {
-                    $statement_insert_feature_dbxref->execute();
-                    $dbxref_inserted += $statement_insert_feature_dbxref->rowCount();
-                } catch (\PDOException $e) {
-                    // is the exception a unique violation (error code 23505, see http://www.postgresql.org/docs/8.1/static/errcodes-appendix.html)
-                    if($e->getCode() == 23505){
-                        $dbxref_skipped_dupplicate++;
-                    }
-                    else{
-                        throw $e;
-                    }
-                }
+
+                $statement_insert_feature_dbxref->execute();
+                $dbxref_inserted += $statement_insert_feature_dbxref->rowCount();
+                $dbxref_skipped_dupplicate += (1 - $statement_insert_feature_dbxref->rowCount());
+
 //update progress bar
                 self::updateProgress(++$lines_imported);
             }
