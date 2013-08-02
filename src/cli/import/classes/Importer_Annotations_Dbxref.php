@@ -41,7 +41,7 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
 //statement inserts feature_dbxref connection. creates dbxref if non-existant.
             $statement_insert_feature_dbxref = $db->prepare(
-                    'INSERT INTO feature_dbxref (feature_id, dbxref_id) SELECT f.feature_id, get_or_insert_dbxref(:dbname, :accession) FROM feature f WHERE uniquename=:uniquename AND organism_id=:organism AND NOT EXISTS (SELECT 1 FROM feature_dbxref x WHERE f.feature_id=x.feature_id AND x.dbxref_id=get_or_insert_dbxref(:dbname2, :accession2)'
+                    'INSERT INTO feature_dbxref (feature_id, dbxref_id) SELECT f.feature_id, get_or_insert_dbxref(:dbname, :accession) FROM feature f WHERE uniquename=:uniquename AND organism_id=:organism AND NOT EXISTS (SELECT 1 FROM feature_dbxref x WHERE f.feature_id=x.feature_id AND x.dbxref_id=get_or_insert_dbxref(:dbname2, :accession2))'
             );
             $statement_insert_feature_dbxref->bindParam('accession', $param_accession, PDO::PARAM_STR);
             $statement_insert_feature_dbxref->bindParam('accession2', $param_accession, PDO::PARAM_STR);
