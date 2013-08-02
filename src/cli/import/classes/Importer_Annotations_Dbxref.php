@@ -1,6 +1,7 @@
 <?php
 
 namespace cli_import;
+
 use \PDO;
 
 require_once ROOT . 'classes/AbstractImporter.php';
@@ -30,14 +31,15 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
         global $db;
         $lines_imported = 0;
         $dbxref_inserted = 0;
+        $dbxref_skipped_dupplicate = 0;
         try {
             $db->beginTransaction();
-            #shared parameters
+#shared parameters
             $param_accession = null;
             $param_dbname = null;
             $param_feature_uniq = null;
 
-            //statement inserts feature_dbxref connection. creates dbxref if non-existant.
+//statement inserts feature_dbxref connection. creates dbxref if non-existant.
             $statement_insert_feature_dbxref = $db->prepare(
                     sprintf('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES ((%s), get_or_insert_dbxref(:dbname, :accession))', 'SELECT feature_id FROM feature WHERE uniquename=:uniquename AND organism_id=:organism')
             );
@@ -48,17 +50,27 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
 
             $file = fopen($filename, 'r');
             while (($line = fgetcsv($file, 0, $separator)) !== false) {
-                //skip empty lines
+//skip empty lines
                 if (count($line) == 0)
                     continue;
                 $feature = $line[$feature_pos];
                 $dbxref = $line[$dbxref_pos];
                 list($param_dbname, $param_accession) = explode(':', $dbxref);
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
-                //execute insert statement
-                $statement_insert_feature_dbxref->execute();
-                $dbxref_inserted += $statement_insert_feature_dbxref->rowCount();
-                //update progress bar
+//execute insert statement
+                try {
+                    $statement_insert_feature_dbxref->execute();
+                    $dbxref_inserted += $statement_insert_feature_dbxref->rowCount();
+                } catch (\PDOException $e) {
+                    // is the exception a unique violation (error code 23505, see http://www.postgresql.org/docs/8.1/static/errcodes-appendix.html)
+                    if($e->getCode() == 23505){
+                        $dbxref_skipped_dupplicate++;
+                    }
+                    else{
+                        throw $e;
+                    }
+                }
+//update progress bar
                 self::updateProgress(++$lines_imported);
             }
             self::preCommitMsg();
@@ -70,7 +82,7 @@ abstract class Importer_Annotations_Dbxref extends AbstractImporter {
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'references_linked' => $dbxref_inserted);
+        return array(LINES_IMPORTED => $lines_imported, 'references_linked' => $dbxref_inserted, 'skipped_dupplicates' => $dbxref_skipped_dupplicate);
     }
 
     /**
