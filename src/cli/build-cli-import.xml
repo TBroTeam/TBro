@@ -56,7 +56,6 @@
         <exec command="chmod +x ${bin_dir}/tbro-import" escape="false" />
         <exec command="${bin_dir}/tbro-import --build-autocomplete" escape="false" output="${autocomplete_path}/tbro-import" />
         <echo msg="tbro-import autocompletion script created in ${autocomplete_path}/tbro-import" />
-        <exec command="source ${autocomplete_path}/tbro-import" escape="false" />
     </target>
     
     <target name="cli-import-clean">

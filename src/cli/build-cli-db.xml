@@ -56,7 +56,6 @@
         <exec command="chmod +x ${bin_dir}/tbro-db" escape="false" />
         <exec command="${bin_dir}/tbro-db --build-autocomplete" escape="false" output="${autocomplete_path}/tbro-db" />
         <echo msg="tbro-db autocompletion script created in ${autocomplete_path}/tbro-db" />
-        <exec command="source ${autocomplete_path}/tbro-db" escape="false" />
     </target>
     
     <target name="cli-db-clean">
