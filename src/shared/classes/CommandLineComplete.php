@@ -5,6 +5,8 @@ require_once 'Console/CommandLine.php';
 class CommandLineComplete {
 
     static function fromConsoleCommandLine($commandname, \Console_CommandLine $cli) {
+        ob_start();
+       
         echo <<<EOF
 #!/bin/bash
 
@@ -19,6 +21,8 @@ _${commandname}_main()
 EOF;
         
         self::printCmd("_${commandname}_cmd", $cli);
+        
+        print str_replace("\r\n", "\n", ob_get_clean());
     }
 
     private static function printCmd($cmdname, \Console_CommandLine $cli) {
