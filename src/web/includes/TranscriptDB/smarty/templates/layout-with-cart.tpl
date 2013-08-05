@@ -109,7 +109,7 @@
                 <div class="panel large-12 columns" id="cart">
                     <div>
                         <h4 class="left">Cart</h4>                        
-                        <a class="button secondary right" href="javascript:cart.addGroup();">add new group</a>
+                        <a class="button secondary right" href="#" onclick="cart.addGroup();">add new group</a>
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
@@ -121,8 +121,8 @@
                     <div class="cartGroup" data-name="all">
                     <div class="large-12 columns"><div class="left">all</div>
                     <div class="right">
-                    <a href="javascript:$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/></a>
-                    <a href="javascript:$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+                    <a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/></a>
+                    <a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
                     <a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
                     </div>
                     </div>
@@ -139,7 +139,7 @@
                     <div class="right">
                     <a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>
                     <a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/></a>
-                    <a href="javascript:cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+                    <a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
                     <a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
                     </div>
                     </div>
