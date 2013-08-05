@@ -63,7 +63,7 @@ EOF;
 $cmdname()
 {
     cur=\${COMP_WORDS[\$1]}
-	opts="$opt_string"
+	opts="-h --help -v  --version $opt_string"
 	subcom="$sub_string"
 	
 	if [[ \$1 == \$COMP_CWORD ]] ; then
