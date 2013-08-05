@@ -36,6 +36,7 @@ EOF;
         foreach ($cli->commands as $sub){
             $subname = $sub->name;
             $subcommands.=<<<EOF
+
 				"${subname}")
                                         ${cmdname}_sub_${subname} \$((\$1+1))
 				;;
