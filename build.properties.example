@@ -4,6 +4,7 @@ bin_dir = ${prefix}/bin
 www_root = ${prefix}/var/www/tbro
 share_path = ${prefix}/share/tbro
 var_path = ${prefix}/var/tbro
+autocomplete_path = /etc/bash_completion.d
 www_user = www-data
 www_group = www-data
 www_mode = 0777

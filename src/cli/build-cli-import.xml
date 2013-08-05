@@ -54,6 +54,8 @@
         <mkdir dir="${bin_dir}"/>
         <copy file ="${builddir}/cli/bin/tbro-import.phar" tofile="${bin_dir}/tbro-import"  overwrite="true"/>
         <exec command="chmod +x ${bin_dir}/tbro-import" escape="false" />
+        <exec command="${bin_dir}/tbro-import --build-autocomplete" escape="false" output="${autocomplete_path}/tbro-import" />
+        <echo msg="tbro-import autocompletion script created in ${autocomplete_path}/tbro-import" />
     </target>
     
     <target name="cli-import-clean">
