@@ -213,19 +213,19 @@
                     </li>
                     {#/block#}</ul>
                     <ul class="right">
-                        <li><div><label for="select_organism">organism:</label></div></li>
+                        <li><div><label for="select_organism">Organism:</label></div></li>
                         <li><div><select id="select_organism" style="display:inline"></select></div></li>
-                        <li><div><label for="select_release">release:</label></div></li>
+                        <li><div><label for="select_release">Release:</label></div></li>
                         <li><div><select id="select_release"></select></div></li>
                         <li class="divider"></li>
-                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">adv. search</a>
+                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">Adv. Search</a>
                             <ul class="dropdown" id="searchnav">
-                                <li><a href='{#$AppPath#}/multisearch'>search for multiple features</a></li>
-                                <li><a href='{#$AppPath#}/annotationsearch'>search for annotations</a></li>
+                                <li><a href='{#$AppPath#}/multisearch'>Search for multiple features</a></li>
+                                <li><a href='{#$AppPath#}/annotationsearch'>Search for annotations</a></li>
                             </ul>
                         </li>
                         <li class="divider"></li>
-                        <li><div><label for="search">quick search:</label></div></li>
+                        <li><div><label for="search">Quick Search:</label></div></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
                     </ul>
                 </section>
