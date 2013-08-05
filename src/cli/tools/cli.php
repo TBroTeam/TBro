@@ -73,6 +73,12 @@ foreach ($new_classes as $class) {
     }
 }
 
+if ($argv[1] == '--build-autocomplete'){
+    require_once SHARED . 'classes/CommandLineComplete.php';
+    CommandLineComplete::fromConsoleCommandLine(basename($argv[0]), $parser);
+    exit(0);
+}
+
 try {
     $result = $parser->parse();
 
