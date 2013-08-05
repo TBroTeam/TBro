@@ -54,7 +54,9 @@
         <mkdir dir="${bin_dir}"/>
         <copy file ="${builddir}/cli/bin/tbro-tools.phar" tofile="${bin_dir}/tbro-tools"  overwrite="true"/>
         <exec command="chmod +x ${bin_dir}/tbro-tools" escape="false" />
-        <exec command="${bin_dir}/tbro-tools --build-autocomplete" escape="false" output="${autocomplete_path}/tbro-tools-autocomplete" />
+        <exec command="${bin_dir}/tbro-tools --build-autocomplete" escape="false" output="${autocomplete_path}/tbro-tools" />
+        <echo msg="tbro-tools autocompletion script created in ${autocomplete_path}/tbro-tools" />
+        <exec command="source ${autocomplete_path}/tbro-tools" />
     </target>
     
     <target name="cli-tools-clean">
