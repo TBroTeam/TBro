@@ -54,7 +54,7 @@
         <mkdir dir="${bin_dir}"/>
         <copy file ="${builddir}/cli/bin/tbro-db.phar" tofile="${bin_dir}/tbro-db"  overwrite="true"/>
         <exec command="chmod +x ${bin_dir}/tbro-db" escape="false" />
-        <exec command="${bin_dir}/tbro-db --build-autocomplete" escape="false" output="${autocomplet_path}/tbro-db-autocomplete" />
+        <exec command="${bin_dir}/tbro-db --build-autocomplete" escape="false" output="${autocomplete_path}/tbro-db-autocomplete" />
     </target>
     
     <target name="cli-db-clean">
