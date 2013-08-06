@@ -113,14 +113,15 @@
                 <script>
                     var settings = {
                         "size": {
-                            "grid": 16
+                            "grid": 14
                         },
                         "options": {
                             "color": "random-dark",
-                            "printMultiplier": 3
+                            "printMultiplier": 2,
+                            "sort" : "highest" 
                         },
                         "font": "Futura, Helvetica, sans-serif",
-                        "shape": "square"
+                        "shape": "circle"
                     }
                     $("#wordcloud").awesomeCloud(settings);
                 </script>
