@@ -51,18 +51,27 @@
 
     <div class="row">
         <div class="large-12 columns panel">
-            <div class="large-12 columns">
-                <h4>Statistics</h4>
+            <div class="row">
+                <div class="large-12 columns">
+                    <h4>Statistics</h4>
+                </div>
             </div>
-            <table>
-                <tr><th>Species in this database: </th><td id='stat_organisms'></td></tr>
-                <tr><th>Releases in this database: </th><td id='stat_releases'></td></tr>
-                <tr><th>Unigenes in this database: </th><td id='stat_total_unigenes'></td></tr>
-                <tr><th>Isoforms in this database: </th><td id='stat_total_isoforms'></td></tr>
-                <tr><td></td></tr>
-                <tr><th>Unigenes in the selected release: </th><td id='stat_count_unigenes'></td></tr>
-                <tr><th>Isoforms in the selected release: </th><td id='stat_count_isoforms'></td></tr>
-            </table>
+            <div class="row">
+                <div class="large-6 columns">
+                    <table>
+                        <tr><th align="left">Species in this database: </th><td id='stat_organisms' align="rigth"></td></tr>
+                        <tr><th align="left">Releases in this database: </th><td id='stat_releases' align="rigth"></td></tr>
+                        <tr><th align="left">Unigenes in this database: </th><td id='stat_total_unigenes' align="rigth"></td></tr>
+                        <tr><th align="left">Isoforms in this database: </th><td id='stat_total_isoforms' align="rigth"></td></tr>
+                    </table>
+
+                </div>
+                <div class="large-6 columns">
+                    <table>
+                        <tr><th align="left">Unigenes in the selected release: </th><td id='stat_count_unigenes' align="rigth"></td></tr>
+                        <tr><th align="left">Isoforms in the selected release: </th><td id='stat_count_isoforms' align="rigth"></td></tr>
+                    </table></div>
+            </div>
         </div>
     </div>
 {#/block#}
