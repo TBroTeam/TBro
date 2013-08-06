@@ -55,7 +55,7 @@
         <div class="large-12 columns panel">
             <div class="row">
                 <div class="large-6 columns">
-                    <h4>Statistics (overall)</h4>
+                    <h4>Statistics (Overall)</h4>
                 </div>
                 <div class="large-6 columns">
                     <h4>Statistics (selected release)</h4>
