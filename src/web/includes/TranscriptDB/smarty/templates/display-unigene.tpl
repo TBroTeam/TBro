@@ -18,7 +18,7 @@
         <div class="row">
             <div class="large-12 columns">
                 <h1 class="left">Unigene {#$data.unigene.name#}</h1>
-                <div class="right"><span class="button" onclick="javascript:cart.addItem({#$data.unigene.feature_id#});"> add to cart -> </span></div>
+                <div class="right"><span class="button" onclick="javascript:cart.addItem({#$data.unigene.feature_id#});"> Add to Cart </span></div>
             </div>
         </div>
         <h5>last modified: {#$data.unigene.timelastmodified#}</h5>
