@@ -4,9 +4,9 @@
     <div class="row" id="predpep">
         <div class="large-12 columns">
             <div id="predpeps"> </div>
-            <h4>Predicted Peptides:</h4>
             <div class="row">
                 <div class="large-12 columns panel">
+                    <h4>Predicted Peptides:</h4>
                     <div class="tabs">
                         <ul>
                             {#foreach $predpeps as $predpep#}
@@ -54,7 +54,7 @@
 
                                             <table style="width:100%" class="contains-tooltip dataTable">
                                                 <thead>
-                                                    <tr><td>Interpro ID</td><td>Interpro Description</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><td>GO</td></tr>
+                                                    <tr><td>Interpro ID</td><td>Interpro Description</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><!--<td>GO</td>--></tr>
                                                 </thead>
                                                 <tbody>
                                                     {#foreach $predpep.interpro as $interpro#}
@@ -73,7 +73,7 @@
                                                                     {#/if#}
                                                                 </span>
                                                             </td>
-                                                            <td>
+                                                        <!--    <td>
                                                                 {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
                                                                     <ul style="list-style: none">
                                                                         {#foreach $interpro.dbxref as $dbxref#}
@@ -81,7 +81,7 @@
                                                                             {#/foreach#}
                                                                     </ul>
                                                                 {#/if#}
-                                                            </td>
+                                                            </td> -->
                                                         </tr>
                                                     {#/foreach#}
                                                 </tbody>
