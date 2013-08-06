@@ -1,29 +1,30 @@
 <div id="diffexpr">
-    <div class="large-12 columns panel">
     <div class="row">
-        <div class="large-4 columns">
-            <h4>Condition A</h4>
-        </div>
-        <div class="large-4 columns">
-            <h4>Condition B</h4>
-        </div>
+        <div class="large-12 columns panel">
+            <div class="row">
+                <div class="large-4 columns">
+                    <h4>Condition A</h4>
+                </div>
+                <div class="large-4 columns">
+                    <h4>Condition B</h4>
+                </div>
 
-        <div class="large-4 columns">
-            <h4>Analysis</h4>
-        </div>
-    </div>
-    <form id="diffexp_filters">
-        <div class="row">
-            <div class="large-4 columns">
-                <select id="select-gdfx-conditionA" size="12"></select>
+                <div class="large-4 columns">
+                    <h4>Analysis</h4>
+                </div>
             </div>
-            <div class="large-4 columns">
-                <select id="select-gdfx-conditionB" size="12"></select>
-            </div>
-            <div class="large-4 columns">
-                <select id="select-gdfx-analysis" size="12"></select>
-            </div>
-        </div>
+            <form id="diffexp_filters">
+                <div class="row">
+                    <div class="large-4 columns">
+                        <select id="select-gdfx-conditionA" size="12"></select>
+                    </div>
+                    <div class="large-4 columns">
+                        <select id="select-gdfx-conditionB" size="12"></select>
+                    </div>
+                    <div class="large-4 columns">
+                        <select id="select-gdfx-analysis" size="12"></select>
+                    </div>
+                </div>
         </div>
 
         <div class="row">
@@ -97,7 +98,8 @@
                 </table>
             </div>
         </div>
-    </form>
+        </form>
+    </div>
     <div class="row" id="div-gdfxtable" style="display:none">
         <div class="large-12 column panel">
             <div class="large-12 column">
