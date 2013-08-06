@@ -13,7 +13,7 @@
                         });
                     }
                 });
-                $('stat_release_header').html('Statistics (' + organism.find(':selected').text() + " " + release.val() + ")");
+                $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " " + release.val() + ")</h4>");
             });
         });
     </script>
