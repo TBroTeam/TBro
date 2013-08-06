@@ -31,8 +31,6 @@
         <div class="large-6 columns panel">
             <h4>Search by homology</h4>
         </div>
-    </div>
-    <div class="row">
         <div class="large-6 columns panel">
             <h4>Search by annotation</h4>
         </div>
