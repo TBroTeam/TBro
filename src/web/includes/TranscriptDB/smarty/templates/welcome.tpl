@@ -25,17 +25,25 @@
     </div>
 
     <div class="row">
-        <div class="large-6 columns panel">
-            <h4>Search by name</h4>
+        <div class="large-6 columns">
+            <div class="panel callout">
+                <h4>Search by name</h4>
+            </div>
         </div>
-        <div class="large-6 columns panel">
-            <h4>Search by homology</h4>
+        <div class="large-6 columns">
+            <div class="panel callout">
+                <h4>Search by homology</h4>
+            </div>
         </div>
-        <div class="large-6 columns panel">
-            <h4>Search by annotation</h4>
+        <div class="large-6 columns">
+            <div class="panel callout">
+                <h4>Search by annotation</h4>
+            </div>
         </div>
-        <div class="large-6 columns panel">
-            <h4>Bulk data retrival</h4>
+        <div class="large-6 columns">
+            <div class="panel callout">
+                <h4>Bulk data retrival</h4>
+            </div>
         </div>
     </div>
 
