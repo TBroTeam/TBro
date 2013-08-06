@@ -4,12 +4,7 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">
-                <h4>Barplot</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="large-12 columns">
-                <h4>Filters</h4>
+                <h4>Barplot (Filters)</h4>
             </div>
         </div>
 
