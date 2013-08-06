@@ -107,7 +107,7 @@
                 <table id="diffexp_results">
                     <thead>  
                         <tr>
-                            <th>feature</th>
+                            <th>Sequence ID</th>
                             <th>baseMean</th>
                             <th>baseMean1</th>
                             <th>baseMean2</th>
