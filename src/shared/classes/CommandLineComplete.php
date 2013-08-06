@@ -36,6 +36,15 @@ EOF;
             if (!empty($option->long_name))
                 $options[] = $option->long_name;
         }
+        if ($cli->add_help_option) {
+            $options[] = '-h';
+            $options[] = '--help';
+        }
+        
+        if ($cli->add_version_option && !empty($cli->version)) {
+            $options[] = '-v';
+            $options[] = '--version';
+        }
 
         $opt_string = implode(' ', $options);
 
@@ -63,7 +72,7 @@ EOF;
 $cmdname()
 {
     cur=\${COMP_WORDS[\$1]}
-	opts="-h --help -v  --version $opt_string"
+	opts="$opt_string"
 	subcom="$sub_string"
 	
 	if [[ \$1 == \$COMP_CWORD ]] ; then
