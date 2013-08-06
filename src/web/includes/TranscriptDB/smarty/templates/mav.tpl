@@ -16,7 +16,7 @@
     </style>
     <script type="text/javascript">
         (function($) {
-            
+
         {#include file="js/mav-graphs.js"#}
             (function() {
         {#include file="js/diffexpr.js" cart_ids=true#}
@@ -42,6 +42,7 @@
             <ul>
                 <li><a href="#tabs-graphs">Graphs</a></li>
                 <li><a href="#tabs-diffexp">differential Expressions</a></li>
+                <li><a href="#tabs-wordcloud">differential Expressions</a></li>
             </ul>
             <div id="tabs-graphs">
                 <div class="row">
@@ -99,6 +100,29 @@
             </div>
             <div id="tabs-diffexp">
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
+            </div>
+            <div id="tabs-wordcloud">
+                <div id="wordcloud" style="border:1px solid #f00;height:150px;width:150px;">
+                    <span data-weight="14">word</span>
+                    <span data-weight="5">another</span>
+                    <span data-weight="7">things</span>
+                    <span data-weight="23">super</span>
+                    <span data-weight="10">cloud</span>
+                </div>
+                <script>
+                    var settings = {
+                        "size": {
+                            "grid": 16
+                        },
+                        "options": {
+                            "color": "random-dark",
+                            "printMultiplier": 3
+                        },
+                        "font": "Futura, Helvetica, sans-serif",
+                        "shape": "square"
+                    }
+                    $("#wordcloud").awesomeCloud(settings);
+                </script>
             </div>
         </div>
     </div>
