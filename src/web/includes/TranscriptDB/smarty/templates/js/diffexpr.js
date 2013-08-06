@@ -208,11 +208,8 @@ $(document).ready(function() {
 //toggle display of a certain column
 function fnShowHide( iCol )
 {
-	/* Get the DataTables object again - this is not a recreation, just a get of the object */
-	var oTable = $('#query_details').dataTable();
-	
-	var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-	oTable.fnSetColumnVis( iCol, bVis ? false : true );
+	var bVis = dataTable.fnSettings().aoColumns[iCol].bVisible;
+	dataTable.fnSetColumnVis( iCol, bVis ? false : true );
 }
 
     fnShowHide(2);
