@@ -13,6 +13,7 @@
                         });
                     }
                 });
+                $('stat_release_header').html('Statistics (' + organism.find(':selected').text() + " " + release.val() + ")");
             });
         });
     </script>
@@ -24,31 +25,33 @@
         </div>
     </div>
 
-    <div class="large-12 columns panel">
     <div class="row">
-        <div class="large-6 columns">
-            <a class="large button expand" href="/multisearch">
-                <h4>Search by Name</h4>
-            </a>
+        <div class="large-12 columns panel">
+            <div class="row">
+                <div class="large-6 columns">
+                    <a class="large button expand" href="/multisearch">
+                        <h4>Search by Name</h4>
+                    </a>
+                </div>
+                <div class="large-6 columns">
+                    <a class="large button expand secondary" href="/blast">
+                        <h4>Search by Homology</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    <a class="large button expand alert" href="/annotationsearch">
+                        <h4>Search by Annotation</h4>
+                    </a>
+                </div>
+                <div class="large-6 columns">
+                    <a class="large button expand success" href="/diffexpr">
+                        <h4>Differential Expression</h4>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="large-6 columns">
-            <a class="large button expand secondary" href="/blast">
-                <h4>Search by Homology</h4>
-            </a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-6 columns">
-            <a class="large button expand alert" href="/annotationsearch">
-                <h4>Search by Annotation</h4>
-            </a>
-        </div>
-        <div class="large-6 columns">
-            <a class="large button expand success" href="/diffexpr">
-                <h4>Differential Expression</h4>
-            </a>
-        </div>
-    </div>
     </div>
 
     <div class="row">
@@ -57,7 +60,7 @@
                 <div class="large-6 columns">
                     <h4>Statistics (Overall)</h4>
                 </div>
-                <div class="large-6 columns">
+                <div class="large-6 columns" id="stat_release_header">
                     <h4>Statistics (selected release)</h4>
                 </div>
             </div>
