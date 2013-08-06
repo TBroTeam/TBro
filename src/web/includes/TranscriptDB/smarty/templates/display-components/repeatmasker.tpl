@@ -4,9 +4,9 @@
     <div class="row" id="repeatmasker" class="contains-tooltip">
         <div class="large-12 columns">
             <div id="repeatmasker-annotations"> </div>
-            <h4>Repeatmasker Annotations:</h4>
             <div class="row">
                 <div class="large-12 columns panel">
+                    <h4>Repeatmasker Annotations:</h4>
                     <table style="width:100%" id="repeatmasker-results">
                         <thead>
                             <tr><td>Name</td><td>Class</td><td>Family</td><td>Start</td><td>End</td><td>Direction</td><td>Length</td></tr>

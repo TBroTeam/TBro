@@ -4,9 +4,9 @@
     <div class="row" id="predpep">
         <div class="large-12 columns">
             <div id="predpeps"> </div>
-            <h4>Predicted Peptides:</h4>
             <div class="row">
                 <div class="large-12 columns panel">
+                    <h4>Predicted Peptides:</h4>
                     <div class="tabs">
                         <ul>
                             {#foreach $predpeps as $predpep#}
