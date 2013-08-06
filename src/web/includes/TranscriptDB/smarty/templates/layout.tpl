@@ -24,8 +24,7 @@
         <script type="text/javascript" src="{#$AppPath#}/js/alphanum.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/datatable-init.js"></script>
         <script type="text/javascript" src="{#$AppPath#}/js/sprintf.min.js"></script>
-        <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>        
-        <script type="text/javascript" src="{#$AppPath#}/js/jquery.awesomeCloud-0.2.min.js"></script>        
+        <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>       
         <!--script type="text/javascript" src="{#$AppPath#}/js/json3.min.js"></script-->
 
         <script type="text/javascript">

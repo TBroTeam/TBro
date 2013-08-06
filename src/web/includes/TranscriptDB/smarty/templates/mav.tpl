@@ -2,6 +2,7 @@
 {#block name='head'#}
     <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
     <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+    <script type="text/javascript" src="{#$AppPath#}/js/jquery.awesomeCloud-0.2.min.js"></script> 
 
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -42,7 +43,7 @@
             <ul>
                 <li><a href="#tabs-graphs">Graphs</a></li>
                 <li><a href="#tabs-diffexp">differential Expressions</a></li>
-                <li><a href="#tabs-wordcloud">differential Expressions</a></li>
+                <li><a href="#tabs-wordcloud">Wordcloud</a></li>
             </ul>
             <div id="tabs-graphs">
                 <div class="row">
