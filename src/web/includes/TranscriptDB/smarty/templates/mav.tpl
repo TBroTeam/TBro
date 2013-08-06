@@ -103,9 +103,9 @@
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
             <div id="tabs-wordcloud">
-                <div id="wordcloud" class="large-12 columns panel">
-                    <span data-weight="14">Transcription</span>
-                    <span data-weight="5">Germination</span>
+                <div id="wordcloud" style="height:300px;width:300px;">
+                    <span data-weight="14">Respiration</span>
+                    <span data-weight="5">Transcription</span>
                     <span data-weight="7">Regulation</span>
                     <span data-weight="23">Photosyntesis</span>
                     <span data-weight="10">Housekeeping</span>
