@@ -23,20 +23,17 @@
                 <select id="select-gdfx-analysis" size="12"></select>
             </div>
         </div>
-        <div class="row">
-            <div class="large-5 columns">
-                <h4>Filters</h4>
-            </div>
-            <div class="large-2 columns">
-                &nbsp;
-            </div>
-            <div class="large-5 columns query_details" style="display:none">
-                <h4>Results overview</h4>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="large-5 columns panel">
-
+<div class="row">
+            <div class="large-8 columns">
+                <h4>Filters</h4>
+            </div>
+            <div class="large-4 columns">
+                <button type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
+            </div>
+        </div>
                 <table id="filters" style="width:100%">
                     {#$i=1#}
                     {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
@@ -61,10 +58,15 @@
             </div>
 
             <div class="large-2 columns position" data-my="left center" data-at="right center" data-of="PREV">
-                <button type="button" id="button-gdfx-table" value="table" disabled="disabled">display Table</button>
+                &nbsp;
             </div>
 
             <div class="large-5 columns  panel query_details" style="display:none" id="query_details">
+                <div class="row">
+            <div class="large-12 columns query_details" style="display:none">
+                <h4>Results overview</h4>
+            </div>
+        </div>
                 <table style="width:100%" >
                     <tr>
                         <td>Condition 1</td>
