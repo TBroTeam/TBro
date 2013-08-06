@@ -24,6 +24,7 @@
         </div>
     </div>
 
+    <div class="large-12 columns panel">
     <div class="row">
         <div class="large-6 columns">
             <a class="large button expand" href="/multisearch">
@@ -48,12 +49,16 @@
             </a>
         </div>
     </div>
+    </div>
 
     <div class="row">
         <div class="large-12 columns panel">
             <div class="row">
-                <div class="large-12 columns">
-                    <h4>Statistics</h4>
+                <div class="large-6 columns">
+                    <h4>Statistics (overall)</h4>
+                </div>
+                <div class="large-6 columns">
+                    <h4>Statistics (selected release)</h4>
                 </div>
             </div>
             <div class="row">
