@@ -205,5 +205,18 @@ $(document).ready(function() {
         items: ".has-tooltip"
     }));
 
+//toggle display of a certain column
+function fnShowHide( iCol )
+{
+	/* Get the DataTables object again - this is not a recreation, just a get of the object */
+	var oTable = $('#query_details').dataTable();
+	
+	var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+	oTable.fnSetColumnVis( iCol, bVis ? false : true );
+}
+
+    fnShowHide(2);
+    fnShowHide(3);
+    fnShowHide(6);
 
 });
