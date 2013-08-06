@@ -26,9 +26,9 @@
 
     <div class="row">
         <div class="large-6 columns">
-            <div class="panel callout">
+            <a class="large button expand" href="#">
                 <h4>Search by name</h4>
-            </div>
+            </a>
         </div>
         <div class="large-6 columns">
             <div class="panel callout">
