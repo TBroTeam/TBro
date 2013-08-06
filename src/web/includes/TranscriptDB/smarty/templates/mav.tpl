@@ -103,12 +103,12 @@
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
             <div id="tabs-wordcloud">
-                <div id="wordcloud" style="border:1px solid #f00;height:150px;width:150px;">
-                    <span data-weight="14">word</span>
-                    <span data-weight="5">another</span>
-                    <span data-weight="7">things</span>
-                    <span data-weight="23">super</span>
-                    <span data-weight="10">cloud</span>
+                <div id="wordcloud" class="large-12 columns panel">
+                    <span data-weight="14">Transcription</span>
+                    <span data-weight="5">Germination</span>
+                    <span data-weight="7">Regulation</span>
+                    <span data-weight="23">Photosyntesis</span>
+                    <span data-weight="10">Housekeeping</span>
                 </div>
                 <script>
                     var settings = {
