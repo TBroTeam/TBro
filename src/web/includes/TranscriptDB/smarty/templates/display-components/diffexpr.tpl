@@ -95,10 +95,10 @@
         </div>
     </form>
     <div class="row" id="div-gdfxtable" style="display:none">
-        <div class="large-12 column">
-            <h4>Detailed Results</h4>
-        </div>
         <div class="large-12 column panel">
+            <div class="large-12 column">
+                <h4>Detailed Results</h4>
+            </div>
             <div class="large-12 column">
                 <table id="diffexp_results">
                     <thead>  
