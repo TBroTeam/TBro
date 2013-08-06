@@ -26,25 +26,25 @@
 
     <div class="row">
         <div class="large-6 columns">
-            <a class="large button expand" href="#">
+            <a class="large button expand" href="/multisearch">
                 <h4>Search by Name</h4>
             </a>
         </div>
         <div class="large-6 columns">
-            <a class="large button expand" href="#">
+            <a class="large button expand secondary" href="/blast">
                 <h4>Search by Homology</h4>
             </a>
         </div>
     </div>
     <div class="row">
         <div class="large-6 columns">
-            <a class="large button expand" href="#">
+            <a class="large button expand alert" href="/annotationsearch">
                 <h4>Search by Annotation</h4>
             </a>
         </div>
         <div class="large-6 columns">
-            <a class="large button expand" href="#">
-                <h4>Bulk data retrival</h4>
+            <a class="large button expand success" href="/diffexpr">
+                <h4>Differential Expression</h4>
             </a>
         </div>
     </div>
