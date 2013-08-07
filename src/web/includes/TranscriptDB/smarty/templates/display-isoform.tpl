@@ -102,23 +102,6 @@
         </div>
     </div>
     {#include file="display-components/synonym.tpl" feature=$data.isoform #}
-    <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
-    <div class="row">
-        <div class="large-12 columns panel">
-            <h4>Sequence</h4>
-            <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns panel">
-            <div class="large-12 columns">
-                <h4>Sequence Annotation</h4>
-            </div>
-            <canvas id="canvas_isoform" width="600"></canvas>
-            <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-        </div>
-    </div>
-
     {#if isset($data.isoform.description) #}
         <div class="row">
             <div class="large-12 columns panel">
@@ -129,16 +112,29 @@
             </div>
         </div>
     {#/if#}
+    {#include file="display-components/publication.tpl" feature=$data.isoform #}
+    <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Sequence</h4>
+            <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Sequence Annotation</h4>
+            <canvas id="canvas_isoform" width="600"></canvas>
+            <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+        </div>
+    </div>
+    
+    {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
 
     {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
 
     {#include file="display-components/mapman.tpl" feature=$data.isoform #}
 
-    {#include file="display-components/publication.tpl" feature=$data.isoform #}
-
     {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
-
-    {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
 
     <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
     {#include file="display-components/barplot.tpl"#}
