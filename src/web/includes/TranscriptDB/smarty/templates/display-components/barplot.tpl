@@ -7,7 +7,7 @@
                 <h4>Barplot (Filters)</h4>
             </div>
             <div class="large-2 columns">
-                <input type="submit" class="button large-2" />
+                <input type="submit" class="button large-12" />
             </div>
         </div>
 
