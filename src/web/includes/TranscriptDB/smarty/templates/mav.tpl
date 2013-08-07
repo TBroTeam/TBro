@@ -103,7 +103,8 @@
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
             <div id="tabs-wordcloud">
-                <div id="wordcloud" style="height:300px;width:300px;">
+                <a class="button" onclick="drawCloud()">Draw default wordcloud</a>
+                <div id="wordcloud" style="height:400px;width:400px;">
                     <span data-weight="14">Respiration</span>
                     <span data-weight="5">Transcription</span>
                     <span data-weight="7">Regulation</span>
@@ -111,6 +112,7 @@
                     <span data-weight="10">Housekeeping</span>
                 </div>
                 <script>
+                    function drawCloud(){
                     var settings = {
                         "size": {
                             "grid": 14
@@ -124,6 +126,7 @@
                         "shape": "circle"
                     }
                     $("#wordcloud").awesomeCloud(settings);
+                    }
                 </script>
             </div>
         </div>
