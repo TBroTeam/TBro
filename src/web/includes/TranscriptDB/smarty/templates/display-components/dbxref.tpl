@@ -21,7 +21,7 @@
 {#if (isset($dbxref['EC']))#}
     <div class="row contains-tooltip">
         <div class="large-12 columns panel">
-            <h4>Enzyme classifications</h4>
+            <h4>Enzyme Classification</h4>
             {#foreach $dbxref['EC'] as $namespace=>$dbxarr#}
                 <table style="width:100%">
                     <tbody>
