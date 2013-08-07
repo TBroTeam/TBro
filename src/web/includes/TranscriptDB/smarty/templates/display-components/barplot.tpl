@@ -3,11 +3,11 @@
 <div class="row">
     <div class="large-12 columns panel">
         <div class="row">
-            <div class="large-9 columns">
+            <div class="large-10 columns">
                 <h4>Barplot (Filters)</h4>
             </div>
-            <div class="large-3 columns">
-                <input type="submit" class="button" />
+            <div class="large-2 columns">
+                <input type="submit" class="button large-2" />
             </div>
         </div>
 
