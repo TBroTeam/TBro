@@ -6,7 +6,7 @@
             <div id="predpeps"> </div>
             <div class="row">
                 <div class="large-12 columns panel">
-                    <h4>Predicted Peptides:</h4>
+                    <h4>Predicted Peptides</h4>
                     <div class="tabs">
                         <ul>
                             {#foreach $predpeps as $predpep#}
@@ -50,7 +50,7 @@
                                 {#if isset($predpep.interpro) && count($predpep.interpro) > 0 #}
                                     <div class="row">
                                         <div class="large-12 columns">
-                                            <h4>Interpro Annotations:</h4>
+                                            <h4>Interpro Annotation</h4>
 
                                             <table style="width:100%" class="contains-tooltip dataTable">
                                                 <thead>

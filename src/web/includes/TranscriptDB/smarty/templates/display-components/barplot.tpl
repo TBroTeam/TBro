@@ -3,37 +3,35 @@
 <div class="row">
     <div class="large-12 columns panel">
         <div class="row">
-            <div class="large-12 columns">
+            <div class="large-9 columns">
                 <h4>Barplot (Filters)</h4>
+            </div>
+            <div class="large-3 columns">
+                <input type="submit" class="button" />
             </div>
         </div>
 
         <div class="row">
-            <div class="large-3 columns">
+            <div class="large-4 columns">
                 <h5>Assay</h5>
             </div>
-            <div class="large-3 columns">
+            <div class="large-4 columns">
                 <h5>Analysis</h5>
             </div>
-            <div class="large-3 columns">
+            <div class="large-4 columns">
                 <h5>Samples</h5>
-            </div>
-            <div class="large-3 columns">
             </div>
         </div>
         <form id='isoform-barplot-filter-form'>
             <div class="row">
-                <div class="large-3 columns">
+                <div class="large-4 columns">
                     <select id="isoform-barplot-filter-assay" size="6" ></select>
                 </div>
-                <div class="large-3 columns">
+                <div class="large-4 columns">
                     <select id="isoform-barplot-filter-analysis" size="6" ></select>
                 </div>
-                <div class="large-3 columns">
+                <div class="large-4 columns">
                     <select id="isoform-barplot-filter-tissue" size="6" multiple="multiple"></select>
-                </div>
-                <div class="large-3 columns">
-                    <input type="submit" class="button" />
                 </div>
             </div>
         </form>
