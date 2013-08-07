@@ -41,9 +41,9 @@
         <div class="large-12 columns" id="tabs">
 
             <ul>
-                <li><a href="#tabs-graphs">Graphs</a></li>
-                <li><a href="#tabs-diffexp">differential Expressions</a></li>
-                <li><a href="#tabs-wordcloud">Wordcloud</a></li>
+                <li><a href="#tabs-graphs">ExpressionPlots</a></li>
+                <li><a href="#tabs-diffexp">Differential Analysis</a></li>
+                <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li>
             </ul>
             <div id="tabs-graphs">
                 <div class="row">
