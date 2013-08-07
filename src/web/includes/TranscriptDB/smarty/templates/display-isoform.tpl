@@ -105,9 +105,7 @@
     <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
     <div class="row">
         <div class="large-12 columns panel">
-            <div class="large-6 columns">
-                <h4>Sequence</h4>
-            </div>
+            <h4>Sequence</h4>
             <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
         </div>
     </div>
@@ -128,7 +126,6 @@
                 {#foreach $data.isoform.description as $description#}
                     <h5> {#$description.value#}</h5>
                 {#/foreach#}
-
             </div>
         </div>
     {#/if#}
