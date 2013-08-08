@@ -38,7 +38,7 @@ CREATE OR REPLACE FUNCTION get_isoform_graph(int) RETURNS
                     SELECT f.feature_id, 
                         CASE WHEN description.value IS NOT NULL AND description.value != 'no description' THEN description.value::varchar 
                              WHEN interpro_id.value IS NOT NULL THEN interpro_id.value::varchar
-                             ELSE (analysis.name || ':' || analysis_match_id.value)::varchar
+                             ELSE (analysis.sourcename || ':' || analysis_match_id.value)::varchar
                         END AS name,
                         f.type_id, f.residues, f.seqlen, fl.fmin,fl.fmax,fl.strand 
                     FROM  featureloc fl 
