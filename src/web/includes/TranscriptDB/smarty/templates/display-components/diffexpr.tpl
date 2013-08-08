@@ -4,7 +4,7 @@
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#diffexp_results').dataTable();
 
-        var bVis = document.getElementById('columnCheckbox'+iCol).checked;
+        var bVis = !document.getElementById('columnCheckbox'+iCol).checked;
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
 </script>
