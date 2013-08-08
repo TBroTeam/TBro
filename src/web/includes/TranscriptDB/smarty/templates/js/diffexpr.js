@@ -42,6 +42,7 @@ $(document).ready(function() {
         };
         //show result table
         $('#div-gdfxtable').show();
+        $('#div-gdfxtable-columnselector').show();
 
 
         if (typeof dataTable === "undefined") {

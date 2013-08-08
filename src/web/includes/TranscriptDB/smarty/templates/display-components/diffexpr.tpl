@@ -145,7 +145,7 @@
         </div>
     </div>
 </div>
-<div class="large-12">
+<div class="large-12 panel" id="div-gdfxtable-columnselector" style="display:none">
     <h6> Show/hide columns </h6>
     <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" onclick="fnShowHide(1);"/>baseMean<br>
     <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" onclick="fnShowHide(2);"/>baseMean1<br>
