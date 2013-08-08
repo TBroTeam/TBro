@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-5 columns panel">
+        <div class="large-6 columns panel">
             <div class="row">
                 <div class="large-8 columns">
                     <h4>Filters</h4>
@@ -60,11 +60,7 @@
             </table>
         </div>
 
-        <div class="large-2 columns position" data-my="left center" data-at="right center" data-of="PREV">
-            &nbsp;
-        </div>
-
-        <div class="large-5 columns  panel query_details" style="display:none" id="query_details">
+        <div class="large-6 columns  panel query_details" style="display:none" id="query_details">
             <div class="row">
                 <div class="large-12 columns query_details" style="display:none">
                     <h4>Results overview</h4>
