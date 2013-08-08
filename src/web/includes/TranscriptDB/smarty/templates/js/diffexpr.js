@@ -155,7 +155,8 @@ $(document).ready(function() {
                             }
                         }
                     ],
-                    sRowSelect: "multi"
+                    sRowSelect: "multi",
+                    sPaginationType: "full_numbers"
                 }
             };
             //execute dataTable
