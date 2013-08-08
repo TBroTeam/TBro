@@ -101,7 +101,7 @@
                         </form>
                     {#else#}
                         <form action="?login" method="post">
-                            <span class="button large">Login with Google</span>
+                            <button class="button large">Login with Google</button>
                         </form>
                     {#/if#}
                 </div>
