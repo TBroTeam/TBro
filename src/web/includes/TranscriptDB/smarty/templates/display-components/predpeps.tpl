@@ -7,7 +7,8 @@
             <div class="row">
                 <div class="large-12 columns panel">
                     <h4>Predicted Peptides</h4>
-                    <div class="tabs">
+                    <div class="tabs" style="padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;"
+>
                         <ul>
                             {#foreach $predpeps as $predpep#}
                                 <li><p><a href="#{#$predpep.name|clean_id#}">{#$predpep.name#}</a></p></li>
