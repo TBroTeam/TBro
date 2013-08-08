@@ -105,19 +105,6 @@
             <table id="diffexp_results">
                 <thead>  
                     <tr>
-                        <th>Sequence ID</th>
-                        <th>baseMean</th>
-                        <th>baseMean1</th>
-                        <th>baseMean2</th>
-                        <th>foldChange</th>
-                        <th>log2foldChange</th>
-                        <th>pval</th>
-                        <th>pvaladj</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
                         <td colspan="8">
                             <span class="left" style="vertical-align: bottom">
                                 <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">select all</a>
@@ -131,7 +118,19 @@
                             </span>
                         </td>
                     </tr>
-                </tfoot>
+                    <tr>
+                        <th>Sequence ID</th>
+                        <th>baseMean</th>
+                        <th>baseMean1</th>
+                        <th>baseMean2</th>
+                        <th>foldChange</th>
+                        <th>log2foldChange</th>
+                        <th>pval</th>
+                        <th>pvaladj</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
             </table>
         </div>
     </div>
