@@ -29,24 +29,24 @@
         <div class="large-12 columns panel">
             <div class="row">
                 <div class="large-6 columns">
-                    <a class="large button expand" href="/multisearch">
+                    <a class="large button expand" href="/multisearch" style="background-color: #1A86DB;border-color: #3D3DCC;">
                         <h4>Search by Name</h4>
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand secondary" href="/blast">
+                    <a class="large button expand" href="/blast" style="background-color: #7757CC;border-color: #260C69;">
                         <h4>Search by Homology</h4>
                     </a>
                 </div>
             </div>
             <div class="row">
                 <div class="large-6 columns">
-                    <a class="large button expand alert" href="/annotationsearch">
+                    <a class="large button expand" href="/annotationsearch" style="background-color: #E9952B;border-color: #A0743C;">
                         <h4>Search by Annotation</h4>
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand success" href="/diffexpr">
+                    <a class="large button expand" href="/diffexpr" style="background-color: #5da423;border-color: #457a1a;">
                         <h4>Differential Expression</h4>
                     </a>
                 </div>
