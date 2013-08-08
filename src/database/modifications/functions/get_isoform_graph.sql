@@ -38,13 +38,16 @@ CREATE OR REPLACE FUNCTION get_isoform_graph(int) RETURNS
                     SELECT f.feature_id, 
                         CASE WHEN description.value IS NOT NULL AND description.value != 'no description' THEN description.value::varchar 
                              WHEN interpro_id.value IS NOT NULL THEN interpro_id.value::varchar
-                             ELSE 'interpro/anon'
+                             ELSE (analysis.name || ':' || analysis_match_id.value)::varchar
                         END AS name,
                         f.type_id, f.residues, f.seqlen, fl.fmin,fl.fmax,fl.strand 
                     FROM  featureloc fl 
                         JOIN feature f ON (f.feature_id = fl.feature_id AND f.type_id = {PHPCONST('CV_ANNOTATION_INTERPRO')}) 
                         LEFT JOIN featureprop interpro_id ON (interpro_id.feature_id = fl.feature_id AND interpro_id.type_id = {PHPCONST('CV_INTERPRO_ID')})
                         LEFT JOIN featureprop description ON (description.feature_id = fl.feature_id AND description.type_id = {PHPCONST('CV_INTERPRO_ANALYSIS_MATCH_DESCRIPTION')})
+                        LEFT JOIN analysisfeature ON (fl.feature_id = analysisfeature.feature_id)
+                        LEFT JOIN analysis ON (analysisfeature.analysis_id = analysis.analysis_id)                        
+                        LEFT JOIN featureprop AS analysis_match_id ON (analysis_match_id.feature_id = fl.feature_id AND analysis_match_id.type_id = {PHPCONST('CV_INTERPRO_ANALYSIS_MATCH_ID')})
                     WHERE fl.srcfeature_id=predpep.feature_id;
 	END LOOP;
 
