@@ -161,9 +161,9 @@ $(document).ready(function() {
             };
             //execute dataTable
             dataTable = $('#diffexp_results').dataTable(options);
-            dataTable.fnSetColumnVis(2, false);
-            dataTable.fnSetColumnVis(3, false);
-            dataTable.fnSetColumnVis(6, false);
+            dataTable.fnSetColumnVis( 2, false );
+            dataTable.fnSetColumnVis( 3, false );
+            dataTable.fnSetColumnVis( 6, false );
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();
