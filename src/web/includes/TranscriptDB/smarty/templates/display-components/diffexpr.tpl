@@ -4,7 +4,7 @@
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#diffexp_results').dataTable();
 
-        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+        var bVis = document.getElementById('columnCheckbox'+iCol).checked;
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
 </script>
@@ -106,6 +106,18 @@
         </div>
     </div>
 </form>
+<div class="row" id="div-gdfxtable-columnselector" style="display:none">        
+    <div class="large-12 panel">
+        <h6> Show/hide columns </h6>
+        <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>baseMean<br>
+        <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" onclick="fnShowHide(2);"/>baseMean1<br>
+        <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean2<br>
+        <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" checked="checked" onclick="fnShowHide(4);"/>foldChange<br>
+        <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/>log2foldChange<br>
+        <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" onclick="fnShowHide(6);"/>pval<br>
+        <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" checked="checked" onclick="fnShowHide(7);"/>pvaladj<br>
+    </div>
+</div>
 <div class="row" id="div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
         <div class="large-12 column">
@@ -144,15 +156,5 @@
             </table>
         </div>
     </div>
-</div>
-<div class="large-12 panel" id="div-gdfxtable-columnselector" style="display:none">
-    <h6> Show/hide columns </h6>
-    <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" onclick="fnShowHide(1);"/>baseMean<br>
-    <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" onclick="fnShowHide(2);"/>baseMean1<br>
-    <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean2<br>
-    <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" onclick="fnShowHide(4);"/>foldChange<br>
-    <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" onclick="fnShowHide(5);"/>log2foldChange<br>
-    <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" onclick="fnShowHide(6);"/>pval<br>
-    <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" onclick="fnShowHide(7);"/>pvaladj<br>
 </div>
 </div>
