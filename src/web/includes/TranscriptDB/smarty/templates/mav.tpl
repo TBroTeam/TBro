@@ -48,7 +48,7 @@
             <div id="tabs-graphs">
                 <div class="row">
                     <div class="large-3 columns">
-                        <h4>Assay</h4>
+                        <h4>Experiment</h4>
                     </div>
                     <div class="large-3 columns">
                         <h4>Analysis</h4>

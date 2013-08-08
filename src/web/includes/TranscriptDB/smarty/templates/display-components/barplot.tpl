@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="large-4 columns">
-                <h5>Assay</h5>
+                <h5>Experiment</h5>
             </div>
             <div class="large-4 columns">
                 <h5>Analysis</h5>
