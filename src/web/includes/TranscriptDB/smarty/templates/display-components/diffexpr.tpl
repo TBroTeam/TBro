@@ -28,8 +28,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-6 columns">
-            <div class="large-11 columns panel">
+        <div class="large-5 columns panel">
             <div class="row">
                 <div class="large-8 columns">
                     <h4>Filters</h4>
@@ -37,31 +36,30 @@
                 <div class="large-4 columns">
                     <button type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
                 </div>
+
+                <table id="filters" style="width:100%">
+                    {#$i=1#}
+                    {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
+                        <tr>
+                            <th>{#$filter_key#}</th>
+                            <td>
+                                <select name="filter_column[{#$i#}][type]">
+                                    <option value="lt">&lt;</option>
+                                    <option value="gt">&gt;</option>
+                                    <option value="leq">&lt;=</option>
+                                    <option value="geq">&gt;=</option>
+                                    <option value="eq">=</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input name="filter_column[{#$i#}][value]" type="text" />
+                            </td>
+                        </tr>
+                        {#$i=$i+1#}
+                    {#/foreach#}
+                </table>
             </div>
-                
-            <table id="filters" style="width:100%">
-                {#$i=1#}
-                {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
-                    <tr>
-                        <th>{#$filter_key#}</th>
-                        <td>
-                            <select name="filter_column[{#$i#}][type]">
-                                <option value="lt">&lt;</option>
-                                <option value="gt">&gt;</option>
-                                <option value="leq">&lt;=</option>
-                                <option value="geq">&gt;=</option>
-                                <option value="eq">=</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input name="filter_column[{#$i#}][value]" type="text" />
-                        </td>
-                    </tr>
-                    {#$i=$i+1#}
-                {#/foreach#}
-            </table>
         </div>
-            </div>
 
         <div class="large-6 columns panel query_details" style="display:none" id="query_details">
             <div class="row">
