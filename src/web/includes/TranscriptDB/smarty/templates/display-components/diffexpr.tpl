@@ -28,7 +28,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-6 columns panel">
+        <div class="large-6 columns">
+            <div class="large-12 columns panel">
             <div class="row">
                 <div class="large-8 columns">
                     <h4>Filters</h4>
@@ -37,6 +38,7 @@
                     <button type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
                 </div>
             </div>
+                
             <table id="filters" style="width:100%">
                 {#$i=1#}
                 {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
@@ -59,8 +61,10 @@
                 {#/foreach#}
             </table>
         </div>
+            </div>
 
-        <div class="large-6 columns  panel query_details" style="display:none" id="query_details">
+        <div class="large-12 columns query_details" style="display:none" id="query_details">
+            <div class="large-6 columns panel query_details" style="display:none">
             <div class="row">
                 <div class="large-12 columns query_details" style="display:none">
                     <h4>Results overview</h4>
@@ -92,6 +96,7 @@
                     <td class='hits'></td>
                 </tr>
             </table>
+                </div>
         </div>
     </div>
 </form>
