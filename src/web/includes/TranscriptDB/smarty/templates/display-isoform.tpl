@@ -86,7 +86,7 @@
             <div class="row">
                 <div class="large-12 columns">
                     <div class="left"><h1>{#$data.isoform.name#}</h1></div>
-                    <div class="right"><span class="button" onclick="javascript:cart.addItem({#$data.isoform.feature_id#});"> Add to Cart </span></div>
+                    <div class="right" style="display:table-cell; vertical-align:middle"><span class="button" onclick="javascript:cart.addItem({#$data.isoform.feature_id#});"> Add to Cart </span></div>
                 </div>
             </div>
             <table style="width:100%">
