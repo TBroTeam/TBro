@@ -3,7 +3,7 @@
 {#if (count($mapman)>0)#}
     <div class="row contains-tooltip">
         <div class="large-12 columns panel">                    
-            <h4>MapMan Annotations</h4>
+            <h4>MapMan Annotation</h4>
             <table style="width:100%">
                 <tbody>
                     {#foreach $mapman as $hit#}

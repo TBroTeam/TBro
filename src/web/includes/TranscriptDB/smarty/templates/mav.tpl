@@ -2,6 +2,7 @@
 {#block name='head'#}
     <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
     <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+    <script type="text/javascript" src="{#$AppPath#}/js/jquery.awesomeCloud-0.2.min.js"></script> 
 
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -16,7 +17,7 @@
     </style>
     <script type="text/javascript">
         (function($) {
-            
+
         {#include file="js/mav-graphs.js"#}
             (function() {
         {#include file="js/diffexpr.js" cart_ids=true#}
@@ -40,8 +41,9 @@
         <div class="large-12 columns" id="tabs">
 
             <ul>
-                <li><a href="#tabs-graphs">Graphs</a></li>
-                <li><a href="#tabs-diffexp">differential Expressions</a></li>
+                <li><a href="#tabs-graphs">Expression Plots</a></li>
+                <li><a href="#tabs-diffexp">Differential Expression Analysis</a></li>
+                <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li>
             </ul>
             <div id="tabs-graphs">
                 <div class="row">
@@ -99,6 +101,33 @@
             </div>
             <div id="tabs-diffexp">
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
+            </div>
+            <div id="tabs-wordcloud">
+                <a class="button" onclick="drawCloud()">Draw default wordcloud</a>
+                <div id="wordcloud" style="height:400px;width:400px;">
+                    <span data-weight="14">Respiration</span>
+                    <span data-weight="5">Transcription</span>
+                    <span data-weight="7">Regulation</span>
+                    <span data-weight="23">Photosyntesis</span>
+                    <span data-weight="10">Housekeeping</span>
+                </div>
+                <script>
+                    function drawCloud(){
+                    var settings = {
+                        "size": {
+                            "grid": 14
+                        },
+                        "options": {
+                            "color": "random-dark",
+                            "printMultiplier": 2,
+                            "sort" : "highest" 
+                        },
+                        "font": "Futura, Helvetica, sans-serif",
+                        "shape": "circle"
+                    }
+                    $("#wordcloud").awesomeCloud(settings);
+                    }
+                </script>
             </div>
         </div>
     </div>

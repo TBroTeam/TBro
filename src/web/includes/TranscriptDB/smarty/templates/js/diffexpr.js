@@ -82,6 +82,7 @@ $(document).ready(function() {
             var lastQueryData;
             //dataTable options
             var options = {
+                sPaginationType: "full_numbers",
                 bFilter: false,
                 bProcessing: true,
                 bServerSide: true,
@@ -160,6 +161,9 @@ $(document).ready(function() {
             };
             //execute dataTable
             dataTable = $('#diffexp_results').dataTable(options);
+            dataTable.fnSetColumnVis( 2, false );
+            dataTable.fnSetColumnVis( 3, false );
+            dataTable.fnSetColumnVis( 6, false );
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();
@@ -204,6 +208,5 @@ $(document).ready(function() {
     $('#query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
-
 
 });

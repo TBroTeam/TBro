@@ -1,6 +1,7 @@
 <script type="text/javascript">
     function displayFeatureTable(data, opts) {
         var options = $.extend(true, {
+            sPaginationType: "full_numbers",
             aoColumns: [
                 {mData: 'type'},
                 {mData: 'name'},
@@ -62,13 +63,6 @@
         <table style="width:100%" id="results">
             <thead>
                 <tr>
-                    <td>Type</td>
-                    <td>Name</td>
-                    <td>Alias</td>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
                     <td colspan="3">
                         <span class="left" style="vertical-align: bottom">
                             <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('results').fnSelectAll();">select all</a>
@@ -81,7 +75,13 @@
                         </span>
                     </td>
                 </tr>
-            </tfoot>
+                <tr>
+                    <td>Type</td>
+                    <td>Name</td>
+                    <td>Alias</td>
+                </tr>
+            </thead>
+            <tfoot></tfoot>
             <tbody>
             </tbody>
         </table>
