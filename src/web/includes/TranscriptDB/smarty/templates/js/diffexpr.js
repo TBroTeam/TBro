@@ -171,15 +171,6 @@ $(document).ready(function() {
 
     });
 
-    function fnShowHide(iCol)
-    {
-        /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#diffexp_results').dataTable();
-
-        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-        oTable.fnSetColumnVis(iCol, bVis ? false : true);
-    }
-
     new Groupselect($('#select-gdfx-cart'), cart);
 
     //add selected to cart $('#select-gdfx-cart').val()

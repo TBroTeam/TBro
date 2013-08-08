@@ -133,16 +133,26 @@
                 <tfoot></tfoot>
             </table>
         </div>
+        <source type="text/javascript">
+        function fnShowHide(iCol)
+        {
+        /* Get the DataTables object again - this is not a recreation, just a get of the object */
+        var oTable = $('#diffexp_results').dataTable();
+
+        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+        oTable.fnSetColumnVis(iCol, bVis ? false : true);
+        }
+        </source>
         <div class="large-12">
             <h6> Show/hide columns </h6>
-            	<a href="javascript:void(0);" onclick="fnShowHide(0);">Sequence ID<br></a>
-		<a href="javascript:void(0);" onclick="fnShowHide(1);">baseMean<br></a>
-		<a href="javascript:void(0);" onclick="fnShowHide(2);">baseMean1<br></a>
-		<a href="javascript:void(0);" onclick="fnShowHide(3);">baseMean2<br></a>
-		<a href="javascript:void(0);" onclick="fnShowHide(4);">foldChange<br></a>
-                <a href="javascript:void(0);" onclick="fnShowHide(5);">log2foldChange<br></a>
-                <a href="javascript:void(0);" onclick="fnShowHide(6);">pval<br></a>
-                <a href="javascript:void(0);" onclick="fnShowHide(7);">pvaladj<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(0);">Sequence ID<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(1);">baseMean<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(2);">baseMean1<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(3);">baseMean2<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(4);">foldChange<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(5);">log2foldChange<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(6);">pval<br></a>
+            <a href="javascript:void(0);" onclick="fnShowHide(7);">pvaladj<br></a>
         </div>
     </div>
 </div>
