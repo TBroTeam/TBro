@@ -143,7 +143,7 @@
                 <tfoot></tfoot>
             </table>
         </div>
-        <div class="large-12">
+<!--        <div class="large-12">
             <h6> Show/hide columns </h6>
             	<a href="javascript:void(0);" onclick="fnShowHide(0);">Sequence ID<br></a>
 		<a href="javascript:void(0);" onclick="fnShowHide(1);">baseMean<br></a>
@@ -153,7 +153,7 @@
                 <a href="javascript:void(0);" onclick="fnShowHide(5);">log2foldChange<br></a>
                 <a href="javascript:void(0);" onclick="fnShowHide(6);">pval<br></a>
                 <a href="javascript:void(0);" onclick="fnShowHide(7);">pvaladj<br></a>
-        </div>
+        </div> -->
     </div>
 </div>
 </div>
