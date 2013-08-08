@@ -82,6 +82,7 @@ $(document).ready(function() {
             var lastQueryData;
             //dataTable options
             var options = {
+                sPaginationType: "full_numbers",
                 bFilter: false,
                 bProcessing: true,
                 bServerSide: true,
@@ -155,8 +156,7 @@ $(document).ready(function() {
                             }
                         }
                     ],
-                    sRowSelect: "multi",
-                    sPaginationType: "full_numbers"
+                    sRowSelect: "multi"
                 }
             };
             //execute dataTable
