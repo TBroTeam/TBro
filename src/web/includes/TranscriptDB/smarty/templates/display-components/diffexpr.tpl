@@ -1,5 +1,12 @@
 <script type="text/javascript">
-    {#include file="js/diffexpr.js"#}
+    function fnShowHide(iCol)
+    {
+        /* Get the DataTables object again - this is not a recreation, just a get of the object */
+        var oTable = $('#diffexp_results').dataTable();
+
+        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+        oTable.fnSetColumnVis(iCol, bVis ? false : true);
+    }
 </script>
 <div id="diffexpr">
     <div class="row">
