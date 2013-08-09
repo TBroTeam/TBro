@@ -27,7 +27,7 @@
                     </table>
                     <script type="text/javascript">
                         $(document).ready(function(){
-                            $('#repeatmasker-results').dataTable();
+                            //$('#repeatmasker-results').dataTable();
                         });
                     </script>
                 </div>
