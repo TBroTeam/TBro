@@ -26,8 +26,26 @@
                 $("#tabs").tabs();
 
                 $('select').tooltip(metadata_tooltip_options({items: "option"}));
+                drawCloud();
             });
         })(jQuery);
+    </script>
+    <script>
+        function drawCloud() {
+            var settings = {
+                "size": {
+                    "grid": 14
+                },
+                "options": {
+                    "color": "random-dark",
+                    "printMultiplier": 2,
+                    "sort": "highest"
+                },
+                "font": "Futura, Helvetica, sans-serif",
+                "shape": "circle"
+            }
+            $("#wordcloud").awesomeCloud(settings);
+        }
     </script>
 {#/block#}
 {#block name='body'#}
@@ -111,23 +129,6 @@
                     <span data-weight="23">Photosyntesis</span>
                     <span data-weight="10">Housekeeping</span>
                 </div>
-                <script>
-                    function drawCloud(){
-                    var settings = {
-                        "size": {
-                            "grid": 14
-                        },
-                        "options": {
-                            "color": "random-dark",
-                            "printMultiplier": 2,
-                            "sort" : "highest" 
-                        },
-                        "font": "Futura, Helvetica, sans-serif",
-                        "shape": "circle"
-                    }
-                    $("#wordcloud").awesomeCloud(settings);
-                    }
-                </script>
             </div>
         </div>
     </div>

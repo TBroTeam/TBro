@@ -145,7 +145,7 @@ class Importer_Expressions extends AbstractImporter {
     public static function CLI_longHelp() {
         return <<<EOF
    
-Imports output files from Anna-Lena Keller's "aggregator_CountMat.pl" script.
+Imports output files from "aggregator_CountMat.pl" script.
 
 File format looks like:
 ID      flower_L1       flower_L2       flower_L3       coronatin_L1    coronatin_L2    coronatin_L3
