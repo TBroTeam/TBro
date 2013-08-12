@@ -1,6 +1,7 @@
 <script type="text/javascript">
     function fnShowHide(iCol)
     {
+        $('#diffexp_results').width("98%")
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#diffexp_results').dataTable();
 
@@ -110,7 +111,7 @@
 <div class="row" id="div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
         <div class="row" id="div-gdfxtable-columnselector" style="display:none">        
-            <div class="large-12">
+            <div class="large-6 column">
                 <h6> Show/hide columns </h6>
                 <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>Alias<br>
                 <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" checked="checked" onclick="fnShowHide(2);"/>baseMean<br>
@@ -120,6 +121,9 @@
                 <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" checked="checked" onclick="fnShowHide(6);"/>log2foldChange<br>
                 <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" onclick="fnShowHide(7);"/>pval<br>
                 <input type="checkbox" id="columnCheckbox8" name="columnCheckbox8" checked="checked" onclick="fnShowHide(8);"/>pvaladj<br>
+            </div>
+            <div class="large-6 column">
+                <button class="button" id="download-csv-button"> Download .csv </button>
             </div>
         </div>
         <div class="large-12 column">

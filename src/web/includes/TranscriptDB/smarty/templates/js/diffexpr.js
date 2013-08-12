@@ -31,6 +31,7 @@ $(document).ready(function() {
 
     var selectedItem;
     var dataTable;
+    var lastQueryData;
     $('#button-gdfx-table').click(function() {
         var selected = finalSelect.filteredData();
         //conditionA and conditionB have to be re-ordered (are shown both directions but sotred internally only one diferction)
@@ -80,7 +81,6 @@ $(document).ready(function() {
                 });
                 /*{#/if#}*/
             };
-            var lastQueryData;
             //dataTable options
             var options = {
                 sPaginationType: "full_numbers",
@@ -201,9 +201,13 @@ $(document).ready(function() {
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
         iframe.style.width = "0px";
-        iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
-        document.body.appendChild(iframe);
+        if(typeof lastQueryData !== 'undefined'){
+            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
+            document.body.appendChild(iframe);
+        }
     }
+    
+    $('#download-csv-button').on("click", download_csv());
 
     $('#diffexpr select').tooltip(metadata_tooltip_options({
         items: "option"

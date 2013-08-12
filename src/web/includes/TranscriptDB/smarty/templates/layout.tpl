@@ -189,6 +189,10 @@
                 background: #f2f2f2;
                 
             }
+            
+            .dataTable th td{
+                white-space: nowrap;
+            }
         </style>
         <script type="text/javascript">
             $(document).ready(function() {
