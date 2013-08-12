@@ -84,6 +84,8 @@ $(document).ready(function() {
             //dataTable options
             var options = {
                 sPaginationType: "full_numbers",
+                sScrollX: "100%",
+                bScrollCollapse: true,
                 bFilter: false,
                 bProcessing: true,
                 bServerSide: true,
@@ -144,27 +146,15 @@ $(document).ready(function() {
                 sDom: 'T<"clear">lfrtip',
                 oTableTools: {
                     sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf",
-                    aButtons: [
-                        {
-                            "sExtends": "ajax",
-                            "sButtonText": "CSV Export All",
-                            "fnClick": function(nButton, oConfig) {
-                                var iframe = document.createElement('iframe');
-                                iframe.style.height = "0px";
-                                iframe.style.width = "0px";
-                                iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
-                                document.body.appendChild(iframe);
-                            }
-                        }
-                    ],
+                    aButtons: [],
                     sRowSelect: "multi"
                 }
             };
             //execute dataTable
             dataTable = $('#diffexp_results').dataTable(options);
-            dataTable.fnSetColumnVis( 2, false );
-            dataTable.fnSetColumnVis( 3, false );
-            dataTable.fnSetColumnVis( 6, false );
+            dataTable.fnSetColumnVis(2, false);
+            dataTable.fnSetColumnVis(3, false);
+            dataTable.fnSetColumnVis(6, false);
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();
@@ -201,6 +191,14 @@ $(document).ready(function() {
         domQd.find('.release').text(query_details.release);
         domQd.find('.hits').text(data.iTotalRecords);
         $('.query_details').fadeIn(500);
+    }
+
+    function download_csv() {
+        var iframe = document.createElement('iframe');
+        iframe.style.height = "0px";
+        iframe.style.width = "0px";
+        iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
+        document.body.appendChild(iframe);
     }
 
     $('#diffexpr select').tooltip(metadata_tooltip_options({

@@ -184,10 +184,13 @@ class Differential_expressions extends \WebService {
 
         $query = <<<EOF
 SELECT 
-$select
+$select ,
+        s.name AS synonym_name
 FROM 
 	diffexpresult d 
-	join feature f on d.feature_id=f.feature_id 
+	JOIN feature f ON d.feature_id=f.feature_id 
+        LEFT JOIN feature_synonym fs ON f.feature_id=fs.feature_id
+        LEFT JOIN synonym s ON fs.synonym_id=s.synonym_id
 WHERE
 $wherestr
 $order_by

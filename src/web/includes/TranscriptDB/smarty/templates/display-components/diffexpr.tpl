@@ -4,7 +4,7 @@
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#diffexp_results').dataTable();
 
-        var bVis = !document.getElementById('columnCheckbox'+iCol).checked;
+        var bVis = !document.getElementById('columnCheckbox' + iCol).checked;
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
 </script>
@@ -106,40 +106,42 @@
         </div>
     </div>
 </form>
-<div class="row" id="div-gdfxtable-columnselector" style="display:none">        
-    <div class="large-12 panel">
-        <h6> Show/hide columns </h6>
-        <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>baseMean<br>
-        <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" onclick="fnShowHide(2);"/>baseMean1<br>
-        <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean2<br>
-        <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" checked="checked" onclick="fnShowHide(4);"/>foldChange<br>
-        <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/>log2foldChange<br>
-        <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" onclick="fnShowHide(6);"/>pval<br>
-        <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" checked="checked" onclick="fnShowHide(7);"/>pvaladj<br>
-    </div>
-</div>
+
 <div class="row" id="div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
+        <div class="row" id="div-gdfxtable-columnselector" style="display:none">        
+            <div class="large-12">
+                <h6> Show/hide columns </h6>
+                <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>baseMean<br>
+                <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" onclick="fnShowHide(2);"/>baseMean1<br>
+                <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean2<br>
+                <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" checked="checked" onclick="fnShowHide(4);"/>foldChange<br>
+                <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/>log2foldChange<br>
+                <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" onclick="fnShowHide(6);"/>pval<br>
+                <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" checked="checked" onclick="fnShowHide(7);"/>pvaladj<br>
+            </div>
+        </div>
         <div class="large-12 column">
             <h4>Detailed Results</h4>
         </div>
         <div class="large-12 column">
+            <div class="row">
+                <div class="large-12 column">
+                    <span class="left" style="vertical-align: bottom">
+                        <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">select all</a>
+                        <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectNone();">select none</a>
+                        <span>click a row to select</span>
+                    </span>
+
+                    <span class="right">
+                        <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
+                        <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
+                    </span>
+                </div>
+            </div>
             <table id="diffexp_results">
                 <thead>  
-                    <tr>
-                        <td colspan="8">
-                            <span class="left" style="vertical-align: bottom">
-                                <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">select all</a>
-                                <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectNone();">select none</a>
-                                <span>click a row to select</span>
-                            </span>
 
-                            <span class="right">
-                                <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
-                                <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
-                            </span>
-                        </td>
-                    </tr>
                     <tr>
                         <th>Sequence ID</th>
                         <th>baseMean</th>
