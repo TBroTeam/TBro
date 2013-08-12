@@ -177,9 +177,17 @@
             .top-bar-section .right label {
                 color: #fff;
             }
-            
+
             .ui-tabs-panel a { 
                 color: #2795b6; 
+            }
+
+            .ui-tabs-nav {
+                padding-left: 0px;
+                padding-top: 0px;
+                padding-right: 0px;
+                background: #f2f2f2;
+                
             }
         </style>
         <script type="text/javascript">
