@@ -21,7 +21,7 @@
 {#block name='body'#}
     <div class="row">
         <div class="large-12 columns panel">
-            <h2>Welcome to TBro</h2>
+            <h2>Welcome to <span style="color: #2ba6bc">T</span>ranscriptome <span style="color: #2ba6bc">Bro</span>wser</h2>
         </div>
     </div>
 

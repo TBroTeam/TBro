@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <!--meta name="viewport" content="width=device-width" /-->
-        <title>Transcript Browser</title>
+        <title>TBro &alpha;</title>
 
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="{#$AppPath#}/css/foundation.min.css" />
@@ -212,12 +212,12 @@
         <nav class="top-bar" id="top">
             <ul class="title-area">
                 <li class="name">
-                    <h1><a href="{#$AppPath#}/">Transcript Browser</a></h1>
+                    <h1><a href="{#$AppPath#}/">TBro &alpha;</a></h1>
                 </li>
             </ul>
             <section class="top-bar-section">
                 <ul class="left">{#block name='header-nav'#}
-                    <li class="has-dropdown"  id="quicknav-parent"><a href="#">QuickNav</a>
+                    <li class="has-dropdown"  id="quicknav-parent"><a href="#">Navigation</a>
                         <ul class="dropdown" id="quicknav">
                             <li><a href="{#$AppPath#}/diffexpr">Differential Expressions</a></li>
                             <li><a href="{#$AppPath#}/blast">Blast</a></li>
@@ -230,10 +230,10 @@
                         <li><div><label for="select_release">Release:</label></div></li>
                         <li><div><select id="select_release"></select></div></li>
                         <li class="divider"></li>
-                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">Adv. Search</a>
+                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">Advanced Search</a>
                             <ul class="dropdown" id="searchnav">
-                                <li><a href='{#$AppPath#}/multisearch'>Search for multiple features</a></li>
-                                <li><a href='{#$AppPath#}/annotationsearch'>Search for annotations</a></li>
+                                <li><a href='{#$AppPath#}/multisearch'>Search for Multiple Features</a></li>
+                                <li><a href='{#$AppPath#}/annotationsearch'>Search for Annotations</a></li>
                             </ul>
                         </li>
                         <li class="divider"></li>
