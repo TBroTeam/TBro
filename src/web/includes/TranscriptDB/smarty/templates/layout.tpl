@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <!--meta name="viewport" content="width=device-width" /-->
-        <title>Transcript Browser - dionaea muscipula</title>
+        <title>Transcript Browser</title>
 
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="{#$AppPath#}/css/foundation.min.css" />
@@ -176,6 +176,10 @@
 
             .top-bar-section .right label {
                 color: #fff;
+            }
+            
+            .ui-tabs-panel a { 
+                color: #2795b6; 
             }
         </style>
         <script type="text/javascript">

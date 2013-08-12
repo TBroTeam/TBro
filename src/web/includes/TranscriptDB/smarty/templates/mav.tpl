@@ -2,7 +2,7 @@
 {#block name='head'#}
     <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
     <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
-    <script type="text/javascript" src="{#$AppPath#}/js/jquery.awesomeCloud-0.2.min.js"></script> 
+    <script type="text/javascript" src="{#$AppPath#}/js/jqTagCloud.js"></script> 
 
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -26,27 +26,49 @@
                 $("#tabs").tabs();
 
                 $('select').tooltip(metadata_tooltip_options({items: "option"}));
-                drawCloud();
+
+
+                $('#Cart').on('cartEvent', function(event) {
+                    if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
+                        return;
+
+                    drawCloud('gos');
+                });
             });
+
+
         })(jQuery);
     </script>
     <script>
-        function drawCloud() {
-            var settings = {
-                "size": {
-                    "grid": 14
-                },
-                "options": {
-                    "color": "random-dark",
-                    "printMultiplier": 2,
-                    "sort": "highest"
-                },
-                "font": "Futura, Helvetica, sans-serif",
-                "shape": "circle"
+        function drawCloud(service) {
+            var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+            var prefix = '';
+            if (service==='gos'){
+                prefix = 'http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=GO:';
             }
-            $("#wordcloud").awesomeCloud(settings);
+            console.log(cartitems);
+            $.ajax('{#$ServicePath#}/listing/wordcloud/' + service, {
+                method: 'post',
+                data: {
+                    parents: cartitems
+                },
+                success: function(data) {
+                    var mol = data.results.molecular_function;
+                    var wc = $('#wordcloud');
+                    wc.empty();
+                    $.each(mol, function(key, value) {
+                        wc.append('<a href="'+prefix+value.accession+'" count="' + value.count + '">' + key + '</a>');
+                    });
+                    wc.jqTagCloud({ maxSize:35, minSize:10 });
+                }
+            });
         }
     </script>
+    <style type="text/css">
+        #wordcloud a {
+            padding: 2px 5px;
+        }
+    </style>
 {#/block#}
 {#block name='body'#}
 
@@ -121,13 +143,8 @@
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
             <div id="tabs-wordcloud">
-                <a class="button" onclick="drawCloud()">Draw default wordcloud</a>
-                <div id="wordcloud" style="height:400px;width:400px;">
-                    <span data-weight="14">Respiration</span>
-                    <span data-weight="5">Transcription</span>
-                    <span data-weight="7">Regulation</span>
-                    <span data-weight="23">Photosyntesis</span>
-                    <span data-weight="10">Housekeeping</span>
+                <a class="button" onclick="drawCloud('gos');">Draw default wordcloud</a> 
+                <div id="wordcloud">
                 </div>
             </div>
         </div>
