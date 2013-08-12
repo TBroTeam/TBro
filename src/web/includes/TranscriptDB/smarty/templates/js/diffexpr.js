@@ -108,11 +108,15 @@ $(document).ready(function() {
                 sServerMethod: "POST",
                 sAjaxSource: "{#$ServicePath#}/listing/differential_expressions/fullRelease",
                 fnServerParams: serverParams,
-                aaSorting: [[5, "asc"]],
+                aaSorting: [[6, "asc"]],
                 aoColumns: [
                     {
                         sType: "natural",
                         mData: 'feature_name'
+                    },
+                    {
+                        sType: "natural",
+                        mData: 'synonym_name'
                     },
                     {
                         sType: "scientific",
@@ -152,9 +156,9 @@ $(document).ready(function() {
             };
             //execute dataTable
             dataTable = $('#diffexp_results').dataTable(options);
-            dataTable.fnSetColumnVis(2, false);
             dataTable.fnSetColumnVis(3, false);
-            dataTable.fnSetColumnVis(6, false);
+            dataTable.fnSetColumnVis(4, false);
+            dataTable.fnSetColumnVis(7, false);
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();

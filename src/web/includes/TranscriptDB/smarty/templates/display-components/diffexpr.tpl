@@ -112,13 +112,14 @@
         <div class="row" id="div-gdfxtable-columnselector" style="display:none">        
             <div class="large-12">
                 <h6> Show/hide columns </h6>
-                <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>baseMean<br>
-                <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" onclick="fnShowHide(2);"/>baseMean1<br>
-                <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean2<br>
-                <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" checked="checked" onclick="fnShowHide(4);"/>foldChange<br>
-                <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/>log2foldChange<br>
-                <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" onclick="fnShowHide(6);"/>pval<br>
-                <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" checked="checked" onclick="fnShowHide(7);"/>pvaladj<br>
+                <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>Alias<br>
+                <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" checked="checked" onclick="fnShowHide(2);"/>baseMean<br>
+                <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean1<br>
+                <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" onclick="fnShowHide(4);"/>baseMean2<br>
+                <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/>foldChange<br>
+                <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" checked="checked" onclick="fnShowHide(6);"/>log2foldChange<br>
+                <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" onclick="fnShowHide(7);"/>pval<br>
+                <input type="checkbox" id="columnCheckbox8" name="columnCheckbox8" checked="checked" onclick="fnShowHide(8);"/>pvaladj<br>
             </div>
         </div>
         <div class="large-12 column">
@@ -144,6 +145,7 @@
 
                     <tr>
                         <th>Sequence ID</th>
+                        <th>Alias</th>
                         <th>baseMean</th>
                         <th>baseMean1</th>
                         <th>baseMean2</th>
