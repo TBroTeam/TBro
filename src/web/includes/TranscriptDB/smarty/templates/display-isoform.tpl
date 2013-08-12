@@ -106,9 +106,13 @@
         <div class="row">
             <div class="large-12 columns panel">
                 <h4>Description</h4>
-                {#foreach $data.isoform.description as $description#}
-                    <h5> {#$description.value#}</h5>
-                {#/foreach#}
+                <table style="width:100%">
+                    <tbody>
+                        {#foreach $data.isoform.description as $description#}
+                            <tr><td>{#$description.value#}</td></tr>
+                        {#/foreach#}
+                    </tbody>
+                </table>
             </div>
         </div>
     {#/if#}
@@ -118,24 +122,24 @@
         <div class="large-12 columns panel">
             <h4>Sequence</h4>
             <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns panel">
-            <h4>Sequence Annotation</h4>
-            <canvas id="canvas_isoform" width="600"></canvas>
-            <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-        </div>
-    </div>
-    
-    {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
+        <div class="row">
+            <div class="large-12 columns panel">
+                <h4>Sequence Annotation</h4>
+                <canvas id="canvas_isoform" width="600"></canvas>
+                <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+                </div>
+            </div>
 
-    {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
+            {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
 
-    {#include file="display-components/mapman.tpl" feature=$data.isoform #}
+            {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
 
-    {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
+            {#include file="display-components/mapman.tpl" feature=$data.isoform #}
 
-    <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
-    {#include file="display-components/barplot.tpl"#}
-{#/block#}
+            {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
+
+            <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
+            {#include file="display-components/barplot.tpl"#}
+        {#/block#}
