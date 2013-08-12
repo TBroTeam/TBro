@@ -8,12 +8,12 @@ namespace webservices\graphs\genome;
 class Isoform extends \WebService {
 
     /**
-     * returns "right" or "left" depending on $strand>0
+     * returns "+" or "-" depending on $strand>0
      * @param int $strand
      * @return String
      */
     private static function strand2dir($strand) {
-        return $strand > 0 ? 'right' : 'left';
+        return $strand > 0 ? '+' : '-';
     }
 
     /**
@@ -75,7 +75,7 @@ class Isoform extends \WebService {
                                 'id' => $row['name'],
                                 'sequence' => $row['residues'],
                                 'translate' => array(-1, 3),
-                                'dir' => 'right',
+                                'dir' => '+',
                                 'offset' => 1
                         ))
                     );
@@ -112,7 +112,7 @@ class Isoform extends \WebService {
                                         , $row['fmin'], $row['fmax']),
                                 'sequence' => self::rewinds(self::space($row['residues']), $row['strand']),
                                 'offset' => $row['fmin'],
-                                'dir' => 'right'#strand2dir($predpep['strand'])
+                                'dir' => '+'#strand2dir($predpep['strand'])
                         ))
                     );
                     break;
