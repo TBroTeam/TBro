@@ -34,7 +34,7 @@
                                                     <td>{#$predpep.name#}</td>
                                                     <td>{#$predpep.fmin#}</td>
                                                     <td>{#$predpep.fmax#}</td>
-                                                    <td>{#if $predpep.strand gt 0#}right{#else#}left{#/if#}</td>
+                                                    <td>{#if $predpep.strand gt 0#}+{#else#}-{#/if#}</td>
                                                     <td>{#$predpep.seqlen#}</td>
                                                 </tr>
                                             </tbody>

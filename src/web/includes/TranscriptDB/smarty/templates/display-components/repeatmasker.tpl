@@ -19,7 +19,7 @@
                                     <td>{#$repeatmasker.repeat_family#}</td>
                                     <td>{#$repeatmasker.fmin#}</td>
                                     <td>{#$repeatmasker.fmax#}</td>
-                                    <td>{#if $repeatmasker.strand gt 0#}right{#else#}left{#/if#}</td>
+                                    <td>{#if $repeatmasker.strand gt 0#}+{#else#}-{#/if#}</td>
                                     <td>{#$repeatmasker.fmax-$repeatmasker.fmin+1#}</td>
                                 </tr>
                             {#/foreach#}
