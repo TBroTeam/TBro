@@ -142,7 +142,10 @@
                 </span>
             </div>
             <div class="large-3 column">
-                <button class="small button dropdown" id="download_csv_button"> Download .csv </button>
+                <button class="small button dropdown" id="download-dropdown" data-dropdown="download-dropdown-options"> Export </button>
+                <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
+                    <li id="download_csv_button"> csv </li> 
+                </ul>
             </div>
         </div>
         <div class="large-12 column">
