@@ -5,7 +5,8 @@
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#diffexp_results').dataTable();
 
-        var bVis = !document.getElementById('columnCheckbox' + iCol).checked;
+        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+        $('#columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
 </script>
@@ -117,31 +118,31 @@
             <div class="large-3 column">
                 <button class="small button dropdown" data-dropdown="show-hide-dropdown" data-options="is_hover:true">Show Columns</button>
                 <ul id="show-hide-dropdown" class="f-dropdown" data-dropdown-content>
-                    <li><input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/> Alias</li>
-                    <li><input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" checked="checked" onclick="fnShowHide(2);"/> baseMean</li>
-                    <li><input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/> baseMean1</li>
-                    <li><input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" onclick="fnShowHide(4);"/> baseMean2</li>
-                    <li><input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/> foldChange</li>
-                    <li><input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" checked="checked" onclick="fnShowHide(6);"/> log2foldChange</li>
-                    <li><input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" onclick="fnShowHide(7);"/> pval</li>
-                    <li><input type="checkbox" id="columnCheckbox8" name="columnCheckbox8" checked="checked" onclick="fnShowHide(8);"/> pvaladj</li>
+                    <li onclick="fnShowHide(1);"><span id="columnCheckbox1" style="width: 15px; display: inline-block"/>&#10003;</span> Alias</li>
+                    <li onclick="fnShowHide(2);"><span id="columnCheckbox2" style="width: 15px; display: inline-block"/>&#10003;</span> baseMean</li>
+                    <li onclick="fnShowHide(3);"><span id="columnCheckbox3" style="width: 15px; display: inline-block"/>&emsp;</span> baseMean1</li>
+                    <li onclick="fnShowHide(4);"><span id="columnCheckbox4" style="width: 15px; display: inline-block"/>&emsp;</span> baseMean2</li>
+                    <li onclick="fnShowHide(5);"><span id="columnCheckbox5" style="width: 15px; display: inline-block"/>&#10003;</span> foldChange</li>
+                    <li onclick="fnShowHide(6);"><span id="columnCheckbox6" style="width: 15px; display: inline-block"/>&#10003;</span> log2foldChange</li>
+                    <li onclick="fnShowHide(7);"><span id="columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> pval</li>
+                    <li onclick="fnShowHide(8);"><span id="columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
                 </ul>
             </div>
             <div class="large-3 column">
                 <button class="small button dropdown" data-dropdown="select-all-none-dropdown">Selection</button>
-                <ul id="select-all-none-dropdown" class="f-dropdown">
-                    <li><a href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">All</a></li>
-                    <li><a href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectNone();">None</a></li>
+                <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+                    <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectAll();">All</li>
+                    <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();">None</li>
                 </ul>
             </div>
             <div class="large-3 column">
                 <span class="right">
-                    <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
+                    <button class="small button dropdown" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
                     <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
                 </span>
             </div>
             <div class="large-3 column">
-                <button class="button" id="download_csv_button"> Download .csv </button>
+                <button class="small button dropdown" id="download_csv_button"> Download .csv </button>
             </div>
         </div>
         <div class="large-12 column">
