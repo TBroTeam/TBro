@@ -169,11 +169,7 @@
             .top-bar-section .right .has-dropdown li {
                 height:auto;
             }
-
-            .top-bar-section .right a {
-                text-decoration: underline;
-            }
-
+            
             .top-bar-section .right label {
                 color: #fff;
             }

@@ -112,15 +112,17 @@
     <div class="large-12 column panel">
         <div class="row" id="div-gdfxtable-columnselector" style="display:none">        
             <div class="large-6 column">
-                <h6> Show/hide columns </h6>
-                <input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/>Alias<br>
-                <input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" checked="checked" onclick="fnShowHide(2);"/>baseMean<br>
-                <input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/>baseMean1<br>
-                <input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" onclick="fnShowHide(4);"/>baseMean2<br>
-                <input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/>foldChange<br>
-                <input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" checked="checked" onclick="fnShowHide(6);"/>log2foldChange<br>
-                <input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" onclick="fnShowHide(7);"/>pval<br>
-                <input type="checkbox" id="columnCheckbox8" name="columnCheckbox8" checked="checked" onclick="fnShowHide(8);"/>pvaladj<br>
+                <button class="button dropdown" data-dropdown="show-hide-dropdown" data-options="is_hover:true">Show/hide columns</button>
+                <ul id="show-hide-dropdown" class="f-dropdown" data-dropdown-content>
+                    <li><input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/> Alias</li>
+                    <li><input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" checked="checked" onclick="fnShowHide(2);"/> baseMean</li>
+                    <li><input type="checkbox" id="columnCheckbox3" name="columnCheckbox3" onclick="fnShowHide(3);"/> baseMean1</li>
+                    <li><input type="checkbox" id="columnCheckbox4" name="columnCheckbox4" onclick="fnShowHide(4);"/> baseMean2</li>
+                    <li><input type="checkbox" id="columnCheckbox5" name="columnCheckbox5" checked="checked" onclick="fnShowHide(5);"/> foldChange</li>
+                    <li><input type="checkbox" id="columnCheckbox6" name="columnCheckbox6" checked="checked" onclick="fnShowHide(6);"/> log2foldChange</li>
+                    <li><input type="checkbox" id="columnCheckbox7" name="columnCheckbox7" onclick="fnShowHide(7);"/> pval</li>
+                    <li><input type="checkbox" id="columnCheckbox8" name="columnCheckbox8" checked="checked" onclick="fnShowHide(8);"/> pvaladj</li>
+                </ul>
             </div>
             <div class="large-6 column">
                 <button class="button" id="download-csv-button"> Download .csv </button>
