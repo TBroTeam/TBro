@@ -75,7 +75,7 @@
         <div class="large-6 columns panel query_details" style="display:none" id="query_details">
             <div class="row">
                 <div class="large-12 columns query_details" style="display:none">
-                    <h4>Results overview</h4>
+                    <h4>Results Overview</h4>
                 </div>
             </div>
             <table style="width:100%" >

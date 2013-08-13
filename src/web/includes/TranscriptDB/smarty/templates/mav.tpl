@@ -53,19 +53,33 @@
                     parents: cartitems
                 },
                 success: function(data) {
-                    var mol = data.results.molecular_function;
-                    var wc = $('#wordcloud');
-                    wc.empty();
-                    $.each(mol, function(key, value) {
-                        wc.append('<a href="'+prefix+value.accession+'" count="' + value.count + '">' + key + '</a>');
+                    var mf = data.results.molecular_function;
+                    var bp = data.results.biological_process;
+                    var cc = data.results.cellular_component;
+                    var wc_mf = $('#wordcloud_mf');
+                    var wc_bp = $('#wordcloud_bp');
+                    var wc_cc = $('#wordcloud_cc');
+                    wc_mf.empty();
+                    $.each(mf, function(key, value) {
+                        wc_mf.append('<a href="'+prefix+value.accession+'" count="' + value.count + '">' + key + '</a>');
                     });
-                    wc.jqTagCloud({ maxSize:35, minSize:10 });
+                    wc_mf.jqTagCloud({ maxSize:35, minSize:10 });
+                    wc_bp.empty();
+                    $.each(bp, function(key, value) {
+                        wc_bp.append('<a href="'+prefix+value.accession+'" count="' + value.count + '">' + key + '</a>');
+                    });
+                    wc_bp.jqTagCloud({ maxSize:35, minSize:10 });
+                    wc_cc.empty();
+                    $.each(cc, function(key, value) {
+                        wc_cc.append('<a href="'+prefix+value.accession+'" count="' + value.count + '">' + key + '</a>');
+                    });
+                    wc_cc.jqTagCloud({ maxSize:35, minSize:10 });
                 }
             });
         }
     </script>
     <style type="text/css">
-        #wordcloud a {
+        #wordcloud_bp #wordcloud_cc #wordcloud_mf a {
             padding: 2px 5px;
         }
     </style>
@@ -143,9 +157,13 @@
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
             <div id="tabs-wordcloud">
-                <a class="button" onclick="drawCloud('gos');">Draw default wordcloud</a> 
-                <div id="wordcloud">
-                </div>
+                <button class="button" onclick="drawCloud('gos');">Draw default wordcloud</button> 
+                <h5> Molecular Function </h5>
+                <div id="wordcloud_mf"></div>
+                <h5> Biological Process </h5>
+                <div id="wordcloud_bp"></div>
+                <h5> Cellular Component </h5>
+                <div id="wordcloud_cc"></div>
             </div>
         </div>
     </div>
