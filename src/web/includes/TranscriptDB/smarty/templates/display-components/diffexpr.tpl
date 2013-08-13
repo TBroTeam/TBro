@@ -110,9 +110,12 @@
 
 <div class="row" id="div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
+        <div class="large-12 column">
+            <h4>Detailed Results</h4>
+        </div>
         <div class="row" id="div-gdfxtable-columnselector" style="display:none">        
-            <div class="large-6 column">
-                <button class="button dropdown" data-dropdown="show-hide-dropdown" data-options="is_hover:true">Show/hide columns</button>
+            <div class="large-3 column">
+                <button class="small button dropdown" data-dropdown="show-hide-dropdown" data-options="is_hover:true">Show Columns</button>
                 <ul id="show-hide-dropdown" class="f-dropdown" data-dropdown-content>
                     <li><input type="checkbox" id="columnCheckbox1" name="columnCheckbox1" checked="checked" onclick="fnShowHide(1);"/> Alias</li>
                     <li><input type="checkbox" id="columnCheckbox2" name="columnCheckbox2" checked="checked" onclick="fnShowHide(2);"/> baseMean</li>
@@ -124,28 +127,24 @@
                     <li><input type="checkbox" id="columnCheckbox8" name="columnCheckbox8" checked="checked" onclick="fnShowHide(8);"/> pvaladj</li>
                 </ul>
             </div>
-            <div class="large-6 column">
-                <button class="button" id="download-csv-button"> Download .csv </button>
+            <div class="large-3 column">
+                <button class="small button dropdown" data-dropdown="select-all-none-dropdown">Selection</button>
+                <ul id="select-all-none-dropdown" class="f-dropdown">
+                    <li><a href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">All</a></li>
+                    <li><a href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectNone();">None</a></li>
+                </ul>
+            </div>
+            <div class="large-3 column">
+                <span class="right">
+                    <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
+                    <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
+                </span>
+            </div>
+            <div class="large-3 column">
+                <button class="button" id="download_csv_button"> Download .csv </button>
             </div>
         </div>
         <div class="large-12 column">
-            <h4>Detailed Results</h4>
-        </div>
-        <div class="large-12 column">
-            <div class="row">
-                <div class="large-12 column">
-                    <span class="left" style="vertical-align: bottom">
-                        <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectAll();">select all</a>
-                        <a style="margin-bottom:0px" class="small button" href="javascript:TableTools.fnGetInstance('diffexp_results').fnSelectNone();">select none</a>
-                        <span>click a row to select</span>
-                    </span>
-
-                    <span class="right">
-                        <button class="small button" type="button" id="button-gdfx-addToCart" value="table">add selected to cart: </button>
-                        <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
-                    </span>
-                </div>
-            </div>
             <table id="diffexp_results">
                 <thead>  
 

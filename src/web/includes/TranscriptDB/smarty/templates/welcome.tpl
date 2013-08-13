@@ -9,6 +9,8 @@
                     dataType: "json",
                     success: function(data) {
                         $.each(data.results, function(key, val) {
+                            if(val === null)
+                                val = 0;
                             $('#stat_' + key).html(val);
                         });
                     }
@@ -67,17 +69,17 @@
             <div class="row">
                 <div class="large-6 columns">
                     <table>
-                        <tr><th align="left">Species in this database: </th><td id='stat_organisms' align="rigth"></td></tr>
-                        <tr><th align="left">Releases in this database: </th><td id='stat_releases' align="rigth"></td></tr>
-                        <tr><th align="left">Unigenes in this database: </th><td id='stat_total_unigenes' align="rigth"></td></tr>
-                        <tr><th align="left">Isoforms in this database: </th><td id='stat_total_isoforms' align="rigth"></td></tr>
+                        <tr><th align="left">Species in this database: </th><td id='stat_organisms' align="right"></td></tr>
+                        <tr><th align="left">Releases in this database: </th><td id='stat_releases' align="right"></td></tr>
+                        <tr><th align="left">Unigenes in this database: </th><td id='stat_total_unigenes' align="right"></td></tr>
+                        <tr><th align="left">Isoforms in this database: </th><td id='stat_total_isoforms' align="right"></td></tr>
                     </table>
 
                 </div>
                 <div class="large-6 columns">
                     <table>
-                        <tr><th align="left">Unigenes in the selected release: </th><td id='stat_count_unigenes' align="rigth"></td></tr>
-                        <tr><th align="left">Isoforms in the selected release: </th><td id='stat_count_isoforms' align="rigth"></td></tr>
+                        <tr><th align="left">Unigenes in the selected release: </th><td id='stat_count_unigenes' align="right"></td></tr>
+                        <tr><th align="left">Isoforms in the selected release: </th><td id='stat_count_isoforms' align="right"></td></tr>
                     </table></div>
             </div>
         </div>

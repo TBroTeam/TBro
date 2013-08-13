@@ -32,7 +32,7 @@
                     if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
                         return;
 
-                    drawCloud('gos');
+                    //drawCloud('gos');
                 });
             });
 
@@ -46,6 +46,7 @@
             if (service==='gos'){
                 prefix = 'http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=GO:';
             }
+            $('#panel-wordclouds').show();
             console.log(cartitems);
             $.ajax('{#$ServicePath#}/listing/wordcloud/' + service, {
                 method: 'post',
@@ -79,7 +80,7 @@
         }
     </script>
     <style type="text/css">
-        #wordcloud_bp #wordcloud_cc #wordcloud_mf a {
+        .wordcloud a {
             padding: 2px 5px;
         }
     </style>
@@ -157,13 +158,15 @@
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
             <div id="tabs-wordcloud">
-                <button class="button" onclick="drawCloud('gos');">Draw default wordcloud</button> 
-                <h5> Molecular Function </h5>
-                <div id="wordcloud_mf"></div>
-                <h5> Biological Process </h5>
-                <div id="wordcloud_bp"></div>
-                <h5> Cellular Component </h5>
-                <div id="wordcloud_cc"></div>
+                <button class="button" onclick="drawCloud('gos');">Draw GO wordclouds</button> 
+                    <div id="panel-wordclouds" style="display: none">
+                    <h5> Molecular Function </h5>
+                    <div id="wordcloud_mf" class="wordcloud large-12 column panel"></div>
+                    <h5> Biological Process </h5>
+                    <div id="wordcloud_bp" class="wordcloud large-12 column panel"></div>
+                    <h5> Cellular Component </h5>
+                    <div id="wordcloud_cc" class="wordcloud large-12 column panel"></div>
+                </div>
             </div>
         </div>
     </div>
