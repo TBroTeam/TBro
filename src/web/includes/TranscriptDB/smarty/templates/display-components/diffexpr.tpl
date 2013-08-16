@@ -145,7 +145,7 @@
                         <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectAll();" style="width:100%">All</li>
                         <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
                     </ul></li>
-                <li><button class="small button dropdown" type="button" id="button-gdfx-addToCart" value="table"> Store </button></li>
+                <li><button class="small button dropdown" type="button" id="button-gdfx-addToCart" data-dropdown="button-gdfx-addToCart-options"> Store </button></li>
                 <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
 
                 </ul>
