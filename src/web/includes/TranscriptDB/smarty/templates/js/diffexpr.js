@@ -83,6 +83,7 @@ $(document).ready(function() {
             };
             //dataTable options
             var options = {
+                bLengthChange: false,
                 sPaginationType: "full_numbers",
                 sScrollX: "100%",
                 bScrollCollapse: true,
