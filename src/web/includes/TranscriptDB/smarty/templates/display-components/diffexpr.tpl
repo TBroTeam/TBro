@@ -146,15 +146,15 @@
                         <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
                     </ul></li>
                 <li><button class="small button dropdown" type="button" id="button-gdfx-addToCart" data-dropdown="button-gdfx-addToCart-options"> Store </button></li>
-                <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
-
-                </ul>
-                <li><button class="small button dropdown" id="download-dropdown" data-dropdown="download-dropdown-options"> Export </button>
+                               <li><button class="small button dropdown" id="download-dropdown" data-dropdown="download-dropdown-options"> Export </button>
                     <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                         <li id="download_csv_button" style="width:100%"> csv </li> 
                     </ul></li>
             </ul>
-            <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select>
+            <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
+                    <li onclick="" style="width: 100%">new</li>
+            </ul>
+            <!-- <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select> -->
         </div>
         <div class="large-12 column">
             <table id="diffexp_results">
