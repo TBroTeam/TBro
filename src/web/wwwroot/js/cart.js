@@ -754,7 +754,7 @@ function Grouplist(node$, cart, callback) {
     this.cart.options.rootNode.on('cartEvent', function(e) {
         if (e.eventData.action === 'addGroup') {
             var li = $('<li/>').text(e.eventData.groupname).val(e.eventData.groupname);
-            li.click(x);
+            li.click(callback);
             node$.append(li);
         }
         else if (e.eventData.action === 'renameGroup') {
