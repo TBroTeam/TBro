@@ -753,12 +753,12 @@ function Grouplist(node$, cart, callback) {
     this.cart = cart;
     this.cart.options.rootNode.on('cartEvent', function(e) {
         if (e.eventData.action === 'addGroup') {
-            var li = $('<li/>').text(e.eventData.groupname).val(e.eventData.groupname);
+            var li = $('<li/>').text(e.eventData.groupname).data("cartname", e.eventData.groupname);
             li.click(callback);
             node$.append(li);
         }
         else if (e.eventData.action === 'renameGroup') {
-            node$.find('li[value="' + e.eventData.groupname + '"]').text(e.eventData.newname).val(e.eventData.newname);
+            node$.find('li[value="' + e.eventData.groupname + '"]').text(e.eventData.newname).data("cartname", e.eventData.newname);
         }
         else if (e.eventData.action === 'removeGroup') {
             node$.find('li[value="' + e.eventData.groupname + '"]').remove();

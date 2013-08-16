@@ -1,23 +1,35 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        new Grouplist($('#button-gdfx-addToCart-options'), cart, function(){ console.log($(this).text());});
+        new Grouplist($('#button-gdfx-addToCart-options'), cart,
+                function() {
+                    var selectedItems = TableTools.fnGetInstance('diffexp_results').fnGetSelectedData();
+                    var group = $(this).text();
+                    if (group === '#new#')
+                        group = cart.addGroup();
+                    cart.addItem($.map(selectedItems, function(val) {
+                        return val.feature_id;
+                    }), {
+                        groupname: group
+                    });
+
+                });
     });
     function fnShowHide(iCol)
     {
-    $('#diffexp_results').width("98%")
-            /* Get the DataTables object again - this is not a recreation, just a get of the object */
-            var oTable = $('#diffexp_results').dataTable();
-            var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-            $('#columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
-            oTable.fnSetColumnVis(iCol, bVis ? false : true);
+        $('#diffexp_results').width("98%")
+        /* Get the DataTables object again - this is not a recreation, just a get of the object */
+        var oTable = $('#diffexp_results').dataTable();
+        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+        $('#columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
+        oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
     function fnNumOfEntries(numOfEntries)
     {
-    /* Get the DataTables object again - this is not a recreation, just a get of the object */
-    var oTable = $('#diffexp_results').dataTable();
-            var oSettings = oTable.fnSettings();
-            oSettings._iDisplayLength = numOfEntries;
-            oTable.fnDraw();
+        /* Get the DataTables object again - this is not a recreation, just a get of the object */
+        var oTable = $('#diffexp_results').dataTable();
+        var oSettings = oTable.fnSettings();
+        oSettings._iDisplayLength = numOfEntries;
+        oTable.fnDraw();
     }
 </script>
 <div id="diffexpr">
@@ -146,13 +158,13 @@
                         <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
                     </ul></li>
                 <li><button class="small button dropdown" type="button" id="button-gdfx-addToCart" data-dropdown="button-gdfx-addToCart-options"> Store </button></li>
-                               <li><button class="small button dropdown" id="download-dropdown" data-dropdown="download-dropdown-options"> Export </button>
+                <li><button class="small button dropdown" id="download-dropdown" data-dropdown="download-dropdown-options"> Export </button>
                     <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                         <li id="download_csv_button" style="width:100%"> csv </li> 
                     </ul></li>
             </ul>
             <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
-                    <li onclick="" style="width: 100%">new</li>
+                <li onclick="" style="width: 100%" class="keep">new</li>
             </ul>
             <!-- <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select> -->
         </div>
