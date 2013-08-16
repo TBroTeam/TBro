@@ -207,7 +207,7 @@ $(document).ready(function() {
         }
     }
 
-    $('#download_csv_button').click(download_csv());
+    $('#download_csv_button').click(download_csv);
 
     $('#diffexpr select').tooltip(metadata_tooltip_options({
         items: "option"
