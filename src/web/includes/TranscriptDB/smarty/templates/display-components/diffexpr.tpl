@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
-    new Grouplist($('#button-gdfx-addToCart-options'), cart);
+        new Grouplist($('#button-gdfx-addToCart-options'), cart, function(){ console.log($(this).text());});
     });
     function fnShowHide(iCol)
     {

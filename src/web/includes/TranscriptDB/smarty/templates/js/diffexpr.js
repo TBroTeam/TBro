@@ -167,23 +167,23 @@ $(document).ready(function() {
 
     });
 
-    new Groupselect($('#select-gdfx-cart'), cart);
+//    new Groupselect($('#select-gdfx-cart'), cart);
 
     //add selected to cart $('#select-gdfx-cart').val()
-    $('#button-gdfx-addToCart').click(function() {
-        var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();
-        var group = $('#select-gdfx-cart').val();
-        if (group === '#new#')
-            group = cart.addGroup();
+//    $('#button-gdfx-addToCart').click(function() {
+//        var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();
+//        var group = $('#select-gdfx-cart').val();
+//        if (group === '#new#')
+//            group = cart.addGroup();
 
-        cart.addItem($.map(selectedItems, function(val) {
-            return val.feature_id;
-        }), {
-            groupname: group
-        });
+//        cart.addItem($.map(selectedItems, function(val) {
+//            return val.feature_id;
+//        }), {
+//            groupname: group
+//        });
 
 
-    });
+//    });
 
     //updates table displaying query details
     function update_query_details(data) {

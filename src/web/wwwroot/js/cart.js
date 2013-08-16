@@ -745,14 +745,17 @@ function Groupselect(node$, cart) {
 * @constructor
  * @param {jQuery} node$ a List
  * @param {Cart} cart
+ * @param {Function} callback
  * @returns {Grouplist} 
  * */
-function Grouplist(node$, cart) {
+function Grouplist(node$, cart, callback) {
     this.node$ = node$;
     this.cart = cart;
     this.cart.options.rootNode.on('cartEvent', function(e) {
         if (e.eventData.action === 'addGroup') {
-            node$.append($('<li/>').text(e.eventData.groupname).val(e.eventData.groupname));
+            var li = $('<li/>').text(e.eventData.groupname).val(e.eventData.groupname);
+            li.click(x);
+            node$.append(li);
         }
         else if (e.eventData.action === 'renameGroup') {
             node$.find('li[value="' + e.eventData.groupname + '"]').text(e.eventData.newname).val(e.eventData.newname);
