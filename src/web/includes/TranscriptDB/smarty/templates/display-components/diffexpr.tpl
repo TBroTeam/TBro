@@ -1,21 +1,23 @@
 <script type="text/javascript">
+    $(document).ready(function() {
+    new Grouplist($('#button-gdfx-addToCart-options'), cart);
+    });
     function fnShowHide(iCol)
     {
-        $('#diffexp_results').width("98%")
-        /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#diffexp_results').dataTable();
-
-        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-        $('#columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
-        oTable.fnSetColumnVis(iCol, bVis ? false : true);
+    $('#diffexp_results').width("98%")
+            /* Get the DataTables object again - this is not a recreation, just a get of the object */
+            var oTable = $('#diffexp_results').dataTable();
+            var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+            $('#columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
+            oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
     function fnNumOfEntries(numOfEntries)
     {
-        /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#diffexp_results').dataTable();
-        var oSettings = oTable.fnSettings();
-        oSettings._iDisplayLength = numOfEntries;
-        oTable.fnDraw();
+    /* Get the DataTables object again - this is not a recreation, just a get of the object */
+    var oTable = $('#diffexp_results').dataTable();
+            var oSettings = oTable.fnSettings();
+            oSettings._iDisplayLength = numOfEntries;
+            oTable.fnDraw();
     }
 </script>
 <div id="diffexpr">
@@ -139,11 +141,14 @@
                         <li onclick="fnShowHide(8);" style="width:100%"><span id="columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
                     </ul></li>
                 <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button>
-                <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-                    <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectAll();" style="width:100%">All</li>
-                    <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
-                </ul></li>
+                    <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+                        <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectAll();" style="width:100%">All</li>
+                        <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
+                    </ul></li>
                 <li><button class="small button dropdown" type="button" id="button-gdfx-addToCart" value="table"> Store </button></li>
+                <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
+
+                </ul>
                 <li><button class="small button dropdown" id="download-dropdown" data-dropdown="download-dropdown-options"> Export </button>
                     <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                         <li id="download_csv_button" style="width:100%"> csv </li> 

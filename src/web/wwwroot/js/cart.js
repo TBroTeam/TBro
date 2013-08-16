@@ -738,3 +738,29 @@ function Groupselect(node$, cart) {
         }
     });
 }
+
+
+/**
+* Binds a list element to a cart, always keeping Groups synchronized as list items
+* @constructor
+ * @param {jQuery} node$ a List
+ * @param {Cart} cart
+ * @returns {Grouplist} 
+ * */
+function Grouplist(node$, cart) {
+    this.node$ = node$;
+    this.cart = cart;
+    this.cart.options.rootNode.on('cartEvent', function(e) {
+        if (e.eventData.action === 'addGroup') {
+            node$.append($('<li/>').text(e.eventData.groupname).val(e.eventData.groupname));
+        }
+        else if (e.eventData.action === 'renameGroup') {
+            node$.find('li[value="' + e.eventData.groupname + '"]').text(e.eventData.newname).val(e.eventData.newname);
+        }
+        else if (e.eventData.action === 'removeGroup') {
+            node$.find('li[value="' + e.eventData.groupname + '"]').remove();
+        } else if (e.eventData.action === 'redraw') {
+            node$.find('li:not(.keep)').remove();
+        }
+    });
+}
