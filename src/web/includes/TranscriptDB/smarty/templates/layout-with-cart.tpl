@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <div class="panel large-12 columns">
+                <div class="panel large-12 columns" style="text-align: center">
                     {#if (isset($smarty.session['OpenID'])) #}
                         <form action="?logout" method="post">
                             <button class="button large">Logout</button>
