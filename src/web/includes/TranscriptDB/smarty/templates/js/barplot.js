@@ -53,7 +53,7 @@ $(document).ready(function() {
     $('#isoform-barplot-groupByTissues').click(isoform_barplot_groupByTissues);
     
     //get data & display graph
-    $('#isoform-barplot-filter-form').submit(function() {
+    $('#barplot-btn').click(function() {
         var data = {
             parents: [feature_id], 
             analysis: [], 
