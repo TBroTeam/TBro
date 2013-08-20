@@ -17,7 +17,7 @@ class Features extends \WebService {
     public function execute($querydata) {
         $feature_ids = array();
 
-        if (isset($querydata['query1']))
+        if (isset($querydata['query1']) && !empty($querydata['query1']))
             $feature_ids[] = $querydata['query1'];
 
         if (isset($querydata['terms']))
