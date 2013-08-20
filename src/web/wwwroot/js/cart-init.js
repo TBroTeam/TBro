@@ -1,6 +1,7 @@
 var cart;
 
 $(document).ready(function() {
+
     cart = new Cart({}, $.extend(true, {
         callbacks: {
             afterDOMinsert_groupAll: groupAllAfterDOM,
@@ -15,8 +16,9 @@ $(document).ready(function() {
     release.on('change', function() {
         cart.updateContext(organism.val() + '_' + release.val());
     });
-    
-    setInterval(function(){
+
+
+    setInterval(function() {
         cart.sync({
             action: 'refreshCart'
         }, {
@@ -31,9 +33,39 @@ $(document).ready(function() {
             heightStyle: "content"
         });
 
+        this.find('.exportBtn').click(function() {
+            exportBtnClick.call(this, 'all');
+        });
+
         this.find('a').click(function(event) {
             event.stopPropagation();
         });
+        this.find('button').click(cartButtonClick);
+    }
+
+    function cartButtonClick(event) {
+        if ($(this).is('.cartMenuButton')) {
+            var menu = $('#' + $(this).attr('data-cartMenu'));
+            menu.toggle().position({
+                my: "left top",
+                at: "left bottom",
+                collision: "none none",
+                of: this
+            });
+            $(document).on("click", function() {
+                menu.hide();
+            });
+        }
+        event.stopPropagation();
+    }
+
+    function exportBtnClick(cartname) {
+        var ids = $.map(cart._getCartForContext()[cartname] || [], function(key, val) {
+            return val;
+        });
+        var a = $(this);
+        var service = a.attr("data-servicePath");
+        a.attr("href", service + "?" + $.param({terms: ids}));
     }
 
     function groupAfterDOM() {
@@ -53,10 +85,15 @@ $(document).ready(function() {
             collapsible: true,
             heightStyle: "content"
         });
+        
+        this.find('.exportBtn').click(function() {
+            exportBtnClick.call(this, that.attr('data-name'));
+        });
 
         this.find('a').click(function(event) {
             event.stopPropagation();
         });
+        this.find('button').click(cartButtonClick);
 
         this.find('.cart-button-rename').click(function(event) {
             var dialog = $('#dialog-rename-cart-group');
@@ -80,7 +117,7 @@ $(document).ready(function() {
                 helper: function() {
                     return $(this).clone().addClass('beingDragged');
                 }
-        });
+            });
 
         this.find('.cart-button-rename').click(function() {
             cart._getItemDetails([id], function(data) {
@@ -108,6 +145,10 @@ $(document).ready(function() {
             "rename cart": function() {
                 var oldname = $(this).data('oldname');
                 var newname = $('#cartname').val();
+                if (!/^[a-zA-Z0-9_]+$/.test(newname)) {
+                    alert('New name contains illegal characters. Please use only letters, numbers and underscore!');
+                    return false;
+                }
                 try {
                     cart.renameGroup(oldname, newname);
                 } catch (e) {

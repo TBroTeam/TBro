@@ -4,10 +4,10 @@
     <script type="text/javascript">
         //will be used by cart-init.js
         var cartoptions = {
-        serviceNodes: {
-        itemDetails: '{#$ServicePath#}/details/features',
-        sync: '{#$ServicePath#}/cart/sync'
-        }
+            serviceNodes: {
+                itemDetails: '{#$ServicePath#}/details/features',
+                sync: '{#$ServicePath#}/cart/sync'
+            }
         };
     </script>
     <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
@@ -32,6 +32,9 @@
 
         form {
             margin: 0px;
+        }
+        .cartMenuContent{
+            display:none;
         }
     </style>
     {#$smarty.block.child#}
@@ -118,37 +121,45 @@
                 </div>
 
                 <script type="text/template" id="template_cart_all_group"> 
-                    <div class="cartGroup" data-name="all">
+                <div class="cartGroup" data-name="all">
                     <div class="large-12 columns"><div class="left">all</div>
-                    <div class="right">
-                    <a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/></a>
-                    <a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
-                    <a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
+                        <div class="right" >
+                            <button class="cartMenuButton" data-cartMenu="cart-dropdown-groupall">Actions</button>
+                            <ul id="cart-dropdown-groupall"  class="f-dropdown cartMenuContent">
+                                <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>Paste Group</a></li>
+                                <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>Delete All</a></li>
+                                <li><a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Execute</a></li>
+                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Export fasta</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    </div>
-                    <ul class="large-12 columns elements">
-                    </ul>
-                    </div>
+                    <ul class="large-12 columns elements"> 
+                    </ul> 
+                </div> 
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
-                    <div class='cartGroup' data-name="<%= groupname %>">
+                <div class='cartGroup' data-name="<%= groupname %>">
                     <div class="large-12 columns">
-                    <div class="left"><%= groupname %>
-                    </div>
-                    <div class="right">
-                    <a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>
-                    <a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/></a>
-                    <a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
-                    <a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/></a>
-                    </div>
+                        <div class="left"><%= groupname %>
+                        </div>
+                        <div class="right">
+                            <button class="cartMenuButton" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
+                            <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
+                                <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>Rename Group</a></li>
+                                <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>Copy Group</a></li>
+                                <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>Remove Group</a></li>
+                                <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Execute</a></li>
+                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Export fasta</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <ul class="large-12 columns elements">
-                    <li class="placeholder">
-                    drag your items here
-                    </li>
+                        <li class="placeholder">
+                            drag your items here
+                        </li>
                     </ul>
-                    </div>
+                </div>
                 </script>
 
                 <script type="text/template"  id="template_cart_new_item"> 
