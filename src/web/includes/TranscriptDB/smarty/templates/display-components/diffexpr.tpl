@@ -1,13 +1,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        new Grouplist($('#button-gdfx-addToCart-options'), cart,
-                function() {
-                    var group = $(this).text();
-                    addSelectedToCart(group)
-                });
+        new Grouplist($('#button-gdfx-addToCart-options'), cart, addSelectedToCart);
+        $('#button-gdfx-addToCart-options-newcart').click(addSelectedToCart);
     });
 
-    function addSelectedToCart(group) {
+    function addSelectedToCart() {
+        var group = $(this).attr('data-value');
         var selectedItems = TableTools.fnGetInstance('diffexp_results').fnGetSelectedData();
         if (selectedItems.length === 0)
             return;
@@ -68,68 +66,74 @@
                 </div>
         </div>
     </div>
+
     <div class="row">
-        <div class="large-6 columns panel">
-            <div class="large-8 columns">
-                <h4>Filters</h4>
-            </div>
-            <div class="large-4 columns">
-                <button type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
+        <div class="large-6" style="float:left">
+            <div class="large-11 columns panel">
+                <div class="large-12 columns">
+                    <h4>Filters</h4>
+                </div>
+
+
+                <table id="filters" style="width:100%">
+                    {#$i=1#}
+                    {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
+                        <tr>
+                            <th>{#$filter_key#}</th>
+                            <td>
+                                <select name="filter_column[{#$i#}][type]">
+                                    <option value="lt">&lt;</option>
+                                    <option value="gt">&gt;</option>
+                                    <option value="leq">&lt;=</option>
+                                    <option value="geq">&gt;=</option>
+                                    <option value="eq">=</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input name="filter_column[{#$i#}][value]" type="text" />
+                            </td>
+                        </tr>
+                        {#$i=$i+1#}
+                    {#/foreach#}
+                </table>
+                <button class="right" type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
+
             </div>
 
-            <table id="filters" style="width:100%">
-                {#$i=1#}
-                {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
-                    <tr>
-                        <th>{#$filter_key#}</th>
-                        <td>
-                            <select name="filter_column[{#$i#}][type]">
-                                <option value="lt">&lt;</option>
-                                <option value="gt">&gt;</option>
-                                <option value="leq">&lt;=</option>
-                                <option value="geq">&gt;=</option>
-                                <option value="eq">=</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input name="filter_column[{#$i#}][value]" type="text" />
-                        </td>
-                    </tr>
-                    {#$i=$i+1#}
-                {#/foreach#}
-            </table>
         </div>
 
-        <div class="large-6 columns panel query_details" style="display:none;" id="query_details">
-            <div class="large-12 columns query_details" style="display:none">
-                <h4>Results Overview</h4>
+        <div class="large-6 query_details" style="display:none; float:left" id="query_details">
+            <div class="large-11 columns panel large-offset-1">
+                <div class="large-12 columns query_details" style="display:none">
+                    <h4>Results Overview</h4>
+                </div>
+                <table style="width:100%" >
+                    <tr>
+                        <td>Condition 1</td>
+                        <td class='conditionA has-tooltip'></td>
+                    </tr>
+                    <tr>
+                        <td>Condition 2</td>
+                        <td class='conditionB has-tooltip'></td>
+                    </tr>
+                    <tr>
+                        <td>Analysis</td>
+                        <td class='analysis has-tooltip'></td>
+                    </tr>
+                    <tr>
+                        <td>Organism</td>
+                        <td class='organism'></td>
+                    </tr>
+                    <tr>
+                        <td>Release</td>
+                        <td class='release'></td>
+                    </tr>
+                    <tr>
+                        <td>Hits</td>
+                        <td class='hits'></td>
+                    </tr>
+                </table>
             </div>
-            <table style="width:100%" >
-                <tr>
-                    <td>Condition 1</td>
-                    <td class='conditionA has-tooltip'></td>
-                </tr>
-                <tr>
-                    <td>Condition 2</td>
-                    <td class='conditionB has-tooltip'></td>
-                </tr>
-                <tr>
-                    <td>Analysis</td>
-                    <td class='analysis has-tooltip'></td>
-                </tr>
-                <tr>
-                    <td>Organism</td>
-                    <td class='organism'></td>
-                </tr>
-                <tr>
-                    <td>Release</td>
-                    <td class='release'></td>
-                </tr>
-                <tr>
-                    <td>Hits</td>
-                    <td class='hits'></td>
-                </tr>
-            </table>
         </div>
     </div>
 </form>
@@ -169,7 +173,7 @@
                 <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
             </ul>
             <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
-                <li onclick="addSelectedToCart('#new#');" class="keep">new</li>
+                <li id="button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
             </ul>
             <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                 <li id="download_csv_button" > csv </li> 
