@@ -19,6 +19,14 @@
             });
         });
     </script>
+    <style type="text/css">
+        .btn1{
+            background-color: #7757CC;border-color: #260C69;
+        }
+        .btn1:hover{
+            background-color: pink;
+        }
+    </style>
 {#/block#}
 {#block name='body'#}
     <div class="row">
@@ -36,7 +44,7 @@
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand" href="/blast" style="background-color: #7757CC;border-color: #260C69;">
+                    <a class="large button expand btn1" href="/blast" >
                         <h4>Search by Homology</h4>
                     </a>
                 </div>
