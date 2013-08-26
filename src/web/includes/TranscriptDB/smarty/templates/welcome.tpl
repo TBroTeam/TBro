@@ -21,10 +21,32 @@
     </script>
     <style type="text/css">
         .btn1{
-            background-color: #7757CC;border-color: #260C69;
+            background-color: #00A383;
+            border-color: #006A55;
         }
         .btn1:hover{
-            background-color: pink;
+            background-color: #1F7A68;
+        }
+        .btn2{
+            background-color: #0A64A4;
+            border-color: #03406A;
+        }
+        .btn2:hover{
+            background-color: #24577B;
+        }
+        .btn3{
+            background-color: #FF9000;
+            border-color: #A65E00;
+        }
+        .btn3:hover{
+            background-color: #BF8130;
+        }
+        .btn4{
+            background-color: #FF6400;
+            border-color: #A64100;
+        }
+        .btn4:hover{
+            background-color: #BF6830;
         }
     </style>
 {#/block#}
@@ -39,24 +61,24 @@
         <div class="large-12 columns panel">
             <div class="row">
                 <div class="large-6 columns">
-                    <a class="large button expand" href="/multisearch" style="background-color: #1A86DB;border-color: #3D3DCC;">
+                    <a class="large button expand btn1" href="/multisearch">
                         <h4>Search by Name</h4>
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand btn1" href="/blast" >
+                    <a class="large button expand btn2" href="/blast" >
                         <h4>Search by Homology</h4>
                     </a>
                 </div>
             </div>
             <div class="row">
                 <div class="large-6 columns">
-                    <a class="large button expand" href="/annotationsearch" style="background-color: #E9952B;border-color: #A0743C;">
+                    <a class="large button expand btn3" href="/annotationsearch">
                         <h4>Search by Annotation</h4>
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand" href="/diffexpr" style="background-color: #5da423;border-color: #457a1a;">
+                    <a class="large button expand btn4" href="/diffexpr">
                         <h4>Differential Expression</h4>
                     </a>
                 </div>
