@@ -169,7 +169,7 @@
             .top-bar-section .right .has-dropdown li {
                 height:auto;
             }
-            
+
             .top-bar-section .right label {
                 color: #fff;
             }
@@ -178,14 +178,24 @@
                 color: #2795b6; 
             }
 
+            .ui-tabs {
+                border-top-width: 0px;
+                border-right-width: 0px;
+                border-left-width: 0px;
+                border-bottom-width: 0px;
+            }
+
             .ui-tabs-nav {
                 padding-left: 0px;
                 padding-top: 0px;
                 padding-right: 0px;
                 background: #f2f2f2;
-                
+                border-left-width: 0px;
+                border-top-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
             }
-            
+
             .dataTable th td{
                 white-space: nowrap;
             }
