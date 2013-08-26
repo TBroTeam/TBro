@@ -140,10 +140,10 @@
 
 <div class="row" id="div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
-        <div class="large-12 column">
+        <div class="large-12">
             <h4>Detailed Results</h4>
         </div>
-        <div class="row" id="div-gdfxtable-columnselector" style="display:none">        
+        <div class="large-12" id="div-gdfxtable-columnselector" style="display:none">        
             <ul class="button-group even-5">
                 <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Show Entries </button></li>
                 <li><button class="small button dropdown" data-dropdown="show-hide-dropdown" data-options="is_hover:true">Show Columns</button></li>
@@ -181,7 +181,7 @@
 
             <!-- <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select> -->
         </div>
-        <div class="large-12 column">
+        <div class="large-12">
             <table id="diffexp_results">
                 <thead>  
                     <tr>
