@@ -36,6 +36,9 @@
         .cartMenuContent{
             display:none;
         }
+        .cartMenuButton{
+            margin-bottom: 0px;
+        }
     </style>
     {#$smarty.block.child#}
 {#/block#}
@@ -122,9 +125,9 @@
 
                 <script type="text/template" id="template_cart_all_group"> 
                 <div class="cartGroup" data-name="all">
-                    <div class="large-12 columns"><div class="left">all</div>
+                    <div class="large-12 columns"><div class="left" style="position:absolute; top:50%; margin-top:-10px;">all</div>
                         <div class="right" >
-                            <button class="cartMenuButton" data-cartMenu="cart-dropdown-groupall">Actions</button>
+                            <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-groupall">Actions</button>
                             <ul id="cart-dropdown-groupall"  class="f-dropdown cartMenuContent">
                                 <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>Paste Group</a></li>
                                 <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>Delete All</a></li>
@@ -141,10 +144,10 @@
                 <script type="text/template" id="template_cart_new_group"> 
                 <div class='cartGroup' data-name="<%= groupname %>">
                     <div class="large-12 columns">
-                        <div class="left"><%= groupname %>
+                        <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
                         </div>
                         <div class="right">
-                            <button class="cartMenuButton" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
+                            <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                             <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
                                 <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>Rename Group</a></li>
                                 <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>Copy Group</a></li>
