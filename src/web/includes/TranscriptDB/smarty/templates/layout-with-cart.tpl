@@ -115,7 +115,7 @@
                 <div class="panel large-12 columns" id="cart">
                     <div>
                         <h4 class="left">Cart</h4>                        
-                        <a class="button secondary right" href="#" onclick="cart.addGroup();">add new group</a>
+                        <a class="button secondary right" href="#" onclick="cart.addGroup();">Add New Group</a>
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
@@ -132,7 +132,7 @@
                                 <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>Paste Group</a></li>
                                 <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>Delete All</a></li>
                                 <li><a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Execute</a></li>
-                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Export fasta</a></li>
+                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>Export fasta</a></li>
                             </ul>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                                 <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>Copy Group</a></li>
                                 <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>Remove Group</a></li>
                                 <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Execute</a></li>
-                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>Export fasta</a></li>
+                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>Export fasta</a></li>
                             </ul>
                         </div>
                     </div>

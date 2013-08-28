@@ -124,7 +124,7 @@
     <div class="large-12 columns panel">
         There has been an error processing your job.<br/>
         Please review your job.<br/>
-        If this keeps happening, notify the the administrator.<br/><br/><br/>
+        If this keeps happening, notify the administrator.<br/><br/><br/>
         These errors occured:<br/>
         <pre><%= errors %></pre>
     </div>
@@ -149,16 +149,13 @@
 </script>
 <script type="text/template" id="template_processed">
     <div class="large-12 columns panel">
-        <div class="row">
-            <div class="large-12 columns panel">
-                Select a Sequence: <br/>
-                <select id="query_select">
-                    <% _.each(processed_results, function(result, idx){ var query=result.query; %>
-                    <option value="<%=idx%>"><%= query.substr(query.indexOf('>')==-1?0:1, Math.max(query.indexOf("\n"),20)) %></option>
-                    <% }); %>
-                </select>
-            </div>
-
+        <div class="large-12 columns panel">
+            Select a Sequence: <br/>
+            <select id="query_select">
+                <% _.each(processed_results, function(result, idx){ var query=result.query; %>
+                <option value="<%=idx%>"><%= query.substr(query.indexOf('>')==-1?0:1, Math.max(query.indexOf("\n"),20)) %></option>
+                <% }); %>
+            </select>
         </div>
         <div id="resultDetails">
         </div>

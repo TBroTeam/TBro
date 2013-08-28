@@ -21,32 +21,32 @@
     </script>
     <style type="text/css">
         .btn1{
-            background-color: #00A383;
-            border-color: #006A55;
+            background-color: #00A0B1;
+            border-color: #008090;
         }
         .btn1:hover{
-            background-color: #1F7A68;
+            background-color: #008299;
         }
         .btn2{
-            background-color: #0A64A4;
-            border-color: #03406A;
+            background-color: #2E8DEF;
+            border-color: #2070E0;
         }
         .btn2:hover{
-            background-color: #24577B;
+            background-color: #2672EC;
         }
         .btn3{
-            background-color: #FF9000;
-            border-color: #A65E00;
+            background-color: #A700AE;
+            border-color: #800090;
         }
         .btn3:hover{
-            background-color: #BF8130;
+            background-color: #8C0095;
         }
         .btn4{
-            background-color: #FF6400;
-            border-color: #A64100;
+            background-color: #643EBF;
+            border-color: #5030A0;
         }
         .btn4:hover{
-            background-color: #BF6830;
+            background-color: #5133AB;
         }
     </style>
 {#/block#}
