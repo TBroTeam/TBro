@@ -2,9 +2,15 @@ $(document).ready(function() {
     var select_analysis = $('#select-gdfx-analysis');
     var select_conditionA = $('#select-gdfx-conditionA');
     var select_conditionB = $('#select-gdfx-conditionB');
+    var select_assay = $('#select-gdfx-assay');
 
 
     //filteredSelect: select_conditionA => select_conditionB => select_analysis
+
+    new filteredSelect(select_conditionA, 'ba', {
+        precedessorNode: select_assay
+    });
+
     new filteredSelect(select_conditionB, 'bb', {
         precedessorNode: select_conditionA
     });
@@ -13,21 +19,59 @@ $(document).ready(function() {
         precedessorNode: select_conditionB
     });
 
+
+    /*{#if isset($cartname)#}*/
+//if selected cart group changes (adding/removing items or context switch), update  filters accordingly
+    $('#Cart').on('cartEvent', function(event) {
+        if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
+            return;
+
+        var myItemEvent = new Date().getTime();
+        lastItemEvent = myItemEvent;
+
+        setTimeout(function() {
+
+            //if another itemEvent has happened in the last 100ms, skip.
+            if (lastItemEvent !== myItemEvent)
+                return;
+
+
+            var data = {ids: cart._getCartForContext()['{#$cartname#}'] || []};
+            var url = '{#$ServicePath#}/listing/filters_diffexp/forCart';
+
+
+            $.ajax(url, {
+                method: 'post',
+                data: data,
+                success: function(data) {
+                    new filteredSelect(select_assay, 'assay', {
+                        data: data
+                    }).refill();
+                    $('#button-gdfx-table').prop('disabled', false);
+                }
+            });
+        }, 100);
+    });
+
+    /*{#else#}*/
     release.change(function() {
-        $.ajax('{#$ServicePath#}/listing/filters_diffexp/fullRelease', {
+        var url = '{#$ServicePath#}/listing/filters_diffexp/fullRelease';
+        var data = {
+            organism: organism.val(),
+            release: release.val()
+        };
+        $.ajax(url, {
             method: 'post',
-            data: {
-                organism: organism.val(),
-                release: release.val()
-            },
+            data: data,
             success: function(data) {
-                new filteredSelect(select_conditionA, 'ba', {
+                new filteredSelect(select_assay, 'assay', {
                     data: data
                 }).refill();
                 $('#button-gdfx-table').prop('disabled', false);
             }
         });
     });
+    /*{#/if#}*/
 
     var selectedItem;
     var dataTable;

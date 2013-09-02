@@ -61,6 +61,12 @@ abstract class AbstractImporter implements \CLI_Command, Importer {
             'long_name' => '--release',
             'description' => 'this will be used as prefix for all uniquenames and displayed in the "dataset" dropdown'
         ));
+        $command->addOption('skip', array(
+            'short_name' => '-k',
+            'long_name' => '--skip-materialize-views',
+            'action'=>'StoreTrue',
+            'description' => 'this will cause the program to skip updating the materialized views'
+        ));
 
         $command->addArgument('files', array(
             'multiple' => true,
@@ -110,11 +116,14 @@ abstract class AbstractImporter implements \CLI_Command, Importer {
                 $tbl->addRow(array($key, $value));
             echo $tbl->getTable();
         }
-        //update materialized views for statistics etc.
-        echo "\nupdating materialized views...";
-        global $db;
-        $db->query('SELECT update_materialized_views()');
-        echo " done!\n";
+        if(@!$command_options['skip']){
+            //update materialized views for statistics etc.
+            echo "\nupdating materialized views...";
+            global $db;
+            $db->query('SELECT update_materialized_views()');
+            echo " done!\n";
+        }
+        
     }
 
     static function preCommitMsg() {

@@ -7,8 +7,8 @@
             <table style="width:100%">
                 <tbody class="contains-tooltip">
                     {#foreach $synonyms as $synonym#}
-                        <tr><th>{#$synonym.synonym_name#}</th><td>{#$synonym.synonym_type#}</td></tr>
-                        {#publink pub=$synonym#}
+                        <tr><td>{#$synonym.synonym_name#}</td><td>{#$synonym.synonym_type#}</td>
+                        {#publinkshort pub=$synonym#}</tr>
                     {#/foreach#}
                 </tbody>
             </table>

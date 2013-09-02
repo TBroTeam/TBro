@@ -54,13 +54,16 @@
             </div>
             <form id="diffexp_filters">
                 <div class="row">
-                    <div class="large-4 columns">
+                    <div class="large-3 columns">
+                        <select id="select-gdfx-assay" size="12"></select>
+                    </div>
+                    <div class="large-3 columns">
                         <select id="select-gdfx-conditionA" size="12"></select>
                     </div>
-                    <div class="large-4 columns">
+                    <div class="large-3 columns">
                         <select id="select-gdfx-conditionB" size="12"></select>
                     </div>
-                    <div class="large-4 columns">
+                    <div class="large-3 columns">
                         <select id="select-gdfx-analysis" size="12"></select>
                     </div>
                 </div>

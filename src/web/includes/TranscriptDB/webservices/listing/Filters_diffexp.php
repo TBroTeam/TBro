@@ -28,20 +28,27 @@ class Filters_diffexp extends \WebService {
             $ids = array_merge($ids, $querydata['ids']);
         }
 
+        if (count($ids)==0)
+            return array();
 
         $place_holders = implode(',', array_fill(0, count($ids), '?'));
 
         $query_get_filters = <<<EOF
 SELECT 
-  d.feature_id AS feature_id,
+  DISTINCT
+  --d.feature_id AS feature_id,
   analysis.analysis_id, analysis.name AS analysis_name, analysis.description AS analysis_description, analysis.program AS analysis_program, analysis.programversion AS analysis_programversion, analysis.algorithm AS analysis_algorithm,
   ba.biomaterial_id AS ba_id, ba.name AS ba_name, ba.description AS ba_description,
-  bb.biomaterial_id AS bb_id, bb.name AS bb_name, bb.description AS bb_description
+  bb.biomaterial_id AS bb_id, bb.name AS bb_name, bb.description AS bb_description,
+  assay.name AS assay_name, assay.description AS assay_description, assay.assay_id
 FROM 
   diffexpresult d
   JOIN analysis ON (d.analysis_id = analysis.analysis_id)
   JOIN biomaterial ba ON (d.biomateriala_id = ba.biomaterial_id)
   JOIN biomaterial bb ON (d.biomaterialb_id = bb.biomaterial_id)
+  JOIN quantification ON (d.quantification_id=quantification.quantification_id)
+  JOIN acquisition ON (quantification.acquisition_id = acquisition.acquisition_id)
+  JOIN assay ON (acquisition.assay_id=assay.assay_id)
 WHERE 
   d.feature_id IN ({$place_holders});
 EOF;
@@ -53,19 +60,28 @@ EOF;
         $stm_get_filters->execute($ids);
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
 
-            $data['data']['feature'][$filter['feature_id']] = self::getItem('feature', $filter);
             $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
             $data['data']['ba'][$filter['ba_id']] = self::getItem('ba', $filter);
-            $data['data']['bb'][$filter['bb_id']] = self::getItem('bb', $filter);
+            $data['data']['ba'][$filter['bb_id']] = self::getItem('bb', $filter);
+            $data['data']['assay'][$filter['assay_id']] = self::getItem('assay', $filter);
 
             $data['values'][] = array(
-                'feature' => $filter['feature_id'],
                 'analysis' => $filter['analysis_id'],
                 'ba' => $filter['ba_id'],
                 'bb' => $filter['bb_id'],
+                'assay' => $filter['assay_id'],
+                'dir' => 'ltr'
+            );
+            // add flip
+            $data['values'][] = array(
+                'analysis' => $filter['analysis_id'],
+                'bb' => $filter['ba_id'],
+                'ba' => $filter['bb_id'],
+                'assay' => $filter['assay_id'],
+                'dir' => 'rtl'
             );
         }
-
+        $data['data']['bb'] = &$data['data']['ba'];
         return $data;
     }
 
@@ -87,23 +103,26 @@ EOF;
 
         $query_get_filters = <<<EOF
 SELECT 
-ba.name AS ba_name, ba_id, bb.name AS bb_name, bb_id, analysis.name AS analysis_name, ids.analysis_id FROM
-(SELECT 
-	d.biomateriala_id ba_id, d.biomaterialb_id bb_id, d.analysis_id
-    FROM 
-	diffexpresult d 
-	join feature f on d.feature_id=f.feature_id 
-    WHERE f.organism_id=? AND f.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)        
-    GROUP BY d.biomateriala_id, d.biomaterialb_id, d.analysis_id, f.organism_id, f.dbxref_id
-) AS ids
+    ba.name AS ba_name, ba_id, 
+    bb.name AS bb_name, bb_id,
+    analysis.name AS analysis_name, ids.analysis_id,
+    assay.name AS assay_name, assay.description AS assay_description, assay.assay_id
+FROM
+    materialized_view_diffexp_filter AS ids
 JOIN biomaterial ba ON (ids.ba_id=ba.biomaterial_id)
 JOIN biomaterial bb ON (ids.bb_id=bb.biomaterial_id)
 JOIN analysis ON (ids.analysis_id=analysis.analysis_id)
+JOIN quantification ON (ids.quantification_id=quantification.quantification_id)
+JOIN acquisition ON (quantification.acquisition_id = acquisition.acquisition_id)
+JOIN assay ON (acquisition.assay_id=assay.assay_id)
+
+WHERE 
+    ids.organism_id=? AND ids.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')}  AND accession = ?)
 EOF;
 
         $stm_get_filters = $db->prepare($query_get_filters);
 
-        $data = array();
+        $data = array();  
 
         $stm_get_filters->execute(array($organism, $release));
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
@@ -111,11 +130,13 @@ EOF;
             $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
             $data['data']['ba'][$filter['ba_id']] = self::getItem('ba', $filter);
             $data['data']['ba'][$filter['bb_id']] = self::getItem('bb', $filter);
+            $data['data']['assay'][$filter['assay_id']] = self::getItem('assay', $filter);
 
             $data['values'][] = array(
                 'analysis' => $filter['analysis_id'],
                 'ba' => $filter['ba_id'],
                 'bb' => $filter['bb_id'],
+                'assay' => $filter['assay_id'],
                 'dir' => 'ltr'
             );
             // add flip
@@ -123,6 +144,7 @@ EOF;
                 'analysis' => $filter['analysis_id'],
                 'bb' => $filter['ba_id'],
                 'ba' => $filter['bb_id'],
+                'assay' => $filter['assay_id'],
                 'dir' => 'rtl'
             );
         }

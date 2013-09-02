@@ -37,6 +37,7 @@ class Importer_Differential_Expressions extends AbstractImporter {
         $analysis_id = $options['analysis_id'];
         $biomaterial_parentA_name = $options['conditionGroupA'];
         $biomaterial_parentB_name = $options['conditionGroupB'];
+        $quantification_id = $options['quantification_id'];
 
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         self::setLineCount($lines_total);
@@ -112,8 +113,8 @@ class Importer_Differential_Expressions extends AbstractImporter {
 
             //query for insertion of diffexp
             $query_insert_diffexp = <<<EOF
-INSERT INTO diffexpresult(analysis_id, feature_id, biomateriala_id, biomaterialb_id, baseMean, baseMeanA, baseMeanB, foldChange, log2foldChange, pval, pvaladj)
-SELECT :analysis_id, feature_id, :biomaterialA_id, :biomaterialB_id, :baseMean, :baseMeanA, :baseMeanB, :foldChange, :log2foldChange, :pval, :pvaladj
+INSERT INTO diffexpresult(analysis_id, feature_id, biomateriala_id, biomaterialb_id, quantification_id, baseMean, baseMeanA, baseMeanB, foldChange, log2foldChange, pval, pvaladj)
+SELECT :analysis_id, feature_id, :biomaterialA_id, :biomaterialB_id, :quantification_id, :baseMean, :baseMeanA, :baseMeanB, :foldChange, :log2foldChange, :pval, :pvaladj
 FROM feature WHERE uniquename = :feature_uniquename AND organism_id = :organism
 EOF;
 
@@ -121,6 +122,7 @@ EOF;
             $statement_insert_diffexp->bindValue('analysis_id', $analysis_id, PDO::PARAM_INT);
             $statement_insert_diffexp->bindValue('biomaterialA_id', $biomaterial_parentA_id, PDO::PARAM_INT);
             $statement_insert_diffexp->bindValue('biomaterialB_id', $biomaterial_parentB_id, PDO::PARAM_INT);
+            $statement_insert_diffexp->bindValue('quantification_id', $quantification_id, PDO::PARAM_INT);
             $statement_insert_diffexp->bindParam('baseMean', $param_baseMean, PDO::PARAM_STR);
             $statement_insert_diffexp->bindParam('baseMeanA', $param_baseMeanA, PDO::PARAM_STR);
             $statement_insert_diffexp->bindParam('baseMeanB', $param_baseMeanB, PDO::PARAM_STR);
@@ -198,6 +200,11 @@ EOF;
             'long_name' => '--conditionB',
             'description' => 'condition B name'
         ));
+        $command->addOption('quantification_id', array(
+            'short_name' => '-q',
+            'long_name' => '--quantification_id',
+            'description' => 'quantification id'
+        ));
         return $command;
     }
 
@@ -210,6 +217,7 @@ EOF;
         AbstractImporter::dieOnMissingArg($options, 'analysis_id');
         AbstractImporter::dieOnMissingArg($options, 'conditionGroupA');
         AbstractImporter::dieOnMissingArg($options, 'conditionGroupB');
+        AbstractImporter::dieOnMissingArg($options, 'quantification_id');
     }
 
     /**
