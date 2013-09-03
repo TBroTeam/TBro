@@ -2,14 +2,14 @@ $(document).ready(function() {
     var select_assay = $('#isoform-barplot-filter-assay');
     var select_analysis = $('#isoform-barplot-filter-analysis');
     var select_tissues = $('#isoform-barplot-filter-tissue');
-    
+
     //applies filteredSelect. select_assay => select_analysis => select_tissues
     new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
     new filteredSelect(select_tissues, 'sample', {
         precedessorNode: select_analysis
-    });            
+    });
     $.ajax('{#$ServicePath#}/listing/filters/' + feature_id, {
         success: function(data) {
             new filteredSelect(select_assay, 'assay', {
@@ -23,7 +23,7 @@ $(document).ready(function() {
         items: "option",
         open: function(event, ui) {
             ui.tooltip.offset({
-                top: event.pageY, 
+                top: event.pageY,
                 left: event.pageX
             });
             ui.tooltip.css("max-width", "600px");
@@ -38,26 +38,26 @@ $(document).ready(function() {
             return tooltip;
         }
     });
-    
+
     //groupByTissues button
     function isoform_barplot_groupByTissues() {
         var checkbox = $(this);
         var cx = $('#isoform-barplot-canvas').data('canvasxpress');
-        if (checkbox.is(':checked')) {
+        if (checkbox.prop('checked')) {
             cx.groupSamples(["Tissue_Group"]);
         } else {
             cx.groupSamples([]);
         }
     }
-    
+
     $('#isoform-barplot-groupByTissues').click(isoform_barplot_groupByTissues);
-    
+
     //get data & display graph
     $('#barplot-btn').click(function() {
         var data = {
-            parents: [feature_id], 
-            analysis: [], 
-            assay: [], 
+            parents: [feature_id],
+            analysis: [],
+            assay: [],
             biomaterial: []
         };
         data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
@@ -90,19 +90,44 @@ $(document).ready(function() {
 
 
                 cx = new CanvasXpress(
-                    "isoform-barplot-canvas",
-                    {
-                        "x": val.x,
-                        "y": val.y
-                    },
-                    {
-                        graphType: "Bar",
-                        showDataValues: true,
-                        graphOrientation: "vertical"
-                    });
+                        "isoform-barplot-canvas",
+                        {
+                            "x": val.x,
+                            "y": val.y
+                        },
+                {
+                    graphType: "Bar",
+                    showDataValues: true,
+                    graphOrientation: "vertical"
+                });
 
                 canvas.data('canvasxpress', cx);
                 isoform_barplot_groupByTissues();
+
+                var tbl = $('<table></table>');
+                // y.smps = tissues
+                // y.vars = names
+                // y.data = data
+
+                var tblColumns = [{sTitle: ''}];
+                for (var x = 0; x < val.y.smps.length; x++)
+                    tblColumns.push({sTitle: val.y.smps[x]});
+
+                var tblData = [];
+                for (var y = 0; y < val.y.data.length; y++) {
+                    var row = [val.y.vars[y]];
+                    Array.prototype.push.apply(row, val.y.data[y]);
+                    tblData.push(row);
+                }
+
+
+                parent.append(tbl);
+                tbl.dataTable(
+                        {
+                            aoColumns: tblColumns,
+                            aaData: tblData
+                        }
+                );
             }
         });
         return false;

@@ -169,11 +169,13 @@ $(document).ready(function() {
                     },
                     {
                         sType: "scientific",
-                        mData: 'baseMeanA'
+                        mData: 'baseMeanA',
+                        bVisible: false
                     },
                     {
                         sType: "scientific",
-                        mData: 'baseMeanB'
+                        mData: 'baseMeanB',
+                        bVisible: false
                     },
                     {
                         sType: "scientific",
@@ -185,7 +187,8 @@ $(document).ready(function() {
                     },
                     {
                         sType: "scientific",
-                        mData: 'pval'
+                        mData: 'pval',
+                        bVisible: false
                     },
                     {
                         sType: "scientific",
@@ -201,9 +204,6 @@ $(document).ready(function() {
             };
             //execute dataTable
             dataTable = $('#diffexp_results').dataTable(options);
-            dataTable.fnSetColumnVis(3, false);
-            dataTable.fnSetColumnVis(4, false);
-            dataTable.fnSetColumnVis(7, false);
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();

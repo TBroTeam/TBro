@@ -41,14 +41,17 @@
     <div class="row">
         <div class="large-12 columns panel">
             <div class="row">
-                <div class="large-4 columns">
+                <div class="large-3 columns">
+                    <h4>Experiment</h4>
+                </div>
+                <div class="large-3 columns">
                     <h4>Condition A</h4>
                 </div>
-                <div class="large-4 columns">
+                <div class="large-3 columns">
                     <h4>Condition B</h4>
                 </div>
 
-                <div class="large-4 columns">
+                <div class="large-3 columns">
                     <h4>Analysis</h4>
                 </div>
             </div>
@@ -71,8 +74,7 @@
     </div>
 
     <div class="row">
-        <div class="large-6" style="float:left">
-            <div class="large-11 columns panel">
+        <div class="large-6 panel" style="float:left;  width:49%">
                 <div class="large-12 columns">
                     <h4>Filters</h4>
                 </div>
@@ -101,12 +103,10 @@
                 </table>
                 <button class="right" type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
 
-            </div>
 
         </div>
 
-        <div class="large-6 query_details" style="display:none; float:left" id="query_details">
-            <div class="large-11 columns panel large-offset-1">
+        <div class="large-6 query_details  panel" style="display:none; float:right; width:49%" id="query_details">
                 <div class="large-12 columns query_details" style="display:none">
                     <h4>Results Overview</h4>
                 </div>
@@ -136,7 +136,6 @@
                         <td class='hits'></td>
                     </tr>
                 </table>
-            </div>
         </div>
     </div>
 </form>

@@ -16,6 +16,7 @@ class Differential_expressions extends \WebService {
      */
     public static $columns = array(
         'f.name' => '"feature_name"',
+        's.name' => 'synonym_name',
         'd.baseMean' => '"baseMean"',
         'd.baseMeanA' => '"baseMeanA"',
         'd.baseMeanB' => '"baseMeanB"',
@@ -23,7 +24,7 @@ class Differential_expressions extends \WebService {
         'd.log2foldChange' => '"log2foldChange"',
         'd.pval' => 'pval',
         'd.pvaladj' => 'pvaladj',
-        "f.feature_id" => 'feature_id'
+        "f.feature_id" => 'feature_id'         
     );
 
     /**
@@ -184,8 +185,7 @@ class Differential_expressions extends \WebService {
 
         $query = <<<EOF
 SELECT 
-$select ,
-        s.name AS synonym_name
+$select 
 FROM 
 	diffexpresult d 
 	JOIN feature f ON d.feature_id=f.feature_id 

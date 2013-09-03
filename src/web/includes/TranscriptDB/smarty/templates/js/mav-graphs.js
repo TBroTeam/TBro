@@ -20,7 +20,7 @@ $(document).ready(function() {
     var lastItemEvent = 0;
     //if selected cart group changes (adding/removing items or context switch), update  filters accordingly
     $('#Cart').on('cartEvent', function(event) {
-        if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action==='updateContext' ))
+        if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
             return;
 
         var myItemEvent = new Date().getTime();
@@ -57,9 +57,9 @@ $(document).ready(function() {
 
 
 
- 
+
     //get selected filters as collection
- 
+
     function getFilterData() {
         var data = {
             parents: [],
@@ -104,22 +104,22 @@ $(document).ready(function() {
 
 
                 cx = new CanvasXpress(
-                    "isoform-barplot-canvas",
-                    {
-                        "x": val.x,
-                        "y": val.y
-                    },
-                    {
-                        graphType: "Bar",
-                        showDataValues: true,
-                        graphOrientation: "vertical"
-                    });
+                        "isoform-barplot-canvas",
+                        {
+                            "x": val.x,
+                            "y": val.y
+                        },
+                {
+                    graphType: "Bar",
+                    showDataValues: true,
+                    graphOrientation: "vertical"
+                });
 
                 canvas.data('canvasxpress', cx);
 
                 groupByTissues();
 
-
+                addTable(parent, val);
             }
         });
         return false;
@@ -150,27 +150,54 @@ $(document).ready(function() {
 
 
                 cx = new CanvasXpress(
-                    "isoform-barplot-canvas",
-                    {
-                        "x": val.x,
-                        "y": val.y
-                    },
-                    {
-                        graphType: "Heatmap",
-                        showDataValues: true,
-                        graphOrientation: "vertical",
-                        zoomSamplesDisable: true,
-                        zoomVariablesDisable: true
-                    });
+                        "isoform-barplot-canvas",
+                        {
+                            "x": val.x,
+                            "y": val.y
+                        },
+                {
+                    graphType: "Heatmap",
+                    showDataValues: true,
+                    graphOrientation: "vertical",
+                    zoomSamplesDisable: true,
+                    zoomVariablesDisable: true
+                });
 
                 canvas.data('canvasxpress', cx);
                 groupByTissues();
 
-
+                addTable(parent, val);
             }
         });
         return false;
     });
+
+    function addTable(parent, val) {
+        var tbl = $('<table></table>');
+        // y.smps = tissues
+        // y.vars = names
+        // y.data = data
+
+        var tblColumns = [{sTitle: ''}];
+        for (var x = 0; x < val.y.smps.length; x++)
+            tblColumns.push({sTitle: val.y.smps[x]});
+
+        var tblData = [];
+        for (var y = 0; y < val.y.data.length; y++) {
+            var row = [val.y.vars[y]];
+            Array.prototype.push.apply(row, val.y.data[y]);
+            tblData.push(row);
+        }
+
+
+        parent.append(tbl);
+        tbl.dataTable(
+                {
+                    aoColumns: tblColumns,
+                    aaData: tblData
+                }
+        );
+    }
 
     //group by tissues button clicked
     function groupByTissues() {
