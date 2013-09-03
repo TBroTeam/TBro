@@ -68,9 +68,20 @@
                     return tooltip;
                 }
             });
+
+            new Grouplist($('#button-isoform-addToCart-options'), cart, addSelectedToCart);
+            $('#button-isoform-addToCart-options-newcart').click(addSelectedToCart);
+
         });
 
-
+        function addSelectedToCart() {
+            var group = $(this).attr('data-value');
+            if (group === '#new#')
+                group = cart.addGroup();
+            cart.addItem({#$data.isoform.feature_id#}, {
+                groupname: group
+            });
+        }
 
 
 
@@ -86,7 +97,12 @@
             <div class="row">
                 <div class="large-12 columns">
                     <div class="left"><h1>{#$data.isoform.name#}</h1></div>
-                    <div class="right"><span class="large button" onclick="javascript:cart.addItem({#$data.isoform.feature_id#});"> Add to Cart </span></div>
+                    <div class="right">
+                        <button class="large button dropdown" type="button" id="button-isoform-addToCart" data-dropdown="button-isoform-addToCart-options"> Add to Cart </button>
+                        <ul id="button-isoform-addToCart-options" class="f-dropdown" data-dropdown-content>
+                            <li id="button-isoform-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <table style="width:100%">
@@ -122,24 +138,24 @@
         <div class="large-12 columns panel">
             <h4>Sequence</h4>
             <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
-            </div>
         </div>
-        <div class="row">
-            <div class="large-12 columns panel">
-                <h4>Sequence Annotation</h4>
-                <canvas id="canvas_isoform" width="600"></canvas>
-                <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
-                </div>
-            </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Sequence Annotation</h4>
+            <canvas id="canvas_isoform" width="600"></canvas>
+            <div style="clear:both; height:1px; overflow:hidden">&nbsp;</div>
+        </div>
+    </div>
 
-            {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
+    {#include file="display-components/predpeps.tpl" feature=$data.isoform #}
 
-            {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
+    {#include file="display-components/dbxref.tpl" feature=$data.isoform #}
 
-            {#include file="display-components/mapman.tpl" feature=$data.isoform #}
+    {#include file="display-components/mapman.tpl" feature=$data.isoform #}
 
-            {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
+    {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
 
-            <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
-            {#include file="display-components/barplot.tpl"#}
-        {#/block#}
+    <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
+    {#include file="display-components/barplot.tpl"#}
+{#/block#}
