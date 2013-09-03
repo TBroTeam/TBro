@@ -194,8 +194,14 @@ $(document).ready(function() {
         tbl.dataTable(
                 {
                     aoColumns: tblColumns,
-                    aaData: tblData
+                    aaData: tblData,
+                    sScrollX: "100%",
+                    bScrollCollapse: true,
+                    bFilter: false,
+                    bInfo: false,
+                    bPaginate: false
                 }
+
         );
     }
 

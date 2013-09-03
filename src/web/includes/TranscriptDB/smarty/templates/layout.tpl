@@ -229,24 +229,33 @@
                 <ul class="left">{#block name='header-nav'#}
                     <li class="has-dropdown"  id="quicknav-parent"><a href="#">Navigation</a>
                         <ul class="dropdown" id="quicknav">
-                            <li><a href="{#$AppPath#}/diffexpr">Differential Expressions</a></li>
-                            <li><a href="{#$AppPath#}/blast">Blast</a></li>
+                            <li><a href="{#$AppPath#}">Home</a></li>
                         </ul>
                     </li>
-                    {#/block#}</ul>
+                    {#/block#}
+                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">Search</a>
+                            <ul class="dropdown" id="searchnav">
+                                <li><a href='{#$AppPath#}/multisearch'>Search by Name</a></li>
+                                <li><a href='{#$AppPath#}/blast'>Search by Homology</a></li>
+                                <li><a href='{#$AppPath#}/annotationsearch'>Search by Annotation</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-dropdown"  id="datanav-parent"><a href="#">Data</a>
+                            <ul class="dropdown" id="datanav">
+                                <li><a href='{#$AppPath#}/diffexpr'>Differential Expressions</a></li>
+                                <li><a href='#'>Sequences</a></li>
+                                <li><a href='#'>Expression Counts</a></li>
+                                <li><a href='#'>Annotation</a></li>
+                            </ul>
+                        </li></ul>
                     <ul class="right">
                         <li><div><label for="select_organism">Organism:</label></div></li>
                         <li><div><select id="select_organism" style="display:inline"></select></div></li>
                         <li><div><label for="select_release">Release:</label></div></li>
                         <li><div><select id="select_release"></select></div></li>
+                        
                         <li class="divider"></li>
-                        <li class="has-dropdown"  id="searchnav-parent"><a href="#">Advanced Search</a>
-                            <ul class="dropdown" id="searchnav">
-                                <li><a href='{#$AppPath#}/multisearch'>Search for Multiple Features</a></li>
-                                <li><a href='{#$AppPath#}/annotationsearch'>Search for Annotations</a></li>
-                            </ul>
-                        </li>
-                        <li class="divider"></li>
+
                         <li><div><label for="search">Quick Search:</label></div></li>
                         <li class="has-form"><input type="search" id="search_unigene"/></li>
                     </ul>
