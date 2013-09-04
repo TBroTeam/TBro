@@ -180,8 +180,6 @@
             <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                 <li id="download_csv_button" > csv </li> 
             </ul>
-
-            <!-- <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select> -->
         </div>
         <div class="large-12" style="padding-right: 4px;">
             <table id="diffexp_results">
