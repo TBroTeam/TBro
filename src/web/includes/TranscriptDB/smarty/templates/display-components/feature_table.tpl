@@ -109,13 +109,14 @@
         </ul>
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="TableTools.fnGetInstance('results').fnSelectAll();" style="width:100%">All</li>
+            <li onclick="TableTools.fnGetInstance('results').fnSelect($('#results').dataTable().$('tr',  {'filter':'applied'}));" style="width:100%">Filtered</li>
             <li onclick="TableTools.fnGetInstance('results').fnSelectNone();" style="width:100%">None</li>
         </ul>
         <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
             <li id="button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
         </ul>
     </div>
-    <div class="large-3 columns">
+    <div class="large-3 columns" style="padding-top: 6px">
         <label>Filter: <input id="input-filter-results">  </input></label>
     </div>
     <div class="large-12 column">
