@@ -65,7 +65,7 @@ $(document).ready(function() {
         });
         var a = $(this);
         var service = a.attr("data-servicePath");
-        a.attr("href", service + "?" + $.param({terms: ids}));
+        a.attr("href", service + "?" + $.param({terms: ids, cartname: cartname}));
     }
 
     function groupAfterDOM() {

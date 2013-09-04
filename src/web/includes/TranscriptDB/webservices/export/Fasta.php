@@ -21,7 +21,10 @@ class Fasta extends \WebService {
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private", false);
         header("Content-Type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=\"sequences.fasta\";");
+        $cartname = "sequences";
+        if (isset($querydata['cartname']))
+            $cartname = $querydata['cartname'];
+        header(sprintf("Content-Disposition: attachment; filename=\"%s.fasta\";", $cartname));
         header("Content-Transfer-Encoding: binary");
 
         $feature_ids = array();
@@ -31,7 +34,6 @@ class Fasta extends \WebService {
 
         if (isset($querydata['terms']))
             $feature_ids = array_merge($feature_ids, $querydata['terms']);
-
 
         if (count($feature_ids) == 0) {
             die();

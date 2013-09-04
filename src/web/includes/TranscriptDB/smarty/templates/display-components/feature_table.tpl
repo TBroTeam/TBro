@@ -105,6 +105,7 @@
             <li onclick="fnNumOfEntries(20);"> 20 </li> 
             <li onclick="fnNumOfEntries(50);"> 50 </li> 
             <li onclick="fnNumOfEntries(100);"> 100 </li> 
+            <li onclick="fnNumOfEntries(1000000);"> All </li> 
         </ul>
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="TableTools.fnGetInstance('results').fnSelectAll();" style="width:100%">All</li>
