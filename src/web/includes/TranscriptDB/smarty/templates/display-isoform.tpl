@@ -107,7 +107,7 @@
             </div>
             <table style="width:100%">
                 <tbody>
-                    <tr><td>Last modified</td><td>{#$data.isoform.timelastmodified#}</td></tr>
+                    <tr><td>Imported into TBro</td><td>{#$data.isoform.timelastmodified#}</td></tr>
                     {#if isset($data.isoform.unigene)#}
                         <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
                             {#/if#}

@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <h5>last modified: {#$data.unigene.timelastmodified#}</h5>
+            <h5>Imported into TBro: {#$data.unigene.timelastmodified#}</h5>
         </div>
     </div>
 
