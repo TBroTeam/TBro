@@ -229,7 +229,7 @@
                 <ul class="left">{#block name='header-nav'#}
                     <li class="has-dropdown"  id="quicknav-parent"><a href="#">Navigation</a>
                         <ul class="dropdown" id="quicknav">
-                            <li><a href="{#$AppPath#}">Home</a></li>
+                            <li><a href="{#$AppPath#}/">Home</a></li>
                         </ul>
                     </li>
                     {#/block#}

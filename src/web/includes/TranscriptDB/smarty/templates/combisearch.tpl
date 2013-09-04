@@ -4,30 +4,6 @@
         $(document).ready(function() {
             //different allowed search methods
             var searchNodes = {
-                hasGO: {
-                    name: 'Has GO',
-                    webservice: '{#$ServicePath#}/combisearch/hasgo/',
-                    template_search: '#template_search_hasGO',
-                    fnPrepareData: function() {
-                        return {
-                            species: organism.val(),
-                            release: release.val(),
-                            term: $(this).find('input.GO').val()
-                        };
-                    }
-                },
-                hasGO_or_children: {
-                    name: 'Has GO or Children (slower!)',
-                    webservice: '{#$ServicePath#}/combisearch/hasgo_or_children/',
-                    template_search: '#template_search_hasGO_or_children',
-                    fnPrepareData: function() {
-                        return {
-                            species: organism.val(),
-                            release: release.val(),
-                            term: $(this).find('input.GO').val()
-                        };
-                    }
-                },
                 descriptionContains: {
                     name: 'Description Contains',
                     webservice: '{#$ServicePath#}/combisearch/description_contains/',
@@ -49,6 +25,42 @@
                             species: organism.val(),
                             release: release.val(),
                             term: $(this).find('input.term').val()
+                        };
+                    }
+                },
+                mapmanHasbin: {
+                    name: 'MapMan has Bincode',
+                    webservice: '{#$ServicePath#}/combisearch/mapman_hasbin/',
+                    template_search: '#template_search_mapman_hasbin',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.term').val()
+                        };
+                    }
+                },
+                hasGO: {
+                    name: 'Has GO',
+                    webservice: '{#$ServicePath#}/combisearch/hasgo/',
+                    template_search: '#template_search_hasGO',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.GO').val()
+                        };
+                    }
+                },
+                hasGO_or_children: {
+                    name: 'Has GO or Children (slower!)',
+                    webservice: '{#$ServicePath#}/combisearch/hasgo_or_children/',
+                    template_search: '#template_search_hasGO_or_children',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.GO').val()
                         };
                     }
                 }
@@ -122,48 +134,59 @@
         </div>            
         </div>
     </script>
-    <script type="text/template" id="template_search_hasGO">
-        <div class="row">
-            <div class="large-6 columns">
-                Has GO: 
-            </div>
-            <div class="large-3 columns" style="text-align: right">GO:</div>
-            <div class="large-3 columns">
-                <input type="text" class="GO" style="margin:0px"/>
-            </div>
-        </div>
-    </script>
-    <script type="text/template" id="template_search_hasGO_or_children">
-        <div class="row">
-            <div class="large-6 columns">
-                Has GO or Children of GO: 
-            </div>
-            <div class="large-3 columns" style="text-align: right">GO:</div>
-            <div class="large-3 columns">
-                <input type="text" class="GO" style="margin:0px"/>
-            </div>
-        </div>
-    </script>
     <script type="text/template" id="template_search_description_contains">
         <div class="row">
-            <div class="large-6 columns">
-                Description Contains: 
-            </div>
-            <div class="large-2 columns" style="text-align: right">Term:</div>
-            <div class="large-4 columns">
-                <input type="text" class="term" style="margin:0px"/>
-            </div>
+        <div class="large-6 columns">
+        Description Contains: 
+        </div>
+        <div class="large-2 columns" style="text-align: right">Term:</div>
+        <div class="large-4 columns">
+        <input type="text" class="term" style="margin:0px"/>
+        </div>
         </div>
     </script>
     <script type="text/template" id="template_search_mapman_contains">
         <div class="row">
-            <div class="large-6 columns">
-                MapMan Contains: 
-            </div>
-            <div class="large-2 columns" style="text-align: right">Term:</div>
-            <div class="large-4 columns">
-                <input type="text" class="term" style="margin:0px"/>
-            </div>
+        <div class="large-6 columns">
+        MapMan Contains: 
+        </div>
+        <div class="large-2 columns" style="text-align: right">Term:</div>
+        <div class="large-4 columns">
+        <input type="text" class="term" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+    <script type="text/template" id="template_search_mapman_hasbin">
+        <div class="row">
+        <div class="large-6 columns">
+        Has Mapman Bincode: 
+        </div>
+        <div class="large-3 columns" style="text-align: right">Bincode:</div>
+        <div class="large-3 columns">
+        <input type="text" class="term" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+    <script type="text/template" id="template_search_hasGO">
+        <div class="row">
+        <div class="large-6 columns">
+        Has GO: 
+        </div>
+        <div class="large-3 columns" style="text-align: right">GO:</div>
+        <div class="large-3 columns">
+        <input type="text" class="GO" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+    <script type="text/template" id="template_search_hasGO_or_children">
+        <div class="row">
+        <div class="large-6 columns">
+        Has GO or Children of GO: 
+        </div>
+        <div class="large-3 columns" style="text-align: right">GO:</div>
+        <div class="large-3 columns">
+        <input type="text" class="GO" style="margin:0px"/>
+        </div>
         </div>
     </script>
 {#/block#}

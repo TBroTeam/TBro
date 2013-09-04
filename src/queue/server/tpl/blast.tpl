@@ -92,10 +92,8 @@
 {#/block#}
 {#block name='body'#}
     <div class="row">
-        <div class="large-12 columns">
-            <h2>Blast</h2>
-        </div>
         <div class="large-12 columns panel">
+            <h2>Blast</h2>
 
             <form id="blastform" method="POST" action="{#$webservice_job_start#}" data-goto="{#$result_page#}?jobid=">
                 <div class="row">
