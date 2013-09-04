@@ -5,7 +5,7 @@
         //different allowed search methods
         var searchNodes = {
             hasGO: {
-                name: 'has GO',
+                name: 'Has GO',
                 webservice: '{#$ServicePath#}/combisearch/hasgo/', 
                 template_search: '#template_search_hasGO',
                 fnPrepareData: function(){
@@ -17,7 +17,7 @@
                 }
             },
             hasGO_or_children: {
-                name: 'has GO or children (slower!)',
+                name: 'Has GO or Children (slower!)',
                 webservice: '{#$ServicePath#}/combisearch/hasgo_or_children/', 
                 template_search: '#template_search_hasGO_or_children',
                 fnPrepareData: function(){
@@ -29,9 +29,21 @@
                 }
             },
             descriptionContains: {
-                name: 'description contains',
+                name: 'Description Contains',
                 webservice: '{#$ServicePath#}/combisearch/description_contains/', 
                 template_search: '#template_search_description_contains',
+                fnPrepareData: function(){
+                    return {
+                        species: organism.val(),
+                        release: release.val(),
+                        term: $(this).find('input.term').val()
+                    };
+                }
+            },
+            mapmanContains: {
+                name: 'MapMan Contains',
+                webservice: '{#$ServicePath#}/combisearch/mapman_contains/', 
+                template_search: '#template_search_mapman_contains',
                 fnPrepareData: function(){
                     return {
                         species: organism.val(),
@@ -113,7 +125,7 @@
 <script type="text/template" id="template_search_hasGO">
     <div class="row">
         <div class="large-6 columns">
-            has GO: 
+            Has GO: 
         </div>
         <div class="large-3 columns" style="text-align: right">GO:</div>
         <div class="large-3 columns">
@@ -124,7 +136,7 @@
 <script type="text/template" id="template_search_hasGO_or_children">
     <div class="row">
         <div class="large-6 columns">
-            has GO or children of GO: 
+            Has GO or Children of GO: 
         </div>
         <div class="large-3 columns" style="text-align: right">GO:</div>
         <div class="large-3 columns">
@@ -135,7 +147,18 @@
 <script type="text/template" id="template_search_description_contains">
     <div class="row">
         <div class="large-6 columns">
-            description contains: 
+            Description Contains: 
+        </div>
+        <div class="large-2 columns" style="text-align: right">Term:</div>
+        <div class="large-4 columns">
+            <input type="text" class="term" style="margin:0px"/>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="template_search_mapman_contains">
+    <div class="row">
+        <div class="large-6 columns">
+            MapMan Contains: 
         </div>
         <div class="large-2 columns" style="text-align: right">Term:</div>
         <div class="large-4 columns">
@@ -164,7 +187,7 @@
         Search for: <select id="select-terms"></select>
     </div>
     <div class="large-4 column">
-        <a id="add-term" class="button"/>add term</a>
+        <a id="add-term" class="button"/>Add Term</a>
     </div>
 </div>
 <div class="row">
@@ -173,11 +196,11 @@
         </ul>
     </div>
     <div class="large-4 column">
-        <a id="start-combisearch" class="button"/>search</a>
+        <a id="start-combisearch" class="button"/>Search</a>
     </div>
 </div>
 <div class="loading alert-box" style="display:none;">
-    please wait, loading!
+    Please wait, loading!
 </div>
 <div class="results" style="display:none">
     <div class="row" >
