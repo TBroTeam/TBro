@@ -183,7 +183,7 @@
 
             <!-- <select style="width:auto" id="select-gdfx-cart"><option class="keep" value='#new#'>new</option></select> -->
         </div>
-        <div class="large-12">
+        <div class="large-12" style="padding-right: 4px;">
             <table id="diffexp_results">
                 <thead>  
                     <tr>
