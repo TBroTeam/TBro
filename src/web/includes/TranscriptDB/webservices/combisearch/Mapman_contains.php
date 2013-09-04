@@ -6,9 +6,9 @@ use \PDO as PDO;
 
 /**
  * WebService.
- * Searches for Features which description contains a phrase.
+ * Searches for Features with MapMan description.
  */
-class Description_contains extends \WebService {
+class Mapman_contains extends \WebService {
 
     /**
      * @param $querydata[species] organism id
@@ -26,15 +26,26 @@ class Description_contains extends \WebService {
         $term = sprintf('%%%s%%', trim($querydata['term']));
 
         $query_get_features = <<<EOF
-           
-SELECT featureprop.feature_id 
-    FROM 
-        featureprop,
-        (SELECT feature_id FROM feature WHERE feature.type_id={$constant('CV_ISOFORM')} AND feature.organism_id = :species AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)) as feature        
-    WHERE 
-        featureprop.type_id={$constant('CV_ANNOTATION_DESC')} 
-        AND featureprop.value LIKE :term
-        AND featureprop.feature_id = feature.feature_id
+          
+SELECT relationship.object_id AS feature_id FROM featureprop, 
+	(SELECT subject_id, object_id 
+            FROM feature_relationship 
+            WHERE type_id={$constant('CV_ANNOTATION_MAPMAN_RELATIONSHIP')}
+            AND object_id IN (SELECT feature_id 
+		FROM feature 
+		WHERE feature.type_id={$constant('CV_ISOFORM')} 
+		AND feature.organism_id =:species
+		AND feature.dbxref_id = 
+		(SELECT dbxref_id 
+			FROM dbxref 
+			WHERE db_id={$constant('DB_ID_IMPORTS')} 
+			AND accession=:release 
+			LIMIT 1
+		)
+            )
+        ) AS relationship
+	WHERE featureprop.feature_id=relationship.subject_id
+	AND featureprop.value LIKE :term
 EOF;
         
 //        $query = "SELECT name FROM feature WHERE id=?";
