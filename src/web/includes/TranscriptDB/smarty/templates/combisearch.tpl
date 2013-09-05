@@ -5,7 +5,7 @@
             //different allowed search methods
             var searchNodes = {
                 descriptionContains: {
-                    name: 'Description Contains',
+                    name: 'Description contains',
                     webservice: '{#$ServicePath#}/combisearch/description_contains/',
                     template_search: '#template_search_description_contains',
                     fnPrepareData: function() {
@@ -17,7 +17,7 @@
                     }
                 },
                 mapmanContains: {
-                    name: 'MapMan Contains',
+                    name: 'MapMan description contains',
                     webservice: '{#$ServicePath#}/combisearch/mapman_contains/',
                     template_search: '#template_search_mapman_contains',
                     fnPrepareData: function() {
@@ -67,24 +67,15 @@
             };
 
             //fill up #select-terms with searchNodes
-            var select$ = $('#select-terms');
+            var selectOptions$ = $('#select-terms-dropdown-options');
             $.each(searchNodes, function(key) {
-                select$.append($('<option/>').val(key).text(this.name));
+                var li = $('<li/>').text(this.name).attr("data-value", key);
+                li.click(addSearchNodeToSite);
+                //addSearchNode);
+                selectOptions$.append(li);
             });
 
             var row_template = _.template($('#template_row').html());
-
-            //adds a term for selected searchNode using template searchNode.template_search
-            $('#add-term').click(function() {
-                var searchNode = searchNodes[$('#select-terms').val()];
-                var elem = _.template($(searchNode.template_search).html())(searchNode);
-                var elem$ = $('<div/>').append(row_template({row: elem})).children();
-                elem$.find('.delete_row').click(function() {
-                    $(this).parents('.template_row').remove();
-                });
-                elem$.data('searchNode', searchNode);
-                $('#searchterms').append(elem$);
-            });
 
             $('#start-combisearch').click(function() {
                 //gui animationi
@@ -122,6 +113,17 @@
                     });
                 });
             });
+
+            function addSearchNodeToSite() {
+                var searchNode = searchNodes[$(this).attr('data-value')];
+                var elem = _.template($(searchNode.template_search).html())(searchNode);
+                var elem$ = $('<div/>').append(row_template({row: elem})).children();
+                elem$.find('.delete_row').click(function() {
+                    $(this).parents('.template_row').remove();
+                });
+                elem$.data('searchNode', searchNode);
+                $('#searchterms').append(elem$);
+            }
         });
     </script>
     <script type="text/template" id="template_row">
@@ -137,7 +139,7 @@
     <script type="text/template" id="template_search_description_contains">
         <div class="row">
         <div class="large-6 columns">
-        Description Contains: 
+        Description contains: 
         </div>
         <div class="large-2 columns" style="text-align: right">Term:</div>
         <div class="large-4 columns">
@@ -148,7 +150,7 @@
     <script type="text/template" id="template_search_mapman_contains">
         <div class="row">
         <div class="large-6 columns">
-        MapMan Contains: 
+        MapMan description contains: 
         </div>
         <div class="large-2 columns" style="text-align: right">Term:</div>
         <div class="large-4 columns">
@@ -208,19 +210,17 @@
 
         <div class="row">
             <div class="large-8 column">
-                Search for: <select id="select-terms"></select>
+                <button class="large button dropdown expand" id="select-terms-dropdown" data-dropdown="select-terms-dropdown-options"> Search for </button>
+                <ul id="select-terms-dropdown-options" class="f-dropdown medium" data-dropdown-content></ul>
             </div>
             <div class="large-4 column">
-                <a id="add-term" class="button"/>Add Term</a>
+                <a id="start-combisearch" class="button large"/>Start Search</a>
             </div>
         </div>
         <div class="row">
             <div class="large-8 column">
                 <ul id="searchterms">
                 </ul>
-            </div>
-            <div class="large-4 column">
-                <a id="start-combisearch" class="button"/>Search</a>
             </div>
         </div>
         <div class="loading alert-box" style="display:none;">

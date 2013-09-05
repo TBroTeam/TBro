@@ -172,7 +172,7 @@
                 <li onclick="fnShowHide(8);"><span id="columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-                <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectAll();" style="width:100%">All</li>
+                <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectAll();" style="width:100%">All visible</li>
                 <li onclick="TableTools.fnGetInstance('diffexp_results').fnSelectNone();" style="width:100%">None</li>
             </ul>
             <ul id="button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
