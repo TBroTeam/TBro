@@ -41,10 +41,11 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-12 columns">
-                <div style="width:100%" id="isoform-barplot-canvas-parent">
-                </div>
-                <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
-
+                <input type="checkbox" id="isoform-barplot-groupByTissues"/>
+                <label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
+            </div>
+            <div class="large-12 columns">
+                <div style="width:100%" id="isoform-barplot-canvas-parent"></div>
             </div>
         </div>
     </div>
