@@ -157,12 +157,12 @@
         <% }); %>
         </select>
         </div>
-        <div id="resultDetails">
-        </div>
+        <div id="resultDetails"> </div>
         </div>
     </script>
     <script type="text/Template" id="template_resultDetails">
-        <table>
+        <div class="row"><div class="large-12 columns">
+            <table>
         <tr><th>Program</th><td><%= execDetails.program %></td></tr>
         <tr><th>Version</th><td><%= execDetails.version %></td></tr>
         <tr><th>Reference</th><td><%= execDetails.reference %></td></tr>
@@ -177,6 +177,7 @@
         </td>
         </tr>
         </table>
+</div></div>
         <div class="large-centered large-6 columns ">
         <table style="width:100%;">
         <tr><th colspan="42">Color key for alignment scores</th></tr>

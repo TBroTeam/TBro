@@ -80,7 +80,9 @@
             $('#start-combisearch').click(function() {
                 //gui animationi
                 $.when($('.results').hide(500)).then(function() {
-                    $('.loading').show();
+                    if(!$('.results').is(':visible')){
+                        $('.loading').show();
+                    }
                 });
                 var filteredResults;
 
