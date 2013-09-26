@@ -1,4 +1,5 @@
 {#call_webservice path="details/annotations/feature/dbxref" data=["query1"=>$feature.feature_id] assign='dbxref'#}
+{#call_webservice path="details/annotations/feature/pathway" data=["query1"=>$feature.feature_id] assign='pathway'#}
 
 {#if (isset($dbxref['GO']))#}
     <div class="row contains-tooltip">
@@ -31,6 +32,21 @@
                     </tbody>
                 </table>
             {#/foreach#}
+            {#if (isset($pathway))#}
+            <h5>Associated Pathways</h5>
+            {#foreach $pathway as $pw#}
+                <table style="width:100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a href="http://www.genome.jp/kegg-bin/show_pathway?query={#$pw['ec']#}&map=map{#$pw['accession']#}" target="_blank">{#$pw['accession']#}</a>
+                            </td>
+                            <td>{#$pw['definition']#}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            {#/foreach#}
+            {#/if#}
         </div>
     </div>
 {#/if#}

@@ -160,6 +160,7 @@
                 <li onclick="fnNumOfEntries(50);"> 50 </li> 
                 <li onclick="fnNumOfEntries(100);"> 100 </li> 
                 <li onclick="fnNumOfEntries(1000);"> 1000 </li> 
+                <!--<li onclick="fnNumOfEntries(1000000);"> All (Caution!) </li>-->
             </ul>
             <ul id="show-hide-dropdown" class="f-dropdown" data-dropdown-content>
                 <li onclick="fnShowHide(1);"><span id="columnCheckbox1" style="width: 15px; display: inline-block"/>&#10003;</span> Alias</li>
