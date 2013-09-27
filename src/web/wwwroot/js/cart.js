@@ -507,7 +507,7 @@ Cart.prototype.addGroup = function(groupname, options) {
     if (typeof options.afterDOMinsert === 'undefined') {
 
         if (groupname === 'all')
-            options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
+        ;//    options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
         else
             options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
     }
