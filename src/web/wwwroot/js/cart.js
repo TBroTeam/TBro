@@ -219,6 +219,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
             data: {
                 terms: missingIDs
             },
+            type: 'POST',
             dataType: 'JSON',
             success: function(data) {
                 $.each(data.results, function() {
