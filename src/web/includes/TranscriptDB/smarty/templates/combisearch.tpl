@@ -107,6 +107,7 @@
                     $.ajax('{#$ServicePath#}/details/features', {
                         data: {terms: filteredResults},
                         type: 'POST',
+                        method: 'post',
                         datatype: 'JSON',
                         success: function(data) {
                             $('.loading').hide();
