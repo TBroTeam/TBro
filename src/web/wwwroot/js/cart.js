@@ -756,9 +756,11 @@ function Grouplist(node$, cart, callback) {
     this.cart = cart;
     this.cart.options.rootNode.on('cartEvent', function(e) {
         if (e.eventData.action === 'addGroup') {
-            var li = $('<li/>').text(e.eventData.groupname).attr("data-value", e.eventData.groupname);
-            li.click(callback);
-            node$.append(li);
+            if(e.eventData.groupname !== "all"){
+                var li = $('<li/>').text(e.eventData.groupname).attr("data-value", e.eventData.groupname);
+                li.click(callback);
+                node$.append(li);
+            }
         }
         else if (e.eventData.action === 'renameGroup') {
             node$.find('li[data-value="' + e.eventData.groupname + '"]').text(e.eventData.newname).attr("data-value", e.eventData.newname);
