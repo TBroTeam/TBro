@@ -115,10 +115,10 @@
                 <div class="panel large-12 columns" id="cart">
                     <div>
                         <h4 class="left">Cart</h4>
-                        <div class="large-12 columns right">
-                            <a class="button secondary large-6" href="#" onclick="cart.addGroup();">New</a>
-                            <a class="button secondary large-6" href="#" onclick="$('#dialog-paste-cart-group').dialog('open');">Import</a>
-                        </div>
+                        <ul class="button-group right">
+                            <li><a class="button secondary" href="#" onclick="cart.addGroup();">New</a></li>
+                            <li><a class="button secondary" href="#" onclick="$('#dialog-paste-cart-group').dialog('open');">Import</a></li>
+                        </ul>
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
