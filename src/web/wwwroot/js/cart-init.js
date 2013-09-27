@@ -111,7 +111,7 @@ $(document).ready(function() {
     function itemAfterDOM() {
         var id = this.attr('data-id');
 
-        if (this.parents('.cartGroup').attr('data-name') === 'all')
+        //if (this.parents('.cartGroup').attr('data-name') === 'all')
             this.draggable({
                 appendTo: "body",
                 helper: function() {
