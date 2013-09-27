@@ -539,7 +539,7 @@ Cart.prototype.addGroup = function(groupname, options) {
         var parent$ = this.options.rootNode;
         var group$;
         if (groupname === 'all') {
-       //     group$ = this._executeTemplate$('GroupAll');
+            group$ = this._executeTemplate$('GroupAll');
         } else {
             group$ = this._executeTemplate$('Group', {
                 groupname: groupname

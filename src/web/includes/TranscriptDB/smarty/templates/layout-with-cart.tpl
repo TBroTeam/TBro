@@ -124,7 +124,7 @@
                 </div>
 
                 <script type="text/template" id="template_cart_all_group"> 
-                <div class="cartGroup" data-name="all">
+                <div class="cartGroup" data-name="all" style="display: none">
                     <div class="large-12 columns"><div class="left" style="position:absolute; top:50%; margin-top:-10px;">all</div>
                         <div class="right" >
                             <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-groupall">Actions</button>
