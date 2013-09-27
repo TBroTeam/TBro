@@ -594,6 +594,9 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         var afterDOMinsert = oldGroup$.data('afterDOMinsert');
         newGroup$.data('afterDOMinsert', afterDOMinsert);
         newGroup$.find('.elements').append(items$);
+        if($( ".elements" ).length > 1){
+            newGroup$.find('.elements .placeholder').remove();
+        }
         oldGroup$.replaceWith(newGroup$);
         afterDOMinsert.call(newGroup$);
     }
