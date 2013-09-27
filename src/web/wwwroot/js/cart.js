@@ -506,9 +506,9 @@ Cart.prototype.addGroup = function(groupname, options) {
     }, options);
     if (typeof options.afterDOMinsert === 'undefined') {
 
-       // if (groupname === 'all')
-       //     options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
-       // else
+        if (groupname === 'all')
+            options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
+        else
             options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
     }
 
@@ -539,7 +539,7 @@ Cart.prototype.addGroup = function(groupname, options) {
         var parent$ = this.options.rootNode;
         var group$;
         if (groupname === 'all') {
-            group$ = this._executeTemplate$('GroupAll');
+       //     group$ = this._executeTemplate$('GroupAll');
         } else {
             group$ = this._executeTemplate$('Group', {
                 groupname: groupname
