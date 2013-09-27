@@ -115,7 +115,7 @@
                 <div class="panel large-12 columns" id="cart">
                     <div>
                         <h4 class="left">Cart</h4>
-                        <ul class="button-group right">
+                        <ul class="button-group even-2 right">
                             <li><a class="button secondary" href="#" onclick="cart.addGroup();">New</a></li>
                             <li><a class="button secondary" href="#" onclick="$('#dialog-paste-cart-group').dialog('open');">Import</a></li>
                         </ul>
