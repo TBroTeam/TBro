@@ -506,9 +506,9 @@ Cart.prototype.addGroup = function(groupname, options) {
     }, options);
     if (typeof options.afterDOMinsert === 'undefined') {
 
-        if (groupname === 'all')
-        ;//    options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
-        else
+       // if (groupname === 'all')
+       //     options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
+       // else
             options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
     }
 
