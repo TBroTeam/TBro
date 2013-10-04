@@ -4,7 +4,6 @@ namespace webservices\cart;
 
 require_once 'TranscriptDB//db.php';
 
-
 /**
  * Web Service.
  * Replicates cart functionality on server side, syncing client-side cart with server-side cart in SESSION.
@@ -14,7 +13,6 @@ require_once 'TranscriptDB//db.php';
 class Sync extends \WebService {
 
     public static $regexCartName = '^[a-z0-9._ ]+$';
-
 
     /**
      * Loads cart from database, if logged in.
@@ -74,7 +72,7 @@ class Sync extends \WebService {
     public function execute($querydata) {
         global $db;
         $db->beginTransaction();
-        
+
         if (!isset($_SESSION))
             session_start();
 
@@ -108,10 +106,10 @@ class Sync extends \WebService {
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
-                foreach ($parms['ids'] as $key=>$id)
+                foreach ($parms['ids'] as $key => $id)
                     $parms['ids'][$key] = intval($id);
 
-                $missingIds = array_diff( $parms['ids'], array_keys($cartitems));
+                $missingIds = array_diff($parms['ids'], array_keys($cartitems));
                 // add item to $cartitems
                 if (count($missingIds) > 0) {
                     list($service) = \WebService::factory('details/features');
@@ -123,7 +121,7 @@ class Sync extends \WebService {
                 // add item to $currentCart
                 foreach ($parms['ids'] as $id) {
                     if (!in_array($id, $currentCart[$parms['groupname']]))
-                            $currentCart[$parms['groupname']][] = $id;
+                        $currentCart[$parms['groupname']][] = $id;
                 }
 
                 break;
@@ -138,7 +136,7 @@ class Sync extends \WebService {
                     //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
                     $parms['id'] = intval($parms['id']);
                     //remove from all groups
-                    foreach ($currentCart as &$group){
+                    foreach ($currentCart as &$group) {
                         $pos = array_search($parms['id'], $group);
                         if ($pos !== FALSE)
                             array_splice($group, $pos, 1);
@@ -150,6 +148,8 @@ class Sync extends \WebService {
                     $pos = array_search($parms['id'], $currentCart[$parms['groupname']]);
                     if ($pos !== FALSE)
                         array_splice($currentCart[$parms['groupname']], $pos, 1);
+
+                    $this->item_removed($currentCart, $cartitems, $parms['id']);
                 }
                 break;
             case 'addGroup':
@@ -160,13 +160,34 @@ class Sync extends \WebService {
                 unset($currentCart[$parms['groupname']]);
                 break;
             case 'removeGroup':
+                $oldcart = $currentCart[$parms['groupname']];
                 unset($currentCart[$parms['groupname']]);
+                foreach ($oldcart as $id)
+                    $this->item_removed ($currentCart, $cartitems, $id);
                 break;
             case 'clear':
                 foreach ($currentCart['all'] as $id)
                     unset($cartitems[$id]);
                 $_SESSION['cart']['carts'][$currentContext] = array('all' => array());
                 break;
+        }
+    }
+
+    function item_removed(&$currentCart, &$cartitems, $id) {
+        //check if it is in other carts, if not, remove it from all-cart and cartitems
+        $inothercart = false;
+        foreach ($currentCart as $name => &$group) {
+            if ($name == 'all')
+                continue;
+            $inothercart |= array_search($id, $group) !== FALSE;
+        }
+        if (!$inothercart) {
+            //remove from all-cart
+            $pos = array_search($id, $currentCart['all']);
+            if ($pos !== FALSE)
+                array_splice($currentCart['all'], $pos, 1);
+            //remove from $cartitems
+            unset($cartitems[$id]);
         }
     }
 
