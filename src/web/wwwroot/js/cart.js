@@ -426,6 +426,14 @@ Cart.prototype.addItem = function(ids, options) {
     }
 };
 
+//comment: get all cart items with metadata
+
+/*
+var groupData = $.map(cart._getGroup('all'),function(){
+    return cart.cartitems[this];
+});
+ */
+
 /**
  * Updates Metadata for a cart Item
  * @param {Number} id of features to add to the cart

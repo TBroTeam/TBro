@@ -3,17 +3,14 @@
 namespace webservices\details;
 
 require_once 'TranscriptDB//db.php';
+require_once 'Zend/Cache.php';
+
 /**
  * Web Service.
  * Get details on all passed feature_ids. Takes either one url parameter or an array as POST variable "terms"
  */
 class Features extends \WebService {
 
-    /**
-     * @inheritDoc
-     * @param int $querydata['query1'] one id
-     * @param Array[int] $querydata['terms'] multiple ids
-     */
     public function execute($querydata) {
         $feature_ids = array();
 
@@ -23,7 +20,44 @@ class Features extends \WebService {
         if (isset($querydata['terms']))
             $feature_ids = array_merge($feature_ids, $querydata['terms']);
 
-        
+
+        @mkdir('/tmp/zendcache/details_features', 0755, true);
+        $cache = \Zend_Cache::factory(
+                        'Core'
+                        , 'File'
+                        , array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true)
+                        , array('cache_dir' => '/tmp/zendcache/details_features')
+        );
+
+        $return = array();
+        $uncached_ids = array();
+        foreach ($feature_ids as $id) {
+            if (($feature = $cache->load($id)) === false)
+                $uncached_ids[] = $id;
+            else
+                $return[] = $feature;
+        }
+
+        if (count($uncached_ids) > 0){
+            $new_features = $this->query_database($uncached_ids);
+            
+            foreach ($new_features as $new_feature){
+                $cache->save($new_feature, $new_feature['feature_id']);
+                $return[] = $new_feature;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * @inheritDoc
+     * @param int $querydata['query1'] one id
+     * @param Array[int] $querydata['terms'] multiple ids
+     */
+    public function query_database($feature_ids) {
+
+
         $ret = array('results' => array());
         if (count($feature_ids) == 0) {
             return $ret;

@@ -3,12 +3,14 @@
 namespace webservices\listing;
 
 use \PDO as PDO;
+
 /**
  * Web Service.
  * Returns Differential Expressions for dataTable Server-Side processing.
  * See http://www.datatables.net/release-datatables/examples/server_side/server_side.html
  */
 class Differential_expressions extends \WebService {
+
     /**
      * mapping for dataTable columns to database columns.
      * only these are allowed for filtering
@@ -24,7 +26,7 @@ class Differential_expressions extends \WebService {
         'd.log2foldChange' => '"log2foldChange"',
         'd.pval' => 'pval',
         'd.pvaladj' => 'pvaladj',
-        "f.feature_id" => 'feature_id'         
+        "f.feature_id" => 'feature_id'
     );
 
     /**
@@ -71,9 +73,9 @@ class Differential_expressions extends \WebService {
                 array_push($ret['filters'], str_replace('"', '', str_replace('?', $arguments[$i], $where[$i])));
             }
         }
-        
+
         if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
-            array_push($ret['filters'], 'feature_id in ('.implode(';', $querydata['ids']).')');
+            array_push($ret['filters'], 'feature_id in (' . implode(';', $querydata['ids']) . ')');
         }
 
         return $ret;
@@ -157,7 +159,7 @@ class Differential_expressions extends \WebService {
 
         if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
             array_push($where, 'd.feature_id IN (' . implode(',', array_fill(0, count($querydata['ids']), '?')) . ')');
-            foreach ($querydata['ids'] as $id){
+            foreach ($querydata['ids'] as $id) {
                 array_push($arguments, $id);
             }
         }
@@ -290,6 +292,33 @@ EOF;
         fclose($out);
     }
 
+    public function addAllMatchingToCart($querydata) {
+        global $db;
+
+#UI hint
+        if (false)
+            $db = new PDO();
+
+        list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, true, false);
+
+        $stm_get_diffexpr = $db->prepare($query);
+        $stm_get_diffexpr->execute($arguments);
+
+        $ids = array();
+        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) 
+            $ids[] = $row['feature_id'];
+        
+        list($service) = \WebService::factory('cart/sync');
+        $service->execute(
+                array('currentContext' =>  $querydata['currentContext'],
+                    'action' => array(
+                        'action' => 'addItem',
+                        'ids' => $ids,
+                        'groupname' => $querydata['groupname']
+                    )
+        ));
+    }
+
     /**
      * @inheritDoc
      * Switches behaviour based on $querydata['query1']: "fullRelease" or "releaseCsv"
@@ -300,6 +329,8 @@ EOF;
     public function execute($querydata) {
         if ($querydata['query1'] == 'fullRelease') {
             return $this->fullRelease($querydata);
+        } elseif ($querydata['query1']=='addAllMatchingToCart') {
+            return $this->addAllMatchingToCart($querydata);
         } elseif ($querydata['query1'] == 'releaseCsv') {
             header("Pragma: public");
             header("Expires: 0");

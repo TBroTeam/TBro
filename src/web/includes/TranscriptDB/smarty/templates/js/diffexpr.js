@@ -252,6 +252,24 @@ $(document).ready(function() {
         }
     }
 
+    $('#addAllToNewCart').click(function() {
+
+        if (typeof lastQueryData == 'undefined')
+            return;
+
+
+        var data = {
+            currentContext: organism.val() + '_' + release.val(),
+            groupname: 'myNewGroup123'
+        };
+
+        $.ajax('{#$ServicePath#}/listing/differential_expressions/addAllMatchingToCart'+ "?" + $.param(lastQueryData), {
+            method: 'post',
+            data: data
+        });
+
+    });
+
     $('#download_csv_button').click(download_csv);
 
     $('#diffexpr select').tooltip(metadata_tooltip_options({

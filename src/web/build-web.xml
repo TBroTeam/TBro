@@ -29,6 +29,8 @@
             <fileset dir="${srcdir}/shared/libs">
                 <include name="loggedPDO" />
                 <include name="loggedPDO/**" />
+                <include name="Zend" />
+                <include name="Zend/**" />                
                 <include name="smarty" />
                 <include name="smarty/**" />
             </fileset>

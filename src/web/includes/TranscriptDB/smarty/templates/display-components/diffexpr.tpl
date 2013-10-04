@@ -2,6 +2,10 @@
     $(document).ready(function() {
         new Grouplist($('#button-gdfx-addToCart-options'), cart, addSelectedToCart);
         $('#button-gdfx-addToCart-options-newcart').click(addSelectedToCart);
+        
+        
+        
+        
     });
 
     function addSelectedToCart() {
@@ -36,6 +40,8 @@
         oSettings._iDisplayLength = numOfEntries;
         oTable.fnDraw();
     }
+    
+    
 </script>
 <div id="diffexpr">
     <div class="row">
@@ -181,6 +187,8 @@
             </ul>
             <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                 <li id="download_csv_button" > csv </li> 
+                
+                <li id="addAllToNewCart" > add all to new cart </li> 
             </ul>
         </div>
         <div class="large-12" style="padding-right: 4px;">
