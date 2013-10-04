@@ -122,7 +122,6 @@
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
-
                     </div>
                 </div>
 
@@ -143,6 +142,7 @@
                     <ul class="large-12 columns elements"> 
                     </ul> 
                 </div> 
+                                <div style="clear:both">&nbsp;</div>
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
@@ -168,6 +168,7 @@
                     </li>
                     </ul>
                     </div>
+                                    <div style="clear:both">&nbsp;</div>
                 </script>
 
                 <script type="text/template"  id="template_cart_new_item"> 

@@ -86,6 +86,31 @@ class Sync extends \WebService {
         return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart']);
     }
 
+    private function check_cartitem_integrity() {
+        if (!isset($_SESSION['cart']['cartitems']) || !is_array($_SESSION['cart']['cartitems']))
+            $_SESSION['cart']['cartitems'] = array();
+
+        $cartitems = &$_SESSION['cart']['cartitems'];
+        $missingIds = array();
+
+
+        foreach ($_SESSION['cart']['carts'] as $context_name => $context) {
+            foreach ($context['all'] as $id) {
+                if (!isset($cartitems[$id]))
+                    if (!in_array($id, $missingIds))
+                        $missingIds[] = $id;
+            }
+        }
+
+        if (count($missingIds) > 0) {
+            list($service) = \WebService::factory('details/features');
+            $items = $service->execute(array('terms' => $missingIds));
+            foreach ($items['results'] as $item) {
+                $cartitems[intval($item['feature_id'])] = array_merge($item, array('metadata' => array()));
+            }
+        }
+    }
+
     /**
      * replicates client-side action in the session stored cart.
      * @param type $parms contains action to be executed & parameters
@@ -96,6 +121,7 @@ class Sync extends \WebService {
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array('cartitems' => array(), 'carts' => array());
         }
+
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
             $_SESSION['cart']['carts'][$currentContext] = array('all' => array());
 
@@ -103,26 +129,40 @@ class Sync extends \WebService {
         $cartitems = &$_SESSION['cart']['cartitems'];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
 
+
+
+        $func_item_removed = function ($id) use (&$currentCart, &$cartitems) {
+                    //check if it is in other carts, if not, remove it from all-cart and cartitems
+                    $inothercart = false;
+                    foreach ($currentCart as $name => &$group) {
+                        if ($name == 'all')
+                            continue;
+                        $inothercart |= array_search($id, $group) !== FALSE;
+                    }
+                    if (!$inothercart) {
+                        //remove from all-cart
+                        $pos = array_search($id, $currentCart['all']);
+                        if ($pos !== FALSE)
+                            array_splice($currentCart['all'], $pos, 1);
+                        //remove from $cartitems
+                        unset($cartitems[$id]);
+                    }
+                };
+
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
                 foreach ($parms['ids'] as $key => $id)
                     $parms['ids'][$key] = intval($id);
 
-                $missingIds = array_diff($parms['ids'], array_keys($cartitems));
-                // add item to $cartitems
-                if (count($missingIds) > 0) {
-                    list($service) = \WebService::factory('details/features');
-                    $items = $service->execute(array('terms' => $missingIds));
-                    foreach ($items['results'] as $item) {
-                        $cartitems[intval($item['feature_id'])] = array_merge($item, array('metadata' => array()));
-                    }
-                }
                 // add item to $currentCart
                 foreach ($parms['ids'] as $id) {
                     if (!in_array($id, $currentCart[$parms['groupname']]))
                         $currentCart[$parms['groupname']][] = $id;
                 }
+
+                // add item to $cartitems
+                $this->check_cartitem_integrity();
 
                 break;
             case 'updateItem':
@@ -149,7 +189,7 @@ class Sync extends \WebService {
                     if ($pos !== FALSE)
                         array_splice($currentCart[$parms['groupname']], $pos, 1);
 
-                    $this->item_removed($currentCart, $cartitems, $parms['id']);
+                    $func_item_removed($parms['id']);
                 }
                 break;
             case 'addGroup':
@@ -163,7 +203,7 @@ class Sync extends \WebService {
                 $oldcart = $currentCart[$parms['groupname']];
                 unset($currentCart[$parms['groupname']]);
                 foreach ($oldcart as $id)
-                    $this->item_removed ($currentCart, $cartitems, $id);
+                    $func_item_removed($parms['id']);
                 break;
             case 'clear':
                 foreach ($currentCart['all'] as $id)
@@ -173,24 +213,5 @@ class Sync extends \WebService {
         }
     }
 
-    function item_removed(&$currentCart, &$cartitems, $id) {
-        //check if it is in other carts, if not, remove it from all-cart and cartitems
-        $inothercart = false;
-        foreach ($currentCart as $name => &$group) {
-            if ($name == 'all')
-                continue;
-            $inothercart |= array_search($id, $group) !== FALSE;
-        }
-        if (!$inothercart) {
-            //remove from all-cart
-            $pos = array_search($id, $currentCart['all']);
-            if ($pos !== FALSE)
-                array_splice($currentCart['all'], $pos, 1);
-            //remove from $cartitems
-            unset($cartitems[$id]);
-        }
-    }
-
 }
-
 ?>

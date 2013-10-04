@@ -19,6 +19,7 @@ $(document).ready(function() {
 
 
     setInterval(function() {
+        console.log('sync');;
         cart.sync({
             action: 'refreshCart'
         }, {
@@ -42,6 +43,7 @@ $(document).ready(function() {
         });
         this.find('button').click(cartButtonClick);
     }
+    
 
     function cartButtonClick(event) {
         if ($(this).is('.cartMenuButton')) {
@@ -250,6 +252,8 @@ $(document).ready(function() {
         content: function() {
             var element = $(this);
             itemdata = cart.cartitems[element.attr('data-id')];
+            
+            
             var tooltip = $("<table />");
             $.each(itemdata, function(key, val) {
                 if (_.isObject(val)) {

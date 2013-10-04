@@ -7,7 +7,7 @@
  * @param {Collection} [initialData.carts={}]
  * @param {Array} [initialData.cartitems=[]]
  * @param {Collection} options configuration options for the car
- * @param {jQuery} options.rootNode jQuery node in which all cart DOM will take place
+ * @param {jQuery} [options.rootNode] jQuery node in which all cart DOM will take place
  * @param {String} [options.templates.GroupAll='#template_cart_all_group'] template for the "All" Group
  * @param {String} [options.templates.Group='#template_cart_new_group'] template for any other Group
  * @param {String} [options.templates.Item='#template_cart_new_item'] template for all Items
@@ -69,12 +69,12 @@ function Cart(initialData, options) {
     var currentRequest;
 
     /**
- * Syncronizes an Action with the options.serviceNodes.sync web service.
- * @param {Collection} syncaction action to sync.
- * @param {Collection} [options]
- * @param {bool} [options.triggerEvent] determines if an event is to be triggered
- * @param {bool} [options.sync] determines if this event should be synced to the WebService
- */
+     * Syncronizes an Action with the options.serviceNodes.sync web service.
+     * @param {Collection} syncaction action to sync.
+     * @param {Collection} [options]
+     * @param {bool} [options.triggerEvent] determines if an event is to be triggered
+     * @param {bool} [options.sync] determines if this event should be synced to the WebService
+     */
     Cart.prototype.sync = function(syncaction, options) {
         options = $.extend({
             triggerEvent: true,
@@ -116,27 +116,27 @@ function Cart(initialData, options) {
     };
 })();
 
-(function(){
-    function checkEqual(obj1, obj2){
-        if (obj1==obj2)
+(function() {
+    function checkEqual(obj1, obj2) {
+        if (obj1 == obj2)
             return true;
-        for (var key in obj1){
+        for (var key in obj1) {
             if (!obj1.hasOwnProperty(key))
                 continue;
             if (typeof obj2[key] === "undefined")
                 return false;
         }
-        
-        for (key in obj2){
+
+        for (key in obj2) {
             if (!obj2.hasOwnProperty(key))
                 continue;
             if (typeof obj1[key] === "undefined")
                 return false;
-            
+
             if (!checkEqual(obj1[key], obj2[key]))
                 return false;
         }
-        
+
         return true;
     }
 
@@ -197,6 +197,7 @@ Cart.prototype._getGroupNode = function(groupname) {
 Cart.prototype._getItemDetails = function(ids, callback) {
     var that = this;
     var missingIDs = [];
+    console.log(this.cartitems);
     var newCartitems = {};
     var retArray = [];
     var dfd = $.Deferred();
@@ -214,6 +215,8 @@ Cart.prototype._getItemDetails = function(ids, callback) {
         callback(retArray);
         dfd.resolve();
     } else {
+        //hier "processing" einblenden
+        $(document).css('cursor', 'wait');
         $.ajax({
             url: this.options.serviceNodes.itemDetails,
             data: {
@@ -232,6 +235,10 @@ Cart.prototype._getItemDetails = function(ids, callback) {
                 });
                 callback(retArray);
                 dfd.resolve();
+            },
+            complete: function() {
+                //hier fertig - "processing" ausblenden
+                $(document).css('cursor', 'default');
             }
         });
     }
@@ -386,6 +393,8 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
     function addToDOM(aItemDetails) {
+        $(document).css('cursor', 'default');
+
         $.each(aItemDetails, function(key, itemDetails) {
             var group$ = that._getGroupNode(options.groupname);
             if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
@@ -399,6 +408,8 @@ Cart.prototype.addItem = function(ids, options) {
             group$.find('.elements').append(item$);
             options.afterDOMinsert.call(item$);
         });
+
+        $(document).css('cursor', 'wait');
     }
 };
 
@@ -459,6 +470,7 @@ Cart.prototype.updateItem = function(id, metadata, options) {
 Cart.prototype.removeItem = function(id, options) {
     //make sure we don't have a string id'
     id = parseInt(id);
+    var that = this;
 
     options = $.extend({
         groupname: 'all',
@@ -487,6 +499,8 @@ Cart.prototype.removeItem = function(id, options) {
             var index;
             if ((index = _.indexOf(group, id)) >= 0)
                 group.splice(index, 1);
+
+            that._item_removed(id);
         }
     }
 
@@ -494,6 +508,24 @@ Cart.prototype.removeItem = function(id, options) {
         this._getItemNodes(id, options.groupname).remove();
     }
 };
+
+Cart.prototype._item_removed = function(id) {
+    var inothercart = false;
+    $.each(cart, function(key, value) {
+        if (key == 'all')
+            return;
+        inothercart |= _.indexOf(value, id) >= 0;
+    });
+
+    if (!inothercart) {
+        var group = this._getGroup('all');
+        var index;
+        if ((index = _.indexOf(group, id)) >= 0)
+            group.splice(index, 1);
+
+        delete this.cartitems[id];
+    }
+}
 
 /**
  * Adds a new group to the cart
@@ -595,7 +627,7 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         var afterDOMinsert = oldGroup$.data('afterDOMinsert');
         newGroup$.data('afterDOMinsert', afterDOMinsert);
         newGroup$.find('.elements').append(items$);
-        if(newGroup$.find( ".elements" ).length > 1){
+        if (newGroup$.find(".elements").length > 1) {
             newGroup$.find('.elements .placeholder').remove();
         }
         oldGroup$.replaceWith(newGroup$);
@@ -613,6 +645,7 @@ Cart.prototype.removeGroup = function(groupname, options) {
     options = $.extend({
         sync: true
     }, options);
+    var that = this;
 
 
     removeInternal.call(this);
@@ -623,7 +656,11 @@ Cart.prototype.removeGroup = function(groupname, options) {
     }, options);
 
     function removeInternal() {
+        var oldgroup = this._getCartForContext()[groupname];
         delete this._getCartForContext()[groupname];
+        $.each(oldgroup, function() {
+            that._item_removed(this);
+        });
     }
 
     function removeFromDOM() {
@@ -668,7 +705,7 @@ Cart.prototype.exportGroup = function(groupname) {
     for (var i = 0; i < group.length; i++) {
         var item = {
             id: group[i]
-            };
+        };
         var metadata = (this.cartitems[group[i]] || {}).metadata || {};
         if (!_.isEmpty(metadata)) {
             item.metadata = metadata;
@@ -719,8 +756,8 @@ Cart.prototype.importGroup = function(items, options) {
 };
 
 /**
-* Binds a select element to a cart, always keeping Groups synchronized as Select Options
-* @constructor
+ * Binds a select element to a cart, always keeping Groups synchronized as Select Options
+ * @constructor
  * @param {jQuery} node$ a Select
  * @param {Cart} cart
  * @returns {Groupselect} 
@@ -745,8 +782,8 @@ function Groupselect(node$, cart) {
 
 
 /**
-* Binds a list element to a cart, always keeping Groups synchronized as list items
-* @constructor
+ * Binds a list element to a cart, always keeping Groups synchronized as list items
+ * @constructor
  * @param {jQuery} node$ a List
  * @param {Cart} cart
  * @param {Function} callback
@@ -757,7 +794,7 @@ function Grouplist(node$, cart, callback) {
     this.cart = cart;
     this.cart.options.rootNode.on('cartEvent', function(e) {
         if (e.eventData.action === 'addGroup') {
-            if(e.eventData.groupname !== "all"){
+            if (e.eventData.groupname !== "all") {
                 var li = $('<li/>').text(e.eventData.groupname).attr("data-value", e.eventData.groupname);
                 li.click(callback);
                 node$.append(li);
