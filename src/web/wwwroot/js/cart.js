@@ -197,7 +197,6 @@ Cart.prototype._getGroupNode = function(groupname) {
 Cart.prototype._getItemDetails = function(ids, callback) {
     var that = this;
     var missingIDs = [];
-    console.log(this.cartitems);
     var newCartitems = {};
     var retArray = [];
     var dfd = $.Deferred();
@@ -395,16 +394,19 @@ Cart.prototype.addItem = function(ids, options) {
     function addToDOM(aItemDetails) {
         $('body').css('cursor', 'default');
         var group$ = that._getGroupNode(options.groupname);
+        var group = that._getGroup(options.groupname);
+        var placeholder = $('li.cartFullText', group$);
 
         $.each(aItemDetails, function(key, itemDetails) {
 
             if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
                 return;
             }
-
-            if (group$.length > 100) {
-                if (!group$.is(':has(li.cartFullText')) {
-                    $('<li class="cartFullText">the cart is full! bla bla bla</li>').appendTo(group$);
+            
+            if ($('li', group$).length > 100) {
+                if (placeholder.length===0) {
+                    placeholder = $('<li class="cartFullText" style="clear:both"></li>');
+                    group$.append(placeholder)
                 }
                 return;
             }
@@ -417,6 +419,8 @@ Cart.prototype.addItem = function(ids, options) {
             group$.find('.elements').append(item$);
             options.afterDOMinsert.call(item$);
         });
+        placeholder.text('There are '+(group.length-100)+" items in this group that are not being displayed");
+
 
         $('body').css('cursor', 'wait');
     }
