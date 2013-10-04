@@ -35,6 +35,11 @@
                 <include name="**" />
                 <include name="**/**" />
             </fileset>
+            <filterchain>
+                <expandproperties />
+            </filterchain>            
+        </copy>
+        <copy todir="${builddir}/queue/standalone" >
             <fileset dir="${srcdir}/shared/libs">
                 <include name="smarty" />
                 <include name="smarty/**" />
