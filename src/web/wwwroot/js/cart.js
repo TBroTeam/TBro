@@ -216,7 +216,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
         dfd.resolve();
     } else {
         //hier "processing" einblenden
-        $(document).css('cursor', 'wait');
+        $('body').css('cursor', 'wait');
         $.ajax({
             url: this.options.serviceNodes.itemDetails,
             data: {
@@ -238,7 +238,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
             },
             complete: function() {
                 //hier fertig - "processing" ausblenden
-                $(document).css('cursor', 'default');
+                $('body').css('cursor', 'default');
             }
         });
     }
@@ -393,13 +393,22 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
     function addToDOM(aItemDetails) {
-        $(document).css('cursor', 'default');
+        $('body').css('cursor', 'default');
+        var group$ = that._getGroupNode(options.groupname);
 
         $.each(aItemDetails, function(key, itemDetails) {
-            var group$ = that._getGroupNode(options.groupname);
+
             if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
                 return;
             }
+
+            if (group$.length > 100) {
+                if (!group$.is(':has(li.cartFullText')) {
+                    $('<li class="cartFullText">the cart is full! bla bla bla</li>').appendTo(group$);
+                }
+                return;
+            }
+
             var item$ = that._executeTemplate$('Item', {
                 item: itemDetails
             });
@@ -409,7 +418,7 @@ Cart.prototype.addItem = function(ids, options) {
             options.afterDOMinsert.call(item$);
         });
 
-        $(document).css('cursor', 'wait');
+        $('body').css('cursor', 'wait');
     }
 };
 
