@@ -29,21 +29,21 @@ class Features extends \WebService {
                         , array('cache_dir' => '/tmp/zendcache/details_features')
         );
 
-        $return = array();
+        $return = array('results' => array());
         $uncached_ids = array();
         foreach ($feature_ids as $id) {
             if (($feature = $cache->load($id)) === false)
                 $uncached_ids[] = $id;
             else
-                $return[] = $feature;
+                $return['results'][] = $feature;
         }
 
         if (count($uncached_ids) > 0){
             $new_features = $this->query_database($uncached_ids);
-            
-            foreach ($new_features as $new_feature){
-                $cache->save($new_feature, $new_feature['feature_id']);
-                $return[] = $new_feature;
+                        
+            foreach ($new_features['results'] as $new_feature){
+                $cache->save($new_feature, strval($new_feature['feature_id']));
+                $return['results'][] = $new_feature;
             }
         }
 
