@@ -6,6 +6,12 @@ if (stream_resolve_include_path('Console/CommandLine.php'))
 else
     die("Failure including Console/CommandLine.php\nplease install PEAR::Console_CommandLine or check your include_path\n");
 
+if (stream_resolve_include_path('Console/Table.php'))
+    require_once 'Console/Table.php';
+else
+    die("Failure including Console/Table.php\nplease install PEAR::Console_Table or check your include_path\n");
+
+
 $xmldata = <<<EOF
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <command>
@@ -15,16 +21,43 @@ $xmldata = <<<EOF
         <description>path to configuration file</description>
     </option>    
 
-    <command name="list_databases">
-       <description>list_databases</description>
+    <command>
+        <name>list_databases</name>
+        <description>list_databases</description>
     </command>
 
-    <command name="add_database">
-       <description>add_database</description>
+    <command>
+        <name>add_database</name>
+        <description>add_database</description>
+        
+        <option name="name">
+            <short_name>-n</short_name>
+            <long_name>--name</long_name>
+            <description>name of database file within zip archive</description>
+        </option>
+
+        <option name="md5">
+            <short_name>-m</short_name>
+            <long_name>--md5</long_name>
+            <description>md5 sum of zip archive</description>
+        </option>    
+
+        <option name="uri">
+            <short_name>-u</short_name>
+            <long_name>--uri</long_name>
+            <description>download uri for zip archive (should be accessible for workers)</description>
+        </option>    
     </command>
 
-    <command name="remove_database">
-       <description>remove_database</description>
+    <command>
+        <name>remove_database</name>
+        <description>remove_database</description>
+        
+        <option name="name">
+            <short_name>-n</short_name>
+            <long_name>--name</long_name>
+            <description>name of database file within zip archive</description>
+        </option>
     </command>
 </command>
 EOF;
@@ -36,36 +69,56 @@ $parser->subcommand_required = true;
 try {
     $result = $parser->parse();
 
-    if ($result->options['debug'] === true) {
-        define('DEBUG', true);
-    }
-
+    //include config files
+    require_command_option($result, 'configfile');
+    if (file_exists($result->options['configfile']))
+        include_once $result->options['configfile'];
+    else
+        die("Missing config file " . $result->options['configfile'] . "\n");
 
     //have we been called with a command?
     if (is_object($result->command)) {
-
-        //include config files
-        if (isset($result->options->configfile) && file_exists($result->options->configfile))
-            include_once $result->options->configfile;
-        else
-            die(sprintf("Missing config file: %s\n", CONFIG_DIR . 'config.php'));
+        $pdo = connect_queue_db();
 
         switch ($result->command_name) {
-            
-        }
+            case 'list_databases':
+                $stm_list = $pdo->prepare('SELECT name, md5, download_uri FROM database_files');
+                $stm_list->execute();
 
-        //map command back to class
-        $class = $command_classes[$result->command_name];
-        //if class is CLI_Command and not abstract
-        $ref = new ReflectionClass($class);
-        if ($ref->implementsInterface('\CLI_Command') && !$ref->isAbstract()) {
-            //$class::CLI_checkRequiredOpts
-            call_user_func(array($class, 'CLI_checkRequiredOpts'), $result->command);
-            //$class::CLI_execute
-            call_user_func(array($class, 'CLI_execute'), $result->command, $parser);
+                $tbl = new Console_Table();
+                $tbl->setHeaders(array('name', 'md5', 'download_uri'));
+
+                while ($row = $stm_list->fetch(\PDO::FETCH_NUM))
+                    $tbl->addRow($row);
+
+                echo $tbl->getTable();
+
+                break;
+
+            case 'add_database':
+                require_command_option($result->command, 'name');
+                require_command_option($result->command, 'md5');
+                require_command_option($result->command, 'uri');
+
+                $stm_ins = $pdo->prepare('INSERT INTO database_files (name, md5, download_uri) VALUES (?,?,?);');
+                $stm_ins->execute(array($result->command->options['name'], $result->command->options['md5'], $result->command->options['uri']));
+                if ($stm_ins->rowCount() > 0)
+                    echo "successfully inserted\n";
+
+                break;
+
+            case 'remove_database':
+                require_command_option($result->command, 'name');
+
+
+                $stm_del = $pdo->prepare('DELETE FROM database_files WHERE name=?');
+                $stm_del->execute(array($result->command->options['name']));
+
+                if ($stm_del->rowCount() > 0)
+                    echo "successfully removed\n";
+
+                break;
         }
-        else
-            die('command not implemented correctly!');
     } else {
         $parser->displayUsage();
         exit(0);
@@ -74,6 +127,12 @@ try {
     if (defined('DEBUG') && DEBUG) {
         throw $exc;
     }
-    $parser->displayError($exc->getMessage());
+    $parser->displayError("\n".$exc->getMessage()."\n\n");
+}
+
+function require_command_option($command, $optionname) {
+    if (!isset($command->options[$optionname])) {
+        die("Please specify command line option $optionname !\n");
+    }
 }
 ?>
