@@ -63,6 +63,18 @@
                             term: $(this).find('input.GO').val()
                         };
                     }
+                },
+                inPathway: {
+                    name: 'In Pathway (KEGG ID)',
+                    webservice: '{#$ServicePath#}/combisearch/inpathway/',
+                    template_search: '#template_search_inPathway',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.GO').val()
+                        };
+                    }
                 }
             };
 
@@ -188,6 +200,17 @@
         Has GO or Children of GO: 
         </div>
         <div class="large-3 columns" style="text-align: right">GO:</div>
+        <div class="large-3 columns">
+        <input type="text" class="GO" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+    <script type="text/template" id="template_search_inPathway">
+        <div class="row">
+        <div class="large-6 columns">
+        In Pathway 
+        </div>
+        <div class="large-3 columns" style="text-align: right">KEGG ID:</div>
         <div class="large-3 columns">
         <input type="text" class="GO" style="margin:0px"/>
         </div>

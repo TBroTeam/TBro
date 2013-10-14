@@ -26,7 +26,6 @@ function Cart(initialData, options) {
      */
     this.options = {
         templates: {
-            GroupAll: '#template_cart_all_group',
             Group: '#template_cart_new_group',
             Item: '#template_cart_new_item'
         },
@@ -35,8 +34,6 @@ function Cart(initialData, options) {
             sync: '/cart/sync'
         },
         callbacks: {
-            afterDOMinsert_groupAll: function() {
-            },
             afterDOMinsert_group: function() {
             },
             afterDOMinsert_item: function() {
@@ -52,7 +49,6 @@ function Cart(initialData, options) {
     this.cartitems = initialData.cartitems || {};
     /** @private */
     this.emptyCartPrototype = {
-        'all': []
     };
     /** @private */
     this.currentContext = 'unknown';
@@ -142,14 +138,6 @@ function Cart(initialData, options) {
 
     /** @private */
     Cart.prototype._compareCarts = function(newCart) {
-        //no need to compare the cartitems, we will just use the latest from the server assuming they are equal or more up-to-date
-        //one exception: php gives us back [] instead of {} as there is no difference in php between an empty array and an empty associative array(object)
-        //we want always {}.
-        if (_.isEqual([], newCart.cartitems))
-            this.cartitems = {};
-        else
-            this.cartitems = newCart.cartitems || {};
-
         var cartsDiffer = !checkEqual(this.carts, newCart.carts);
         var currentCartDiffers = !checkEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
         //log
@@ -245,7 +233,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
 };
 /** @private */
 Cart.prototype._getItemNodes = function(id, groupname) {
-    if (typeof groupname === 'undefined' || groupname === 'all')
+    if (typeof groupname === 'undefined')
         return this.options.rootNode.find('.cartItem[data-id="' + id + '"]');
     else
         return this._getGroupNode(groupname).find('.cartItem[data-id="' + id + '"]');
@@ -349,18 +337,14 @@ Cart.prototype.addItem = function(ids, options) {
 
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
+        
     if (missingIds.length == 0) {
         // we have nothing to do. return from here.
         dfd.resolve();
         return dfd.promise();
     }
-
-    if (options.groupname !== 'all')
-        $.when(this.addItem(ids, $.extend({}, options, {
-            groupname: 'all'
-        }))).then(work);
-    else
-        work();
+    
+    work();
 
     return dfd.promise();
 
@@ -383,7 +367,7 @@ Cart.prototype.addItem = function(ids, options) {
 
     function addInternal() {
         var group = this._getGroup(options.groupname);
-        if (typeof group === undefined)
+        if (typeof group === undefined || group === undefined)
             group = this._getGroup(this.addGroup(options.groupname));
 
         for (var i = 0; i < ids.length; i++)
@@ -508,21 +492,13 @@ Cart.prototype.removeItem = function(id, options) {
 
     function removeInternal() {
         var cart = this._getCartForContext();
-        if (options.groupname === 'all') {
-            $.each(cart, function() {
-                var index;
-                if ((index = _.indexOf(this, id)) >= 0)
-                    this.splice(index, 1);
-            });
-            delete this.cartitems[id];
-        } else {
             var group = this._getGroup(options.groupname);
             var index;
             if ((index = _.indexOf(group, id)) >= 0)
                 group.splice(index, 1);
 
             that._item_removed(id);
-        }
+        
     }
 
     function removeFromDOM() {
@@ -533,17 +509,10 @@ Cart.prototype.removeItem = function(id, options) {
 Cart.prototype._item_removed = function(id) {
     var inothercart = false;
     $.each(cart, function(key, value) {
-        if (key == 'all')
-            return;
         inothercart |= _.indexOf(value, id) >= 0;
     });
 
     if (!inothercart) {
-        var group = this._getGroup('all');
-        var index;
-        if ((index = _.indexOf(group, id)) >= 0)
-            group.splice(index, 1);
-
         delete this.cartitems[id];
     }
 }
@@ -559,11 +528,7 @@ Cart.prototype.addGroup = function(groupname, options) {
         sync: true
     }, options);
     if (typeof options.afterDOMinsert === 'undefined') {
-
-        if (groupname === 'all')
-            options.afterDOMinsert = this.options.callbacks.afterDOMinsert_groupAll;
-        else
-            options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
+        options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
     }
 
 
@@ -592,13 +557,9 @@ Cart.prototype.addGroup = function(groupname, options) {
     function addToDOM() {
         var parent$ = this.options.rootNode;
         var group$;
-        if (groupname === 'all') {
-            group$ = this._executeTemplate$('GroupAll');
-        } else {
             group$ = this._executeTemplate$('Group', {
                 groupname: groupname
             });
-        }
         group$.data('afterDOMinsert', options.afterDOMinsert);
         parent$.append(group$);
         options.afterDOMinsert.call(group$);
@@ -699,10 +660,7 @@ Cart.prototype.clear = function(options) {
         sync: true
     }, options);
 
-    var that = this;
-    $.each(this._getCartForContext()['all'], function() {
-        delete that.cartitems[this];
-    });
+    this.cartitems.length = 0;
 
     delete this.carts[this.currentContext];
     this.sync({
@@ -815,11 +773,9 @@ function Grouplist(node$, cart, callback) {
     this.cart = cart;
     this.cart.options.rootNode.on('cartEvent', function(e) {
         if (e.eventData.action === 'addGroup') {
-            if (e.eventData.groupname !== "all") {
-                var li = $('<li/>').text(e.eventData.groupname).attr("data-value", e.eventData.groupname);
-                li.click(callback);
-                node$.append(li);
-            }
+            var li = $('<li/>').text(e.eventData.groupname).attr("data-value", e.eventData.groupname);
+            li.click(callback);
+            node$.append(li);
         }
         else if (e.eventData.action === 'renameGroup') {
             node$.find('li[data-value="' + e.eventData.groupname + '"]').text(e.eventData.newname).attr("data-value", e.eventData.newname);
