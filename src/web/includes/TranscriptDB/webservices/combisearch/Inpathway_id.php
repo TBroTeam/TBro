@@ -8,7 +8,7 @@ use \PDO as PDO;
  * WebService.
  * Searches for Features which is part of the given pathway (pathway given as KEGG id)
  */
-class Inpathway extends \WebService {
+class Inpathway_id extends \WebService {
 
     /**
      * @param $querydata[species] organism id

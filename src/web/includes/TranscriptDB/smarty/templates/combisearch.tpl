@@ -64,15 +64,27 @@
                         };
                     }
                 },
-                inPathway: {
+                inPathwayID: {
                     name: 'In Pathway (KEGG ID)',
-                    webservice: '{#$ServicePath#}/combisearch/inpathway/',
-                    template_search: '#template_search_inPathway',
+                    webservice: '{#$ServicePath#}/combisearch/inpathway_id/',
+                    template_search: '#template_search_inPathwayID',
                     fnPrepareData: function() {
                         return {
                             species: organism.val(),
                             release: release.val(),
                             term: $(this).find('input.GO').val()
+                        };
+                    }
+                },
+                inPathwayTerm: {
+                    name: 'In Pathway (definition contains)',
+                    webservice: '{#$ServicePath#}/combisearch/inpathway_term/',
+                    template_search: '#template_search_inPathwayTerm',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.term').val()
                         };
                     }
                 }
@@ -205,7 +217,7 @@
         </div>
         </div>
     </script>
-    <script type="text/template" id="template_search_inPathway">
+    <script type="text/template" id="template_search_inPathwayID">
         <div class="row">
         <div class="large-6 columns">
         In Pathway 
@@ -213,6 +225,17 @@
         <div class="large-3 columns" style="text-align: right">KEGG ID:</div>
         <div class="large-3 columns">
         <input type="text" class="GO" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+        <script type="text/template" id="template_search_inPathwayTerm">
+        <div class="row">
+        <div class="large-6 columns">
+        In Pathway 
+        </div>
+        <div class="large-2 columns" style="text-align: right">Term:</div>
+        <div class="large-4 columns">
+        <input type="text" class="term" style="margin:0px"/>
         </div>
         </div>
     </script>
