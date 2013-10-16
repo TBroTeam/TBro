@@ -73,7 +73,7 @@ foreach ($new_classes as $class) {
     }
 }
 
-if ($argv[1] == '--build-autocomplete'){
+if ($argv[1] == '--build-autocomplete') {
     require_once SHARED . 'classes/CommandLineComplete.php';
     CommandLineComplete::fromConsoleCommandLine(basename($argv[0]), $parser);
     exit(0);
@@ -86,6 +86,18 @@ try {
         define('DEBUG', true);
     }
 
+    try {
+        global $db;
+        if (defined('DEBUG') && DEBUG) {
+            require_once SHARED . '/libs/loggedPDO/PDO.php';
+            $db = new \LoggedPDO\PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION), Log::factory('console', '', 'PDO'));
+        }
+        else
+            $db = new PDO(DB_CONNSTR, DB_USERNAME, DB_PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    } catch (\PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
 
     //have we been called with a command?
     if (is_object($result->command)) {
