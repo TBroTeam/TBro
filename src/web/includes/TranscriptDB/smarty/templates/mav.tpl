@@ -32,7 +32,15 @@
                     if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
                         return;
 
-                    //drawCloud('gos');
+                    var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+                    $.ajax('{#$ServicePath#}/details/features', {
+                        data: {terms: cartitems},
+                        type: 'POST',
+                        datatype: 'JSON',
+                        success: function(data) {
+                            displayFeatureTable(data.results, {});
+                        }
+                    });
                 });
             });
 
@@ -47,7 +55,6 @@
                 prefix = 'http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=GO:';
             }
             $('#panel-wordclouds').show();
-            console.log(cartitems);
             $.ajax('{#$ServicePath#}/listing/wordcloud/' + service, {
                 method: 'post',
                 data: {
@@ -105,6 +112,7 @@
                 {#include file="display-components/feature_table.tpl"#}
             </div>
             <div id="tabs-graphs">
+                <div id="tabs-graphs-selection">
                 <div class="row">
                     <div class="large-3 columns">
                         <h4>Experiment</h4>
@@ -156,6 +164,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                </div>
+                <div id="tabs-graphs-too-many" style="display: none">
+                    Too many isoforms (more than 20) to display
                 </div>
             </div>
             <div id="tabs-diffexp">

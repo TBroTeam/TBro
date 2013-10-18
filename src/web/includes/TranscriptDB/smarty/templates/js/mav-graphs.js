@@ -35,22 +35,28 @@ $(document).ready(function() {
 
             var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
 
-            $.ajax('{#$ServicePath#}/listing/filters/', {
-                method: 'post',
-                data: {
-                    ids: cartitems
-                },
-                success: function(data) {
-                    var filterdata = data;
-                    $.each(cartitems, function() {
-                        filterdata.data.feature[this] = cart.cartitems[this];
-                    });
-                    new filteredSelect(select_assay, 'assay', {
-                        data: filterdata
-                    }).refill();
+            if (cartitems.length <= 20) {
+                $.ajax('{#$ServicePath#}/listing/filters/', {
+                    method: 'post',
+                    data: {
+                        ids: cartitems
+                    },
+                    success: function(data) {
+                        var filterdata = data;
+                        $.each(cartitems, function() {
+                            filterdata.data.feature[this] = cart.cartitems[this];
+                        });
+                        new filteredSelect(select_assay, 'assay', {
+                            data: filterdata
+                        }).refill();
 
-                }
-            });
+                    }
+                });
+            }
+            else{
+                $('#tabs-graphs-selection').hide();
+                $('#tabs-graphs-too-many').show();
+            }
         }, 100);
 
     });
