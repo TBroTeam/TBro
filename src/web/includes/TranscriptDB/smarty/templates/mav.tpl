@@ -96,10 +96,14 @@
         <div class="large-12 columns" id="tabs">
 
             <ul>
+                <li><a href="#tabs-overview">Overview</a></li>
                 <li><a href="#tabs-graphs">Expression Plots</a></li>
                 <li><a href="#tabs-diffexp">Differential Expression Analysis</a></li>
                 <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li>
             </ul>
+            <div id="tabs-overview">
+                {#include file="display-components/feature_table.tpl"#}
+            </div>
             <div id="tabs-graphs">
                 <div class="row">
                     <div class="large-3 columns">

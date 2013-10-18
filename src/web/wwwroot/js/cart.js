@@ -337,23 +337,38 @@ Cart.prototype.addItem = function(ids, options) {
 
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
-        
+
     if (missingIds.length == 0) {
         // we have nothing to do. return from here.
         dfd.resolve();
         return dfd.promise();
     }
-    
+
     work();
 
     return dfd.promise();
 
     function work() {
-        that._getItemDetails(missingIds, function(aItemDetails) {
+        if (missingIds.length <= 100) {
+            that._getItemDetails(missingIds, function(aItemDetails) {
 
+                addInternal.call(that);
+                if (options.addToDOM)
+                    addToDOM.call(that, aItemDetails);
+
+                that.sync({
+                    action: 'addItem',
+                    ids: missingIds,
+                    groupname: options.groupname
+                }, options);
+
+                dfd.resolve();
+            });
+        }
+        else {
             addInternal.call(that);
             if (options.addToDOM)
-                addToDOM.call(that, aItemDetails);
+                addToDOM.call(that);
 
             that.sync({
                 action: 'addItem',
@@ -362,12 +377,12 @@ Cart.prototype.addItem = function(ids, options) {
             }, options);
 
             dfd.resolve();
-        });
+        }
     }
 
     function addInternal() {
         var group = this._getGroup(options.groupname);
-        if (typeof group === undefined || group === undefined)
+        if (typeof group === "undefined")
             group = this._getGroup(this.addGroup(options.groupname));
 
         for (var i = 0; i < ids.length; i++)
@@ -379,43 +394,37 @@ Cart.prototype.addItem = function(ids, options) {
         $('body').css('cursor', 'default');
         var group$ = that._getGroupNode(options.groupname);
         var group = that._getGroup(options.groupname);
-        var placeholder = $('li.cartFullText', group$);
+        if (group.length > 100) {
+            $('li', group$.find('.elements')).empty();
+            var placeholder = $('<li class="cartFullText" style="clear:both"></li>');
+            placeholder.text('There are ' + group.length + " items in this group. Therefore it is too large to be displayed.");
+            group$.find('.elements').append(placeholder);
+        }
+        else {
+            $.each(aItemDetails, function(key, itemDetails) {
 
-        $.each(aItemDetails, function(key, itemDetails) {
-
-            if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
-                return;
-            }
-            
-            if ($('li', group$).length > 100) {
-                if (placeholder.length===0) {
-                    placeholder = $('<li class="cartFullText" style="clear:both"></li>');
-                    group$.append(placeholder)
+                if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
+                    return;
                 }
-                return;
-            }
 
-            var item$ = that._executeTemplate$('Item', {
-                item: itemDetails
+                var item$ = that._executeTemplate$('Item', {
+                    item: itemDetails
+                });
+                item$.data('afterDOMinsert', options.afterDOMinsert);
+                group$.find('.elements .placeholder').remove();
+                group$.find('.elements').append(item$);
+                options.afterDOMinsert.call(item$);
             });
-            item$.data('afterDOMinsert', options.afterDOMinsert);
-            group$.find('.elements .placeholder').remove();
-            group$.find('.elements').append(item$);
-            options.afterDOMinsert.call(item$);
-        });
-        placeholder.text('There are '+(group.length-100)+" items in this group that are not being displayed");
-
-
-        $('body').css('cursor', 'wait');
+        }
     }
 };
 
 //comment: get all cart items with metadata
 
 /*
-var groupData = $.map(cart._getGroup('all'),function(){
-    return cart.cartitems[this];
-});
+ var groupData = $.map(cart._getGroup('all'),function(){
+ return cart.cartitems[this];
+ });
  */
 
 /**
@@ -492,13 +501,13 @@ Cart.prototype.removeItem = function(id, options) {
 
     function removeInternal() {
         var cart = this._getCartForContext();
-            var group = this._getGroup(options.groupname);
-            var index;
-            if ((index = _.indexOf(group, id)) >= 0)
-                group.splice(index, 1);
+        var group = this._getGroup(options.groupname);
+        var index;
+        if ((index = _.indexOf(group, id)) >= 0)
+            group.splice(index, 1);
 
-            that._item_removed(id);
-        
+        that._item_removed(id);
+
     }
 
     function removeFromDOM() {
@@ -557,9 +566,9 @@ Cart.prototype.addGroup = function(groupname, options) {
     function addToDOM() {
         var parent$ = this.options.rootNode;
         var group$;
-            group$ = this._executeTemplate$('Group', {
-                groupname: groupname
-            });
+        group$ = this._executeTemplate$('Group', {
+            groupname: groupname
+        });
         group$.data('afterDOMinsert', options.afterDOMinsert);
         parent$.append(group$);
         options.afterDOMinsert.call(group$);
@@ -603,14 +612,18 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
     function renameInDOM() {
         var oldGroup$ = this._getGroupNode(groupname);
         var items$ = oldGroup$.find('.cartItem');
+        var cft$ = oldGroup$.find('.cartFullText');
         var newGroup$ = this._executeTemplate$('Group', {
             groupname: newname
         });
         var afterDOMinsert = oldGroup$.data('afterDOMinsert');
         newGroup$.data('afterDOMinsert', afterDOMinsert);
         newGroup$.find('.elements').append(items$);
-        if (newGroup$.find(".elements").length > 1) {
-            newGroup$.find('.elements .placeholder').remove();
+        if (newGroup$.find(".elements").children("li").length >= 1) {
+            newGroup$.find('.placeholder').remove();
+        }
+        if(typeof cft$ !== 'undefined'){
+            newGroup$.find('.elements').append(cft$);
         }
         oldGroup$.replaceWith(newGroup$);
         afterDOMinsert.call(newGroup$);
