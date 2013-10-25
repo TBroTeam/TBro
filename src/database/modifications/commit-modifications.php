@@ -5,12 +5,16 @@ require_once '${config_dir}/cvterms.php';
 
 require_once __DIR__.'/db.php';
 
+$db->beginTransaction();
+
 if (in_array('--tables', $argv))
     execute_query_dir('tables');
 if (in_array('--functions', $argv))
     execute_query_dir('functions');
 if (in_array('--mat_views', $argv))
     execute_query_dir('materialized_views');
+
+$db->commit();
 
 function execute_query_dir($subdirname) {
     global $db;
