@@ -35,10 +35,12 @@ $(document).ready(function() {
             if (lastItemEvent !== myItemEvent)
                 return;
 
-
-            var data = {ids: cart._getCartForContext()['{#$cartname#}'] || []};
+            var data = {
+                organism: organism.val(),
+                release: release.val()
+            };
+            
             var url = '{#$ServicePath#}/listing/filters_diffexp/forCart';
-
 
             $.ajax(url, {
                 method: 'post',
@@ -263,7 +265,7 @@ $(document).ready(function() {
             groupname: 'myNewGroup123'
         };
 
-        $.ajax('{#$ServicePath#}/listing/differential_expressions/addAllMatchingToCart'+ "?" + $.param(lastQueryData), {
+        $.ajax('{#$ServicePath#}/listing/differential_expressions/addAllMatchingToCart' + "?" + $.param(lastQueryData), {
             method: 'post',
             data: data
         });
