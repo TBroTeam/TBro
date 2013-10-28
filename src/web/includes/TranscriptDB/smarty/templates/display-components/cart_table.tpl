@@ -17,23 +17,23 @@
                 });
             },
 
-            //     bLengthChange: false,
-            //     sPaginationType: "full_numbers",
+                 bLengthChange: false,
+                 sPaginationType: "full_numbers",
                  aoColumns: [
                      {mData: 'type'},
                      {mData: 'name'},
                      {mData: 'alias'}
-                 ]
-            //     fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            //         console.log($(nRow).find('td:eq(1)').html());
-            //         $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
-            //         $(nRow).css('cursor', 'pointer');
-            //     },
-            //     sDom: 'T<"clear">lrtip',
-            //     oTableTools: {
-            //         sRowSelect: "multi",
-            //         aButtons: []
-            //     },
+                 ],
+                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                     console.log($(nRow).find('td:eq(1)').html());
+                     $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
+                     $(nRow).css('cursor', 'pointer');
+                 },
+                 sDom: 'T<"clear">lrtip',
+                 oTableTools: {
+                     sRowSelect: "multi",
+                     aButtons: []
+                 }
             //     aaData: []
         }, opts);
         // $.each(data, function() {
@@ -68,16 +68,16 @@
 
             });
 
-            new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToCart);
-            $('#button-features-addToCart-options-newcart').click(addSelectedToCart);
+            new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToOtherCart);
+            $('#button-features-addToCart-options-newcart').click(addSelectedToOtherCart);
 
             $("#input-filter-carttable").keyup(function() {
-                fnFilter();
+                fnFilterCart();
             });
         });
     })(jQuery);
 
-    function fnNumOfEntries(numOfEntries)
+    function fnNumOfEntriesCart(numOfEntries)
     {
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#carttable').dataTable();
@@ -86,12 +86,12 @@
         oTable.fnDraw();
     }
 
-    function fnFilter() {
+    function fnFilterCart() {
         var oTable = $('#carttable').dataTable();
         oTable.fnFilter($("#input-filter-carttable").val());
     }
 
-    function addSelectedToCart() {
+    function addSelectedToOtherCart() {
         var group = $(this).attr('data-value');
         var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
         if (selectedItems.length === 0)
@@ -116,11 +116,11 @@
         </ul>
 
         <ul class="f-dropdown" id="show-entries-dropdown-options" data-dropdown-content>
-            <li onclick="fnNumOfEntries(10);"> 10 </li> 
-            <li onclick="fnNumOfEntries(20);"> 20 </li> 
-            <li onclick="fnNumOfEntries(50);"> 50 </li> 
-            <li onclick="fnNumOfEntries(100);"> 100 </li> 
-            <li onclick="fnNumOfEntries(1000);"> 1000 </li> 
+            <li onclick="fnNumOfEntriesCart(10);"> 10 </li> 
+            <li onclick="fnNumOfEntriesCart(20);"> 20 </li> 
+            <li onclick="fnNumOfEntriesCart(50);"> 50 </li> 
+            <li onclick="fnNumOfEntriesCart(100);"> 100 </li> 
+            <li onclick="fnNumOfEntriesCart(1000);"> 1000 </li> 
         </ul>
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">All visible</li>

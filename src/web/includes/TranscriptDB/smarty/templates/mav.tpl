@@ -29,11 +29,18 @@
 
 
                 $('#Cart').on('cartEvent', function(event) {
-                    if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
+                    if (!(event.eventData.action === 'updateContext'))
                         return;
-
-                    var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
-                    displayCartTable(cartitems, {});
+                        
+                    console.log(event.eventData);    
+                    _.delay(function(){
+                        var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+                    if(cartitems.length === 0){
+                        console.log("No items in cart");
+                        return;
+                    }
+                    displayCartTable(cartitems, {}); 
+                    }, 500);
                 });
             });
 

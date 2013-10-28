@@ -27,8 +27,9 @@ class Cart_table extends \WebService {
         if(!is_array($querydata['terms'])){
             $querydata['terms'] = explode(",", $querydata['terms']);
         }
+        \sort($querydata['terms']);
         $limit_count = max(array(10, min(array(1000, intval($querydata['iDisplayLength'])))));
-        $terms = array_slice($querydata['terms'], (intval($querydata['sEcho'])-1)*$limit_count, $limit_count);
+        $terms = array_slice($querydata['terms'], intval($querydata['iDisplayStart']), $limit_count);
 
         list($service) = \WebService::factory('details/features');
         $results = ($service->execute(array('terms' =>  $terms)));

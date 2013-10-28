@@ -2,10 +2,6 @@
     $(document).ready(function() {
         new Grouplist($('#button-gdfx-addToCart-options'), cart, addSelectedToCart);
         $('#button-gdfx-addToCart-options-newcart').click(addSelectedToCart);
-        
-        
-        
-        
     });
 
     function addSelectedToCart() {
