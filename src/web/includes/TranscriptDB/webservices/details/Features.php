@@ -13,7 +13,7 @@ class Features extends \WebService {
 
     public function execute($querydata) {
         $feature_ids = array();
-
+        
         if (isset($querydata['query1']) && !empty($querydata['query1']))
             $feature_ids[] = $querydata['query1'];
 
@@ -28,11 +28,11 @@ class Features extends \WebService {
                         , array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true)
                         , array('cache_dir' => '/tmp/zendcache/details_features')
         );
-
+      
         $return = array('results' => array());
         $uncached_ids = array();
         foreach ($feature_ids as $id) {
-            if (($feature = $cache->load($id)) === false)
+            if (($feature = $cache->load(strval($id))) === false)
                 $uncached_ids[] = $id;
             else
                 $return['results'][] = $feature;

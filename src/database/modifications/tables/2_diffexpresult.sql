@@ -17,7 +17,7 @@ CREATE TABLE diffexpresult
    CONSTRAINT diffexpresult_feature_fkey FOREIGN KEY (feature_id) REFERENCES feature (feature_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
    CONSTRAINT diffexpresult_biomaterialA_fkey FOREIGN KEY (biomaterialA_id) REFERENCES biomaterial (biomaterial_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
    CONSTRAINT diffexpresult_biomaterialB_fkey FOREIGN KEY (biomaterialB_id) REFERENCES biomaterial (biomaterial_id) ON UPDATE CASCADE ON DELETE NO ACTION, 
-   CONSTRAINT diffexpresult_analysis_id_feature_id_biomateriala_id_bioma_key1 UNIQUE (analysis_id , feature_id , biomateriala_id , biomaterialb_id , quantification_id )
+   CONSTRAINT diffexpresult_analysis_id_feature_id_biomateriala_id_bioma_key1 UNIQUE (analysis_id , feature_id , biomateriala_id , biomaterialb_id , quantification_id ),
    CONSTRAINT diffexpresult_quantification_fkey FOREIGN KEY (quantification_id) REFERENCES quantification (quantification_id) ON UPDATE CASCADE ON DELETE NO ACTION,
    CONSTRAINT diffexpresult_pkey PRIMARY KEY (diffexpresult_id)
 ) 
