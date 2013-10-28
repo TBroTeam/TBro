@@ -33,14 +33,7 @@
                         return;
 
                     var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
-                    $.ajax('{#$ServicePath#}/details/features', {
-                        data: {terms: cartitems},
-                        type: 'POST',
-                        datatype: 'JSON',
-                        success: function(data) {
-                            displayFeatureTable(data.results, {});
-                        }
-                    });
+                    displayCartTable(cartitems, {});
                 });
             });
 
@@ -109,7 +102,7 @@
                 <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li>
             </ul>
             <div id="tabs-overview">
-                {#include file="display-components/feature_table.tpl"#}
+                {#include file="display-components/cart_table.tpl"#}
             </div>
             <div id="tabs-graphs">
                 <div id="tabs-graphs-selection">
