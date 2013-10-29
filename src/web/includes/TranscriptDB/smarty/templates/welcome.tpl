@@ -61,24 +61,24 @@
         <div class="large-12 columns panel">
             <div class="row">
                 <div class="large-6 columns">
-                    <a class="large button expand btn1" href="/multisearch">
+                    <a class="large button expand btn1" href="{#$AppPath#}/multisearch">
                         <h4>Search by Name</h4>
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand btn2" href="/blast" >
+                    <a class="large button expand btn2" href="{#$AppPath#}/blast" >
                         <h4>Search by Homology</h4>
                     </a>
                 </div>
             </div>
             <div class="row">
                 <div class="large-6 columns">
-                    <a class="large button expand btn3" href="/annotationsearch">
+                    <a class="large button expand btn3" href="{#$AppPath#}/annotationsearch">
                         <h4>Search by Annotation</h4>
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand btn4" href="/diffexpr">
+                    <a class="large button expand btn4" href="{#$AppPath#}/diffexpr">
                         <h4>Differential Expression</h4>
                     </a>
                 </div>
