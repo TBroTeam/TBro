@@ -104,7 +104,7 @@
             $('#start-combisearch').click(function() {
                 //gui animationi
                 $.when($('.results').hide(500)).then(function() {
-                    if(!$('.results').is(':visible')){
+                    if (!$('.results').is(':visible')) {
                         $('.loading').show();
                     }
                 });
@@ -135,6 +135,10 @@
                         success: function(data) {
                             $('.loading').hide();
                             displayFeatureTable(data.results, {});
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            $('.loading').hide();
+                            alert("It took to long to lookup the details of the "+filteredResults.length+" results. Please restrict your search.");
                         }
                     });
                 });
@@ -228,7 +232,7 @@
         </div>
         </div>
     </script>
-        <script type="text/template" id="template_search_inPathwayTerm">
+    <script type="text/template" id="template_search_inPathwayTerm">
         <div class="row">
         <div class="large-6 columns">
         In Pathway 
