@@ -163,7 +163,7 @@ EOF;
                 //more complex parameters
                 $param_feature = $match['feature'];
                 $param_feature_uniq = IMPORT_PREFIX . "_" . $param_feature;
-                $param_feature_domain_name = sprintf('%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax);
+                $param_feature_domain_name = sprintf('%s_%s_%s_%s_%s', $param_feature, $match['analysisMatchID'], $param_domain_fmin, $param_domain_fmax, $param_source_name);
                 $param_feature_domain_uniq = IMPORT_PREFIX . "_" . $param_feature_domain_name;
 
                 //insert domain feature
