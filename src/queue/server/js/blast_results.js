@@ -58,7 +58,9 @@ function parseBlastXml(job_results){
                 hitcoverage[i]=false;
             }
             hit.hsps = [];
-            hit.def_firstword = hit.def.substr(0,hit.def.indexOf(' '));
+            hit.def_firstword = hit.def;
+            if(hit.def.indexOf(' ') > 0)
+                hit.def_firstword = hit.def.substr(0,hit.def.indexOf(' '));
             hit.max_score = 0;
             hit.max_ident = 0;
             hit.total_score = 0;
