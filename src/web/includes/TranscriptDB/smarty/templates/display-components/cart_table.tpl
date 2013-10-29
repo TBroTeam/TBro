@@ -72,7 +72,8 @@
             $('#button-features-addToCart-options-newcart').click(addSelectedToOtherCart);
 
             $("#input-filter-carttable").keyup(function() {
-                fnFilterCart();
+                if($("#input-filter-carttable").val().length >= 3)
+                    fnFilterCart();
             });
         });
     })(jQuery);
