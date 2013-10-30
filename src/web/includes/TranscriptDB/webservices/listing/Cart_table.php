@@ -41,8 +41,8 @@ class Cart_table extends \WebService {
 
         $data = array(
             "sEcho" => intval($querydata['sEcho']),
-            "iTotalDisplayRecords" => sizeof($querydata['terms']),
-            "iTotalRecords" => sizeof($ids),
+            "iTotalDisplayRecords" => sizeof($ids),
+            "iTotalRecords" => sizeof($querydata['terms']),
             "aaData" => array()
         );
 
@@ -75,12 +75,10 @@ class Cart_table extends \WebService {
     ),'') AS alias
     FROM feature
     WHERE feature.feature_id IN ($place_holders)) as f
-    WHERE (f.name LIKE '?' OR f.alias LIKE '?')
+    WHERE (f.name LIKE ? OR f.alias LIKE ?)
 EOF;
         $stm = $db->prepare($query);
         $replacement = array_merge($querydata['terms'], array($term, $term));
-        var_dump($replacement);
-        return $querydata['terms'];
         $stm->execute($replacement);
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             $ret[] = $row['feature_id'];
