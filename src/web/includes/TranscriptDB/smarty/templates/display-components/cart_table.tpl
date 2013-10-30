@@ -19,9 +19,15 @@
             bLengthChange: false,
             sPaginationType: "full_numbers",
             aoColumns: [
-                {mData: 'type'},
-                {mData: 'name'},
-                {mData: 'alias'}
+                {mData: 'type',
+                    bSortable: false
+                },
+                {mData: 'name',
+                    bSortable: false
+                },
+                {mData: 'alias',
+                    bSortable: false
+                }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 console.log($(nRow).find('td:eq(1)').html());
@@ -137,7 +143,6 @@
         </ul>
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">All visible</li>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelect($('#carttable').dataTable().$('tr', {'filter': 'applied'}));" style="width:100%">Filtered</li>
             <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">None</li>
         </ul>
         <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>

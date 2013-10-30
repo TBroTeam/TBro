@@ -27,21 +27,28 @@ class Cart_table extends \WebService {
         if (!is_array($querydata['terms'])) {
             $querydata['terms'] = explode(",", $querydata['terms']);
         }
-        $ids = $querydata['terms'];
+        $ids_filtered = $querydata['terms'];
         if (isset($querydata['sSearch']) && $querydata['sSearch'] !== '') {
-            $ids = $this->filter_ids($querydata);
+            $ids_filtered = array();
+            if (strpos('isoform', $querydata['sSearch']) !== FALSE) {
+                $ids_filtered = array_merge($this->filter_ids_bytype('isoform', $querydata['terms']), $ids_filtered);
+            }
+            if (strpos('unigene', $querydata['sSearch']) !== FALSE) {
+                $ids_filtered = array_merge($this->filter_ids_bytype('unigene', $querydata['terms']), $ids_filtered);
+            }
+            $ids_filtered = array_merge($this->filter_ids($querydata['sSearch'], $querydata['terms']), $ids_filtered);
         }
 
-        \sort($ids);
+        \sort($ids_filtered);
         $limit_count = max(array(10, min(array(1000, intval($querydata['iDisplayLength'])))));
-        $terms = array_slice($ids, intval($querydata['iDisplayStart']), $limit_count);
+        $terms = array_slice($ids_filtered, intval($querydata['iDisplayStart']), $limit_count);
 
         list($service) = \WebService::factory('details/features');
         $results = ($service->execute(array('terms' => $terms)));
 
         $data = array(
             "sEcho" => intval($querydata['sEcho']),
-            "iTotalDisplayRecords" => sizeof($ids),
+            "iTotalDisplayRecords" => sizeof($ids_filtered),
             "iTotalRecords" => sizeof($querydata['terms']),
             "aaData" => array()
         );
@@ -53,15 +60,46 @@ class Cart_table extends \WebService {
         return $data;
     }
 
-    public function filter_ids($querydata) {
+    public function filter_ids_bytype($type, $ids) {
+        $type_id = '';
+        if ($type === 'isoform') {
+            $type_id = CV_ISOFORM;
+        } elseif ($type === 'unigene') {
+            $type_id = CV_UNIGENE;
+        } else {
+            return array();
+        }
+
         global $db;
         $ret = array();
 #UI hint
         if (false)
             $db = new PDO();
 
-        $place_holders = implode(',', array_fill(0, count($querydata['terms']), '?'));
-        $term = sprintf('%%%s%%', trim($querydata['sSearch']));
+        $place_holders = implode(',', array_fill(0, count($ids), '?'));
+
+        $query = <<<EOF
+    SELECT feature.feature_id, type_id FROM feature
+    WHERE feature_id IN ($place_holders) AND type_id = ?
+EOF;
+        $stm = $db->prepare($query);
+        $replacement = array_merge($ids, array($type_id));
+        $stm->execute($replacement);
+        while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
+            $ret[] = $row['feature_id'];
+        }
+        return $ret;
+    }
+
+    public function filter_ids($searchterm, $ids) {
+        global $db;
+        $ret = array();
+#UI hint
+        if (false)
+            $db = new PDO();
+
+        $place_holders = implode(',', array_fill(0, count($ids), '?'));
+        $term = sprintf('%%%s%%', trim($searchterm));
 
         $query = <<<EOF
     SELECT * FROM (SELECT
@@ -78,7 +116,7 @@ class Cart_table extends \WebService {
     WHERE (f.name LIKE ? OR f.alias LIKE ?)
 EOF;
         $stm = $db->prepare($query);
-        $replacement = array_merge($querydata['terms'], array($term, $term));
+        $replacement = array_merge($ids, array($term, $term));
         $stm->execute($replacement);
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             $ret[] = $row['feature_id'];
