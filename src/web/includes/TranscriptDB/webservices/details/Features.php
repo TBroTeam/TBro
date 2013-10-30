@@ -13,22 +13,20 @@ class Features extends \WebService {
 
     public function execute($querydata) {
         $feature_ids = array();
-        
+
         if (isset($querydata['query1']) && !empty($querydata['query1']))
             $feature_ids[] = $querydata['query1'];
 
         if (isset($querydata['terms']))
             $feature_ids = array_merge($feature_ids, $querydata['terms']);
 
-
-        @mkdir('/tmp/zendcache/details_features', 0755, true);
         $cache = \Zend_Cache::factory(
-                        'Core'
-                        , 'File'
-                        , array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true)
-                        , array('cache_dir' => '/tmp/zendcache/details_features')
+                'Core', 
+                'Memcached', 
+                array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), 
+                array('servers' => array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
         );
-      
+
         $return = array('results' => array());
         $uncached_ids = array();
         foreach ($feature_ids as $id) {
@@ -38,10 +36,10 @@ class Features extends \WebService {
                 $return['results'][] = $feature;
         }
 
-        if (count($uncached_ids) > 0){
+        if (count($uncached_ids) > 0) {
             $new_features = $this->query_database($uncached_ids);
-                        
-            foreach ($new_features['results'] as $new_feature){
+
+            foreach ($new_features['results'] as $new_feature) {
                 $cache->save($new_feature, strval($new_feature['feature_id']));
                 $return['results'][] = $new_feature;
             }
