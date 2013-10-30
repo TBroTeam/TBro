@@ -128,17 +128,20 @@
 
                 //when all deferred ajax calls have finished, display feature table
                 $.when.apply($, deferreds.get()).then(function() {
+                    $('.loading').hide();
+                    $('.waiting-for-details').html("There are "+filteredResults.length+" results. Retrieving details...")
+                    $('.waiting-for-details').show();
                     $.ajax('{#$ServicePath#}/details/features', {
                         data: {terms: filteredResults},
                         type: 'POST',
                         datatype: 'JSON',
                         success: function(data) {
-                            $('.loading').hide();
+                            $('.waiting-for-details').hide();
                             displayFeatureTable(data.results, {});
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            $('.loading').hide();
-                            alert("It took to long to lookup the details of the "+filteredResults.length+" results. Please restrict your search.");
+                            $('.waiting-for-details').hide();
+                            alert("It took too long to lookup the details of the "+filteredResults.length+" results. Please restrict your search.\n"+errorThrown+textStatus);
                         }
                     });
                 });
@@ -274,6 +277,9 @@
                 <ul id="searchterms">
                 </ul>
             </div>
+        </div>
+        <div class="waiting-for-details alert-box" style="display:none;">
+            Please wait, loading!
         </div>
         <div class="loading alert-box" style="display:none;">
             Please wait, loading!
