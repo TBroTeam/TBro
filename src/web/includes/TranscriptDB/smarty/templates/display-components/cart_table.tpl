@@ -16,24 +16,23 @@
                     "success": fnCallback
                 });
             },
-
-                 bLengthChange: false,
-                 sPaginationType: "full_numbers",
-                 aoColumns: [
-                     {mData: 'type'},
-                     {mData: 'name'},
-                     {mData: 'alias'}
-                 ],
-                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                     console.log($(nRow).find('td:eq(1)').html());
-                     $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
-                     $(nRow).css('cursor', 'pointer');
-                 },
-                 sDom: 'T<"clear">lrtip',
-                 oTableTools: {
-                     sRowSelect: "multi",
-                     aButtons: []
-                 }
+            bLengthChange: false,
+            sPaginationType: "full_numbers",
+            aoColumns: [
+                {mData: 'type'},
+                {mData: 'name'},
+                {mData: 'alias'}
+            ],
+            fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                console.log($(nRow).find('td:eq(1)').html());
+                $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
+                $(nRow).css('cursor', 'pointer');
+            },
+            sDom: 'T<"clear">lrtip',
+            oTableTools: {
+                sRowSelect: "multi",
+                aButtons: []
+            }
             //     aaData: []
         }, opts);
         // $.each(data, function() {
@@ -71,9 +70,22 @@
             new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToOtherCart);
             $('#button-features-addToCart-options-newcart').click(addSelectedToOtherCart);
 
-            $("#input-filter-carttable").keyup(function() {
-                if($("#input-filter-carttable").val().length >= 3)
+            $("#input-filter-carttable").focus(function() {
+                if ($(this).val() === 'Filter') {
+                    $(this).val("");
+                    $(this).attr("style", "color: black");
+                }
+            });
+            $("#input-filter-carttable").blur(function() {
+                if ($(this).val() === '') {
+                    $(this).val("Filter");
+                    $(this).attr("style", "color: lightgrey");
+                }
+            });
+            $("#input-filter-carttable").keyup(function(e) {
+                if (e.keyCode === 13) {
                     fnFilterCart();
+                }
             });
         });
     })(jQuery);
@@ -133,7 +145,7 @@
         </ul>
     </div>
     <div class="large-3 columns" style="padding-top: 6px">
-        <label>Filter: <input id="input-filter-carttable">  </input></label>
+        <input id="input-filter-carttable" value="Filter" style="color: lightgray">
     </div>
     <div class="large-12 column">
         <table style="width:100%" id="carttable">
