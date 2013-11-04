@@ -1,24 +1,38 @@
 <?php
 
-namespace cli_import;
 use \PDO;
 
-require_once ROOT . 'classes/AbstractImporter.php';
+require_once SHARED . 'classes/CLI_Command.php';
 
 /**
- * importer for textual descriptions
+ * importer pathway information
  */
-class Importer_Annotations_Description extends AbstractImporter {
+class PathwayInformation implements \CLI_Command {
 
-    /**
-     * @inheritDoc
-     * @param String $separator defaults to TAB
-     */
-    static function import($options, $separator = "\t") {
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        
+    }
 
-        $filename = $options['file'];
-        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        self::setLineCount($lines_total);
+    public static function CLI_commandDescription() {
+        return "Bring (KEGG) pathway information into CHADO.";
+    }
+
+    public static function CLI_commandName() {
+        return "addPathwayInformationToDB";
+    }
+
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
+        $command = $parser->addCommand(self::CLI_commandName(), array(
+            'description' => self::CLI_commandDescription()
+        ));
+
+        $command->addArgument('input_files', array('multiple' => true));
+
+        return $command;
+    }
+
+    public static function CLI_execute(\Console_CommandLine_Result $command, \Console_CommandLine $parser) {
+        $separator = "\t";
 
         global $db;
         $lines_imported = 0;
@@ -26,51 +40,48 @@ class Importer_Annotations_Description extends AbstractImporter {
         try {
             $db->beginTransaction();
             #shared parameters
-            $description = null;
-            $param_feature_uniq = null;
+            $param_kegg_id = null;
+            $param_name = null;
+            $param_definition = null;
 
-            //statement to add featureprop to feature
-            $statement_insert_featureprop = $db->prepare(<<<EOF
-WITH new_values (feature_id, type_id, rank, description) as (
-	SELECT feature_id, :type_id ::integer, 0, :description ::varchar
-	FROM feature 
-	WHERE uniquename=:uniquename AND organism_id=:organism
-),
+            //statement to add pathway as dbxref and cvterm
+            $statement_insert_cvterm = $db->prepare(<<<EOF
+WITH new_values (name, definition, cv_id, dbxref_id) as 
+    (SELECT :name::varchar, :definition::varchar, :cv_id::int, get_or_insert_dbxref::int FROM  get_or_insert_dbxref('KEGG', :kegg_id)),
 upsert as
 (
-    UPDATE featureprop p 
-        SET value = nv.description
+    UPDATE cvterm c
+        SET (name, definition) = (nv.name, nv.definition)
     FROM new_values nv
-    WHERE p.feature_id = nv.feature_id
-	AND p.type_id = nv.type_id
-	AND p.rank = nv.rank
-    RETURNING p.*
+    WHERE c.dbxref_id = nv.dbxref_id
+	AND c.cv_id = nv.cv_id
+    RETURNING c.*
 )
-INSERT INTO featureprop (feature_id, type_id, rank, value)
-SELECT feature_id, type_id, rank, description FROM new_values
-WHERE NOT EXISTS (SELECT 1 FROM upsert up WHERE up.feature_id = new_values.feature_id)
+INSERT INTO cvterm (name, definition, cv_id, dbxref_id)
+SELECT name, definition, cv_id, dbxref_id FROM new_values
+WHERE NOT EXISTS (SELECT 1 FROM upsert up WHERE up.dbxref_id = new_values.dbxref_id)
 EOF
-);
-            $statement_insert_featureprop->bindValue('type_id', CV_ANNOTATION_DESC, PDO::PARAM_INT);
-            $statement_insert_featureprop->bindParam('uniquename', $param_feature_uniq, PDO::PARAM_STR);
-            $statement_insert_featureprop->bindParam('description', $description, PDO::PARAM_STR);
-            $statement_insert_featureprop->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
+            );
+            // cv_id = 2 means 'local' if conflicting needs to be changed to speciel kegg-cv
+            $statement_insert_cvterm->bindValue('cv_id', 2, PDO::PARAM_INT);
+            $statement_insert_cvterm->bindParam('name', $param_name, PDO::PARAM_STR);
+            $statement_insert_cvterm->bindParam('kegg_id', $param_kegg_id, PDO::PARAM_STR);
+            $statement_insert_cvterm->bindParam('definition', $param_definition, PDO::PARAM_STR);
 
-            $file = fopen($filename, 'r');
-            while (($line = fgetcsv($file, 0, $separator)) !== false) {
-                if (count($line) == 0)
-                    continue;
-                $feature = $line[0];
-                $description = $line[1];
-                $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
+            foreach ($command->args['input_files'] as $infilename) {
+                $file = fopen($infilename, 'r');
+                while (($line = fgetcsv($file, 0, $separator)) !== false) {
+                    if (count($line) == 0)
+                        continue;
+                    $param_definition = $line[1];
+                    $param_kegg_id = $line[0];
+                    $param_name = sprintf("KEGG:map%s", $param_kegg_id);
 
-                $statement_insert_featureprop->execute();
-                $descriptions_added+=$statement_insert_featureprop->rowCount();
-
-
-                self::updateProgress(++$lines_imported);
+                    $statement_insert_cvterm->execute();
+                    $descriptions_added+=$statement_insert_cvterm->rowCount();
+                    $lines_imported++;
+                }
             }
-            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
@@ -79,7 +90,8 @@ EOF
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
+        printf("Descriptions added/updated:\t%s\n", $lines_imported);
+        printf("New pathways:\t\t%s\n", $descriptions_added);
     }
 
     /**
@@ -87,24 +99,22 @@ EOF
      */
     public static function CLI_longHelp() {
         return <<<EOF
-Tab-Separated file with column 1: feature_id and column 2: feature description
-   
-\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
+Add (KEGG) pathway ids and corresponding descriptions.
+        
+Tab-Separated file with column 1: kegg_id and column 2: pathway_name
+Example:
+00010   Glycolysis / Gluconeogenesis
+00020   Citrate cycle (TCA cycle)
+00030   Pentose phosphate pathway
+00040   Pentose and glucuronate interconversions
+00051   Fructose and mannose metabolism
+00052   Galactose metabolism
+00053   Ascorbate and aldarate metabolism
+00061   Fatty acid biosynthesis
+00062   Fatty acid elongation in mitochondria
+00071   Fatty acid metabolism
+
 EOF;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function CLI_commandDescription() {
-        return 'import feature descriptions';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function CLI_commandName() {
-        return 'annotation_description';
     }
 
 }
