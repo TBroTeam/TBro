@@ -33,7 +33,7 @@ class Inpathway_term extends \WebService {
 			(SELECT object_id FROM cvterm_relationship,
 				(SELECT * FROM cvterm, 
 					(SELECT * from dbxref 
-					WHERE db_id=119) AS dbx
+					WHERE db_id=(SELECT db_id FROM db WHERE name='KEGG' LIMIT 1)) AS dbx
 				WHERE cvterm.dbxref_id=dbx.dbxref_id
                                 AND UPPER(cvterm.definition) LIKE UPPER(:term)) AS cvt
 			WHERE cvterm_relationship.subject_id=cvt.cvterm_id) AS obj
@@ -42,7 +42,7 @@ class Inpathway_term extends \WebService {
 WHERE feature.feature_id=fdbx.feature_id 
 AND organism_id=:species
 AND type_id={$constant('CV_ISOFORM')}
-AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id=177 AND accession=:release LIMIT 1)
+AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)
 
 EOF;
         
