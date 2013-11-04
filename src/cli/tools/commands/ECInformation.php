@@ -1,24 +1,38 @@
 <?php
 
-namespace cli_import;
 use \PDO;
 
-require_once ROOT . 'classes/AbstractImporter.php';
+require_once SHARED . 'classes/CLI_Command.php';
 
 /**
- * importer for textual descriptions
+ * importer pathway information
  */
-class Importer_Annotations_Description extends AbstractImporter {
+class ECInformation implements \CLI_Command {
 
-    /**
-     * @inheritDoc
-     * @param String $separator defaults to TAB
-     */
-    static function import($options, $separator = "\t") {
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        
+    }
 
-        $filename = $options['file'];
-        $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
-        self::setLineCount($lines_total);
+    public static function CLI_commandDescription() {
+        return "Bring EC information into CHADO.";
+    }
+
+    public static function CLI_commandName() {
+        return "addECInformationToDB";
+    }
+
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
+        $command = $parser->addCommand(self::CLI_commandName(), array(
+            'description' => self::CLI_commandDescription()
+        ));
+
+        $command->addArgument('input_files', array('multiple' => true));
+
+        return $command;
+    }
+
+    public static function CLI_execute(\Console_CommandLine_Result $command, \Console_CommandLine $parser) {
+        $separator = "\t";
 
         global $db;
         $lines_imported = 0;
@@ -26,51 +40,48 @@ class Importer_Annotations_Description extends AbstractImporter {
         try {
             $db->beginTransaction();
             #shared parameters
-            $description = null;
-            $param_feature_uniq = null;
+            $param_name = null;
+            $param_ec_id = null;
+            $param_definition = null;
 
-            //statement to add featureprop to feature
-            $statement_insert_featureprop = $db->prepare(<<<EOF
-WITH new_values (feature_id, type_id, rank, description) as (
-	SELECT feature_id, :type_id ::integer, 0, :description ::varchar
-	FROM feature 
-	WHERE uniquename=:uniquename AND organism_id=:organism
-),
+            //statement to add pathway as dbxref and cvterm
+            $statement_insert_cvterm = $db->prepare(<<<EOF
+WITH new_values (name, definition, cv_id, dbxref_id) as 
+    (SELECT :name::varchar, :definition::varchar, :cv_id::int, get_or_insert_dbxref::int FROM  get_or_insert_dbxref('EC', :ec_id)),
 upsert as
 (
-    UPDATE featureprop p 
-        SET value = nv.description
+    UPDATE cvterm c
+        SET (name, definition) = (nv.name, nv.definition)
     FROM new_values nv
-    WHERE p.feature_id = nv.feature_id
-	AND p.type_id = nv.type_id
-	AND p.rank = nv.rank
-    RETURNING p.*
+    WHERE c.dbxref_id = nv.dbxref_id
+	AND c.cv_id = nv.cv_id
+    RETURNING c.*
 )
-INSERT INTO featureprop (feature_id, type_id, rank, value)
-SELECT feature_id, type_id, rank, description FROM new_values
-WHERE NOT EXISTS (SELECT 1 FROM upsert up WHERE up.feature_id = new_values.feature_id)
+INSERT INTO cvterm (name, definition, cv_id, dbxref_id)
+SELECT name, definition, cv_id, dbxref_id FROM new_values
+WHERE NOT EXISTS (SELECT 1 FROM upsert up WHERE up.dbxref_id = new_values.dbxref_id)
 EOF
-);
-            $statement_insert_featureprop->bindValue('type_id', CV_ANNOTATION_DESC, PDO::PARAM_INT);
-            $statement_insert_featureprop->bindParam('uniquename', $param_feature_uniq, PDO::PARAM_STR);
-            $statement_insert_featureprop->bindParam('description', $description, PDO::PARAM_STR);
-            $statement_insert_featureprop->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
+            );
+            // cv_id = 2 means 'local' if conflicting needs to be changed to speciel kegg-cv
+            $statement_insert_cvterm->bindValue('cv_id', 2, PDO::PARAM_INT);
+            $statement_insert_cvterm->bindParam('name', $param_name, PDO::PARAM_STR);
+            $statement_insert_cvterm->bindParam('definition', $param_definition, PDO::PARAM_STR);
+            $statement_insert_cvterm->bindParam('ec_id', $param_ec_id, PDO::PARAM_STR);
 
-            $file = fopen($filename, 'r');
-            while (($line = fgetcsv($file, 0, $separator)) !== false) {
-                if (count($line) == 0)
-                    continue;
-                $feature = $line[0];
-                $description = $line[1];
-                $param_feature_uniq = IMPORT_PREFIX . "_" . $feature;
+            foreach ($command->args['input_files'] as $infilename) {
+                $file = fopen($infilename, 'r');
+                while (($line = fgetcsv($file, 0, $separator)) !== false) {
+                    if (count($line) == 0)
+                        continue;
+                    $param_definition = $line[1];
+                    $param_ec_id = $line[0];
+                    $param_name = sprintf("EC:%s", $param_ec_id);
 
-                $statement_insert_featureprop->execute();
-                $descriptions_added+=$statement_insert_featureprop->rowCount();
-
-
-                self::updateProgress(++$lines_imported);
+                    $statement_insert_cvterm->execute();
+                    $descriptions_added+=$statement_insert_cvterm->rowCount();
+                    $lines_imported++;
+                }
             }
-            self::preCommitMsg();
             if (!$db->commit()) {
                 $err = $db->errorInfo();
                 throw new \ErrorException($err[2], ERRCODE_TRANSACTION_NOT_COMPLETED, 1);
@@ -79,7 +90,8 @@ EOF
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
+        printf("Descriptions added/updated:\t%s\n", $lines_imported);
+        printf("New EC numbers:\t\t%s\n", $descriptions_added);
     }
 
     /**
@@ -87,24 +99,22 @@ EOF
      */
     public static function CLI_longHelp() {
         return <<<EOF
-Tab-Separated file with column 1: feature_id and column 2: feature description
-   
-\033[0;31mThis import requires a successful Sequence ID Import!\033[0m
+Add EC ids and corresponding descriptions.
+        
+Tab-Separated file with column 1: EC_numer and column 2: description
+Example:
+1.1.1.1 Alcohol dehydrogenase.
+1.1.1.2 Alcohol dehydrogenase (NADP(+)).
+1.1.1.3 Homoserine dehydrogenase.
+1.1.1.4 (R,R)-butanediol dehydrogenase.
+1.1.1.5 Transferred entry: 1.1.1.303 and 1.1.1.304.
+1.1.1.6 Glycerol dehydrogenase.
+1.1.1.7 Propanediol-phosphate dehydrogenase.
+1.1.1.8 Glycerol-3-phosphate dehydrogenase (NAD(+)).
+1.1.1.9 D-xylulose reductase.
+1.1.1.10    L-xylulose reductase.
+...
 EOF;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function CLI_commandDescription() {
-        return 'import feature descriptions';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function CLI_commandName() {
-        return 'annotation_description';
     }
 
 }
