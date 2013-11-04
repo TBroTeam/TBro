@@ -24,29 +24,33 @@
         <div class="large-12 columns panel">
             <h4>Enzyme Classification</h4>
             {#foreach $dbxref['EC'] as $namespace=>$dbxarr#}
-                <table style="width:100%">
-                    <tbody>
-                        {#foreach $dbxarr as $dbxref#}
+                {#foreach $dbxarr as $dbxref#}
+                    <table style="width:100%">
+                        <tbody>
                             <tr><td>{#dbxreflink dbxref=$dbxref#}</td></tr>
-                        {#/foreach#}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+
+
+                    {#if (isset($pathway))#}
+                        <h6>Associated Pathways</h6>
+                        <table style="width:100%">
+                            <tbody>
+                                {#foreach $pathway as $pw#}
+                                    {#if ($pw['ec'] === $dbxref['accession'])#}
+                                        <tr>
+                                            <td>
+                                                <a href="http://www.genome.jp/kegg-bin/show_pathway?query={#$pw['ec']#}&map=map{#$pw['accession']#}" target="_blank">{#$pw['accession']#}</a>
+                                            </td>
+                                            <td>{#$pw['definition']#}</td>
+                                        </tr>
+                                    {#/if#}
+                                {#/foreach#}
+                            </tbody>
+                        </table>
+                    {#/if#}
+                {#/foreach#}
             {#/foreach#}
-            {#if (isset($pathway))#}
-            <h5>Associated Pathways</h5>
-            {#foreach $pathway as $pw#}
-                <table style="width:100%">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <a href="http://www.genome.jp/kegg-bin/show_pathway?query={#$pw['ec']#}&map=map{#$pw['accession']#}" target="_blank">{#$pw['accession']#}</a>
-                            </td>
-                            <td>{#$pw['definition']#}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            {#/foreach#}
-            {#/if#}
         </div>
     </div>
 {#/if#}
