@@ -4,9 +4,15 @@
             bLengthChange: false,
             sPaginationType: "full_numbers",
             aoColumns: [
-                {mData: 'type'},
-                {mData: 'name'},
-                {mData: 'alias'}
+                {mData: 'type',
+                    bSortable: false
+                },
+                {mData: 'name',
+                    bSortable: false
+                },
+                {mData: 'alias',
+                    bSortable: false
+                }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 console.log($(nRow).find('td:eq(1)').html());

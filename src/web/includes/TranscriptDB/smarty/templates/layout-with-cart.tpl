@@ -149,7 +149,7 @@
                     <div class='cartGroup' data-name="<%= groupname %>">
                     <div class="large-12 columns">
                     <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
-                    </div>
+                    <span class="elements">(0)</span></div>
                     <div class="right">
                     <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
@@ -162,11 +162,6 @@
                     </ul>
                     </div>
                     </div>
-                    <ul class="large-12 columns elements">
-                    <li class="placeholder">
-                    drag your items here
-                    </li>
-                    </ul>
                     </div>
                                     <div style="clear:both">&nbsp;</div>
                 </script>

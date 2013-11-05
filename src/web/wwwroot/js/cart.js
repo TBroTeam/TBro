@@ -349,35 +349,17 @@ Cart.prototype.addItem = function(ids, options) {
     return dfd.promise();
 
     function work() {
-        if (missingIds.length <= 100) {
-            that._getItemDetails(missingIds, function(aItemDetails) {
+        addInternal.call(that);
+        if (options.addToDOM)
+            addToDOM.call(that);
 
-                addInternal.call(that);
-                if (options.addToDOM)
-                    addToDOM.call(that, aItemDetails);
+        that.sync({
+            action: 'addItem',
+            ids: missingIds,
+            groupname: options.groupname
+        }, options);
 
-                that.sync({
-                    action: 'addItem',
-                    ids: missingIds,
-                    groupname: options.groupname
-                }, options);
-
-                dfd.resolve();
-            });
-        }
-        else {
-            addInternal.call(that);
-            if (options.addToDOM)
-                addToDOM.call(that);
-
-            that.sync({
-                action: 'addItem',
-                ids: missingIds,
-                groupname: options.groupname
-            }, options);
-
-            dfd.resolve();
-        }
+        dfd.resolve();
     }
 
     function addInternal() {
@@ -394,28 +376,7 @@ Cart.prototype.addItem = function(ids, options) {
         $('body').css('cursor', 'default');
         var group$ = that._getGroupNode(options.groupname);
         var group = that._getGroup(options.groupname);
-        if (group.length > 100) {
-            $('li', group$.find('.elements')).empty();
-            var placeholder = $('<li class="cartFullText" style="clear:both"></li>');
-            placeholder.text('There are ' + group.length + " items in this group. Therefore it is too large to be displayed.");
-            group$.find('.elements').append(placeholder);
-        }
-        else {
-            $.each(aItemDetails, function(key, itemDetails) {
-
-                if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
-                    return;
-                }
-
-                var item$ = that._executeTemplate$('Item', {
-                    item: itemDetails
-                });
-                item$.data('afterDOMinsert', options.afterDOMinsert);
-                group$.find('.elements .placeholder').remove();
-                group$.find('.elements').append(item$);
-                options.afterDOMinsert.call(item$);
-            });
-        }
+        group$.find('.elements').html('('+group.length+')');
     }
 };
 
@@ -618,13 +579,7 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         });
         var afterDOMinsert = oldGroup$.data('afterDOMinsert');
         newGroup$.data('afterDOMinsert', afterDOMinsert);
-        newGroup$.find('.elements').append(items$);
-        if (newGroup$.find(".elements").children("li").length >= 1) {
-            newGroup$.find('.placeholder').remove();
-        }
-        if(typeof cft$ !== 'undefined'){
-            newGroup$.find('.elements').append(cft$);
-        }
+        
         oldGroup$.replaceWith(newGroup$);
         afterDOMinsert.call(newGroup$);
     }
