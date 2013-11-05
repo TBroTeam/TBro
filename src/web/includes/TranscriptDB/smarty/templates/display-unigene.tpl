@@ -9,11 +9,11 @@
         var feature_id = '{#$data.unigene.feature_id#}';
 
         $(document).ready(function() {
-            new Grouplist($('#button-unigene-addToCart-options'), cart, addSelectedToCart);
-            $('#button-unigene-addToCart-options-newcart').click(addSelectedToCart);
+            new Grouplist($('#button-unigene-addToCart-options'), cart, addUnigeneToCart);
+            $('#button-unigene-addToCart-options-newcart').click(addUnigeneToCart);
         });
 
-        function addSelectedToCart() {
+        function addUnigeneToCart() {
             var group = $(this).attr('data-value');
             if (group === '#new#')
                 group = cart.addGroup();
