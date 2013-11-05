@@ -114,17 +114,18 @@ Add EC number to KEGG-pathway relationship.
         
 Tab-Separated file with column 1: ec_number and column 2: kegg_id
 Example:
-00010   Glycolysis / Gluconeogenesis
-00020   Citrate cycle (TCA cycle)
-00030   Pentose phosphate pathway
-00040   Pentose and glucuronate interconversions
-00051   Fructose and mannose metabolism
-00052   Galactose metabolism
-00053   Ascorbate and aldarate metabolism
-00061   Fatty acid biosynthesis
-00062   Fatty acid elongation in mitochondria
-00071   Fatty acid metabolism
+6.4.1.3	01120
+6.4.1.4	00280
+6.4.1.4	01100
+6.4.1.5	00281
+6.4.1.5	01110
+6.6.1.1	00860
+6.6.1.1	01100
+6.6.1.1	01110
+6.6.1.2	00860
+6.6.1.2	01100
 
+\033[0;31mThis requires successful Pathway-Information and EC-Information imports\033[0m
 EOF;
     }
 
