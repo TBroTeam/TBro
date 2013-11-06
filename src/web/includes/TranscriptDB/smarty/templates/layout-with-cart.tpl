@@ -13,12 +13,6 @@
     <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
 
     <style>
-        .ui-accordion .ui-accordion-header {
-            margin-bottom:0px;
-        }
-        .ui-accordion .ui-accordion-content {
-            padding: 0.5em 1em;
-        }
         .beingDragged {
             list-style: none;
         }
@@ -147,11 +141,11 @@
 
                 <script type="text/template" id="template_cart_new_group"> 
                     <div class='cartGroup' data-name="<%= groupname %>">
-                    <div class="large-12 columns">
+                    <div class="large-12 columns panel" style="background:white">
                     <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
                     <span class="elements">(0)</span></div>
                     <div class="right">
-                    <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
+                    <button class="cartMenuButton small" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
                     <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename Group</a></li>
                     <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy Group</a></li>

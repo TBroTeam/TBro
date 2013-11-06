@@ -572,8 +572,7 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
 
     function renameInDOM() {
         var oldGroup$ = this._getGroupNode(groupname);
-        var items$ = oldGroup$.find('.cartItem');
-        var cft$ = oldGroup$.find('.cartFullText');
+        
         var newGroup$ = this._executeTemplate$('Group', {
             groupname: newname
         });
@@ -582,6 +581,8 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         
         oldGroup$.replaceWith(newGroup$);
         afterDOMinsert.call(newGroup$);
+        var numOfElements = this._getGroup(newname).length;
+        newGroup$.find('.elements').html('('+numOfElements+')');
     }
 };
 

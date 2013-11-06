@@ -29,11 +29,6 @@ $(document).ready(function() {
     }, 5000); //sync over tabs if neccessary
 
     function groupAllAfterDOM() {
-        this.accordion({
-            collapsible: true,
-            heightStyle: "content"
-        });
-
         this.find('.exportBtn').click(function() {
             exportBtnClick.call(this, 'all');
         });
@@ -82,10 +77,6 @@ $(document).ready(function() {
                     addToDOM: true
                 });
             }
-        });
-        this.accordion({
-            collapsible: true,
-            heightStyle: "content"
         });
         
         this.find('.exportBtn').click(function() {
