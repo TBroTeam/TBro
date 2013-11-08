@@ -39,7 +39,8 @@
                         console.log("No items in cart");
                         return;
                     }
-                    displayCartTable(cartitems, {}); 
+                    displayCartTable(cartitems, {});
+                    showPathwayInfo();
                     }, 500);
                 });
             });
