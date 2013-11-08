@@ -52,8 +52,8 @@
             });
             $(document).ready(function() {
                 displayFeatureTable(isoform_data, {
-                    bPaginate: false,
-                    bFilter: false
+                    // bPaginate: false,
+                    // bFilter: false
                 });
             });
         </script>

@@ -29,7 +29,6 @@
         $.each(data, function() {
             options.aaData.push(this);
         });
-        console.log(options);
         $('.results').show(500);
         var tbl = $('#results');
         if (!$.fn.DataTable.fnIsDataTable(tbl.get(0)))
@@ -62,8 +61,23 @@
             new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToCart);
             $('#button-features-addToCart-options-newcart').click(addSelectedToCart);
 
-            $("#input-filter-results").keyup(function() {
-                fnFilter();
+            $("#input-filter-results").focus(function() {
+                if ($(this).val() === 'Filter') {
+                    $(this).val("");
+                    $(this).attr("style", "color: black");
+                }
+            });
+            $("#input-filter-results").blur(function() {
+                if ($(this).val() === '') {
+                    $(this).val("Filter");
+                    $(this).attr("style", "color: lightgrey");
+                }
+            });
+            $("#input-filter-results").keyup(function(e) {
+                // only if "Enter" key pressed.
+                if (e.keyCode === 13) {
+                    fnFilterResults();
+                }
             });
         });
     })(jQuery);
@@ -77,7 +91,7 @@
         oTable.fnDraw();
     }
 
-    function fnFilter() {
+    function fnFilterResults() {
         var oTable = $('#results').dataTable();
         oTable.fnFilter($("#input-filter-results").val());
     }
@@ -123,7 +137,7 @@
         </ul>
     </div>
     <div class="large-3 columns" style="padding-top: 6px">
-        <label>Filter: <input id="input-filter-results">  </input></label>
+        <input id="input-filter-results" value="Filter" style="color: lightgray">
     </div>
     <div class="large-12 column">
         <table style="width:100%" id="results">

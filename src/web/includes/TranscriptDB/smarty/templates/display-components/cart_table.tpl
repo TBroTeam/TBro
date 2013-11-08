@@ -89,6 +89,7 @@
                 }
             });
             $("#input-filter-carttable").keyup(function(e) {
+                // only if "Enter" key pressed.
                 if (e.keyCode === 13) {
                     fnFilterCart();
                 }
