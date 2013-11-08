@@ -27,11 +27,12 @@ class Pathways extends \WebService {
 
         $query_get_features = <<<EOF
 SELECT
-  dbx.feature_id, dbx.comp_acc, dbx.comp_def, dbxref.accession AS pw_acc, cvterm.definition AS pw_def
+  dbx.feature_id, dbx.comp_acc, dbx.comp_def, dbxref.accession AS pw_acc, cvterm.definition AS pw_def, feature.name
 FROM
   cvterm_relationship,
   cvterm,
   dbxref,
+  feature,
 	(SELECT 
 	  feature_id, dbxref.accession AS comp_acc, cvterm.definition AS comp_def, cvterm_id
 	FROM 
@@ -48,7 +49,8 @@ FROM
 WHERE
   cvterm_relationship.object_id = dbx.cvterm_id AND
   cvterm.cvterm_id = cvterm_relationship.subject_id AND
-  dbxref.dbxref_id = cvterm.dbxref_id
+  dbxref.dbxref_id = cvterm.dbxref_id AND
+  feature.feature_id = dbx.feature_id
 
 EOF;
 
@@ -86,7 +88,7 @@ EOF;
             $data['results']['pathways'][$pw['pw_acc']]['comps'][$pw['comp_acc']] = 1;
             if (!isset($data['results']['components'][$pw['comp_acc']]))
                 $data['results']['components'][$pw['comp_acc']] = array('definition'=>$pw['comp_def'], 'features'=>array());
-            $data['results']['components'][$pw['comp_acc']]['features'][$pw['feature_id']] = 1;
+            $data['results']['components'][$pw['comp_acc']]['features'][$pw['feature_id']] = $pw['name'];
         }
 
         return $data;
