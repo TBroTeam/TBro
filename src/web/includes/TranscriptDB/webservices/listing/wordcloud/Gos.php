@@ -6,7 +6,7 @@ use \PDO as PDO;
 
 /**
  * Web Service.
- * returns up to 20+20 features, searching by start of featurename or synonym
+ * returns GO annotations for the given features
  */
 class Gos extends \WebService {
 
