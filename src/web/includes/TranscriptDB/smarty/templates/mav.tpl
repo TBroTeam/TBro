@@ -106,7 +106,8 @@
                 <li><a href="#tabs-overview">Overview</a></li>
                 <li><a href="#tabs-graphs">Expression Plots</a></li>
                 <li><a href="#tabs-diffexp">Differential Expression Analysis</a></li>
-                <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li>
+                <li><a href="#tabs-pathways">Pathways</a></li>
+                <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
                 {#include file="display-components/cart_table.tpl"#}
@@ -173,7 +174,10 @@
             <div id="tabs-diffexp">
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}
             </div>
-            <div id="tabs-wordcloud">
+            <div id="tabs-pathways">
+                {#include file="display-components/pathways.tpl"#}
+            </div>
+            <div id="tabs-wordcloud" style="display: none">
                 <button class="button" onclick="drawCloud('gos');">Draw GO wordclouds</button> 
                     <div id="panel-wordclouds" style="display: none">
                     <h5> Molecular Function </h5>
