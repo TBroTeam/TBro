@@ -116,32 +116,26 @@
             <div id="tabs-graphs">
                 <div id="tabs-graphs-selection">
                 <div class="row">
-                    <div class="large-3 columns">
+                    <div class="large-4 columns">
                         <h4>Experiment</h4>
                     </div>
-                    <div class="large-3 columns">
+                    <div class="large-4 columns">
                         <h4>Analysis</h4>
                     </div>
-                    <div class="large-3 columns">
-                        <h4>Features</h4>
-                    </div>
-                    <div class="large-3 columns">
+                    <div class="large-4 columns">
                         <h4>Samples</h4>
                     </div>
                 </div>
 
                 <form id="filters">
-                    <div class="row">
-                        <div class="large-3 columns panel">
+                    <div class="row panel">
+                        <div class="large-4 columns">
                             <select id="select-assay" size="12"></select>
                         </div>
-                        <div class="large-3 columns panel">
+                        <div class="large-4 columns">
                             <select id="select-analysis" size="12"></select>
                         </div>
-                        <div class="large-3 columns panel">
-                            <select id="select-elements" size="12" multiple="multiple"></select>
-                        </div>
-                        <div class="large-3 columns panel">
+                        <div class="large-4 columns">
                             <select id="select-sample" size="12" multiple="multiple"></select>
                         </div>
                     </div>
