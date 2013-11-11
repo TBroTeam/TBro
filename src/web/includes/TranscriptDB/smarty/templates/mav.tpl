@@ -97,7 +97,7 @@
 
     <div class="row">
         <div class="large-12 columns">
-            <h2>Multi-Feature Actions on Cart {#$cartname#}</h2>
+            <h2>{#$cartname#}</h2>
         </div>
     </div>
     <div class="row">
