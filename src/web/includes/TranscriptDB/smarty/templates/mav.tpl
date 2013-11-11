@@ -162,9 +162,6 @@
                     </div>
                 </div>
                 </div>
-                <div id="tabs-graphs-too-many" style="display: none">
-                    Too many isoforms (more than 20) to display
-                </div>
             </div>
             <div id="tabs-diffexp">
                 {#include file="display-components/diffexpr.tpl" cart_ids=true#}

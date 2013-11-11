@@ -41,7 +41,7 @@ $(document).ready(function() {
 
     //groupByTissues button
     function isoform_barplot_groupByTissues() {
-        var checkbox = $(this);
+        var checkbox = $("#isoform-barplot-groupByTissues");
         var cx = $('#isoform-barplot-canvas').data('canvasxpress');
         if (checkbox.prop('checked')) {
             cx.groupSamples(["Tissue_Group"]);
