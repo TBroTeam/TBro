@@ -1,21 +1,16 @@
 $(document).ready(function() {
 
-    var select_element = $('#select-elements');
     var select_assay = $('#select-assay');
     var select_analysis = $('#select-analysis');
     var select_tissues = $('#select-sample');
 
-    //filteredSelect: select_assay => select_analysis => select_element => select_tissues
+    //filteredSelect: select_assay => select_analysis => select_tissues
     new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
-    new filteredSelect(select_element, 'feature', {
+    new filteredSelect(select_tissues, 'sample', {
         precedessorNode: select_analysis
     });
-    new filteredSelect(select_tissues, 'sample', {
-        precedessorNode: select_element
-    });
-
 
     var lastItemEvent = 0;
     //if selected cart group changes (adding/removing items or context switch), update  filters accordingly
@@ -35,28 +30,22 @@ $(document).ready(function() {
 
             var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
 
-            if (cartitems.length <= 20) {
-                $.ajax('{#$ServicePath#}/listing/filters/', {
-                    method: 'post',
-                    data: {
-                        ids: cartitems
-                    },
-                    success: function(data) {
-                        var filterdata = data;
-                        $.each(cartitems, function() {
-                            filterdata.data.feature[this] = cart.cartitems[this];
-                        });
-                        new filteredSelect(select_assay, 'assay', {
-                            data: filterdata
-                        }).refill();
+            $.ajax('{#$ServicePath#}/listing/filters/', {
+                method: 'post',
+                data: {
+                    ids: cartitems
+                },
+                success: function(data) {
+                    var filterdata = data;
+                    $.each(cartitems, function() {
+                        filterdata.data.feature[this] = cart.cartitems[this];
+                    });
+                    new filteredSelect(select_assay, 'assay', {
+                        data: filterdata
+                    }).refill();
 
-                    }
-                });
-            }
-            else{
-                $('#tabs-graphs-selection').hide();
-                $('#tabs-graphs-too-many').show();
-            }
+                }
+            });
         }, 100);
 
     });
@@ -73,9 +62,7 @@ $(document).ready(function() {
             assay: [],
             biomaterial: []
         };
-        select_element.find(':selected').each(function() {
-            data.parents.push($(this).val());
-        });
+        data.parents = cart._getCartForContext()['{#$cartname#}'] || [];
         data.analysis.push(select_analysis.find(':selected').val());
         data.assay.push(select_assay.find(':selected').val());
         select_tissues.find(':selected').each(function() {
