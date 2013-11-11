@@ -75,6 +75,7 @@ $(document).ready(function() {
     $('#button-barplot').click(function() {
 
         $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
+            method: 'post',
             data: getFilterData(),
             success: function(val) {
                 $('#isoform-barplot-panel').show(0);
@@ -121,6 +122,7 @@ $(document).ready(function() {
 //display heatmap
     $('#button-heatmap').click(function() {
         $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
+            method: 'post',
             data: getFilterData(),
             success: function(val) {
                 $('#isoform-barplot-panel').show(0);
