@@ -123,15 +123,37 @@
         }), {
             groupname: group
         });
+    }
 
+    function removeSelectedFromCart() {
+        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
+        if (selectedItems.length === 0)
+            return;
+        console.log(selectedItems);
+        _.each(selectedItems, function(val) {
+            cart.removeItem(val.feature_id, {groupname: '{#$cartname#}'});
+        });
+        var oTable = $('#carttable').dataTable();
+        oTable.fnReloadAjax();
+    }
+    
+    function removeAllFromCart() {
+        var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+        while (cartitems.length !== 0){
+            cart.removeItem(cartitems[0], {groupname: '{#$cartname#}'});
+        }
+        var oTable = $('#carttable').dataTable();
+        oTable.fnClearTable();
     }
 </script>
 
 <div class="row">
     <div class="large-9 columns">        
-        <ul class="button-group even-3">
-            <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Show Entries </button></li>
+        <ul class="button-group even-5">
+            <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Entries </button></li>
             <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button></li>
+            <li><button class="small button dropdown" data-dropdown="delete-dropdown">Delete</button></li>
+            <li><button class="small button dropdown" data-dropdown="export-dropdown">Export</button></li>
             <li><button class="small button dropdown" type="button" id="button-features-addToCart" data-dropdown="button-features-addToCart-options"> Store </button></li>
         </ul>
 
@@ -145,6 +167,14 @@
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">All visible</li>
             <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">None</li>
+        </ul>
+        <ul id="delete-dropdown" class="f-dropdown" data-dropdown-content>
+            <li onclick="removeSelectedFromCart();">Selected</li>
+            <li onclick="removeAllFromCart();">All</li>
+        </ul>
+        <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
+            <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">Nucleotides (fasta)</li>
+            <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">Peptides (fasta)</li>
         </ul>
         <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
             <li id="button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>

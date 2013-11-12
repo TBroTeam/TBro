@@ -28,6 +28,10 @@ class Cart_table extends \WebService {
             $querydata['terms'] = explode(",", $querydata['terms']);
         }
         $ids_filtered = $querydata['terms'];
+        if($ids_filtered[0] === ''){
+            array_splice($ids_filtered, 0, 1);
+        }
+        
         if (isset($querydata['sSearch']) && $querydata['sSearch'] !== '') {
             $ids_filtered = array();
             if (strpos('isoform', $querydata['sSearch']) !== FALSE) {

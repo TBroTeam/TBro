@@ -473,6 +473,9 @@ Cart.prototype.removeItem = function(id, options) {
 
     function removeFromDOM() {
         this._getItemNodes(id, options.groupname).remove();
+        var group$ = that._getGroupNode(options.groupname);
+        var group = that._getGroup(options.groupname);
+        group$.find('.elements').html('('+group.length+')');
     }
 };
 

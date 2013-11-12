@@ -37,11 +37,11 @@
             <div class="large-12 columns panel">
                 <div class="row">
                 <div class="large-10 columns">
-                <h6> <%= pathway.definition %> 
+                <h5> <%= pathway.definition %> 
                     (<a href="http://www.genome.jp/kegg-bin/show_pathway?map=map<%=id%>&multi_query=<% _.each(components, function(comp) { %><%=comp%>%0D%0A<% }); %>" target="_blank">
                         <%= id %> 
                     </a>)
-                </h6> Components: <%print(components.length);%>
+                </h5> Components: <%print(components.length);%>
                 </div>
                 <div class="large-2 columns">
                 <div class="button" onclick="$('#pathway-<%=id%>-details').toggle();"> Details </div>
@@ -50,7 +50,7 @@
                 <div class="large-12" style="display: none" id="pathway-<%=id%>-details">
                     <% _.each(components, function(comp) { 
                         comp_p="http://www.chem.qmul.ac.uk/iubmb/enzyme/EC"+comp.replace(/\./g, '/')+".html";%>
-                                <div class="panel"><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a>
+                                <div class="panel"><h6><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
                                 <ul><% _.each(comp_array[comp].features, function(value, key) { %><li> <a target="_blank" href="{#$AppPath#}/details/byId/<%=key%>"><%= value %></a> </li><% }) %></ul>
                                 </div>
                         <% }); %>
