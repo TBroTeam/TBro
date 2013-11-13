@@ -97,6 +97,11 @@
         });
     })(jQuery);
 
+    function updateSelectedCount() {
+        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
+        $('.selectedItemsCount').html('Selected ('+selectedItems.length+')');
+    }
+
     function fnNumOfEntriesCart(numOfEntries)
     {
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
@@ -171,7 +176,7 @@
         var ids = $.map(selectedItems, function(key, val) {
             return key.feature_id;
         });
-        exportIds(service, ids, '{#$cartname#}'+"_selection");
+        exportIds(service, ids, '{#$cartname#}' + "_selection");
     }
     function exportAll(service) {
         var ids = cart._getCartForContext()['{#$cartname#}'] || [];
@@ -179,9 +184,9 @@
     }
     function exportIds(service, ids, cartname) {
         $.download(service, {
-                terms: ids,
-                cartname: cartname
-            }, 'post');
+            terms: ids,
+            cartname: cartname
+        }, 'post');
     }
 </script>
 
@@ -190,8 +195,8 @@
         <ul class="button-group even-5">
             <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Entries </button></li>
             <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button></li>
-            <li><button class="small button dropdown" data-dropdown="delete-dropdown">Delete</button></li>
-            <li><button class="small button dropdown" data-dropdown="export-dropdown">Export</button></li>
+            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="delete-dropdown">Delete</button></li>
+            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="export-dropdown">Export</button></li>
             <li><button class="small button dropdown" type="button" id="button-features-addToCart" data-dropdown="button-features-addToCart-options"> Store </button></li>
         </ul>
 
@@ -207,11 +212,11 @@
             <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">None</li>
         </ul>
         <ul id="delete-dropdown" class="f-dropdown" data-dropdown-content>
-            <li onclick="removeSelectedFromCart();">Selected</li>
+            <li onclick="removeSelectedFromCart();" class="selectedItemsCount">Selected</li>
             <li onclick="removeAllFromCart();">All</li>
         </ul>
         <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
-            <li><b> Selected </b></li>
+            <li><b class="selectedItemsCount"> Selected </b></li>
             <li onclick="exportSelected('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
             <li onclick="exportSelected('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
             <li><b> All </b></li>            
