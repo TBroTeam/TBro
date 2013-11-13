@@ -129,21 +129,59 @@
         var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
         if (selectedItems.length === 0)
             return;
-        console.log(selectedItems);
         _.each(selectedItems, function(val) {
             cart.removeItem(val.feature_id, {groupname: '{#$cartname#}'});
         });
         var oTable = $('#carttable').dataTable();
         oTable.fnReloadAjax();
     }
-    
+
     function removeAllFromCart() {
         var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
-        while (cartitems.length !== 0){
+        while (cartitems.length !== 0) {
             cart.removeItem(cartitems[0], {groupname: '{#$cartname#}'});
         }
         var oTable = $('#carttable').dataTable();
         oTable.fnClearTable();
+    }
+
+    // This method for providing a download file is necessary due to the lack of a standard way.
+    jQuery.download = function(url, data, method) {
+        //url and data options required
+        if (url && data) {
+            //data can be string of parameters or array/object
+            data = typeof data == 'string' ? data : jQuery.param(data);
+            //split params into form inputs
+            var inputs = '';
+            jQuery.each(data.split('&'), function() {
+                var pair = this.split('=');
+                inputs += '<input type="hidden" name="' + unescape(pair[0]) + '" value="' + pair[1] + '" />';
+            });
+            //send request
+            jQuery('<form action="' + url + '" method="' + (method || 'post') + '">' + inputs + '</form>')
+                    .appendTo('body').submit().remove();
+        }
+        ;
+    };
+
+    function exportSelected(service) {
+        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
+        if (selectedItems.length === 0)
+            return;
+        var ids = $.map(selectedItems, function(key, val) {
+            return key.feature_id;
+        });
+        exportIds(service, ids, '{#$cartname#}'+"_selection");
+    }
+    function exportAll(service) {
+        var ids = cart._getCartForContext()['{#$cartname#}'] || [];
+        exportIds(service, ids, '{#$cartname#}');
+    }
+    function exportIds(service, ids, cartname) {
+        $.download(service, {
+                terms: ids,
+                cartname: cartname
+            }, 'post');
     }
 </script>
 
@@ -173,8 +211,13 @@
             <li onclick="removeAllFromCart();">All</li>
         </ul>
         <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">Nucleotides (fasta)</li>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">Peptides (fasta)</li>
+            <li><b> Selected </b></li>
+            <li onclick="exportSelected('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
+            <li onclick="exportSelected('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
+            <li><b> All </b></li>            
+            <li onclick="exportAll('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
+            <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>                   
+
         </ul>
         <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
             <li id="button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
