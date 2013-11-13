@@ -128,8 +128,6 @@
                                 <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>&nbsp;Paste Group</a></li>
                                 <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete All</a></li>
                                 <li><a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
-                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>&nbsp;Export nucleotides fasta</a></li>
-                                <li><a href='#' data-ServicePath="{#$ServicePath#}/export/peptides" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>&nbsp;Export peptides fasta</a></li>
                             </ul>
                         </div>
                     </div>
@@ -151,8 +149,6 @@
                     <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy Group</a></li>
                     <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove Group</a></li>
                     <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
-                    <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>&nbsp;Export nucleotides fasta</a></li>
-                    <li><a href='#' data-ServicePath="{#$ServicePath#}/export/peptides" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>&nbsp;Export peptides fasta</a></li>
                     </ul>
                     </div>
                     </div>
