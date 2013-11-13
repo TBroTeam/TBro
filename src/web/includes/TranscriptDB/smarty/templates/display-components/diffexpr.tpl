@@ -171,8 +171,8 @@
             <ul id="show-hide-dropdown" class="f-dropdown" data-dropdown-content>
                 <li onclick="fnShowHide(1);"><span id="columnCheckbox1" style="width: 15px; display: inline-block"/>&#10003;</span> Alias</li>
                 <li onclick="fnShowHide(2);"><span id="columnCheckbox2" style="width: 15px; display: inline-block"/>&#10003;</span> baseMean</li>
-                <li onclick="fnShowHide(3);"><span id="columnCheckbox3" style="width: 15px; display: inline-block"/>&emsp;</span> baseMean1</li>
-                <li onclick="fnShowHide(4);"><span id="columnCheckbox4" style="width: 15px; display: inline-block"/>&emsp;</span> baseMean2</li>
+                <li onclick="fnShowHide(3);"><span id="columnCheckbox3" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanA</li>
+                <li onclick="fnShowHide(4);"><span id="columnCheckbox4" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanB</li>
                 <li onclick="fnShowHide(5);"><span id="columnCheckbox5" style="width: 15px; display: inline-block"/>&#10003;</span> foldChange</li>
                 <li onclick="fnShowHide(6);"><span id="columnCheckbox6" style="width: 15px; display: inline-block"/>&#10003;</span> log2foldChange</li>
                 <li onclick="fnShowHide(7);"><span id="columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> pval</li>
@@ -198,8 +198,8 @@
                         <th>Sequence ID</th>
                         <th>Alias</th>
                         <th>baseMean</th>
-                        <th>baseMean1</th>
-                        <th>baseMean2</th>
+                        <th>baseMeanA</th>
+                        <th>baseMeanB</th>
                         <th>foldChange</th>
                         <th>log2foldChange</th>
                         <th>pval</th>
