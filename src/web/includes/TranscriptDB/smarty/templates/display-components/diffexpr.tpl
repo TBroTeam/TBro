@@ -36,8 +36,8 @@
         oSettings._iDisplayLength = numOfEntries;
         oTable.fnDraw();
     }
-    
-    
+
+
 </script>
 <div id="diffexpr">
     <div class="row">
@@ -77,67 +77,71 @@
 
     <div class="row">
         <div class="large-6 panel" style="float:left;  width:49%">
-                <div class="large-12 columns">
-                    <h4>Filters</h4>
-                </div>
+            <div class="large-12 columns">
+                <h4>Filters</h4>
+            </div>
 
 
-                <table id="filters" style="width:100%">
-                    {#$i=1#}
-                    {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
-                        <tr>
-                            <th>{#$filter_key#}</th>
-                            <td>
-                                <select name="filter_column[{#$i#}][type]">
-                                    <option value="lt">&lt;</option>
-                                    <option value="gt">&gt;</option>
-                                    <option value="leq">&lt;=</option>
-                                    <option value="geq">&gt;=</option>
-                                    <option value="eq">=</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input name="filter_column[{#$i#}][value]" type="text" />
-                            </td>
-                        </tr>
-                        {#$i=$i+1#}
-                    {#/foreach#}
-                </table>
-                <button class="right" type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
+            <table id="filters" style="width:100%">
+                {#$i=1#}
+                {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
+                    <tr>
+                        <th>{#$filter_key#}</th>
+                        <td>
+                            <select name="filter_column[{#$i#}][type]">
+                                <option value="lt">&lt;</option>
+                                <option value="gt">&gt;</option>
+                                <option value="leq">&lt;=</option>
+                                <option value="geq">&gt;=</option>
+                                <option value="eq">=</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input name="filter_column[{#$i#}][value]" type="text" />
+                        </td>
+                    </tr>
+                    {#$i=$i+1#}
+                {#/foreach#}
+            </table>
+            <button class="right" type="button" id="button-gdfx-table" value="table" disabled="disabled">Apply</button>
 
 
         </div>
 
         <div class="large-6 query_details  panel" style="display:none; float:right; width:49%" id="query_details">
-                <div class="large-12 columns query_details" style="display:none">
-                    <h4>Results Overview</h4>
-                </div>
-                <table style="width:100%" >
-                    <tr>
-                        <td>Condition 1</td>
-                        <td class='conditionA has-tooltip'></td>
-                    </tr>
-                    <tr>
-                        <td>Condition 2</td>
-                        <td class='conditionB has-tooltip'></td>
-                    </tr>
-                    <tr>
-                        <td>Analysis</td>
-                        <td class='analysis has-tooltip'></td>
-                    </tr>
-                    <tr>
-                        <td>Organism</td>
-                        <td class='organism'></td>
-                    </tr>
-                    <tr>
-                        <td>Release</td>
-                        <td class='release'></td>
-                    </tr>
-                    <tr>
-                        <td>Hits</td>
-                        <td class='hits'></td>
-                    </tr>
-                </table>
+            <div class="large-12 columns query_details" style="display:none">
+                <h4>Results Overview</h4>
+            </div>
+            <div id='swappedWarning' class='large-12 columns panel' style="display: none; color:red">
+                Warning! Conditions A and B have been swapped due to their orientation in the database.
+                Filters still apply to your selection but the table does not.
+            </div>
+            <table style="width:100%" >
+                <tr>
+                    <td>Condition A</td>
+                    <td class='conditionA has-tooltip'></td>
+                </tr>
+                <tr>
+                    <td>Condition B</td>
+                    <td class='conditionB has-tooltip'></td>
+                </tr>
+                <tr>
+                    <td>Analysis</td>
+                    <td class='analysis has-tooltip'></td>
+                </tr>
+                <tr>
+                    <td>Organism</td>
+                    <td class='organism'></td>
+                </tr>
+                <tr>
+                    <td>Release</td>
+                    <td class='release'></td>
+                </tr>
+                <tr>
+                    <td>Hits</td>
+                    <td class='hits'></td>
+                </tr>
+            </table>
         </div>
     </div>
 </form>
@@ -183,7 +187,7 @@
             </ul>
             <ul class="f-dropdown" id="download-dropdown-options" data-dropdown-content>
                 <li id="download_csv_button" > csv </li> 
-                
+
                 <li id="addAllToNewCart" > add all to new cart </li> 
             </ul>
         </div>

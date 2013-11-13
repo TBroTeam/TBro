@@ -235,6 +235,13 @@ $(document).ready(function() {
     function update_query_details(data) {
         var query_details = data.query_details;
         var domQd = $('#query_details');
+        var swapped = finalSelect.filteredData().values[0].dir !== 'ltr';
+        if(swapped){
+            domQd.find('#swappedWarning').show();
+        }
+        else{
+            domQd.find('#swappedWarning').hide();
+        }
         domQd.find('.conditionA').text(query_details.conditionA.name).data('metadata', query_details.conditionA);
         domQd.find('.conditionB').text(query_details.conditionB.name).data('metadata', query_details.conditionB);
         domQd.find('.analysis').text(query_details.analysis.name).data('metadata', query_details.analysis);
