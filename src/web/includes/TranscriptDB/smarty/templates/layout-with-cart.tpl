@@ -37,7 +37,8 @@
             background-color: white;
         }
         .cartgroup:hover{
-            background-color: gray;
+            background-color: #d9d9d9;
+            cursor:pointer;
         }
     </style>
     {#$smarty.block.child#}
@@ -140,27 +141,24 @@
                     <ul class="large-12 columns elements"> 
                     </ul> 
                 </div> 
-                                <div style="clear:both">&nbsp;</div>
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
                     <div class='cartGroup' data-name="<%= groupname %>">
-                    <div class="large-12 columns panel cartgroup" onclick="$('#goto-<%= groupname %>').click();">
+                    <div class="large-12 columns panel cartgroup" onclick="window.location = '{#$AppPath#}/graphs/<%= groupname %>'" id="cartgroup-<%= groupname %>">
                     <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
                     <span class="elements">(0)</span></div>
-                    <a href="{#$AppPath#}/graphs/<%= groupname %>" style="display:none" id="goto-<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a>
                     <div class="right">
                     <button class="cartMenuButton small" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
                     <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename Group</a></li>
                     <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy Group</a></li>
                     <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove Group</a></li>
-                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
+                    <!-- <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li> -->
                     </ul>
                     </div>
                     </div>
                     </div>
-                                    <div style="clear:both">&nbsp;</div>
                 </script>
 
                 <script type="text/template"  id="template_cart_new_item"> 
