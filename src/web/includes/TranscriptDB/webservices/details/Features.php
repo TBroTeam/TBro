@@ -55,8 +55,7 @@ class Features extends \WebService {
      * @param Array[int] $querydata['terms'] multiple ids
      */
     public function query_database($feature_ids, $with_descriptions) {
-        var_dump($with_descriptions);
-
+        
         $ret = array('results' => array());
         if (count($feature_ids) == 0) {
             return $ret;
@@ -83,7 +82,7 @@ class Features extends \WebService {
     FROM feature
         JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
         JOIN organism ON (feature.organism_id = organism.organism_id)
-    WHERE feature.feature_id IN (1,2,3,4)) AS raw, featureprop 
+    WHERE feature.feature_id IN ($place_holders)) AS raw, featureprop 
     WHERE raw.feature_id=featureprop.feature_id
     AND featureprop.type_id={$constant('CV_ANNOTATION_DESC')}
 EOF;
