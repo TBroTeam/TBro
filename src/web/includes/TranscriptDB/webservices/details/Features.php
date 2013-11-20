@@ -13,6 +13,7 @@ class Features extends \WebService {
 
     public function execute($querydata) {
         $feature_ids = array();
+        $with_descriptions = false;
 
         if (isset($querydata['query1']) && !empty($querydata['query1']))
             $feature_ids[] = $querydata['query1'];
@@ -20,11 +21,11 @@ class Features extends \WebService {
         if (isset($querydata['terms']))
             $feature_ids = array_merge($feature_ids, $querydata['terms']);
 
+        if (isset($querydata['with_description']))
+            $with_descriptions = true;
+
         $cache = \Zend_Cache::factory(
-                'Core', 
-                'Memcached', 
-                array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), 
-                array('servers' => array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
+                        'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
         );
 
         $return = array('results' => array());
@@ -66,6 +67,28 @@ class Features extends \WebService {
         global $db;
         $constant = 'constant';
 
+        $query;
+        
+        if($with_description){           
+        $query = <<<EOF
+        SELECT raw.*, featureprop.value AS description FROM (SELECT
+    feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
+    SELECT s.name 
+    FROM feature_synonym fs, synonym s 
+    WHERE fs.feature_id=feature.feature_id 
+    AND s.synonym_id=fs.synonym_id 
+    AND s.type_id=(SELECT type_id FROM cvterm c WHERE name='symbol' LIMIT 1)
+    LIMIT 1
+    ),'') AS alias
+    FROM feature
+        JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
+        JOIN organism ON (feature.organism_id = organism.organism_id)
+    WHERE feature.feature_id IN (1,2,3,4)) AS raw, featureprop 
+    WHERE raw.feature_id=featureprop.feature_id
+    AND featureprop.type_id={$constant('CV_ANNOTATION_DESC')}
+EOF;
+        }
+        else{
         $query = <<<EOF
     SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
@@ -81,6 +104,9 @@ class Features extends \WebService {
         JOIN organism ON (feature.organism_id = organism.organism_id)
     WHERE feature.feature_id IN ($place_holders)
 EOF;
+        }
+
+
 //var_dump($query);
 
         $stm = $db->prepare($query);
