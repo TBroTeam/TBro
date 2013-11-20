@@ -38,7 +38,7 @@ class Features extends \WebService {
         }
 
         if (count($uncached_ids) > 0) {
-            $new_features = $this->query_database($uncached_ids, $with_description);
+            $new_features = $this->query_database($uncached_ids, $with_descriptions);
 
             foreach ($new_features['results'] as $new_feature) {
                 $cache->save($new_feature, strval($new_feature['feature_id']));
@@ -54,7 +54,7 @@ class Features extends \WebService {
      * @param int $querydata['query1'] one id
      * @param Array[int] $querydata['terms'] multiple ids
      */
-    public function query_database($feature_ids, $with_description) {
+    public function query_database($feature_ids, $with_descriptions) {
 
 
         $ret = array('results' => array());
@@ -69,7 +69,7 @@ class Features extends \WebService {
 
         $query;
         
-        if($with_description){           
+        if($with_descriptions){           
         $query = <<<EOF
         SELECT raw.*, featureprop.value AS description FROM (SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
