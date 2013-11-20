@@ -132,7 +132,7 @@
                     $('.waiting-for-details').html("There are "+filteredResults.length+" results. Retrieving details...")
                     $('.waiting-for-details').show();
                     $.ajax('{#$ServicePath#}/details/features', {
-                        data: {terms: filteredResults, with_description: 1},
+                        data: {terms: filteredResults},
                         type: 'POST',
                         datatype: 'JSON',
                         success: function(data) {

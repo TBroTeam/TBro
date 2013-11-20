@@ -13,7 +13,7 @@ class Features extends \WebService {
 
     public function execute($querydata) {
         $feature_ids = array();
-        $with_descriptions = false;
+        $with_descriptions = true;
 
         if (isset($querydata['query1']) && !empty($querydata['query1']))
             $feature_ids[] = $querydata['query1'];
@@ -21,8 +21,8 @@ class Features extends \WebService {
         if (isset($querydata['terms']))
             $feature_ids = array_merge($feature_ids, $querydata['terms']);
 
-        if (isset($querydata['with_description']))
-            $with_descriptions = true;
+        if (isset($querydata['no_description']))
+            $with_descriptions = false;
 
         $cache = \Zend_Cache::factory(
                         'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
