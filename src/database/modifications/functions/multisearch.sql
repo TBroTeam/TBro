@@ -32,19 +32,17 @@ CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, 
 		_unigene_id:=t_.feature_id;
         ELSIF t_.type_id = {PHPCONST('CV_ISOFORM')} THEN
         -- if we are a isoform: store corresponding unigene into hits (if it is not already in hits), set _unigene_id
-		SELECT feat.* fp.value AS description 
-            FROM (SELECT object_id INTO _unigene_id FROM feature_relationship WHERE subject_id=t_.feature_id;
+		SELECT object_id INTO _unigene_id FROM feature_relationship WHERE subject_id=t_.feature_id;
 		INSERT INTO hits (SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name FROM feature f WHERE f.feature_id = _unigene_id 
-			AND NOT EXISTS (SELECT 1 FROM hits WHERE hits.feature_id = f.feature_id))) AS feat, featureprop WHERE feat.feature_id = fp.feature_id;
+			AND NOT EXISTS (SELECT 1 FROM hits WHERE hits.feature_id = f.feature_id));
 	END IF;
 	-- insert all isoforms for _unigene_id into hits, if they are not already in hits (e.g. have been found in the first place).
 	-- this way, found aliases will be preserved
 	INSERT INTO hits (
-		SELECT feat.* fp.value AS description 
-            FROM (SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name 
+		SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name 
 		FROM feature_relationship fr JOIN feature f ON (fr.subject_id = f.feature_id) 
 		WHERE fr.object_id=_unigene_id AND NOT EXISTS (SELECT 1 FROM hits WHERE hits.feature_id = f.feature_id)
-		)) AS feat, featureprop WHERE feat.feature_id = fp.feature_id;
+		);
      END LOOP;     
      RETURN QUERY SELECT * FROM hits ORDER BY feature_id;
  END
