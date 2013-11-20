@@ -55,7 +55,7 @@ class Features extends \WebService {
      * @param Array[int] $querydata['terms'] multiple ids
      */
     public function query_database($feature_ids, $with_descriptions) {
-
+        var_dump($with_descriptions);
 
         $ret = array('results' => array());
         if (count($feature_ids) == 0) {
