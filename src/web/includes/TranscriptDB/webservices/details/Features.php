@@ -38,7 +38,7 @@ class Features extends \WebService {
         }
 
         if (count($uncached_ids) > 0) {
-            $new_features = $this->query_database($uncached_ids);
+            $new_features = $this->query_database($uncached_ids, $with_description);
 
             foreach ($new_features['results'] as $new_feature) {
                 $cache->save($new_feature, strval($new_feature['feature_id']));
@@ -54,7 +54,7 @@ class Features extends \WebService {
      * @param int $querydata['query1'] one id
      * @param Array[int] $querydata['terms'] multiple ids
      */
-    public function query_database($feature_ids) {
+    public function query_database($feature_ids, $with_description) {
 
 
         $ret = array('results' => array());
