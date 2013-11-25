@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS multisearch(_organism_id int, _release_name varchar, _feature_names varchar[]);
 --NEWCMD--
 CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, _feature_names varchar[])
- RETURNS TABLE(feature_name varchar, feature_id int, type_id int, synonym_name varchar)
+ RETURNS TABLE(feature_name varchar, feature_id int, type_id int, synonym_name varchar, description varchar)
  LANGUAGE plpgsql AS $$
  DECLARE
      _release_id int;
@@ -12,12 +12,13 @@ CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, 
 
      --create temp table with 'direct' search hits
      CREATE TEMP TABLE hits ON COMMIT DROP AS 
-	(SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name FROM feature f WHERE f.dbxref_id = _release_id AND f.organism_id = _organism_id AND name=ANY(_feature_names) LIMIT 500)
+	SELECT details.*, fp.value AS description FROM ((SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name FROM feature f WHERE f.dbxref_id = _release_id AND f.organism_id = _organism_id AND name=ANY(_feature_names) LIMIT 500)
 		UNION
 	(SELECT f.name, f.feature_id, f.type_id, s.name AS synonym_name 
 		FROM synonym s JOIN feature_synonym fs ON (fs.synonym_id = s.synonym_id) JOIN feature f ON (fs.feature_id = f.feature_id)
 		WHERE s.name=ANY(_feature_names) AND f.organism_id = _organism_id AND f.dbxref_id = _release_id
-	LIMIT 500);
+	LIMIT 500)) AS details LEFT JOIN (SELECT featureprop.feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) AS fp
+    ON details.feature_id=fp.feature_id;
 
      --for all these search hits:
      FOR t_ IN (SELECT * FROM hits) LOOP
@@ -33,10 +34,11 @@ CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, 
 	-- insert all isoforms for _unigene_id into hits, if they are not already in hits (e.g. have been found in the first place).
 	-- this way, found aliases will be preserved
 	INSERT INTO hits (
-		SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name 
+		SELECT details.*, fp.value AS description FROM (SELECT f.name, f.feature_id, f.type_id, '' AS synonym_name 
 		FROM feature_relationship fr JOIN feature f ON (fr.subject_id = f.feature_id) 
 		WHERE fr.object_id=_unigene_id AND NOT EXISTS (SELECT 1 FROM hits WHERE hits.feature_id = f.feature_id)
-		);
+		) AS details LEFT JOIN (SELECT featureprop.feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) AS fp
+                ON details.feature_id=fp.feature_id);
      END LOOP;     
      RETURN QUERY SELECT * FROM hits ORDER BY feature_id;
  END

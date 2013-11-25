@@ -40,6 +40,7 @@ EOF;
                 , 'type' => $feature['type_id'] == CV_UNIGENE ? 'unigene' :  (CV_ISOFORM ?  'isoform' : 'unknonwn')
                 , 'feature_id' => $feature['feature_id']
                 , 'alias' => $feature['synonym_name']
+                , 'description' => $feature['description']
             );
         }
 
