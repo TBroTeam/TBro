@@ -70,7 +70,7 @@ class Features extends \WebService {
         
         if($with_descriptions){           
         $query = <<<EOF
-        SELECT raw.*, featureprop.value AS description FROM (SELECT
+        SELECT raw.*, fp.value AS description FROM (SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
     SELECT s.name 
     FROM feature_synonym fs, synonym s 
@@ -82,9 +82,8 @@ class Features extends \WebService {
     FROM feature
         JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id AND dbxref.db_id = {$constant('DB_ID_IMPORTS')})
         JOIN organism ON (feature.organism_id = organism.organism_id)
-    WHERE feature.feature_id IN ($place_holders)) AS raw, featureprop 
-    WHERE raw.feature_id=featureprop.feature_id
-    AND featureprop.type_id={$constant('CV_ANNOTATION_DESC')}
+    WHERE feature.feature_id IN ($place_holders)) AS raw LEFT JOIN (SELECT feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) AS fp
+    ON raw.feature_id=fp.feature_id
 EOF;
         }
         else{

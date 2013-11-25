@@ -12,7 +12,7 @@
                 },
                 {mData: 'alias',
                     bSortable: false
-                }
+                },
                 {mData: 'description',
                     bSortable: false
                 }
