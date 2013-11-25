@@ -27,6 +27,9 @@
                 },
                 {mData: 'alias',
                     bSortable: false
+                },
+                {mData: 'description',
+                    bSortable: false
                 }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -238,6 +241,7 @@
                     <td>Type</td>
                     <td>Name</td>
                     <td>Alias</td>
+                    <td>Description</td>
                 </tr>
             </thead>
             <tfoot></tfoot>
