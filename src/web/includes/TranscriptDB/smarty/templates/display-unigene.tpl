@@ -21,7 +21,6 @@
                 groupname: group
             });
         }
-        
     </script>
     <script type="text/javascript" src="{#$AppPath#}/js/feature/barplot.js"></script>
 
