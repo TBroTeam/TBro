@@ -1,6 +1,7 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
     <script type="text/javascript">
+        var autocomplete_pw;
         $(document).ready(function() {
             //different allowed search methods
             var searchNodes = {
@@ -100,6 +101,14 @@
             });
 
             var row_template = _.template($('#template_row').html());
+            
+            $.ajax('{#$ServicePath#}/listing/PathwaysAll', {
+                success: function(val) {
+                    autocomplete_pw = val.results;
+                    console.log(val);
+                    console.log(autocomplete_pw);
+                }
+            });
 
             $('#start-combisearch').click(function() {
                 //gui animationi
@@ -156,6 +165,11 @@
                 });
                 elem$.data('searchNode', searchNode);
                 $('#searchterms').append(elem$);
+                refreshAutocomplete();
+            }
+            
+            function refreshAutocomplete(){
+                $( ".pathwayName" ).autocomplete({ source: autocomplete_pw });
             }
         });
     </script>
@@ -242,7 +256,7 @@
         </div>
         <div class="large-2 columns" style="text-align: right">Term:</div>
         <div class="large-4 columns">
-        <input type="text" class="term" style="margin:0px"/>
+        <input type="text" class="term pathwayName" style="margin:0px"/>
         </div>
         </div>
     </script>
