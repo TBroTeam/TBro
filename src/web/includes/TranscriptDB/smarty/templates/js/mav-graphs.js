@@ -37,9 +37,6 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     var filterdata = data;
-                    $.each(cartitems, function() {
-                        filterdata.data.feature[this] = cart.cartitems[this];
-                    });
                     new filteredSelect(select_assay, 'assay', {
                         data: filterdata
                     }).refill();

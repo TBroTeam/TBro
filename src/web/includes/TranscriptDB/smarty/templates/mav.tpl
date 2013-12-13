@@ -51,10 +51,7 @@
     </script>
     <script>
         function adjustCartgroupStyle() {
-            $('#cartgroup-{#$cartname#}').css("background", "green");
-            $('#cartgroup-{#$cartname#}').css("color", "white");
-            $('#cartgroup-{#$cartname#}').css("cursor", "auto");
-            $('#cartgroup-{#$cartname#}').css("font-weight", "bold");
+            $('#cartgroup-{#$cartname#}').accordion({ active: true });
         }
         function drawCloud(service) {
             var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];

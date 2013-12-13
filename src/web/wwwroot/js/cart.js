@@ -181,6 +181,9 @@ Cart.prototype._getGroup = function(groupname) {
 Cart.prototype._getGroupNode = function(groupname) {
     return this.options.rootNode.find('.cartGroup[data-name="' + groupname + '"]');
 };
+
+var itemsToShow = 15;
+
 /** @private */
 Cart.prototype._getItemDetails = function(ids, callback) {
     var that = this;
@@ -337,6 +340,9 @@ Cart.prototype.addItem = function(ids, options) {
 
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
+    if (missingIds.length > itemsToShow) {
+        missingIds = missingIds.slice(0, itemsToShow);
+    }
 
     if (missingIds.length == 0) {
         // we have nothing to do. return from here.
@@ -352,8 +358,8 @@ Cart.prototype.addItem = function(ids, options) {
         if (missingIds.length <= 100) {
             that._getItemDetails(missingIds, function(aItemDetails) {
 
-        addInternal.call(that);
-        if (options.addToDOM)
+                addInternal.call(that);
+                if (options.addToDOM)
                     addToDOM.call(that, aItemDetails);
 
                 that.sync({
@@ -368,16 +374,16 @@ Cart.prototype.addItem = function(ids, options) {
         else {
             addInternal.call(that);
             if (options.addToDOM)
-            addToDOM.call(that);
+                addToDOM.call(that);
 
-        that.sync({
-            action: 'addItem',
-            ids: missingIds,
-            groupname: options.groupname
-        }, options);
+            that.sync({
+                action: 'addItem',
+                ids: missingIds,
+                groupname: options.groupname
+            }, options);
 
-        dfd.resolve();
-    }
+            dfd.resolve();
+        }
     }
 
     function addInternal() {
@@ -394,33 +400,38 @@ Cart.prototype.addItem = function(ids, options) {
         $('body').css('cursor', 'default');
         var group$ = that._getGroupNode(options.groupname);
         var group = that._getGroup(options.groupname);
-        if (group.length > 25) {
-            $('li', group$.find('.elements')).empty();
-            var placeholder = $('<li class="cartFullText" style="clear:both"></li>');
-            placeholder.text('There are ' + group.length + " items in this group. Therefore it is too large to be displayed.");
-            group$.find('.elements').append(placeholder);
-    }
-        else {
-            $.each(aItemDetails, function(key, itemDetails) {
+        group$.find('.numelements').html('('+group.length+')');
+        var placeholder = $('li.cartFullText', group$);
 
-                if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
-                    return;
-                }
+        $.each(aItemDetails, function(key, itemDetails) {
 
-                var item$ = that._executeTemplate$('Item', {
-                    item: itemDetails
-                });
-                item$.data('afterDOMinsert', options.afterDOMinsert);
-                group$.find('.elements .placeholder').remove();
-                group$.find('.elements').append(item$);
-                options.afterDOMinsert.call(item$);
+            if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
+                return;
+            }
+
+
+            var item$ = that._executeTemplate$('Item', {
+                item: itemDetails
             });
-        placeholder.text('There are '+(group.length-100)+" items in this group that are not being displayed");
+            item$.data('afterDOMinsert', options.afterDOMinsert);
+            group$.find('.elements .placeholder').remove();
+            group$.find('.elements').append(item$);
+            options.afterDOMinsert.call(item$);
+
+        });
+        if (group.length > itemsToShow) {
+            if (placeholder.length === 0) {
+                placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = \'/graphs/'+options.groupname+'\'"></li>');
+                placeholder.css('cursor', 'pointer');
+                group$.find('.elements').append(placeholder)
+            }
+        }
+        placeholder.text('There are ' + (group.length - group$.find(".elements").children("li").length + 1) + " more items (go to cart)");
 
 
         $('body').css('cursor', 'wait');
-        }
     }
+
 };
 
 //comment: get all cart items with metadata
@@ -516,6 +527,9 @@ Cart.prototype.removeItem = function(id, options) {
 
     function removeFromDOM() {
         this._getItemNodes(id, options.groupname).remove();
+        var group$ = that._getGroupNode(options.groupname);
+        var group = that._getGroup(options.groupname);
+        group$.find('.numelements').html('('+group.length+')');
     }
 };
 
@@ -626,13 +640,13 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         if (newGroup$.find(".elements").children("li").length >= 1) {
             newGroup$.find('.placeholder').remove();
         }
-        if(typeof cft$ !== 'undefined'){
+        if (typeof cft$ !== 'undefined') {
             newGroup$.find('.elements').append(cft$);
         }
         oldGroup$.replaceWith(newGroup$);
         afterDOMinsert.call(newGroup$);
         var numOfElements = this._getGroup(newname).length;
-        newGroup$.find('.elements').html('('+numOfElements+')');
+        newGroup$.find('.numelements').html('(' + numOfElements + ')');
     }
 };
 

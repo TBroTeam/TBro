@@ -39,6 +39,14 @@
         .cartMenuButton{
             margin-bottom: 0px;
         }
+        .cartgroup{
+            background-color: white;
+            background: white;
+        }
+        .cartgroup:hover{
+            background-color: #d9d9d9;
+            cursor:pointer;
+        }
     </style>
     {#$smarty.block.child#}
 {#/block#}
@@ -144,19 +152,18 @@
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
-                    <div class='cartGroup' data-name="<%= groupname %>">
-                    <div class="large-12 columns">
+                    <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>">
+                    <div class="large-12 columns cartgroup">
                     <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
-                    </div>
+                    <span class="numelements">(0)</span></div>
                     <div class="right">
                     <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
-                    <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename Group</a></li>
-                    <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy Group</a></li>
-                    <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove Group</a></li>
-                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
-                    <li><a href='#' data-ServicePath="{#$ServicePath#}/export/fasta" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>&nbsp;Export nucleotides fasta</a></li>
-                    <li><a href='#' data-ServicePath="{#$ServicePath#}/export/peptides" class="exportBtn"><img  src="{#$AppPath#}/img/mimiGlyphs/31.png"/>&nbsp;Export peptides fasta</a></li>
+                    <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename</a></li>
+                    <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy</a></li>
+                    <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove</a></li>
+                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/7.png"/>&nbsp;View&nbsp;/&nbsp;Modify</a></li>
+                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
                     </ul>
                     </div>
                     </div>
