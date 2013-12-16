@@ -35,11 +35,11 @@
                     console.log(event.eventData);
                     _.delay(function() {
                         var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
-                        adjustCartgroupStyle();
                         if (cartitems.length === 0) {
                             console.log("No items in cart");
                             return;
                         }
+                        adjustCartgroupStyle();
                         displayCartTable(cartitems, {});
                         showPathwayInfo();
                     }, 500);
@@ -51,7 +51,9 @@
     </script>
     <script>
         function adjustCartgroupStyle() {
-            $('#cartgroup-{#$cartname#}').accordion({ active: true });
+            $( ".selector" ).accordion( "option", "collapsible", true );
+            $('#cartgroup-{#$cartname#}').accordion( "option", "active", 0 );
+            console.log($('#cartgroup-{#$cartname#}'));
         }
         function drawCloud(service) {
             var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
