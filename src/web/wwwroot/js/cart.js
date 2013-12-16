@@ -340,8 +340,9 @@ Cart.prototype.addItem = function(ids, options) {
 
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
+    var showItems = missingIds;
     if (missingIds.length > itemsToShow) {
-        missingIds = missingIds.slice(0, itemsToShow);
+        showItems = missingIds.slice(0, itemsToShow);
     }
 
     if (missingIds.length == 0) {
@@ -355,8 +356,7 @@ Cart.prototype.addItem = function(ids, options) {
     return dfd.promise();
 
     function work() {
-        if (missingIds.length <= 100) {
-            that._getItemDetails(missingIds, function(aItemDetails) {
+            that._getItemDetails(showItems, function(aItemDetails) {
 
                 addInternal.call(that);
                 if (options.addToDOM)
@@ -370,20 +370,6 @@ Cart.prototype.addItem = function(ids, options) {
 
                 dfd.resolve();
             });
-        }
-        else {
-            addInternal.call(that);
-            if (options.addToDOM)
-                addToDOM.call(that);
-
-            that.sync({
-                action: 'addItem',
-                ids: missingIds,
-                groupname: options.groupname
-            }, options);
-
-            dfd.resolve();
-        }
     }
 
     function addInternal() {
@@ -427,9 +413,6 @@ Cart.prototype.addItem = function(ids, options) {
             }
         }
         placeholder.text('There are ' + (group.length - group$.find(".elements").children("li").length + 1) + " more items (go to cart)");
-
-
-        $('body').css('cursor', 'wait');
     }
 
 };
