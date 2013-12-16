@@ -163,7 +163,7 @@
                     <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy</a></li>
                     <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove</a></li>
                     <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/7.png"/>&nbsp;View&nbsp;/&nbsp;Modify</a></li>
-                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
+                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>#tabs-graphs"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
                     </ul>
                     </div>
                     </div>
