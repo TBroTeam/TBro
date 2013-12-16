@@ -183,6 +183,10 @@
                 border-right-width: 0px;
                 border-left-width: 0px;
                 border-bottom-width: 0px;
+                padding-left: 0px; 
+                padding-right: 0px; 
+                padding-top: 0px;
+                padding-bottom: 0px; 
             }
 
             .ui-tabs-nav {
@@ -194,6 +198,11 @@
                 border-top-width: 0px;
                 border-right-width: 0px;
                 border-bottom-width: 0px;
+            }
+        
+            .ui-tabs-panel {
+                border-width: 1px !important;
+                border-color: #aaaaaa;
             }
 
             .dataTable th td{

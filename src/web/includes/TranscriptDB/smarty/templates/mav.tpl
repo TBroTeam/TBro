@@ -100,12 +100,12 @@
 {#block name='body'#}
 
     <div class="row">
-        <div class="large-12 columns">
+        <div class="large-12 columns panel">
             <h2>{#$cartname#}</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="large-12 columns" id="tabs">
+    <div class="row panel">
+        <div class="large-12" id="tabs">
 
             <ul>
                 <li><a href="#tabs-overview">Overview</a></li>
