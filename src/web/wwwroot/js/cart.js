@@ -345,7 +345,7 @@ Cart.prototype.addItem = function(ids, options) {
         showItems = missingIds.slice(0, itemsToShow);
     }
 
-    if (missingIds.length == 0) {
+    if (missingIds.length === 0) {
         // we have nothing to do. return from here.
         dfd.resolve();
         return dfd.promise();
@@ -387,7 +387,7 @@ Cart.prototype.addItem = function(ids, options) {
         var group$ = that._getGroupNode(options.groupname);
         var group = that._getGroup(options.groupname);
         group$.find('.numelements').html('('+group.length+')');
-        var placeholder = $('li.cartFullText', group$);
+        var full_placeholder = $('li.cartFullText', group$);
 
         $.each(aItemDetails, function(key, itemDetails) {
 
@@ -401,18 +401,22 @@ Cart.prototype.addItem = function(ids, options) {
             });
             item$.data('afterDOMinsert', options.afterDOMinsert);
             group$.find('.elements .placeholder').remove();
-            group$.find('.elements').append(item$);
+            if (full_placeholder.length !== 0){
+                full_placeholder.before(item$);
+            }
+            else{
+                group$.find('.elements').append(item$);
+            }
             options.afterDOMinsert.call(item$);
-
         });
         if (group.length > itemsToShow) {
-            if (placeholder.length === 0) {
-                placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = \'/graphs/'+options.groupname+'\'"></li>');
-                placeholder.css('cursor', 'pointer');
-                group$.find('.elements').append(placeholder)
+            if (full_placeholder.length === 0) {
+                full_placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = \'/graphs/'+options.groupname+'\'"></li>');
+                full_placeholder.css('cursor', 'pointer');
+                group$.find('.elements').append(full_placeholder)
             }
         }
-        placeholder.text('There are ' + (group.length - group$.find(".elements").children("li").length + 1) + " more items (go to cart)");
+        full_placeholder.text('There are ' + (group.length - group$.find(".elements").children("li").length + 1) + " more items (go to cart)");
     }
 
 };
