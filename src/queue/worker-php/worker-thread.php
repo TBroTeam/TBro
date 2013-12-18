@@ -117,7 +117,7 @@ function acquire_database($target_db, $target_db_md5, $target_db_download_uri) {
     $download_file = $db_dir . '.download';
     printf('will download %s to %s', $target_db_download_uri, $download_file);
     try {
-        mkdir($db_dir, 777, true);
+        mkdir($db_dir, 0777, true);
         download($target_db_download_uri, $download_file);
         if ($target_db_md5 !== ($real_md5 = md5_file($download_file)))
             throw new Exception(sprintf('download md5 could not be validated. should be %s but was %s', $target_db_md5, $real_md5));
