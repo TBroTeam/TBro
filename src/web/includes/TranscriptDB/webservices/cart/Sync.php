@@ -86,7 +86,6 @@ class Sync extends \WebService {
         return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart']);
     }
 
-
     /**
      * replicates client-side action in the session stored cart.
      * @param type $parms contains action to be executed & parameters
@@ -95,15 +94,14 @@ class Sync extends \WebService {
     public function syncActions($parms, $currentContext) {
         //prepare empty values
         if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = array('carts' => array());
+            $_SESSION['cart'] = array('metadata' => array(), 'carts' => array());
         }
-
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
             $_SESSION['cart']['carts'][$currentContext] = array();
 
         //refs for quicker access
+        $metadata = &$_SESSION['cart']['metadata'];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
-
 
         //manipulation
         switch ($parms['action']) {
@@ -121,6 +119,8 @@ class Sync extends \WebService {
             case 'updateItem':
                 //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
                 $parms['id'] = intval($parms['id']);
+                //update metadata
+                $metadata[$parms['id']] = $parms['metadata'];
                 break;
             case 'removeItem':
                 //remove from group

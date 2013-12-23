@@ -48,6 +48,8 @@ function Cart(initialData, options) {
     /** @private */
     this.cartitems = initialData.cartitems || {};
     /** @private */
+    this.metadata = initialData.metadata || {};
+    /** @private */
     this.emptyCartPrototype = {
     };
     /** @private */
@@ -138,19 +140,24 @@ function Cart(initialData, options) {
 
     /** @private */
     Cart.prototype._compareCarts = function(newCart) {
+        var metadataDiffer = !checkEqual(this.metadata, newCart.metadata);
         var cartsDiffer = !checkEqual(this.carts, newCart.carts);
         var currentCartDiffers = !checkEqual(this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
         //log
         cartsDiffer && console.log('carts differ', this.carts, newCart.carts);
         currentCartDiffers && console.log('displayed cart differs, redrawing', this.carts[this.currentContext] || {}, newCart.carts[this.currentContext] || {});
 
+        //if metadata differs, use the version from the server
+        if (metadataDiffer) {
+            this.metadata = newCart.metadata;
+        }
         //if carts differ, use the version from the server
         if (cartsDiffer) {
             this.carts = newCart.carts;
         }
 
         //if there were also differences in the currently displayed cart, redraw
-        if (currentCartDiffers) {
+        if (currentCartDiffers || metadataDiffer) {
             this._redraw();
         }
     };
@@ -191,6 +198,11 @@ Cart.prototype._getItemDetails = function(ids, callback) {
     var newCartitems = {};
     var retArray = [];
     var dfd = $.Deferred();
+    $.each(that.metadata, function(id, meta) {
+        if (typeof that.cartitems[id] !== 'undefined'){
+            that.cartitems[id].metadata = that.metadata[id];
+        }
+    });
     $.each(ids, function(key, id) {
         if (typeof that.cartitems[id] !== 'undefined')
             retArray.push(that.cartitems[id]);
@@ -216,10 +228,10 @@ Cart.prototype._getItemDetails = function(ids, callback) {
             dataType: 'JSON',
             success: function(data) {
                 $.each(data.results, function() {
+                    var id = this.feature_id;
                     var itemDetails = $.extend(true, this, {
-                        metadata: {}
+                        metadata: that.metadata[id] || {}
                     });
-                    var id = itemDetails.feature_id;
                     that.cartitems[id] = itemDetails;
                     $.extend(newCartitems[id], itemDetails);
                 });
