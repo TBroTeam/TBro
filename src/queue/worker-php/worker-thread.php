@@ -241,6 +241,8 @@ function report_results_cleanup() {
     }
 
     global $job_id, $stdout_collected, $stderr_collected, $return_value;
+    // removing invalid characters introduced by BLAST
+    $stderr_collected = iconv("UTF-8", "UTF-8//IGNORE", $stderr_collected);
     pdo_connect()->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
     
     trigger_error("reported processed job back", E_USER_NOTICE);
