@@ -115,12 +115,8 @@
                 </div>
                 <ul class="large-block-grid-5">
                     <li>
-                        <label for="blastform-num_descriptions">Number of Descriptions:</label>
-                        <select id="blastform-num_descriptions" name="parameters[num_descriptions]" style="width:auto"><option>10</option><option>50</option><option>100</option><option>250</option><option>1000</option></select>
-                    </li>
-                    <li>
-                        <label for="blastform-num_alignments">Number of Alignments:</label>
-                        <select id="blastform-num_alignments" name="parameters[num_alignments]" style="width:auto"><option>10</option><option>50</option><option>100</option><option>250</option><option>1000</option></select>
+                        <label for="blastform-num_descriptions">Max Target Sequences:</label>
+                        <select id="blastform-max_target_seqs" name="parameters[max_target_seqs]" style="width:auto"><option>10</option><option selected="selected">50</option><option>100</option><option>250</option><option>1000</option></select>
                     </li>
                     <li>
                         <label for="blastform-evalue">Maximum E-value:</label>
