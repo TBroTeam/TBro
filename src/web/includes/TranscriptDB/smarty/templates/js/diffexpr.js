@@ -39,7 +39,7 @@ $(document).ready(function() {
                 organism: organism.val(),
                 release: release.val()
             };
-            
+
             var url = '{#$ServicePath#}/listing/filters_diffexp/forCart';
 
             $.ajax(url, {
@@ -151,6 +151,14 @@ $(document).ready(function() {
                 },
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData.feature_id, aData.feature_name))
+                    $(nRow).attr('data-id', aData.feature_id);
+                    $(nRow).draggable({
+                        appendTo: "body",
+                        helper: function() {
+                            return $(nRow).find('td:first').clone().addClass('beingDragged');
+                        },
+                        cursorAt: {top: 5, left: 5}
+                    });
                 },
                 sServerMethod: "POST",
                 sAjaxSource: "{#$ServicePath#}/listing/differential_expressions/fullRelease",
@@ -236,10 +244,10 @@ $(document).ready(function() {
         var query_details = data.query_details;
         var domQd = $('#query_details');
         var swapped = finalSelect.filteredData().values[0].dir !== 'ltr';
-        if(swapped){
+        if (swapped) {
             domQd.find('#swappedWarning').show();
         }
-        else{
+        else {
             domQd.find('#swappedWarning').hide();
         }
         domQd.find('.conditionA').text(query_details.conditionA.name).data('metadata', query_details.conditionA);

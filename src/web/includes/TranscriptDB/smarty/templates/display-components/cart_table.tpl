@@ -38,12 +38,12 @@
                 $(nRow).css('cursor', 'pointer');
                 $(nRow).attr('data-id', aData.feature_id);
                 $(nRow).draggable({
-                appendTo: "body",
-                helper: function() {
-                    return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
-                },
-                cursorAt: { top: 5, left: 5 }
-            });
+                    appendTo: "body",
+                    helper: function() {
+                        return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
+                    },
+                    cursorAt: { top: 5, left: 5 }
+                });
             },
             sDom: 'T<"clear">lrtip',
             oTableTools: {
