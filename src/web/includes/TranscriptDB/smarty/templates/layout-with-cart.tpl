@@ -23,7 +23,7 @@
             list-style: none;
         }
         .beingDragged img {
-            display:none;
+            display: none;
         }
 
         fieldset *:last-child{
