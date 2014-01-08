@@ -71,6 +71,14 @@
 
             new Grouplist($('#button-isoform-addToCart-options'), cart, addSelectedToCart);
             $('#button-isoform-addToCart-options-newcart').click(addSelectedToCart);
+            
+            $('.isoform-header').draggable({
+                appendTo: "body",
+                helper: function() {
+                    return $('<div>', {text: $('.isoform-header').text()}).addClass('beingDragged');
+                },
+                cursorAt: { top: 5, left: 5 }
+            });
 
         });
 
@@ -96,7 +104,7 @@
         <div class="large-12 columns panel" id="description">
             <div class="row">
                 <div class="large-12 columns">
-                    <div class="left"><h1>{#$data.isoform.name#}</h1></div>
+                    <div class="left"><h1 class="isoform-header" data-id="{#$data.isoform.feature_id#}">{#$data.isoform.name#}</h1></div>
                     <div class="right">
                         <button class="large button dropdown" type="button" id="button-isoform-addToCart" data-dropdown="button-isoform-addToCart-options"> Add to Cart </button>
                         <ul id="button-isoform-addToCart-options" class="f-dropdown" data-dropdown-content>
