@@ -55,7 +55,7 @@
 
                                             <table style="width:100%" class="contains-tooltip dataTable">
                                                 <thead>
-                                                    <tr><td>Interpro ID</td><td>Interpro Description</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><!--<td>GO</td>--></tr>
+                                                    <tr><td>ID</td><td>Description</td><td>Start</td><td>End</td><td>eValue</td><td>Match Description</td><!--<td>GO</td>--></tr>
                                                 </thead>
                                                 <tbody>
                                                     {#foreach $predpep.interpro as $interpro#}
