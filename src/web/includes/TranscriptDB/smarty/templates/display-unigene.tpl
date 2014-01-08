@@ -11,6 +11,14 @@
         $(document).ready(function() {
             new Grouplist($('#button-unigene-addToCart-options'), cart, addUnigeneToCart);
             $('#button-unigene-addToCart-options-newcart').click(addUnigeneToCart);
+            
+            $('.unigene-header').draggable({
+                appendTo: "body",
+                helper: function() {
+                    return $('<div>', {text: $('.unigene-header').text()}).addClass('beingDragged');
+                },
+                cursorAt: { top: 5, left: 5 }
+            });
         });
 
         function addUnigeneToCart() {
@@ -31,7 +39,7 @@
         <div class="large-12 columns panel">
             <div class="row">
                 <div class="large-12 columns">
-                    <h1 class="left">Unigene {#$data.unigene.name#}</h1>
+                    <h1 class="left unigene-header" data-id="{#$data.unigene.feature_id#}">Unigene {#$data.unigene.name#}</h1>
                     <div class="right">
                         <button class="large button dropdown" type="button" id="button-unigene-addToCart" data-dropdown="button-unigene-addToCart-options"> Add to Cart </button>
                         <ul id="button-unigene-addToCart-options" class="f-dropdown" data-dropdown-content>
