@@ -88,6 +88,30 @@
                             term: $(this).find('input.term').val()
                         };
                     }
+                },
+                interproID: {
+                    name: 'Interpro ID',
+                    webservice: '{#$ServicePath#}/combisearch/interpro_id/',
+                    template_search: '#template_search_interpro_ID',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.GO').val()
+                        };
+                    }
+                },
+                interproMatchDescription: {
+                    name: 'Interpro Match Description',
+                    webservice: '{#$ServicePath#}/combisearch/interpro_match_description/',
+                    template_search: '#template_search_interpro_match_description',
+                    fnPrepareData: function() {
+                        return {
+                            species: organism.val(),
+                            release: release.val(),
+                            term: $(this).find('input.term').val()
+                        };
+                    }
                 }
             };
 
@@ -101,7 +125,7 @@
             });
 
             var row_template = _.template($('#template_row').html());
-            
+
             $.ajax('{#$ServicePath#}/listing/PathwaysAll', {
                 success: function(val) {
                     autocomplete_pw = val.results;
@@ -138,7 +162,7 @@
                 //when all deferred ajax calls have finished, display feature table
                 $.when.apply($, deferreds.get()).then(function() {
                     $('.loading').hide();
-                    $('.waiting-for-details').html("There are "+filteredResults.length+" results. Retrieving details...")
+                    $('.waiting-for-details').html("There are " + filteredResults.length + " results. Retrieving details...")
                     $('.waiting-for-details').show();
                     $.ajax('{#$ServicePath#}/details/features', {
                         data: {terms: filteredResults},
@@ -150,7 +174,7 @@
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                             $('.waiting-for-details').hide();
-                            alert("It took too long to lookup the details of the "+filteredResults.length+" results. Please restrict your search.\n"+errorThrown+textStatus);
+                            alert("It took too long to lookup the details of the " + filteredResults.length + " results. Please restrict your search.\n" + errorThrown + textStatus);
                         }
                     });
                 });
@@ -167,9 +191,9 @@
                 $('#searchterms').append(elem$);
                 refreshAutocomplete();
             }
-            
-            function refreshAutocomplete(){
-                $( ".pathwayName" ).autocomplete({ source: autocomplete_pw });
+
+            function refreshAutocomplete() {
+                $(".pathwayName").autocomplete({source: autocomplete_pw});
             }
         });
     </script>
@@ -257,6 +281,28 @@
         <div class="large-2 columns" style="text-align: right">Term:</div>
         <div class="large-4 columns">
         <input type="text" class="term pathwayName" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+    <script type="text/template" id="template_search_interpro_ID">
+        <div class="row">
+        <div class="large-6 columns">
+        Interpro ID 
+        </div>
+        <div class="large-3 columns" style="text-align: right">ID:</div>
+        <div class="large-3 columns">
+        <input type="text" class="GO" style="margin:0px"/>
+        </div>
+        </div>
+    </script>
+    <script type="text/template" id="template_search_interpro_match_description">
+        <div class="row">
+        <div class="large-6 columns">
+        Interpro Match Description 
+        </div>
+        <div class="large-2 columns" style="text-align: right">Term:</div>
+        <div class="large-4 columns">
+        <input type="text" class="term" style="margin:0px"/>
         </div>
         </div>
     </script>
