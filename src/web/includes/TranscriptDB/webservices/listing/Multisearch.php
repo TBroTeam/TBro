@@ -3,6 +3,7 @@
 namespace webservices\listing;
 
 use \PDO as PDO;
+
 /**
  * Web Service.
  * Splits $querydata['longterm'] into words and searches for matching features and their associated features
@@ -20,7 +21,7 @@ class Multisearch extends \WebService {
         $terms = preg_split('/[,\s]+/m', $longterm, -1, PREG_SPLIT_NO_EMPTY);
         $qmarks = implode(',', array_fill(0, count($terms), '?'));
         $values = array_merge(array($species, $import), $terms);
-        
+
 #UI hint
         if (false)
             $db = new PDO();
@@ -28,6 +29,13 @@ class Multisearch extends \WebService {
         $query_get_features = <<<EOF
 SELECT * FROM multisearch(?, ?, ARRAY[$qmarks]::varchar[])
 EOF;
+
+        if (isset($querydata['strict']) && $querydata['strict'] === 'true') {
+
+            $query_get_features = <<<EOF
+SELECT * FROM multisearch_strict(?, ?, ARRAY[$qmarks]::varchar[])
+EOF;
+        }
 
         $stm_get_features = $db->prepare($query_get_features);
 
@@ -37,7 +45,7 @@ EOF;
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][$feature['feature_id']] = array(
                 'name' => $feature['feature_name']
-                , 'type' => $feature['type_id'] == CV_UNIGENE ? 'unigene' :  (CV_ISOFORM ?  'isoform' : 'unknonwn')
+                , 'type' => $feature['type_id'] == CV_UNIGENE ? 'unigene' : (CV_ISOFORM ? 'isoform' : 'unknonwn')
                 , 'feature_id' => $feature['feature_id']
                 , 'alias' => $feature['synonym_name']
                 , 'description' => $feature['description']
@@ -48,7 +56,6 @@ EOF;
     }
 
 }
-
 ?>
 
 
