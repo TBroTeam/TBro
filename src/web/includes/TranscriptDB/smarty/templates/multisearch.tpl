@@ -8,7 +8,7 @@
                 $.ajax({
                     url: "{#$ServicePath#}/listing/multisearch/",
                     type: "POST",
-                    data: {species: organism.val(), release: release.val(), longterm: $('#multisearch').val()},
+                    data: {species: organism.val(), release: release.val(), longterm: $('#multisearch').val(), strict: $('#strict').is(':checked')},
                     dataType: "json",
                     success: function(data) {
                         displayFeatureTable(data.results);
@@ -43,7 +43,8 @@
                 <textarea id="multisearch" style="max-width: 100%; height: 150px"></textarea>
             </div>
             <div class="large-4 column">
-                <a id="start-multisearch" class="button"/>search</a>
+                <a id="start-multisearch" class="button"/>search</a><br>
+                <input type="checkbox" id="strict" checked="true"> <label for="strict">Strict Search</label>
             </div>
         </div>
     </div>
