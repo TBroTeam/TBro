@@ -28,10 +28,10 @@ class Cart_table extends \WebService {
             $querydata['terms'] = explode(",", $querydata['terms']);
         }
         $ids_filtered = $querydata['terms'];
-        if($ids_filtered[0] === ''){
+        if ($ids_filtered[0] === '') {
             array_splice($ids_filtered, 0, 1);
         }
-        
+
         if (isset($querydata['sSearch']) && $querydata['sSearch'] !== '') {
             $ids_filtered = array();
             if (strpos('isoform', $querydata['sSearch']) !== FALSE) {
@@ -43,25 +43,67 @@ class Cart_table extends \WebService {
             $ids_filtered = array_merge($this->filter_ids($querydata['sSearch'], $querydata['terms']), $ids_filtered);
         }
 
-        \sort($ids_filtered);
-        $limit_count = max(array(10, min(array(1000, intval($querydata['iDisplayLength'])))));
-        $terms = array_slice($ids_filtered, intval($querydata['iDisplayStart']), $limit_count);
+        # If no sorting is requested or there are too many terms just return the result with the appropriate ids
+        if (sizeof($ids_filtered) > 1000 || $querydata['iSortCol_0'] == 0) {
+            \sort($ids_filtered);
+            $limit_count = max(array(10, min(array(1000, intval($querydata['iDisplayLength'])))));
+            $terms = array_slice($ids_filtered, intval($querydata['iDisplayStart']), $limit_count);
 
-        list($service) = \WebService::factory('details/features');
-        $results = ($service->execute(array('terms' => $terms)));
+            list($service) = \WebService::factory('details/features');
+            $results = ($service->execute(array('terms' => $terms)));
 
-        $data = array(
-            "sEcho" => intval($querydata['sEcho']),
-            "iTotalDisplayRecords" => sizeof($ids_filtered),
-            "iTotalRecords" => sizeof($querydata['terms']),
-            "aaData" => array()
-        );
+            $data = array(
+                "sEcho" => intval($querydata['sEcho']),
+                "iTotalDisplayRecords" => sizeof($ids_filtered),
+                "iTotalRecords" => sizeof($querydata['terms']),
+                "aaData" => array()
+            );
 
-        foreach ($results['results'] as $result) {
-            $data['aaData'][] = $result; //array_values($row);
+            foreach ($results['results'] as $result) {
+                $data['aaData'][] = $result; //array_values($row);
+            }
+
+            return $data;
+        } else {
+            # get full set of feature descriptions, apply sorting and return the appropriate range
+            list($service) = \WebService::factory('details/features');
+            $results = ($service->execute(array('terms' => $ids_filtered)));
+            if($querydata['iSortCol_0'] == 1)
+                usort($results['results'], array($this, "cmp_name"));
+            if($querydata['iSortCol_0'] == 2)
+                usort($results['results'], array($this, "cmp_alias"));
+            if($querydata['iSortCol_0'] == 3)
+                usort($results['results'], array($this, "cmp_description"));
+            if($querydata['sSortDir_0'] == 'desc')
+                $results['results'] = array_reverse ($results['results']);
+            $limit_count = max(array(10, min(array(1000, intval($querydata['iDisplayLength'])))));
+            $final_results = array_slice($results['results'], intval($querydata['iDisplayStart']), $limit_count);
+
+            $data = array(
+                "sEcho" => intval($querydata['sEcho']),
+                "iTotalDisplayRecords" => sizeof($ids_filtered),
+                "iTotalRecords" => sizeof($querydata['terms']),
+                "aaData" => array()
+            );
+
+            foreach ($final_results as $result) {
+                $data['aaData'][] = $result; //array_values($row);
+            }
+
+            return $data;
         }
+    }
 
-        return $data;
+    private function cmp_name($a, $b) {
+        return strcmp($a['name'], $b['name']);
+    }
+
+    private function cmp_alias($a, $b) {
+        return strcmp($a['alias'], $b['alias']);
+    }
+
+    private function cmp_description($a, $b) {
+        return strcmp($a['description'], $b['description']);
     }
 
     public function filter_ids_bytype($type, $ids) {

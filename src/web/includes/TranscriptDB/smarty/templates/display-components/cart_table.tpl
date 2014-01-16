@@ -1,5 +1,17 @@
 <script type="text/javascript">
     function displayCartTable(data, opts) {
+        var cols = [{mData: 'type', bSortable: false},
+            {mData: 'name', bSortable: true},
+            {mData: 'alias', bSortable: true},
+            {mData: 'description', bSortable: true}];
+        // disable column sorting if cart is too large
+        if (data.length > 1000) {
+            cols = [{mData: 'type', bSortable: false},
+                {mData: 'name', bSortable: false},
+                {mData: 'alias', bSortable: false},
+                {mData: 'description', bSortable: false}];
+            $('#placeholder-unsortable').show();
+        }
         var options = $.extend(true, {
             bProcessing: true,
             bServerSide: true,
@@ -18,20 +30,7 @@
             },
             bLengthChange: false,
             sPaginationType: "full_numbers",
-            aoColumns: [
-                {mData: 'type',
-                    bSortable: false
-                },
-                {mData: 'name',
-                    bSortable: false
-                },
-                {mData: 'alias',
-                    bSortable: false
-                },
-                {mData: 'description',
-                    bSortable: false
-                }
-            ],
+            aoColumns: cols,
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 console.log($(nRow).find('td:eq(1)').html());
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
@@ -42,7 +41,7 @@
                     helper: function() {
                         return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
                     },
-                    cursorAt: { top: 5, left: 5 }
+                    cursorAt: {top: 5, left: 5}
                 });
             },
             sDom: 'T<"clear">lrtip',
@@ -110,7 +109,7 @@
 
     function updateSelectedCount() {
         var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
-        $('.selectedItemsCount').html('Selected ('+selectedItems.length+')');
+        $('.selectedItemsCount').html('Selected (' + selectedItems.length + ')');
     }
 
     function fnNumOfEntriesCart(numOfEntries)
@@ -242,14 +241,17 @@
     <div class="large-3 columns" style="padding-top: 6px">
         <input id="input-filter-carttable" value="Filter" style="color: lightgray">
     </div>
+    <div  class="large-12 column" id="placeholder-unsortable" style="display: none; color: red">
+        Attention: This cart is large (>1000 entries) therefore column sorting is disabled!
+    </div>
     <div class="large-12 column">
         <table style="width:100%" id="carttable">
             <thead>
                 <tr>
-                    <td>Type</td>
-                    <td>Name</td>
-                    <td>Alias</td>
-                    <td>Description</td>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Alias</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tfoot></tfoot>
