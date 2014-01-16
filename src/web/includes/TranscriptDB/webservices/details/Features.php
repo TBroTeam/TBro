@@ -122,6 +122,9 @@ EOF;
                     break;
             }
             unset($row['type_id']);
+            // if description is null: set to empty string
+            if(is_null ( $row['description'] )) 
+                $row['description'] = '';
             $ret['results'][] = $row;
         }
         return $ret;
