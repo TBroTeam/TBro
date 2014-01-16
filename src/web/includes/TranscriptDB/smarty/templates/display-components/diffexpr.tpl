@@ -97,7 +97,7 @@
                             </select>
                         </td>
                         <td>
-                            <input name="filter_column[{#$i#}][value]" type="text" />
+                            <input name="filter_column[{#$i+1#}][value]" type="text" />
                         </td>
                     </tr>
                     {#$i=$i+1#}
