@@ -5,16 +5,16 @@
             sPaginationType: "full_numbers",
             aoColumns: [
                 {mData: 'type',
-                    bSortable: false
+                    bSortable: true
                 },
                 {mData: 'name',
-                    bSortable: false
+                    bSortable: true
                 },
                 {mData: 'alias',
-                    bSortable: false
+                    bSortable: true
                 },
                 {mData: 'description',
-                    bSortable: false
+                    bSortable: true
                 }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -154,10 +154,10 @@
         <table style="width:100%" id="results">
             <thead>
                 <tr>
-                    <td>Type</td>
-                    <td>Name</td>
-                    <td>Alias</td>
-                    <td>Description</td>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Alias</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tfoot></tfoot>
