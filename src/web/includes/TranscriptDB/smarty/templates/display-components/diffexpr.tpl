@@ -83,7 +83,7 @@
 
 
             <table id="filters" style="width:100%">
-                {#$i=1#}
+                {#$i=2#}
                 {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
                     <tr>
                         <th>{#$filter_key#}</th>
@@ -97,7 +97,7 @@
                             </select>
                         </td>
                         <td>
-                            <input name="filter_column[{#$i+1#}][value]" type="text" />
+                            <input name="filter_column[{#$i#}][value]" type="text" />
                         </td>
                     </tr>
                     {#$i=$i+1#}
