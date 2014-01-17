@@ -11,13 +11,13 @@
         $(document).ready(function() {
             new Grouplist($('#button-unigene-addToCart-options'), cart, addUnigeneToCart);
             $('#button-unigene-addToCart-options-newcart').click(addUnigeneToCart);
-            
+
             $('.unigene-header').draggable({
                 appendTo: "body",
                 helper: function() {
                     return $('<div>', {text: $('.unigene-header').text()}).addClass('beingDragged');
                 },
-                cursorAt: { top: 5, left: 5 }
+                cursorAt: {top: 5, left: 5}
             });
         });
 
@@ -51,7 +51,20 @@
             <h5>Imported into TBro: {#$data.unigene.timelastmodified#}</h5>
         </div>
     </div>
-
+    {#if isset($data.unigene.description) #}
+        <div class="row">
+            <div class="large-12 columns panel">
+                <h4>Description</h4>
+                <table style="width:100%">
+                    <tbody>
+                        {#foreach $data.unigene.description as $description#}
+                            <tr><td>{#$description.value#}</td></tr>
+                        {#/foreach#}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {#/if#}
     {#if (isset($data.unigene.isoforms) && count($data.unigene.isoforms)>0)#}
         <script type="text/javascript">
             var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {

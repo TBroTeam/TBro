@@ -30,6 +30,21 @@ EOF;
         $stm_get_unigenes = $db->prepare($query_get_unigenes);
         $stm_get_unigenes->bindValue('feature_id', $param_unigene_feature_id);
 
+        //all textual annotations
+        $query_get_desc = <<<EOF
+SELECT
+  *
+FROM
+  featureprop
+WHERE
+  featureprop.feature_id = :unigene_id AND
+  featureprop.type_id = {$constant('CV_ANNOTATION_DESC')}
+EOF;
+
+        $stm_get_desc = $db->prepare($query_get_desc);
+        $stm_get_desc->bindParam('unigene_id', $param_unigene_feature_id);
+
+        
         $return = array();
 
         $stm_get_unigenes->execute();
@@ -40,6 +55,11 @@ EOF;
             $isoforms = $service->execute($querydata);
             if (isset($isoforms['isoforms']))
                 $return['unigene']['isoforms'] = $isoforms['isoforms'];
+            $stm_get_desc->execute();
+            //add all descriptions to array $unigene['description']
+            while ($desc = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
+                $return['unigene']['description'][] = $desc;
+            }
         }
 
         return $return;
