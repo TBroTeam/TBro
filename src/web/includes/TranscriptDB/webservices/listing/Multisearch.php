@@ -43,6 +43,9 @@ EOF;
 
         $stm_get_features->execute($values);
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
+            // if description is null: set to empty string
+            if(is_null ( $feature['description'] )) 
+                $feature['description'] = '';
             $data['results'][$feature['feature_id']] = array(
                 'name' => $feature['feature_name']
                 , 'type' => $feature['type_id'] == CV_UNIGENE ? 'unigene' : (CV_ISOFORM ? 'isoform' : 'unknonwn')
