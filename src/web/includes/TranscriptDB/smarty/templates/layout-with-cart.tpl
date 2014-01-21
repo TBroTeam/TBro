@@ -101,7 +101,7 @@
                     <div id="dialog-copy-cart-group" title="Export Group">
                         <form>
                             <fieldset>
-                                <label for="copy-json">You can copy the data below. It may be re-imported by anyone using the "Import Group" feature.</label>
+                                <label for="copy-json">You can copy the data below. It may be re-imported by anyone using the "Import" feature.</label>
                                 <textarea id="copy-json" class="text ui-widget-content ui-corner-all" style="height: 375px"></textarea>
                             </fieldset>
                         </form>
@@ -122,7 +122,7 @@
 
                 <div class="panel large-12 columns" id="cart">
                     <div>
-                        <h4 class="left">Cart</h4>
+                        <h4 class="left">Carts</h4>
                         <ul class="button-group even-2 right">
                             <li><a class="button secondary" href="#" onclick="cart.addGroup();">New</a></li>
                             <li><a class="button secondary" href="#" onclick="$('#dialog-paste-cart-group').dialog('open');">Import</a></li>
@@ -160,7 +160,7 @@
                     <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
                     <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename</a></li>
-                    <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Copy</a></li>
+                    <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Export</a></li>
                     <li><a href="#" onclick="cart.removeGroup('<%= groupname %>');"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove</a></li>
                     <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/7.png"/>&nbsp;View&nbsp;/&nbsp;Modify</a></li>
                     <li><a href="{#$AppPath#}/graphs/<%= groupname %>#tabs-graphs"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
