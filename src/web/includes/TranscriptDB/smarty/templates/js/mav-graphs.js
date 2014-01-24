@@ -175,9 +175,12 @@ $(document).ready(function() {
             tblColumns.push({sTitle: val.y.smps[x]});
 
         var tblData = [];
-        for (var y = 0; y < val.y.data.length; y++) {
-            var row = [val.y.vars[y]];
-            Array.prototype.push.apply(row, val.y.data[y]);
+        for (var i = 0; i < val.y.data.length; i++) {
+            for(var j=0; j<val.y.data[i].length; j++){
+                 val.y.data[i][j] = Math.round(val.y.data[i][j]);
+            }
+            var row = [val.y.vars[i]];
+            Array.prototype.push.apply(row, val.y.data[i]);
             tblData.push(row);
         }
 
