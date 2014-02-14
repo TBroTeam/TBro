@@ -202,10 +202,10 @@ function execute_command($cwd, $cmd, $query) {
                 foreach ($read as $pipe) {
                     switch ($pipe) {
                         case $pipes[1]:
-                            $stdout_collected .= fgets($pipe);
-                            break;
+                           while ($buf = fgets($pipe)) $stdout_collected .= $buf;   
+                           break;
                         case $pipes[2]:
-                            $stderr_collected .= fgets($pipe);
+                            while ($buf = fgets($pipe)) $stderr_collected .= $buf;
                             break;
                     }
                 }
@@ -215,6 +215,7 @@ function execute_command($cwd, $cmd, $query) {
                 break;
             }
         }
+            
         fclose($pipes[1]);
         fclose($pipes[2]);
 
