@@ -9,10 +9,7 @@
         margin: 0px !important;
     }
 </style>
-<script type="text/javascript">
-    {#include file="js/diffexpr.js"#}
-</script>
 {#/block#}
 {#block name="body"#}
-{#include file="display-components/diffexpr.tpl"#}
+{#include file="display-components/diffexpr.tpl" instance_name="diffexpr"#}
 {#/block#}

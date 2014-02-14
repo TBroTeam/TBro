@@ -7,21 +7,10 @@
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
-    <style type="text/css">
-        #filters tr td, #filters tr th {
-            padding: 1px !important;
-        }
-        #filters input {
-            margin: 0px !important;
-        }
-    </style>
     <script type="text/javascript">
         (function($) {
 
         {#include file="js/mav-graphs.js"#}
-            (function() {
-        {#include file="js/diffexpr.js" cart_ids=true#}
-            })();
             $(document).ready(function() {
                 $("#tabs").tabs();
 
@@ -170,7 +159,7 @@
                 </div>
             </div>
             <div id="tabs-diffexp">
-                {#include file="display-components/diffexpr.tpl" cart_ids=true#}
+                {#include file="display-components/diffexpr.tpl" cart_ids=true instance_name="cart"#}
             </div>
             <div id="tabs-pathways">
                 {#include file="display-components/pathways.tpl"#}

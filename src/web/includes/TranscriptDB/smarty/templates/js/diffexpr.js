@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    var select_analysis = $('#select-gdfx-analysis');
-    var select_conditionA = $('#select-gdfx-conditionA');
-    var select_conditionB = $('#select-gdfx-conditionB');
-    var select_assay = $('#select-gdfx-assay');
+    var select_analysis = $('#{#$instance_name#}-select-gdfx-analysis');
+    var select_conditionA = $('#{#$instance_name#}-select-gdfx-conditionA');
+    var select_conditionB = $('#{#$instance_name#}-select-gdfx-conditionB');
+    var select_assay = $('#{#$instance_name#}-select-gdfx-assay');
 
 
     //filteredSelect: select_conditionA => select_conditionB => select_analysis
@@ -49,7 +49,7 @@ $(document).ready(function() {
                     new filteredSelect(select_assay, 'assay', {
                         data: data
                     }).refill();
-                    $('#button-gdfx-table').prop('disabled', false);
+                    $('#{#$instance_name#}-button-gdfx-table').prop('disabled', false);
                 }
             });
         }, 100);
@@ -69,7 +69,7 @@ $(document).ready(function() {
                 new filteredSelect(select_assay, 'assay', {
                     data: data
                 }).refill();
-                $('#button-gdfx-table').prop('disabled', false);
+                $('#{#$instance_name#}-button-gdfx-table').prop('disabled', false);
             }
         });
     });
@@ -78,7 +78,7 @@ $(document).ready(function() {
     var selectedItem;
     var dataTable;
     var lastQueryData;
-    $('#button-gdfx-table').click(function() {
+    $('#{#$instance_name#}-button-gdfx-table').click(function() {
         var selected = finalSelect.filteredData();
         //conditionA and conditionB have to be re-ordered (are shown both directions but sotred internally only one diferction)
         selectedItem = {
@@ -88,8 +88,8 @@ $(document).ready(function() {
 
         };
         //show result table
-        $('#div-gdfxtable').show();
-        $('#div-gdfxtable-columnselector').show();
+        $('#{#$instance_name#}-div-gdfxtable').show();
+        $('#{#$instance_name#}-div-gdfxtable-columnselector').show();
 
 
         if (typeof dataTable === "undefined") {
@@ -115,7 +115,7 @@ $(document).ready(function() {
                     name: "conditionB",
                     value: selectedItem.conditionB
                 });
-                $.each($('#diffexp_filters').serializeArray(), function() {
+                $.each($('#{#$instance_name#}-diffexp_filters').serializeArray(), function() {
                     aoData.push(this);
                 });
                 /*{#if isset($cart_ids)#}*/
@@ -213,7 +213,7 @@ $(document).ready(function() {
                 }
             };
             //execute dataTable
-            dataTable = $('#diffexp_results').dataTable(options);
+            dataTable = $('#{#$instance_name#}-diffexp_results').dataTable(options);
         } else {
             //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
             dataTable.fnReloadAjax();
@@ -242,13 +242,13 @@ $(document).ready(function() {
     //updates table displaying query details
     function update_query_details(data) {
         var query_details = data.query_details;
-        var domQd = $('#query_details');
+        var domQd = $('#{#$instance_name#}-query_details');
         var swapped = finalSelect.filteredData().values[0].dir !== 'ltr';
         if (swapped) {
-            domQd.find('#swappedWarning').show();
+            domQd.find('#{#$instance_name#}-swappedWarning').show();
         }
         else {
-            domQd.find('#swappedWarning').hide();
+            domQd.find('#{#$instance_name#}-swappedWarning').hide();
         }
         domQd.find('.conditionA').text(query_details.conditionA.name).data('metadata', query_details.conditionA);
         domQd.find('.conditionB').text(query_details.conditionB.name).data('metadata', query_details.conditionB);
@@ -269,7 +269,7 @@ $(document).ready(function() {
         }
     }
 
-    $('#addAllToNewCart').click(function() {
+    $('#{#$instance_name#}-addAllToNewCart').click(function() {
 
         if (typeof lastQueryData == 'undefined')
             return;
@@ -287,12 +287,12 @@ $(document).ready(function() {
 
     });
 
-    $('#download_csv_button').click(download_csv);
+    $('#{#$instance_name#}-download_csv_button').click(download_csv);
 
-    $('#diffexpr select').tooltip(metadata_tooltip_options({
+    $('#{#$instance_name#}-diffexpr select').tooltip(metadata_tooltip_options({
         items: "option"
     }));
-    $('#query_details').tooltip(metadata_tooltip_options({
+    $('#{#$instance_name#}-query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
 
