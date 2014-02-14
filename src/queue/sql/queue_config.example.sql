@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 -- programs that the user is allowed to execute
 INSERT INTO programs (name) VALUES
 ('blastn'),
@@ -71,3 +73,4 @@ INSERT INTO allowed_parameters
 ('tblastx', 'matrix',           'BLOSUM62',  'cfunc_in_array',      ARRAY['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250']),
 ('tblastx', 'db',               '$DBFILE',   'cfunc_default_only',  NULL);
 
+COMMIT;
