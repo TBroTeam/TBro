@@ -29,6 +29,7 @@
                     $('#pathway-table').dataTable({
                         bLengthChange: false,
                         bPaginate: false,
+                        bDestroy: true,
                         bInfo: false,
                         aaSorting: [[2,'desc'],[0,'asc']],
                         sDom: 'T<"clear">lrtip',

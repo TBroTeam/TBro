@@ -60,6 +60,7 @@ class Cart_table extends \WebService {
             );
 
             foreach ($results['results'] as $result) {
+                $result['user_alias'] = '';
                 $data['aaData'][] = $result; //array_values($row);
             }
 
@@ -87,6 +88,7 @@ class Cart_table extends \WebService {
             );
 
             foreach ($final_results as $result) {
+                $result['user_alias'] = '';
                 $data['aaData'][] = $result; //array_values($row);
             }
 

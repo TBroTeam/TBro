@@ -79,7 +79,7 @@
                                 <input type="text" name="feature_id" id="item-feature_id" disabled="disabled" class="text ui-widget-content ui-corner-all" />
                             </fieldset>
                             <fieldset>
-                                <label for="item-alias">display alias</label>
+                                <label for="item-alias">user alias</label>
                                 <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" />
                                 <label for="item-annotations">annotations</label>
                                 <textarea name="annotations" id="item-annotations" class="text ui-widget-content ui-corner-all"></textarea>

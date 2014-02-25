@@ -18,8 +18,10 @@
 
 
                 $('#Cart').on('cartEvent', function(event) {
-                    if (!(event.eventData.action === 'updateContext'))
+                    if(!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname === '{#$cartname#}')){
+                        console.log(event.eventData);
                         return;
+                    }
 
                     console.log(event.eventData);
                     _.delay(function() {

@@ -3,16 +3,19 @@
         var cols = [{mData: 'type', bSortable: false},
             {mData: 'name', bSortable: true},
             {mData: 'alias', bSortable: true},
-            {mData: 'description', bSortable: true}];
+            {mData: 'description', bSortable: true},
+            {mData: 'user_alias', bSortable: true}];
         // disable column sorting if cart is too large
         if (data.length > 1000) {
             cols = [{mData: 'type', bSortable: false},
                 {mData: 'name', bSortable: false},
                 {mData: 'alias', bSortable: false},
-                {mData: 'description', bSortable: false}];
+                {mData: 'description', bSortable: false},
+                {mData: 'user_alias', bSortable: false}];
             $('#placeholder-unsortable').show();
         }
         var options = $.extend(true, {
+            bDestroy: true,
             bProcessing: true,
             bServerSide: true,
             sAjaxSource: "{#$ServicePath#}/listing/cart_table",
@@ -32,8 +35,14 @@
             sPaginationType: "full_numbers",
             aoColumns: cols,
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log($(nRow).find('td:eq(1)').html());
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
+                if(typeof cart.metadata[aData.feature_id] !== 'undefined'){
+                    $(nRow).find('td:eq(4)').html(cart.metadata[aData.feature_id]['alias']);
+                }
+                $(nRow).find('td:eq(4)').append(
+                      '</div><div class="right"><a class="cart-button-rename" onclick="annotateElement('+aData.feature_id+');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>'+
+                      '<a class="cart-button-delete" onclick="deleteElement('+aData.feature_id+');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
+                );
                 $(nRow).css('cursor', 'pointer');
                 $(nRow).attr('data-id', aData.feature_id);
                 $(nRow).draggable({
@@ -54,19 +63,8 @@
         // $.each(data, function() {
         //     options.aaData.push(this);
         // });
-        console.log(options);
         var tbl = $('#carttable');
-        if (!$.fn.DataTable.fnIsDataTable(tbl.get(0)))
-            tbl.dataTable(options);
-        else {
-            //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
-            tbl.dataTable().fnClearTable();
-            var dataArray = [];
-            $.each(data, function() {
-                dataArray.push(this);
-            });
-            tbl.dataTable().fnAddData(dataArray);
-        }
+        tbl.dataTable(options);        
     }
 
     (function($) {
@@ -106,6 +104,19 @@
             });
         });
     })(jQuery);
+
+    function deleteElement(id){
+        cart.removeItem(id, {groupname: '{#$cartname#}'});
+    }
+    
+    function annotateElement(id){
+        cart._getItemDetails([id], function(data) {
+                $('#item-feature_id').val(id);
+                $('#item-alias').val(data[0].metadata.alias || '');
+                $('#item-annotations').val(data[0].metadata.annotations || '');
+                $("#dialog-edit-cart-item").dialog("open");
+            });
+    }
 
     function updateSelectedCount() {
         var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
@@ -252,6 +263,7 @@
                     <th>Name</th>
                     <th>Alias</th>
                     <th>Description</th>
+                    <th>User Alias</th>
                 </tr>
             </thead>
             <tfoot></tfoot>
