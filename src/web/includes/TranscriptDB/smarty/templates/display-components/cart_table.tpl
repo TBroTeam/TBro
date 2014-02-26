@@ -1,17 +1,21 @@
 <script type="text/javascript">
     function displayCartTable(data, opts) {
-        var cols = [{mData: 'type', bSortable: false},
-            {mData: 'name', bSortable: true},
-            {mData: 'alias', bSortable: true},
-            {mData: 'description', bSortable: true},
-            {mData: 'user_alias', bSortable: true}];
+        var cols = [{mData: 'type', bSortable: false, sClass: "no_wrap"},
+            {mData: 'name', bSortable: true, sClass: "no_wrap"},
+            {mData: 'alias', bSortable: true, sClass: "no_wrap"},
+            {mData: 'description', bSortable: true, sClass: "no_wrap"},
+            {mData: 'user_alias', bSortable: true, sClass: "no_wrap"},
+            {mData: 'user_annotations', bSortable: true, sClass: "no_wrap"},
+            {mData: 'actions', bSortable: false, sClass: "no_wrap"}];
         // disable column sorting if cart is too large
         if (data.length > 1000) {
-            cols = [{mData: 'type', bSortable: false},
-                {mData: 'name', bSortable: false},
-                {mData: 'alias', bSortable: false},
-                {mData: 'description', bSortable: false},
-                {mData: 'user_alias', bSortable: false}];
+            cols = [{mData: 'type', bSortable: false, sClass: "no_wrap"},
+                {mData: 'name', bSortable: false, sClass: "no_wrap"},
+                {mData: 'alias', bSortable: false, sClass: "no_wrap"},
+                {mData: 'description', bSortable: false, sClass: "no_wrap"},
+                {mData: 'user_alias', bSortable: false, sClass: "no_wrap"},
+                {mData: 'user_annotations', bSortable: true, sClass: "no_wrap"},
+                {mData: 'actions', bSortable: false, sClass: "no_wrap"}];
             $('#placeholder-unsortable').show();
         }
         var options = $.extend(true, {
@@ -36,10 +40,7 @@
             aoColumns: cols,
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
-                if(typeof cart.metadata[aData.feature_id] !== 'undefined'){
-                    $(nRow).find('td:eq(4)').html(cart.metadata[aData.feature_id]['alias']);
-                }
-                $(nRow).find('td:eq(4)').append(
+                $(nRow).find('td:eq(6)').append(
                       '</div><div class="right"><a class="cart-button-rename" onclick="annotateElement('+aData.feature_id+');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>'+
                       '<a class="cart-button-delete" onclick="deleteElement('+aData.feature_id+');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
                 );
@@ -264,6 +265,8 @@
                     <th>Alias</th>
                     <th>Description</th>
                     <th>User Alias</th>
+                    <th>Annotations</th>
+                    <th></th>
                 </tr>
             </thead>
             <tfoot></tfoot>

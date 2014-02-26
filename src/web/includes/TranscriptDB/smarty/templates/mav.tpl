@@ -18,7 +18,7 @@
 
 
                 $('#Cart').on('cartEvent', function(event) {
-                    if(!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname === '{#$cartname#}')){
+                    if(!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname === '{#$cartname#}'))){
                         console.log(event.eventData);
                         return;
                     }
