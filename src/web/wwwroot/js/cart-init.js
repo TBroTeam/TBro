@@ -264,18 +264,16 @@ $(document).ready(function() {
             var element = $(this);
             itemdata = cart.cartitems[element.attr('data-id')];
             
-            
             var tooltip = $("<table />");
-            $.each(itemdata, function(key, val) {
-                if (_.isObject(val)) {
-                    $.each(val, function(k, v) {
-                        tooltip.append($('<tr/>').append($('<td/>').text(k)).append($('<td/>').append(v || '')));
-                    });
-                } else {
-                    //TODO secure this up
-                    tooltip.append($('<tr/>').append($('<td/>').text(key)).append($('<td/>').text(val || '')));
-                }
-            });
+            tooltip.append($('<tr/>').append($('<td/>').text("Name")).append($('<td/>').append(itemdata['name'] || '')));
+            tooltip.append($('<tr/>').append($('<td/>').text("Type")).append($('<td/>').append(itemdata['type'] || '')));
+            tooltip.append($('<tr/>').append($('<td/>').text("Release")).append($('<td/>').append(itemdata['dataset'] || '')));
+            tooltip.append($('<tr/>').append($('<td/>').text("DB Alias")).append($('<td/>').append(itemdata['alias'] || '')));
+            tooltip.append($('<tr/>').append($('<td/>').text("DB Description")).append($('<td/>').append(itemdata['description'] || '')));
+            if(typeof itemdata['metadata']['alias'] !== 'undefined' || typeof itemdata['metadata']['descriptions'] !== 'undefined'){
+                tooltip.append($('<tr/>').append($('<td/>').text("User Alias")).append($('<td/>').append(itemdata['metadata']['alias'] || '')));
+                tooltip.append($('<tr/>').append($('<td/>').text("User Description")).append($('<td/>').append(itemdata['metadata']['annotations'] || '')));
+            }
             tooltip.foundation();
             return tooltip;
         }

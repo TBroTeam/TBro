@@ -23,12 +23,12 @@ class Cart_table extends \WebService {
 #UI hint
         if (false)
             $db = new PDO();
-        
+
         if (!isset($_SESSION))
             session_start();
-        
+
         $metadata = array();
-        if(isset($_SESSION['cart']) && $_SESSION['cart']['metadata'])
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'])
             $metadata = &$_SESSION['cart']['metadata'];
         // var_dump($metadata);
 
@@ -50,6 +50,7 @@ class Cart_table extends \WebService {
             }
             $ids_filtered = array_merge($this->filter_ids_db($querydata['sSearch'], $querydata['terms']), $ids_filtered);
             $ids_filtered = array_merge($this->filter_ids_user_annotation($querydata['sSearch'], $querydata['terms']), $ids_filtered);
+            $ids_filtered = array_merge($this->filter_ids_description($querydata['sSearch'], $querydata['terms']), $ids_filtered);
         }
 
 
@@ -70,7 +71,7 @@ class Cart_table extends \WebService {
                 $result['actions'] = '';
                 $result['user_alias'] = '';
                 $result['user_annotations'] = '';
-                if(array_key_exists($result['feature_id'], $metadata)){
+                if (array_key_exists($result['feature_id'], $metadata)) {
                     $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
                     $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
                 }
@@ -86,23 +87,23 @@ class Cart_table extends \WebService {
                 $result['actions'] = '';
                 $result['user_alias'] = '';
                 $result['user_annotations'] = '';
-                if(array_key_exists($result['feature_id'], $metadata)){
+                if (array_key_exists($result['feature_id'], $metadata)) {
                     $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
                     $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
                 }
-            }            
-            if($querydata['iSortCol_0'] == 1)
+            }
+            if ($querydata['iSortCol_0'] == 1)
                 usort($results['results'], array($this, "cmp_name"));
-            if($querydata['iSortCol_0'] == 2)
+            if ($querydata['iSortCol_0'] == 2)
                 usort($results['results'], array($this, "cmp_alias"));
-            if($querydata['iSortCol_0'] == 3)
+            if ($querydata['iSortCol_0'] == 3)
                 usort($results['results'], array($this, "cmp_description"));
-            if($querydata['iSortCol_0'] == 4)
+            if ($querydata['iSortCol_0'] == 4)
                 usort($results['results'], array($this, "cmp_user_alias"));
-            if($querydata['iSortCol_0'] == 5)
+            if ($querydata['iSortCol_0'] == 5)
                 usort($results['results'], array($this, "cmp_user_annotations"));
-            if($querydata['sSortDir_0'] == 'desc')
-                $results['results'] = array_reverse ($results['results']);
+            if ($querydata['sSortDir_0'] == 'desc')
+                $results['results'] = array_reverse($results['results']);
             $limit_count = max(array(10, min(array(1000, intval($querydata['iDisplayLength'])))));
             $final_results = array_slice($results['results'], intval($querydata['iDisplayStart']), $limit_count);
 
@@ -132,11 +133,11 @@ class Cart_table extends \WebService {
     private function cmp_description($a, $b) {
         return strcmp($a['description'], $b['description']);
     }
-    
+
     private function cmp_user_alias($a, $b) {
         return strcmp($a['user_alias'], $b['user_alias']);
     }
-    
+
     private function cmp_user_annotations($a, $b) {
         return strcmp($a['user_annotations'], $b['user_annotations']);
     }
@@ -204,17 +205,31 @@ EOF;
         }
         return $ret;
     }
-    
+
     public function filter_ids_user_annotation($searchterm, $ids) {
         $metadata = array();
-        if(isset($_SESSION['cart']) && $_SESSION['cart']['metadata'])
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'])
             $metadata = &$_SESSION['cart']['metadata'];
         $ret = array();
         foreach ($ids as $id) {
-            if(array_key_exists($id, $metadata)){
-                 if(strpos($metadata[$id]['alias'], $searchterm) !== FALSE || strpos($metadata[$id]['annotations'], $searchterm) !== FALSE)
-                      $ret[] = $id;
+            if (array_key_exists($id, $metadata)) {
+                if (array_key_exists('alias', $metadata[$id]) && (strpos($metadata[$id]['alias'], $searchterm) !== FALSE)) {
+                    $ret[] = $id;
+                } elseif (array_key_exists('annotations', $metadata[$id]) && (strpos($metadata[$id]['annotations'], $searchterm) !== FALSE)) {
+                    $ret[] = $id;
+                }
             }
+        }
+        return $ret;
+    }
+
+    public function filter_ids_description($searchterm, $ids) {
+        list($service) = \WebService::factory('details/features');
+        $results = ($service->execute(array('terms' => $ids)));
+        $ret = array();
+        foreach ($results['results'] as $result) {
+            if (strpos($result['description'], $searchterm) !== FALSE)
+                $ret[] = $result['feature_id'];
         }
         return $ret;
     }
