@@ -1,21 +1,21 @@
 <script type="text/javascript">
     function displayCartTable(data, opts) {
-        var cols = [{mData: 'type', bSortable: false, sClass: "no_wrap"},
-            {mData: 'name', bSortable: true, sClass: "no_wrap"},
-            {mData: 'alias', bSortable: true, sClass: "no_wrap"},
-            {mData: 'description', bSortable: true, sClass: "no_wrap"},
-            {mData: 'user_alias', bSortable: true, sClass: "no_wrap"},
-            {mData: 'user_annotations', bSortable: true, sClass: "no_wrap"},
-            {mData: 'actions', bSortable: false, sClass: "no_wrap"}];
+        var cols = [{mData: 'type', bSortable: false, sClass: "no-wrap"},
+            {mData: 'name', bSortable: true, sClass: "no-wrap"},
+            {mData: 'alias', bSortable: true, sClass: "no-wrap"},
+            {mData: 'description', bSortable: true, sClass: "no-wrap"},
+            {mData: 'user_alias', bSortable: true, sClass: "no-wrap"},
+            {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
+            {mData: 'actions', bSortable: false, sClass: "no-wrap"}];
         // disable column sorting if cart is too large
         if (data.length > 1000) {
-            cols = [{mData: 'type', bSortable: false, sClass: "no_wrap"},
-                {mData: 'name', bSortable: false, sClass: "no_wrap"},
-                {mData: 'alias', bSortable: false, sClass: "no_wrap"},
-                {mData: 'description', bSortable: false, sClass: "no_wrap"},
-                {mData: 'user_alias', bSortable: false, sClass: "no_wrap"},
-                {mData: 'user_annotations', bSortable: true, sClass: "no_wrap"},
-                {mData: 'actions', bSortable: false, sClass: "no_wrap"}];
+            cols = [{mData: 'type', bSortable: false, sClass: "no-wrap"},
+                {mData: 'name', bSortable: false, sClass: "no-wrap"},
+                {mData: 'alias', bSortable: false, sClass: "no-wrap"},
+                {mData: 'description', bSortable: false, sClass: "no-wrap"},
+                {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
+                {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
+                {mData: 'actions', bSortable: false, sClass: "no-wrap"}];
             $('#placeholder-unsortable').show();
         }
         var options = $.extend(true, {
@@ -41,9 +41,9 @@
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
                 $(nRow).find('td:eq(6)').append(
-                      '</div><div class="right"><a class="cart-button-rename" onclick="annotateElement('+aData.feature_id+');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>'+
-                      '<a class="cart-button-delete" onclick="deleteElement('+aData.feature_id+');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
-                );
+                        '</div><div class="right"><a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>' +
+                        '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
+                        );
                 $(nRow).css('cursor', 'pointer');
                 $(nRow).attr('data-id', aData.feature_id);
                 $(nRow).draggable({
@@ -65,7 +65,7 @@
         //     options.aaData.push(this);
         // });
         var tbl = $('#carttable');
-        tbl.dataTable(options);        
+        tbl.dataTable(options);
     }
 
     (function($) {
@@ -106,17 +106,17 @@
         });
     })(jQuery);
 
-    function deleteElement(id){
+    function deleteElement(id) {
         cart.removeItem(id, {groupname: '{#$cartname#}'});
     }
-    
-    function annotateElement(id){
+
+    function annotateElement(id) {
         cart._getItemDetails([id], function(data) {
-                $('#item-feature_id').val(id);
-                $('#item-alias').val(data[0].metadata.alias || '');
-                $('#item-annotations').val(data[0].metadata.annotations || '');
-                $("#dialog-edit-cart-item").dialog("open");
-            });
+            $('#item-feature_id').val(id);
+            $('#item-alias').val(data[0].metadata.alias || '');
+            $('#item-annotations').val(data[0].metadata.annotations || '');
+            $("#dialog-edit-cart-item").dialog("open");
+        });
     }
 
     function updateSelectedCount() {
@@ -212,66 +212,75 @@
     }
 </script>
 
+<style>
+    .no-wrap {
+        white-space: nowrap;
+        max-width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
 <div class="row">
     <div class="large-9 columns">        
         <ul class="button-group even-5">
             <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Entries </button></li>
-            <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button></li>
-            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="delete-dropdown">Delete</button></li>
-            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="export-dropdown">Export</button></li>
-            <li><button class="small button dropdown" type="button" id="button-features-addToCart" data-dropdown="button-features-addToCart-options"> Store </button></li>
-        </ul>
+                 <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button></li>
+                 <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="delete-dropdown">Delete</button></li>
+                     <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="export-dropdown">Export</button></li>
+                 <li><button class="small button dropdown" type="button" id="button-features-addToCart" data-dropdown="button-features-addToCart-options"> Store </button></li>
+                 </ul>
 
-        <ul class="f-dropdown" id="show-entries-dropdown-options" data-dropdown-content>
-            <li onclick="fnNumOfEntriesCart(10);"> 10 </li> 
-            <li onclick="fnNumOfEntriesCart(20);"> 20 </li> 
-            <li onclick="fnNumOfEntriesCart(50);"> 50 </li> 
-            <li onclick="fnNumOfEntriesCart(100);"> 100 </li> 
-            <li onclick="fnNumOfEntriesCart(1000);"> 1000 </li> 
-        </ul>
-        <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">All visible</li>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">None</li>
-        </ul>
-        <ul id="delete-dropdown" class="f-dropdown" data-dropdown-content>
-            <li onclick="removeSelectedFromCart();" class="selectedItemsCount">Selected</li>
-            <li onclick="removeAllFromCart();">All</li>
-        </ul>
-        <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
-            <li><b class="selectedItemsCount"> Selected </b></li>
-            <li onclick="exportSelected('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
-            <li onclick="exportSelected('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
-            <li><b> All </b></li>            
-            <li onclick="exportAll('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
-            <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>                   
+                 <ul class="f-dropdown" id="show-entries-dropdown-options" data-dropdown-content>
+                     <li onclick="fnNumOfEntriesCart(10);"> 10 </li> 
+                     <li onclick="fnNumOfEntriesCart(20);"> 20 </li> 
+                     <li onclick="fnNumOfEntriesCart(50);"> 50 </li> 
+                     <li onclick="fnNumOfEntriesCart(100);"> 100 </li> 
+                     <li onclick="fnNumOfEntriesCart(1000);"> 1000 </li> 
+                 </ul>
+                 <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+                     <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">All visible</li>
+                     <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">None</li>
+                 </ul>
+                 <ul id="delete-dropdown" class="f-dropdown" data-dropdown-content>
+                     <li onclick="removeSelectedFromCart();" class="selectedItemsCount">Selected</li>
+                     <li onclick="removeAllFromCart();">All</li>
+                 </ul>
+                 <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
+                     <li><b class="selectedItemsCount"> Selected </b></li>
+                     <li onclick="exportSelected('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
+                     <li onclick="exportSelected('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
+                     <li><b> All </b></li>            
+                     <li onclick="exportAll('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
+                     <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>                   
 
-        </ul>
-        <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
-            <li id="button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
-        </ul>
+                 </ul>
+                 <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
+                     <li id="button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
+                 </ul>
+            </div>
+            <div class="large-3 columns" style="padding-top: 6px">
+                <input id="input-filter-carttable" value="Filter" style="color: lightgray">
+            </div>
+            <div  class="large-12 column" id="placeholder-unsortable" style="display: none; color: red">
+            Attention: This cart is large (>1000 entries) therefore column sorting is disabled!
+        </div>
+        <div class="large-12 column">
+            <table style="width:100%" id="carttable">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Alias</th>
+                        <th>Description</th>
+                        <th>User Alias</th>
+                        <th>Annotations</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot></tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="large-3 columns" style="padding-top: 6px">
-        <input id="input-filter-carttable" value="Filter" style="color: lightgray">
-    </div>
-    <div  class="large-12 column" id="placeholder-unsortable" style="display: none; color: red">
-        Attention: This cart is large (>1000 entries) therefore column sorting is disabled!
-    </div>
-    <div class="large-12 column">
-        <table style="width:100%" id="carttable">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Alias</th>
-                    <th>Description</th>
-                    <th>User Alias</th>
-                    <th>Annotations</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tfoot></tfoot>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-</div>
