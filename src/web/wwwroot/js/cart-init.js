@@ -31,7 +31,7 @@ $(document).ready(function() {
     function groupAllAfterDOM() {
         this.accordion({
             collapsible: true,
-            heightStyle: "content", 
+            heightStyle: "content",
             active: false
         });
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
         });
         this.find('button').click(cartButtonClick);
     }
-    
+
 
     function cartButtonClick(event) {
         if ($(this).is('.cartMenuButton')) {
@@ -98,7 +98,7 @@ $(document).ready(function() {
             heightStyle: "content",
             active: false
         });
-        
+
         this.find('.exportBtn').click(function() {
             exportBtnClick.call(this, that.attr('data-name'));
         });
@@ -119,18 +119,24 @@ $(document).ready(function() {
             dialog.data('data', cart.exportGroup(that.attr('data-name')));
             dialog.dialog("open");
         });
+
+        this.find('.cart-button-remove').click(function(event) {
+            var dialog = $('#dialog-delete-cart');
+            dialog.data('groupname', that.attr('data-name'));
+            dialog.dialog("open");
+        });
     }
 
     function itemAfterDOM() {
         var id = this.attr('data-id');
 
         //if (this.parents('.cartGroup').attr('data-name') === 'all')
-            this.draggable({
-                appendTo: "body",
-                helper: function() {
-                    return $(this).clone().addClass('beingDragged');
-                }
-            });
+        this.draggable({
+            appendTo: "body",
+            helper: function() {
+                return $(this).clone().addClass('beingDragged');
+            }
+        });
 
         this.find('.cart-button-rename').click(function() {
             cart._getItemDetails([id], function(data) {
@@ -255,7 +261,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $("#dialog-delete-item").dialog({
         resizable: false,
         autoOpen: false,
@@ -263,8 +269,23 @@ $(document).ready(function() {
         modal: true,
         buttons: {
             "Delete items": function() {
-                console.log('removeItem(%s,%s)', $(this).data('id'), $(this).data('groupname'));
                 cart.removeItem($(this).data('id'), {groupname: $(this).data('groupname')});
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $("#dialog-delete-cart").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        buttons: {
+            "Delete cart": function() {
+                cart.removeGroup($(this).data('groupname'));
                 $(this).dialog("close");
             },
             Cancel: function() {
@@ -281,14 +302,14 @@ $(document).ready(function() {
         content: function() {
             var element = $(this);
             itemdata = cart.cartitems[element.attr('data-id')];
-            
+
             var tooltip = $("<table />");
             tooltip.append($('<tr/>').append($('<td/>').text("Name")).append($('<td/>').append(itemdata['name'] || '')));
             tooltip.append($('<tr/>').append($('<td/>').text("Type")).append($('<td/>').append(itemdata['type'] || '')));
             // tooltip.append($('<tr/>').append($('<td/>').text("Release")).append($('<td/>').append(itemdata['dataset'] || '')));
             tooltip.append($('<tr/>').append($('<td/>').text("DB Alias")).append($('<td/>').append(itemdata['alias'] || '')));
             tooltip.append($('<tr/>').append($('<td/>').text("DB Description")).append($('<td/>').append(itemdata['description'] || '')));
-            if(typeof itemdata['metadata']['alias'] !== 'undefined' || typeof itemdata['metadata']['descriptions'] !== 'undefined'){
+            if (typeof itemdata['metadata']['alias'] !== 'undefined' || typeof itemdata['metadata']['descriptions'] !== 'undefined') {
                 tooltip.append($('<tr/>').append($('<td/>').text("User Alias")).append($('<td/>').append(itemdata['metadata']['alias'] || '')));
                 tooltip.append($('<tr/>').append($('<td/>').text("User Description")).append($('<td/>').append(itemdata['metadata']['annotations'] || '')));
             }
