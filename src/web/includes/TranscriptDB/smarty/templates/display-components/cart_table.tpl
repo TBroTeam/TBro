@@ -133,7 +133,10 @@
     })(jQuery);
 
     function deleteElement(id) {
-        cart.removeItem(id, {groupname: '{#$cartname#}'});
+        var dialog = $('#dialog-delete-item');
+        dialog.data('id', id);
+        dialog.data('groupname', '{#$cartname#}');
+        dialog.dialog("open");
     }
 
     function annotateElement(id) {

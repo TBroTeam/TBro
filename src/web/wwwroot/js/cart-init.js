@@ -143,8 +143,10 @@ $(document).ready(function() {
         });
 
         this.find('.cart-button-delete').click(function(event) {
-            console.log('removeItem(%s,%s)', id, $(this).parents('.cartGroup').attr('data-name'));
-            cart.removeItem(id, {groupname: $(this).parents('.cartGroup').attr('data-name')});
+            var dialog = $('#dialog-delete-item');
+            dialog.data('id', id);
+            dialog.data('groupname', $(this).parents('.cartGroup').attr('data-name'));
+            dialog.dialog("open");
         });
     }
 
@@ -253,7 +255,23 @@ $(document).ready(function() {
             }
         }
     });
-
+    
+    $("#dialog-delete-item").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        buttons: {
+            "Delete items": function() {
+                console.log('removeItem(%s,%s)', $(this).data('id'), $(this).data('groupname'));
+                cart.removeItem($(this).data('id'), {groupname: $(this).data('groupname')});
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
 
     $('#cart').tooltip({
         items: ".cartItem",

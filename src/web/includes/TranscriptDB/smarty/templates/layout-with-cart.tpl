@@ -71,6 +71,20 @@
                     <div id="dialog-delete-all" title="Delete all items and groups?">
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your cart items and groups. Are you sure?</p>
                     </div>
+                    
+                    <div id="dialog-delete-cart" title="Delete this cart?">
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+                            This action can not be undone. Are you sure?
+                        </p>
+                    </div>
+                    
+                    <div id="dialog-delete-item" title="Delete this item?">
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+                            This action can not be undone. Are you sure?
+                        </p>
+                    </div>
 
                     <div id="dialog-edit-cart-item" title="Edit Item">
                         <form>
