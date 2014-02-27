@@ -75,13 +75,9 @@
                     <div id="dialog-edit-cart-item" title="Edit Item">
                         <form>
                             <fieldset>
-                                <label for="item-feature_id">feature_id</label>
-                                <input type="text" name="feature_id" id="item-feature_id" disabled="disabled" class="text ui-widget-content ui-corner-all" />
-                            </fieldset>
-                            <fieldset>
-                                <label for="item-alias">user alias</label>
+                                <label for="item-alias">User Alias</label>
                                 <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" />
-                                <label for="item-annotations">annotations</label>
+                                <label for="item-annotations">User Description</label>
                                 <textarea name="annotations" id="item-annotations" class="text ui-widget-content ui-corner-all"></textarea>
                             </fieldset>
                         </form>

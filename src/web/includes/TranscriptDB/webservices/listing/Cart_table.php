@@ -72,8 +72,10 @@ class Cart_table extends \WebService {
                 $result['user_alias'] = '';
                 $result['user_annotations'] = '';
                 if (array_key_exists($result['feature_id'], $metadata)) {
-                    $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
-                    $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
+                    if (array_key_exists('alias', $metadata[$result['feature_id']]))
+                        $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
+                    if (array_key_exists('annotations', $metadata[$result['feature_id']]))
+                        $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
                 }
                 $data['aaData'][] = $result;
             }
@@ -88,8 +90,10 @@ class Cart_table extends \WebService {
                 $result['user_alias'] = '';
                 $result['user_annotations'] = '';
                 if (array_key_exists($result['feature_id'], $metadata)) {
-                    $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
-                    $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
+                    if (array_key_exists('alias', $metadata[$result['feature_id']]))
+                        $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
+                    if (array_key_exists('annotations', $metadata[$result['feature_id']]))
+                        $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
                 }
             }
             if ($querydata['iSortCol_0'] == 1)

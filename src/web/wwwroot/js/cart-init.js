@@ -220,11 +220,11 @@ $(document).ready(function() {
 
     $("#dialog-edit-cart-item").dialog({
         autoOpen: false,
-        height: 500,
+        height: 340,
         width: 500,
         modal: true,
         buttons: {
-            "save changes": function() {
+            "Save Changes": function() {
                 cart.updateItem($('#item-feature_id').val(), {alias: $('#item-alias').val(), annotations: $('#item-annotations').val()});
                 $(this).dialog("close");
             },
@@ -267,7 +267,7 @@ $(document).ready(function() {
             var tooltip = $("<table />");
             tooltip.append($('<tr/>').append($('<td/>').text("Name")).append($('<td/>').append(itemdata['name'] || '')));
             tooltip.append($('<tr/>').append($('<td/>').text("Type")).append($('<td/>').append(itemdata['type'] || '')));
-            tooltip.append($('<tr/>').append($('<td/>').text("Release")).append($('<td/>').append(itemdata['dataset'] || '')));
+            // tooltip.append($('<tr/>').append($('<td/>').text("Release")).append($('<td/>').append(itemdata['dataset'] || '')));
             tooltip.append($('<tr/>').append($('<td/>').text("DB Alias")).append($('<td/>').append(itemdata['alias'] || '')));
             tooltip.append($('<tr/>').append($('<td/>').text("DB Description")).append($('<td/>').append(itemdata['description'] || '')));
             if(typeof itemdata['metadata']['alias'] !== 'undefined' || typeof itemdata['metadata']['descriptions'] !== 'undefined'){
