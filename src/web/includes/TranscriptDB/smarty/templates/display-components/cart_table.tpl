@@ -41,7 +41,7 @@
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
                 $(nRow).find('td:eq(5)').append(
-                        '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>' +
+                        '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \''+aData.name+'\', \''+aData.description+'\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>' +
                         '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
                         );
                 $(nRow).find('td:eq(5)').attr("align", "center");
@@ -139,9 +139,11 @@
         dialog.dialog("open");
     }
 
-    function annotateElement(id) {
+    function annotateElement(id, name, description) {
         cart._getItemDetails([id], function(data) {
-            $('#item-feature_id').val(id);
+            $("#dialog-edit-cart-item").data('id', id);
+            $("#dialog-edit-cart-item").data('name', name);
+            $("#dialog-edit-cart-item").data('description', description);
             $('#item-alias').val(data[0].metadata.alias || '');
             $('#item-annotations').val(data[0].metadata.annotations || '');
             $("#dialog-edit-cart-item").dialog("open");
@@ -248,11 +250,11 @@
         text-overflow: ellipsis;
         overflow: hidden;
     }
-    
+
     .no-wrap:hover {
         overflow: visible;
     }
-    
+
     .dataTable .notSortable{
         padding-right: 10px
     }

@@ -89,6 +89,10 @@
                     <div id="dialog-edit-cart-item" title="Edit Item">
                         <form>
                             <fieldset>
+                                <label for="item-name">Name</label>
+                                <input type="text" name="name" id="item-name" class="text ui-widget-content ui-corner-all" readonly/>
+                                <label for="item-db-description">DB Description</label>
+                                <input type="text" name="db-description" id="item-db-description" class="text ui-widget-content ui-corner-all" readonly/>
                                 <label for="item-alias">User Alias</label>
                                 <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" />
                                 <label for="item-annotations">User Description</label>

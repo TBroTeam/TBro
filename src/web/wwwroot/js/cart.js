@@ -736,7 +736,6 @@ Cart.prototype.importGroup = function(items, options) {
     options = $.extend({
         metadata_conflict: 'keep'
     }, options);
-    console.log(items);
     var groupname = this.addGroup();
     var that = this;
     $.when(that.addItem($.map(items, function(val) {

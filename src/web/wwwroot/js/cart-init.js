@@ -141,6 +141,8 @@ $(document).ready(function() {
         this.find('.cart-button-rename').click(function() {
             cart._getItemDetails([id], function(data) {
                 $("#dialog-edit-cart-item").data('id', id);
+                $("#dialog-edit-cart-item").data('name', cart.cartitems[id]['name']);
+                $("#dialog-edit-cart-item").data('description', cart.cartitems[id]['description']);
                 $('#item-alias').val(data[0].metadata.alias || '');
                 $('#item-annotations').val(data[0].metadata.annotations || '');
                 $("#dialog-edit-cart-item").dialog("open");
@@ -228,7 +230,7 @@ $(document).ready(function() {
 
     $("#dialog-edit-cart-item").dialog({
         autoOpen: false,
-        height: 340,
+        height: 500,
         width: 500,
         modal: true,
         buttons: {
@@ -241,6 +243,9 @@ $(document).ready(function() {
             }
         },
         open: function(event, ui) {
+            $('#item-name').val($(this).data('name'));
+            $('#item-db-description').val($(this).data('description'));
+            $('#item-alias').focus();
         }
     });
 
