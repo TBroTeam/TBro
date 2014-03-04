@@ -129,8 +129,6 @@
             $.ajax('{#$ServicePath#}/listing/PathwaysAll', {
                 success: function(val) {
                     autocomplete_pw = val.results;
-                    console.log(val);
-                    console.log(autocomplete_pw);
                 }
             });
 

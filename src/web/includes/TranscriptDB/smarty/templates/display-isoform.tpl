@@ -48,7 +48,6 @@
                 content: function() {
                     var element = $(this);
                     var tooltip = $("<table/>");
-                    console.log(this.attributes);
 
                     //build a table over all "data-" attributes.
                     $.each(this.attributes, function(key, attr) {

@@ -82,6 +82,8 @@
         </script>
         <div class="large-12 columns panel" id="pathway-details" style="display:none">
         </div>
+        <div id="pathway-diffexp" style="display:none">
         {#include file="display-components/diffexpr.tpl" cart_ids=true instance_name="pathway"#}
+        </div>
     </div>
 </div>

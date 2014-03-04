@@ -18,7 +18,6 @@
                 }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                console.log($(nRow).find('td:eq(1)').html());
                 $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
                 $(nRow).css('cursor', 'pointer');
                 $(nRow).attr('data-id', aData.feature_id);

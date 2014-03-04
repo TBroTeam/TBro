@@ -19,11 +19,9 @@
 
                 $('#Cart').on('cartEvent', function(event) {
                     if(!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname === '{#$cartname#}'))){
-                        console.log(event.eventData);
                         return;
                     }
 
-                    console.log(event.eventData);
                     _.delay(function() {
                         var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
                         if (cartitems.length === 0) {
@@ -44,7 +42,6 @@
         function adjustCartgroupStyle() {
             $( ".selector" ).accordion( "option", "collapsible", true );
             $('#cartgroup-{#$cartname#}').accordion( "option", "active", 0 );
-            console.log($('#cartgroup-{#$cartname#}'));
         }
         function drawCloud(service) {
             var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];

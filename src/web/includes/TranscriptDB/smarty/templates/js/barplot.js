@@ -63,7 +63,6 @@ $(document).ready(function() {
         data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
         data.assay.push($('#isoform-barplot-filter-assay option:selected').val());
         $('#isoform-barplot-filter-tissue option:selected').each(function() {
-            console.log(this);
             data.biomaterial.push($(this).val());
         });
         $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
