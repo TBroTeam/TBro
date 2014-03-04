@@ -140,7 +140,7 @@ $(document).ready(function() {
 
         this.find('.cart-button-rename').click(function() {
             cart._getItemDetails([id], function(data) {
-                $('#item-feature_id').val(id);
+                $("#dialog-edit-cart-item").data('id', id);
                 $('#item-alias').val(data[0].metadata.alias || '');
                 $('#item-annotations').val(data[0].metadata.annotations || '');
                 $("#dialog-edit-cart-item").dialog("open");
@@ -233,7 +233,7 @@ $(document).ready(function() {
         modal: true,
         buttons: {
             "Save Changes": function() {
-                cart.updateItem($('#item-feature_id').val(), {alias: $('#item-alias').val(), annotations: $('#item-annotations').val()});
+                cart.updateItem($(this).data('id'), {alias: $('#item-alias').val(), annotations: $('#item-annotations').val()});
                 $(this).dialog("close");
             },
             Cancel: function() {
