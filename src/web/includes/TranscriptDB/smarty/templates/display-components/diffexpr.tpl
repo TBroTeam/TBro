@@ -7,11 +7,11 @@
     
 
     $(document).ready(function() {
-        new Grouplist($('#{#$instance_name#}-button-gdfx-addToCart-options'), cart, addSelectedToCart);
-        $('#{#$instance_name#}-button-gdfx-addToCart-options-newcart').click(addSelectedToCart);
+        new Grouplist($('#{#$instance_name#}-button-gdfx-addToCart-options'), cart, {#$instance_name#}addSelectedToCart);
+        $('#{#$instance_name#}-button-gdfx-addToCart-options-newcart').click({#$instance_name#}addSelectedToCart);
     });
 
-    function addSelectedToCart() {
+    function {#$instance_name#}addSelectedToCart() {
         var group = $(this).attr('data-value');
         var selectedItems = TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnGetSelectedData();
         if (selectedItems.length === 0)
@@ -26,16 +26,16 @@
 
     }
 
-    function fnShowHide(iCol)
+    function {#$instance_name#}fnShowHide(iCol)
     {
-        $('#{#$instance_name#}-diffexp_results').width("98%")
+        $('#{#$instance_name#}-diffexp_results').width("98%");
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#{#$instance_name#}-diffexp_results').dataTable();
         var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
         $('#{#$instance_name#}-columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
     }
-    function fnNumOfEntries(numOfEntries)
+    function {#$instance_name#}fnNumOfEntries(numOfEntries)
     {
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
         var oTable = $('#{#$instance_name#}-diffexp_results').dataTable();
@@ -178,22 +178,22 @@
             </ul>
 
             <ul class="f-dropdown" id="{#$instance_name#}-show-entries-dropdown-options" data-dropdown-content>
-                <li onclick="fnNumOfEntries(10);"> 10 </li> 
-                <li onclick="fnNumOfEntries(20);"> 20 </li> 
-                <li onclick="fnNumOfEntries(50);"> 50 </li> 
-                <li onclick="fnNumOfEntries(100);"> 100 </li> 
-                <li onclick="fnNumOfEntries(1000);"> 1000 </li> 
+                <li onclick="{#$instance_name#}fnNumOfEntries(10);"> 10 </li> 
+                <li onclick="{#$instance_name#}fnNumOfEntries(20);"> 20 </li> 
+                <li onclick="{#$instance_name#}fnNumOfEntries(50);"> 50 </li> 
+                <li onclick="{#$instance_name#}fnNumOfEntries(100);"> 100 </li> 
+                <li onclick="{#$instance_name#}fnNumOfEntries(1000);"> 1000 </li> 
                 <!--<li onclick="fnNumOfEntries(1000000);"> All (Caution!) </li>-->
             </ul>
             <ul id="{#$instance_name#}-show-hide-dropdown" class="f-dropdown" data-dropdown-content>
-                <li onclick="fnShowHide(1);"><span id="columnCheckbox1" style="width: 15px; display: inline-block"/>&#10003;</span> Alias</li>
-                <li onclick="fnShowHide(2);"><span id="columnCheckbox2" style="width: 15px; display: inline-block"/>&#10003;</span> baseMean</li>
-                <li onclick="fnShowHide(3);"><span id="columnCheckbox3" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanA</li>
-                <li onclick="fnShowHide(4);"><span id="columnCheckbox4" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanB</li>
-                <li onclick="fnShowHide(5);"><span id="columnCheckbox5" style="width: 15px; display: inline-block"/>&#10003;</span> foldChange</li>
-                <li onclick="fnShowHide(6);"><span id="columnCheckbox6" style="width: 15px; display: inline-block"/>&#10003;</span> log2foldChange</li>
-                <li onclick="fnShowHide(7);"><span id="columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> pval</li>
-                <li onclick="fnShowHide(8);"><span id="columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
+                <li onclick="{#$instance_name#}fnShowHide(1);"><span id="{#$instance_name#}-columnCheckbox1" style="width: 15px; display: inline-block"/>&#10003;</span> Alias</li>
+                <li onclick="{#$instance_name#}fnShowHide(2);"><span id="{#$instance_name#}-columnCheckbox2" style="width: 15px; display: inline-block"/>&#10003;</span> baseMean</li>
+                <li onclick="{#$instance_name#}fnShowHide(3);"><span id="{#$instance_name#}-columnCheckbox3" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanA</li>
+                <li onclick="{#$instance_name#}fnShowHide(4);"><span id="{#$instance_name#}-columnCheckbox4" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanB</li>
+                <li onclick="{#$instance_name#}fnShowHide(5);"><span id="{#$instance_name#}-columnCheckbox5" style="width: 15px; display: inline-block"/>&#10003;</span> foldChange</li>
+                <li onclick="{#$instance_name#}fnShowHide(6);"><span id="{#$instance_name#}-columnCheckbox6" style="width: 15px; display: inline-block"/>&#10003;</span> log2foldChange</li>
+                <li onclick="{#$instance_name#}fnShowHide(7);"><span id="{#$instance_name#}-columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> pval</li>
+                <li onclick="{#$instance_name#}fnShowHide(8);"><span id="{#$instance_name#}-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="{#$instance_name#}-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
                 <li onclick="TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();" style="width:100%">All visible</li>

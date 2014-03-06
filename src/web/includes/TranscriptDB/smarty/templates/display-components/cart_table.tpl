@@ -6,7 +6,7 @@
             {mData: 'description', bSortable: true, sClass: "no-wrap"},
             {mData: 'user_alias', bSortable: true, sClass: "no-wrap"},
             {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
-            {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "10px"}];
+            {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
         // disable column sorting if cart is too large
         if (data.length > 1000) {
             cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
@@ -15,7 +15,7 @@
                 {mData: 'description', bSortable: false, sClass: "no-wrap"},
                 {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
                 {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
-                {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "10px"}];
+                {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
             $('#placeholder-unsortable').show();
         }
         var options = $.extend(true, {
@@ -39,9 +39,9 @@
             sPaginationType: "full_numbers",
             aoColumns: cols,
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                $(nRow).find('td:eq(1)').html('<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '">' + aData.name + '</a>');
                 $(nRow).find('td:eq(5)').append(
-                        '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \''+aData.name+'\', \''+aData.description+'\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>' +
+                        '<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
+                        '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \''+aData.name+'\', \''+aData.description+'\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
                         '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
                         );
                 $(nRow).find('td:eq(5)').attr("align", "center");
@@ -53,31 +53,6 @@
                         return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
                     },
                     cursorAt: {top: 5, left: 5}
-                });
-                $(nRow).find('td:eq(1)').tooltip({
-                    items: ".cartItem",
-                    open: function(event, ui) {
-                        ui.tooltip.css("max-width", "500px");
-                    },
-                    content: function() {
-                        var element = $(this);
-                        var itemdata = cart.cartitems[element.attr('data-id')];
-
-
-                        var tooltip = $("<table />");
-                        $.each(itemdata, function(key, val) {
-                            if (_.isObject(val)) {
-                                $.each(val, function(k, v) {
-                                    tooltip.append($('<tr/>').append($('<td/>').text(k)).append($('<td/>').append(v || '')));
-                                });
-                            } else {
-                                //TODO secure this up
-                                tooltip.append($('<tr/>').append($('<td/>').text(key)).append($('<td/>').text(val || '')));
-                            }
-                        });
-                        tooltip.foundation();
-                        return tooltip;
-                    }
                 });
             },
             sDom: 'T<"clear">lrtip',

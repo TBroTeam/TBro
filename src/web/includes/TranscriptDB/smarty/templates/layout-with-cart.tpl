@@ -192,13 +192,14 @@
 
                 <script type="text/template"  id="template_cart_new_item"> 
                     <li style="clear:both" class="large-12 cartItem" data-id="<%=item.feature_id%>">
-                    <div class="left"><a href="{#$AppPath#}/details/byId/<%= item.feature_id %>"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/></a> 
+                    <div class="left">
                     <span class="displayname">
                     <%= item.metadata.alias || item.name || item.feature_id %>
                     </span>
                     </div>
                     <div class="right">
-                    <a class="cart-button-rename" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/></a>
+                    <a href="{#$AppPath#}/details/byId/<%= item.feature_id %>"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a> 
+                    <a class="cart-button-rename" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>
                     <a class="cart-button-delete" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
                     </div>
                     </li>
