@@ -201,16 +201,11 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION report_job_pid(int, int) IS
 'set\s the job status to "PROCESSING" (is "STARTED" when request_job is called, but report_job_pid has not been called yet) and saves the pid to the DB';
 
-CREATE OR REPLACE FUNCTION report_job_result(_running_query_id int,  _return_code integer, _stdout text, _stderr text) RETURNS VOID
+CREATE OR REPLACE FUNCTION report_job_result(_query_id int,  _return_code integer, _stdout text, _stderr text) RETURNS VOID
 AS 
 $BODY$
-DECLARE
-    _query_id integer;
 BEGIN
-    LOCK TABLE queries;
-    LOCK TABLE running_queries;
-
-    SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
+    PERFORM * FROM queries WHERE query_id=_query_id FOR UPDATE;
     IF NOT FOUND THEN
         RAISE NOTICE 'this job does not belong to you(any more?)!';
         RETURN;
@@ -223,7 +218,6 @@ BEGIN
         stderr = _stderr,
         processing_end_time = NOW()
     WHERE query_id=_query_id;
-    DELETE FROM running_queries WHERE query_id=_query_id;
 END;
 $BODY$
 LANGUAGE plpgsql;
