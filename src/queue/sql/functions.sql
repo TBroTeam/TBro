@@ -212,7 +212,7 @@ $BODY$
 DECLARE
     _query_id integer;
 BEGIN
-    EXECUTE * from queries WHERE query_id=_running_query_id FOR UPDATE;
+    PERFORM * FROM queries WHERE query_id=_running_query_id FOR UPDATE;
     UPDATE queries SET last_keepalive=now() WHERE query_id=_running_query_id;
     IF FOUND THEN
         RETURN get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer;
