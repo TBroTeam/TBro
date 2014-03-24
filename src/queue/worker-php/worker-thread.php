@@ -42,6 +42,7 @@ function execute_job($job) {
                 //did we time out? if yes, die
                 if ($die_on_timeout && $end_time < microtime(true)) {
                     trigger_error("timed out, exiting", E_USER_NOTICE);
+		    $pdo = null;
                     exit(-1);
                 }
                 static $next_keepalive = 0; //static. will be created on first function execution and then the value will be kept between executions
@@ -82,7 +83,8 @@ function execute_job($job) {
     $cmd.= ' ' . $job['parameters'];
     $cmd = str_replace('$DBFILE', $dbfile, $cmd);
     execute_command(DATABASE_BASEDIR, $cmd, $job['query']);
-    report_results_cleanup();
+    report_results_cleanup($pdo);
+    $pdo = null;
 }
 
 /**
@@ -231,7 +233,7 @@ function execute_command($cwd, $cmd, $query) {
     }
 }
 
-function report_results_cleanup() {
+function report_results_cleanup($pdo) {
     //don't leave any processes orphaned
     global $process;
     if (is_resource($process)) {
@@ -244,7 +246,7 @@ function report_results_cleanup() {
     global $job_id, $stdout_collected, $stderr_collected, $return_value;
     // removing invalid characters introduced by BLAST
     $stderr_collected = iconv("UTF-8", "UTF-8//IGNORE", $stderr_collected);
-    pdo_connect()->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
+    $pdo->prepare('SELECT report_job_result(?,?,?,?);')->execute(array($job_id, $return_value, $stdout_collected, $stderr_collected));
     
     trigger_error("reported processed job back", E_USER_NOTICE);
 }
