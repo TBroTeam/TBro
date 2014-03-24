@@ -245,7 +245,8 @@ CREATE OR REPLACE FUNCTION set_job_final_status(_job_id int) RETURNS VOID
 AS 
 $BODY$
 BEGIN
-    LOCK TABLE jobs;
+	PERFORM * FROM jobs WHERE job_id=_job_id FOR UPDATE;
+
         IF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT status='PROCESSED') THEN
             UPDATE jobs SET status='PROCESSED' WHERE job_id = _job_id;
         ELSEIF NOT EXISTS (SELECT 1 FROM job_queries jq JOIN queries q ON (jq.query_id=q.query_id) WHERE jq.job_id=_job_id AND NOT (status='PROCESSED' OR status='ERROR')) THEN
