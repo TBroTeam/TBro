@@ -127,7 +127,7 @@ $BODY$
   COST 100;
 
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
-RETURNS TABLE(_query_id int, programname varchar, parameters varchar, query text, max_lifetime int, target_db varchar, target_db_md5 varchar, target_db_download_uri varchar)
+RETURNS TABLE(query_id int, programname varchar, parameters varchar, query text, max_lifetime int, target_db varchar, target_db_md5 varchar, target_db_download_uri varchar)
 AS
 $BODY$
 DECLARE 
@@ -165,7 +165,7 @@ BEGIN
     SELECT q.query_id,  q.programname, q.query, q.target_db, p.parameters_assembled
     INTO _query_id, _programname, _query, _target_db, _parameters
     FROM queries q JOIN parameter_sets p ON (q.parameter_set_id=p.parameter_set_id) 
-    WHERE q.status='NOT_PROCESSED' AND q.programname = any(_handled_programs) AND queries_is_locke(q.query_id) IS FALSE
+    WHERE q.status='NOT_PROCESSED' AND q.programname = any(_handled_programs) AND queries_is_locked(q.query_id) IS FALSE
     ORDER BY q.query_id ASC
     LIMIT 1
     FOR UPDATE;
