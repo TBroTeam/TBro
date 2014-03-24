@@ -185,21 +185,15 @@ assign this job to the given hostname and return a row describing the job.
 otherwise, returns zero rows.
 ';
 
-CREATE OR REPLACE FUNCTION report_job_pid(_running_query_id int,  _pid int) RETURNS VOID
+CREATE OR REPLACE FUNCTION report_job_pid(_query_id int,  _pid int) RETURNS VOID
 AS 
 $BODY$
-DECLARE
-    _query_id integer;
 BEGIN
-    LOCK TABLE jobs;
-    LOCK TABLE queries;
-    LOCK TABLE running_queries;
-
-    SELECT INTO _query_id query_id FROM running_queries WHERE running_query_id=_running_query_id;
+    PERFORM * FROM queries WHERE query_id=_query_id FOR UPDATE;
     IF FOUND THEN
-        UPDATE queries         SET status='PROCESSING' WHERE  query_id=_query_id;
-        UPDATE running_queries SET pid=_pid            WHERE  query_id=_query_id;
-        UPDATE jobs            SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id IN (SELECT job_id FROM job_queries WHERE query_id=_query_id);
+        UPDATE queries SET status='PROCESSING', pid=_pid WHERE  query_id=_query_id;
+	PERFORM * FROM jobs WHERE status='NOT_PROCESSED' and job_id IN (SELECT job_id FROM job_queries WHERE query_id=_query_id) FOR UPDATE;
+        UPDATE jobs SET status='PROCESSING' WHERE status='NOT_PROCESSED' and job_id IN (SELECT job_id FROM job_queries WHERE query_id=_query_id);
     END IF;
 END;
 $BODY$
