@@ -154,7 +154,7 @@ BEGIN
             RAISE NOTICE 'no worker identifier given, using ip address';
             _worker_identifier = inet_client_addr()::varchar;
         END IF;
-        SELECT COUNT(*) INTO _jobs_running FROM queries WHERE processing_host_identifier = _worker_identifier;
+        SELECT COUNT(*) INTO _jobs_running FROM queries WHERE processing_host_identifier = _worker_identifier AND queries.status IN ('STARTING', 'PROCESSING';
         RAISE NOTICE '% jobs are currently running for %', _jobs_running, _worker_identifier;
         IF _jobs_running >= _max_jobs_running THEN
             RAISE NOTICE 'already at full capacity, exiting';
