@@ -206,14 +206,12 @@ LANGUAGE plpgsql;
 COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
 'sets query final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the running_queries table';
 
-CREATE OR REPLACE FUNCTION keepalive_ping(_running_query_id int) RETURNS integer
+CREATE OR REPLACE FUNCTION keepalive_ping(_query_id int) RETURNS integer
 AS 
 $BODY$
-DECLARE
-    _query_id integer;
 BEGIN
-    PERFORM * FROM queries WHERE query_id=_running_query_id FOR UPDATE;
-    UPDATE queries SET last_keepalive=now() WHERE query_id=_running_query_id;
+    PERFORM * FROM queries WHERE query_id=_query_id FOR UPDATE;
+    UPDATE queries SET last_keepalive=now() WHERE query_id=_query_id;
     IF FOUND THEN
         RETURN get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer;
     ELSE
