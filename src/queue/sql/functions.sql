@@ -419,7 +419,7 @@ BEGIN
 	 (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second'<NOW())
       )) FOR UPDATE;
 
-      UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE 
+      UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL, processing_host_identifier=NULL WHERE 
       (
       (status='PROCESSING' OR status='STARTING') 
       AND 
