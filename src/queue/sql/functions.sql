@@ -408,8 +408,10 @@ CREATE OR REPLACE FUNCTION reset_timed_out_queries()
 RETURNS void
 AS 
 $BODY$
+DECLARE
+	_query_id integer;
 BEGIN
-      PERFORM * from queries WHERE 
+      FOR _query_id IN SELECT query_id from queries WHERE 
       (
       (status='PROCESSING' OR status='STARTING') 
       AND 
@@ -417,17 +419,13 @@ BEGIN
          (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second'<NOW())
 	 OR
 	 (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second'<NOW())
-      )) FOR UPDATE;
-
-      UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL, processing_host_identifier=NULL WHERE 
-      (
-      (status='PROCESSING' OR status='STARTING') 
-      AND 
-      (
-         (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second'<NOW())
-	 OR
-	 (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second'<NOW())
-      ));
+      )
+      AND
+      queries_is_locked(query_id) IS FALSE)
+      FOR UPDATE
+      LOOP
+            UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL, processing_host_identifier=NULL WHERE query_id=_query_id;
+      END LOOP;	   
  END;
 $BODY$
 LANGUAGE plpgsql;
