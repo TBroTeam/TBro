@@ -222,7 +222,7 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 COMMENT ON FUNCTION report_job_result(int, int, text, text) IS
-'sets query final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the running_queries table';
+'sets query final status "PROCESSED" or "ERROR", depending on return code. saves stdout and stderr and removes job from the queries table';
 
 CREATE OR REPLACE FUNCTION keepalive_ping(_query_id int) RETURNS integer
 AS 
