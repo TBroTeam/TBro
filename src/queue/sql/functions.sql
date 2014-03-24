@@ -264,9 +264,7 @@ $BODY$
 DECLARE
     _job_id int;
 BEGIN
-    FOR _job_id IN SELECT job_id FROM job_queries WHERE job_queries.query_id=NEW.query_id LOOP
-        EXECUTE set_job_final_status(_job_id);
-    END LOOP;
+    PERFORM set_job_final_status(job_id) FROM job_queries WHERE job_queries.query_id=NEW.query_id;
     RETURN NEW;
 END;
 $BODY$
@@ -280,7 +278,6 @@ CREATE TRIGGER trigger_update_query_status
     FOR EACH ROW
     WHEN (OLD.status IS DISTINCT FROM NEW.status AND (NEW.status='PROCESSED' OR NEW.status='ERROR'))
     EXECUTE PROCEDURE updated_query_status();
-
 
 CREATE OR REPLACE FUNCTION create_job(_programname varchar,  _target_db varchar, _additional_data text, _parameters varchar[][], _queries text[]) 
 RETURNS varchar
