@@ -47,6 +47,8 @@ while (true) {
             exec(sprintf('psexec -d php.exe worker-thread.php "%s"', $tmpfile));
         }
     } else {
+        // After discussion with Lenz we detected this code snipped causing open database connections... Therefore, I close the connection first
+      	$pdo = null;
         usleep(5 * 1000 * 1000);
     }
 }
