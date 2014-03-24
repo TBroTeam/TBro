@@ -392,25 +392,31 @@ CREATE OR REPLACE FUNCTION reset_timed_out_queries()
 RETURNS void
 AS 
 $BODY$
-DECLARE
-    _query_id integer;
 BEGIN
-    LOCK TABLE job_queries;
-    LOCK TABLE running_queries;
+      PERFORM * from queries WHERE 
+      (
+      (status='PROCESSING' OR status='STARTING') 
+      AND 
+      (
+         (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second'<NOW())
+	 OR
+	 (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second'<NOW())
+      )) FOR UPDATE;
 
-    FOR _query_id IN 
-            SELECT query_id FROM queries WHERE (status='PROCESSING' OR status='STARTING') AND (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second')<NOW()  
-        UNION
-            SELECT query_id FROM running_queries WHERE (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second')<NOW() 
-    LOOP
-        UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE query_id=_query_id;
-        DELETE FROM running_queries WHERE query_id=_query_id;
-    END LOOP;
-END;
+      UPDATE queries SET status='NOT_PROCESSED', processing_start_time=NULL WHERE 
+      (
+      (status='PROCESSING' OR status='STARTING') 
+      AND 
+      (
+         (processing_start_time + get_option('MAXIMUM_EXECUTION_TIME')::integer * interval '1 second'<NOW())
+	 OR
+	 (last_keepalive + get_option('MAXIMUM_KEEPALIVE_TIMEOUT')::integer * interval '1 second'<NOW())
+      ));
+ END;
 $BODY$
 LANGUAGE plpgsql;
-COMMENT ON FUNCTION  get_option(varchar) IS 
-'resets all queries that have started more than MAXIMUM_EXECUTION_TIME seconds ago to NOT_PROCESSED';
+COMMENT ON FUNCTION reset_timed_out_queries() IS 
+'resets all queries that have ran for more than MAXIMUM_EXECUTION_TIME or did not send a keepalive pint seconds ago to NOT_PROCESSED';
 
 CREATE OR REPLACE FUNCTION get_programname_database(_availability_filter varchar)
 RETURNS TABLE(programname varchar, database_name varchar)
