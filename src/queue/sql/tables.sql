@@ -50,7 +50,11 @@ CREATE TABLE queries
 	processing_end_time timestamp without time zone,
 	return_value integer,
 	stdout text,
-	stderr text
+	stderr text,
+-- columns from running_queries table
+	processing_host_identifier varchar NOT NULL,
+        last_keepalive timestamp without time zone NOT NULL DEFAULT now(),
+	pid int
 );
 CREATE INDEX ON queries (programname, parameter_set_id, target_db, query);
 
@@ -61,16 +65,6 @@ CREATE TABLE job_queries
     query_id integer NOT NULL REFERENCES queries(query_id),
     UNIQUE (job_id, query_id)
 );
-
-CREATE TABLE running_queries
-(
-	running_query_id serial NOT NULL PRIMARY KEY,
-	query_id integer NOT NULL REFERENCES queries(query_id) UNIQUE,
-	processing_host_identifier varchar NOT NULL,
-        last_keepalive timestamp without time zone NOT NULL DEFAULT now(),
-	pid int
-);
-
 
 CREATE TABLE allowed_parameters
 (
