@@ -52,8 +52,8 @@ CREATE TABLE queries
 	stdout text,
 	stderr text,
 -- columns from running_queries table
-	processing_host_identifier varchar NOT NULL,
-        last_keepalive timestamp without time zone NOT NULL DEFAULT now(),
+	processing_host_identifier varchar DEFAULT NULL,
+        last_keepalive timestamp without time zone DEFAULT NULL,
 	pid int
 );
 CREATE INDEX ON queries (programname, parameter_set_id, target_db, query);
