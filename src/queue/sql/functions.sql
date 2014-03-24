@@ -93,8 +93,41 @@ COMMENT ON FUNCTION get_param_set_id(varchar[][], varchar) IS
 'assemble command line parameters & add default values where none given to form a command line call, e.g. ''-a "valuea" -b "valueb"''';
 
 
+-- Function: queries_is_locked(integer) 
+-- This function retuns if a row (identified by the query_id) is locked
+-- by another query. This is achieved by trying to lock the row and this
+-- will fail in case of an already locked row
+
+-- DROP FUNCTION queries_is_locked(integer);
+
+CREATE OR REPLACE FUNCTION queries_is_locked(integer)
+  RETURNS boolean AS
+$BODY$
+DECLARE
+    id integer;
+    checkout_id integer;
+    is_it boolean;
+BEGIN
+    checkout_id := $1;
+    is_it := FALSE;
+
+    BEGIN
+        -- we use FOR UPDATE to attempt a lock and NOWAIT to get the error immediately 
+        id := query_id FROM queries WHERE query_id = checkout_id FOR UPDATE NOWAIT;
+        EXCEPTION
+            WHEN lock_not_available THEN
+                is_it := TRUE;
+    END;
+
+    RETURN is_it;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
 CREATE OR REPLACE FUNCTION request_job(_max_jobs_running int,  _worker_identifier varchar, _handled_programs varchar[]) 
-RETURNS TABLE(running_query_id int, programname varchar, parameters varchar, query text, max_lifetime int, target_db varchar, target_db_md5 varchar, target_db_download_uri varchar)
+RETURNS TABLE(_query_id int, programname varchar, parameters varchar, query text, max_lifetime int, target_db varchar, target_db_md5 varchar, target_db_download_uri varchar)
 AS
 $BODY$
 DECLARE 
@@ -104,14 +137,10 @@ DECLARE
     _programname varchar;
     _parameters varchar;
     _query text;
-    _running_query_id integer;
     _target_db varchar;
     _target_db_md5 varchar;
     _target_db_download_uri varchar;    
 BEGIN
-    LOCK TABLE queries;
-    LOCK TABLE running_queries;
-
     EXECUTE reset_timed_out_queries();
     
     --check for job availability
@@ -125,7 +154,7 @@ BEGIN
             RAISE NOTICE 'no worker identifier given, using ip address';
             _worker_identifier = inet_client_addr()::varchar;
         END IF;
-        SELECT COUNT(*) INTO _jobs_running FROM running_queries WHERE processing_host_identifier = _worker_identifier;
+        SELECT COUNT(*) INTO _jobs_running FROM queries WHERE processing_host_identifier = _worker_identifier;
         RAISE NOTICE '% jobs are currently running for %', _jobs_running, _worker_identifier;
         IF _jobs_running >= _max_jobs_running THEN
             RAISE NOTICE 'already at full capacity, exiting';
@@ -136,15 +165,16 @@ BEGIN
     SELECT q.query_id,  q.programname, q.query, q.target_db, p.parameters_assembled
     INTO _query_id, _programname, _query, _target_db, _parameters
     FROM queries q JOIN parameter_sets p ON (q.parameter_set_id=p.parameter_set_id) 
-    WHERE q.status='NOT_PROCESSED' AND q.programname = any(_handled_programs)
+    WHERE q.status='NOT_PROCESSED' AND q.programname = any(_handled_programs) AND queries_is_locke(q.query_id) IS FALSE
     ORDER BY q.query_id ASC
-    LIMIT 1;
+    LIMIT 1
+    FOR UPDATE;
+
+    UPDATE queries SET status='STARTING', processing_start_time=NOW(), processing_host_identifier=_worker_identifier WHERE queries.query_id=_query_id;
 
     SELECT md5, download_uri FROM database_files WHERE name=_target_db INTO _target_db_md5, _target_db_download_uri;
 
-    UPDATE queries SET status='STARTING', processing_start_time=NOW() WHERE queries.query_id=_query_id;
-    INSERT INTO running_queries (query_id, processing_host_identifier) VALUES (_query_id, _worker_identifier)  RETURNING running_queries.running_query_id INTO _running_query_id;
-    RETURN QUERY SELECT _running_query_id, _programname, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer, _target_db, _target_db_md5, _target_db_download_uri ;
+    RETURN QUERY SELECT _query_id, _programname, _parameters, _query, get_option('MAXIMUM_EXECUTION_TIME')::integer, _target_db, _target_db_md5, _target_db_download_uri ;
 END;
 $BODY$
 LANGUAGE plpgsql;
