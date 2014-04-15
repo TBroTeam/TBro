@@ -24,38 +24,38 @@ class Importer_Annotations_Repeatmasker extends AbstractImporter {
 
         $regex = <<<EOF
 {^ 
-\d+[ ]
+\s*\d+\s+
 # 1320     = Smith-Waterman score of the match, usually complexity adjusted
-\d+\.\d+[ ]
+\d+\.\d+\s+
 # 15.6     = % divergence = mismatches/(matches+mismatches) **
-\d+\.\d+[ ]
+\d+\.\d+\s+
 # 6.2      = % of bases opposite a gap in the query sequence (deleted bp)
-\d+\.\d+[ ]
+\d+\.\d+\s
 # 0.0      = % of bases opposite a gap in the repeat consensus (inserted bp)
-(?<name>[^\s]+)[ ]
+(?<name>[^\s]+)\s
 # HSU08988 = name of query sequence
-(?<start>\d+)[ ]
+(?<start>\d+)\s
 # 6563     = starting position of match in query sequence
-(?<end>\d+)[ ]
+(?<end>\d+)\s
 # 6781     = ending position of match in query sequence
-\(\d+\)[ ]
+\(\d+\)\s
 # (22462)  = no. of bases in query sequence past the ending position of match
-(?:[C+][ ])?
+(?:[C+]\s)?
 # C        = match is with the Complement of the repeat consensus sequence
 (?<repeat_name>[\w()-?]+)[\s#]
 # MER7A    = name of the matching interspersed repeat
 (?<repeat_class>[\w()-?]+)
-(?:/(?<repeat_family>[\w()-?]+))?[ ]
+(?:/(?<repeat_family>[\w()-?]+))?\s
 # DNA/MER2_type = the class of the repeat, in this case a DNA transposon fossil of the MER2 group (see below for list and references)
-\(?\d+\)?[ ]
+\(?\d+\)?\s
 # (0)      = no. of bases in (complement of) the repeat consensus sequence prior to beginning of the match (0 means that the match extended all the way to the end of the repeat consensus sequence)
-\(?\d+\)?[ ]
+\(?\d+\)?\s
 # 337      = starting position of match in repeat consensus sequence
-\(?\d+\)?[ ]
+\(?\d+\)?\s?
 # 104      = ending position of match in repeat consensus sequence
-\d+
+\d*
 # 20       = unique identifier for individual insertions    
-([ ][*])?
+(\s[*])?
 $}x
 EOF;
 
