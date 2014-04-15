@@ -1,72 +1,78 @@
 <script type="text/javascript">
+    var dataTable;
     function displayCartTable(data, opts) {
-        var cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
-            {mData: 'name', bSortable: true, sClass: "no-wrap"},
-            {mData: 'alias', bSortable: true, sClass: "no-wrap", bVisible: false},
-            {mData: 'description', bSortable: true, sClass: "no-wrap"},
-            {mData: 'user_alias', bSortable: true, sClass: "no-wrap"},
-            {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
-            {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
-        // disable column sorting if cart is too large
-        if (data.length > 1000) {
-            cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
-                {mData: 'name', bSortable: false, sClass: "no-wrap"},
-                {mData: 'alias', bSortable: false, sClass: "no-wrap", bVisible: false},
-                {mData: 'description', bSortable: false, sClass: "no-wrap"},
-                {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
+        if (typeof dataTable === "undefined") {
+            var cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
+                {mData: 'name', bSortable: true, sClass: "no-wrap"},
+                {mData: 'alias', bSortable: true, sClass: "no-wrap", bVisible: false},
+                {mData: 'description', bSortable: true, sClass: "no-wrap"},
+                {mData: 'user_alias', bSortable: true, sClass: "no-wrap"},
                 {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
                 {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
-            $('#placeholder-unsortable').show();
-        }
-        var options = $.extend(true, {
-            bDestroy: true,
-            bProcessing: true,
-            bServerSide: true,
-            sAjaxSource: "{#$ServicePath#}/listing/cart_table",
-            "fnServerParams": function(aoData) {
-                aoData.push({"name": "terms", "value": data});
-            },
-            fnServerData: function(sSource, aoData, fnCallback, oSettings) {
-                oSettings.jqXHR = $.ajax({
-                    "dataType": 'json',
-                    "type": "POST",
-                    "url": sSource,
-                    "data": aoData,
-                    "success": fnCallback
-                });
-            },
-            bLengthChange: false,
-            sPaginationType: "full_numbers",
-            aoColumns: cols,
-            fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                $(nRow).find('td:eq(5)').append(
-                        '<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
-                        '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \''+aData.name+'\', \''+aData.description+'\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
-                        '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
-                        );
-                $(nRow).find('td:eq(5)').attr("align", "center");
-                $(nRow).css('cursor', 'pointer');
-                $(nRow).attr('data-id', aData.feature_id);
-                $(nRow).draggable({
-                    appendTo: "body",
-                    helper: function() {
-                        return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
-                    },
-                    cursorAt: {top: 5, left: 5}
-                });
-            },
-            sDom: 'T<"clear">lrtip',
-            oTableTools: {
-                sRowSelect: "multi",
-                aButtons: []
+            // disable column sorting if cart is too large
+            if (data.length > 1000) {
+                cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
+                    {mData: 'name', bSortable: false, sClass: "no-wrap"},
+                    {mData: 'alias', bSortable: false, sClass: "no-wrap", bVisible: false},
+                    {mData: 'description', bSortable: false, sClass: "no-wrap"},
+                    {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
+                    {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
+                    {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
+                $('#placeholder-unsortable').show();
             }
-            //     aaData: []
-        }, opts);
-        // $.each(data, function() {
-        //     options.aaData.push(this);
-        // });
-        var tbl = $('#carttable');
-        tbl.dataTable(options);
+            var options = $.extend(true, {
+                bDestroy: true,
+                bProcessing: true,
+                bServerSide: true,
+                sAjaxSource: "{#$ServicePath#}/listing/cart_table",
+                "fnServerParams": function(aoData) {
+                    aoData.push({"name": "terms", "value": data});
+                },
+                fnServerData: function(sSource, aoData, fnCallback, oSettings) {
+                    oSettings.jqXHR = $.ajax({
+                        "dataType": 'json',
+                        "type": "POST",
+                        "url": sSource,
+                        "data": aoData,
+                        "success": fnCallback
+                    });
+                },
+                bLengthChange: false,
+                sPaginationType: "full_numbers",
+                aoColumns: cols,
+                fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    $(nRow).find('td:eq(5)').append(
+                            '<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
+                            '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \'' + aData.name + '\', \'' + aData.description + '\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
+                            '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
+                            );
+                    $(nRow).find('td:eq(5)').attr("align", "center");
+                    $(nRow).css('cursor', 'pointer');
+                    $(nRow).attr('data-id', aData.feature_id);
+                    $(nRow).draggable({
+                        appendTo: "body",
+                        helper: function() {
+                            return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
+                        },
+                        cursorAt: {top: 5, left: 5}
+                    });
+                },
+                sDom: 'T<"clear">lrtip',
+                oTableTools: {
+                    sRowSelect: "multi",
+                    aButtons: []
+                }
+                //     aaData: []
+            }, opts);
+            // $.each(data, function() {
+            //     options.aaData.push(this);
+            // });
+            var tbl = $('#carttable');
+            dataTable = tbl.dataTable(options);
+        } else {
+            //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
+            dataTable.fnReloadAjax();
+        }
     }
 
     (function($) {
