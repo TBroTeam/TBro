@@ -83,7 +83,10 @@ class Sync extends \WebService {
         //if we are logged in: save our cart back to the DB
         $this->saveCart();
         $db->commit();
-        return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart']);
+        if ($querydata['action']['action'] === 'refreshCart') {
+            return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'md5sum' => md5(json_encode($_SESSION['cart'])));
+        }
+        return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart'], 'md5sum' => md5(json_encode($_SESSION['cart'])));
     }
 
     /**
@@ -102,7 +105,7 @@ class Sync extends \WebService {
         //refs for quicker access
         $metadata = &$_SESSION['cart']['metadata'];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
-
+        
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
@@ -121,6 +124,10 @@ class Sync extends \WebService {
                 $parms['id'] = intval($parms['id']);
                 //update metadata
                 $metadata[$parms['id']] = $parms['metadata'];
+                // if metadata is empty (remove it)
+                if((!isset($parms['metadata']['alias']) || $parms['metadata']['alias'] === '') && (!isset($parms['metadata']['annotations']) || $parms['metadata']['annotations'] === '')){
+                    unset($metadata[$parms['id']]);
+                }
                 break;
             case 'removeItem':
                 //remove from group
@@ -146,4 +153,5 @@ class Sync extends \WebService {
     }
 
 }
+
 ?>
