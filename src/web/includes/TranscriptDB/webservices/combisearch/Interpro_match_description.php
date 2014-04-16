@@ -58,7 +58,8 @@ EOF;
         while ($row = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = $row['feature_id'];
         }
-
+        $data['results'] = array_unique($data['results']);
+        
         return $data;
     }
 }
