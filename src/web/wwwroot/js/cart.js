@@ -110,10 +110,11 @@ function Cart(initialData, options) {
 
         function responseHandler(data) {
             //handle only the most recent request
-            if (parseInt(data.currentRequest) === currentRequest)
+            if (parseInt(data.currentRequest) === currentRequest){
                 that._compareCarts(data);
-            if (typeof data.cart !== 'undefined'){
-                that._replaceCarts(data);
+                if (typeof data.cart !== 'undefined'){
+                    that._replaceCarts(data);
+                }
             }
         }
     };
