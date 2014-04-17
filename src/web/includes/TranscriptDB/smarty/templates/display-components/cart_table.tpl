@@ -112,10 +112,7 @@
                 if (groupname === '#new#') {
                     groupname = cart.addGroup();
                 }
-                $.each(selectedIDs, function(index, value) {
-                    cart.addItem(value, {
-                        groupname: groupname});
-                });
+                cart.addItem(selectedIDs, {groupname: groupname});
             });
 
             new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToOtherCart);
@@ -185,10 +182,8 @@
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        $.each(selectedIDs, function(index, value) {
-            cart.addItem(value, {
-                groupname: group
-            });
+        cart.addItem(selectedIDs, {
+            groupname: group
         });
     }
 
@@ -292,8 +287,8 @@
             <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Entries </button></li>
             <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button></li>
             <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="delete-dropdown">Delete</button></li>
-            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="export-dropdown">Export</button></li>
             <li><button class="small button dropdown" type="button" id="button-features-addToCart" data-dropdown="button-features-addToCart-options"> Store </button></li>
+            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="export-dropdown">Export</button></li>
         </ul>
 
         <ul class="f-dropdown" id="show-entries-dropdown-options" data-dropdown-content>

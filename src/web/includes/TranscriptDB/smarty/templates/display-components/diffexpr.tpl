@@ -17,10 +17,8 @@
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        $.each(diffexpSelectedIDs, function(index, value) {
-            cart.addItem(value, {
-                groupname: group
-            });
+        cart.addItem(diffexpSelectedIDs, {
+            groupname: group
         });
 
     }
@@ -49,11 +47,11 @@
         data.push({name: "currentContext",
             value: organism.val() + '_' + release.val()
         });
-                
+
         $.ajax('{#$ServicePath#}/listing/differential_expressions/getAllMatching', {
             method: 'post',
             data: data,
-            success: function(response){
+            success: function(response) {
                 diffexpSelectedIDs = response;
                 // fnSelectAll only for graphical selection
                 TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
