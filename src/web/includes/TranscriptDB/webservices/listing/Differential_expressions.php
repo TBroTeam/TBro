@@ -174,7 +174,8 @@ class Differential_expressions extends \WebService {
         if ($apply_order && isset($querydata['iSortCol_0'])) {
             for ($i = 0; $i < intval($querydata['iSortingCols']); $i++) {
                 if ($querydata['bSortable_' . intval($querydata['iSortCol_' . $i])] == "true") {
-                    $order_by = 'ORDER BY ' . self::$columns[$keys[intval($querydata['iSortCol_' . $i])]] . ' ' . ($querydata['sSortDir_' . $i] === 'asc' ? 'ASC' : 'DESC');
+                    $order_by = 'ORDER BY ' . self::$columns[$keys[intval($querydata['iSortCol_' . $i])]] . ' ' . ($querydata['sSortDir_' . $i] === 'asc' ? 'ASC' : 'DESC')
+                            . ', ' . self::$columns[$keys[0]] . ' DESC';
                 }
             }
         }
@@ -305,12 +306,12 @@ EOF;
         $stm_get_diffexpr->execute($arguments);
 
         $ids = array();
-        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) 
+        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC))
             $ids[] = $row['feature_id'];
-        
+
         list($service) = \WebService::factory('cart/sync');
         $service->execute(
-                array('currentContext' =>  $querydata['currentContext'],
+                array('currentContext' => $querydata['currentContext'],
                     'action' => array(
                         'action' => 'addItem',
                         'ids' => $ids,
@@ -329,7 +330,7 @@ EOF;
     public function execute($querydata) {
         if ($querydata['query1'] == 'fullRelease') {
             return $this->fullRelease($querydata);
-        } elseif ($querydata['query1']=='addAllMatchingToCart') {
+        } elseif ($querydata['query1'] == 'addAllMatchingToCart') {
             return $this->addAllMatchingToCart($querydata);
         } elseif ($querydata['query1'] == 'releaseCsv') {
             header("Pragma: public");
