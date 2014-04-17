@@ -4,7 +4,7 @@
     {#else#}
         {#include file="js/diffexpr.js" instance_name=$instance_name#}
     {#/if#}
-    
+
 
     $(document).ready(function() {
         new Grouplist($('#{#$instance_name#}-button-gdfx-addToCart-options'), cart, {#$instance_name#}addSelectedToCart);
@@ -13,15 +13,14 @@
 
     function {#$instance_name#}addSelectedToCart() {
         var group = $(this).attr('data-value');
-        var selectedItems = TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnGetSelectedData();
-        if (selectedItems.length === 0)
+        if (diffexpSelectedIDs.length === 0)
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        cart.addItem($.map(selectedItems, function(val) {
-            return val.feature_id;
-        }), {
-            groupname: group
+        $.each(diffexpSelectedIDs, function(index, value) {
+            cart.addItem(value, {
+                groupname: group
+            });
         });
 
     }
@@ -43,19 +42,36 @@
         oSettings._iDisplayLength = numOfEntries;
         oTable.fnDraw();
     }
-
+    function {#$instance_name#}selectAll() {
+        // fnSelectAll only for graphical selection
+        diffexpSelectedIDs = allIDs;
+        TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
+    }
+    function {#$instance_name#}selectAllVisible() {
+        // fnSelectAll only for graphical selection
+        TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
+        diffexpSelectedIDs = $.map(TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnGetVisibleSelectedData(), function(val) {
+            return val.feature_id;
+        });
+    }
+    function {#$instance_name#}selectNone() {
+        diffexpSelectedIDs = [];
+        // fnSelectAll fnSelectNone only for graphical selection
+        TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
+        TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectNone();
+    }
 
 </script>
-        
+
 <style type="text/css">
-        #{#$instance_name#}-filters tr td, #{#$instance_name#}-filters tr th {
-            padding: 1px !important;
-        }
-        #{#$instance_name#}-filters input {
-            margin: 0px !important;
-        }
+    #{#$instance_name#}-filters tr td, #{#$instance_name#}-filters tr th {
+        padding: 1px !important;
+    }
+    #{#$instance_name#}-filters input {
+        margin: 0px !important;
+    }
 </style>       
-        
+
 <div id="diffexpr">
     <div class="row">
         <div class="large-12 columns panel">
@@ -196,8 +212,8 @@
                 <li onclick="{#$instance_name#}fnShowHide(8);"><span id="{#$instance_name#}-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="{#$instance_name#}-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-                <li onclick="TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();" style="width:100%">All visible</li>
-                <li onclick="TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectNone();" style="width:100%">None</li>
+                <li onclick="{#$instance_name#}selectAllVisible();" style="width:100%">All visible</li>
+                <li onclick="{#$instance_name#}selectNone();" style="width:100%">None</li>
             </ul>
             <ul id="{#$instance_name#}-button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
                 <li id="{#$instance_name#}-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>

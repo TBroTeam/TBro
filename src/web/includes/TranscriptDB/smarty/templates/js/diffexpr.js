@@ -1,3 +1,4 @@
+var diffexpSelectedIDs = [];
 $(document).ready(function() {
     var select_analysis = $('#{#$instance_name#}-select-gdfx-analysis');
     var select_conditionA = $('#{#$instance_name#}-select-gdfx-conditionA');
@@ -93,6 +94,7 @@ $(document).ready(function() {
 
 
         if (typeof dataTable === "undefined") {
+            diffexpSelectedIDs = [];
             //build server request filters
             var serverParams = function(aoData) {
                 aoData.push({
@@ -159,6 +161,27 @@ $(document).ready(function() {
                         },
                         cursorAt: {top: 5, left: 5}
                     });
+                    $(nRow).on('click', function(event) {
+                        var aData = dataTable.fnGetData(this);
+                        var iId = aData.feature_id;
+                        if (jQuery.inArray(iId, diffexpSelectedIDs) === -1)
+                        {
+                            diffexpSelectedIDs[diffexpSelectedIDs.length++] = iId;
+                        }
+                        else
+                        {
+                            diffexpSelectedIDs = jQuery.grep(diffexpSelectedIDs, function(value) {
+                                return value !== iId;
+                            });
+                        }
+                        console.log(diffexpSelectedIDs);
+                        $(nRow).toggleClass('DTTT_selected');
+                        event.stopPropagation();
+                    });
+                    if (jQuery.inArray(aData.feature_id, diffexpSelectedIDs) !== -1)
+                    {
+                        $(nRow).addClass('DTTT_selected');
+                    }
                 },
                 sServerMethod: "POST",
                 sAjaxSource: "{#$ServicePath#}/listing/differential_expressions/fullRelease",
