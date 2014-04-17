@@ -43,9 +43,22 @@
         oTable.fnDraw();
     }
     function {#$instance_name#}selectAll() {
-        // fnSelectAll only for graphical selection
-        diffexpSelectedIDs = allIDs;
-        TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
+        if (typeof lastQueryData === 'undefined')
+            return;
+        var data = lastQueryData;
+        data.push({name: "currentContext",
+            value: organism.val() + '_' + release.val()
+        });
+                
+        $.ajax('{#$ServicePath#}/listing/differential_expressions/getAllMatching', {
+            method: 'post',
+            data: data,
+            success: function(response){
+                diffexpSelectedIDs = response;
+                // fnSelectAll only for graphical selection
+                TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
+            }
+        });
     }
     function {#$instance_name#}selectAllVisible() {
         // fnSelectAll only for graphical selection
@@ -212,6 +225,7 @@
                 <li onclick="{#$instance_name#}fnShowHide(8);"><span id="{#$instance_name#}-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="{#$instance_name#}-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+                <li onclick="{#$instance_name#}selectAll();" style="width:100%">All</li>
                 <li onclick="{#$instance_name#}selectAllVisible();" style="width:100%">All visible</li>
                 <li onclick="{#$instance_name#}selectNone();" style="width:100%">None</li>
             </ul>
@@ -220,8 +234,6 @@
             </ul>
             <ul class="f-dropdown" id="{#$instance_name#}-download-dropdown-options" data-dropdown-content>
                 <li id="{#$instance_name#}-download_csv_button" > csv </li> 
-
-                <li id="{#$instance_name#}-addAllToNewCart" > add all to new cart </li> 
             </ul>
         </div>
         <div class="large-12" style="padding-right: 4px;">

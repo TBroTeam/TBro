@@ -253,6 +253,16 @@ EOF;
         if (false)
             $db = new PDO();
 
+        if (!isset($_SESSION))
+            session_start();
+        if (!isset($querydata['ids']))
+            $querydata['ids'] = array();
+        if (isset($querydata['cartname']) && $_SESSION['cart']['carts'][$querydata['currentContext']][$querydata['cartname']] !== null) {
+            foreach ($_SESSION['cart']['carts'][$querydata['currentContext']][$querydata['cartname']] as $index => $id) {
+                array_push($querydata['ids'], $id);
+            }
+        }
+
         list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, true, false);
 
         $stm_get_diffexpr = $db->prepare($query);
@@ -293,7 +303,7 @@ EOF;
         fclose($out);
     }
 
-    public function addAllMatchingToCart($querydata) {
+    public function getAllMatching($querydata) {
         global $db;
 
 #UI hint
@@ -309,15 +319,17 @@ EOF;
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC))
             $ids[] = $row['feature_id'];
 
-        list($service) = \WebService::factory('cart/sync');
-        $service->execute(
-                array('currentContext' => $querydata['currentContext'],
-                    'action' => array(
-                        'action' => 'addItem',
-                        'ids' => $ids,
-                        'groupname' => $querydata['groupname']
-                    )
-        ));
+        //list($service) = \WebService::factory('cart/sync');
+        //$service->execute(
+        //        array('currentContext' => $querydata['currentContext'],
+        //            'action' => array(
+        //                'action' => 'addItem',
+        //                'ids' => $ids,
+        //                'groupname' => $querydata['groupname']
+        //            )
+        //));
+
+        return $ids;
     }
 
     /**
@@ -330,8 +342,8 @@ EOF;
     public function execute($querydata) {
         if ($querydata['query1'] == 'fullRelease') {
             return $this->fullRelease($querydata);
-        } elseif ($querydata['query1'] == 'addAllMatchingToCart') {
-            return $this->addAllMatchingToCart($querydata);
+        } elseif ($querydata['query1'] == 'getAllMatching') {
+            return $this->getAllMatching($querydata);
         } elseif ($querydata['query1'] == 'releaseCsv') {
             header("Pragma: public");
             header("Expires: 0");

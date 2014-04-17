@@ -1,4 +1,6 @@
 var diffexpSelectedIDs = [];
+var lastQueryData;
+
 $(document).ready(function() {
     var select_analysis = $('#{#$instance_name#}-select-gdfx-analysis');
     var select_conditionA = $('#{#$instance_name#}-select-gdfx-conditionA');
@@ -78,7 +80,6 @@ $(document).ready(function() {
 
     var selectedItem;
     var dataTable;
-    var lastQueryData;
     $('#{#$instance_name#}-button-gdfx-table').click(function() {
         var selected = finalSelect.filteredData();
         //conditionA and conditionB have to be re-ordered (are shown both directions but sotred internally only one diferction)
@@ -286,29 +287,21 @@ $(document).ready(function() {
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
         iframe.style.width = "0px";
+        var data = lastQueryData;
+        data.push({name: "currentContext",
+            value: organism.val() + '_' + release.val()
+        });
+        data.push({name: "cartname",
+            value: '{#$cartname#}'
+        });
+        data = jQuery.grep(data, function(value) {
+              return value['name'] !== 'ids[]';
+         });
         if (typeof lastQueryData !== 'undefined') {
-            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(lastQueryData);
+            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(data);
             document.body.appendChild(iframe);
         }
     }
-
-    $('#{#$instance_name#}-addAllToNewCart').click(function() {
-
-        if (typeof lastQueryData == 'undefined')
-            return;
-
-
-        var data = {
-            currentContext: organism.val() + '_' + release.val(),
-            groupname: 'myNewGroup123'
-        };
-
-        $.ajax('{#$ServicePath#}/listing/differential_expressions/addAllMatchingToCart' + "?" + $.param(lastQueryData), {
-            method: 'post',
-            data: data
-        });
-
-    });
 
     $('#{#$instance_name#}-download_csv_button').click(download_csv);
 
