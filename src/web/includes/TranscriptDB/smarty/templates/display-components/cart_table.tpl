@@ -1,6 +1,12 @@
 <script type="text/javascript">
     var dataTable;
+    var selectedIDs = [];
+    var allIDs;
     function displayCartTable(data, opts) {
+        allIDs = data;
+        selectedIDs = selectedIDs.filter(function(n) {
+            return data.indexOf(n) !== -1;
+        });
         if (typeof dataTable === "undefined") {
             var cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
                 {mData: 'name', bSortable: true, sClass: "no-wrap"},
@@ -56,6 +62,28 @@
                         },
                         cursorAt: {top: 5, left: 5}
                     });
+                    $(nRow).on('click', function(event) {
+                        var aData = dataTable.fnGetData(this);
+                        var iId = aData.feature_id;
+
+                        if (jQuery.inArray(iId, selectedIDs) === -1)
+                        {
+                            selectedIDs[selectedIDs.length++] = iId;
+                        }
+                        else
+                        {
+                            selectedIDs = jQuery.grep(selectedIDs, function(value) {
+                                return value !== iId;
+                            });
+                        }
+                        console.log(selectedIDs);
+                        $(nRow).toggleClass('DTTT_selected');
+                        event.stopPropagation();
+                    });
+                    if (jQuery.inArray(aData.feature_id, selectedIDs) !== -1)
+                    {
+                        $(nRow).addClass('DTTT_selected');
+                    }
                 },
                 sDom: 'T<"clear">lrtip',
                 oTableTools: {
@@ -77,16 +105,17 @@
 
     (function($) {
         $(document).ready(function() {
+            /* Click event handler */
+
             $('#add_selected').click(function() {
                 var groupname = $('#select-group').val();
                 if (groupname === '#new#') {
                     groupname = cart.addGroup();
                 }
-
-                cart.addItem($.map(TableTools.fnGetInstance('carttable').fnGetVisibleSelectedData(), function(val) {
-                    return val.feature_id;
-                }), {groupname: groupname});
-
+                $.each(selectedIDs, function(index, value) {
+                    cart.addItem(value, {
+                        groupname: groupname});
+                });
             });
 
             new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToOtherCart);
@@ -132,8 +161,8 @@
     }
 
     function updateSelectedCount() {
-        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
-        $('.selectedItemsCount').html('Selected (' + selectedItems.length + ')');
+        var selectedItems = selectedIDs.length;
+        $('.selectedItemsCount').html('Selected (' + selectedItems + ')');
     }
 
     function fnNumOfEntriesCart(numOfEntries)
@@ -152,24 +181,22 @@
 
     function addSelectedToOtherCart() {
         var group = $(this).attr('data-value');
-        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
-        if (selectedItems.length === 0)
+        if (selectedIDs.length === 0)
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        cart.addItem($.map(selectedItems, function(val) {
-            return val.feature_id;
-        }), {
-            groupname: group
+        $.each(selectedIDs, function(index, value) {
+            cart.addItem(value, {
+                groupname: group
+            });
         });
     }
 
     function removeSelectedFromCart() {
-        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
-        if (selectedItems.length === 0)
+        if (selectedIDs.length === 0)
             return;
-        _.each(selectedItems, function(val) {
-            cart.removeItem(val.feature_id, {groupname: '{#$cartname#}'});
+        _.each(selectedIDs, function(val) {
+            cart.removeItem(val, {groupname: '{#$cartname#}'});
         });
         var oTable = $('#carttable').dataTable();
         oTable.fnReloadAjax();
@@ -204,13 +231,9 @@
     };
 
     function exportSelected(service) {
-        var selectedItems = TableTools.fnGetInstance('carttable').fnGetSelectedData();
-        if (selectedItems.length === 0)
+        if (selectedIDs.length === 0)
             return;
-        var ids = $.map(selectedItems, function(key, val) {
-            return key.feature_id;
-        });
-        exportIds(service, ids, '{#$cartname#}' + "_selection");
+        exportIds(service, selectedIDs, '{#$cartname#}' + "_selection");
     }
     function exportAll(service) {
         var ids = cart._getCartForContext()['{#$cartname#}'] || [];
@@ -221,6 +244,24 @@
             terms: ids,
             cartname: cartname
         }, 'post');
+    }
+    function selectAll() {
+        // fnSelectAll only for graphical selection
+        selectedIDs = allIDs;
+        TableTools.fnGetInstance('carttable').fnSelectAll();
+    }
+    function selectAllVisible() {
+        // fnSelectAll only for graphical selection
+        TableTools.fnGetInstance('carttable').fnSelectAll();
+        selectedIDs = $.map(TableTools.fnGetInstance('carttable').fnGetVisibleSelectedData(), function(val) {
+            return val.feature_id;
+        });
+    }
+    function selectNone() {
+        selectedIDs = [];
+        // fnSelectAll fnSelectNone only for graphical selection
+        TableTools.fnGetInstance('carttable').fnSelectAll();
+        TableTools.fnGetInstance('carttable').fnSelectNone();
     }
 </script>
 
@@ -263,8 +304,9 @@
             <li onclick="fnNumOfEntriesCart(1000);"> 1000 </li> 
         </ul>
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelectAll();" style="width:100%">All visible</li>
-            <li onclick="TableTools.fnGetInstance('carttable').fnSelectNone();" style="width:100%">None</li>
+            <li onclick="selectAll();" style="width:100%">All</li>
+            <li onclick="selectAllVisible();" style="width:100%">All visible</li>
+            <li onclick="selectNone();" style="width:100%">None</li>
         </ul>
         <ul id="delete-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="removeSelectedFromCart();" class="selectedItemsCount">Selected</li>
