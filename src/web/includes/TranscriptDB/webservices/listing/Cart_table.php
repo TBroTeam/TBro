@@ -63,6 +63,7 @@ class Cart_table extends \WebService {
                 "sEcho" => intval($querydata['sEcho']),
                 "iTotalDisplayRecords" => sizeof($ids_filtered),
                 "iTotalRecords" => sizeof($querydata['terms']),
+                "idsFiltered" => $ids_filtered,
                 "aaData" => array()
             );
             list($service) = \WebService::factory('details/features');

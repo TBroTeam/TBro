@@ -40,7 +40,10 @@
                         "type": "POST",
                         "url": sSource,
                         "data": aoData,
-                        "success": fnCallback
+                        "success": function(result){
+                            allIDs = result.idsFiltered;
+                            fnCallback(result);
+                        }
                     });
                 },
                 bLengthChange: false,
