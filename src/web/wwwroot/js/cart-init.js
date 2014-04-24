@@ -204,6 +204,22 @@ $(document).ready(function() {
             $('#copy-json').val(JSON.stringify(data));
         }
     });
+    
+    $("#dialog-copy-all-carts").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 700,
+        modal: true,
+        buttons: {
+            Close: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function() {
+            var data = $(this).data('data');
+            $('#copy-all-json').val(JSON.stringify(data));
+        }
+    });
 
     $("#dialog-paste-cart-group").dialog({
         autoOpen: false,
@@ -213,7 +229,7 @@ $(document).ready(function() {
         buttons: {
             "rename cart": function() {
                 var data = JSON.parse($('#paste-json').val());
-                cart.importGroup(data, {metadata_conflict: $('#paste-conflict').val()});
+                cart.importGroups(data, {metadata_conflict: $('#paste-conflict').val()});
                 $(this).dialog("close");
             },
             Cancel: function() {

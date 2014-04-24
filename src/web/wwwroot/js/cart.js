@@ -110,9 +110,9 @@ function Cart(initialData, options) {
 
         function responseHandler(data) {
             //handle only the most recent request
-            if (parseInt(data.currentRequest) === currentRequest){
+            if (parseInt(data.currentRequest) === currentRequest) {
                 that._compareCarts(data);
-                if (typeof data.cart !== 'undefined'){
+                if (typeof data.cart !== 'undefined') {
                     that._replaceCarts(data);
                 }
             }
@@ -130,12 +130,12 @@ function Cart(initialData, options) {
         this.carts = newCart.carts;
         this._redraw();
     };
-    
+
     /** @private */
     Cart.prototype._compareCarts = function(data) {
         var newCart = data.cart;
-        if(this.md5sum !== data.md5sum){
-            console.log("md5sums differ: "+this.md5sum+" vs "+data.md5sum);
+        if (this.md5sum !== data.md5sum) {
+            console.log("md5sums differ: " + this.md5sum + " vs " + data.md5sum);
             this.md5sum = data.md5sum;
             this.sync({
                 action: 'fullSync'
@@ -179,7 +179,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
     var retArray = [];
     var dfd = $.Deferred();
     $.each(that.metadata, function(id, meta) {
-        if (typeof that.cartitems[id] !== 'undefined'){
+        if (typeof that.cartitems[id] !== 'undefined') {
             that.cartitems[id].metadata = that.metadata[id];
         }
     });
@@ -348,20 +348,20 @@ Cart.prototype.addItem = function(ids, options) {
     return dfd.promise();
 
     function work() {
-            that._getItemDetails(showItems, function(aItemDetails) {
+        that._getItemDetails(showItems, function(aItemDetails) {
 
-                addInternal.call(that);
-                if (options.addToDOM)
-                    addToDOM.call(that, aItemDetails);
+            addInternal.call(that);
+            if (options.addToDOM)
+                addToDOM.call(that, aItemDetails);
 
-                that.sync({
-                    action: 'addItem',
-                    ids: missingIds,
-                    groupname: options.groupname
-                }, options);
+            that.sync({
+                action: 'addItem',
+                ids: missingIds,
+                groupname: options.groupname
+            }, options);
 
-                dfd.resolve();
-            });
+            dfd.resolve();
+        });
     }
 
     function addInternal() {
@@ -378,7 +378,7 @@ Cart.prototype.addItem = function(ids, options) {
         $('body').css('cursor', 'default');
         var group$ = that._getGroupNode(options.groupname);
         var group = that._getGroup(options.groupname);
-        group$.find('.numelements').html('('+group.length+')');
+        group$.find('.numelements').html('(' + group.length + ')');
         var full_placeholder = $('li.cartFullText', group$);
 
         $.each(aItemDetails, function(key, itemDetails) {
@@ -393,17 +393,17 @@ Cart.prototype.addItem = function(ids, options) {
             });
             item$.data('afterDOMinsert', options.afterDOMinsert);
             group$.find('.elements .placeholder').remove();
-            if (full_placeholder.length !== 0){
+            if (full_placeholder.length !== 0) {
                 full_placeholder.before(item$);
             }
-            else{
+            else {
                 group$.find('.elements').append(item$);
             }
             options.afterDOMinsert.call(item$);
         });
         if (group.length > itemsToShow) {
             if (full_placeholder.length === 0) {
-                full_placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = \'/graphs/'+options.groupname+'\'"></li>');
+                full_placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = \'/graphs/' + options.groupname + '\'"></li>');
                 full_placeholder.css('cursor', 'pointer');
                 group$.find('.elements').append(full_placeholder)
             }
@@ -508,7 +508,7 @@ Cart.prototype.removeItem = function(id, options) {
         this._getItemNodes(id, options.groupname).remove();
         var group$ = that._getGroupNode(options.groupname);
         var group = that._getGroup(options.groupname);
-        group$.find('.numelements').html('('+group.length+')');
+        group$.find('.numelements').html('(' + group.length + ')');
     }
 };
 
@@ -686,36 +686,71 @@ Cart.prototype.clear = function(options) {
 };
 
 /**
- * Get all items from a given group, in the format [{id: id[, metadata:{metadata}]}]
+ * Get all items from a given group, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
  * @param {String} groupname
  * @returns {Array}
  */
 Cart.prototype.exportGroup = function(groupname) {
+    var result = {carts: {}, metadata: {}};
     var group = this._getGroup(groupname) || [];
-    var items = [];
+    result.carts[this.currentContext] = {};
+    result.carts[this.currentContext][groupname] = group;
     for (var i = 0; i < group.length; i++) {
-        var item = {
-            id: group[i]
-        };
-        var metadata = (this.cartitems[group[i]] || {}).metadata || {};
-        if (!_.isEmpty(metadata)) {
-            item.metadata = metadata;
+        var meta = (this.metadata[group[i]] || {});
+        if (!_.isEmpty(meta)) {
+            result.metadata[group[i]] = meta;
         }
-        items.push(item);
     }
-    return items;
+    return result;
 };
 
 /**
- * Imports passed Array items as new Group to the cart. 
- * @param {Array} items [{id: id, metadata:{alias: string, annotations:string}}, ...]
+ * Get all items from all groups, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
+ * @param {String} groupname
+ * @returns {Array}
+ */
+Cart.prototype.exportAllGroups = function() {
+    return {carts: this.carts, metadata: this.metadata};
+};
+
+/**
+ * Imports passed Array items as new/existing Groups to the cart. 
+ * @param {Array} items {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
  * @param {Collection} options
- * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep'] defaults to keep
+ * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep',group_conflict='keep'] defaults to keep
+ */
+Cart.prototype.importGroups = function(items, options) {
+    options = $.extend({
+        group_conflict: 'keep',
+        metadata_conflict: 'keep'
+    }, options);
+    this.importMetadata(items.metadata, options);
+    var that = this;
+    $.each(items.carts, function(context, carts) {
+        $.each(carts, function(name, cart){
+            that.importGroup({context: context, name: name, items:cart}, options);
+        });
+    });
+};
+
+/**
+ * Imports passed Array items as new/existing Group to the cart. 
+ * @param {Array} items {context: context, name: name, items:[id, ...]}
+ * @param {Collection} options
+ * @param {Enum(keep|merge|overwrite)} [group_conflict='keep'] defaults to keep
  */
 Cart.prototype.importGroup = function(items, options) {
     options = $.extend({
-        metadata_conflict: 'keep'
+        group_conflict: 'keep'
     }, options);
+    if(typeof this.carts[items.context] !== 'undefined'){
+        if(typeof this.carts[items.context][items.name] !== 'undefined'){
+            console.log(items.name + " already exists in context " + items.context);
+            Hier weiter arbeiten :-)
+        }
+    }
+    
+    /*
     var groupname = this.addGroup();
     var that = this;
     $.when(that.addItem($.map(items, function(val) {
@@ -723,12 +758,12 @@ Cart.prototype.importGroup = function(items, options) {
     }), {
         groupname: groupname
     })).then(function() {
-        console.log(options.metadata_conflict);
+        console.log(options.group_conflict);
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             var cartitem = that.cartitems[item.id];
             if (!_.isEmpty(item.metadata))
-                switch (options.metadata_conflict) {
+                switch (options.group_conflict) {
                     case 'keep':
                         break;
                     case 'merge':
@@ -741,6 +776,35 @@ Cart.prototype.importGroup = function(items, options) {
                             that.updateItem(item.id, item.metadata);
                         break;
                 }
+        }
+    });
+    */
+};
+
+/**
+ * Imports passed Array items as metadata.
+ * @param {Array} items {id: {alias: string, annotations:string}, ...}
+ * @param {Collection} options
+ * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep'] defaults to keep
+ */
+Cart.prototype.importMetadata = function(items, options) {
+    options = $.extend({
+        metadata_conflict: 'keep'
+    }, options);
+    var that = this;
+    $.each(items, function(key, value) {
+        switch (options.metadata_conflict) {
+            case 'keep':
+                break;
+            case 'merge':
+                var new_metadata = $.extend({}, value, that.metadata[key]);
+                if (!_.isEqual(new_metadata, that.metadata[key]))
+                    that.updateItem(key, new_metadata);
+                break;
+            case 'overwrite':
+                if (!_.isEqual(value, that.metadata[key]))
+                    that.updateItem(key, value);
+                break;
         }
     });
 };

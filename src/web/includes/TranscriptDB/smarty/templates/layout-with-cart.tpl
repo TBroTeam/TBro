@@ -120,6 +120,15 @@
                             </fieldset>
                         </form>
                     </div>
+                    
+                    <div id="dialog-copy-all-carts" title="Export All Carts">
+                        <form>
+                            <fieldset>
+                                <label for="copy-all-json">You can copy the data below. It may be re-imported by anyone using the "Import" feature.</label>
+                                <textarea id="copy-all-json" class="text ui-widget-content ui-corner-all" style="height: 375px"></textarea>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="panel large-12 columns" style="text-align: center">
@@ -137,9 +146,10 @@
                 <div class="panel large-12 columns" id="cart">
                     <div>
                         <h4 class="left">Carts</h4>
-                        <ul class="button-group even-2 right">
+                        <ul class="button-group even-3 right">
                             <li><a class="button secondary" href="#" onclick="cart.addGroup();">New</a></li>
                             <li><a class="button secondary" href="#" onclick="$('#dialog-paste-cart-group').dialog('open');">Import</a></li>
+                            <li><a class="button secondary" href="#" onclick="var dialog=$('#dialog-copy-all-carts'); dialog.data('data', cart.exportAllGroups()); dialog.dialog('open');">Export All</a></li>
                         </ul>
                         <div style="clear:both">&nbsp;</div>
                     </div>
