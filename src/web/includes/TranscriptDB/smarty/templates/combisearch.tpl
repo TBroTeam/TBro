@@ -153,6 +153,10 @@
                             } else {
                                 filteredResults = _.intersection(filteredResults, data.results || []);
                             }
+                        },
+                        error: function(data) {
+                            $('.loading').hide();
+                            alert("Error: " + data.responseText);
                         }
                     });
                 });
