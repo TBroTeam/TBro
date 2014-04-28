@@ -224,13 +224,13 @@ $(document).ready(function() {
 
     $("#dialog-paste-cart-group").dialog({
         autoOpen: false,
-        height: 600,
+        height: 680,
         width: 700,
         modal: true,
         buttons: {
-            "rename cart": function() {
+            "Import": function() {
                 var data = JSON.parse($('#paste-json').val());
-                cart.importGroups(data, {metadata_conflict: $('#paste-conflict').val()});
+                cart.importGroups(data, {metadata_conflict: $('#metadata-conflict').val(), group_conflict: $('#group-conflict').val()});
                 $(this).dialog("close");
             },
             Cancel: function() {

@@ -106,8 +106,10 @@
                             <fieldset>
                                 <label for="paste-json">Data as created using the "Export Group" feature:</label>
                                 <textarea id="paste-json" class="text ui-widget-content ui-corner-all" style="height: 350px"></textarea>
-                                <label for="paste-conflict">Existing annotations should be:</label>
-                                <select id="paste-conflict"><option value="keep">kept</option><option value="merge">merged</option><option value="overwrite">overwritten</option></select>
+                                <label for="metadata-conflict">Existing annotations should be:</label>
+                                <select id="metadata-conflict"><option value="keep">kept</option><option value="merge">merged</option><option value="overwrite">overwritten</option></select>
+                                <label for="group-conflict">Existing carts should be:</label>
+                                <select id="group-conflict"><option value="keep">kept</option><option value="merge">merged</option><option value="overwrite">overwritten</option></select>
                             </fieldset>
                         </form>
                     </div>
