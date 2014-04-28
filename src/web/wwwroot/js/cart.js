@@ -471,6 +471,8 @@ Cart.prototype.updateItem = function(id, metadata, options) {
             item: itemDetails
         });
         var afterDOMinsert = items$.data('afterDOMinsert');
+        if(afterDOMinsert === null)
+            return;
         newItem$.data('afterDOMinsert', afterDOMinsert);
         items$.replaceWith(newItem$);
         afterDOMinsert.apply(newItem$);
@@ -776,37 +778,6 @@ Cart.prototype.importGroup = function(items, options) {
         var addDOM = (items.context === this.currentContext);
         this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
     }
-
-
-    /*
-     var groupname = this.addGroup();
-     var that = this;
-     $.when(that.addItem($.map(items, function(val) {
-     return val.id;
-     }), {
-     groupname: groupname
-     })).then(function() {
-     console.log(options.group_conflict);
-     for (var i = 0; i < items.length; i++) {
-     var item = items[i];
-     var cartitem = that.cartitems[item.id];
-     if (!_.isEmpty(item.metadata))
-     switch (options.group_conflict) {
-     case 'keep':
-     break;
-     case 'merge':
-     var new_metadata = $.extend({}, item.metadata, cartitem.metadata);
-     if (!_.isEqual(new_metadata, cartitem.metadata))
-     that.updateItem(item.id, new_metadata);
-     break;
-     case 'overwrite':
-     if (!_.isEqual(item.metadata, cartitem.metadata))
-     that.updateItem(item.id, item.metadata);
-     break;
-     }
-     }
-     });
-     */
 };
 
 /**
