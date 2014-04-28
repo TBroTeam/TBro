@@ -71,14 +71,14 @@
                     <div id="dialog-delete-all" title="Delete all items and groups?">
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your cart items and groups. Are you sure?</p>
                     </div>
-                    
+
                     <div id="dialog-delete-cart" title="Delete this cart?">
                         <p>
                             <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
                             This action can not be undone. Are you sure?
                         </p>
                     </div>
-                    
+
                     <div id="dialog-delete-item" title="Delete this item?">
                         <p>
                             <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
@@ -120,7 +120,7 @@
                             </fieldset>
                         </form>
                     </div>
-                    
+
                     <div id="dialog-copy-all-carts" title="Export All Carts">
                         <form>
                             <fieldset>
@@ -146,11 +146,16 @@
                 <div class="panel large-12 columns" id="cart">
                     <div>
                         <h4 class="left">Carts</h4>
-                        <ul class="button-group even-3 right">
-                            <li><a class="button secondary" href="#" onclick="cart.addGroup();">New</a></li>
-                            <li><a class="button secondary" href="#" onclick="$('#dialog-paste-cart-group').dialog('open');">Import</a></li>
-                            <li><a class="button secondary" href="#" onclick="var dialog=$('#dialog-copy-all-carts'); dialog.data('data', cart.exportAllGroups()); dialog.dialog('open');">Export All</a></li>
-                        </ul>
+                        <div class="right">
+                            <button class="button dropdown" id="" data-dropdown="cart-dropdown-master">Actions</button>
+                            <ul class="f-dropdown" id="cart-dropdown-master" data-dropdown-content>
+                                <li onclick="cart.addGroup();">New</li>
+                                <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import</li>
+                                <li onclick="var dialog = $('#dialog-copy-all-carts');
+            dialog.data('data', cart.exportAllGroups());
+            dialog.dialog('open');">Export All</li>
+                            </ul>
+                        </div>
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
@@ -158,21 +163,21 @@
                 </div>
 
                 <script type="text/template" id="template_cart_all_group"> 
-                <div class="cartGroup" data-name="all" style="display: none">
+                    <div class="cartGroup" data-name="all" style="display: none">
                     <div class="large-12 columns"><div class="left" style="position:absolute; top:50%; margin-top:-10px;">all</div>
-                        <div class="right" >
-                            <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-groupall">Actions</button>
-                            <ul id="cart-dropdown-groupall"  class="f-dropdown cartMenuContent">
-                                <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>&nbsp;Paste Group</a></li>
-                                <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete All</a></li>
-                                <li><a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
-                            </ul>
-                        </div>
+                    <div class="right" >
+                    <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-groupall">Actions</button>
+                    <ul id="cart-dropdown-groupall"  class="f-dropdown cartMenuContent">
+                    <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>&nbsp;Paste Group</a></li>
+                    <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete All</a></li>
+                    <li><a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
+                    </ul>
+                    </div>
                     </div>
                     <ul class="large-12 columns elements"> 
                     </ul> 
-                </div> 
-                                <div style="clear:both">&nbsp;</div>
+                    </div> 
+                    <div style="clear:both">&nbsp;</div>
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
@@ -197,7 +202,7 @@
                     </li>
                     </ul>
                     </div>
-                                    <div style="clear:both">&nbsp;</div>
+                    <div style="clear:both">&nbsp;</div>
                 </script>
 
                 <script type="text/template"  id="template_cart_new_item"> 
