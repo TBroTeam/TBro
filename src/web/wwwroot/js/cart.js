@@ -745,8 +745,20 @@ Cart.prototype.importGroup = function(items, options) {
     }, options);
     if(typeof this.carts[items.context] !== 'undefined'){
         if(typeof this.carts[items.context][items.name] !== 'undefined'){
-            console.log(items.name + " already exists in context " + items.context);
-            Hier weiter arbeiten :-)
+            if(options.group_conflict === 'keep')
+                console.log(items.name + " already exists in context " + items.context + " ... skipping.");
+            else if(options.group_conflict === 'merge'){
+                console.log(items.name + " already exists in context " + items.context + " ... merging.");
+             //   TODO mischen
+            }
+            else{
+                console.log(items.name + " already exists in context " + items.context + " ... replacing.");
+             //   TODO löschen
+            }
+        }
+        else{
+            this.addGroup(items.name);
+            this.addItem(items.items, {groupname: items.name});
         }
     }
     
