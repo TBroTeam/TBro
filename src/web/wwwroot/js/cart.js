@@ -82,7 +82,8 @@ function Cart(initialData, options) {
             triggerEvent: true,
             sync: true,
             context: this.currentContext,
-            auto: false
+            auto: false,
+            customCallback: null
         }, options);
         if (options.auto && !this.autoSync)
             return;
@@ -114,6 +115,9 @@ function Cart(initialData, options) {
 
 
         function responseHandler(data) {
+            if (options.customCallback !== null) {
+                options.customCallback();
+            }
             //handle only the most recent request
             if (parseInt(data.currentRequest) === currentRequest) {
                 that._compareCarts(data);
@@ -471,7 +475,7 @@ Cart.prototype.updateItem = function(id, metadata, options) {
             item: itemDetails
         });
         var afterDOMinsert = items$.data('afterDOMinsert');
-        if(afterDOMinsert === null)
+        if (afterDOMinsert === null)
             return;
         newItem$.data('afterDOMinsert', afterDOMinsert);
         items$.replaceWith(newItem$);
@@ -651,7 +655,8 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
  */
 Cart.prototype.removeGroup = function(groupname, options) {
     options = $.extend({
-        sync: true
+        sync: true,
+        context: this.currentContext
     }, options);
     var that = this;
 
@@ -761,16 +766,23 @@ Cart.prototype.importGroup = function(items, options) {
     options = $.extend({
         group_conflict: 'keep'
     }, options);
+    var that = this;
     if (typeof this._getGroup(items.name, items.context) !== 'undefined') {
         if (options.group_conflict === 'keep')
             console.log(items.name + " already exists in context " + items.context + " ... skipping.");
         else if (options.group_conflict === 'merge') {
             console.log(items.name + " already exists in context " + items.context + " ... merging.");
-            //   TODO mischen
+            var addDOM = (items.context === this.currentContext);
+            this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
         }
         else {
             console.log(items.name + " already exists in context " + items.context + " ... replacing.");
-            //   TODO löschen
+            this.removeGroup(items.name, {context: items.context, customCallback: function() {
+                    var addDOM = (items.context === this.currentContext);
+                    that.addItem(
+                            items.items, {groupname: items.name, context: items.context, addToDOM: addDOM})
+                }
+            });
         }
     }
     else {
