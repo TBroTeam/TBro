@@ -78,9 +78,9 @@ function Cart(initialData, options) {
     Cart.prototype.sync = function(syncaction, options) {
         options = $.extend({
             triggerEvent: true,
-            sync: true
+            sync: true,
+            context: this.currentContext
         }, options);
-
 
         if (options.triggerEvent) {
             this.options.rootNode.trigger({
@@ -102,7 +102,7 @@ function Cart(initialData, options) {
             data: {
                 action: syncaction,
                 currentRequest: currentRequest,
-                currentContext: this.currentContext
+                currentContext: options.context
             },
             success: responseHandler
         });
@@ -155,14 +155,16 @@ Cart.prototype._executeTemplate$ = function(templateName) {
     return $('<div/>').append(template.apply(window, templateArguments)).children();
 };
 /** @private */
-Cart.prototype._getCartForContext = function() {
-    if (typeof this.carts[this.currentContext] === 'undefined')
-        this.carts[this.currentContext] = this.emptyCartPrototype;
-    return this.carts[this.currentContext];
+Cart.prototype._getCartForContext = function(context) {
+    if(typeof context === 'undefined') context = this.currentContext;
+    if (typeof this.carts[context] === 'undefined')
+        this.carts[context] = this.emptyCartPrototype;
+    return this.carts[context];
 };
 /** @private */
-Cart.prototype._getGroup = function(groupname) {
-    return this._getCartForContext()[groupname];
+Cart.prototype._getGroup = function(groupname, context) {
+    if(typeof context === 'undefined') context = this.currentContext;
+    return this._getCartForContext(context)[groupname];
 };
 /** @private */
 Cart.prototype._getGroupNode = function(groupname) {
@@ -325,13 +327,14 @@ Cart.prototype.addItem = function(ids, options) {
     var dfd = $.Deferred();
     options = $.extend({
         groupname: 'all',
+        context: this.currentContext,
         addToDOM: true,
         afterDOMinsert: this.options.callbacks.afterDOMinsert_item,
         sync: true
     }, options);
 
     var that = this;
-    var missingIds = _.difference(ids, that._getCartForContext()[options.groupname || []]);
+    var missingIds = _.difference(ids, that._getCartForContext(options.context)[options.groupname || []]);
     var showItems = missingIds;
     if (missingIds.length > itemsToShow) {
         showItems = missingIds.slice(0, itemsToShow);
@@ -365,9 +368,9 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
     function addInternal() {
-        var group = this._getGroup(options.groupname);
+        var group = this._getGroup(options.groupname, options.context);
         if (typeof group === "undefined")
-            group = this._getGroup(this.addGroup(options.groupname));
+            group = this._getGroup(this.addGroup(options.groupname, {context: options.context}), options.context);
 
         for (var i = 0; i < ids.length; i++)
             if (_.indexOf(group, ids[i]) === -1)
@@ -531,7 +534,8 @@ Cart.prototype._item_removed = function(id) {
  */
 Cart.prototype.addGroup = function(groupname, options) {
     options = $.extend({
-        sync: true
+        sync: true,
+        context: this.currentContext
     }, options);
     if (typeof options.afterDOMinsert === 'undefined') {
         options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
@@ -543,12 +547,13 @@ Cart.prototype.addGroup = function(groupname, options) {
     if (typeof groupname === 'undefined')
         do {
             groupname = this.options.groupNamePrefix + (++lastGroupNumber);
-        } while (typeof this._getGroup(groupname) !== 'undefined');
+        } while (typeof this._getGroup(groupname, options.context) !== 'undefined');
 
     //create a group if we need to
-    if (typeof this._getGroup(groupname) === 'undefined') {
+    if (typeof this._getGroup(groupname, options.context) === 'undefined') {
         addInternal.call(this);
-        addToDOM.call(this);
+        if(options.context === this.currentContext)
+            addToDOM.call(this);
         this.sync({
             action: 'addGroup',
             groupname: groupname
@@ -557,7 +562,7 @@ Cart.prototype.addGroup = function(groupname, options) {
     return groupname;
 
     function addInternal() {
-        this._getCartForContext()[groupname] = [];
+        this._getCartForContext(options.context)[groupname] = [];
     }
 
     function addToDOM() {
@@ -744,7 +749,7 @@ Cart.prototype.importGroup = function(items, options) {
         group_conflict: 'keep'
     }, options);
     if(typeof this.carts[items.context] !== 'undefined'){
-        if(typeof this.carts[items.context][items.name] !== 'undefined'){
+        if(typeof this._getGroup(items.name, items.context) !== 'undefined'){
             if(options.group_conflict === 'keep')
                 console.log(items.name + " already exists in context " + items.context + " ... skipping.");
             else if(options.group_conflict === 'merge'){
@@ -757,8 +762,9 @@ Cart.prototype.importGroup = function(items, options) {
             }
         }
         else{
-            this.addGroup(items.name);
-            this.addItem(items.items, {groupname: items.name});
+            // Group is automatically added if it does not exist.
+            var addDOM = (items.context === this.currentContext);
+            this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
         }
     }
     
