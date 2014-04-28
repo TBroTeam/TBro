@@ -291,9 +291,11 @@ $(document).ready(function() {
         data.push({name: "currentContext",
             value: organism.val() + '_' + release.val()
         });
+        /*{#if isset($cartname)#}*/
         data.push({name: "cartname",
             value: '{#$cartname#}'
         });
+        /*{#/if#}*/
         data = jQuery.grep(data, function(value) {
               return value['name'] !== 'ids[]';
          });
