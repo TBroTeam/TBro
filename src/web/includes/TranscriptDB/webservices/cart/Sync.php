@@ -111,7 +111,9 @@ class Sync extends \WebService {
             case 'addItem':
                 foreach ($parms['ids'] as $key => $id)
                     $parms['ids'][$key] = intval($id);
-
+                // create cart if it does not already exist
+                if (!in_array($parms['groupname'], $currentCart))
+                    $currentCart[$parms['groupname']] = array();
                 // add item to $currentCart
                 foreach ($parms['ids'] as $id) {
                     if (!in_array($id, $currentCart[$parms['groupname']]))

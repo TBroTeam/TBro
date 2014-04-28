@@ -55,6 +55,8 @@ function Cart(initialData, options) {
     this.emptyCartPrototype = {
     };
     /** @private */
+    this.autoSync = true;
+    /** @private */
     this.currentContext = 'unknown';
     this.updateContext('unknown', {
         force: true,
@@ -79,8 +81,11 @@ function Cart(initialData, options) {
         options = $.extend({
             triggerEvent: true,
             sync: true,
-            context: this.currentContext
+            context: this.currentContext,
+            auto: false
         }, options);
+        if (options.auto && !this.autoSync)
+            return;
 
         if (options.triggerEvent) {
             this.options.rootNode.trigger({
@@ -156,14 +161,16 @@ Cart.prototype._executeTemplate$ = function(templateName) {
 };
 /** @private */
 Cart.prototype._getCartForContext = function(context) {
-    if(typeof context === 'undefined') context = this.currentContext;
+    if (typeof context === 'undefined')
+        context = this.currentContext;
     if (typeof this.carts[context] === 'undefined')
         this.carts[context] = this.emptyCartPrototype;
     return this.carts[context];
 };
 /** @private */
 Cart.prototype._getGroup = function(groupname, context) {
-    if(typeof context === 'undefined') context = this.currentContext;
+    if (typeof context === 'undefined')
+        context = this.currentContext;
     return this._getCartForContext(context)[groupname];
 };
 /** @private */
@@ -370,7 +377,7 @@ Cart.prototype.addItem = function(ids, options) {
     function addInternal() {
         var group = this._getGroup(options.groupname, options.context);
         if (typeof group === "undefined")
-            group = this._getGroup(this.addGroup(options.groupname, {context: options.context}), options.context);
+            group = this._getGroup(this.addGroup(options.groupname, {context: options.context, sync: false}), options.context);
 
         for (var i = 0; i < ids.length; i++)
             if (_.indexOf(group, ids[i]) === -1)
@@ -552,7 +559,7 @@ Cart.prototype.addGroup = function(groupname, options) {
     //create a group if we need to
     if (typeof this._getGroup(groupname, options.context) === 'undefined') {
         addInternal.call(this);
-        if(options.context === this.currentContext)
+        if (options.context === this.currentContext)
             addToDOM.call(this);
         this.sync({
             action: 'addGroup',
@@ -725,6 +732,8 @@ Cart.prototype.exportAllGroups = function() {
  * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep',group_conflict='keep'] defaults to keep
  */
 Cart.prototype.importGroups = function(items, options) {
+    // disable autoSync for the import time to prevent intermediate results to be overwritten
+    this.autoSync = false;
     options = $.extend({
         group_conflict: 'keep',
         metadata_conflict: 'keep'
@@ -732,10 +741,12 @@ Cart.prototype.importGroups = function(items, options) {
     this.importMetadata(items.metadata, options);
     var that = this;
     $.each(items.carts, function(context, carts) {
-        $.each(carts, function(name, cart){
-            that.importGroup({context: context, name: name, items:cart}, options);
+        $.each(carts, function(name, cart) {
+            that.importGroup({context: context, name: name, items: cart}, options);
         });
     });
+    // reenable autoSync
+    this.autoSync = true;
 };
 
 /**
@@ -748,55 +759,54 @@ Cart.prototype.importGroup = function(items, options) {
     options = $.extend({
         group_conflict: 'keep'
     }, options);
-    if(typeof this.carts[items.context] !== 'undefined'){
-        if(typeof this._getGroup(items.name, items.context) !== 'undefined'){
-            if(options.group_conflict === 'keep')
-                console.log(items.name + " already exists in context " + items.context + " ... skipping.");
-            else if(options.group_conflict === 'merge'){
-                console.log(items.name + " already exists in context " + items.context + " ... merging.");
-             //   TODO mischen
-            }
-            else{
-                console.log(items.name + " already exists in context " + items.context + " ... replacing.");
-             //   TODO löschen
-            }
+    if (typeof this._getGroup(items.name, items.context) !== 'undefined') {
+        if (options.group_conflict === 'keep')
+            console.log(items.name + " already exists in context " + items.context + " ... skipping.");
+        else if (options.group_conflict === 'merge') {
+            console.log(items.name + " already exists in context " + items.context + " ... merging.");
+            //   TODO mischen
         }
-        else{
-            // Group is automatically added if it does not exist.
-            var addDOM = (items.context === this.currentContext);
-            this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
+        else {
+            console.log(items.name + " already exists in context " + items.context + " ... replacing.");
+            //   TODO löschen
         }
     }
-    
+    else {
+        // Group is automatically added if it does not exist.
+        var addDOM = (items.context === this.currentContext);
+        this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
+    }
+
+
     /*
-    var groupname = this.addGroup();
-    var that = this;
-    $.when(that.addItem($.map(items, function(val) {
-        return val.id;
-    }), {
-        groupname: groupname
-    })).then(function() {
-        console.log(options.group_conflict);
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var cartitem = that.cartitems[item.id];
-            if (!_.isEmpty(item.metadata))
-                switch (options.group_conflict) {
-                    case 'keep':
-                        break;
-                    case 'merge':
-                        var new_metadata = $.extend({}, item.metadata, cartitem.metadata);
-                        if (!_.isEqual(new_metadata, cartitem.metadata))
-                            that.updateItem(item.id, new_metadata);
-                        break;
-                    case 'overwrite':
-                        if (!_.isEqual(item.metadata, cartitem.metadata))
-                            that.updateItem(item.id, item.metadata);
-                        break;
-                }
-        }
-    });
-    */
+     var groupname = this.addGroup();
+     var that = this;
+     $.when(that.addItem($.map(items, function(val) {
+     return val.id;
+     }), {
+     groupname: groupname
+     })).then(function() {
+     console.log(options.group_conflict);
+     for (var i = 0; i < items.length; i++) {
+     var item = items[i];
+     var cartitem = that.cartitems[item.id];
+     if (!_.isEmpty(item.metadata))
+     switch (options.group_conflict) {
+     case 'keep':
+     break;
+     case 'merge':
+     var new_metadata = $.extend({}, item.metadata, cartitem.metadata);
+     if (!_.isEqual(new_metadata, cartitem.metadata))
+     that.updateItem(item.id, new_metadata);
+     break;
+     case 'overwrite':
+     if (!_.isEqual(item.metadata, cartitem.metadata))
+     that.updateItem(item.id, item.metadata);
+     break;
+     }
+     }
+     });
+     */
 };
 
 /**

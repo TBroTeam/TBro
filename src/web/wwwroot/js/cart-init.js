@@ -24,7 +24,8 @@ $(document).ready(function() {
             action: 'refreshCart'
         }, {
             sync: true,
-            triggerEvent: false
+            triggerEvent: false,
+            auto: true
         });
     }, 5000); //sync over tabs if neccessary
 
