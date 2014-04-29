@@ -12,6 +12,7 @@
     </script>
     <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
 
+
     <style>
         .ui-accordion .ui-accordion-header {
             margin-bottom:0px;
@@ -187,7 +188,7 @@
                 </script>
 
                 <script type="text/template" id="template_cart_new_group"> 
-                    <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>">
+                    <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>" title="<%= groupname %>">
                     <div class="large-12 columns cartgroup">
                     <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
                     <span class="numelements">(0)</span></div>
