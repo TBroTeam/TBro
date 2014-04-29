@@ -65,11 +65,10 @@ function Cart(initialData, options) {
 }
 
 (function() {
-    //create own scope for private variables for sync
+//create own scope for private variables for sync
 
-    //current request. 
+//current request. 
     var currentRequest;
-
     /**
      * Syncronizes an Action with the options.serviceNodes.sync web service.
      * @param {Collection} syncaction action to sync.
@@ -87,7 +86,6 @@ function Cart(initialData, options) {
         }, options);
         if (options.auto && !this.autoSync)
             return;
-
         if (options.triggerEvent) {
             this.options.rootNode.trigger({
                 type: 'cartEvent',
@@ -97,9 +95,7 @@ function Cart(initialData, options) {
 
         if (options.sync === false)
             return;
-
         var that = this;
-
         currentRequest = new Date().getTime();
         $.ajax({
             url: this.options.serviceNodes.sync,
@@ -112,8 +108,6 @@ function Cart(initialData, options) {
             },
             success: responseHandler
         });
-
-
         function responseHandler(data) {
             if (options.customCallback !== null) {
                 options.customCallback();
@@ -128,7 +122,6 @@ function Cart(initialData, options) {
         }
     };
 })();
-
 (function() {
     /** @private */
     Cart.prototype._replaceCarts = function(data) {
@@ -139,7 +132,6 @@ function Cart(initialData, options) {
         this.carts = newCart.carts;
         this._redraw();
     };
-
     /** @private */
     Cart.prototype._compareCarts = function(data) {
         var newCart = data.cart;
@@ -152,7 +144,6 @@ function Cart(initialData, options) {
         }
     };
 })();
-
 /** @private */
 Cart.prototype._getTemplate = _.memoize(function(templateName) {
     return _.template($(this.options.templates[templateName]).html());
@@ -181,9 +172,7 @@ Cart.prototype._getGroup = function(groupname, context) {
 Cart.prototype._getGroupNode = function(groupname) {
     return this.options.rootNode.find('.cartGroup[data-name="' + groupname + '"]');
 };
-
 var itemsToShow = 15;
-
 /** @private */
 Cart.prototype._getItemDetails = function(ids, callback) {
     var that = this;
@@ -200,7 +189,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
         if (typeof that.cartitems[id] !== 'undefined')
             retArray.push(that.cartitems[id]);
         else {
-            //add a reference that will be filled after the ajax call
+//add a reference that will be filled after the ajax call
             newCartitems[id] = {};
             retArray.push(newCartitems[id]);
             missingIDs.push(id);
@@ -210,7 +199,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
         callback(retArray);
         dfd.resolve();
     } else {
-        //hier "processing" einblenden
+//hier "processing" einblenden
         $('body').css('cursor', 'wait');
         $.ajax({
             url: this.options.serviceNodes.itemDetails,
@@ -232,7 +221,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
                 dfd.resolve();
             },
             complete: function() {
-                //hier fertig - "processing" ausblenden
+//hier fertig - "processing" ausblenden
                 $('body').css('cursor', 'default');
             }
         });
@@ -258,16 +247,11 @@ Cart.prototype.updateContext = function(newContext, options) {
         force: false,
         triggerEvent: true
     }, options);
-
-
     if (this.currentContext === newContext && !options.force)
         //nothing to do
         return;
-
     this.currentContext = newContext;
-
     this._redraw();
-
     this.sync({
         action: 'updateContext'
     }, {
@@ -284,7 +268,6 @@ Cart.prototype._redraw = function() {
         sync: false,
         triggerEvent: true
     });
-
     var cart = _.clone(this._getCartForContext());
     var cartToEmpty = this._getCartForContext();
     for (var key in cartToEmpty) {
@@ -292,7 +275,6 @@ Cart.prototype._redraw = function() {
             delete cartToEmpty[key];
     }
     var that = this;
-
     for (var groupname in cart) {
         if (!cart.hasOwnProperty(groupname))
             continue;
@@ -320,21 +302,21 @@ Cart.prototype._redraw = function() {
  * @returns {jQuery Deferred Promise}
  */
 Cart.prototype.addItem = function(ids, options) {
-    //convert object values to array. keys will be lost
+//convert object values to array. keys will be lost
     if (_.isObject(ids)) {
         ids = _.map(ids, function(value) {
             return value;
         });
     }
-    //if ids is still no array, it was passed as a single value. convert to array
+//if ids is still no array, it was passed as a single value. convert to array
     if (!_.isArray(ids)) {
         ids = [ids];
     }
-    //convert all array values to Int
+//convert all array values to Int
     for (var i = 0; i < ids.length; i++) {
         ids[i] = parseInt(ids[i]);
     }
-    //this function is very asynchronous, this deferred object is a way to see if it finished ( via $.when(cart.addItem(id)).then(function) )
+//this function is very asynchronous, this deferred object is a way to see if it finished ( via $.when(cart.addItem(id)).then(function) )
     var dfd = $.Deferred();
     options = $.extend({
         groupname: 'all',
@@ -343,7 +325,6 @@ Cart.prototype.addItem = function(ids, options) {
         afterDOMinsert: this.options.callbacks.afterDOMinsert_item,
         sync: true
     }, options);
-
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext(options.context)[options.groupname || []]);
     var showItems = missingIds;
@@ -352,28 +333,24 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
     if (missingIds.length === 0) {
-        // we have nothing to do. return from here.
+// we have nothing to do. return from here.
         dfd.resolve();
         return dfd.promise();
     }
 
     work();
-
     return dfd.promise();
-
     function work() {
         that._getItemDetails(showItems, function(aItemDetails) {
 
             addInternal.call(that);
             if (options.addToDOM)
                 addToDOM.call(that, aItemDetails);
-
             that.sync({
                 action: 'addItem',
                 ids: missingIds,
                 groupname: options.groupname
             }, options);
-
             dfd.resolve();
         });
     }
@@ -382,7 +359,6 @@ Cart.prototype.addItem = function(ids, options) {
         var group = this._getGroup(options.groupname, options.context);
         if (typeof group === "undefined")
             group = this._getGroup(this.addGroup(options.groupname, {context: options.context, sync: false}), options.context);
-
         for (var i = 0; i < ids.length; i++)
             if (_.indexOf(group, ids[i]) === -1)
                 group.push(ids[i]);
@@ -394,7 +370,6 @@ Cart.prototype.addItem = function(ids, options) {
         var group = that._getGroup(options.groupname);
         group$.find('.numelements').html('(' + group.length + ')');
         var full_placeholder = $('li.cartFullText', group$);
-
         $.each(aItemDetails, function(key, itemDetails) {
 
             if (group$.is(':has(li.cartItem[data-id="' + itemDetails.feature_id + '"])')) {
@@ -426,7 +401,6 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
 };
-
 //comment: get all cart items with metadata
 
 /*
@@ -443,25 +417,21 @@ Cart.prototype.addItem = function(ids, options) {
  * @param {bool} [options.sync] sync?
  */
 Cart.prototype.updateItem = function(id, metadata, options) {
-    //make sure we don't have a string id'
+//make sure we don't have a string id'
     id = parseInt(id);
-
     options = $.extend({
         sync: true
     }, options);
     var that = this;
-
     this._getItemDetails([id], function(aItemDetails) {
         if (updateInternal.call(that, aItemDetails[0]))
             updateDOM.call(that, aItemDetails[0]);
-
         that.sync({
             action: 'updateItem',
             id: id,
             metadata: metadata
         }, options);
     });
-
     function updateInternal(itemDetails) {
         if (_.isEqual(itemDetails.metadata, metadata))
             return false;
@@ -483,7 +453,6 @@ Cart.prototype.updateItem = function(id, metadata, options) {
     }
 
 };
-
 /**
  * Removes a feature from a group or all groups
  * @param {Number} id of features to remove
@@ -492,15 +461,13 @@ Cart.prototype.updateItem = function(id, metadata, options) {
  * @param {bool} [options.sync] sync?
  */
 Cart.prototype.removeItem = function(id, options) {
-    //make sure we don't have a string id'
+//make sure we don't have a string id'
     id = parseInt(id);
     var that = this;
-
     options = $.extend({
         groupname: 'all',
         sync: true
     }, options);
-
     removeInternal.call(this);
     removeFromDOM.call(this);
     this.sync({
@@ -508,16 +475,13 @@ Cart.prototype.removeItem = function(id, options) {
         id: id,
         groupname: options.groupname
     }, options);
-
     function removeInternal() {
         var cart = this._getCartForContext();
         var group = this._getGroup(options.groupname);
         var index;
         if ((index = _.indexOf(group, id)) >= 0)
             group.splice(index, 1);
-
         that._item_removed(id);
-
     }
 
     function removeFromDOM() {
@@ -527,13 +491,11 @@ Cart.prototype.removeItem = function(id, options) {
         group$.find('.numelements').html('(' + group.length + ')');
     }
 };
-
 Cart.prototype._item_removed = function(id) {
     var inothercart = false;
     $.each(cart, function(key, value) {
         inothercart |= _.indexOf(value, id) >= 0;
     });
-
     if (!inothercart) {
         delete this.cartitems[id];
     }
@@ -561,7 +523,6 @@ Cart.prototype.addGroup = function(groupname, options) {
         do {
             groupname = this.options.groupNamePrefix + (++lastGroupNumber);
         } while (typeof this._getGroup(groupname, options.context) !== 'undefined');
-
     //create a group if we need to
     if (typeof this._getGroup(groupname, options.context) === 'undefined') {
         addInternal.call(this);
@@ -573,7 +534,6 @@ Cart.prototype.addGroup = function(groupname, options) {
         }, options);
     }
     return groupname;
-
     function addInternal() {
         this._getCartForContext(options.context)[groupname] = [];
     }
@@ -589,7 +549,6 @@ Cart.prototype.addGroup = function(groupname, options) {
         options.afterDOMinsert.call(group$);
     }
 };
-
 /**
  * Renames a cart group
  * @param {String} groupname
@@ -601,10 +560,8 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
     options = $.extend({
         sync: true
     }, options);
-
     if (groupname === newname)
         return;
-
     if (this._getGroup(newname) !== undefined) {
         throw new Error("Cart with this name already exists!");
     }
@@ -616,7 +573,6 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         groupname: groupname,
         newname: newname
     }, options);
-
     function renameInternal() {
         var cart = this._getCartForContext();
         var group = cart[groupname];
@@ -646,7 +602,6 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         newGroup$.find('.numelements').html('(' + numOfElements + ')');
     }
 };
-
 /**
  * Removes a cart group
  * @param {String} groupname
@@ -659,15 +614,12 @@ Cart.prototype.removeGroup = function(groupname, options) {
         context: this.currentContext
     }, options);
     var that = this;
-
-
     removeInternal.call(this);
     removeFromDOM.call(this);
     this.sync({
         action: 'removeGroup',
         groupname: groupname
     }, options);
-
     function removeInternal() {
         var oldgroup = this._getCartForContext()[groupname];
         delete this._getCartForContext()[groupname];
@@ -680,7 +632,6 @@ Cart.prototype.removeGroup = function(groupname, options) {
         this._getGroupNode(groupname).remove();
     }
 };
-
 /**
  * Removes everything from the current context
  * @param {Collection} [options]
@@ -690,20 +641,15 @@ Cart.prototype.clear = function(options) {
     options = $.extend({
         sync: true
     }, options);
-
     this.cartitems.length = 0;
-
     delete this.carts[this.currentContext];
     this.sync({
         action: 'clear'
     }, options);
-
-
     this.updateContext(this.currentContext, {
         force: true
     });
 };
-
 /**
  * Get all items from a given group, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
  * @param {String} groupname
@@ -722,7 +668,6 @@ Cart.prototype.exportGroup = function(groupname) {
     }
     return result;
 };
-
 /**
  * Get all items from all groups, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
  * @param {String} groupname
@@ -731,7 +676,18 @@ Cart.prototype.exportGroup = function(groupname) {
 Cart.prototype.exportAllGroups = function() {
     return {carts: this.carts, metadata: this.metadata};
 };
-
+/**
+ * Get all items from all groups for a given context, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
+ * @param {String} groupname
+ * @returns {Array}
+ */
+Cart.prototype.exportAllGroupsOfCurrentContext = function(context) {
+    if(typeof context === 'undefined')
+        context = this.currentContext;
+    var result = {carts: {}, metadata: this.metadata};
+    result.carts[context] = this._getCartForContext(context);
+    return result;
+};
 /**
  * Imports passed Array items as new/existing Groups to the cart. 
  * @param {Array} items {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
@@ -739,7 +695,7 @@ Cart.prototype.exportAllGroups = function() {
  * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep',group_conflict='keep'] defaults to keep
  */
 Cart.prototype.importGroups = function(items, options) {
-    // disable autoSync for the import time to prevent intermediate results to be overwritten
+// disable autoSync for the import time to prevent intermediate results to be overwritten
     this.autoSync = false;
     options = $.extend({
         group_conflict: 'keep',
@@ -755,7 +711,6 @@ Cart.prototype.importGroups = function(items, options) {
     // reenable autoSync
     this.autoSync = true;
 };
-
 /**
  * Imports passed Array items as new/existing Group to the cart. 
  * @param {Array} items {context: context, name: name, items:[id, ...]}
@@ -786,12 +741,11 @@ Cart.prototype.importGroup = function(items, options) {
         }
     }
     else {
-        // Group is automatically added if it does not exist.
+// Group is automatically added if it does not exist.
         var addDOM = (items.context === this.currentContext);
         this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
     }
 };
-
 /**
  * Imports passed Array items as metadata.
  * @param {Array} items {id: {alias: string, annotations:string}, ...}
@@ -819,7 +773,6 @@ Cart.prototype.importMetadata = function(items, options) {
         }
     });
 };
-
 /**
  * Binds a select element to a cart, always keeping Groups synchronized as Select Options
  * @constructor
