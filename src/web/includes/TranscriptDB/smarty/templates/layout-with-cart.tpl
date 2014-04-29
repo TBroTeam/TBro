@@ -151,11 +151,15 @@
                         <div class="right">
                             <button class="button dropdown" id="" data-dropdown="cart-dropdown-master">Actions</button>
                             <ul class="f-dropdown" id="cart-dropdown-master" data-dropdown-content>
-                                <li onclick="cart.addGroup();">New</li>
-                                <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import</li>
+                                <li onclick="cart.addGroup();">New Cart</li>
+                                <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import Carts</li>
                                 <li onclick="var dialog = $('#dialog-copy-all-carts');
             dialog.data('data', cart.exportAllGroups());
-            dialog.dialog('open');">Export All</li>
+            dialog.dialog('open');">Export All Carts</li>
+                                <li onclick="var dialog = $('#dialog-copy-all-carts');
+            dialog.data('data', cart.exportAllGroupsOfCurrentContext());
+            dialog.dialog('open');">Export Carts for Context</li>
+                                <li onclick="$('#dialog-delete-all').dialog('open');">Delete Carts for Context</li>
                             </ul>
                         </div>
                         <div style="clear:both">&nbsp;</div>
