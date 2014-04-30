@@ -36,6 +36,8 @@
         }
         .cartMenuContent{
             display:none;
+            width: auto;
+            white-space: nowrap;
         }
         .cartMenuButton{
             margin-bottom: 0px;
@@ -48,6 +50,11 @@
             background-color: #d9d9d9;
             cursor:pointer;
         }
+        .cartMasterDropdown{
+            width: auto;
+        }
+        .cartMenuContent.f-dropdown:after{left:80px !important;} 
+        .cartMenuContent.f-dropdown:before{left:81px !important;}
     </style>
     {#$smarty.block.child#}
 {#/block#}
@@ -151,16 +158,16 @@
                         <h4 class="left">Carts</h4>
                         <div class="right">
                             <button class="button dropdown" id="" data-dropdown="cart-dropdown-master">Manage</button>
-                            <ul class="f-dropdown" id="cart-dropdown-master" data-dropdown-content>
-                                <li onclick="cart.addGroup();">New Cart</li>
-                                <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import Carts</li>
+                            <ul class="f-dropdown cartMasterDropdown" id="cart-dropdown-master" data-dropdown-content>
+                                <li onclick="cart.addGroup();">New</li>
+                                <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import</li>
                                 <li onclick="var dialog = $('#dialog-copy-all-carts');
             dialog.data('data', cart.exportAllGroups());
-            dialog.dialog('open');">Export All Carts</li>
+            dialog.dialog('open');">Export (All)</li>
                                 <li onclick="var dialog = $('#dialog-copy-all-carts');
             dialog.data('data', cart.exportAllGroupsOfCurrentContext());
-            dialog.dialog('open');">Export Carts for Context</li>
-                                <li onclick="$('#dialog-delete-all').dialog('open');">Delete Carts for Context</li>
+            dialog.dialog('open');">Export (Release)</li>
+                                <li onclick="$('#dialog-delete-all').dialog('open');">Delete (Release)</li>
                             </ul>
                         </div>
                         <div style="clear:both">&nbsp;</div>
@@ -173,7 +180,7 @@
                     <div class="cartGroup" data-name="all" style="display: none">
                     <div class="large-12 columns"><div class="left" style="position:absolute; top:50%; margin-top:-10px;">all</div>
                     <div class="right" >
-                    <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-groupall">Actions</button>
+                    <button class="cartMenuButton small button dropdown" data-cartMenu="cart-dropdown-groupall">Actions</button>
                     <ul id="cart-dropdown-groupall"  class="f-dropdown cartMenuContent">
                     <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>&nbsp;Paste Group</a></li>
                     <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete All</a></li>
@@ -193,7 +200,7 @@
                     <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
                     <span class="numelements">(0)</span></div>
                     <div class="right">
-                    <button class="cartMenuButton tiny" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
+                    <button class="cartMenuButton small button dropdown" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
                     <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename</a></li>
                     <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Export</a></li>

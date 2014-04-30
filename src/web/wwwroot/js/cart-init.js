@@ -50,12 +50,17 @@ $(document).ready(function() {
     function cartButtonClick(event) {
         if ($(this).is('.cartMenuButton')) {
             var menu = $('#' + $(this).attr('data-cartMenu'));
-            menu.toggle().position({
-                my: "left top",
-                at: "left bottom",
-                collision: "none none",
-                of: this
-            });
+            if (menu.is(':visible')) {
+                menu.hide();
+            }
+            else {
+                menu.show().position({
+                    my: "right top",
+                    at: "right bottom",
+                    collision: "none none",
+                    of: this
+                });
+            }
             $(document).on("click", function() {
                 menu.hide();
             });
@@ -205,7 +210,7 @@ $(document).ready(function() {
             $('#copy-json').val(JSON.stringify(data));
         }
     });
-    
+
     $("#dialog-copy-all-carts").dialog({
         autoOpen: false,
         height: 600,
