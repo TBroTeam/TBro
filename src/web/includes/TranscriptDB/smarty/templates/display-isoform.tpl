@@ -144,7 +144,7 @@
     <div class="row">
         <div class="large-12 columns panel">
             <h4>Sequence</h4>
-            <textarea style="height:100px;" id="sequence-isoform">{#$data.isoform.residues#}</textarea>
+            <textarea style="height:100px;" id="sequence-isoform">>{#$data.isoform.name#}&#10;{#$data.isoform.residues#}</textarea>
         </div>
     </div>
     <div class="row">

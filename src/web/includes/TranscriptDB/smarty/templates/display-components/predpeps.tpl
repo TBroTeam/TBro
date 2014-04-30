@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="large-12 columns">
-                                        <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">{#$predpep.residues#}</textarea>
+                                        <textarea style="height:100px;" id="sequence-{#$predpep.uniquename|clean_id#}">>{#$predpep.name#} REF={#$feature.name#} START={#$predpep.fmin#} END={#$predpep.fmax#} STRAND={#$predpep.strand#}&#10;{#$predpep.residues#}</textarea>
                                     </div>
                                 </div>
 
