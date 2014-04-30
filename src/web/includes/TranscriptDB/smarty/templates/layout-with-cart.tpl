@@ -150,7 +150,7 @@
                     <div>
                         <h4 class="left">Carts</h4>
                         <div class="right">
-                            <button class="button dropdown" id="" data-dropdown="cart-dropdown-master">Actions</button>
+                            <button class="button dropdown" id="" data-dropdown="cart-dropdown-master">Manage</button>
                             <ul class="f-dropdown" id="cart-dropdown-master" data-dropdown-content>
                                 <li onclick="cart.addGroup();">New Cart</li>
                                 <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import Carts</li>
