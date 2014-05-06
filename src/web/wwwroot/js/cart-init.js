@@ -276,8 +276,9 @@ $(document).ready(function() {
         autoOpen: false,
         height: 200,
         modal: true,
+        dialogClass: "warningDialogClass",
         buttons: {
-            "Delete all items": function() {
+            "Delete": function() {
                 cart.clear({
                     sync: true
                 });
@@ -294,8 +295,9 @@ $(document).ready(function() {
         autoOpen: false,
         height: 200,
         modal: true,
+        dialogClass: "warningDialogClass",
         buttons: {
-            "Delete items": function() {
+            "Delete item": function() {
                 cart.removeItem($(this).data('id'), {groupname: $(this).data('groupname')});
                 $(this).dialog("close");
             },
@@ -310,6 +312,7 @@ $(document).ready(function() {
         autoOpen: false,
         height: 200,
         modal: true,
+        dialogClass: "warningDialogClass",
         buttons: {
             "Delete cart": function() {
                 cart.removeGroup($(this).data('groupname'));

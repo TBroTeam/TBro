@@ -55,6 +55,9 @@
         }
         .cartMenuContent.f-dropdown:after{left:80px !important;} 
         .cartMenuContent.f-dropdown:before{left:81px !important;}
+        .warningDialogClass .ui-widget-header {
+            color: red;
+        }
     </style>
     {#$smarty.block.child#}
 {#/block#}
@@ -76,8 +79,8 @@
                         </form>
                     </div>
 
-                    <div id="dialog-delete-all" title="Delete all items and groups?">
-                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your cart items and groups. Are you sure?</p>
+                    <div id="dialog-delete-all" title="Delete all Carts (Release)?">
+                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts in the current release. Are you sure?</p>
                     </div>
 
                     <div id="dialog-delete-cart" title="Delete this cart?">
@@ -176,24 +179,6 @@
                     </div>
                 </div>
 
-                <script type="text/template" id="template_cart_all_group"> 
-                    <div class="cartGroup" data-name="all" style="display: none">
-                    <div class="large-12 columns"><div class="left" style="position:absolute; top:50%; margin-top:-10px;">all</div>
-                    <div class="right" >
-                    <button class="cartMenuButton small button dropdown" data-cartMenu="cart-dropdown-groupall">Actions</button>
-                    <ul id="cart-dropdown-groupall"  class="f-dropdown cartMenuContent">
-                    <li><a href="#" onclick="$('#dialog-paste-cart-group').dialog('open');"><img alt="Import Group" src="{#$AppPath#}/img/mimiGlyphs/5.png"/>&nbsp;Paste Group</a></li>
-                    <li><a href="#" onclick="$('#dialog-delete-all').dialog('open');"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete All</a></li>
-                    <li><a href="{#$AppPath#}/graphs/all"><img  src="{#$AppPath#}/img/mimiGlyphs/23.png"/>&nbsp;Execute</a></li>
-                    </ul>
-                    </div>
-                    </div>
-                    <ul class="large-12 columns elements"> 
-                    </ul> 
-                    </div> 
-                    <div style="clear:both">&nbsp;</div>
-                </script>
-
                 <script type="text/template" id="template_cart_new_group"> 
                     <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>" title="<%= groupname %>">
                     <div class="large-12 columns cartgroup">
@@ -204,7 +189,7 @@
                     <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
                     <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename</a></li>
                     <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Export</a></li>
-                    <li><a class="cart-button-remove" href="#"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Remove</a></li>
+                    <li><a class="cart-button-remove" href="#"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete</a></li>
                     <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/7.png"/>&nbsp;View&nbsp;/&nbsp;Modify</a></li>
                     <li><a href="{#$AppPath#}/graphs/<%= groupname %>#tabs-graphs"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
                     </ul>
@@ -223,7 +208,7 @@
                     <li style="clear:both" class="large-12 cartItem" data-id="<%=item.feature_id%>">
                     <div class="left">
                     <span class="displayname">
-                    <%= item.metadata.alias || item.name || item.feature_id %>
+                    <%= (item.metadata && item.metadata.alias) || item.name || item.feature_id %>
                     </span>
                     </div>
                     <div class="right">

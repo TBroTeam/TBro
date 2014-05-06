@@ -101,9 +101,11 @@ class Sync extends \WebService {
         }
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
             $_SESSION['cart']['carts'][$currentContext] = array();
+        if (!isset($_SESSION['cart']['metadata'][$currentContext]))
+            $_SESSION['cart']['metadata'][$currentContext] = array();
 
         //refs for quicker access
-        $metadata = &$_SESSION['cart']['metadata'];
+        $metadata = &$_SESSION['cart']['metadata'][$currentContext];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
         
         //manipulation

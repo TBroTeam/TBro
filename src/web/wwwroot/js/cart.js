@@ -163,6 +163,14 @@ Cart.prototype._getCartForContext = function(context) {
     return this.carts[context];
 };
 /** @private */
+Cart.prototype._getMetadataForContext = function(context) {
+    if (typeof context === 'undefined')
+        context = this.currentContext;
+    if (typeof this.metadata[context] === 'undefined')
+        this.metadata[context] = {};
+    return this.metadata[context];
+};
+/** @private */
 Cart.prototype._getGroup = function(groupname, context) {
     if (typeof context === 'undefined')
         context = this.currentContext;
@@ -182,7 +190,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
     var dfd = $.Deferred();
     $.each(that.metadata, function(id, meta) {
         if (typeof that.cartitems[id] !== 'undefined') {
-            that.cartitems[id].metadata = that.metadata[id];
+            that.cartitems[id].metadata = that._getMetadataForContext()[id];
         }
     });
     $.each(ids, function(key, id) {
@@ -212,7 +220,7 @@ Cart.prototype._getItemDetails = function(ids, callback) {
                 $.each(data.results, function() {
                     var id = this.feature_id;
                     var itemDetails = $.extend(true, this, {
-                        metadata: that.metadata[id] || {}
+                        metadata: that._getMetadataForContext()[id] || {}
                     });
                     that.cartitems[id] = itemDetails;
                     $.extend(newCartitems[id], itemDetails);
@@ -659,11 +667,12 @@ Cart.prototype.exportGroup = function(groupname) {
     var result = {carts: {}, metadata: {}};
     var group = this._getGroup(groupname) || [];
     result.carts[this.currentContext] = {};
+    result.metadata[this.currentContext] = {};
     result.carts[this.currentContext][groupname] = group;
     for (var i = 0; i < group.length; i++) {
-        var meta = (this.metadata[group[i]] || {});
+        var meta = (this._getMetadataForContext()[group[i]] || {});
         if (!_.isEmpty(meta)) {
-            result.metadata[group[i]] = meta;
+            result.metadata[this.currentContext][group[i]] = meta;
         }
     }
     return result;
@@ -682,7 +691,7 @@ Cart.prototype.exportAllGroups = function() {
  * @returns {Array}
  */
 Cart.prototype.exportAllGroupsOfCurrentContext = function(context) {
-    if(typeof context === 'undefined')
+    if (typeof context === 'undefined')
         context = this.currentContext;
     var result = {carts: {}, metadata: this.metadata};
     result.carts[context] = this._getCartForContext(context);
@@ -757,20 +766,22 @@ Cart.prototype.importMetadata = function(items, options) {
         metadata_conflict: 'keep'
     }, options);
     var that = this;
-    $.each(items, function(key, value) {
-        switch (options.metadata_conflict) {
-            case 'keep':
-                break;
-            case 'merge':
-                var new_metadata = $.extend({}, value, that.metadata[key]);
-                if (!_.isEqual(new_metadata, that.metadata[key]))
-                    that.updateItem(key, new_metadata);
-                break;
-            case 'overwrite':
-                if (!_.isEqual(value, that.metadata[key]))
-                    that.updateItem(key, value);
-                break;
-        }
+    $.each(items, function(context, meta) {
+        $.each(meta, function(key, value) {
+            switch (options.metadata_conflict) {
+                case 'keep':
+                    break;
+                case 'merge':
+                    var new_metadata = $.extend({}, value, that._getMetadataForContext(context)[key]);
+                    if (!_.isEqual(new_metadata, that._getMetadataForContext(context)[key]))
+                        that.updateItem(key, new_metadata);
+                    break;
+                case 'overwrite':
+                    if (!_.isEqual(value, that._getMetadataForContext(context)[key]))
+                        that.updateItem(key, value);
+                    break;
+            }
+        });
     });
 };
 /**
