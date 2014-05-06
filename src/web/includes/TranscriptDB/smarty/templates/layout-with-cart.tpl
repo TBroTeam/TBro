@@ -79,8 +79,12 @@
                         </form>
                     </div>
 
-                    <div id="dialog-delete-all" title="Delete all Carts (Release)?">
+                    <div id="dialog-delete-all-context" title="Delete all Carts (Release)?">
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts in the current release. Are you sure?</p>
+                    </div>
+
+                    <div id="dialog-delete-all" title="Delete all Carts (all Releases)?">
+                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts from all releases. Are you sure?</p>
                     </div>
 
                     <div id="dialog-delete-cart" title="Delete this cart?">
@@ -165,12 +169,13 @@
                                 <li onclick="cart.addGroup();">New</li>
                                 <li onclick="$('#dialog-paste-cart-group').dialog('open');">Import</li>
                                 <li onclick="var dialog = $('#dialog-copy-all-carts');
-            dialog.data('data', cart.exportAllGroups());
-            dialog.dialog('open');">Export (All)</li>
-                                <li onclick="var dialog = $('#dialog-copy-all-carts');
             dialog.data('data', cart.exportAllGroupsOfCurrentContext());
             dialog.dialog('open');">Export (Release)</li>
-                                <li onclick="$('#dialog-delete-all').dialog('open');">Delete (Release)</li>
+                                <li onclick="var dialog = $('#dialog-copy-all-carts');
+            dialog.data('data', cart.exportAllGroups());
+            dialog.dialog('open');">Export (All)</li>
+                                <li onclick="$('#dialog-delete-all-release').dialog('open');">Delete (Release)</li>
+                                <li onclick="$('#dialog-delete-all').dialog('open');">Delete (All)</li>
                             </ul>
                         </div>
                         <div style="clear:both">&nbsp;</div>

@@ -279,6 +279,25 @@ $(document).ready(function() {
         dialogClass: "warningDialogClass",
         buttons: {
             "Delete": function() {
+                cart.clearAll({
+                    sync: true
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+    
+    $("#dialog-delete-all-context").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        dialogClass: "warningDialogClass",
+        buttons: {
+            "Delete": function() {
                 cart.clear({
                     sync: true
                 });

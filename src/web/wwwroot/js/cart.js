@@ -659,6 +659,24 @@ Cart.prototype.clear = function(options) {
     });
 };
 /**
+ * Removes everything from all contexts
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
+Cart.prototype.clearAll = function(options) {
+    options = $.extend({
+        sync: true
+    }, options);
+    this.cartitems.length = 0;
+    this.carts = {};
+    this.sync({
+        action: 'clearAll'
+    }, options);
+    this.updateContext(this.currentContext, {
+        force: true
+    });
+};
+/**
  * Get all items from a given group, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
  * @param {String} groupname
  * @returns {Array}
