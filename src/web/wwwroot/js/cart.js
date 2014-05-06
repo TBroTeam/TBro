@@ -718,10 +718,6 @@ Cart.prototype.importGroups = function(items, options) {
             that.importGroup({context: context, name: name, items: cart}, options);
         });
     });
-    // do full sync
-    this.sync({
-        action: 'fullSync'
-    }, {});
     // reenable autoSync
     this.autoSync = true;
 };
