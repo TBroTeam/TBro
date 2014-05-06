@@ -188,9 +188,9 @@ Cart.prototype._getItemDetails = function(ids, callback) {
     var newCartitems = {};
     var retArray = [];
     var dfd = $.Deferred();
-    $.each(that.metadata, function(id, meta) {
+    $.each(that._getMetadataForContext(), function(id, meta) {
         if (typeof that.cartitems[id] !== 'undefined') {
-            that.cartitems[id].metadata = that._getMetadataForContext()[id];
+            that.cartitems[id].metadata = meta;
         }
     });
     $.each(ids, function(key, id) {
@@ -350,7 +350,7 @@ Cart.prototype.addItem = function(ids, options) {
     return dfd.promise();
     function work() {
         that._getItemDetails(showItems, function(aItemDetails) {
-
+            console.log(aItemDetails);
             addInternal.call(that);
             if (options.addToDOM)
                 addToDOM.call(that, aItemDetails);
@@ -693,7 +693,8 @@ Cart.prototype.exportAllGroups = function() {
 Cart.prototype.exportAllGroupsOfCurrentContext = function(context) {
     if (typeof context === 'undefined')
         context = this.currentContext;
-    var result = {carts: {}, metadata: this.metadata};
+    var result = {carts: {}, metadata: {}};
+    result.metadata[context] = this._getMetadataForContext(context);
     result.carts[context] = this._getCartForContext(context);
     return result;
 };
@@ -717,6 +718,10 @@ Cart.prototype.importGroups = function(items, options) {
             that.importGroup({context: context, name: name, items: cart}, options);
         });
     });
+    // do full sync
+    this.sync({
+        action: 'fullSync'
+    }, {});
     // reenable autoSync
     this.autoSync = true;
 };
