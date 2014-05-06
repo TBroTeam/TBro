@@ -308,6 +308,44 @@ $(document).ready(function() {
             }
         }
     });
+    
+    $("#dialog-delete-annotations").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        dialogClass: "warningDialogClass",
+        buttons: {
+            "Delete": function() {
+                cart.clearAllAnnotations({
+                    sync: true
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+    
+    $("#dialog-delete-annotations-context").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        dialogClass: "warningDialogClass",
+        buttons: {
+            "Delete": function() {
+                cart.clearAnnotations({
+                    sync: true
+                });
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
 
     $("#dialog-delete-item").dialog({
         resizable: false,

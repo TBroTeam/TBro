@@ -14,7 +14,7 @@
                 {mData: 'description', bSortable: true, sClass: "no-wrap"},
                 {mData: 'user_alias', bSortable: true, sClass: "no-wrap"},
                 {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
-                {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
+                {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "90px"}];
             // disable column sorting if cart is too large
             if (data.length > 1000) {
                 cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
@@ -23,7 +23,7 @@
                     {mData: 'description', bSortable: false, sClass: "no-wrap"},
                     {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
                     {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
-                    {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "70px"}];
+                    {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "90px"}];
                 $('#placeholder-unsortable').show();
             }
             var options = $.extend(true, {
@@ -33,6 +33,7 @@
                 sAjaxSource: "{#$ServicePath#}/listing/cart_table",
                 "fnServerParams": function(aoData) {
                     aoData.push({"name": "terms", "value": data});
+                    aoData.push({"name": "currentContext", "value": cart.currentContext});                 
                 },
                 fnServerData: function(sSource, aoData, fnCallback, oSettings) {
                     oSettings.jqXHR = $.ajax({
@@ -40,7 +41,7 @@
                         "type": "POST",
                         "url": sSource,
                         "data": aoData,
-                        "success": function(result){
+                        "success": function(result) {
                             allIDs = result.idsFiltered;
                             fnCallback(result);
                         }
@@ -53,7 +54,8 @@
                     $(nRow).find('td:eq(5)').append(
                             '<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
                             '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \'' + aData.name + '\', \'' + aData.description + '\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
-                            '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>'
+                            '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>' +
+                            '<a class="cart-button-delete" onclick="deleteAnnotation(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/52.png"/></a>'
                             );
                     $(nRow).find('td:eq(5)').attr("align", "center");
                     $(nRow).css('cursor', 'pointer');
@@ -147,6 +149,14 @@
         dialog.data('id', id);
         dialog.data('groupname', '{#$cartname#}');
         dialog.dialog("open");
+    }
+    
+    function deleteAnnotation(id) {
+        //var dialog = $('#dialog-delete-item');
+        //dialog.data('id', id);
+        //dialog.data('groupname', '{#$cartname#}');
+        //dialog.dialog("open");
+        cart.updateItem(id, {alias: "", annotations: ""});
     }
 
     function annotateElement(id, name, description) {

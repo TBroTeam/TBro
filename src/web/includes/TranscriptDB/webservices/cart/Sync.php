@@ -156,6 +156,12 @@ class Sync extends \WebService {
             case 'clearAll':
                 $_SESSION['cart']['carts'] = array();
                 break;
+            case 'clearAnnotations':
+                $_SESSION['cart']['metadata'][$currentContext] = array();
+                break;
+            case 'clearAllAnnotations':
+                $_SESSION['cart']['metadata'] = array();
+                break;
         }
     }
 

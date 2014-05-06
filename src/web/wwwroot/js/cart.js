@@ -138,6 +138,7 @@ function Cart(initialData, options) {
         if (this.md5sum !== data.md5sum) {
             console.log("md5sums differ: " + this.md5sum + " vs " + data.md5sum);
             this.md5sum = data.md5sum;
+            this.cartitems = {};
             this.sync({
                 action: 'fullSync'
             }, {});
@@ -350,7 +351,6 @@ Cart.prototype.addItem = function(ids, options) {
     return dfd.promise();
     function work() {
         that._getItemDetails(showItems, function(aItemDetails) {
-            console.log(aItemDetails);
             addInternal.call(that);
             if (options.addToDOM)
                 addToDOM.call(that, aItemDetails);
@@ -677,6 +677,40 @@ Cart.prototype.clearAll = function(options) {
     });
 };
 /**
+ * Removes all annotations from the current context
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
+Cart.prototype.clearAnnotations = function(options) {
+    options = $.extend({
+        sync: true
+    }, options);
+    delete this.metadata[this.currentContext];
+    this.sync({
+        action: 'clearAnnotations'
+    }, options);
+    this.updateContext(this.currentContext, {
+        force: true
+    });
+};
+/**
+ * Removes all annotations from all contexts
+ * @param {Collection} [options]
+ * @param {bool} [options.sync] sync?
+ */
+Cart.prototype.clearAllAnnotations = function(options) {
+    options = $.extend({
+        sync: true
+    }, options);
+    this.carts = {};
+    this.sync({
+        action: 'clearAllAnnotations'
+    }, options);
+    this.updateContext(this.currentContext, {
+        force: true
+    });
+};
+/**
  * Get all items from a given group, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
  * @param {String} groupname
  * @returns {Array}
@@ -751,21 +785,36 @@ Cart.prototype.importGroup = function(items, options) {
     }, options);
     var that = this;
     if (typeof this._getGroup(items.name, items.context) !== 'undefined') {
-        if (options.group_conflict === 'keep')
-            console.log(items.name + " already exists in context " + items.context + " ... skipping.");
-        else if (options.group_conflict === 'merge') {
-            console.log(items.name + " already exists in context " + items.context + " ... merging.");
-            var addDOM = (items.context === this.currentContext);
-            this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
+        if (_.isEqual(this._getGroup(items.name, items.context), items.items)) {
+            console.log(items.name + " identical to existing in context " + items.context + " ... skipping.");
         }
-        else {
-            console.log(items.name + " already exists in context " + items.context + " ... replacing.");
-            this.removeGroup(items.name, {context: items.context, customCallback: function() {
-                    var addDOM = (items.context === this.currentContext);
-                    that.addItem(
-                            items.items, {groupname: items.name, context: items.context, addToDOM: addDOM})
-                }
-            });
+        else{
+            if (options.group_conflict === 'keep')
+                console.log(items.name + " already exists in context " + items.context + " ... skipping.");
+            else if (options.group_conflict === 'merge') {
+                console.log(items.name + " already exists in context " + items.context + " ... merging.");
+                var addDOM = (items.context === this.currentContext);
+                this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
+            }
+            else if (options.group_conflict === 'copy') {
+                console.log(items.name + " already exists in context " + items.context + " ... creating a copy.");
+                var lastGroupNumber = 0;
+                var groupname = items.name;
+                do {
+                    groupname = items.name + "_" + (++lastGroupNumber);
+                } while (typeof this._getGroup(groupname, items.context) !== 'undefined');
+                var addDOM = (items.context === this.currentContext);
+                this.addItem(items.items, {groupname: groupname, context: items.context, addToDOM: addDOM});
+            }
+            else {
+                console.log(items.name + " already exists in context " + items.context + " ... replacing.");
+                this.removeGroup(items.name, {context: items.context, customCallback: function() {
+                        var addDOM = (items.context === this.currentContext);
+                        that.addItem(
+                                items.items, {groupname: items.name, context: items.context, addToDOM: addDOM})
+                    }
+                });
+            }
         }
     }
     else {
@@ -793,11 +842,11 @@ Cart.prototype.importMetadata = function(items, options) {
                 case 'merge':
                     var new_metadata = $.extend({}, value, that._getMetadataForContext(context)[key]);
                     if (!_.isEqual(new_metadata, that._getMetadataForContext(context)[key]))
-                        that.updateItem(key, new_metadata);
+                        that.updateItem(key, new_metadata, {context: context});
                     break;
                 case 'overwrite':
                     if (!_.isEqual(value, that._getMetadataForContext(context)[key]))
-                        that.updateItem(key, value);
+                        that.updateItem(key, value, {context: context});
                     break;
             }
         });

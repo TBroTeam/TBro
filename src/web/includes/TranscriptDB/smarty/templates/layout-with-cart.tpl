@@ -87,6 +87,14 @@
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts from all releases. Are you sure?</p>
                     </div>
 
+                    <div id="dialog-delete-annotations-context" title="Delete all Carts (Release)?">
+                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts in the current release. Are you sure?</p>
+                    </div>
+
+                    <div id="dialog-delete-annotations" title="Delete all Carts (all Releases)?">
+                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts from all releases. Are you sure?</p>
+                    </div>
+
                     <div id="dialog-delete-cart" title="Delete this cart?">
                         <p>
                             <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
@@ -121,10 +129,19 @@
                             <fieldset>
                                 <label for="paste-json">Data as created using the "Export Group" feature:</label>
                                 <textarea id="paste-json" class="text ui-widget-content ui-corner-all" style="height: 350px"></textarea>
-                                <label for="metadata-conflict">Existing annotations should be:</label>
-                                <select id="metadata-conflict"><option value="keep">kept</option><option value="merge">merged</option><option value="overwrite">overwritten</option></select>
-                                <label for="group-conflict">Existing carts should be:</label>
-                                <select id="group-conflict"><option value="keep">kept</option><option value="merge">merged</option><option value="overwrite">overwritten</option></select>
+                                <label for="metadata-conflict">How to treat annotations?</label>
+                                <select id="metadata-conflict">
+                                    <option value="merge">prefer existing (if conflicting)</option>
+                                    <option value="keep">keep existing (do not import any)</option>
+                                    <option value="overwrite">prefer imported (if conflicting)</option>
+                                </select>
+                                <label for="group-conflict">What to do with conflicting carts?</label>
+                                <select id="group-conflict">
+                                    <option value="keep">keep existing</option>
+                                    <option value="merge">merge items</option>
+                                    <option value="copy">create a new cart from the imported (same name but with suffix _1)</option>
+                                    <option value="overwrite">overwrite with imported</option>
+                                </select>
                             </fieldset>
                         </form>
                     </div>
@@ -174,8 +191,10 @@
                                 <li onclick="var dialog = $('#dialog-copy-all-carts');
             dialog.data('data', cart.exportAllGroups());
             dialog.dialog('open');">Export (All)</li>
-                                <li onclick="$('#dialog-delete-all-release').dialog('open');">Delete (Release)</li>
+                                <li onclick="$('#dialog-delete-all-context').dialog('open');">Delete (Release)</li>
                                 <li onclick="$('#dialog-delete-all').dialog('open');">Delete (All)</li>
+                                <li onclick="$('#dialog-delete-annotations-context').dialog('open');">Delete Annotations (Release)</li>
+                                <li onclick="$('#dialog-delete-annotations').dialog('open');">Delete Annotations (All)</li>
                             </ul>
                         </div>
                         <div style="clear:both">&nbsp;</div>

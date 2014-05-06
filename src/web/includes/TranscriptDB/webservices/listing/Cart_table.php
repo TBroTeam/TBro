@@ -28,8 +28,8 @@ class Cart_table extends \WebService {
             session_start();
 
         $metadata = array();
-        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'])
-            $metadata = &$_SESSION['cart']['metadata'];
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$querydata['currentContext']])
+            $metadata = &$_SESSION['cart']['metadata'][$querydata['currentContext']];
         // var_dump($metadata);
 
         if (!is_array($querydata['terms'])) {
