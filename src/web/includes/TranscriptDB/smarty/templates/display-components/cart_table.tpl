@@ -52,10 +52,10 @@
                 aoColumns: cols,
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $(nRow).find('td:eq(5)').append(
-                            '<a target="_blank" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
-                            '<a class="cart-button-rename" onclick="annotateElement(' + aData.feature_id + ', \'' + aData.name + '\', \'' + aData.description + '\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
-                            '<a class="cart-button-delete" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>' +
-                            '<a class="cart-button-delete" onclick="deleteAnnotation(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/52.png"/></a>'
+                            '<a target="_blank"  title="Goto Details Page" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
+                            '<a class="cart-button-rename" title="Change Annotation" onclick="annotateElement(' + aData.feature_id + ', \'' + aData.name + '\', \'' + aData.description + '\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
+                            '<a class="cart-button-delete" title="Delete from Cart" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>' +
+                            '<a class="cart-button-delete" title="Delete Annotation" onclick="deleteAnnotation(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/own_1.png"/></a>'
                             );
                     $(nRow).find('td:eq(5)').attr("align", "center");
                     $(nRow).css('cursor', 'pointer');
