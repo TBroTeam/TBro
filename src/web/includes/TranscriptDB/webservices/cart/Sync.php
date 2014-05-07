@@ -107,21 +107,27 @@ class Sync extends \WebService {
         //refs for quicker access
         $metadata = &$_SESSION['cart']['metadata'][$currentContext];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
-        
+
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
+                // get all feature ids of the context to check before adding
+                list($service) = \WebService::factory('listing/features');
+                $cont = explode('_' ,$currentContext, 2);
+                $results = ($service->execute(array('species' => $cont[0], 'release' => $cont[1])));
+                // convert ids to int
                 foreach ($parms['ids'] as $key => $id)
                     $parms['ids'][$key] = intval($id);
+                // only keep ids that belong to this context
+                $ids_context = array_intersect($parms['ids'], $results['results']);
                 // create cart if it does not already exist
                 if (!in_array($parms['groupname'], array_keys($currentCart)))
                     $currentCart[$parms['groupname']] = array();
-                // add item to $currentCart
-                foreach ($parms['ids'] as $id) {
+                // add item to $currentCart if not already in there
+                foreach ($ids_context as $id) {
                     if (!in_array($id, $currentCart[$parms['groupname']]))
                         $currentCart[$parms['groupname']][] = $id;
                 }
-
                 break;
             case 'updateItem':
                 //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
@@ -129,7 +135,7 @@ class Sync extends \WebService {
                 //update metadata
                 $metadata[$parms['id']] = $parms['metadata'];
                 // if metadata is empty (remove it)
-                if((!isset($parms['metadata']['alias']) || $parms['metadata']['alias'] === '') && (!isset($parms['metadata']['annotations']) || $parms['metadata']['annotations'] === '')){
+                if ((!isset($parms['metadata']['alias']) || $parms['metadata']['alias'] === '') && (!isset($parms['metadata']['annotations']) || $parms['metadata']['annotations'] === '')) {
                     unset($metadata[$parms['id']]);
                 }
                 break;
