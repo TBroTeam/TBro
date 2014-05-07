@@ -19,7 +19,6 @@ $(document).ready(function() {
 
 
     setInterval(function() {
-        console.log('sync');
         cart.sync({
             action: 'refreshCart'
         }, {

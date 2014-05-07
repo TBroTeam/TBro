@@ -77,6 +77,8 @@ function Cart(initialData, options) {
      * @param {bool} [options.sync] determines if this event should be synced to the WebService
      */
     Cart.prototype.sync = function(syncaction, options) {
+        var that = this;
+        var dfd = $.Deferred();
         options = $.extend({
             triggerEvent: true,
             sync: true,
@@ -84,8 +86,10 @@ function Cart(initialData, options) {
             auto: false,
             customCallback: null
         }, options);
-        if (options.auto && !this.autoSync)
-            return;
+        if (options.auto && !this.autoSync) {
+            dfd.resolve();
+            return dfd.promise();
+        }
         if (options.triggerEvent) {
             this.options.rootNode.trigger({
                 type: 'cartEvent',
@@ -93,10 +97,15 @@ function Cart(initialData, options) {
             });
         }
 
-        if (options.sync === false)
-            return;
+        if (options.sync === false) {
+            dfd.resolve();
+            return dfd.promise();
+        }
         var that = this;
         currentRequest = new Date().getTime();
+        if (options.auto) {
+            console.log("autosync");
+        }
         $.ajax({
             url: this.options.serviceNodes.sync,
             type: 'post',
@@ -106,12 +115,18 @@ function Cart(initialData, options) {
                 currentRequest: currentRequest,
                 currentContext: options.context
             },
-            success: responseHandler
-        });
-        function responseHandler(data) {
-            if (options.customCallback !== null) {
-                options.customCallback();
+            success: function(data) {
+                if (options.customCallback !== null) {
+                    options.customCallback();
+                }
+                if(that.autoSync)
+                    responseHandler(data);
+                dfd.resolve();
             }
+        });
+        return dfd.promise();
+
+        function responseHandler(data) {
             //handle only the most recent request
             if (parseInt(data.currentRequest) === currentRequest) {
                 that._compareCarts(data);
@@ -354,12 +369,13 @@ Cart.prototype.addItem = function(ids, options) {
             addInternal.call(that);
             if (options.addToDOM)
                 addToDOM.call(that, aItemDetails);
-            that.sync({
+            $.when(that.sync({
                 action: 'addItem',
                 ids: missingIds,
                 groupname: options.groupname
-            }, options);
-            dfd.resolve();
+            }, options)).then(function() {
+                dfd.resolve()
+            });
         });
     }
 
@@ -427,6 +443,7 @@ Cart.prototype.addItem = function(ids, options) {
 Cart.prototype.updateItem = function(id, metadata, options) {
 //make sure we don't have a string id'
     id = parseInt(id);
+    var dfd = $.Deferred();
     options = $.extend({
         sync: true
     }, options);
@@ -434,12 +451,15 @@ Cart.prototype.updateItem = function(id, metadata, options) {
     this._getItemDetails([id], function(aItemDetails) {
         if (updateInternal.call(that, aItemDetails[0]))
             updateDOM.call(that, aItemDetails[0]);
-        that.sync({
+        $.when(that.sync({
             action: 'updateItem',
             id: id,
             metadata: metadata
-        }, options);
+        }, options)).then(function() {
+            dfd.resolve()
+        });
     });
+    return dfd.promise();
     function updateInternal(itemDetails) {
         if (_.isEqual(itemDetails.metadata, metadata))
             return false;
@@ -759,19 +779,23 @@ Cart.prototype.exportAllGroupsOfCurrentContext = function(context) {
 Cart.prototype.importGroups = function(items, options) {
 // disable autoSync for the import time to prevent intermediate results to be overwritten
     this.autoSync = false;
+    var deferreds = [];
     options = $.extend({
         group_conflict: 'keep',
         metadata_conflict: 'keep'
     }, options);
-    this.importMetadata(items.metadata, options);
+    deferreds.push(this.importMetadata(items.metadata, options));
     var that = this;
     $.each(items.carts, function(context, carts) {
         $.each(carts, function(name, cart) {
-            that.importGroup({context: context, name: name, items: cart}, options);
+            deferreds.push(that.importGroup({context: context, name: name, items: cart}, options));
         });
     });
-    // reenable autoSync
-    this.autoSync = true;
+    $.when.apply($, deferreds).then(function() {
+        // reenable autoSync
+        that.autoSync = true;
+        alert("Juhu fertig!");
+    });
 };
 /**
  * Imports passed Array items as new/existing Group to the cart. 
@@ -780,6 +804,8 @@ Cart.prototype.importGroups = function(items, options) {
  * @param {Enum(keep|merge|overwrite)} [group_conflict='keep'] defaults to keep
  */
 Cart.prototype.importGroup = function(items, options) {
+    var dfd = $.Deferred();
+    var deferreds = [];
     options = $.extend({
         group_conflict: 'keep'
     }, options);
@@ -788,13 +814,13 @@ Cart.prototype.importGroup = function(items, options) {
         if (_.isEqual(this._getGroup(items.name, items.context), items.items)) {
             console.log(items.name + " identical to existing in context " + items.context + " ... skipping.");
         }
-        else{
+        else {
             if (options.group_conflict === 'keep')
                 console.log(items.name + " already exists in context " + items.context + " ... skipping.");
             else if (options.group_conflict === 'merge') {
                 console.log(items.name + " already exists in context " + items.context + " ... merging.");
                 var addDOM = (items.context === this.currentContext);
-                this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
+                deferreds.push(this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM}));
             }
             else if (options.group_conflict === 'copy') {
                 console.log(items.name + " already exists in context " + items.context + " ... creating a copy.");
@@ -804,14 +830,14 @@ Cart.prototype.importGroup = function(items, options) {
                     groupname = items.name + "_" + (++lastGroupNumber);
                 } while (typeof this._getGroup(groupname, items.context) !== 'undefined');
                 var addDOM = (items.context === this.currentContext);
-                this.addItem(items.items, {groupname: groupname, context: items.context, addToDOM: addDOM});
+                deferreds.push(this.addItem(items.items, {groupname: groupname, context: items.context, addToDOM: addDOM}));
             }
             else {
                 console.log(items.name + " already exists in context " + items.context + " ... replacing.");
                 this.removeGroup(items.name, {context: items.context, customCallback: function() {
                         var addDOM = (items.context === this.currentContext);
-                        that.addItem(
-                                items.items, {groupname: items.name, context: items.context, addToDOM: addDOM})
+                        deferreds.push(that.addItem(
+                                items.items, {groupname: items.name, context: items.context, addToDOM: addDOM}));
                     }
                 });
             }
@@ -820,8 +846,12 @@ Cart.prototype.importGroup = function(items, options) {
     else {
 // Group is automatically added if it does not exist.
         var addDOM = (items.context === this.currentContext);
-        this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM});
+        deferreds.push(this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM}));
     }
+    $.when.apply($, deferreds).then(function() {
+        dfd.resolve();
+    });
+    return dfd.promise();
 };
 /**
  * Imports passed Array items as metadata.
@@ -830,6 +860,8 @@ Cart.prototype.importGroup = function(items, options) {
  * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep'] defaults to keep
  */
 Cart.prototype.importMetadata = function(items, options) {
+    var dfd = $.Deferred();
+    var deferreds = [];
     options = $.extend({
         metadata_conflict: 'keep'
     }, options);
@@ -842,15 +874,19 @@ Cart.prototype.importMetadata = function(items, options) {
                 case 'merge':
                     var new_metadata = $.extend({}, value, that._getMetadataForContext(context)[key]);
                     if (!_.isEqual(new_metadata, that._getMetadataForContext(context)[key]))
-                        that.updateItem(key, new_metadata, {context: context});
+                        deferreds.push(that.updateItem(key, new_metadata, {context: context}));
                     break;
                 case 'overwrite':
                     if (!_.isEqual(value, that._getMetadataForContext(context)[key]))
-                        that.updateItem(key, value, {context: context});
+                        deferreds.push(that.updateItem(key, value, {context: context}));
                     break;
             }
         });
     });
+    $.when.apply($, deferreds).then(function() {
+        dfd.resolve();
+    });
+    return dfd.promise();
 };
 /**
  * Binds a select element to a cart, always keeping Groups synchronized as Select Options
