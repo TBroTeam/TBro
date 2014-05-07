@@ -779,6 +779,7 @@ Cart.prototype.exportAllGroupsOfCurrentContext = function(context) {
 Cart.prototype.importGroups = function(items, options) {
 // disable autoSync for the import time to prevent intermediate results to be overwritten
     this.autoSync = false;
+    $("body").addClass("loading");
     var deferreds = [];
     options = $.extend({
         group_conflict: 'keep',
@@ -794,7 +795,8 @@ Cart.prototype.importGroups = function(items, options) {
     $.when.apply($, deferreds).then(function() {
         // reenable autoSync
         that.autoSync = true;
-        alert("Juhu fertig!");
+        $("body").removeClass("loading");
+        $('#dialog-import-finished').dialog('open');
     });
 };
 /**

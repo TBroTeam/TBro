@@ -79,6 +79,10 @@
                         </form>
                     </div>
 
+                    <div id="dialog-import-finished" title="Import finished">
+                        <p>Congratulations, you have successfully imported your carts.</p>
+                    </div>
+                    
                     <div id="dialog-delete-all-context" title="Delete all Carts (Release)?">
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts in the current release. Are you sure?</p>
                     </div>

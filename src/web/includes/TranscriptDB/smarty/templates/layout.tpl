@@ -200,7 +200,7 @@
                 border-right-width: 0px;
                 border-bottom-width: 0px;
             }
-        
+
             .ui-tabs-panel {
                 border-width: 1px !important;
                 border-color: #aaaaaa;
@@ -208,6 +208,37 @@
 
             .dataTable th td{
                 white-space: nowrap;
+            }
+
+            /* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+            .modal {
+                display:    none;
+                position:   fixed;
+                z-index:    1000;
+                top:        0;
+                left:       0;
+                height:     100%;
+                width:      100%;
+                background: rgba( 255, 255, 255, .8 ) 
+                    url('/img/ajax-loader.gif') 
+                    50% 50% 
+                    no-repeat;
+            }
+
+            /* When the body has the loading class, we turn
+               the scrollbar off with overflow:hidden */
+            body.loading {
+                overflow: hidden;   
+            }
+
+            /* Anytime the body has the loading class, our
+               modal element will be visible */
+            body.loading .modal {
+                display: block;
             }
         </style>
         <script type="text/javascript">
@@ -263,7 +294,7 @@
                         <li><div><select id="select_organism" style="display:inline"></select></div></li>
                         <li><div><label for="select_release">Release:</label></div></li>
                         <li><div><select id="select_release"></select></div></li>
-                        
+
                         <li class="divider"></li>
 
                         <li><div><label for="search">Quick Search:</label></div></li>
@@ -276,6 +307,7 @@
         {#block name='body'#}{#/block#}
     </div>
 
+    <div class="modal"><!-- Placeholder to block page when busy --></div>
 </body>
 </html>
 

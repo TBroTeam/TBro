@@ -403,4 +403,19 @@ $(document).ready(function() {
             return tooltip;
         }
     });
+    
+    $("#dialog-import-finished").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 700,
+        modal: true,
+        buttons: {
+            Close: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function() {
+            //var data = $(this).data('data');
+        }
+    });
 });
