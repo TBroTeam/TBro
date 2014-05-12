@@ -53,18 +53,6 @@
                         };
                     }
                 },
-                hasGO_or_children: {
-                    name: 'Has GO or Children (slower!)',
-                    webservice: '{#$ServicePath#}/combisearch/hasgo_or_children/',
-                    template_search: '#template_search_hasGO_or_children',
-                    fnPrepareData: function() {
-                        return {
-                            species: organism.val(),
-                            release: release.val(),
-                            term: $(this).find('input.GO').val()
-                        };
-                    }
-                },
                 inPathwayID: {
                     name: 'In Pathway (KEGG ID)',
                     webservice: '{#$ServicePath#}/combisearch/inpathway_id/',
@@ -246,17 +234,6 @@
         <div class="row">
         <div class="large-6 columns">
         Has GO: 
-        </div>
-        <div class="large-3 columns" style="text-align: right">GO:</div>
-        <div class="large-3 columns">
-        <input type="text" class="GO" style="margin:0px"/>
-        </div>
-        </div>
-    </script>
-    <script type="text/template" id="template_search_hasGO_or_children">
-        <div class="row">
-        <div class="large-6 columns">
-        Has GO or Children of GO: 
         </div>
         <div class="large-3 columns" style="text-align: right">GO:</div>
         <div class="large-3 columns">
