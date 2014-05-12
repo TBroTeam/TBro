@@ -32,7 +32,7 @@
                 bServerSide: true,
                 sAjaxSource: "{#$ServicePath#}/listing/cart_table",
                 "fnServerParams": function(aoData) {
-                    aoData.push({"name": "terms", "value": data});
+                    aoData.push({"name": "terms", "value": allIDs});
                     aoData.push({"name": "currentContext", "value": cart.currentContext});                 
                 },
                 fnServerData: function(sSource, aoData, fnCallback, oSettings) {
