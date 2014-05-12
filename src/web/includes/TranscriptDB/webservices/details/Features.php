@@ -26,7 +26,12 @@ class Features extends \WebService {
 
         $cache = \Zend_Cache::factory(
                         'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
-        );
+            );
+        if (MEMCACHED_ENABLED){
+            $cache = \Zend_Cache::factory(
+                        'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => MEMCACHED_HOST, 'port' => MEMCACHED_PORT, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
+            );
+        }
 
         $return = array('results' => array());
         $uncached_ids = array();

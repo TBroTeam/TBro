@@ -29,6 +29,12 @@ define('DEFAULT_RELEASE', 'test_release');
 error_reporting(E_ALL ^ E_STRICT ^ E_NOTICE);
 ini_set('display_errors', '0');
 
+//use memcached (http://memcached.org/) for caching feature descriptions
+//highly recommended
+define('MEMCACHED_ENABLED', FALSE);
+define('MEMCACHED_HOST', 'localhost');
+define('MEMCACHED_PORT', 11211);
+
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))
 //    define('DEBUG', true);
