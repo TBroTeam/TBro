@@ -30,10 +30,12 @@ error_reporting(E_ALL ^ E_STRICT ^ E_NOTICE);
 ini_set('display_errors', '0');
 
 //use memcached (http://memcached.org/) for caching feature descriptions
-//highly recommended
-define('MEMCACHED_ENABLED', FALSE);
+//disable if you want to use file caching instead (not recommended)
+define('MEMCACHED_ENABLED', TRUE);
 define('MEMCACHED_HOST', 'localhost');
 define('MEMCACHED_PORT', 11211);
+//file cache location (only needed if memcached is disabled)
+define('FILE_CACHE_DIR', '/tmp/zendcache/details_features');
 
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))

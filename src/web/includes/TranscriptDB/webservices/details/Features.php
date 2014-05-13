@@ -24,12 +24,17 @@ class Features extends \WebService {
         if (isset($querydata['no_description']))
             $with_descriptions = false;
 
-        $cache = \Zend_Cache::factory(
-                        'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
-            );
-        if (MEMCACHED_ENABLED){
+        if (MEMCACHED_ENABLED) {
             $cache = \Zend_Cache::factory(
-                        'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => MEMCACHED_HOST, 'port' => MEMCACHED_PORT, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
+                            'Core', 'Memcached', array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true), array('servers' => array(array('host' => MEMCACHED_HOST, 'port' => MEMCACHED_PORT, 'persistent' => true, 'weight' => 1, 'timeout' => 5, 'retry_interval' => 15, 'status' => true)))
+            );
+        } else {
+            @mkdir(FILE_CACHE_DIR, 0755, true);
+            $cache = \Zend_Cache::factory(
+                            'Core'
+                            , 'File'
+                            , array('caching' => true, 'lifetime' => '3600', 'automatic_serialization' => true)
+                            , array('cache_dir' => FILE_CACHE_DIR)
             );
         }
 
@@ -60,7 +65,7 @@ class Features extends \WebService {
      * @param Array[int] $querydata['terms'] multiple ids
      */
     public function query_database($feature_ids, $with_descriptions) {
-        
+
         $ret = array('results' => array());
         if (count($feature_ids) == 0) {
             return $ret;
@@ -72,9 +77,9 @@ class Features extends \WebService {
         $constant = 'constant';
 
         $query;
-        
-        if($with_descriptions){           
-        $query = <<<EOF
+
+        if ($with_descriptions) {
+            $query = <<<EOF
         SELECT raw.*, fp.value AS description FROM (SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
     SELECT s.name 
@@ -90,9 +95,8 @@ class Features extends \WebService {
     WHERE feature.feature_id IN ($place_holders)) AS raw LEFT JOIN (SELECT feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) AS fp
     ON raw.feature_id=fp.feature_id
 EOF;
-        }
-        else{
-        $query = <<<EOF
+        } else {
+            $query = <<<EOF
     SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
     SELECT s.name 
@@ -128,7 +132,7 @@ EOF;
             }
             unset($row['type_id']);
             // if description is null: set to empty string
-            if(is_null ( $row['description'] )) 
+            if (is_null($row['description']))
                 $row['description'] = '';
             $ret['results'][] = $row;
         }
