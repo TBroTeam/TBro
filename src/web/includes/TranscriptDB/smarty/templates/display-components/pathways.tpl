@@ -2,7 +2,7 @@
     <script>
         // called from mav.tpl
         function showPathwayInfo() {
-            var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+            var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
             $('#panel-pathways').show();
             $.ajax('{#$ServicePath#}/listing/pathways', {
                 method: 'post',

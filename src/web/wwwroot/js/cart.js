@@ -302,7 +302,7 @@ Cart.prototype._redraw = function() {
     for (var groupname in cart) {
         if (!cart.hasOwnProperty(groupname))
             continue;
-        var group = cart[groupname];
+        var group = cart[groupname]['items'];
         that.addGroup(groupname, {
             sync: false
         });
@@ -351,6 +351,7 @@ Cart.prototype.addItem = function(ids, options) {
     }, options);
     var that = this;
     var missingIds = _.difference(ids, that._getCartForContext(options.context)[options.groupname || []]);
+    console.log("missing items "+ missingIds);
     var showItems = missingIds;
     if (missingIds.length > itemsToShow) {
         showItems = missingIds.slice(0, itemsToShow);
@@ -380,7 +381,7 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
     function addInternal() {
-        var group = this._getGroup(options.groupname, options.context);
+        var group = this._getGroup(options.groupname, options.context)['items'];
         if (typeof group === "undefined")
             group = this._getGroup(this.addGroup(options.groupname, {context: options.context, sync: false}), options.context);
         for (var i = 0; i < ids.length; i++)
@@ -391,7 +392,7 @@ Cart.prototype.addItem = function(ids, options) {
     function addToDOM(aItemDetails) {
         $('body').css('cursor', 'default');
         var group$ = that._getGroupNode(options.groupname);
-        var group = that._getGroup(options.groupname);
+        var group = that._getGroup(options.groupname)['items'];
         group$.find('.numelements').html('(' + group.length + ')');
         var full_placeholder = $('li.cartFullText', group$);
         $.each(aItemDetails, function(key, itemDetails) {
@@ -563,7 +564,7 @@ Cart.prototype.addGroup = function(groupname, options) {
     }
     return groupname;
     function addInternal() {
-        this._getCartForContext(options.context)[groupname] = [];
+        this._getCartForContext(options.context)[groupname] = {items:[], notes:''};
     }
 
     function addToDOM() {

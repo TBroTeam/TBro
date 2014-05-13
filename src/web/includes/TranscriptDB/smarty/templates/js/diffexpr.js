@@ -122,7 +122,7 @@ $(document).ready(function() {
                     aoData.push(this);
                 });
                 /*{#if isset($cart_ids)#}*/
-                $.each(cart._getCartForContext()['{#$cartname#}'] || [], function() {
+                $.each(cart._getCartForContext()['{#$cartname#}']['items'] || [], function() {
                     aoData.push({
                         name: 'ids[]',
                         value: this

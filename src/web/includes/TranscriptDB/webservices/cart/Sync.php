@@ -121,12 +121,13 @@ class Sync extends \WebService {
                 // only keep ids that belong to this context
                 $ids_context = array_intersect($parms['ids'], $results['results']);
                 // create cart if it does not already exist
-                if (!in_array($parms['groupname'], array_keys($currentCart)))
-                    $currentCart[$parms['groupname']] = array();
+                if (!in_array($parms['groupname'], array_keys($currentCart))){
+                    $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array());
+                }
                 // add item to $currentCart if not already in there
                 foreach ($ids_context as $id) {
-                    if (!in_array($id, $currentCart[$parms['groupname']]))
-                        $currentCart[$parms['groupname']][] = $id;
+                    if (!in_array($id, $currentCart[$parms['groupname']]['items']))
+                        $currentCart[$parms['groupname']]['items'][] = $id;
                 }
                 break;
             case 'updateItem':
@@ -141,16 +142,21 @@ class Sync extends \WebService {
                 break;
             case 'removeItem':
                 //remove from group
-                $pos = array_search($parms['id'], $currentCart[$parms['groupname']]);
+                $pos = array_search($parms['id'], $currentCart[$parms['groupname']]['items']);
                 if ($pos !== FALSE)
-                    array_splice($currentCart[$parms['groupname']], $pos, 1);
+                    array_splice($currentCart[$parms['groupname']]['items'], $pos, 1);
                 break;
             case 'addGroup':
-                $currentCart[$parms['groupname']] = array();
+                $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array());
+                if(isset($parms['groupnotes']))
+                       $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes']; 
                 break;
             case 'renameGroup':
                 $currentCart[$parms['newname']] = $currentCart[$parms['groupname']];
                 unset($currentCart[$parms['groupname']]);
+                break;
+            case 'updateGroup':
+                $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes'];
                 break;
             case 'removeGroup':
                 $oldcart = $currentCart[$parms['groupname']];

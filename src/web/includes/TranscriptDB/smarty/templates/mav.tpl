@@ -23,7 +23,7 @@
                     }
 
                     _.delay(function() {
-                        var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+                        var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
                         if (cartitems.length === 0) {
                             console.log("No items in cart");
                             return;
@@ -44,7 +44,7 @@
             $('#cartgroup-{#$cartname#}').accordion( "option", "active", 0 );
         }
         function drawCloud(service) {
-            var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+            var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
             var prefix = '';
             if (service === 'gos') {
                 prefix = 'http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=GO:';
@@ -105,6 +105,7 @@
                 <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
+                <textarea>Test</textarea>
                 {#include file="display-components/cart_table.tpl"#}
             </div>
             <div id="tabs-graphs">

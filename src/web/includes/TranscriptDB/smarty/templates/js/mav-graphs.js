@@ -28,7 +28,7 @@ $(document).ready(function() {
                 return;
 
 
-            var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+            var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
 
             $.ajax('{#$ServicePath#}/listing/filters/', {
                 method: 'post',
@@ -59,7 +59,7 @@ $(document).ready(function() {
             assay: [],
             biomaterial: []
         };
-        data.parents = cart._getCartForContext()['{#$cartname#}'] || [];
+        data.parents = cart._getCartForContext()['{#$cartname#}']['items'] || [];
         data.analysis.push(select_analysis.find(':selected').val());
         data.assay.push(select_assay.find(':selected').val());
         select_tissues.find(':selected').each(function() {
