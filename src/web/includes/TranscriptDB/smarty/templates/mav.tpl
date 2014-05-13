@@ -33,6 +33,10 @@
                         showPathwayInfo();
                     }, 500);
                 });
+                
+                $('#cart-notes-textfield').blur(function(){
+                    console.log($('#cart-notes-textfield').val());
+                });
             });
 
 
@@ -105,7 +109,7 @@
                 <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
-                <textarea>Test</textarea>
+                <textarea id='cart-notes-textfield'>Test</textarea>
                 {#include file="display-components/cart_table.tpl"#}
             </div>
             <div id="tabs-graphs">
