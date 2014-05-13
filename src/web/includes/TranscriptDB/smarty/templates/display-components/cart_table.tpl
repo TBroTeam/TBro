@@ -211,7 +211,7 @@
     }
 
     function removeAllFromCart() {
-        var cartitems = cart._getCartForContext()['{#$cartname#}'] || [];
+        var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
         while (cartitems.length !== 0) {
             cart.removeItem(cartitems[0], {groupname: '{#$cartname#}'});
         }
@@ -295,6 +295,9 @@
 </style>
 
 <div class="row">
+    <div class="large-12 columns">  
+        <h4>Items</h4>
+    </div>
     <div class="large-9 columns">        
         <ul class="button-group even-5">
             <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Entries </button></li>

@@ -119,7 +119,7 @@ function Cart(initialData, options) {
                 if (options.customCallback !== null) {
                     options.customCallback();
                 }
-                if(that.autoSync)
+                if (that.autoSync)
                     responseHandler(data);
                 dfd.resolve();
             }
@@ -305,7 +305,7 @@ Cart.prototype._redraw = function() {
         var group = cart[groupname]['items'];
         that.addGroup(groupname, {
             sync: false
-        });
+        }, cart[groupname]['notes']);
         that.addItem(group, {
             groupname: groupname,
             sync: false
@@ -350,8 +350,9 @@ Cart.prototype.addItem = function(ids, options) {
         sync: true
     }, options);
     var that = this;
-    var missingIds = _.difference(ids, that._getCartForContext(options.context)[options.groupname || []]);
-    console.log("missing items "+ missingIds);
+    var missingIds = ids;
+    if(typeof that._getCartForContext(options.context)[options.groupname] !== 'undefined')
+        missingIds = _.difference(ids, that._getCartForContext(options.context)[options.groupname]['items'] || []);
     var showItems = missingIds;
     if (missingIds.length > itemsToShow) {
         showItems = missingIds.slice(0, itemsToShow);
@@ -381,12 +382,13 @@ Cart.prototype.addItem = function(ids, options) {
     }
 
     function addInternal() {
-        var group = this._getGroup(options.groupname, options.context)['items'];
+        var group = this._getGroup(options.groupname, options.context);
         if (typeof group === "undefined")
             group = this._getGroup(this.addGroup(options.groupname, {context: options.context, sync: false}), options.context);
+        var items = group.items;
         for (var i = 0; i < ids.length; i++)
-            if (_.indexOf(group, ids[i]) === -1)
-                group.push(ids[i]);
+            if (_.indexOf(items, ids[i]) === -1)
+                items.push(ids[i]);
     }
 
     function addToDOM(aItemDetails) {
@@ -482,6 +484,29 @@ Cart.prototype.updateItem = function(id, metadata, options) {
     }
 
 };
+
+/**
+ * Updates Notes for a cart
+ * @param {String} name of the cart
+ * @param {String} notes to set for this cart
+ * @param {Collection} [options]
+ */
+Cart.prototype.updateGroup = function(cartname, notes, options) {
+    var dfd = $.Deferred();
+    options = $.extend({
+        sync: true
+    }, options);
+    var that = this;
+    $.when(that.sync({
+        action: 'updateGroup',
+        groupname: cartname,
+        groupnotes: notes
+    }, options)).then(function() {
+        dfd.resolve()
+    });
+    return dfd.promise();
+};
+
 /**
  * Removes a feature from a group or all groups
  * @param {Number} id of features to remove
@@ -536,7 +561,7 @@ Cart.prototype._item_removed = function(id) {
  * @param {Collection} [options]
  * @param {bool} [options.sync] sync?
  */
-Cart.prototype.addGroup = function(groupname, options) {
+Cart.prototype.addGroup = function(groupname, options, notes) {
     options = $.extend({
         sync: true,
         context: this.currentContext
@@ -564,7 +589,9 @@ Cart.prototype.addGroup = function(groupname, options) {
     }
     return groupname;
     function addInternal() {
-        this._getCartForContext(options.context)[groupname] = {items:[], notes:''};
+        this._getCartForContext(options.context)[groupname] = {items: [], notes: ''};
+        if (typeof notes !== 'undefined')
+            this._getCartForContext(options.context)[groupname]['notes'] = notes;
     }
 
     function addToDOM() {
@@ -790,7 +817,7 @@ Cart.prototype.importGroups = function(items, options) {
     var that = this;
     $.each(items.carts, function(context, carts) {
         $.each(carts, function(name, cart) {
-            deferreds.push(that.importGroup({context: context, name: name, items: cart}, options));
+            deferreds.push(that.importGroup({context: context, name: name, cart: cart}, options));
         });
     });
     $.when.apply($, deferreds).then(function() {
@@ -813,8 +840,17 @@ Cart.prototype.importGroup = function(items, options) {
         group_conflict: 'keep'
     }, options);
     var that = this;
+
+    // simplify this after completion of change
+    var newitems = items.cart;
+    var newnotes = "";
+    if (typeof items.cart.items !== 'undefined') {
+        newitems = items.cart.items;
+        newnotes = items.cart.notes;
+    }
+
     if (typeof this._getGroup(items.name, items.context) !== 'undefined') {
-        if (_.isEqual(this._getGroup(items.name, items.context), items.items)) {
+        if (_.isEqual(this._getGroup(items.name, items.context)['items'], newitems) && this._getGroup(items.name, items.context)['notes'] === newnotes) {
             console.log(items.name + " identical to existing in context " + items.context + " ... skipping.");
         }
         else {
@@ -823,7 +859,9 @@ Cart.prototype.importGroup = function(items, options) {
             else if (options.group_conflict === 'merge') {
                 console.log(items.name + " already exists in context " + items.context + " ... merging.");
                 var addDOM = (items.context === this.currentContext);
-                deferreds.push(this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM}));
+                deferreds.push(this.addItem(newitems, {groupname: items.name, context: items.context, addToDOM: addDOM}));
+                if (this._getGroup(items.name, items.context)['notes'] !== newnotes)
+                    deferreds.push(that.updateGroup(items.name, this._getGroup(items.name, items.context)['notes'] + newnotes, {context: items.context}));
             }
             else if (options.group_conflict === 'copy') {
                 console.log(items.name + " already exists in context " + items.context + " ... creating a copy.");
@@ -833,14 +871,20 @@ Cart.prototype.importGroup = function(items, options) {
                     groupname = items.name + "_" + (++lastGroupNumber);
                 } while (typeof this._getGroup(groupname, items.context) !== 'undefined');
                 var addDOM = (items.context === this.currentContext);
-                deferreds.push(this.addItem(items.items, {groupname: groupname, context: items.context, addToDOM: addDOM}));
+                deferreds.push(this.addItem(newitems, {groupname: groupname, context: items.context, addToDOM: addDOM, customCallback: function() {
+                        if (newnotes !== '')
+                            deferreds.push(that.updateGroup(groupname, newnotes, {context: items.context}));
+                    }}));
             }
             else {
                 console.log(items.name + " already exists in context " + items.context + " ... replacing.");
                 this.removeGroup(items.name, {context: items.context, customCallback: function() {
                         var addDOM = (items.context === this.currentContext);
                         deferreds.push(that.addItem(
-                                items.items, {groupname: items.name, context: items.context, addToDOM: addDOM}));
+                                newitems, {groupname: items.name, context: items.context, addToDOM: addDOM, customCallback: function() {
+                                if (newnotes !== '')
+                                    deferreds.push(that.updateGroup(items.name, newnotes, {context: items.context}));
+                            }}));
                     }
                 });
             }
@@ -849,7 +893,10 @@ Cart.prototype.importGroup = function(items, options) {
     else {
 // Group is automatically added if it does not exist.
         var addDOM = (items.context === this.currentContext);
-        deferreds.push(this.addItem(items.items, {groupname: items.name, context: items.context, addToDOM: addDOM}));
+        deferreds.push(this.addItem(newitems, {groupname: items.name, context: items.context, addToDOM: addDOM, customCallback: function() {
+                if (newnotes !== '')
+                    deferreds.push(that.updateGroup(items.name, newnotes, {context: items.context}));
+            }}));
     }
     $.when.apply($, deferreds).then(function() {
         dfd.resolve();

@@ -18,7 +18,7 @@
 
 
                 $('#Cart').on('cartEvent', function(event) {
-                    if(!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname === '{#$cartname#}'))){
+                    if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname === '{#$cartname#}'))) {
                         return;
                     }
 
@@ -31,11 +31,13 @@
                         adjustCartgroupStyle();
                         displayCartTable(cartitems, {});
                         showPathwayInfo();
+                        $('#cart-notes-textfield').text(cart._getCartForContext()['{#$cartname#}']['notes']);
+                        console.log(cart._getCartForContext()['{#$cartname#}']['notes']);
                     }, 500);
                 });
-                
-                $('#cart-notes-textfield').blur(function(){
-                    console.log($('#cart-notes-textfield').val());
+
+                $('#cart-notes-textfield').blur(function() {
+                    cart.updateGroup('{#$cartname#}', $('#cart-notes-textfield').val());
                 });
             });
 
@@ -44,8 +46,8 @@
     </script>
     <script>
         function adjustCartgroupStyle() {
-            $( ".selector" ).accordion( "option", "collapsible", true );
-            $('#cartgroup-{#$cartname#}').accordion( "option", "active", 0 );
+            $(".selector").accordion("option", "collapsible", true);
+            $('#cartgroup-{#$cartname#}').accordion("option", "active", 0);
         }
         function drawCloud(service) {
             var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
@@ -109,7 +111,14 @@
                 <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
-                <textarea id='cart-notes-textfield'>Test</textarea>
+                <div class="row">
+                    <div class="large-12 columns">  
+                        <h4>Notes</h4>
+                    </div>
+                    <div class="large-12 columns">
+                        <textarea id='cart-notes-textfield'> </textarea>
+                    </div>
+                </div>
                 {#include file="display-components/cart_table.tpl"#}
             </div>
             <div id="tabs-graphs">

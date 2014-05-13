@@ -39,6 +39,16 @@ class Sync extends \WebService {
         } else {
             $this->saveCart();
         }
+        
+        // keep this only for a short while to convert carts to incorporate the new format (cartname->items,notes)
+        foreach (array_keys($_SESSION['cart']['carts']) as $context) {
+            foreach (array_keys($_SESSION['cart']['carts'][$context]) as $name) {
+                if(!array_key_exists('items', $_SESSION['cart']['carts'][$context][$name])){
+                    $items = $_SESSION['cart']['carts'][$context][$name];
+                    $_SESSION['cart']['carts'][$context][$name] = array('items' => $items, 'notes' => '');
+                }
+            }
+        }
     }
 
     /**
