@@ -45,7 +45,11 @@ class Sync extends \WebService {
             foreach (array_keys($_SESSION['cart']['carts'][$context]) as $name) {
                 if(!array_key_exists('items', $_SESSION['cart']['carts'][$context][$name])){
                     $items = $_SESSION['cart']['carts'][$context][$name];
-                    $_SESSION['cart']['carts'][$context][$name] = array('items' => $items, 'notes' => '');
+                    $_SESSION['cart']['carts'][$context][$name] = array('items' => $items, 'notes' => '', 'created' => time(), 'modified' => time());
+                }
+                if(!array_key_exists('created', $_SESSION['cart']['carts'][$context][$name])){
+                    $_SESSION['cart']['carts'][$context][$name]['created'] = time();
+                    $_SESSION['cart']['carts'][$context][$name]['modified'] = time();
                 }
             }
         }
@@ -132,13 +136,14 @@ class Sync extends \WebService {
                 $ids_context = array_intersect($parms['ids'], $results['results']);
                 // create cart if it does not already exist
                 if (!in_array($parms['groupname'], array_keys($currentCart))){
-                    $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array());
+                    $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
                 }
                 // add item to $currentCart if not already in there
                 foreach ($ids_context as $id) {
                     if (!in_array($id, $currentCart[$parms['groupname']]['items']))
                         $currentCart[$parms['groupname']]['items'][] = $id;
                 }
+                $currentCart[$parms['groupname']]['modified'] = time();
                 break;
             case 'updateItem':
                 //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
@@ -153,23 +158,29 @@ class Sync extends \WebService {
             case 'removeItem':
                 //remove from group
                 $pos = array_search($parms['id'], $currentCart[$parms['groupname']]['items']);
-                if ($pos !== FALSE)
+                if ($pos !== FALSE){
                     array_splice($currentCart[$parms['groupname']]['items'], $pos, 1);
+                    $currentCart[$parms['groupname']]['modified'] = time();
+                }
                 break;
             case 'addGroup':
-                $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array());
+                $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
                 if(isset($parms['groupnotes']))
                        $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes']; 
                 break;
             case 'renameGroup':
                 $currentCart[$parms['newname']] = $currentCart[$parms['groupname']];
+                $currentCart[$parms['newname']]['modified'] = time();
                 unset($currentCart[$parms['groupname']]);
                 break;
             case 'updateGroup':
                 $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes'];
                 break;
+            case 'setTimestamps':
+                $currentCart[$parms['groupname']]['created'] = $parms['created'];
+                $currentCart[$parms['groupname']]['modified'] = $parms['modified'];
+                break;
             case 'removeGroup':
-                $oldcart = $currentCart[$parms['groupname']];
                 unset($currentCart[$parms['groupname']]);
                 break;
             case 'clear':

@@ -32,7 +32,10 @@
                         displayCartTable(cartitems, {});
                         showPathwayInfo();
                         $('#cart-notes-textfield').text(cart._getCartForContext()['{#$cartname#}']['notes']);
-                        console.log(cart._getCartForContext()['{#$cartname#}']['notes']);
+                        var created = parseInt(cart._getCartForContext()['{#$cartname#}']['created'])*1000;
+                        $('#cart-created-time').html(new Date(created).toLocaleString());
+                        var modified = parseInt(cart._getCartForContext()['{#$cartname#}']['modified'])*1000;
+                        $('#cart-modified-time').html(new Date(modified).toLocaleString());
                     }, 500);
                 });
 
@@ -111,6 +114,19 @@
                 <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
+                <div class="row">
+                    <div class="large-12 columns">  
+                        <h4>Info</h4>
+                    </div>
+                    <div class="large-12 columns">  
+                        <table style="width:100%">
+                            <tbody>
+                                <tr><td>Created:</td><td id="cart-created-time"> unknown </td></tr>
+                                <tr><td>Last modified:</td><td id="cart-modified-time"> unknown </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="large-12 columns">  
                         <h4>Notes</h4>

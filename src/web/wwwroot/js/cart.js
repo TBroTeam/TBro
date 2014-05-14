@@ -304,7 +304,9 @@ Cart.prototype._redraw = function() {
             continue;
         var group = cart[groupname]['items'];
         that.addGroup(groupname, {
-            sync: false
+            sync: false,
+            modified: cart[groupname]['modified'],
+            created: cart[groupname]['created']
         }, cart[groupname]['notes']);
         that.addItem(group, {
             groupname: groupname,
@@ -508,6 +510,29 @@ Cart.prototype.updateGroup = function(cartname, notes, options) {
 };
 
 /**
+ * Explicitly set timestamps for a cart
+ * @param {String} name of the cart
+ * @param {String} notes to set for this cart
+ * @param {Collection} [options]
+ */
+Cart.prototype.setTimestamps = function(cartname, created, modified, options) {
+    var dfd = $.Deferred();
+    options = $.extend({
+        sync: true
+    }, options);
+    var that = this;
+    $.when(that.sync({
+        action: 'setTimestamps',
+        groupname: cartname,
+        created: created,
+        modified: modified
+    }, options)).then(function() {
+        dfd.resolve()
+    });
+    return dfd.promise();
+};
+
+/**
  * Removes a feature from a group or all groups
  * @param {Number} id of features to remove
  * @param {Collection} [options]
@@ -589,7 +614,7 @@ Cart.prototype.addGroup = function(groupname, options, notes) {
     }
     return groupname;
     function addInternal() {
-        this._getCartForContext(options.context)[groupname] = {items: [], notes: ''};
+        this._getCartForContext(options.context)[groupname] = {items: [], notes: '', created: options.created, modified: options.modified};
         if (typeof notes !== 'undefined')
             this._getCartForContext(options.context)[groupname]['notes'] = notes;
     }
@@ -874,6 +899,7 @@ Cart.prototype.importGroup = function(items, options) {
                 deferreds.push(this.addItem(newitems, {groupname: groupname, context: items.context, addToDOM: addDOM, customCallback: function() {
                         if (newnotes !== '')
                             deferreds.push(that.updateGroup(groupname, newnotes, {context: items.context}));
+                        deferreds.push(that.setTimestamps(groupname, items.cart.created, items.cart.modified, {context: items.context}));
                     }}));
             }
             else {
@@ -884,6 +910,7 @@ Cart.prototype.importGroup = function(items, options) {
                                 newitems, {groupname: items.name, context: items.context, addToDOM: addDOM, customCallback: function() {
                                 if (newnotes !== '')
                                     deferreds.push(that.updateGroup(items.name, newnotes, {context: items.context}));
+                                deferreds.push(that.setTimestamps(items.name, items.cart.created, items.cart.modified, {context: items.context}));
                             }}));
                     }
                 });
@@ -896,6 +923,7 @@ Cart.prototype.importGroup = function(items, options) {
         deferreds.push(this.addItem(newitems, {groupname: items.name, context: items.context, addToDOM: addDOM, customCallback: function() {
                 if (newnotes !== '')
                     deferreds.push(that.updateGroup(items.name, newnotes, {context: items.context}));
+                deferreds.push(that.setTimestamps(items.name, items.cart.created, items.cart.modified, {context: items.context}));
             }}));
     }
     $.when.apply($, deferreds).then(function() {
