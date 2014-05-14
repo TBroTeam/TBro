@@ -70,13 +70,13 @@
 
             new Grouplist($('#button-isoform-addToCart-options'), cart, addSelectedToCart);
             $('#button-isoform-addToCart-options-newcart').click(addSelectedToCart);
-            
+
             $('.isoform-header').draggable({
                 appendTo: "body",
                 helper: function() {
                     return $('<div>', {text: $('.isoform-header').text()}).addClass('beingDragged');
                 },
-                cursorAt: { top: 5, left: 5 }
+                cursorAt: {top: 5, left: 5}
             });
 
         });
@@ -90,7 +90,22 @@
             });
         }
 
-
+        function updateContainingCartsSection() {
+            var cfc = cart._getCartForContext();
+            var hits = [];
+            $.each(cfc, function(key, attr) {
+                if (_.indexOf(attr.items, {#$data.isoform.feature_id#}) !== -1)
+                    hits.push(key);
+            });
+            $('#containing-carts-section').empty();
+            if (hits.length === 0) {
+                $('#containing-carts-section').append('<li style="font-size:1.5em">No carts yet...</li>');
+            } else {
+                $.each(hits, function(id, attr) {
+                    $('#containing-carts-section').append('<li style="font-size:1.5em"><a href="/graphs/'+attr+'">'+attr+'</a></li>');
+                });
+            }
+        }
 
     </script>
     <script type="text/javascript" src="{#$AppPath#}/js/feature/barplot.js"></script>
@@ -120,10 +135,12 @@
                             {#/if#}
                     <tr><td>Release</td><td>{#$data.isoform.import#}</td></tr>
                     <tr><td>Organism</td><td>{#$data.isoform.organism_name#}</td></tr>
+                <a class="button" data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show carts</a>
                 </tbody>
             </table>
         </div>
     </div>
+
     {#include file="display-components/synonym.tpl" feature=$data.isoform #}
     {#if isset($data.isoform.description) #}
         <div class="row">
@@ -165,4 +182,10 @@
 
     <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
     {#include file="display-components/barplot.tpl"#}
+
+    <div id="myModal" class="reveal-modal">
+        <h2>This isoform is in the following carts:</h2>
+        <ul id="containing-carts-section"></ul>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
 {#/block#}
