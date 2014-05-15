@@ -9,6 +9,40 @@
                 sync: '{#$ServicePath#}/cart/sync'
             }
         };
+        /*
+        function openPasteDialog(event){
+            event.preventDefault();
+            $('#dialog-paste-cart-group').dialog('open');
+        }
+        function openCopyAllContextDialog(event){
+            event.preventDefault();
+            var dialog = $('#dialog-copy-all-carts');
+            dialog.data('data', cart.exportAllGroupsOfCurrentContext());
+            dialog.dialog('open');
+        }
+        function openCopyAllDialog(event){
+            event.preventDefault();
+            var dialog = $('#dialog-copy-all-carts');
+            dialog.data('data', cart.exportAllGroups());
+            dialog.dialog('open');
+        }
+        function openDeleteAllContextDialog(event){
+            event.preventDefault();
+            $('#dialog-delete-all-context').dialog('open');
+        }
+        function openDeleteAllDialog(event){
+            event.preventDefault();
+            $('#dialog-delete-all').dialog('open');
+        }
+        function openDeleteAnnotationsContextDialog(event){
+            event.preventDefault();
+            $('#dialog-delete-annotations-context').dialog('open');
+        }
+        function openDeleteAnnotationsDialog(event){
+            event.preventDefault();
+            $('#dialog-delete-annotations').dialog('open');
+        }
+        */
     </script>
     <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
 

@@ -35,7 +35,8 @@ $(document).ready(function() {
             active: false
         });
 
-        this.find('.exportBtn').click(function() {
+        this.find('.exportBtn').click(function(event) {
+            event.preventDefault();
             exportBtnClick.call(this, 'all');
         });
 
@@ -104,7 +105,8 @@ $(document).ready(function() {
             active: false
         });
 
-        this.find('.exportBtn').click(function() {
+        this.find('.exportBtn').click(function(event) {
+            event.preventDefault();
             exportBtnClick.call(this, that.attr('data-name'));
         });
 
@@ -114,18 +116,21 @@ $(document).ready(function() {
         this.find('button').click(cartButtonClick);
 
         this.find('.cart-button-rename').click(function(event) {
+            event.preventDefault();
             var dialog = $('#dialog-rename-cart-group');
             dialog.data('oldname', that.attr('data-name'));
             dialog.dialog("open");
         });
 
         this.find('.cart-button-copy').click(function(event) {
+            event.preventDefault();
             var dialog = $('#dialog-copy-cart-group');
             dialog.data('data', cart.exportGroup(that.attr('data-name')));
             dialog.dialog("open");
         });
 
         this.find('.cart-button-remove').click(function(event) {
+            event.preventDefault();
             var dialog = $('#dialog-delete-cart');
             dialog.data('groupname', that.attr('data-name'));
             dialog.dialog("open");
@@ -143,7 +148,8 @@ $(document).ready(function() {
             }
         });
 
-        this.find('.cart-button-rename').click(function() {
+        this.find('.cart-button-rename').click(function(event) {
+            event.preventDefault();
             cart._getItemDetails([id], function(data) {
                 $("#dialog-edit-cart-item").data('id', id);
                 $("#dialog-edit-cart-item").data('name', cart.cartitems[id]['name']);
@@ -156,6 +162,7 @@ $(document).ready(function() {
         });
 
         this.find('.cart-button-delete').click(function(event) {
+            event.preventDefault();
             var dialog = $('#dialog-delete-item');
             dialog.data('id', id);
             dialog.data('groupname', $(this).parents('.cartGroup').attr('data-name'));
