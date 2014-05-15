@@ -39,19 +39,25 @@ class Sync extends \WebService {
         } else {
             $this->saveCart();
         }
-        
+
         // keep this only for a short while to convert carts to incorporate the new format (cartname->items,notes)
+        if (!array_key_exists('cartorder', $_SESSION['cart'])) {
+            $_SESSION['cart']['cartorder'] = array();
+        }
         foreach (array_keys($_SESSION['cart']['carts']) as $context) {
             foreach (array_keys($_SESSION['cart']['carts'][$context]) as $name) {
-                if(!array_key_exists('items', $_SESSION['cart']['carts'][$context][$name])){
+                if (!array_key_exists('items', $_SESSION['cart']['carts'][$context][$name])) {
                     $items = $_SESSION['cart']['carts'][$context][$name];
                     $_SESSION['cart']['carts'][$context][$name] = array('items' => $items, 'notes' => '', 'created' => time(), 'modified' => time());
                 }
-                if(!array_key_exists('created', $_SESSION['cart']['carts'][$context][$name])){
+                if (!array_key_exists('created', $_SESSION['cart']['carts'][$context][$name])) {
                     $_SESSION['cart']['carts'][$context][$name]['created'] = time();
                     $_SESSION['cart']['carts'][$context][$name]['modified'] = time();
                 }
             }
+            //if (!array_key_exists($context, $_SESSION['cart']['cartorder'])) {
+            //    $_SESSION['cart']['cartorder'][$context] = array_keys($_SESSION['cart']['carts'][$context]);
+            //}
         }
     }
 
@@ -111,23 +117,26 @@ class Sync extends \WebService {
     public function syncActions($parms, $currentContext) {
         //prepare empty values
         if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = array('metadata' => array(), 'carts' => array());
+            $_SESSION['cart'] = array('metadata' => array(), 'carts' => array(), 'cartorder' => array());
         }
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
             $_SESSION['cart']['carts'][$currentContext] = array();
         if (!isset($_SESSION['cart']['metadata'][$currentContext]))
             $_SESSION['cart']['metadata'][$currentContext] = array();
+        if (!isset($_SESSION['cart']['cartorder'][$currentContext]))
+            $_SESSION['cart']['cartorder'][$currentContext] = array();
 
         //refs for quicker access
         $metadata = &$_SESSION['cart']['metadata'][$currentContext];
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
+        $cartorder = &$_SESSION['cart']['cartorder'][$currentContext];
 
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
                 // get all feature ids of the context to check before adding
                 list($service) = \WebService::factory('listing/features');
-                $cont = explode('_' ,$currentContext, 2);
+                $cont = explode('_', $currentContext, 2);
                 $results = ($service->execute(array('species' => $cont[0], 'release' => $cont[1])));
                 // convert ids to int
                 foreach ($parms['ids'] as $key => $id)
@@ -135,7 +144,7 @@ class Sync extends \WebService {
                 // only keep ids that belong to this context
                 $ids_context = array_intersect($parms['ids'], $results['results']);
                 // create cart if it does not already exist
-                if (!in_array($parms['groupname'], array_keys($currentCart))){
+                if (!in_array($parms['groupname'], array_keys($currentCart))) {
                     $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
                 }
                 // add item to $currentCart if not already in there
@@ -158,15 +167,18 @@ class Sync extends \WebService {
             case 'removeItem':
                 //remove from group
                 $pos = array_search($parms['id'], $currentCart[$parms['groupname']]['items']);
-                if ($pos !== FALSE){
+                if ($pos !== FALSE) {
                     array_splice($currentCart[$parms['groupname']]['items'], $pos, 1);
                     $currentCart[$parms['groupname']]['modified'] = time();
                 }
                 break;
             case 'addGroup':
                 $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
-                if(isset($parms['groupnotes']))
-                       $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes']; 
+                $key = array_search($parms['groupname'], $cartorder);
+                if($key === -1)
+                    $cartorder[] = $parms['groupname'];
+                if (isset($parms['groupnotes']))
+                    $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes'];
                 break;
             case 'renameGroup':
                 $currentCart[$parms['newname']] = $currentCart[$parms['groupname']];
@@ -182,6 +194,8 @@ class Sync extends \WebService {
                 break;
             case 'removeGroup':
                 unset($currentCart[$parms['groupname']]);
+                $key = array_search($parms['groupname'], $cartorder);
+                array_splice($cartorder, $key, 1);
                 break;
             case 'clear':
                 $_SESSION['cart']['carts'][$currentContext] = array();
@@ -194,6 +208,9 @@ class Sync extends \WebService {
                 break;
             case 'clearAllAnnotations':
                 $_SESSION['cart']['metadata'] = array();
+                break;
+            case 'setCartOrder':
+                $cartorder = $parms['neworder'];
                 break;
         }
     }

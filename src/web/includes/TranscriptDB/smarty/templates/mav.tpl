@@ -36,6 +36,7 @@
                         $('#cart-created-time').html(new Date(created).toLocaleString());
                         var modified = parseInt(cart._getCartForContext()['{#$cartname#}']['modified'])*1000;
                         $('#cart-modified-time').html(new Date(modified).toLocaleString());
+                        console.log(cart.cartorder);
                     }, 500);
                 });
 

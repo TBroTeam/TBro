@@ -50,6 +50,8 @@ function Cart(initialData, options) {
     /** @private */
     this.metadata = initialData.metadata || {};
     /** @private */
+    this.cartorder = initialData.cartorder || {};
+    /** @private */
     this.md5sum = initialData.md5sum || '';
     /** @private */
     this.emptyCartPrototype = {
@@ -145,6 +147,7 @@ function Cart(initialData, options) {
         this.md5sum = data.md5sum;
         this.metadata = newCart.metadata;
         this.carts = newCart.carts;
+        this.cartorder = newCart.cartorder;
         this._redraw();
     };
     /** @private */
@@ -177,6 +180,14 @@ Cart.prototype._getCartForContext = function(context) {
     if (typeof this.carts[context] === 'undefined')
         this.carts[context] = this.emptyCartPrototype;
     return this.carts[context];
+};
+/** @private */
+Cart.prototype._getCartorderForContext = function(context) {
+    if (typeof context === 'undefined')
+        context = this.currentContext;
+    if (typeof this.cartorder[context] === 'undefined')
+        this.cartorder[context] = [];
+    return this.cartorder[context];
 };
 /** @private */
 Cart.prototype._getMetadataForContext = function(context) {
@@ -293,13 +304,15 @@ Cart.prototype._redraw = function() {
         triggerEvent: true
     });
     var cart = _.clone(this._getCartForContext());
+    var cartorder = this._getCartorderForContext();
     var cartToEmpty = this._getCartForContext();
     for (var key in cartToEmpty) {
         if (cartToEmpty.hasOwnProperty(key))
             delete cartToEmpty[key];
     }
     var that = this;
-    for (var groupname in cart) {
+    for (var index in cartorder) {
+        var groupname = cartorder[index];
         if (!cart.hasOwnProperty(groupname))
             continue;
         var group = cart[groupname]['items'];
@@ -615,6 +628,8 @@ Cart.prototype.addGroup = function(groupname, options, notes) {
     return groupname;
     function addInternal() {
         this._getCartForContext(options.context)[groupname] = {items: [], notes: '', created: options.created, modified: options.modified};
+        if(_.indexOf(this._getCartorderForContext(options.context), groupname) === -1)
+            this._getCartorderForContext(options.context).push(groupname);
         if (typeof notes !== 'undefined')
             this._getCartForContext(options.context)[groupname]['notes'] = notes;
     }
@@ -742,6 +757,7 @@ Cart.prototype.clearAll = function(options) {
     }, options);
     this.cartitems.length = 0;
     this.carts = {};
+    this.cartorder = {};
     this.sync({
         action: 'clearAll'
     }, options);
