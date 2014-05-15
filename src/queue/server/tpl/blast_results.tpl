@@ -219,9 +219,9 @@
         <tr><td colspan="2">
         <pre>
 <% _.each(cut_alignment(hsp.qseq, hsp.hseq, hsp.midline, 100, hsp['query-from'], hsp['hit-from']), function(chunk){ %>
-<%= sprintf("%10s %6d %-100s %-10d", 'Query', chunk.qseq_start, chunk.qseq, chunk.qseq_end) %>
-<%= sprintf("%10s %6s %-100s", '', '', chunk.midline) %>
-<%= sprintf("%10s %6d %-100s %-10d", 'Subject', chunk.hseq_start, chunk.hseq, chunk.hseq_end) %>
+<%= sprintf("%7s %6d %-100s %6d", 'Query', chunk.qseq_start, chunk.qseq, chunk.qseq_end) %>
+<%= sprintf("%7s %6s %-100s", '', '', chunk.midline) %>
+<%= sprintf("%7s %6d %-100s %6d", 'Subject', chunk.hseq_start, chunk.hseq, chunk.hseq_end) %>
 <% }); %>
         </pre>
         </td>
