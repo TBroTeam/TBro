@@ -146,6 +146,13 @@
                             This action can not be undone. Are you sure?
                         </p>
                     </div>
+                    
+                    <div id="dialog-delete-item-annotation" title="Delete annotation?">
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+                            This action can not be undone. Are you sure?
+                        </p>
+                    </div>
 
                     <div id="dialog-edit-cart-item" title="Edit Item">
                         <form>

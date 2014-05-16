@@ -152,11 +152,9 @@
     }
     
     function deleteAnnotation(id) {
-        //var dialog = $('#dialog-delete-item');
-        //dialog.data('id', id);
-        //dialog.data('groupname', '{#$cartname#}');
-        //dialog.dialog("open");
-        cart.updateItem(id, {alias: "", annotations: ""});
+        var dialog = $('#dialog-delete-item-annotation');
+        dialog.data('id', id);
+        dialog.dialog("open");
     }
 
     function annotateElement(id, name, description) {

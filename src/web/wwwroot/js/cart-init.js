@@ -164,11 +164,11 @@ $(document).ready(function() {
                     alert('New name contains illegal characters. Please use only letters, numbers and underscore!');
                     return false;
                 }
-                //try {
+                try {
                     cart.renameGroup(oldname, newname);
-                //} catch (e) {
-                //    alert(e);
-                //}
+                } catch (e) {
+                    alert(e);
+                }
                 $(this).dialog("close");
             },
             Cancel: function() {
@@ -178,6 +178,13 @@ $(document).ready(function() {
         open: function() {
             var oldname = $(this).data('oldname');
             $('#cartname').val(oldname);
+            $("#dialog-rename-cart-group").keypress(function(e) {
+                if (e.keyCode === $.ui.keyCode.ENTER) {
+                    e.preventDefault();
+                    console.log($(this).parent().find("button:contains('rename cart')").text());                    
+                    $(this).parent().find("button:contains('rename cart')").trigger("click");
+                }
+            });
         }
     });
 
@@ -366,6 +373,23 @@ $(document).ready(function() {
             }
         }
     });
+    
+    $("#dialog-delete-item-annotation").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 200,
+        modal: true,
+        dialogClass: "warningDialogClass",
+        buttons: {
+            "Delete annotation": function() {
+                cart.updateItem($(this).data('id'), {alias: "", annotations: ""});
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        }
+    });
 
     $('#cart').tooltip({
         items: ".cartItem",
@@ -421,7 +445,7 @@ $(document).ready(function() {
             ui.placeholder.height(112);
         },
         stop: function(e, ui) {
-            cart.setCartOrder($( "#Cart" ).sortable( "toArray", {attribute: "data-name"} ));
+            cart.setCartOrder($("#Cart").sortable("toArray", {attribute: "data-name"}));
         }
     });
 });
