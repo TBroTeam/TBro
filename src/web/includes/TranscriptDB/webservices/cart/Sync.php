@@ -55,9 +55,9 @@ class Sync extends \WebService {
                     $_SESSION['cart']['carts'][$context][$name]['modified'] = time();
                 }
             }
-            //if (!array_key_exists($context, $_SESSION['cart']['cartorder'])) {
-            //    $_SESSION['cart']['cartorder'][$context] = array_keys($_SESSION['cart']['carts'][$context]);
-            //}
+            if (!array_key_exists($context, $_SESSION['cart']['cartorder']) || empty($_SESSION['cart']['cartorder'][$context])) {
+                $_SESSION['cart']['cartorder'][$context] = array_keys($_SESSION['cart']['carts'][$context]);
+            }
         }
     }
 
