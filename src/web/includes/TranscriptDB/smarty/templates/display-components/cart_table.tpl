@@ -22,7 +22,7 @@
                     {mData: 'alias', bSortable: false, sClass: "no-wrap", bVisible: false},
                     {mData: 'description', bSortable: false, sClass: "no-wrap"},
                     {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
-                    {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
+                    {mData: 'user_annotations', bSortable: false, sClass: "no-wrap"},
                     {mData: 'actions', bSortable: false, sClass: "no-wrap", sWidth: "90px"}];
                 $('#placeholder-unsortable').show();
             }
