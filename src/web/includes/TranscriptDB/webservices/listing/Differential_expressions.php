@@ -258,7 +258,7 @@ EOF;
         if (!isset($querydata['ids']))
             $querydata['ids'] = array();
         if (isset($querydata['cartname']) && $_SESSION['cart']['carts'][$querydata['currentContext']][$querydata['cartname']] !== null) {
-            foreach ($_SESSION['cart']['carts'][$querydata['currentContext']][$querydata['cartname']] as $index => $id) {
+            foreach ($_SESSION['cart']['carts'][$querydata['currentContext']][$querydata['cartname']]['items'] as $index => $id) {
                 array_push($querydata['ids'], $id);
             }
         }
