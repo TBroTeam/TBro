@@ -174,9 +174,7 @@ class Sync extends \WebService {
                 break;
             case 'addGroup':
                 $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
-                $key = array_search($parms['groupname'], $cartorder);
-                if($key === -1)
-                    $cartorder[] = $parms['groupname'];
+                array_unshift($cartorder, $parms['groupname']);
                 if (isset($parms['groupnotes']))
                     $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes'];
                 break;
@@ -184,6 +182,8 @@ class Sync extends \WebService {
                 $currentCart[$parms['newname']] = $currentCart[$parms['groupname']];
                 $currentCart[$parms['newname']]['modified'] = time();
                 unset($currentCart[$parms['groupname']]);
+                $key = array_search($parms['groupname'], $cartorder);
+                $cartorder[$key] = $parms['newname'];
                 break;
             case 'updateGroup':
                 $currentCart[$parms['groupname']]['notes'] = $parms['groupnotes'];

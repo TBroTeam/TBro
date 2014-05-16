@@ -4,7 +4,6 @@ $(document).ready(function() {
 
     cart = new Cart({}, $.extend(true, {
         callbacks: {
-            afterDOMinsert_groupAll: groupAllAfterDOM,
             afterDOMinsert_group: groupAfterDOM,
             afterDOMinsert_item: itemAfterDOM
         },
@@ -27,25 +26,6 @@ $(document).ready(function() {
             auto: true
         });
     }, 5000); //sync over tabs if neccessary
-
-    function groupAllAfterDOM() {
-        this.accordion({
-            collapsible: true,
-            heightStyle: "content",
-            active: false
-        });
-
-        this.find('.exportBtn').click(function(event) {
-            event.preventDefault();
-            exportBtnClick.call(this, 'all');
-        });
-
-        this.find('a').click(function(event) {
-            event.stopPropagation();
-        });
-        this.find('button').click(cartButtonClick);
-    }
-
 
     function cartButtonClick(event) {
         if ($(this).is('.cartMenuButton')) {
@@ -99,7 +79,7 @@ $(document).ready(function() {
                 });
             }
         });
-        this.accordion({
+        this.find('.cartGroup').accordion({
             collapsible: true,
             heightStyle: "content",
             active: false
@@ -184,11 +164,11 @@ $(document).ready(function() {
                     alert('New name contains illegal characters. Please use only letters, numbers and underscore!');
                     return false;
                 }
-                try {
+                //try {
                     cart.renameGroup(oldname, newname);
-                } catch (e) {
-                    alert(e);
-                }
+                //} catch (e) {
+                //    alert(e);
+                //}
                 $(this).dialog("close");
             },
             Cancel: function() {
@@ -295,7 +275,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $("#dialog-delete-all-context").dialog({
         resizable: false,
         autoOpen: false,
@@ -314,7 +294,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $("#dialog-delete-annotations").dialog({
         resizable: false,
         autoOpen: false,
@@ -333,7 +313,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $("#dialog-delete-annotations-context").dialog({
         resizable: false,
         autoOpen: false,
@@ -410,7 +390,7 @@ $(document).ready(function() {
             return tooltip;
         }
     });
-    
+
     $("#dialog-import-finished").dialog({
         autoOpen: false,
         height: 600,
@@ -423,6 +403,25 @@ $(document).ready(function() {
         },
         open: function() {
             //var data = $(this).data('data');
+        }
+    });
+
+    $('#Cart').sortable({
+        helper: 'clone',
+        axis: "y",
+        cursorAt: {top: 30, left: 5},
+        forcePlaceholderSize: true,
+        items: "> .sortable",
+        tolerance: "pointer",
+        placeholder: "sortable-placeholder",
+        handle: ".handle",
+        distance: 5,
+        delay: 200,
+        start: function(e, ui) {
+            ui.placeholder.height(112);
+        },
+        stop: function(e, ui) {
+            cart.setCartOrder($( "#Cart" ).sortable( "toArray", {attribute: "data-name"} ));
         }
     });
 });

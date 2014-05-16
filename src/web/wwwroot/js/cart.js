@@ -673,6 +673,8 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
         var cart = this._getCartForContext();
         var group = cart[groupname];
         cart[newname] = group;
+        var index = _.indexOf(this._getCartorderForContext(), groupname);
+        this._getCartorderForContext()[index] = newname;
         delete cart[groupname];
     }
 
@@ -693,7 +695,8 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
             newGroup$.find('.elements').append(cft$);
         }
         oldGroup$.replaceWith(newGroup$);
-        afterDOMinsert.call(newGroup$);
+        if(typeof afterDOMinsert !== 'undefined')
+            afterDOMinsert.call(newGroup$);
         var numOfElements = this._getGroup(newname).length;
         newGroup$.find('.numelements').html('(' + numOfElements + ')');
     }
@@ -727,6 +730,24 @@ Cart.prototype.removeGroup = function(groupname, options) {
     function removeFromDOM() {
         this._getGroupNode(groupname).remove();
     }
+};
+/**
+ * Set order of carts
+ * @param {Array} [neworder]
+ * @param {Collection} [options]
+ */
+Cart.prototype.setCartOrder = function(neworder, options) {
+    options = $.extend({
+        sync: true,
+        context: this.currentContext
+    }, options);
+    // if order is the same: do nothing
+    if(this._getCartorderForContext(options.context).toString() === neworder.toString())
+        return;
+    this.sync({
+        action: 'setCartOrder',
+        neworder: neworder
+    }, options);
 };
 /**
  * Removes everything from the current context

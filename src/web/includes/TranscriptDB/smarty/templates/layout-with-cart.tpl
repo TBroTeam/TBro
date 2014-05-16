@@ -10,39 +10,39 @@
             }
         };
         /*
-        function openPasteDialog(event){
-            event.preventDefault();
-            $('#dialog-paste-cart-group').dialog('open');
-        }
-        function openCopyAllContextDialog(event){
-            event.preventDefault();
-            var dialog = $('#dialog-copy-all-carts');
-            dialog.data('data', cart.exportAllGroupsOfCurrentContext());
-            dialog.dialog('open');
-        }
-        function openCopyAllDialog(event){
-            event.preventDefault();
-            var dialog = $('#dialog-copy-all-carts');
-            dialog.data('data', cart.exportAllGroups());
-            dialog.dialog('open');
-        }
-        function openDeleteAllContextDialog(event){
-            event.preventDefault();
-            $('#dialog-delete-all-context').dialog('open');
-        }
-        function openDeleteAllDialog(event){
-            event.preventDefault();
-            $('#dialog-delete-all').dialog('open');
-        }
-        function openDeleteAnnotationsContextDialog(event){
-            event.preventDefault();
-            $('#dialog-delete-annotations-context').dialog('open');
-        }
-        function openDeleteAnnotationsDialog(event){
-            event.preventDefault();
-            $('#dialog-delete-annotations').dialog('open');
-        }
-        */
+         function openPasteDialog(event){
+         event.preventDefault();
+         $('#dialog-paste-cart-group').dialog('open');
+         }
+         function openCopyAllContextDialog(event){
+         event.preventDefault();
+         var dialog = $('#dialog-copy-all-carts');
+         dialog.data('data', cart.exportAllGroupsOfCurrentContext());
+         dialog.dialog('open');
+         }
+         function openCopyAllDialog(event){
+         event.preventDefault();
+         var dialog = $('#dialog-copy-all-carts');
+         dialog.data('data', cart.exportAllGroups());
+         dialog.dialog('open');
+         }
+         function openDeleteAllContextDialog(event){
+         event.preventDefault();
+         $('#dialog-delete-all-context').dialog('open');
+         }
+         function openDeleteAllDialog(event){
+         event.preventDefault();
+         $('#dialog-delete-all').dialog('open');
+         }
+         function openDeleteAnnotationsContextDialog(event){
+         event.preventDefault();
+         $('#dialog-delete-annotations-context').dialog('open');
+         }
+         function openDeleteAnnotationsDialog(event){
+         event.preventDefault();
+         $('#dialog-delete-annotations').dialog('open');
+         }
+         */
     </script>
     <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
 
@@ -116,7 +116,7 @@
                     <div id="dialog-import-finished" title="Import finished">
                         <p>Congratulations, you have successfully imported your carts.</p>
                     </div>
-                    
+
                     <div id="dialog-delete-all-context" title="Delete all Carts (Release)?">
                         <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>This will remove all your carts in the current release. Are you sure?</p>
                     </div>
@@ -238,50 +238,54 @@
                         <div style="clear:both">&nbsp;</div>
                     </div>
                     <div id="Cart">
+
                     </div>
                 </div>
-
-                <script type="text/template" id="template_cart_new_group"> 
-                    <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>" title="<%= groupname %>">
-                    <div class="large-12 columns cartgroup">
-                    <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
-                    <span class="numelements">(0)</span></div>
-                    <div class="right">
-                    <button class="cartMenuButton small button dropdown" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
-                    <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
-                    <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename</a></li>
-                    <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Export</a></li>
-                    <li><a class="cart-button-remove" href="#"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete</a></li>
-                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/7.png"/>&nbsp;View&nbsp;/&nbsp;Modify</a></li>
-                    <li><a href="{#$AppPath#}/graphs/<%= groupname %>#tabs-graphs"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
-                    </ul>
-                    </div>
-                    </div>
-                    <ul class="large-12 columns elements">
-                    <li class="placeholder">
-                    drag your items here
-                    </li>
-                    </ul>
-                    </div>
-                    <div style="clear:both">&nbsp;</div>
-                </script>
-
-                <script type="text/template"  id="template_cart_new_item"> 
-                    <li style="clear:both" class="large-12 cartItem" data-id="<%=item.feature_id%>">
-                    <div class="left">
-                    <span class="displayname">
-                    <%= (item.metadata && item.metadata.alias) || item.name || item.feature_id %>
-                    </span>
-                    </div>
-                    <div class="right">
-                    <a href="{#$AppPath#}/details/byId/<%= item.feature_id %>"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a> 
-                    <a class="cart-button-rename" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>
-                    <a class="cart-button-delete" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
-                    </div>
-                    </li>
-                </script>
             </div>
-            <div>&nbsp;</div>
+
+            <script type="text/template" id="template_cart_new_group"> 
+        <div class="sortable" data-name="<%= groupname %>">
+            &nbsp;
+            <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>" title="<%= groupname %>">
+                <div class="large-12 columns cartgroup handle">
+                <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
+                <span class="numelements">(0)</span></div>
+                <div class="right">
+                <button class="cartMenuButton small button dropdown" data-cartMenu="cart-dropdown-group-<%= groupname %>">Actions</button>
+                <ul id="cart-dropdown-group-<%= groupname %>"  class="f-dropdown cartMenuContent">
+                <li><a class="cart-button-rename" href="#"><img alt="Rename Group" src="{#$AppPath#}/img/mimiGlyphs/39.png"/>&nbsp;Rename</a></li>
+                <li><a class="cart-button-copy" href="#"><img alt="Export Group"  src="{#$AppPath#}/img/mimiGlyphs/9.png"/>&nbsp;Export</a></li>
+                <li><a class="cart-button-remove" href="#"><img alt="Remove Group" src="{#$AppPath#}/img/mimiGlyphs/51.png"/>&nbsp;Delete</a></li>
+                <li><a href="{#$AppPath#}/graphs/<%= groupname %>"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/7.png"/>&nbsp;View&nbsp;/&nbsp;Modify</a></li>
+                <li><a href="{#$AppPath#}/graphs/<%= groupname %>#tabs-graphs"><img alt="Execute Group Actions" src="{#$AppPath#}/img/mimiGlyphs/23.png"/><b>&nbsp;Analyse</b></a></li>
+                </ul>
+                </div>
+                </div>
+                <ul class="large-12 columns elements">
+                <li class="placeholder">
+                drag your items here
+                </li>
+                </ul>
+                </div>
         </div>
+            </script>
+
+            <script type="text/template"  id="template_cart_new_item"> 
+                <li style="clear:both" class="large-12 cartItem" data-id="<%=item.feature_id%>">
+                <div class="left">
+                <span class="displayname">
+                <%= (item.metadata && item.metadata.alias) || item.name || item.feature_id %>
+                </span>
+                </div>
+                <div class="right">
+                <a href="{#$AppPath#}/details/byId/<%= item.feature_id %>"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a> 
+                <a class="cart-button-rename" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>
+                <a class="cart-button-delete" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/></a>
+                </div>
+                </li>
+            </script>
+        </div>
+        <div>&nbsp;</div>
     </div>
+</div>
 {#/block#}
