@@ -32,9 +32,9 @@
                         displayCartTable(cartitems, {});
                         showPathwayInfo();
                         $('#cart-notes-textfield').text(cart._getCartForContext()['{#$cartname#}']['notes']);
-                        var created = parseInt(cart._getCartForContext()['{#$cartname#}']['created'])*1000;
+                        var created = parseInt(cart._getCartForContext()['{#$cartname#}']['created']) * 1000;
                         $('#cart-created-time').html(new Date(created).toLocaleString());
-                        var modified = parseInt(cart._getCartForContext()['{#$cartname#}']['modified'])*1000;
+                        var modified = parseInt(cart._getCartForContext()['{#$cartname#}']['modified']) * 1000;
                         $('#cart-modified-time').html(new Date(modified).toLocaleString());
                         console.log(cart.cartorder);
                     }, 500);
@@ -154,24 +154,27 @@
 
                     <form id="filters">
                         <div class="row panel">
-                            <div class="large-4 columns">
-                                <select id="select-assay" size="12"></select>
-                            </div>
-                            <div class="large-4 columns">
-                                <select id="select-analysis" size="12"></select>
-                            </div>
-                            <div class="large-4 columns">
-                                <select id="select-sample" size="12" multiple="multiple"></select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="large-12 columns panel">
-                                <div class="large-8 columns">
-                                    <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
+                            <div class="row">
+                                <div class="large-4 columns">
+                                    <select id="select-assay" size="12"></select>
                                 </div>
                                 <div class="large-4 columns">
-                                    <button type="button" id="button-barplot" value="barplot">Barplot</button>
-                                    <button type="button" id="button-heatmap" value="heatmap">Heatmap</button>
+                                    <select id="select-analysis" size="12"></select>
+                                </div>
+                                <div class="large-4 columns">
+                                    <select id="select-sample" size="12" multiple="multiple"></select>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <div class="large-8 columns">
+                                        <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
+                                    </div>
+                                    <div class="large-4 columns">
+                                        <button type="button" id="button-barplot" value="barplot">Barplot</button>
+                                        <button type="button" id="button-heatmap" value="heatmap">Heatmap</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
