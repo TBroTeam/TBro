@@ -1,9 +1,18 @@
 <script type="text/javascript">
     var dataTable;
     var selectedIDs = [];
+    var allFilteredIDs;
     var allIDs;
     function displayCartTable(data, opts) {
-        allIDs = data;
+        // save a clone of the data as allIDs
+        allIDs = data.slice(0);
+        allIDs = _.map(data, function(value) {
+            return parseInt(value);
+        });
+        allFilteredIDs = data;
+        allFilteredIDs = _.map(data, function(value) {
+            return parseInt(value);
+        });
         selectedIDs = selectedIDs.filter(function(n) {
             return data.indexOf(n) !== -1;
         });
@@ -33,7 +42,7 @@
                 sAjaxSource: "{#$ServicePath#}/listing/cart_table",
                 "fnServerParams": function(aoData) {
                     aoData.push({"name": "terms", "value": allIDs});
-                    aoData.push({"name": "currentContext", "value": cart.currentContext});                 
+                    aoData.push({"name": "currentContext", "value": cart.currentContext});
                 },
                 fnServerData: function(sSource, aoData, fnCallback, oSettings) {
                     oSettings.jqXHR = $.ajax({
@@ -42,7 +51,18 @@
                         "url": sSource,
                         "data": aoData,
                         "success": function(result) {
-                            allIDs = result.idsFiltered;
+                            if (typeof result.idsFiltered !== 'undefined') {
+                                allFilteredIDs = result.idsFiltered;
+                                allFilteredIDs = _.map(allFilteredIDs, function(value) {
+                                    return parseInt(value);
+                                });
+                            }
+                            else {
+                                allFilteredIDs = allIDs.slice(0);
+                                allFilteredIDs = _.map(allFilteredIDs, function(value) {
+                                    return parseInt(value);
+                                });
+                            }
                             fnCallback(result);
                         }
                     });
@@ -81,7 +101,6 @@
                                 return value !== iId;
                             });
                         }
-                        console.log(selectedIDs);
                         $(nRow).toggleClass('DTTT_selected');
                         event.stopPropagation();
                     });
@@ -117,7 +136,7 @@
                 if (groupname === '#new#') {
                     groupname = cart.addGroup();
                 }
-                cart.addItem(selectedIDs, {groupname: groupname});
+                cart.addItem(_.intersection(selectedIDs, allFilteredIDs), {groupname: groupname});
             });
 
             new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToOtherCart);
@@ -150,7 +169,7 @@
         dialog.data('groupname', '{#$cartname#}');
         dialog.dialog("open");
     }
-    
+
     function deleteAnnotation(id) {
         var dialog = $('#dialog-delete-item-annotation');
         dialog.data('id', id);
@@ -169,7 +188,7 @@
     }
 
     function updateSelectedCount() {
-        var selectedItems = selectedIDs.length;
+        var selectedItems = _.intersection(selectedIDs, allFilteredIDs).length;
         $('.selectedItemsCount').html('Selected (' + selectedItems + ')');
     }
 
@@ -193,15 +212,15 @@
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        cart.addItem(selectedIDs, {
+        cart.addItem(_.intersection(selectedIDs, allFilteredIDs), {
             groupname: group
         });
     }
 
     function removeSelectedFromCart() {
-        if (selectedIDs.length === 0)
+        if (_.intersection(selectedIDs, allFilteredIDs).length === 0)
             return;
-        _.each(selectedIDs, function(val) {
+        _.each(_.intersection(selectedIDs, allFilteredIDs), function(val) {
             cart.removeItem(val, {groupname: '{#$cartname#}'});
         });
         var oTable = $('#carttable').dataTable();
@@ -237,9 +256,9 @@
     };
 
     function exportSelected(service) {
-        if (selectedIDs.length === 0)
+        if (_.intersection(selectedIDs, allFilteredIDs).length === 0)
             return;
-        exportIds(service, selectedIDs, '{#$cartname#}' + "_selection");
+        exportIds(service, _.intersection(selectedIDs, allFilteredIDs), '{#$cartname#}' + "_selection");
     }
     function exportAll(service) {
         var ids = cart._getCartForContext()['{#$cartname#}'] || [];
@@ -253,7 +272,7 @@
     }
     function selectAll() {
         // fnSelectAll only for graphical selection
-        selectedIDs = allIDs;
+        selectedIDs = allFilteredIDs;
         TableTools.fnGetInstance('carttable').fnSelectAll();
     }
     function selectAllVisible() {

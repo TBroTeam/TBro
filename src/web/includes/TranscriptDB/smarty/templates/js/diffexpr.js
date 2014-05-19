@@ -118,6 +118,9 @@ $(document).ready(function() {
                     name: "conditionB",
                     value: selectedItem.conditionB
                 });
+                aoData.push({name: "currentContext",
+                    value: organism.val() + '_' + release.val()
+                });
                 $.each($('#{#$instance_name#}-diffexp_filters').serializeArray(), function() {
                     aoData.push(this);
                 });
@@ -227,6 +230,16 @@ $(document).ready(function() {
                     {
                         sType: "scientific",
                         mData: 'pvaladj'
+                    },
+                    {
+                        sType: "natural",
+                        mData: 'user_alias',
+                        bSortable: false
+                    },
+                    {
+                        sType: "natural",
+                        mData: 'user_annotations',
+                        bSortable: false
                     }
                 ],
                 sDom: 'T<"clear">lfrtip',
@@ -297,8 +310,8 @@ $(document).ready(function() {
         });
         /*{#/if#}*/
         data = jQuery.grep(data, function(value) {
-              return value['name'] !== 'ids[]';
-         });
+            return value['name'] !== 'ids[]';
+        });
         if (typeof lastQueryData !== 'undefined') {
             iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(data);
             document.body.appendChild(iframe);
