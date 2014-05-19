@@ -509,8 +509,14 @@ Cart.prototype.updateItem = function(id, metadata, options) {
 Cart.prototype.updateGroup = function(cartname, notes, options) {
     var dfd = $.Deferred();
     options = $.extend({
-        sync: true
+        sync: true,
+        context: this.currentContext
     }, options);
+    var oldnotes = this._getCartForContext(options.context)[cartname]['notes'];
+    if(oldnotes === notes){
+        dfd.resolve();
+        return dfd.promise();
+    }
     var that = this;
     $.when(that.sync({
         action: 'updateGroup',
