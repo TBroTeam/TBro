@@ -8,7 +8,7 @@
 
 
     <script type="text/javascript">
-
+        var blast_alignment_width = 60;
         var div_blast_results;
         var templates;
         var resultData;
@@ -162,7 +162,7 @@
     </script>
     <script type="text/Template" id="template_resultDetails">
         <div class="row"><div class="large-12 columns">
-            <table>
+        <table>
         <tr><th>Program</th><td><%= execDetails.program %></td></tr>
         <tr><th>Version</th><td><%= execDetails.version %></td></tr>
         <tr><th>Reference</th><td><%= execDetails.reference %></td></tr>
@@ -177,7 +177,7 @@
         </td>
         </tr>
         </table>
-</div></div>
+        </div></div>
         <div class="large-centered large-6 columns ">
         <table style="width:100%;">
         <tr><th colspan="42">Color key for alignment scores</th></tr>
@@ -206,27 +206,23 @@
         <% }); %>
     </script>
     <script type="text/template" id="template_hsp">
-        <table style="width:100%">
-        <tr><th>Score</th><td><%= sprintf('%.0f',hsp['bit-score']) %> bits (<%= hsp['score'] %>)</td></tr>
-        <tr><th>Expect</th><td><%= fmtScientific(hsp['evalue']) %></td></tr>
-        <tr><th>Identities</th><td><%= hsp['identity'] %>/<%= hsp['align-len'] %></td></tr>
-        <tr><th>Positives</th><td><%= hsp['positive'] %>/<%= hsp['align-len'] %></td></tr>
-        <tr><th>Gaps</th><td><%= hsp['gaps'] %>/<%= hsp['align-len'] %></td></tr>
+                                </br>
+        Score <%= sprintf('%.0f',hsp['bit-score']) %> bits (<%= hsp['score'] %>), 
+        Expect <%= fmtScientific(hsp['evalue']) %></br>
+        Identities <%= hsp['identity'] %>/<%= hsp['align-len'] %>, 
+        Positives <%= hsp['positive'] %>/<%= hsp['align-len'] %>, 
+        Gaps <%= hsp['gaps'] %>/<%= hsp['align-len'] %></br>
         <% if (typeof hsp['query-frame'] !== 'undefined' ) { %>
-        <tr><th>Query Frame</th><td><%= hsp['query-frame'] %></td></tr>
-        <tr><th>Hit Frame</th><td><%= hsp['hit-frame'] %></td></tr>
+        Query Frame <%= hsp['query-frame'] %>, 
+        Hit Frame <%= hsp['hit-frame'] %>
         <% } %>
-        <tr><td colspan="2">
         <pre>
-<% _.each(cut_alignment(hsp.qseq, hsp.hseq, hsp.midline, 100, hsp['query-from'], hsp['hit-from']), function(chunk){ %>
-<%= sprintf("%7s %6d %-100s %6d", 'Query', chunk.qseq_start, chunk.qseq, chunk.qseq_end) %>
-<%= sprintf("%7s %6s %-100s", '', '', chunk.midline) %>
-<%= sprintf("%7s %6d %-100s %6d", 'Subject', chunk.hseq_start, chunk.hseq, chunk.hseq_end) %>
+<% _.each(cut_alignment(hsp.qseq, hsp.hseq, hsp.midline, blast_alignment_width, hsp['query-from'], hsp['hit-from']), function(chunk){ %>
+<%= sprintf("%7s %6d %-"+blast_alignment_width+"s %6d", 'Query', chunk.qseq_start, chunk.qseq, chunk.qseq_end) %>
+<%= sprintf("%7s %6s %-"+blast_alignment_width+"s", '', '', chunk.midline) %>
+<%= sprintf("%7s %6d %-"+blast_alignment_width+"s %6d", 'Subject', chunk.hseq_start, chunk.hseq, chunk.hseq_end) %>
 <% }); %>
         </pre>
-        </td>
-        </tr>    
-        </table>
     </script>
 
     <div class="large-12 columns panel">
