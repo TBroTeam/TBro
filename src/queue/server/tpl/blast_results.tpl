@@ -149,35 +149,23 @@
     </script>
     <script type="text/template" id="template_processed">
         <div class="large-12 columns">
-        <div class="large-12 columns panel">
-        Select a Sequence: <br/>
-        <select id="query_select">
-        <% _.each(processed_results, function(result, idx){ var query=result.query; %>
-        <option value="<%=idx%>"><%= query.substr(query.indexOf('>')==-1?0:1, Math.max(query.indexOf("\n"),20)) %></option>
-        <% }); %>
-        </select>
+        <div class="large-12 columns panel" style="background:white">
+            <div class="large-3 columns">
+                Select a Sequence: 
+            </div>
+            <div class="large-9 columns">
+                <select id="query_select">
+                <% _.each(processed_results, function(result, idx){ var query=result.query; %>
+                <option value="<%=idx%>"><%= query.substr(query.indexOf('>')==-1?0:1, Math.max(query.indexOf("\n"),20)) %></option>
+                <% }); %>
+                </select>
+            </div>
         </div>
         <div id="resultDetails"> </div>
         </div>
     </script>
     <script type="text/Template" id="template_resultDetails">
-        <div class="row"><div class="large-12 columns">
-        <table>
-        <tr><th>Program</th><td><%= execDetails.program %></td></tr>
-        <tr><th>Version</th><td><%= execDetails.version %></td></tr>
-        <tr><th>Reference</th><td><%= execDetails.reference %></td></tr>
-        <tr>
-        <th>Parameters:</th>
-        <td>
-        <table>
-        <% _.each(execDetails.parameters, function(value,key){ %>
-        <tr><th><%= key %></th><td><%= value %></td></tr>
-        <% }); %>
-        </table>
-        </td>
-        </tr>
-        </table>
-        </div></div>
+        
         <div class="large-centered large-6 columns ">
         <table style="width:100%;">
         <tr><th colspan="42">Color key for alignment scores</th></tr>
@@ -199,6 +187,31 @@
         <canvas id="alignmentGraph"/>
         </div>
         <table id="blast_results_table"></table>
+
+<div class="row"><div class="large-12 columns">
+        <table>
+        <tr><th>Program</th><td><%= execDetails.program %></td></tr>
+        <tr><th>Version</th><td><%= execDetails.version %></td></tr>
+        <tr><th>Reference</th><td><%= execDetails.reference %></td></tr>
+        <tr>
+        <th>Parameters:</th>
+        <td>
+        <table>
+        <tr>
+            <% _.each(execDetails.parameters, function(value,key){ %>
+            <th><%= key %></th>
+            <% }); %>
+        </tr>
+        <tr>
+            <% _.each(execDetails.parameters, function(value,key){ %>
+            <td><%= value %></td>
+            <% }); %>
+        </tr>
+        </table>
+        </td>
+        </tr>
+        </table>
+        </div></div>
     </script>
     <script type="text/template" id="template_hit">
         <% _.each(hit.hsps, function(hsp){ %>
