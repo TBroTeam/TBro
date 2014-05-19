@@ -213,14 +213,17 @@
                 <!--<li onclick="fnNumOfEntries(1000000);"> All (Caution!) </li>-->
             </ul>
             <ul id="{#$instance_name#}-show-hide-dropdown" class="f-dropdown" data-dropdown-content>
-                <li onclick="{#$instance_name#}fnShowHide(1);"><span id="{#$instance_name#}-columnCheckbox1" style="width: 15px; display: inline-block"/>&#10003;</span> Alias</li>
-                <li onclick="{#$instance_name#}fnShowHide(2);"><span id="{#$instance_name#}-columnCheckbox2" style="width: 15px; display: inline-block"/>&#10003;</span> baseMean</li>
-                <li onclick="{#$instance_name#}fnShowHide(3);"><span id="{#$instance_name#}-columnCheckbox3" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanA</li>
-                <li onclick="{#$instance_name#}fnShowHide(4);"><span id="{#$instance_name#}-columnCheckbox4" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanB</li>
-                <li onclick="{#$instance_name#}fnShowHide(5);"><span id="{#$instance_name#}-columnCheckbox5" style="width: 15px; display: inline-block"/>&#10003;</span> foldChange</li>
-                <li onclick="{#$instance_name#}fnShowHide(6);"><span id="{#$instance_name#}-columnCheckbox6" style="width: 15px; display: inline-block"/>&#10003;</span> log2foldChange</li>
-                <li onclick="{#$instance_name#}fnShowHide(7);"><span id="{#$instance_name#}-columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> pval</li>
-                <li onclick="{#$instance_name#}fnShowHide(8);"><span id="{#$instance_name#}-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
+                <li onclick="{#$instance_name#}fnShowHide(1);"><span id="{#$instance_name#}-columnCheckbox1" style="width: 15px; display: inline-block"/>&emsp;</span> DB Alias</li>
+                <li onclick="{#$instance_name#}fnShowHide(2);"><span id="{#$instance_name#}-columnCheckbox2" style="width: 15px; display: inline-block"/>&#10003;</span> DB Description</li>
+                <li onclick="{#$instance_name#}fnShowHide(3);"><span id="{#$instance_name#}-columnCheckbox3" style="width: 15px; display: inline-block"/>&#10003;</span> User Alias</li>
+                <li onclick="{#$instance_name#}fnShowHide(4);"><span id="{#$instance_name#}-columnCheckbox4" style="width: 15px; display: inline-block"/>&#10003;</span> User Description</li>
+                <li onclick="{#$instance_name#}fnShowHide(5);"><span id="{#$instance_name#}-columnCheckbox5" style="width: 15px; display: inline-block"/>&emsp;</span> baseMean</li>
+                <li onclick="{#$instance_name#}fnShowHide(6);"><span id="{#$instance_name#}-columnCheckbox6" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanA</li>
+                <li onclick="{#$instance_name#}fnShowHide(7);"><span id="{#$instance_name#}-columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> baseMeanB</li>
+                <li onclick="{#$instance_name#}fnShowHide(8);"><span id="{#$instance_name#}-columnCheckbox8" style="width: 15px;"/>&#10003;</span> foldChange</li>
+                <li onclick="{#$instance_name#}fnShowHide(9);"><span id="{#$instance_name#}-columnCheckbox6" style="width: 15px; display: inline-block"/>&emsp;</span> log2foldChange</li>
+                <li onclick="{#$instance_name#}fnShowHide(10);"><span id="{#$instance_name#}-columnCheckbox7" style="width: 15px; display: inline-block"/>&emsp;</span> pval</li>
+                <li onclick="{#$instance_name#}fnShowHide(11);"><span id="{#$instance_name#}-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="{#$instance_name#}-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
                 <li onclick="{#$instance_name#}selectAll();" style="width:100%">All</li>
@@ -239,7 +242,10 @@
                 <thead>  
                     <tr>
                         <th>Sequence ID</th>
-                        <th>Alias</th>
+                        <th>DB Alias</th>
+                        <th>DB Description</th>
+                        <th>User Alias</th>
+                        <th>User Description</th>
                         <th>baseMean</th>
                         <th>baseMeanA</th>
                         <th>baseMeanB</th>

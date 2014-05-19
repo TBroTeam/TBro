@@ -190,7 +190,7 @@ $(document).ready(function() {
                 sServerMethod: "POST",
                 sAjaxSource: "{#$ServicePath#}/listing/differential_expressions/fullRelease",
                 fnServerParams: serverParams,
-                aaSorting: [[6, "asc"]],
+                aaSorting: [[11, "asc"]],
                 aoColumns: [
                     {
                         sType: "natural",
@@ -198,11 +198,28 @@ $(document).ready(function() {
                     },
                     {
                         sType: "natural",
-                        mData: 'synonym_name'
+                        mData: 'synonym_name',
+                        bVisible: false
+                    },
+                    {
+                        sType: "natural",
+                        mData: 'db_description',
+                        bSortable: false
+                    },
+                    {
+                        sType: "natural",
+                        mData: 'user_alias',
+                        bSortable: false
+                    },
+                    {
+                        sType: "natural",
+                        mData: 'user_annotations',
+                        bSortable: false
                     },
                     {
                         sType: "scientific",
-                        mData: 'baseMean'
+                        mData: 'baseMean',
+                        bVisible: false
                     },
                     {
                         sType: "scientific",
@@ -220,7 +237,8 @@ $(document).ready(function() {
                     },
                     {
                         sType: "scientific",
-                        mData: 'log2foldChange'
+                        mData: 'log2foldChange',
+                        bVisible: false
                     },
                     {
                         sType: "scientific",
@@ -230,17 +248,8 @@ $(document).ready(function() {
                     {
                         sType: "scientific",
                         mData: 'pvaladj'
-                    },
-                    {
-                        sType: "natural",
-                        mData: 'user_alias',
-                        bSortable: false
-                    },
-                    {
-                        sType: "natural",
-                        mData: 'user_annotations',
-                        bSortable: false
                     }
+
                 ],
                 sDom: 'T<"clear">lfrtip',
                 oTableTools: {

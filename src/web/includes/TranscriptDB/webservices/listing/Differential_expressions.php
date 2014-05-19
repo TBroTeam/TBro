@@ -19,6 +19,9 @@ class Differential_expressions extends \WebService {
     public static $columns = array(
         'f.name' => '"feature_name"',
         's.name' => 'synonym_name',
+        "des.value" => 'db_description',
+        "null" => 'user_alias',
+        "NULL" => 'user_annotations',
         'd.baseMean' => '"baseMean"',
         'd.baseMeanA' => '"baseMeanA"',
         'd.baseMeanB' => '"baseMeanB"',
@@ -26,7 +29,7 @@ class Differential_expressions extends \WebService {
         'd.log2foldChange' => '"log2foldChange"',
         'd.pval' => 'pval',
         'd.pvaladj' => 'pvaladj',
-        "f.feature_id" => 'feature_id'
+        "f.feature_id" => 'feature_id',
     );
 
     /**
@@ -47,6 +50,7 @@ class Differential_expressions extends \WebService {
         );
 
         global $db;
+
         $query_biomat = $db->prepare('SELECT biomaterial_id AS id, name, description FROM biomaterial WHERE biomaterial_id=?');
         $query_biomat->execute(array($querydata['conditionA']));
         $ret['conditionA'] = $query_biomat->fetch(\PDO::FETCH_ASSOC);
@@ -186,6 +190,8 @@ class Differential_expressions extends \WebService {
             $limit = sprintf('OFFSET %d LIMIT %d', $limit_from, $limit_count);
         }
 
+        $constant = 'constant';
+
         $query = <<<EOF
 SELECT 
 $select 
@@ -194,6 +200,7 @@ FROM
 	JOIN feature f ON d.feature_id=f.feature_id 
         LEFT JOIN feature_synonym fs ON f.feature_id=fs.feature_id
         LEFT JOIN synonym s ON fs.synonym_id=s.synonym_id
+        LEFT JOIN (SELECT feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) des ON f.feature_id=des.feature_id
 WHERE
 $wherestr
 $order_by
@@ -216,6 +223,13 @@ EOF;
         if (false)
             $db = new PDO();
 
+        if (!isset($_SESSION))
+            session_start();
+
+        $metadata = array();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$querydata['currentContext']])
+            $metadata = &$_SESSION['cart']['metadata'][$querydata['currentContext']];
+
         list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, true, true);
 
         $stm_get_diffexpr = $db->prepare($query);
@@ -233,6 +247,14 @@ EOF;
                 $data['iTotalDisplayRecords'] = $row['cnt'];
             }
             array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
+            $row['user_alias'] = '';
+            $row['user_annotations'] = '';
+            if (array_key_exists($row['feature_id'], $metadata)) {
+                if (array_key_exists('alias', $metadata[$row['feature_id']]))
+                    $row['user_alias'] = $metadata[$row['feature_id']]['alias'];
+                if (array_key_exists('annotations', $metadata[$row['feature_id']]))
+                    $row['user_annotations'] = $metadata[$row['feature_id']]['annotations'];
+            }
             $data['aaData'][] = $row; //array_values($row);
         }
 
@@ -262,6 +284,9 @@ EOF;
                 array_push($querydata['ids'], $id);
             }
         }
+        $metadata = array();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$querydata['currentContext']])
+            $metadata = &$_SESSION['cart']['metadata'][$querydata['currentContext']];
 
         list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, true, false);
 
@@ -296,6 +321,12 @@ EOF;
             if ($first) {
                 $first = false;
                 fputcsv($out, array_keys($row));
+            }
+            if (array_key_exists($row['feature_id'], $metadata)) {
+                if (array_key_exists('alias', $metadata[$row['feature_id']]))
+                    $row['user_alias'] = $metadata[$row['feature_id']]['alias'];
+                if (array_key_exists('annotations', $metadata[$row['feature_id']]))
+                    $row['user_annotations'] = $metadata[$row['feature_id']]['annotations'];
             }
             array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
             fputcsv($out, array_values($row));
