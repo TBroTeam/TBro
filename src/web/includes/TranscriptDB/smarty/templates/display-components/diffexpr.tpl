@@ -81,6 +81,16 @@
     #{#$instance_name#}-filters input {
         margin: 0px !important;
     }
+    .no-wrap {
+        white-space: nowrap;
+        max-width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .no-wrap:hover {
+        overflow: visible;
+    }
 </style>       
 
 <div id="diffexpr">
@@ -255,7 +265,7 @@
                         <th>pvaladj</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody style="white-space:nowrap"></tbody>
                 <tfoot></tfoot>
             </table>
         </div>

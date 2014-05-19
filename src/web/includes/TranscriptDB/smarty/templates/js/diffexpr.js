@@ -194,60 +194,72 @@ $(document).ready(function() {
                 aoColumns: [
                     {
                         sType: "natural",
-                        mData: 'feature_name'
+                        mData: 'feature_name',
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "natural",
                         mData: 'synonym_name',
-                        bVisible: false
+                        bVisible: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "natural",
                         mData: 'db_description',
-                        bSortable: false
+                        bSortable: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "natural",
                         mData: 'user_alias',
-                        bSortable: false
+                        bSortable: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "natural",
                         mData: 'user_annotations',
-                        bSortable: false
+                        bSortable: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
                         mData: 'baseMean',
-                        bVisible: false
+                        bVisible: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
                         mData: 'baseMeanA',
-                        bVisible: false
+                        bVisible: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
                         mData: 'baseMeanB',
-                        bVisible: false
+                        bVisible: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
-                        mData: 'foldChange'
+                        mData: 'foldChange',
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
                         mData: 'log2foldChange',
-                        bVisible: false
+                        bVisible: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
                         mData: 'pval',
-                        bVisible: false
+                        bVisible: false,
+                        sClass: "no-wrap"
                     },
                     {
                         sType: "scientific",
-                        mData: 'pvaladj'
+                        mData: 'pvaladj',
+                        sClass: "no-wrap"
                     }
 
                 ],
