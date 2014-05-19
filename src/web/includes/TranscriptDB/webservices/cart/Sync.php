@@ -100,12 +100,22 @@ class Sync extends \WebService {
 
         $this->syncActions($querydata['action'], $querydata['currentContext']);
 
-        //if we are logged in: save our cart back to the DB
-        $this->saveCart();
-        $db->commit();
         if ($querydata['action']['action'] === 'refreshCart') {
             return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'md5sum' => md5(json_encode($_SESSION['cart'])));
         }
+        // on each fullSync check that there are no carts, out of order
+        if ($querydata['action']['action'] === 'fullSync') {
+            foreach (array_keys($_SESSION['cart']['carts']) as $context) {
+                foreach (array_keys($_SESSION['cart']['carts'][$context]) as $name) {
+                    if (!in_array($name, $_SESSION['cart']['cartorder'][$context])) {
+                        array_push($_SESSION['cart']['cartorder'][$context], $name);
+                    }
+                }
+            }
+        }
+        //if we are logged in: save our cart back to the DB
+        $this->saveCart();
+        $db->commit();
         return array('currentRequest' => isset($querydata['currentRequest']) ? $querydata['currentRequest'] : -1, 'cart' => $_SESSION['cart'], 'md5sum' => md5(json_encode($_SESSION['cart'])));
     }
 
@@ -146,6 +156,7 @@ class Sync extends \WebService {
                 // create cart if it does not already exist
                 if (!in_array($parms['groupname'], array_keys($currentCart))) {
                     $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
+                    array_unshift($cartorder, $parms['groupname']);
                 }
                 // add item to $currentCart if not already in there
                 foreach ($ids_context as $id) {
