@@ -137,7 +137,7 @@
 
 
             <table id="{#$instance_name#}-filters" style="width:100%">
-                {#$i=2#}
+                {#$i=5#}
                 {#foreach ['baseMean','baseMeanA','baseMeanB','foldChange','log2foldChange','pval','pvaladj'] as $filter_key#}
                     <tr>
                         <th>{#$filter_key#}</th>
