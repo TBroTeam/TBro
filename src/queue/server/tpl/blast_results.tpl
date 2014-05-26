@@ -186,7 +186,52 @@
         <div class="large-12 columns">
         <canvas id="alignmentGraph"/>
         </div>
-        <table id="blast_results_table"></table>
+<div class="large-12">        
+            <ul class="button-group even-5">
+                <li><button class="small button dropdown" id="blast-show-entries-dropdown" data-dropdown="blast-show-entries-dropdown-options"> Show Entries </button></li>
+                <li><button class="small button dropdown" data-dropdown="blast-show-hide-dropdown" data-options="is_hover:true">Show Columns</button></li>
+                <li><button class="small button dropdown" data-dropdown="blast-select-all-none-dropdown">Select</button></li>
+                <li><button class="small button dropdown" type="button" id="blast-button-gdfx-addToCart" data-dropdown="blast-button-gdfx-addToCart-options"> Store </button></li>
+                <li><button class="small button dropdown" id="blast-download-dropdown" data-dropdown="blast-download-dropdown-options"> Export </button></li>
+            </ul>
+
+            <ul class="f-dropdown" id="blast-show-entries-dropdown-options" data-dropdown-content>
+                <li onclick="blastfnNumOfEntries(10);"> 10 </li> 
+                <li onclick="blastfnNumOfEntries(20);"> 20 </li> 
+                <li onclick="blastfnNumOfEntries(50);"> 50 </li> 
+                <li onclick="blastfnNumOfEntries(100);"> 100 </li> 
+                <li onclick="blastfnNumOfEntries(1000);"> 1000 </li> 
+            </ul>
+            <ul id="blast-show-hide-dropdown" class="f-dropdown" data-dropdown-content>
+                <!-- <li onclick="blastfnShowHide(11);"><span id="blast-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li> -->
+            </ul>
+            <ul id="blast-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+                <li onclick="blastselectAll();" style="width:100%">All</li>
+                <li onclick="blastselectAllVisible();" style="width:100%">All visible</li>
+                <li onclick="blastselectNone();" style="width:100%">None</li>
+            </ul>
+            <ul id="blast-button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
+                <!-- <li id="blast-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li> -->
+            </ul>
+            <ul class="f-dropdown" id="blast-download-dropdown-options" data-dropdown-content>
+                <!-- <li id="blast-download_csv_button" > csv </li> -->
+            </ul>
+        </div>
+<div class="large-12 columns">
+        <table id="blast_results_table">
+            <thead>  
+                <tr>
+                    <th>ID</th>
+                    <th>Max Score</th>
+                    <th>Total Score</th>
+                    <th>Coverage</th>
+                    <th>evalue</th>
+                    <th>Max Identity</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+        </table>
+</div>
 
 <div class="row"><div class="large-12 columns">
         <table>
@@ -196,18 +241,9 @@
         <tr>
         <th>Parameters:</th>
         <td>
-        <table>
-        <tr>
             <% _.each(execDetails.parameters, function(value,key){ %>
-            <th><%= key %></th>
+            <%= key %>: <%= value %>; 
             <% }); %>
-        </tr>
-        <tr>
-            <% _.each(execDetails.parameters, function(value,key){ %>
-            <td><%= value %></td>
-            <% }); %>
-        </tr>
-        </table>
         </td>
         </tr>
         </table>

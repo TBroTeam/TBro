@@ -28,7 +28,8 @@
     
     $(document).ready(function(){
         release.change(function() {
-            refreshProgramDatabases();
+            if(typeof refreshProgramDatabases !== 'undefined')
+                refreshProgramDatabases();
         });
     });
 </script>
