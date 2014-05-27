@@ -263,8 +263,7 @@ function displayIteration(iteration, resultTable, canvas, options) {
                     {
                         mData: "max_score",
                         sTitle: "max score",
-                        bVisible: false,
-                        bSortable: false
+                        bVisible: false
                     },
                     {
                         mData: "total_score",
@@ -273,8 +272,7 @@ function displayIteration(iteration, resultTable, canvas, options) {
                     {
                         mData: fnMDataScientific("query_coverage"),
                         sTitle: "coverage",
-                        bVisible: false,
-                        bSortable: false
+                        bVisible: false
                     },
                     {
                         mData: fnMDataScientific("evalue"),
@@ -283,20 +281,19 @@ function displayIteration(iteration, resultTable, canvas, options) {
                     {
                         mData: fnMDataScientific("max_ident"),
                         sTitle: "max identity",
-                        bVisible: false,
-                        bSortable: false
+                        bVisible: false
                     },
                     {
                         mData: "details",
-                        sTitle: "show",
+                        sTitle: "Details",
                         bSortable: false,
                         sWidth: "45px"
                     }
                 ],
-                fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                fnCreatedRow: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $(nRow).find('td:eq(0)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
                     $(nRow).css('cursor', 'pointer');
-                    $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Details </a>');
+                    $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
                     $(nRow).attr('data-id', aData.feature_id);
                     $(nRow).draggable({
                         appendTo: "body",
@@ -381,3 +378,13 @@ function blastselectAllVisible() {
 function blastselectNone() {
     TableTools.fnGetInstance('blast_results_table').fnSelectNone();
 }
+
+function blastfnShowHide(iCol)
+    {
+        $('#blast_results_table').width("98%");
+        /* Get the DataTables object again - this is not a recreation, just a get of the object */
+        var oTable = $('#blast_results_table').dataTable();
+        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+        $('#blast-columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
+        oTable.fnSetColumnVis(iCol, bVis ? false : true);
+    }

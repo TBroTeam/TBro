@@ -208,7 +208,11 @@
                 <li onclick="blastfnNumOfEntries(1000);"> 1000 </li> 
             </ul>
             <ul id="blast-show-hide-dropdown" class="f-dropdown" data-dropdown-content>
-                <!-- <li onclick="blastfnShowHide(11);"><span id="blast-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li> -->
+                <li onclick="blastfnShowHide(1);"><span id="blast-columnCheckbox1" style="width: 15px;">&emsp;</span> Max Score </li>
+                <li onclick="blastfnShowHide(2);"><span id="blast-columnCheckbox2" style="width: 15px;">&#10003;</span> Total Score </li>
+                <li onclick="blastfnShowHide(3);"><span id="blast-columnCheckbox3" style="width: 15px;">&emsp;</span> Query Coverage </li>
+                <li onclick="blastfnShowHide(4);"><span id="blast-columnCheckbox4" style="width: 15px;">&#10003;</span> E-value </li>
+                <li onclick="blastfnShowHide(5);"><span id="blast-columnCheckbox5" style="width: 15px;">&emsp;</span> Max Ident </li>
             </ul>
             <ul id="blast-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
                 <li onclick="blastselectAll();" style="width:100%">All</li>
