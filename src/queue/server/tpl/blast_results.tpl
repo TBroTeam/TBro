@@ -62,6 +62,11 @@
          */
         function displayResults(results) {
             div_blast_results.empty().html(templates['PROCESSED'](results));
+            
+            organism.val(results.additional_data.organism);
+            organism.change();
+            release.val(results.additional_data.release);
+            release.change();
 
             $(document).off('change', '#query_select').on('change', '#query_select', function() {
                 var resultDetailDiv = $('#resultDetails');
@@ -72,7 +77,7 @@
                     var parsedXML = _.memoize(parseBlastXml)(selectedResult.result);
                     resultDetailDiv.html(templates['RESULTDETAILS'](parsedXML));
                     displayIteration(parsedXML.iterations[0], $('#blast_results_table'), $('#alignmentGraph'), $.extend(
-                            {},
+                            {id_from_name_url: "{#$ServicePath#}/listing/ID_from_name"},
                             display_options || {},
                             {additional_data: results.additional_data || {}}
                     ));
@@ -207,11 +212,11 @@
             </ul>
             <ul id="blast-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
                 <li onclick="blastselectAll();" style="width:100%">All</li>
-                <li onclick="blastselectAllVisible();" style="width:100%">All visible</li>
+                <!--<li onclick="blastselectAllVisible();" style="width:100%">All visible</li>-->
                 <li onclick="blastselectNone();" style="width:100%">None</li>
             </ul>
             <ul id="blast-button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
-                <!-- <li id="blast-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li> -->
+                <li id="blast-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
             </ul>
             <ul class="f-dropdown" id="blast-download-dropdown-options" data-dropdown-content>
                 <!-- <li id="blast-download_csv_button" > csv </li> -->
