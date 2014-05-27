@@ -171,6 +171,28 @@ function displayIteration(iteration, resultTable, canvas, options) {
             return '/' + featurename + '#' + featurename.replace('.', '_');
         }
     }, options);
+    var names = [];
+    $.each(iteration.hits, function(key, value) {
+        names.push(value.def_firstword);
+    });
+    $.ajax(options.id_from_name_url, {
+        method: 'post',
+        data: {
+            names: names,
+            species: options.additional_data.organism,
+            release: options.additional_data.release
+        },
+        success: function(data) {
+            $.each(iteration.hits, function(key, value) {
+                if(typeof data.results[value.def_firstword] !== 'undefined')
+                    value.feature_id = data.results[value.def_firstword];
+                else
+                    value.feature_id = 0;
+            })
+            displayCanvasAndTable(data.results);
+        }
+    });
+
     function openRowOnHit() {
         var hit = this;
         if (typeof hit == "undefined")
@@ -205,6 +227,8 @@ function displayIteration(iteration, resultTable, canvas, options) {
     function openCloseDetails(event) {
         event.preventDefault();
         var row = $(this).parents("tr")[0];
+        var dT = TableTools.fnGetInstance( 'blast_results_table' );
+        dT.fnIsSelected(row) ? dT.fnDeselect(row) : dT.fnSelect(row);
         if (resultTable.fnIsOpen(row)) {
             resultTable.fnClose(row);
         } else {
@@ -215,69 +239,79 @@ function displayIteration(iteration, resultTable, canvas, options) {
         }
     }
 
-    canvas.attr('width', canvas.parent().width() - 8);
-    displayIterationGraph(iteration, canvas, colorKey, openRowOnHit);
-    if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
-        resultTable.dataTable({
-            aaSorting: [[4, "asc"]],
-            aaData: iteration.hits,
-            sPaginationType: "full_numbers",
-            bFilter: false,
-            sDom: 'T<"clear">lfrtip',
-            oTableTools: {
-                aButtons: [],
-                sRowSelect: "multi"
-            },
-            bLengthChange: false,
-            aoColumns: [
-                {
-                    mData: "def_firstword",
-                    sTitle: "id",
-                    bSortable: false
+    function displayCanvasAndTable() {
+        canvas.attr('width', canvas.parent().width() - 8);
+        displayIterationGraph(iteration, canvas, colorKey, openRowOnHit);
+        if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
+            resultTable.dataTable({
+                aaSorting: [[4, "asc"]],
+                aaData: iteration.hits,
+                sPaginationType: "full_numbers",
+                bFilter: false,
+                sDom: 'T<"clear">lfrtip',
+                oTableTools: {
+                    aButtons: [],
+                    sRowSelect: "multi"
                 },
-                {
-                    mData: "max_score",
-                    sTitle: "max score",
-                    bVisible: false,
-                    bSortable: false
-                },
-                {
-                    mData: "total_score",
-                    sTitle: "total score"
-                },
-                {
-                    mData: fnMDataScientific("query_coverage"),
-                    sTitle: "coverage",
-                    bVisible: false,
-                    bSortable: false
-                },
-                {
-                    mData: fnMDataScientific("evalue"),
-                    sTitle: "evalue"
-                },
-                {
-                    mData: fnMDataScientific("max_ident"),
-                    sTitle: "max identity",
-                    bVisible: false,
-                    bSortable: false
-                },
-                {
-                    mData: "details",
-                    sTitle: "Details",
-                    bSortable: false,
-                    sWidth: "45px"
+                bLengthChange: false,
+                aoColumns: [
+                    {
+                        mData: "def_firstword",
+                        sTitle: "name",
+                        bSortable: false
+                    },
+                    {
+                        mData: "max_score",
+                        sTitle: "max score",
+                        bVisible: false,
+                        bSortable: false
+                    },
+                    {
+                        mData: "total_score",
+                        sTitle: "total score"
+                    },
+                    {
+                        mData: fnMDataScientific("query_coverage"),
+                        sTitle: "coverage",
+                        bVisible: false,
+                        bSortable: false
+                    },
+                    {
+                        mData: fnMDataScientific("evalue"),
+                        sTitle: "evalue"
+                    },
+                    {
+                        mData: fnMDataScientific("max_ident"),
+                        sTitle: "max identity",
+                        bVisible: false,
+                        bSortable: false
+                    },
+                    {
+                        mData: "details",
+                        sTitle: "show",
+                        bSortable: false,
+                        sWidth: "45px"
+                    }
+                ],
+                fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    $(nRow).find('td:eq(0)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
+                    $(nRow).css('cursor', 'pointer');
+                    $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Details </a>');
+                    $(nRow).attr('data-id', aData.feature_id);
+                    $(nRow).draggable({
+                        appendTo: "body",
+                        helper: function() {
+                            return $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                        },
+                        cursorAt: {top: 5, left: 5}
+                    });
                 }
-            ],
-            fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                $(nRow).find('td:eq(0)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
-                $(nRow).css('cursor', 'pointer');
-                $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Details </a>');
-            }
-        });
-        resultTable.on('click', 'a.open-close-details', openCloseDetails);
-    } else {
-        resultTable.fnClearTable();
-        resultTable.fnAddData(iteration.hits);
+            });
+            resultTable.on('click', 'a.open-close-details', openCloseDetails);
+        } else {
+            resultTable.fnClearTable();
+            resultTable.fnAddData(iteration.hits);
+        }
     }
 }
 
@@ -342,7 +376,7 @@ function blastselectAll() {
 }
 function blastselectAllVisible() {
     // fnSelectAll only for graphical selection
-    TableTools.fnGetInstance('blast_results_table').fnSelect($('#blast_results_table').dataTable().$('tr',  {'filter':'applied'}));
+    TableTools.fnGetInstance('blast_results_table').fnSelect($('#blast_results_table').dataTable().$('tr', {'filter': 'applied'}));
 }
 function blastselectNone() {
     TableTools.fnGetInstance('blast_results_table').fnSelectNone();
