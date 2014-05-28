@@ -837,10 +837,10 @@ Cart.prototype.exportGroup = function(groupname) {
     result.carts[this.currentContext] = {};
     result.metadata[this.currentContext] = {};
     result.carts[this.currentContext][groupname] = group;
-    for (var i = 0; i < group.length; i++) {
-        var meta = (this._getMetadataForContext()[group[i]] || {});
+    for (var i = 0; i < group.items.length; i++) {
+        var meta = (this._getMetadataForContext()[group.items[i]] || {});
         if (!_.isEmpty(meta)) {
-            result.metadata[this.currentContext][group[i]] = meta;
+            result.metadata[this.currentContext][group.items[i]] = meta;
         }
     }
     return result;
