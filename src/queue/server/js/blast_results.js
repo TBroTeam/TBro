@@ -42,14 +42,11 @@ function parseBlastXml(job_results) {
         reference: jqR.find('BlastOutput_reference').text()
     };
     execDetails.parameters = parse_children([], parmRx, jqR.find('BlastOutput_param Parameters').children());
-
     var iterations = [];
     jqR.find('BlastOutput_iterations Iteration').each(function() {
         var jqIt = $(this);
         var iteration = parse_children(['Iteration_hits', 'Iteration_stat'], iterRx, jqIt.children());
-
         iteration.hits = [];
-
         jqIt.find('Iteration_hits Hit').each(function() {
             var jqHit = $(this);
             var hit = parse_children(['Hit_hsps'], hitRx, jqHit.children());
@@ -83,12 +80,10 @@ function parseBlastXml(job_results) {
         });
         iterations.push(iteration);
     });
-
     return {
         execDetails: execDetails,
         iterations: iterations
     };
-
 }
 
 /**
@@ -105,7 +100,6 @@ function displayIterationGraph(iteration, canvas, colorKey, elementClickCallback
         }
         return 'rgb(0,0,0)';
     };
-
     var tracks = [];
     var track = {
         type: 'box',
@@ -117,7 +111,6 @@ function displayIterationGraph(iteration, canvas, colorKey, elementClickCallback
             }]
     };
     tracks.push(track);
-
     $.each(iteration.hits, function() {
         var track = {
             hit: this,
@@ -135,7 +128,6 @@ function displayIterationGraph(iteration, canvas, colorKey, elementClickCallback
         });
         tracks.push(track);
     });
-
     return new CanvasXpress(
             canvas.attr('id'),
             {
@@ -183,15 +175,51 @@ function displayIteration(iteration, resultTable, canvas, options) {
             release: options.additional_data.release
         },
         success: function(data) {
+            var feature_ids = [];
+            var id_to_row_map = {};
             $.each(iteration.hits, function(key, value) {
-                if(typeof data.results[value.def_firstword] !== 'undefined')
-                    value.feature_id = data.results[value.def_firstword];
-                else
-                    value.feature_id = 0;
-            })
-            displayCanvasAndTable(data.results);
+                value.feature_id = -1;
+                value.db_alias = "";
+                value.db_description = "";
+                value.user_alias = "";
+                value.user_description = "";
+                if (typeof data.results[value.def_firstword] !== 'undefined') {
+                    var id = data.results[value.def_firstword];
+                    value.feature_id = id;
+                    feature_ids.push(id);
+                    id_to_row_map[id] = value;
+                }
+            });
+            if(feature_ids.length > 0){
+                getFeatureDetailsForIDs(feature_ids, id_to_row_map);
+            } else {
+                $('#blast-button-gdfx-addToCart').attr('disabled','disabled');
+                displayCanvasAndTable();
+            }
         }
     });
+
+    function getFeatureDetailsForIDs(feature_ids, id_to_row_map) {
+        $.ajax(options.feature_details_url, {
+            method: 'post',
+            data: {
+                terms: feature_ids
+            },
+            success: function(data) {
+                var meta = cart._getMetadataForContext();
+                $.each(data.results, function(key, value) {
+                    id_to_row_map[value.feature_id].db_alias = value.alias;
+                    id_to_row_map[value.feature_id].db_description = value.description;
+                    if(typeof meta[value.feature_id] !== 'undefined'){
+                        id_to_row_map[value.feature_id].user_alias = meta[value.feature_id]['alias'];
+                        id_to_row_map[value.feature_id].user_description = meta[value.feature_id]['annotations'];
+                    }
+               });
+
+                displayCanvasAndTable();
+            }
+        });
+    }
 
     function openRowOnHit() {
         var hit = this;
@@ -223,11 +251,10 @@ function displayIteration(iteration, resultTable, canvas, options) {
         }
     }
     ;
-
     function openCloseDetails(event) {
         event.preventDefault();
         var row = $(this).parents("tr")[0];
-        var dT = TableTools.fnGetInstance( 'blast_results_table' );
+        var dT = TableTools.fnGetInstance('blast_results_table');
         dT.fnIsSelected(row) ? dT.fnDeselect(row) : dT.fnSelect(row);
         if (resultTable.fnIsOpen(row)) {
             resultTable.fnClose(row);
@@ -240,11 +267,16 @@ function displayIteration(iteration, resultTable, canvas, options) {
     }
 
     function displayCanvasAndTable() {
+        new Grouplist($('#blast-button-gdfx-addToCart-options'), cart, blastaddSelectedToCart);
+        $('#blast-button-gdfx-addToCart-options-newcart').click(blastaddSelectedToCart);
+        $('#blast-download_xml_button').click(download_blast_xml);
+        cart._redraw();
+
         canvas.attr('width', canvas.parent().width() - 8);
         displayIterationGraph(iteration, canvas, colorKey, openRowOnHit);
         if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
             resultTable.dataTable({
-                aaSorting: [[4, "asc"]],
+                aaSorting: [[8, "asc"]],
                 aaData: iteration.hits,
                 sPaginationType: "full_numbers",
                 bFilter: false,
@@ -259,6 +291,29 @@ function displayIteration(iteration, resultTable, canvas, options) {
                         mData: "def_firstword",
                         sTitle: "name",
                         bSortable: false
+                    },
+                    {
+                        mData: "db_alias",
+                        sTitle: "DB Alias",
+                        bSortable: false,
+                        bVisible: false
+                    },
+                    {
+                        mData: "db_description",
+                        sTitle: "DB Description",
+                        bSortable: false
+                    },
+                    {
+                        mData: "user_alias",
+                        sTitle: "User Alias",
+                        bSortable: false,
+                        bVisible: false
+                    },
+                    {
+                        mData: "user_description",
+                        sTitle: "User Description",
+                        bSortable: false,
+                        bVisible: false
                     },
                     {
                         mData: "max_score",
@@ -292,16 +347,17 @@ function displayIteration(iteration, resultTable, canvas, options) {
                 ],
                 fnCreatedRow: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $(nRow).find('td:eq(0)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
-                    $(nRow).css('cursor', 'pointer');
-                    $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
+                    $(nRow).find('td:eq(4)').html('<a href="#" class="open-close-details"> Show </a>');
                     $(nRow).attr('data-id', aData.feature_id);
-                    $(nRow).draggable({
-                        appendTo: "body",
-                        helper: function() {
-                            return $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
-                        },
-                        cursorAt: {top: 5, left: 5}
-                    });
+                    if(aData.feature_id !== -1){
+                        $(nRow).draggable({
+                            appendTo: "body",
+                            helper: function() {
+                                return $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                            },
+                            cursorAt: {top: 5, left: 5}
+                        });
+                    }
                 }
             });
             resultTable.on('click', 'a.open-close-details', openCloseDetails);
@@ -310,6 +366,23 @@ function displayIteration(iteration, resultTable, canvas, options) {
             resultTable.fnAddData(iteration.hits);
         }
     }
+}
+
+
+function blastaddSelectedToCart() {
+    var group = $(this).attr('data-value');
+    var selectedIDs = [];
+    $.each(TableTools.fnGetInstance('blast_results_table').fnGetSelectedData(), function(key, value) {
+        selectedIDs.push(value.feature_id);
+    });
+    console.log(selectedIDs);
+    if (selectedIDs.length === 0)
+        return;
+    if (group === '#new#')
+        group = cart.addGroup();
+    cart.addItem(selectedIDs, {
+        groupname: group
+    });
 }
 
 
@@ -332,14 +405,12 @@ function cut_alignment(qseq, hseq, midline, line_length, qseq_start, hseq_start)
     var ret = [];
     var qseq_pos = qseq_start;
     var hseq_pos = hseq_start;
-
     for (var i = 0; i < qseq.length; i += line_length) {
 
         var qseq_sub = qseq.substring(i, i + line_length);
         var qseq_gaps = (qseq_sub.match(/\-/g) || []).length;
         var hseq_sub = hseq.substring(i, i + line_length);
         var hseq_gaps = (hseq_sub.match(/\-/g) || []).length;
-
         var chunk = {
             qseq: qseq_sub,
             qseq_start: qseq_pos,
@@ -349,10 +420,8 @@ function cut_alignment(qseq, hseq, midline, line_length, qseq_start, hseq_start)
             hseq_end: hseq_pos + hseq_sub.length - 1 - hseq_gaps,
             midline: midline.substring(i, i + line_length)
         };
-
         qseq_pos += line_length - qseq_gaps;
         hseq_pos += line_length - hseq_gaps;
-
         ret.push(chunk);
     }
     return ret;
@@ -368,23 +437,22 @@ function blastfnNumOfEntries(numOfEntries)
 }
 
 function blastselectAll() {
-    // fnSelectAll only for graphical selection
+// fnSelectAll only for graphical selection
     TableTools.fnGetInstance('blast_results_table').fnSelectAll();
 }
 function blastselectAllVisible() {
-    // fnSelectAll only for graphical selection
+// fnSelectAll only for graphical selection
     TableTools.fnGetInstance('blast_results_table').fnSelect($('#blast_results_table').dataTable().$('tr', {'filter': 'applied'}));
 }
 function blastselectNone() {
     TableTools.fnGetInstance('blast_results_table').fnSelectNone();
 }
 
-function blastfnShowHide(iCol)
-    {
-        $('#blast_results_table').width("98%");
-        /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#blast_results_table').dataTable();
-        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-        $('#blast-columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
-        oTable.fnSetColumnVis(iCol, bVis ? false : true);
-    }
+function blastfnShowHide(iCol) {
+    $('#blast_results_table').width("98%");
+    /* Get the DataTables object again - this is not a recreation, just a get of the object */
+    var oTable = $('#blast_results_table').dataTable();
+    var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+    $('#blast-columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
+    oTable.fnSetColumnVis(iCol, bVis ? false : true);
+}

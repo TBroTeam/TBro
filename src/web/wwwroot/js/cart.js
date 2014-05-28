@@ -827,7 +827,7 @@ Cart.prototype.clearAllAnnotations = function(options) {
     });
 };
 /**
- * Get all items from a given group, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
+ * Get all items from a given group, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotations":annotations},...}}
  * @param {String} groupname
  * @returns {Array}
  */
@@ -846,7 +846,7 @@ Cart.prototype.exportGroup = function(groupname) {
     return result;
 };
 /**
- * Get all items from all groups, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
+ * Get all items from all groups, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotations":annotations},...}}
  * @param {String} groupname
  * @returns {Array}
  */
@@ -854,7 +854,7 @@ Cart.prototype.exportAllGroups = function() {
     return {carts: this.carts, metadata: this.metadata};
 };
 /**
- * Get all items from all groups for a given context, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
+ * Get all items from all groups for a given context, in the format {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotations":annotations},...}}
  * @param {String} groupname
  * @returns {Array}
  */
@@ -868,7 +868,7 @@ Cart.prototype.exportAllGroupsOfCurrentContext = function(context) {
 };
 /**
  * Imports passed Array items as new/existing Groups to the cart. 
- * @param {Array} items {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotation":annotation},...}}
+ * @param {Array} items {"carts":{context:{name:[id,...],...},...},"metadata":{id:{"alias":alias,"annotations":annotations},...}}
  * @param {Collection} options
  * @param {Enum(keep|merge|overwrite)} [metadata_conflict='keep',group_conflict='keep'] defaults to keep
  */
