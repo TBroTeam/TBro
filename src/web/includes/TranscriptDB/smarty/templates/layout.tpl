@@ -223,7 +223,7 @@
                 height:     100%;
                 width:      100%;
                 background: rgba( 255, 255, 255, .8 ) 
-                    url('/img/ajax-loader.gif') 
+                    url('{#$AppPath#}/img/ajax-loader.gif') 
                     50% 50% 
                     no-repeat;
             }
