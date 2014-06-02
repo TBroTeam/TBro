@@ -181,7 +181,7 @@
         </select>
         </div>
         </div>
-        <div id="resultDetails"> </div>
+        <div id="resultDetails" class="large-12 columns"> </div>
         </div>
     </script>
     <script type="text/Template" id="template_resultDetails">
