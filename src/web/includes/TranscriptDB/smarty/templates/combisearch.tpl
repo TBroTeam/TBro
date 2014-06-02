@@ -136,10 +136,13 @@
                         data: searchNode.fnPrepareData.call(this),
                         dataType: 'JSON',
                         success: function(data) {
+                            var results = $.map(data.results, function(value, index) {
+                                return value;
+                            });
                             if (typeof filteredResults === 'undefined') {
-                                filteredResults = data.results || [];
+                                filteredResults = results || [];
                             } else {
-                                filteredResults = _.intersection(filteredResults, data.results || []);
+                                filteredResults = _.intersection(filteredResults, results || []);
                             }
                         },
                         error: function(data) {
