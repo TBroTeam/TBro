@@ -1,6 +1,5 @@
 {#extends file='layout.tpl'#}
 {#block name='head'#}
-    <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>
     <script type="text/javascript">
         //will be used by cart-init.js
         var cartoptions = {
@@ -8,6 +7,11 @@
                 itemDetails: '{#$ServicePath#}/details/features',
                 sync: '{#$ServicePath#}/cart/sync'
             }
+        };
+        var cartlimits = {
+            max_carts_per_context: {#$max_carts_per_context#},
+            max_items_per_cart: {#$max_items_per_cart#},
+            max_annotations_per_context: {#$max_annotations_per_context#}
         };
         /*
          function openPasteDialog(event){
@@ -44,6 +48,7 @@
          }
          */
     </script>
+    <script type="text/javascript" src="{#$AppPath#}/js/cart.js"></script>
     <script type="text/javascript" src="{#$AppPath#}/js/cart-init.js"></script>
 
 

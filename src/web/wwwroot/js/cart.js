@@ -366,7 +366,7 @@ Cart.prototype.addItem = function(ids, options) {
     }, options);
     var that = this;
     var missingIds = ids;
-    if(typeof that._getCartForContext(options.context)[options.groupname] !== 'undefined')
+    if (typeof that._getCartForContext(options.context)[options.groupname] !== 'undefined')
         missingIds = _.difference(ids, that._getCartForContext(options.context)[options.groupname]['items'] || []);
     var showItems = missingIds;
     if (missingIds.length > itemsToShow) {
@@ -377,6 +377,22 @@ Cart.prototype.addItem = function(ids, options) {
 // we have nothing to do. return from here.
         dfd.resolve();
         return dfd.promise();
+    }
+
+    var g = this._getGroup(options.groupname, options.context);
+    if (typeof g !== 'undefined') {
+        if (missingIds.length + g.items.length > cartlimits.max_items_per_cart) {
+            alert("Unable to add items to cart. Limit of " + cartlimits.max_items_per_cart + " exceeded.");
+            dfd.resolve();
+            return dfd.promise();
+        }
+    }
+    else {
+        if (Object.keys(this.carts[options.context]).length >= cartlimits.max_carts_per_context) {
+            alert("Unable to create new cart. Limit of " + cartlimits.max_carts_per_context + " reached.");
+            dfd.resolve();
+            return dfd.promise();
+        }
     }
 
     work();
@@ -513,7 +529,7 @@ Cart.prototype.updateGroup = function(cartname, notes, options) {
         context: this.currentContext
     }, options);
     var oldnotes = this._getCartForContext(options.context)[cartname]['notes'];
-    if(oldnotes === notes){
+    if (oldnotes === notes) {
         dfd.resolve();
         return dfd.promise();
     }
@@ -613,7 +629,10 @@ Cart.prototype.addGroup = function(groupname, options, notes) {
     if (typeof options.afterDOMinsert === 'undefined') {
         options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
     }
-
+    if (Object.keys(this.carts[options.context]).length >= cartlimits.max_carts_per_context) {
+        alert("Unable to create new cart. Limit of " + cartlimits.max_carts_per_context + " reached.");
+        return null;
+    }
 
     var lastGroupNumber = 0;
     //if we did not recevie a group name, generate a new unused one
@@ -634,7 +653,7 @@ Cart.prototype.addGroup = function(groupname, options, notes) {
     return groupname;
     function addInternal() {
         this._getCartForContext(options.context)[groupname] = {items: [], notes: '', created: options.created, modified: options.modified};
-        if(_.indexOf(this._getCartorderForContext(options.context), groupname) === -1)
+        if (_.indexOf(this._getCartorderForContext(options.context), groupname) === -1)
             this._getCartorderForContext(options.context).push(groupname);
         if (typeof notes !== 'undefined')
             this._getCartForContext(options.context)[groupname]['notes'] = notes;
@@ -701,7 +720,7 @@ Cart.prototype.renameGroup = function(groupname, newname, options) {
             newGroup$.find('.elements').append(cft$);
         }
         oldGroup$.replaceWith(newGroup$);
-        if(typeof afterDOMinsert !== 'undefined')
+        if (typeof afterDOMinsert !== 'undefined')
             afterDOMinsert.call(newGroup$);
         var numOfElements = this._getGroup(newname).length;
         newGroup$.find('.numelements').html('(' + numOfElements + ')');
@@ -748,7 +767,7 @@ Cart.prototype.setCartOrder = function(neworder, options) {
         context: this.currentContext
     }, options);
     // if order is the same: do nothing
-    if(this._getCartorderForContext(options.context).toString() === neworder.toString())
+    if (this._getCartorderForContext(options.context).toString() === neworder.toString())
         return;
     this.sync({
         action: 'setCartOrder',

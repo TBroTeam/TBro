@@ -131,6 +131,12 @@ $(document).ready(function() {
         this.find('.cart-button-rename').click(function(event) {
             event.preventDefault();
             cart._getItemDetails([id], function(data) {
+                if (Object.keys(cart._getMetadataForContext()).length >= cartlimits.max_annotations_per_context) {
+                    if (Object.keys(data[0].metadata).length === 0) {
+                        alert("You have already to many annotations ("+cartlimits.max_annotations_per_context+")");
+                        return;
+                    }
+                }
                 $("#dialog-edit-cart-item").data('id', id);
                 $("#dialog-edit-cart-item").data('name', cart.cartitems[id]['name']);
                 $("#dialog-edit-cart-item").data('description', cart.cartitems[id]['description']);
@@ -181,7 +187,7 @@ $(document).ready(function() {
             $("#dialog-rename-cart-group").keypress(function(e) {
                 if (e.keyCode === $.ui.keyCode.ENTER) {
                     e.preventDefault();
-                    console.log($(this).parent().find("button:contains('rename cart')").text());                    
+                    console.log($(this).parent().find("button:contains('rename cart')").text());
                     $(this).parent().find("button:contains('rename cart')").trigger("click");
                 }
             });
@@ -373,7 +379,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $("#dialog-delete-item-annotation").dialog({
         resizable: false,
         autoOpen: false,

@@ -34,6 +34,10 @@ $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
 $smarty->assign('default_release', DEFAULT_RELEASE);
 $smarty->assign('default_organism', DEFAULT_ORGANISM);
 
+$smarty->assign('max_carts_per_context', MAX_CARTS_PER_CONTEXT);
+$smarty->assign('max_items_per_cart', MAX_ITEMS_PER_CART);
+$smarty->assign('max_annotations_per_context', MAX_ANNOTATIONS_PER_CONTEXT);
+
 /**
  * returns $_REQUEST[$key] value if it matches $regexp, else return $defaultvalue
  * @param String $key
