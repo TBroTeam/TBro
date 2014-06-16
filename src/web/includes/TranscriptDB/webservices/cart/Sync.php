@@ -144,6 +144,14 @@ class Sync extends \WebService {
         //manipulation
         switch ($parms['action']) {
             case 'addItem':
+                // create cart if it does not already exist
+                if (!in_array($parms['groupname'], array_keys($currentCart))) {
+                    if (count($currentCart) >= MAX_CARTS_PER_CONTEXT) {
+                        die("Too many carts already.");
+                    }
+                    $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
+                    array_unshift($cartorder, $parms['groupname']);
+                }
                 // get all feature ids of the context to check before adding
                 list($service) = \WebService::factory('listing/features');
                 $cont = explode('_', $currentContext, 2);
@@ -153,15 +161,15 @@ class Sync extends \WebService {
                     $parms['ids'][$key] = intval($id);
                 // only keep ids that belong to this context
                 $ids_context = array_intersect($parms['ids'], $results['results']);
-                // create cart if it does not already exist
-                if (!in_array($parms['groupname'], array_keys($currentCart))) {
-                    $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
-                    array_unshift($cartorder, $parms['groupname']);
+                $ids_old = array_intersect($ids_context, $currentCart[$parms['groupname']]['items']);
+                if (count($currentCart[$parms['groupname']]['items'])+count($ids_context)-count($ids_old) > MAX_ITEMS_PER_CART) {
+                    die("Too many items already in cart!");
                 }
                 // add item to $currentCart if not already in there
                 foreach ($ids_context as $id) {
-                    if (!in_array($id, $currentCart[$parms['groupname']]['items']))
+                    if (!in_array($id, $currentCart[$parms['groupname']]['items'])) {
                         $currentCart[$parms['groupname']]['items'][] = $id;
+                    }
                 }
                 $currentCart[$parms['groupname']]['modified'] = time();
                 break;
@@ -169,6 +177,9 @@ class Sync extends \WebService {
                 //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
                 $parms['id'] = intval($parms['id']);
                 //update metadata
+                if(!isset($metadata[$parms['id']]) && count($metadata) >= MAX_ANNOTATIONS_PER_CONTEXT){
+                    die("There are already to many annotations in this context!");
+                }
                 $metadata[$parms['id']] = $parms['metadata'];
                 // if metadata is empty (remove it)
                 if ((!isset($parms['metadata']['alias']) || $parms['metadata']['alias'] === '') && (!isset($parms['metadata']['annotations']) || $parms['metadata']['annotations'] === '')) {
@@ -184,6 +195,9 @@ class Sync extends \WebService {
                 }
                 break;
             case 'addGroup':
+                if (count($currentCart) >= MAX_CARTS_PER_CONTEXT) {
+                    die("Too many carts already.");
+                }
                 $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
                 array_unshift($cartorder, $parms['groupname']);
                 if (isset($parms['groupnotes']))

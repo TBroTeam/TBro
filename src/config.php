@@ -37,6 +37,11 @@ define('MEMCACHED_PORT', 11211);
 //file cache location (only needed if memcached is disabled)
 define('FILE_CACHE_DIR', '/tmp/zendcache/details_features');
 
+//user limits on the number of carts, elements and annotations
+define('MAX_CARTS_PER_CONTEXT', 100);
+define('MAX_ITEMS_PER_CART', 10000);
+define('MAX_ANNOTATIONS_PER_CONTEXT', 100000);
+
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))
 //    define('DEBUG', true);
