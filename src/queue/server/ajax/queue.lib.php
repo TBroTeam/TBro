@@ -163,7 +163,7 @@ function split_fasta($query, $type) {
             if (preg_match('/(\n\n|\r\n\r\n|\n\r\n\r)/im', $query)) {
                 throw new Exception('FASTA sequence invalid! If you want to specify multiple sequences, add headers. If you want to query a single sequence, remove blank lines.');
             } else {
-                $queries[] = $query;
+                $queries[] = ">query1\n" . $query;
             }
         else
             throw new Exception('FASTA sequence invalid!');
