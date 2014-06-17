@@ -167,9 +167,10 @@
                                 <label for="item-db-description">DB Description</label>
                                 <input type="text" name="db-description" id="item-db-description" class="text ui-widget-content ui-corner-all" readonly/>
                                 <label for="item-alias">User Alias</label>
-                                <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" />
+                                <input type="text" name="alias" id="item-alias" class="text ui-widget-content ui-corner-all" maxlength="{#$max_digits_user_alias#}"/>
                                 <label for="item-annotations">User Description</label>
-                                <textarea name="annotations" id="item-annotations" class="text ui-widget-content ui-corner-all"></textarea>
+                                <textarea name="annotations" id="item-annotations" class="text ui-widget-content ui-corner-all" maxlength="{#$max_digits_user_description#}"></textarea>
+                                <div class="right"><small>Max. {#$max_digits_user_description#} characters</small></div>
                             </fieldset>
                         </form>
                     </div>
