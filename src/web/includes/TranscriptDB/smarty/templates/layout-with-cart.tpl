@@ -151,7 +151,7 @@
                             This action can not be undone. Are you sure?
                         </p>
                     </div>
-                    
+
                     <div id="dialog-delete-item-annotation" title="Delete annotation?">
                         <p>
                             <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
@@ -256,9 +256,9 @@
             </div>
 
             <script type="text/template" id="template_cart_new_group"> 
-        <div class="sortable" data-name="<%= groupname %>">
-            &nbsp;
-            <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>" title="<%= groupname %>">
+                <div class="sortable" data-name="<%= groupname %>">
+                &nbsp;
+                <div class='cartGroup' id="cartgroup-<%= groupname %>" data-name="<%= groupname %>" title="<%= groupname %>">
                 <div class="large-12 columns cartgroup handle">
                 <div class="left" style="position:absolute; top:50%; margin-top:-10px;"><%= groupname %>
                 <span class="numelements">(0)</span></div>
@@ -279,7 +279,7 @@
                 </li>
                 </ul>
                 </div>
-        </div>
+                </div>
             </script>
 
             <script type="text/template"  id="template_cart_new_item"> 
@@ -298,6 +298,22 @@
             </script>
         </div>
         <div>&nbsp;</div>
+    </div>
+
+    <div id="TooManyCartsDialog" class="reveal-modal medium" data-reveal>
+        <h2>Unable to create new cart.</h2>
+        <p>You have already reached the limit of {#$max_carts_per_context#} carts for this context.</p>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <div id="TooManyItemsDialog" class="reveal-modal medium" data-reveal>
+        <h2>Unable to add item to cart.</h2>
+        <p>You have already reached the limit of {#$max_items_per_cart#} items for this cart.</p>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <div id="TooManyAnnotationsDialog" class="reveal-modal medium" data-reveal>
+        <h2>Unable to create new annotation.</h2>
+        <p>You have already reached the limit of {#$max_annotations_per_context#} annotations for this context.</p>
+        <a class="close-reveal-modal">&#215;</a>
     </div>
 </div>
 {#/block#}

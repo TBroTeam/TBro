@@ -133,7 +133,7 @@ $(document).ready(function() {
             cart._getItemDetails([id], function(data) {
                 if (Object.keys(cart._getMetadataForContext()).length >= cartlimits.max_annotations_per_context) {
                     if (Object.keys(data[0].metadata).length === 0) {
-                        alert("You have already to many annotations ("+cartlimits.max_annotations_per_context+")");
+                        $('#TooManyAnnotationsDialog').foundation('reveal', 'open');
                         return;
                     }
                 }

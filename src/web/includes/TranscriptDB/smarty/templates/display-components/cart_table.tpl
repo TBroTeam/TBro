@@ -180,7 +180,7 @@
         cart._getItemDetails([id], function(data) {
             if (Object.keys(cart.metadata[cart.currentContext]).length >= cartlimits.max_annotations_per_context) {
                 if (typeof data[0].metadata.alias === 'undefined' && typeof data[0].metadata.annotations === 'undefined') {
-                    alert("You have already to many annotations ("+cartlimits.max_annotations_per_context+")");
+                    $('#TooManyAnnotationsDialog').foundation('reveal', 'open');
                     return;
                 }
             }

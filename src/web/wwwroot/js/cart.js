@@ -382,14 +382,14 @@ Cart.prototype.addItem = function(ids, options) {
     var g = this._getGroup(options.groupname, options.context);
     if (typeof g !== 'undefined') {
         if (missingIds.length + g.items.length > cartlimits.max_items_per_cart) {
-            alert("Unable to add items to cart. Limit of " + cartlimits.max_items_per_cart + " exceeded.");
+            $('#TooManyItemsDialog').foundation('reveal', 'open');
             dfd.resolve();
             return dfd.promise();
         }
     }
     else {
         if (Object.keys(this.carts[options.context]).length >= cartlimits.max_carts_per_context) {
-            alert("Unable to create new cart. Limit of " + cartlimits.max_carts_per_context + " reached.");
+            $('#TooManyCartsDialog').foundation('reveal', 'open');
             dfd.resolve();
             return dfd.promise();
         }
@@ -630,7 +630,7 @@ Cart.prototype.addGroup = function(groupname, options, notes) {
         options.afterDOMinsert = this.options.callbacks.afterDOMinsert_group;
     }
     if (Object.keys(this.carts[options.context]).length >= cartlimits.max_carts_per_context) {
-        alert("Unable to create new cart. Limit of " + cartlimits.max_carts_per_context + " reached.");
+        $('#TooManyCartsDialog').foundation('reveal', 'open');
         return null;
     }
 
