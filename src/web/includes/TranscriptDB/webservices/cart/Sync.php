@@ -162,7 +162,7 @@ class Sync extends \WebService {
                 // only keep ids that belong to this context
                 $ids_context = array_intersect($parms['ids'], $results['results']);
                 $ids_old = array_intersect($ids_context, $currentCart[$parms['groupname']]['items']);
-                if (count($currentCart[$parms['groupname']]['items'])+count($ids_context)-count($ids_old) > MAX_ITEMS_PER_CART) {
+                if (count($currentCart[$parms['groupname']]['items']) + count($ids_context) - count($ids_old) > MAX_ITEMS_PER_CART) {
                     die("Too many items already in cart!");
                 }
                 // add item to $currentCart if not already in there
@@ -177,9 +177,13 @@ class Sync extends \WebService {
                 //enforce id to be int. might get interpreted as string otherwise, which will lead json_encode to enclose it in ""...
                 $parms['id'] = intval($parms['id']);
                 //update metadata
-                if(!isset($metadata[$parms['id']]) && count($metadata) >= MAX_ANNOTATIONS_PER_CONTEXT){
+                if (!isset($metadata[$parms['id']]) && count($metadata) >= MAX_ANNOTATIONS_PER_CONTEXT) {
                     die("There are already to many annotations in this context!");
                 }
+                if (isset($parms['metadata']['alias']) && strlen($parms['metadata']['alias']) > MAX_CHARS_USER_ALIAS)
+                    $parms['metadata']['alias'] = substr($parms['metadata']['alias'], 0, MAX_CHARS_USER_ALIAS);
+                if (isset($parms['metadata']['annotations']) && strlen($parms['metadata']['annotations']) > MAX_CHARS_USER_DESCRIPTION)
+                    $parms['metadata']['annotations'] = substr($parms['metadata']['annotations'], 0, MAX_CHARS_USER_DESCRIPTION);
                 $metadata[$parms['id']] = $parms['metadata'];
                 // if metadata is empty (remove it)
                 if ((!isset($parms['metadata']['alias']) || $parms['metadata']['alias'] === '') && (!isset($parms['metadata']['annotations']) || $parms['metadata']['annotations'] === '')) {
