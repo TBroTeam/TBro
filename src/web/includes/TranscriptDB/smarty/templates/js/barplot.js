@@ -71,6 +71,15 @@ $('#button-barplot').click(function() {
 
             window.location.hash = "isoform-barplot-panel";
 
+            val.y.names = [];
+            for (var i = 0; i < val.y.data.length; i++) {
+                val.y.names[i] = val.y.vars[i];
+                var meta = cart._getMetadataForContext()[val.y.ids[i]];
+                if (typeof meta !== 'undefined') {
+                    if (typeof meta['alias'] !== 'undefined')
+                        val.y.vars[i] = meta['alias'];
+                }
+            }
 
             cx = new CanvasXpress(
                     "isoform-barplot-canvas",
@@ -118,6 +127,15 @@ $('#button-heatmap').click(function() {
 
             window.location.hash = "isoform-barplot-panel";
 
+            val.y.names = [];
+            for (var i = 0; i < val.y.data.length; i++) {
+                val.y.names[i] = val.y.vars[i];
+                var meta = cart._getMetadataForContext()[val.y.ids[i]];
+                if (typeof meta !== 'undefined') {
+                    if (typeof meta['alias'] !== 'undefined')
+                        val.y.vars[i] = meta['alias'];
+                }
+            }
 
             cx = new CanvasXpress(
                     "isoform-barplot-canvas",
@@ -148,7 +166,7 @@ function addTable(parent, val) {
     // y.vars = names
     // y.data = data
 
-    var tblColumns = [{sTitle: 'id', bVisible: false}, {sTitle: 'name'}];
+    var tblColumns = [{sTitle: 'id', bVisible: false}, {sTitle: 'ID'}, {sTitle: 'Alias'}];
     for (var x = 0; x < val.y.smps.length; x++)
         tblColumns.push({sTitle: val.y.smps[x]});
 
@@ -157,7 +175,13 @@ function addTable(parent, val) {
         for (var j = 0; j < val.y.data[i].length; j++) {
             val.y.data[i][j] = Math.round(val.y.data[i][j]);
         }
-        var row = [val.y.ids[i], val.y.vars[i]];
+        var alias = "";
+        var meta = cart._getMetadataForContext()[val.y.ids[i]];
+        if (typeof meta !== 'undefined') {
+            if (typeof meta['alias'] !== 'undefined')
+                alias = meta['alias'];
+        }
+        var row = [val.y.ids[i], val.y.names[i], alias];
         Array.prototype.push.apply(row, val.y.data[i]);
         tblData.push(row);
     }

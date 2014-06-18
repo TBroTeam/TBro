@@ -97,12 +97,16 @@
                 });
                 populateBarplotSelectionBoxes(isoform_ids);
             });
+            $('#unigene-barplot-button').click(function() {
+                populateBarplotSelectionBoxes([{#$data.unigene.feature_id#}]);
+            });
         });
     </script>
     <div class="row">
         <div class="large-12 columns panel">
             <h4>Barplot</h4>
             <div class="right">
+                <button class="button" id="unigene-barplot-button">Unigene</button>
                 <button class="button" id="isoform-barplot-button">Isoforms</button>
             </div>
             {#include file="display-components/barplot.tpl"#}
