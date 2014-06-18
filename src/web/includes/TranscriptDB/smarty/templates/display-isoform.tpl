@@ -102,13 +102,12 @@
                 $('#containing-carts-section').append('<li style="font-size:1.5em">No carts yet...</li>');
             } else {
                 $.each(hits, function(id, attr) {
-                    $('#containing-carts-section').append('<li style="font-size:1.5em"><a href="/graphs/'+attr+'">'+attr+'</a></li>');
+                    $('#containing-carts-section').append('<li style="font-size:1.5em"><a href="/graphs/' + attr + '">' + attr + '</a></li>');
                 });
             }
         }
 
     </script>
-    <script type="text/javascript" src="{#$AppPath#}/js/feature/barplot.js"></script>
 {#/block#}
 {#block name='body'#}
 
@@ -181,7 +180,18 @@
     {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
 
     <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
-    {#include file="display-components/barplot.tpl"#}
+    <div class="row">
+        <script type="text/javascript">
+            $(document).ready(function() {
+            {#include file="js/barplot.js"#}
+                populateBarplotSelectionBoxes([{#$data.isoform.feature_id#}]);
+            });
+        </script>
+        <div class="large-12 columns panel">
+            <h4>Barplot</h4>
+            {#include file="display-components/barplot.tpl"#}
+        </div>
+    </div>
 
     <div id="myModal" class="reveal-modal">
         <h2>This isoform is in the following carts:</h2>

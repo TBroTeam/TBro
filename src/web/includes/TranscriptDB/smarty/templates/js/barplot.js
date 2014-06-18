@@ -1,145 +1,203 @@
-$(document).ready(function() {
-    var select_assay = $('#isoform-barplot-filter-assay');
-    var select_analysis = $('#isoform-barplot-filter-analysis');
-    var select_tissues = $('#isoform-barplot-filter-tissue');
+var select_assay = $('#select-assay');
+var select_analysis = $('#select-analysis');
+var select_tissues = $('#select-sample');
 
-    //applies filteredSelect. select_assay => select_analysis => select_tissues
-    new filteredSelect(select_analysis, 'analysis', {
-        precedessorNode: select_assay
-    });
-    new filteredSelect(select_tissues, 'sample', {
-        precedessorNode: select_analysis
-    });
-    $.ajax('{#$ServicePath#}/listing/filters/' + feature_id, {
+var itemIDs;
+
+//filteredSelect: select_assay => select_analysis => select_tissues
+new filteredSelect(select_analysis, 'analysis', {
+    precedessorNode: select_assay
+});
+new filteredSelect(select_tissues, 'sample', {
+    precedessorNode: select_analysis
+});
+
+function populateBarplotSelectionBoxes(items) {
+    console.log(items);
+    itemIDs = items;
+    $.ajax('{#$ServicePath#}/listing/filters/', {
+        method: 'post',
+        data: {
+            ids: itemIDs
+        },
         success: function(data) {
+            var filterdata = data;
             new filteredSelect(select_assay, 'assay', {
-                data: data
+                data: filterdata
             }).refill();
         }
     });
+}
 
-    //tooltip
-    $('#isoform-barplot-filter-form').tooltip({
-        items: "option",
-        open: function(event, ui) {
-            ui.tooltip.offset({
-                top: event.pageY,
-                left: event.pageX
+//get selected filters as collection
+
+function getFilterData() {
+    var data = {
+        parents: itemIDs,
+        analysis: [],
+        assay: [],
+        biomaterial: []
+    };
+    data.analysis.push(select_analysis.find(':selected').val());
+    data.assay.push(select_assay.find(':selected').val());
+    select_tissues.find(':selected').each(function() {
+        data.biomaterial.push($(this).val());
+    });
+    return data;
+}
+
+//display barplot
+$('#button-barplot').click(function() {
+
+    $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
+        method: 'post',
+        data: getFilterData(),
+        success: function(val) {
+            $('#isoform-barplot-panel').show(0);
+            var parent = $("#isoform-barplot-canvas-parent");
+
+            //if we already have an old canvas, we have to clean that up first
+            var canvas = $('#isoform-barplot-canvas');
+            var cx = canvas.data('canvasxpress');
+            if (cx != null) {
+                cx.destroy();
+                parent.empty();
+            }
+
+            canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
+            parent.append(canvas);
+            canvas.attr('width', parent.width() - 8);
+            canvas.attr('height', 500);
+
+            window.location.hash = "isoform-barplot-panel";
+
+
+            cx = new CanvasXpress(
+                    "isoform-barplot-canvas",
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
+            {
+                graphType: "Bar",
+                showDataValues: true,
+                graphOrientation: "vertical"
             });
-            ui.tooltip.css("max-width", "600px");
-        },
-        content: function() {
-            var element = $(this);
-            var tooltip = $("<table/>");
-            $.each(element.data('metadata'), function(key, val) {
-                $("<tr><td>" + key + "</td><td>" + (val !== null ? val : '') + "</td></tr>").appendTo(tooltip);
-            });
-            tooltip.foundation();
-            return tooltip;
+
+            canvas.data('canvasxpress', cx);
+
+            groupByTissues();
+
+            addTable(parent, val);
         }
     });
+    return false;
+});
 
-    //groupByTissues button
-    function isoform_barplot_groupByTissues() {
-        var checkbox = $("#isoform-barplot-groupByTissues");
-        var cx = $('#isoform-barplot-canvas').data('canvasxpress');
-        if (checkbox.prop('checked')) {
-            cx.groupSamples(["Tissue_Group"]);
-        } else {
-            cx.groupSamples([]);
+//display heatmap
+$('#button-heatmap').click(function() {
+    $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
+        method: 'post',
+        data: getFilterData(),
+        success: function(val) {
+            $('#isoform-barplot-panel').show(0);
+            var parent = $("#isoform-barplot-canvas-parent");
+
+            //if we already have an old canvas, we have to clean that up first
+            var canvas = $('#isoform-barplot-canvas');
+            var cx = canvas.data('canvasxpress');
+            if (cx != null) {
+                cx.destroy();
+                parent.empty();
+            }
+
+            canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
+            parent.append(canvas);
+            canvas.attr('width', parent.width() - 8);
+            canvas.attr('height', 500);
+
+            window.location.hash = "isoform-barplot-panel";
+
+
+            cx = new CanvasXpress(
+                    "isoform-barplot-canvas",
+                    {
+                        "x": val.x,
+                        "y": val.y
+                    },
+            {
+                graphType: "Heatmap",
+                showDataValues: true,
+                graphOrientation: "vertical",
+                zoomSamplesDisable: true,
+                zoomVariablesDisable: true
+            });
+
+            canvas.data('canvasxpress', cx);
+            groupByTissues();
+
+            addTable(parent, val);
         }
+    });
+    return false;
+});
+
+function addTable(parent, val) {
+    var tbl = $('<table></table>');
+    // y.smps = tissues
+    // y.vars = names
+    // y.data = data
+
+    var tblColumns = [{sTitle: 'id', bVisible: false}, {sTitle: 'name'}];
+    for (var x = 0; x < val.y.smps.length; x++)
+        tblColumns.push({sTitle: val.y.smps[x]});
+
+    var tblData = [];
+    for (var i = 0; i < val.y.data.length; i++) {
+        for (var j = 0; j < val.y.data[i].length; j++) {
+            val.y.data[i][j] = Math.round(val.y.data[i][j]);
+        }
+        var row = [val.y.ids[i], val.y.vars[i]];
+        Array.prototype.push.apply(row, val.y.data[i]);
+        tblData.push(row);
     }
 
-    $('#isoform-barplot-groupByTissues').click(isoform_barplot_groupByTissues);
 
-    //get data & display graph
-    $('#barplot-btn').click(function() {
-        var data = {
-            parents: [feature_id],
-            analysis: [],
-            assay: [],
-            biomaterial: []
-        };
-        data.analysis.push($('#isoform-barplot-filter-analysis option:selected').val());
-        data.assay.push($('#isoform-barplot-filter-assay option:selected').val());
-        $('#isoform-barplot-filter-tissue option:selected').each(function() {
-            data.biomaterial.push($(this).val());
-        });
-        $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
-            data: data,
-            success: function(val) {
-                $('#isoform-barplot-panel').show(0);
-                var parent = $("#isoform-barplot-canvas-parent");
-
-                //if we already have an old canvas, we have to clean that up first
-                var canvas = $('#isoform-barplot-canvas');
-                var cx = canvas.data('canvasxpress');
-                if (cx != null) {
-                    cx.destroy();
-                    parent.empty();
-                }
-
-                canvas = $('<canvas id="isoform-barplot-canvas"></canvas>');
-                parent.append(canvas);
-                //optical fix. set width to ~parent width
-                canvas.attr('width', parent.width() - 8);
-                canvas.attr('height', 500);
-
-                window.location.hash = "isoform-barplot-panel";
-
-
-                cx = new CanvasXpress(
-                        "isoform-barplot-canvas",
-                        {
-                            "x": val.x,
-                            "y": val.y
+    parent.append(tbl);
+    tbl.dataTable(
+            {
+                aoColumns: tblColumns,
+                aaData: tblData,
+                sScrollX: "100%",
+                bScrollCollapse: true,
+                bFilter: false,
+                bInfo: false,
+                bPaginate: false,
+                fnCreatedRow: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData[0], aData[1]))
+                    $(nRow).attr('data-id', aData[0]);
+                    $(nRow).draggable({
+                        appendTo: "body",
+                        helper: function() {
+                            return $(nRow).find('td:first').clone().addClass('beingDragged');
                         },
-                {
-                    graphType: "Bar",
-                    showDataValues: true,
-                    graphOrientation: "vertical"
-                });
-
-                canvas.data('canvasxpress', cx);
-                isoform_barplot_groupByTissues();
-
-                var tbl = $('<table></table>');
-                // y.smps = tissues
-                // y.vars = names
-                // y.data = data
-
-                var tblColumns = [{sTitle: ''}];
-                for (var x = 0; x < val.y.smps.length; x++)
-                    tblColumns.push({sTitle: val.y.smps[x]});
-
-                var tblData = [];
-                for (var i = 0; i < val.y.data.length; i++) {
-                    for(var j=0; j<val.y.data[i].length; j++){
-                        val.y.data[i][j] = Math.round(val.y.data[i][j]);
-                    }
-                    var row = [val.y.vars[i]];
-                    Array.prototype.push.apply(row, val.y.data[i]);
-                    tblData.push(row);
+                        cursorAt: {top: 5, left: 5}
+                    });
                 }
-
-
-                parent.append(tbl);
-                tbl.dataTable(
-                        {
-                            aoColumns: tblColumns,
-                            aaData: tblData,
-                            sScrollX: "100%",
-                            bScrollCollapse: true,
-                            bFilter: false,
-                            bInfo: false,
-                            bPaginate: false
-                        }
-                );
             }
-        });
-        return false;
-    });
 
+    );
+}
 
+//group by tissues button clicked
+function groupByTissues() {
+    var checkbox = $('#isoform-barplot-groupByTissues');
+    var cx = $('#isoform-barplot-canvas').data('canvasxpress');
+    if (checkbox.is(':checked')) {
+        cx.groupSamples(["Tissue_Group"]);
+    } else {
+        cx.groupSamples([]);
+    }
+}
 
-});
+$('#isoform-barplot-groupByTissues').click(groupByTissues);

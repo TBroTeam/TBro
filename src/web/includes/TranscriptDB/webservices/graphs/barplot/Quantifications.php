@@ -39,6 +39,7 @@ class Quantifications extends \WebService {
 
         $query = <<<EOF
 SELECT 
+  feature.feature_id AS feature_id,
   feature.name AS feature_name, 
   biomaterial.name AS biomaterial_name, 
   expressionresult.value, 
@@ -92,6 +93,7 @@ EOF;
         $lastcell_name = '';
         $data = array();
         $vars = array();
+        $ids = array();
         $smps = array();
         $x = array();
         $row = null;
@@ -103,6 +105,7 @@ EOF;
                 $data[] = array();
                 $row = &$data[count($data) - 1];
                 $vars[] = $cell['feature_name'];
+                $ids[] = $cell['feature_id'];
             }
 
             if (count($data) == 1) {
@@ -121,7 +124,8 @@ EOF;
             'y' => array(
                 'vars' => $vars,
                 'smps' => $smps,
-                'data' => $data
+                'data' => $data,
+                'ids' => $ids
             )
         );
     }

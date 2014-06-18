@@ -1,51 +1,54 @@
-<script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
-
 <div class="row">
-    <div class="large-12 columns panel">
-        <div class="row">
-            <div class="large-10 columns">
-                <h4>Barplot (Filters)</h4>
-            </div>
-            <div class="large-2 columns">
-                <input id="barplot-btn" type="submit" class="button large-12" />
-            </div>
-        </div>
-
+<script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
+<div id="tabs-graphs-selection" class="large-12 columns">
         <div class="row">
             <div class="large-4 columns">
-                <h5>Experiment</h5>
+                <h4>Experiment</h4>
             </div>
             <div class="large-4 columns">
-                <h5>Analysis</h5>
+                <h4>Analysis</h4>
             </div>
             <div class="large-4 columns">
-                <h5>Samples</h5>
+                <h4>Samples</h4>
             </div>
         </div>
-        <form id='isoform-barplot-filter-form'>
-            <div class="row">
-                <div class="large-4 columns">
-                    <select id="isoform-barplot-filter-assay" size="6" ></select>
+    </div>
+    <div class="large-12 columns">
+        <form id="filters">
+            <div class="large-12 columns panel">
+                <div class="row">
+                    <div class="large-4 columns">
+                        <select id="select-assay" size="12"></select>
+                    </div>
+                    <div class="large-4 columns">
+                        <select id="select-analysis" size="12"></select>
+                    </div>
+                    <div class="large-4 columns">
+                        <select id="select-sample" size="12" multiple="multiple"></select>
+                    </div>
                 </div>
-                <div class="large-4 columns">
-                    <select id="isoform-barplot-filter-analysis" size="6" ></select>
-                </div>
-                <div class="large-4 columns">
-                    <select id="isoform-barplot-filter-tissue" size="6" multiple="multiple"></select>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="large-8 columns">
+                            <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
+                        </div>
+                        <div class="large-4 columns">
+                            <button type="button" id="button-barplot" value="barplot">Barplot</button>
+                            <button type="button" id="button-heatmap" value="heatmap">Heatmap</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
-</div>
-<div class="row" id="isoform-barplot-panel" style="display:none">
-    <div class="large-12 columns panel">
-        <div class="row">
-            <div class="large-12 columns">
-                <input type="checkbox" id="isoform-barplot-groupByTissues"/>
-                <label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
-            </div>
-            <div class="large-12 columns">
-                <div style="width:100%" id="isoform-barplot-canvas-parent"></div>
+    <div class="large-12 columns" id="isoform-barplot-panel" name="isoform-barplot-panel" style="display:none">
+        <div class="large-12 columns panel">
+            <div class="row">
+                <div class="large-12 columns">
+                    <div style="width:100%" id="isoform-barplot-canvas-parent">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
