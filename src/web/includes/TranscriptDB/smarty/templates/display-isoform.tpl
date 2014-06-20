@@ -12,6 +12,28 @@
         $(document).ready(function() {
             $('.tabs').tabs();
 
+            $('#Cart').on('cartEvent', function(event) {
+                if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)))) {
+                    return;
+                }
+                var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.isoform.feature_id#}'];
+                console.log(metadata);
+                var alias = "";
+                var description = "";
+                if (typeof metadata !== 'undefined') {
+                    if (typeof metadata.alias !== 'undefined') {
+                        alias = metadata.alias;
+                    }
+                    if (typeof metadata.annotations !== 'undefined') {
+                        description = metadata.annotations;
+                    }
+                }
+                console.log(alias);
+                console.log(description);
+                $('#user-alias-textfield').val(alias);
+                $('#user-description-textfield').val(description);
+            });
+
             // "genome browser" graph
             $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + feature_id, {
                 success: function(val) {
@@ -78,6 +100,14 @@
                 },
                 cursorAt: {top: 5, left: 5}
             });
+            
+            $('#user-alias-textfield').blur(function() {
+                cart.updateItem({#$data.isoform.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
+            });
+            
+            $('#user-description-textfield').blur(function() {
+                cart.updateItem({#$data.isoform.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
+            });
 
         });
 
@@ -128,13 +158,14 @@
             </div>
             <table style="width:100%">
                 <tbody>
-                    <tr><td>Imported into TBro</td><td>{#$data.isoform.timelastmodified#}</td></tr>
                     {#if isset($data.isoform.unigene)#}
                         <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
                             {#/if#}
-                    <tr><td>Release</td><td>{#$data.isoform.import#}</td></tr>
-                    <tr><td>Organism</td><td>{#$data.isoform.organism_name#}</td></tr>
-                <a class="button" data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show carts</a>
+                    <tr><td>Containing Carts</td><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
+                    <tr><td>User Alias</td><td><input id='user-alias-textfield'  type="text" class="text ui-widget-content ui-corner-all"  maxlength="{#$max_chars_user_alias#}"> </td></tr>
+                    <tr><td>User Description</td><td><textarea id="user-description-textfield" class="text ui-widget-content ui-corner-all" maxlength="{#$max_chars_user_description#}"></textarea>
+                            <div class="right"><small>Max. {#$max_chars_user_description#} characters</small></div></td></tr>
+
                 </tbody>
             </table>
         </div>
@@ -190,6 +221,19 @@
         <div class="large-12 columns panel">
             <h4>Expression Analysis</h4>
             {#include file="display-components/barplot.tpl"#}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Import information</h4>
+            <table style="width:100%">
+                <tbody>
+                    <tr><td>Imported into TBro</td><td>{#$data.isoform.timelastmodified#}</td></tr>
+                    <tr><td>Release</td><td>{#$data.isoform.import#}</td></tr>
+                    <tr><td>Organism</td><td>{#$data.isoform.organism_name#}</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
