@@ -17,23 +17,23 @@ new filteredSelect(select_tissues, 'sample', {
 function populateBarplotSelectionBoxes(items, opt) {
     options = $.extend(true, {type: "isoform"}, opt);
     itemIDs = items;
-    if(options.type === 'isoform')
-        $('#isoform-barplot-button').prop('checked',true);
+    if (options.type === 'isoform')
+        $('#isoform-barplot-button').prop('checked', true);
     else
-        $('#unigene-barplot-button').prop('checked',true);
-    if(typeof items.unigene === 'undefined' || items.unigene.length === 0){
-        $('#isoform-barplot-button').prop('checked',true);
-        $('#unigene-isoform-switch').attr('disabled','disabled');
-        $('#isoform-barplot-button').attr('disabled','disabled');
-        $('#unigene-barplot-button').attr('disabled','disabled');
-        options.type="isoform";
+        $('#unigene-barplot-button').prop('checked', true);
+    if (typeof items.unigene === 'undefined' || items.unigene.length === 0) {
+        $('#isoform-barplot-button').prop('checked', true);
+        $('#unigene-isoform-switch').attr('disabled', 'disabled');
+        $('#isoform-barplot-button').attr('disabled', 'disabled');
+        $('#unigene-barplot-button').attr('disabled', 'disabled');
+        options.type = "isoform";
     }
-    if(typeof items.isoform === 'undefined' || items.isoform.length === 0){
-        $('#unigene-barplot-button').prop('checked',true);
-        $('#unigene-isoform-switch').attr('disabled','disabled');
-        $('#isoform-barplot-button').attr('disabled','disabled');
-        $('#unigene-barplot-button').attr('disabled','disabled');
-        options.type="unigene";
+    if (typeof items.isoform === 'undefined' || items.isoform.length === 0) {
+        $('#unigene-barplot-button').prop('checked', true);
+        $('#unigene-isoform-switch').attr('disabled', 'disabled');
+        $('#isoform-barplot-button').attr('disabled', 'disabled');
+        $('#unigene-barplot-button').attr('disabled', 'disabled');
+        options.type = "unigene";
     }
     $.ajax('{#$ServicePath#}/listing/filters/', {
         method: 'post',
@@ -44,8 +44,21 @@ function populateBarplotSelectionBoxes(items, opt) {
             var filterdata = data;
             new filteredSelect(select_assay, 'assay', {
                 data: filterdata,
-                lastData: lastData
             }).refill();
+            if (typeof lastData !== 'undefined') {
+                $("#select-assay option").filter(function() {
+                    return $.inArray($(this).val(), lastData.assay) !== -1;
+                }).prop('selected', true).trigger('selectionChanged');
+                $("#select-analysis option").filter(function() {
+                    return $.inArray($(this).val(), lastData.analysis) !== -1;
+                }).prop('selected', true).trigger('selectionChanged');
+                if (lastData.biomaterial.length > 0) {
+                    $("#select-sample option").prop('selected', false);
+                }
+                $("#select-sample option").filter(function() {
+                    return $.inArray($(this).val(), lastData.biomaterial) !== -1;
+                }).prop('selected', true).trigger('selectionChanged');
+            }
         }
     });
 }
@@ -70,15 +83,20 @@ function getFilterData() {
 
 //display barplot
 $('#button-draw-plot').click(function() {
-    if($('#button-barplot').is(':checked')){
+    if ($('#button-barplot').is(':checked')) {
         drawBarplot();
     } else {
         drawHeatmap();
     }
     $('#button-draw-plot').removeClass("alert");
+    $('#button-draw-plot').text("Draw");
+    $('#isoform-barplot-groupByTissues').removeAttr('disabled');
+    $('#isoform-barplot-groupByTissues-on').removeAttr('disabled');
+    $('#isoform-barplot-groupByTissues-off').prop("checked", true);
+    $('#isoform-barplot-transpose-off').prop("checked", true);
 });
 
-function drawBarplot(){
+function drawBarplot() {
     $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
         method: 'post',
         data: getFilterData(),
@@ -134,7 +152,7 @@ function drawBarplot(){
     return false;
 }
 
-function drawHeatmap(){
+function drawHeatmap() {
     $.ajax('{#$ServicePath#}/graphs/barplot/quantifications', {
         method: 'post',
         data: getFilterData(),
@@ -267,17 +285,15 @@ $('#isoform-barplot-groupByTissues').click(groupByTissues);
 $('#isoform-barplot-transpose').click(function() {
     var cx = $('#isoform-barplot-canvas').data('canvasxpress');
     cx.transpose();
-    if($('#isoform-barplot-transpose-on').is(':checked')){
-        console.log("bla");
+    if ($('#isoform-barplot-transpose-on').is(':checked')) {
         $('#isoform-barplot-groupByTissues-off').prop("checked", true);
-        $('#isoform-barplot-groupByTissues').attr('disabled','disabled');
-        $('#isoform-barplot-groupByTissues-on').attr('disabled','disabled');
+        $('#isoform-barplot-groupByTissues').attr('disabled', 'disabled');
+        $('#isoform-barplot-groupByTissues-on').attr('disabled', 'disabled');
     }
     else {
-        console.log("blub");
         $('#isoform-barplot-groupByTissues').removeAttr('disabled');
         $('#isoform-barplot-groupByTissues-on').removeAttr('disabled');
     }
 });
 
-$( "#radio" ).buttonset();
+$("#radio").buttonset();
