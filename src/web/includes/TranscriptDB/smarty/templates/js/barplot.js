@@ -3,6 +3,7 @@ var select_analysis = $('#select-analysis');
 var select_tissues = $('#select-sample');
 
 var itemIDs;
+var options;
 
 //filteredSelect: select_assay => select_analysis => select_tissues
 new filteredSelect(select_analysis, 'analysis', {
@@ -12,13 +13,14 @@ new filteredSelect(select_tissues, 'sample', {
     precedessorNode: select_analysis
 });
 
-function populateBarplotSelectionBoxes(items) {
+function populateBarplotSelectionBoxes(items, opt) {
     console.log(items);
+    options = $.extend(true, {type: "isoform"}, opt);
     itemIDs = items;
     $.ajax('{#$ServicePath#}/listing/filters/', {
         method: 'post',
         data: {
-            ids: itemIDs
+            ids: itemIDs[options.type]
         },
         success: function(data) {
             var filterdata = data;
@@ -33,7 +35,7 @@ function populateBarplotSelectionBoxes(items) {
 
 function getFilterData() {
     var data = {
-        parents: itemIDs,
+        parents: itemIDs[options.type],
         analysis: [],
         assay: [],
         biomaterial: []
@@ -223,5 +225,15 @@ function groupByTissues() {
         cx.groupSamples([]);
     }
 }
+
+$('#isoform-barplot-button').click(function() {
+    populateBarplotSelectionBoxes(itemIDs, $.extend(true, options, {type: "isoform"}));
+    return false;
+});
+
+$('#unigene-barplot-button').click(function() {
+    populateBarplotSelectionBoxes(itemIDs, $.extend(true, options, {type: "unigene"}));
+    return false;
+});
 
 $('#isoform-barplot-groupByTissues').click(groupByTissues);

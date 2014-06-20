@@ -28,9 +28,17 @@
                             console.log("No items in cart");
                             return;
                         }
+                        $.ajax('{#$ServicePath#}/listing/Filter_by_type', {
+                            method: 'post',
+                            data: {
+                                ids: cartitems
+                            },
+                            success: function(data) {
+                                populateBarplotSelectionBoxes({isoform: data.isoform, unigene: data.unigene}, {type: "isoform"});
+                            }
+                        })
                         adjustCartgroupStyle();
                         displayCartTable(cartitems, {});
-                        populateBarplotSelectionBoxes(cartitems);
                         showPathwayInfo();
                         $('#cart-notes-textfield').text(cart._getCartForContext()['{#$cartname#}']['notes']);
                         var created = parseInt(cart._getCartForContext()['{#$cartname#}']['created']) * 1000;

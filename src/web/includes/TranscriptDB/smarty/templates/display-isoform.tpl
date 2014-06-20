@@ -184,7 +184,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
             {#include file="js/barplot.js"#}
-                populateBarplotSelectionBoxes([{#$data.isoform.feature_id#}]);
+                populateBarplotSelectionBoxes({isoform: [{#$data.isoform.feature_id#}], unigene: [{#if isset($data.isoform.unigene)#}{#$data.isoform.unigene.feature_id#}{#/if#}]}, {type: "isoform"});
             });
         </script>
         <div class="large-12 columns panel">

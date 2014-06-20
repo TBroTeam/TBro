@@ -90,25 +90,18 @@
     <script type="text/javascript">
         $(document).ready(function() {
         {#include file="js/barplot.js"#}
-            populateBarplotSelectionBoxes([{#$data.unigene.feature_id#}]);
-            $('#isoform-barplot-button').click(function() {
-                var isoform_ids = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {
-                    return elem.feature_id;
-                });
-                populateBarplotSelectionBoxes(isoform_ids);
+            var isoform_ids = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {
+                return elem.feature_id;
             });
-            $('#unigene-barplot-button').click(function() {
-                populateBarplotSelectionBoxes([{#$data.unigene.feature_id#}]);
-            });
+            populateBarplotSelectionBoxes({
+                isoform: isoform_ids,
+                unigene: [{#$data.unigene.feature_id#}]
+            }, {type: "unigene"});
         });
     </script>
     <div class="row">
         <div class="large-12 columns panel">
             <h4>Barplot</h4>
-            <div class="right">
-                <button class="button" id="unigene-barplot-button">Unigene</button>
-                <button class="button" id="isoform-barplot-button">Isoforms</button>
-            </div>
             {#include file="display-components/barplot.tpl"#}
         </div>
     </div>
