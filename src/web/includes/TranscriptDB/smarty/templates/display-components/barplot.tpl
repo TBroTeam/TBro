@@ -32,6 +32,7 @@
                     <div class="large-12 columns">
                         <div class="large-4 columns">
                             <input type="checkbox" id="isoform-barplot-groupByTissues"/><label style="display:inline-block" for="isoform-barplot-groupByTissues"> &nbsp;Pool by Tissue Group</label>
+                            <input type="checkbox" id="isoform-barplot-transpose"/><label style="display:inline-block" for="isoform-barplot-transpose"> &nbsp;Transpose</label>
                         </div>
                         <div class="large-8 columns">
                             <button class="button" id="unigene-barplot-button">Unigene</button>
