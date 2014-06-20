@@ -179,7 +179,7 @@
 
     {#include file="display-components/repeatmasker.tpl" feature=$data.isoform #}
 
-    <script type="text/javascript">addNavAnchor('plot', 'Plot Expression Data');</script>
+    <script type="text/javascript">addNavAnchor('plot', 'Expression Analysis');</script>
     <div class="row">
         <script type="text/javascript">
             $(document).ready(function() {
@@ -188,7 +188,7 @@
             });
         </script>
         <div class="large-12 columns panel">
-            <h4>Barplot</h4>
+            <h4>Expression Analysis</h4>
             {#include file="display-components/barplot.tpl"#}
         </div>
     </div>

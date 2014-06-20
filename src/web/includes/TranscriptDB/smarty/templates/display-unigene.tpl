@@ -101,7 +101,7 @@
     </script>
     <div class="row">
         <div class="large-12 columns panel">
-            <h4>Barplot</h4>
+            <h4>Expression Analysis</h4>
             {#include file="display-components/barplot.tpl"#}
         </div>
     </div>
