@@ -267,7 +267,7 @@
         exportIds(service, _.intersection(selectedIDs, allFilteredIDs), '{#$cartname#}' + "_selection");
     }
     function exportAll(service) {
-        var ids = cart._getCartForContext()['{#$cartname#}'] || [];
+        var ids = cart._getCartForContext()['{#$cartname#}']['items'] || [];
         exportIds(service, ids, '{#$cartname#}');
     }
     function exportIds(service, ids, cartname) {
