@@ -19,6 +19,33 @@
                 },
                 cursorAt: {top: 5, left: 5}
             });
+            
+            $('#Cart').on('cartEvent', function(event) {
+                if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)))) {
+                    return;
+                }
+                var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.unigene.feature_id#}'];
+                var alias = "";
+                var description = "";
+                if (typeof metadata !== 'undefined') {
+                    if (typeof metadata.alias !== 'undefined') {
+                        alias = metadata.alias;
+                    }
+                    if (typeof metadata.annotations !== 'undefined') {
+                        description = metadata.annotations;
+                    }
+                }
+                $('#user-alias-textfield').val(alias);
+                $('#user-description-textfield').val(description);
+            });
+
+            $('#user-alias-textfield').blur(function() {
+                cart.updateItem({#$data.unigene.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
+            });
+
+            $('#user-description-textfield').blur(function() {
+                cart.updateItem({#$data.unigene.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
+            });
         });
 
         function addUnigeneToCart() {
@@ -28,6 +55,23 @@
             cart.addItem({#$data.unigene.feature_id#}, {
                 groupname: group
             });
+        }
+
+        function updateContainingCartsSection() {
+            var cfc = cart._getCartForContext();
+            var hits = [];
+            $.each(cfc, function(key, attr) {
+                if (_.indexOf(attr.items, {#$data.unigene.feature_id#}) !== -1)
+                    hits.push(key);
+            });
+            $('#containing-carts-section').empty();
+            if (hits.length === 0) {
+                $('#containing-carts-section').append('<li style="font-size:1.5em">No carts yet...</li>');
+            } else {
+                $.each(hits, function(id, attr) {
+                    $('#containing-carts-section').append('<li style="font-size:1.5em"><a href="/graphs/' + attr + '">' + attr + '</a></li>');
+                });
+            }
         }
     </script>
 
@@ -47,7 +91,14 @@
                     </div>
                 </div>
             </div>
-            <h5>Imported into TBro: {#$data.unigene.timelastmodified#}</h5>
+            <table style="width:100%">
+                <tbody>
+                    <tr><td>Containing Carts</td><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
+                    <tr><td>User Alias</td><td><input id='user-alias-textfield'  type="text" class="text ui-widget-content ui-corner-all"  maxlength="{#$max_chars_user_alias#}"> </td></tr>
+                    <tr><td>User Description</td><td><textarea id="user-description-textfield" class="text ui-widget-content ui-corner-all" maxlength="{#$max_chars_user_description#}"></textarea>
+                            <div class="right"><small>Max. {#$max_chars_user_description#} characters</small></div></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
     {#if isset($data.unigene.description) #}
@@ -66,15 +117,15 @@
     {#/if#}
     {#if (isset($data.unigene.isoforms) && count($data.unigene.isoforms)>0)#}
         <script type="text/javascript">
-            var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {
-                return $.extend({alias: ''}, elem);
+        var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {
+            return $.extend({alias: ''}, elem);
+        });
+        $(document).ready(function() {
+            displayFeatureTable(isoform_data, {
+                // bPaginate: false,
+                // bFilter: false
             });
-            $(document).ready(function() {
-                displayFeatureTable(isoform_data, {
-                    // bPaginate: false,
-                    // bFilter: false
-                });
-            });
+        });
         </script>
         <div class="row">        
             <div class="large-12 columns panel">
@@ -104,5 +155,17 @@
             <h4>Expression Analysis</h4>
             {#include file="display-components/barplot.tpl"#}
         </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h5>Imported into TBro: {#$data.unigene.timelastmodified#}</h5>
+        </div>
+    </div>
+
+    <div id="myModal" class="reveal-modal">
+        <h2>This isoform is in the following carts:</h2>
+        <ul id="containing-carts-section"></ul>
+        <a class="close-reveal-modal">&#215;</a>
     </div>
 {#/block#}

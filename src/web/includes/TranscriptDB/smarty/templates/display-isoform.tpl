@@ -17,7 +17,6 @@
                     return;
                 }
                 var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.isoform.feature_id#}'];
-                console.log(metadata);
                 var alias = "";
                 var description = "";
                 if (typeof metadata !== 'undefined') {
@@ -28,8 +27,6 @@
                         description = metadata.annotations;
                     }
                 }
-                console.log(alias);
-                console.log(description);
                 $('#user-alias-textfield').val(alias);
                 $('#user-description-textfield').val(description);
             });
