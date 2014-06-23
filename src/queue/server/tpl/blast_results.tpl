@@ -273,9 +273,12 @@
         <tr>
         <th>Parameters:</th>
         <td>
+        <% var first = true; %>
         <% _.each(execDetails.parameters, function(value,key){ %>
-        <%= key %>: <%= value %>; 
-        <% }); %>
+        <% if(first){ first=false;%>
+        <%= key %>: <%= value %><%}else{ %>
+        ; <%= key %>: <%= value %>
+        <% }}); %>
         </td>
         </tr>
         </table>
