@@ -483,15 +483,16 @@ Cart.prototype.updateItem = function(id, metadata, options) {
     }, options);
     var that = this;
     this._getItemDetails([id], function(aItemDetails) {
-        if (updateInternal.call(that, aItemDetails[0]))
+        if (updateInternal.call(that, aItemDetails[0])) {
             updateDOM.call(that, aItemDetails[0]);
-        $.when(that.sync({
-            action: 'updateItem',
-            id: id,
-            metadata: metadata
-        }, options)).then(function() {
-            dfd.resolve()
-        });
+            $.when(that.sync({
+                action: 'updateItem',
+                id: id,
+                metadata: metadata
+            }, options)).then(function() {
+                dfd.resolve()
+            });
+        }
     });
     return dfd.promise();
     function updateInternal(itemDetails) {
