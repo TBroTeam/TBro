@@ -166,7 +166,7 @@
             <div class="large-12 columns query_details" style="display:none">
                 <h4>Results Overview</h4>
             </div>
-            <div id='{#$instance_name#}-swappedWarning' class='large-12 columns panel' style="display: none; color:red">
+            <div id='{#$instance_name#}-swappedWarning' class='large-12 columns panel' style="display: none; color:#c60f13">
                 Warning! Conditions A and B have been swapped due to their orientation in the database.
                 Filters still apply to your selection but the table does not.
             </div>

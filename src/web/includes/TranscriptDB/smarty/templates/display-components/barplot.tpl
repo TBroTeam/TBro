@@ -1,4 +1,9 @@
 <div class="row">
+    <style type="text/css">
+        .switch-active-label {
+            color: white;
+        }
+    </style>
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
     <div id="tabs-graphs-selection" class="large-12 columns">
         <div class="row">
@@ -36,7 +41,7 @@
                             <label for="unigene-barplot-button" onclick="">Unigene</label>
 
                             <input id="isoform-barplot-button" name="unigene-isoform-switch" type="radio">
-                            <label for="isoform-barplot-button" onclick="">Isoform</label>
+                            <label for="isoform-barplot-button" onclick="" class="switch-active-label">Isoform</label>
 
                             <span></span>
                         </div>
@@ -48,7 +53,7 @@
                             <label for="button-heatmap" onclick="">Heatmap</label>
 
                             <input id="button-barplot" name="switch-x" type="radio" checked>
-                            <label for="button-barplot" onclick="">Barplot</label>
+                            <label for="button-barplot" onclick="" class="switch-active-label">Barplot</label>
 
                             <span></span>
                         </div>
@@ -74,7 +79,7 @@
                             <label for="isoform-barplot-groupByTissues-off" onclick="">Off</label>
 
                             <input id="isoform-barplot-groupByTissues-on" name="isoform-barplot-groupByTissues" type="radio">
-                            <label for="isoform-barplot-groupByTissues-on" onclick="">On</label>
+                            <label for="isoform-barplot-groupByTissues-on" onclick="" class="switch-active-label">On</label>
 
                             <span></span>
                         </div>
@@ -87,7 +92,7 @@
                             <label for="isoform-barplot-transpose-off" onclick="">Off</label>
 
                             <input id="isoform-barplot-transpose-on" name="isoform-barplot-transpose" type="radio">
-                            <label for="isoform-barplot-transpose-on" onclick="">On</label>
+                            <label for="isoform-barplot-transpose-on" onclick="" class="switch-active-label">On</label>
 
                             <span></span>
                         </div>
