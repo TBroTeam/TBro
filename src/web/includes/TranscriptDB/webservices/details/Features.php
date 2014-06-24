@@ -41,11 +41,11 @@ class Features extends \WebService {
         $metadata = array();
         if (!isset($_SESSION))
             session_start();
-        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata']){
-        foreach($_SESSION['cart']['metadata'] as $meta);
-            $metadata = $metadata + $meta;
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata']) {
+            foreach ($_SESSION['cart']['metadata'] as $meta)
+                $metadata = $metadata + $meta;
         }
-        
+
         $return = array('results' => array());
         $uncached_ids = array();
         foreach ($feature_ids as $id) {
