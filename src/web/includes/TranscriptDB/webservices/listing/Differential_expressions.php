@@ -320,7 +320,7 @@ EOF;
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
             if ($first) {
                 $first = false;
-                fputcsv($out, array_keys($row));
+                fputcsv($out, array_keys($row), "\t");
             }
             if (array_key_exists($row['feature_id'], $metadata)) {
                 if (array_key_exists('alias', $metadata[$row['feature_id']]))
@@ -329,7 +329,7 @@ EOF;
                     $row['user_annotations'] = $metadata[$row['feature_id']]['annotations'];
             }
             array_walk($row, array('webservices\listing\Differential_expressions', 'format'));
-            fputcsv($out, array_values($row));
+            fputcsv($out, array_values($row), "\t");
         }
         fclose($out);
     }
@@ -381,7 +381,7 @@ EOF;
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
             header("Cache-Control: private", false);
             header("Content-Type: application/octet-stream");
-            header("Content-Disposition: attachment; filename=\"diffexp_export.csv\";");
+            header("Content-Disposition: attachment; filename=\"diffexp_export.tsv\";");
             header("Content-Transfer-Encoding: binary");
             $this->printCsv($querydata);
             //die or WebService->output will attach return value to output (in our case: null)

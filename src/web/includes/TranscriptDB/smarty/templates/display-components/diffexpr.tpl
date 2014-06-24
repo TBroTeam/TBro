@@ -244,7 +244,7 @@
                 <li id="{#$instance_name#}-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
             </ul>
             <ul class="f-dropdown" id="{#$instance_name#}-download-dropdown-options" data-dropdown-content>
-                <li id="{#$instance_name#}-download_csv_button" > csv </li> 
+                <li id="{#$instance_name#}-download_csv_button" > tsv </li> 
             </ul>
         </div>
         <div class="large-12" style="padding-right: 4px;">
