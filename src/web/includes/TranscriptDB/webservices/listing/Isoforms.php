@@ -20,6 +20,14 @@ class Isoforms extends \WebService {
         #UI hint
         if (false)
             $db = new PDO();
+        
+        $metadata = array();
+        if (!isset($_SESSION))
+            session_start();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata']) {
+            foreach ($_SESSION['cart']['metadata'] as $meta)
+                $metadata = $metadata + $meta;
+        }
 
         $param_unigene_feature_id = $querydata['query1']; #1.01_comp214244_c0
 
@@ -41,12 +49,23 @@ EOF;
 
         $stm_get_isoforms->execute();
         while ($isoform = $stm_get_isoforms->fetch(PDO::FETCH_ASSOC)) {
+            // add user annotations
+            $user_alias = '';
+            $user_annotations = '';
+            if (array_key_exists($isoform['feature_id'], $metadata)) {
+                if (array_key_exists('alias', $metadata[$isoform['feature_id']]))
+                    $user_alias = $metadata[$isoform['feature_id']]['alias'];
+                if (array_key_exists('annotations', $metadata[$isoform['feature_id']]))
+                    $user_annotations = $metadata[$isoform['feature_id']]['annotations'];
+            }
             $data['isoforms'][] = array(
                 'uniquename' => $isoform['uniquename'], 
                 'name' => $isoform['name'], 
                 'feature_id' => $isoform['feature_id'], 
                 'description' => $isoform['description'], 
-                'type'=>'isoform');
+                'type'=>'isoform',
+                'user_alias' => $user_alias,
+                'user_annotations' => $user_annotations);
         }
 
 

@@ -18,6 +18,14 @@ class Unigene extends \WebService {
             $db = new PDO();
 
         $param_unigene_feature_id = $querydata['query1'];
+        
+        $metadata = array();
+        if (!isset($_SESSION))
+            session_start();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata']) {
+            foreach ($_SESSION['cart']['metadata'] as $meta)
+                $metadata = $metadata + $meta;
+        }
 
         $query_get_unigenes = <<<EOF
 SELECT *
