@@ -30,9 +30,19 @@
                 $(nRow).draggable({
                     appendTo: "body",
                     helper: function() {
-                        return $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
+                        var helper = $(nRow).find('td:eq(1)').clone().addClass('beingDragged');
+                        TableTools.fnGetInstance('results').fnSelect($(nRow));
+                        var selectedItems = TableTools.fnGetInstance('results').fnGetSelectedData();
+                        var selectedIDs = $.map(selectedItems, function(val) {
+                            return val.feature_id;
+                        });
+                        $(nRow).attr('data-id', selectedIDs);
+                        if (selectedIDs.length > 1) {
+                            helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                        }
+                        return helper;
                     },
-                    cursorAt: { top: 5, left: 5 }
+                    cursorAt: {top: 5, left: 30}
                 });
             },
             sDom: 'T<"clear">lrtip',
@@ -145,7 +155,7 @@
         </ul>
         <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="TableTools.fnGetInstance('results').fnSelectAll();" style="width:100%">All</li>
-            <li onclick="TableTools.fnGetInstance('results').fnSelect($('#results').dataTable().$('tr',  {'filter':'applied'}));" style="width:100%">Filtered</li>
+            <li onclick="TableTools.fnGetInstance('results').fnSelect($('#results').dataTable().$('tr', {'filter': 'applied'}));" style="width:100%">Filtered</li>
             <li onclick="TableTools.fnGetInstance('results').fnSelectNone();" style="width:100%">None</li>
         </ul>
         <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
