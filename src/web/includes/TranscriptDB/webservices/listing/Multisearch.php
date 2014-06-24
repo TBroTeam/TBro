@@ -19,6 +19,9 @@ class Multisearch extends \WebService {
         $import = $querydata['release'];
         $longterm = $querydata['longterm'];
         $terms = preg_split('/[,\s]+/m', $longterm, -1, PREG_SPLIT_NO_EMPTY);
+        foreach ($terms as &$term){
+            $term = trim($term, "'\"");
+        }
         $qmarks = implode(',', array_fill(0, count($terms), '?'));
         $values = array_merge(array($species, $import), $terms);
 
