@@ -15,6 +15,12 @@
                 },
                 {mData: 'description',
                     bSortable: true
+                },
+                {mData: 'user_alias',
+                    bSortable: true
+                },
+                {mData: 'user_annotations',
+                    bSortable: true
                 }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -155,8 +161,10 @@
                 <tr>
                     <th>Type</th>
                     <th>Name</th>
-                    <th>Alias</th>
-                    <th>Description</th>
+                    <th>DB Alias</th>
+                    <th>DB Description</th>
+                    <th>User Alias</th>
+                    <th>User Annotations</th>
                 </tr>
             </thead>
             <tfoot></tfoot>

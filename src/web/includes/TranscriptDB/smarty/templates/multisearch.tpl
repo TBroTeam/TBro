@@ -8,7 +8,7 @@
                 $.ajax({
                     url: "{#$ServicePath#}/listing/multisearch/",
                     type: "POST",
-                    data: {species: organism.val(), release: release.val(), longterm: $('#multisearch').val(), strict: $('#strict').is(':checked')},
+                    data: {species: organism.val(), release: release.val(), currentContext: cart.currentContext, longterm: $('#multisearch').val(), strict: $('#strict').is(':checked')},
                     dataType: "json",
                     success: function(data) {
                         displayFeatureTable(data.results);
