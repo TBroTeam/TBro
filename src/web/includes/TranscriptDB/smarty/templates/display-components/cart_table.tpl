@@ -261,20 +261,25 @@
         ;
     };
 
-    function exportSelected(service) {
+    function exportSelected(service, opts) {
         if (_.intersection(selectedIDs, allFilteredIDs).length === 0)
             return;
-        exportIds(service, _.intersection(selectedIDs, allFilteredIDs), '{#$cartname#}' + "_selection");
+        var options = $.extend(true, {
+            terms: _.intersection(selectedIDs, allFilteredIDs),
+            cartname: '{#$cartname#}' + "_selection"
+        }, opts);
+        exportIds(service, options);
     }
-    function exportAll(service) {
+    function exportAll(service, opts) {
         var ids = cart._getCartForContext()['{#$cartname#}']['items'] || [];
-        exportIds(service, ids, '{#$cartname#}');
-    }
-    function exportIds(service, ids, cartname) {
-        $.download(service, {
+        var options = $.extend(true, {
             terms: ids,
-            cartname: cartname
-        }, 'post');
+            cartname: '{#$cartname#}'
+        }, opts);
+        exportIds(service, options);
+    }
+    function exportIds(service, options) {
+        $.download(service, options, 'post');
     }
     function selectAll() {
         // fnSelectAll only for graphical selection
@@ -348,9 +353,11 @@
         </ul>
         <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
             <li><b class="selectedItemsCount"> Selected </b></li>
+            <li onclick="exportSelected('{#$ServicePath#}/listing/Cart_table', {exportTsv: true, currentContext: cart.currentContext});" style="width:100%">Cart (tsv)</li>
             <li onclick="exportSelected('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
             <li onclick="exportSelected('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
             <li><b> All </b></li>            
+            <li onclick="exportAll('{#$ServicePath#}/listing/Cart_table', {exportTsv: true, currentContext: cart.currentContext});" style="width:100%">Cart (tsv)</li>
             <li onclick="exportAll('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
             <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>                   
 

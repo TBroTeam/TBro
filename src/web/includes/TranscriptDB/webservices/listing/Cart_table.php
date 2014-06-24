@@ -39,6 +39,10 @@ class Cart_table extends \WebService {
         if ($ids_filtered[0] === '') {
             array_splice($ids_filtered, 0, 1);
         }
+        
+        if(isset($querydata['exportTsv'])){
+            return $this->exportAsTSV($querydata, $metadata);
+        }
 
         if (isset($querydata['sSearch']) && $querydata['sSearch'] !== '') {
             $ids_filtered = array();
@@ -66,37 +70,12 @@ class Cart_table extends \WebService {
                 "idsFiltered" => $ids_filtered,
                 "aaData" => array()
             );
-            list($service) = \WebService::factory('details/features');
-            $results = ($service->execute(array('terms' => $terms)));
-            foreach ($results['results'] as &$result) {
-                $result['actions'] = '';
-                $result['user_alias'] = '';
-                $result['user_annotations'] = '';
-                if (array_key_exists($result['feature_id'], $metadata)) {
-                    if (array_key_exists('alias', $metadata[$result['feature_id']]))
-                        $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
-                    if (array_key_exists('annotations', $metadata[$result['feature_id']]))
-                        $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
-                }
-                $data['aaData'][] = $result;
-            }
+            $data['aaData'] = $this->get_feature_details($terms, $metadata);
 
             return $data;
         } else {
             # get full set of feature descriptions, apply sorting and return the appropriate range
-            list($service) = \WebService::factory('details/features');
-            $results = ($service->execute(array('terms' => $ids_filtered)));
-            foreach ($results['results'] as &$result) {
-                $result['actions'] = '';
-                $result['user_alias'] = '';
-                $result['user_annotations'] = '';
-                if (array_key_exists($result['feature_id'], $metadata)) {
-                    if (array_key_exists('alias', $metadata[$result['feature_id']]))
-                        $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
-                    if (array_key_exists('annotations', $metadata[$result['feature_id']]))
-                        $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
-                }
-            }
+            $results['results'] = $this->get_feature_details($ids_filtered, $metadata);
             if ($querydata['iSortCol_0'] == 1)
                 usort($results['results'], array($this, "cmp_name"));
             if ($querydata['iSortCol_0'] == 2)
@@ -125,6 +104,25 @@ class Cart_table extends \WebService {
 
             return $data;
         }
+    }
+
+    private function get_feature_details($terms, $metadata) {
+        list($service) = \WebService::factory('details/features');
+        $return = array();
+        $results = ($service->execute(array('terms' => $terms)));
+        foreach ($results['results'] as &$result) {
+            $result['actions'] = '';
+            $result['user_alias'] = '';
+            $result['user_annotations'] = '';
+            if (array_key_exists($result['feature_id'], $metadata)) {
+                if (array_key_exists('alias', $metadata[$result['feature_id']]))
+                    $result['user_alias'] = $metadata[$result['feature_id']]['alias'];
+                if (array_key_exists('annotations', $metadata[$result['feature_id']]))
+                    $result['user_annotations'] = $metadata[$result['feature_id']]['annotations'];
+            }
+            $return[] = $result;
+        }
+        return $return;
     }
 
     private function cmp_name($a, $b) {
@@ -246,6 +244,42 @@ EOF;
      */
     public function execute($querydata) {
         return $this->getDetails($querydata);
+    }
+
+    /**
+     * @inheritDoc
+     * @param int $querydata['query1'] one id
+     * @param Array[int] $querydata['terms'] multiple ids
+     */
+    public function exportAsTSV($querydata, $metadata) {
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private", false);
+        header("Content-Type: application/octet-stream");
+        $cartname = "myCart";
+        if (isset($querydata['cartname']))
+            $cartname = $querydata['cartname'];
+        header(sprintf("Content-Disposition: attachment; filename=\"%s.tsv\";", $cartname));
+        header("Content-Transfer-Encoding: binary");
+
+        $feature_ids = array();
+
+        if (isset($querydata['terms']))
+            $feature_ids = array_merge($feature_ids, $querydata['terms']);
+
+        if (count($feature_ids) == 0) {
+            die();
+        }
+
+        $results = $this->get_feature_details($feature_ids, $metadata);
+                
+        // var_dump($results); die();
+        printf("#\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\n", 'Feature ID', 'Name', 'Type', 'DB Alias', 'DB Description', 'User Alias', 'User Annotations');
+        foreach ($results as $result) {
+            printf("%s\t\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\t\"%s\"\n", $result['feature_id'], $result['name'], $result['type'], $result['alias'], $result['description'], $result['user_alias'], $result['user_annotations']);
+        }
+        die();
     }
 
 }
