@@ -190,10 +190,10 @@ function displayIteration(iteration, resultTable, canvas, options) {
                     id_to_row_map[id] = value;
                 }
             });
-            if(feature_ids.length > 0){
+            if (feature_ids.length > 0) {
                 getFeatureDetailsForIDs(feature_ids, id_to_row_map);
             } else {
-                $('#blast-button-gdfx-addToCart').attr('disabled','disabled');
+                $('#blast-button-gdfx-addToCart').attr('disabled', 'disabled');
                 displayCanvasAndTable();
             }
         }
@@ -210,11 +210,11 @@ function displayIteration(iteration, resultTable, canvas, options) {
                 $.each(data.results, function(key, value) {
                     id_to_row_map[value.feature_id].db_alias = value.alias;
                     id_to_row_map[value.feature_id].db_description = value.description;
-                    if(typeof meta[value.feature_id] !== 'undefined'){
+                    if (typeof meta[value.feature_id] !== 'undefined') {
                         id_to_row_map[value.feature_id].user_alias = meta[value.feature_id]['alias'];
                         id_to_row_map[value.feature_id].user_description = meta[value.feature_id]['annotations'];
                     }
-               });
+                });
 
                 displayCanvasAndTable();
             }
@@ -349,13 +349,23 @@ function displayIteration(iteration, resultTable, canvas, options) {
                     $(nRow).find('td:eq(0)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
                     $(nRow).find('td:eq(4)').html('<a href="#" class="open-close-details"> Show </a>');
                     $(nRow).attr('data-id', aData.feature_id);
-                    if(aData.feature_id !== -1){
+                    if (aData.feature_id !== -1) {
                         $(nRow).draggable({
                             appendTo: "body",
                             helper: function() {
-                                return $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                                var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                                TableTools.fnGetInstance('blast_results_table').fnSelect($(nRow));
+                                var selectedItems = TableTools.fnGetInstance('blast_results_table').fnGetSelectedData();
+                                var selectedIDs = $.map(selectedItems, function(val) {
+                                    return val.feature_id;
+                                });
+                                $(nRow).attr('data-id', selectedIDs);
+                                if (selectedIDs.length > 1) {
+                                    helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                                }
+                                return helper;
                             },
-                            cursorAt: {top: 5, left: 5}
+                            cursorAt: {top: 5, left: 30}
                         });
                     }
                 }

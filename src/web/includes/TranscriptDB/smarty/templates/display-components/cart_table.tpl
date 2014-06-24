@@ -88,13 +88,13 @@
                                 selectedIDs.push(aData.feature_id);
                                 $(nRow).toggleClass('DTTT_selected');
                             }
+                            $(nRow).attr('data-id', _.intersection(selectedIDs, allFilteredIDs));
                             if (_.intersection(selectedIDs, allFilteredIDs).length > 1) {
-                                helper.html("<b>(" + _.intersection(selectedIDs, allFilteredIDs).length + ")</b> " + helper.text());
-                                $(nRow).attr('data-id', _.intersection(selectedIDs, allFilteredIDs));
+                                helper.html("<b>" + _.intersection(selectedIDs, allFilteredIDs).length + "</b> " + helper.text() + ", ...");
                             }
                             return helper;
                         },
-                        cursorAt: {top: 5, left: 15}
+                        cursorAt: {top: 5, left: 30}
                     });
                     $(nRow).on('click', function(event) {
                         var aData = dataTable.fnGetData(this);
