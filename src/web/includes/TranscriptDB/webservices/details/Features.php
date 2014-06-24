@@ -38,6 +38,14 @@ class Features extends \WebService {
             );
         }
 
+        $metadata = array();
+        if (!isset($_SESSION))
+            session_start();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata']){
+        foreach($_SESSION['cart']['metadata'] as $meta);
+            $metadata = $metadata + $meta;
+        }
+        
         $return = array('results' => array());
         $uncached_ids = array();
         foreach ($feature_ids as $id) {
@@ -48,7 +56,7 @@ class Features extends \WebService {
         }
 
         if (count($uncached_ids) > 0) {
-            $new_features = $this->query_database($uncached_ids, $with_descriptions);
+            $new_features = $this->query_database($uncached_ids, $with_descriptions, $metadata);
 
             foreach ($new_features['results'] as $new_feature) {
                 $cache->save($new_feature, strval($new_feature['feature_id']));
@@ -64,7 +72,7 @@ class Features extends \WebService {
      * @param int $querydata['query1'] one id
      * @param Array[int] $querydata['terms'] multiple ids
      */
-    public function query_database($feature_ids, $with_descriptions) {
+    public function query_database($feature_ids, $with_descriptions, $metadata) {
 
         $ret = array('results' => array());
         if (count($feature_ids) == 0) {
@@ -118,6 +126,7 @@ EOF;
 
         $stm = $db->prepare($query);
         $stm->execute($feature_ids);
+
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             switch ($row['type_id']) {
                 case CV_ISOFORM:
@@ -131,6 +140,15 @@ EOF;
                     break;
             }
             unset($row['type_id']);
+            // add user annotations
+            $row['user_alias'] = '';
+            $row['user_annotations'] = '';
+            if (array_key_exists($row['feature_id'], $metadata)) {
+                if (array_key_exists('alias', $metadata[$row['feature_id']]))
+                    $row['user_alias'] = $metadata[$row['feature_id']]['alias'];
+                if (array_key_exists('annotations', $metadata[$row['feature_id']]))
+                    $row['user_annotations'] = $metadata[$row['feature_id']]['annotations'];
+            }
             // if description is null: set to empty string
             if (is_null($row['description']))
                 $row['description'] = '';

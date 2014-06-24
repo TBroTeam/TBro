@@ -45,13 +45,15 @@ EOF;
         $data = array('results' => array());
 
         $stm_get_features->execute($values);
+        
+        $metadata = array();
+        if (!isset($_SESSION))
+            session_start();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$querydata['currentContext']])
+            $metadata = $_SESSION['cart']['metadata'][$querydata['currentContext']];
+        
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             // add user annotations
-            $metadata = array();
-            if (!isset($_SESSION))
-                session_start();
-            if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$querydata['currentContext']])
-                $metadata = $_SESSION['cart']['metadata'][$querydata['currentContext']];
             $user_alias = '';
             $user_annotations = '';
             if (array_key_exists($feature['feature_id'], $metadata)) {
