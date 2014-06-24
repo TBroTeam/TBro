@@ -209,7 +209,7 @@ function drawHeatmap() {
 }
 
 function addTable(parent, val) {
-    var tbl = $('<table></table>');
+    var tbl = $('<table id="expression_table"></table>');
     // y.smps = tissues
     // y.vars = names
     // y.data = data
@@ -245,15 +245,30 @@ function addTable(parent, val) {
                 bFilter: false,
                 bInfo: false,
                 bPaginate: false,
+                sDom: 'T<"clear">lfrtip',
+                oTableTools: {
+                    aButtons: [],
+                    sRowSelect: "multi"
+                },
                 fnCreatedRow: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData[0], aData[1]))
                     $(nRow).attr('data-id', aData[0]);
                     $(nRow).draggable({
                         appendTo: "body",
                         helper: function() {
-                            return $(nRow).find('td:first').clone().addClass('beingDragged');
+                            var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
+                            TableTools.fnGetInstance('expression_table').fnSelect($(nRow));
+                            var selectedItems = TableTools.fnGetInstance('expression_table').fnGetSelectedData();
+                            var selectedIDs = $.map(selectedItems, function(val) {
+                                return val[0];
+                            });
+                            $(nRow).attr('data-id', selectedIDs);
+                            if (selectedIDs.length > 1) {
+                                helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                            }
+                            return helper;
                         },
-                        cursorAt: {top: 5, left: 5}
+                        cursorAt: {top: 5, left: 30}
                     });
                 }
             }
