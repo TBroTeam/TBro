@@ -161,9 +161,18 @@ $(document).ready(function() {
                     $(nRow).draggable({
                         appendTo: "body",
                         helper: function() {
-                            return $(nRow).find('td:first').clone().addClass('beingDragged');
+                            var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
+                            if (jQuery.inArray(aData.feature_id, diffexpSelectedIDs) === -1) {
+                                diffexpSelectedIDs.push(aData.feature_id);
+                                $(nRow).toggleClass('DTTT_selected');
+                            }
+                            $(nRow).attr('data-id', diffexpSelectedIDs);
+                            if (diffexpSelectedIDs.length > 1) {
+                                helper.html("<b>" + diffexpSelectedIDs.length + "</b> " + helper.text() + ", ...");
+                            }
+                            return helper;
                         },
-                        cursorAt: {top: 5, left: 5}
+                        cursorAt: {top: 5, left: 30}
                     });
                     $(nRow).on('click', function(event) {
                         var aData = dataTable.fnGetData(this);
