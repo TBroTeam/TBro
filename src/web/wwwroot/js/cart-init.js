@@ -64,7 +64,7 @@ $(document).ready(function() {
             items: "li:not(.placeholder)",
             accept: ":not(.ui-sortable-helper)",
             drop: function(event, ui) {
-                cart.addItem(ui.draggable.attr('data-id'), {
+                cart.addItem(ui.draggable.attr('data-id').split(","), {
                     groupname: that.attr('data-name'),
                     addToDOM: true
                 });
@@ -73,7 +73,7 @@ $(document).ready(function() {
         this.find('.cartgroup').droppable({
             accept: ":not(.ui-sortable-helper)",
             drop: function(event, ui) {
-                cart.addItem(ui.draggable.attr('data-id'), {
+                cart.addItem(ui.draggable.attr('data-id').split(","), {
                     groupname: that.attr('data-name'),
                     addToDOM: true
                 });
