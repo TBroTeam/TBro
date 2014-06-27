@@ -141,6 +141,12 @@ class Sync extends \WebService {
         $currentCart = &$_SESSION['cart']['carts'][$currentContext];
         $cartorder = &$_SESSION['cart']['cartorder'][$currentContext];
 
+        //enforce cartname length limit
+        if (isset($parms['groupname']) && strlen($parms['groupname']) > MAX_CHARS_CARTNAME)
+            $parms['groupname'] = substr($parms['groupname'], 0, MAX_CHARS_CARTNAME);
+        if (isset($parms['newname']) && strlen($parms['newname']) > MAX_CHARS_CARTNAME)
+            $parms['newname'] = substr($parms['newname'], 0, MAX_CHARS_CARTNAME);
+
         //manipulation
         switch ($parms['action']) {
             case 'addItem':

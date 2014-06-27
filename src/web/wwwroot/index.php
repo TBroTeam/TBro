@@ -39,6 +39,7 @@ $smarty->assign('max_items_per_cart', MAX_ITEMS_PER_CART);
 $smarty->assign('max_annotations_per_context', MAX_ANNOTATIONS_PER_CONTEXT);
 $smarty->assign('max_chars_user_alias', MAX_CHARS_USER_ALIAS);
 $smarty->assign('max_chars_user_description', MAX_CHARS_USER_DESCRIPTION);
+$smarty->assign('max_chars_cartname', MAX_CHARS_CARTNAME);
 
 /**
  * returns $_REQUEST[$key] value if it matches $regexp, else return $defaultvalue

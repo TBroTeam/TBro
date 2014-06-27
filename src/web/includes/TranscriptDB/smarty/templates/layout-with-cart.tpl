@@ -113,7 +113,7 @@
                         <form>
                             <fieldset>
                                 <label for="cartname">cart name</label>
-                                <input type="text" name="name" id="cartname" class="text ui-widget-content ui-corner-all" />
+                                <input type="text" name="name" id="cartname" class="text ui-widget-content ui-corner-all" maxlength="{#$max_chars_cartname#}"/>
                             </fieldset>
                         </form>
                     </div>

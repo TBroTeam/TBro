@@ -43,6 +43,7 @@ define('MAX_ITEMS_PER_CART', 10000);
 define('MAX_ANNOTATIONS_PER_CONTEXT', 100000);
 define('MAX_CHARS_USER_ALIAS', 100);
 define('MAX_CHARS_USER_DESCRIPTION', 1000);
+define('MAX_CHARS_CARTNAME', 100);
 
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))
