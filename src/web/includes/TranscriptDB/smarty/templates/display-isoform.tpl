@@ -176,13 +176,18 @@
                     </div>
                 </div>
             </div>
+            {#if isset($data.isoform.unigene)#}
+            <h4>Corresponding Unigene</h4>
             <table style="width:100%">
                 <tbody>
-                    {#if isset($data.isoform.unigene)#}
-                    <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
-                    {#/if#}
-                    <tr><td>Containing Carts</td><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
-
+                    <tr><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                </tbody>
+            </table>
+            {#/if#}
+            <h4>Containing Carts</h4>
+            <table style="width:100%">
+                <tbody>
+                    <tr><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
                 </tbody>
             </table>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
