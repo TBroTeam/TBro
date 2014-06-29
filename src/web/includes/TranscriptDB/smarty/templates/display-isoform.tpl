@@ -182,17 +182,18 @@
                     <tr><td>Corresponding unigene</td><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
                     {#/if#}
                     <tr><td>Containing Carts</td><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
-                    <tr><td>User Alias 
-                        </td><td><input id='user-alias-textfield'  type="text" class="text ui-widget-content ui-corner-all"  maxlength="{#$max_chars_user_alias#}" readonly> </td>
-                        <td><a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></td>
-                    </tr>
-                    <tr><td>User Description</td>
-                        <td><textarea id="user-description-textfield" class="text ui-widget-content ui-corner-all" maxlength="{#$max_chars_user_description#}" readonly></textarea></td>
-                        <td><a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></td>
-                    </tr>
 
                 </tbody>
             </table>
+            <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
+            <table style="width:100%">
+                <tbody><tr>
+            <td id='user-alias-textfield'> </td>
+            </tr>
+                </tbody>    
+                <h4>User Description <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
+                <tr><td id="user-description-textfield"></td>
+            </tr>
         </div>
     </div>
 
