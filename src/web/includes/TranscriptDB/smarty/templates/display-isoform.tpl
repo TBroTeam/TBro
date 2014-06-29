@@ -187,13 +187,20 @@
             </table>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
             <table style="width:100%">
-                <tbody><tr>
-            <td id='user-alias-textfield'> </td>
-            </tr>
-                </tbody>    
-                <h4>User Description <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
-                <tr><td id="user-description-textfield"></td>
-            </tr>
+                <tbody>
+                    <tr>
+                        <td id='user-alias-textfield'> </td>
+                    </tr>
+                </tbody> 
+            </table>
+            <h4>User Description <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
+            <table style="width:100%">
+                <tbody>
+                    <tr>
+                        <td id="user-description-textfield"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
