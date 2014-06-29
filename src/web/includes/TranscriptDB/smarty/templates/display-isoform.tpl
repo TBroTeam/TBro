@@ -208,7 +208,7 @@
     {#if isset($data.isoform.description) #}
     <div class="row">
         <div class="large-12 columns panel">
-            <h4>Description</h4>
+            <h4>DB Description</h4>
             <table style="width:100%">
                 <tbody>
                     {#foreach $data.isoform.description as $description#}
