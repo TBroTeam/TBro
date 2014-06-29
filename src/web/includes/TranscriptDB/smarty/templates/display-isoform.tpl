@@ -136,8 +136,8 @@
         
         function annotateElement() {
             var id = {#$data.isoform.feature_id#};
-            var name = {#$data.isoform.name#};
-            var description = {#$data.isoform.description#};
+            var name = "{#$data.isoform.name#}";
+            var description = "{#$data.isoform.description#}";
             cart._getItemDetails([id], function(data) {
                 if (Object.keys(cart.metadata[cart.currentContext]).length >= cartlimits.max_annotations_per_context) {
                     if (typeof data[0].metadata.alias === 'undefined' && typeof data[0].metadata.annotations === 'undefined') {
