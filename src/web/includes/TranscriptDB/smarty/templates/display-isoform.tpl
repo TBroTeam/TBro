@@ -27,8 +27,8 @@
         description = metadata.annotations;
         }
         }
-        $('#user-alias-textfield').val(alias);
-        $('#user-description-textfield').val(description);
+        $('#user-alias-textfield').text(alias);
+        $('#user-description-textfield').text(description);
         });
 
         // "genome browser" graph
