@@ -13,7 +13,7 @@
         $('.tabs').tabs();
 
         $('#Cart').on('cartEvent', function(event) {
-        if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)))) {
+        if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)) || ((event.eventData.action || '').match(/redraw/)))) {
         return;
         }
         var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.isoform.feature_id#}'];
@@ -96,14 +96,6 @@
         return $('<div>', {text: $('.isoform-header').text()}).addClass('beingDragged');
         },
         cursorAt: {top: 5, left: 5}
-        });
-
-        $('#user-alias-textfield').blur(function() {
-        cart.updateItem({#$data.isoform.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
-        });
-
-        $('#user-description-textfield').blur(function() {
-        cart.updateItem({#$data.isoform.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
         });
 
         });

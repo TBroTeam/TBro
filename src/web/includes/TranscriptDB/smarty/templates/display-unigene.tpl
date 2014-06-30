@@ -19,9 +19,9 @@
                 },
                 cursorAt: {top: 5, left: 5}
             });
-            
+
             $('#Cart').on('cartEvent', function(event) {
-                if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)))) {
+                if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)) || ((event.eventData.action || '').match(/redraw/)))) {
                     return;
                 }
                 var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.unigene.feature_id#}'];
@@ -35,16 +35,8 @@
                         description = metadata.annotations;
                     }
                 }
-                $('#user-alias-textfield').val(alias);
-                $('#user-description-textfield').val(description);
-            });
-
-            $('#user-alias-textfield').blur(function() {
-                cart.updateItem({#$data.unigene.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
-            });
-
-            $('#user-description-textfield').blur(function() {
-                cart.updateItem({#$data.unigene.feature_id#}, {alias: $('#user-alias-textfield').val(), annotations: $('#user-description-textfield').val()});
+                $('#user-alias-textfield').text(alias);
+                $('#user-description-textfield').text(description);
             });
         });
 
@@ -73,6 +65,29 @@
                 });
             }
         }
+
+        function annotateElement() {
+            var id = {#$data.unigene.feature_id#};
+            var name = "{#$data.unigene.name#}";
+            var description = "";
+        {#if isset($data.unigene.description) #}
+            var description = "{#$data.unigene.description[0].value#}";
+        {#/if#}
+            cart._getItemDetails([id], function(data) {
+                if (Object.keys(cart.metadata[cart.currentContext]).length >= cartlimits.max_annotations_per_context) {
+                    if (typeof data[0].metadata.alias === 'undefined' && typeof data[0].metadata.annotations === 'undefined') {
+                        $('#TooManyAnnotationsDialog').foundation('reveal', 'open');
+                        return;
+                    }
+                }
+                $("#dialog-edit-cart-item").data('id', id);
+                $("#dialog-edit-cart-item").data('name', name);
+                $("#dialog-edit-cart-item").data('description', description);
+                $('#item-alias').val(data[0].metadata.alias || '');
+                $('#item-annotations').val(data[0].metadata.annotations || '');
+                $("#dialog-edit-cart-item").dialog("open");
+            });
+        }
     </script>
 
 {#/block#}
@@ -91,12 +106,26 @@
                     </div>
                 </div>
             </div>
+            <h4>Containing Carts</h4>
             <table style="width:100%">
                 <tbody>
-                    <tr><td>Containing Carts</td><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
-                    <tr><td>User Alias</td><td><input id='user-alias-textfield'  type="text" class="text ui-widget-content ui-corner-all"  maxlength="{#$max_chars_user_alias#}"> </td></tr>
-                    <tr><td>User Description</td><td><textarea id="user-description-textfield" class="text ui-widget-content ui-corner-all" maxlength="{#$max_chars_user_description#}"></textarea>
-                            <div class="right"><small>Max. {#$max_chars_user_description#} characters</small></div></td></tr>
+                    <tr><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
+                </tbody>
+            </table>
+            <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
+            <table style="width:100%">
+                <tbody>
+                    <tr>
+                        <td id='user-alias-textfield'> </td>
+                    </tr>
+                </tbody> 
+            </table>
+            <h4>User Description <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
+            <table style="width:100%">
+                <tbody>
+                    <tr>
+                        <td id="user-description-textfield"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
