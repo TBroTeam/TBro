@@ -146,6 +146,8 @@ class Sync extends \WebService {
             $parms['groupname'] = substr($parms['groupname'], 0, MAX_CHARS_CARTNAME);
         if (isset($parms['newname']) && strlen($parms['newname']) > MAX_CHARS_CARTNAME)
             $parms['newname'] = substr($parms['newname'], 0, MAX_CHARS_CARTNAME);
+        if (isset($parms['groupnotes']) && strlen($parms['groupnotes']) > MAX_CHARS_CARTNOTES)
+            $parms['groupnotes'] = substr($parms['groupnotes'], 0, MAX_CHARS_CARTNOTES);
 
         //manipulation
         switch ($parms['action']) {

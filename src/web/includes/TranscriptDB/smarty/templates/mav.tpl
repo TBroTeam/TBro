@@ -141,7 +141,8 @@
                         <h4>Notes</h4>
                     </div>
                     <div class="large-12 columns">
-                        <textarea id='cart-notes-textfield'> </textarea>
+                        <textarea id='cart-notes-textfield' maxlength="{#$max_chars_cartnotes#}"> </textarea>
+                        <div class="right"><small>Max. {#$max_chars_cartnotes#} characters</small></div>
                     </div>
                 </div>
                 {#include file="display-components/cart_table.tpl"#}
