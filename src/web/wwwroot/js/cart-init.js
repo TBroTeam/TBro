@@ -246,8 +246,26 @@ $(document).ready(function() {
         }
     });
 
-
-
+    $("#dialog-edit-cart-notes").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 500,
+        modal: true,
+        buttons: {
+            "Save Changes": function() {
+                cart.updateGroup($('#cart-name').val(), $('#cart-notes').val());
+                $(this).dialog("close");
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        },
+        open: function(event, ui) {
+            $('#cart-name').val($(this).data('cart-name'));
+            $('#cart-notes').val($(this).data('cart-notes'));
+            $('#cart-notes').focus();
+        }
+    });
 
     $("#dialog-edit-cart-item").dialog({
         autoOpen: false,

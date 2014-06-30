@@ -98,6 +98,12 @@
                 }
             });
         }
+
+        function annotateCart() {
+            $("#dialog-edit-cart-notes").data('cart-name', "{#$cartname#}");
+            $("#dialog-edit-cart-notes").data('cart-notes', $('#cart-notes-textfield').text());
+            $("#dialog-edit-cart-notes").dialog("open");
+        }
     </script>
     <style type="text/css">
         .wordcloud a {
@@ -138,11 +144,12 @@
                 </div>
                 <div class="row">
                     <div class="large-12 columns">  
-                        <h4>Notes</h4>
-                    </div>
-                    <div class="large-12 columns">
-                        <textarea id='cart-notes-textfield' maxlength="{#$max_chars_cartnotes#}"> </textarea>
-                        <div class="right"><small>Max. {#$max_chars_cartnotes#} characters</small></div>
+                        <h4>Notes <a class="cart-button-rename" title="Change Annotation" onclick="annotateCart();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
+                        <table style="width:100%">
+                            <tbody>
+                            <td id='cart-notes-textfield'> </td>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 {#include file="display-components/cart_table.tpl"#}

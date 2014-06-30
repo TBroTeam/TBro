@@ -175,6 +175,18 @@
                         </form>
                     </div>
 
+                    <div id="dialog-edit-cart-notes" title="Edit Cart Notes">
+                        <form>
+                            <fieldset>
+                                <label for="item-name">Cart</label>
+                                <input type="text" name="name" id="cart-name" class="text ui-widget-content ui-corner-all" readonly/>
+                                <label for="item-annotations">User Description</label>
+                                <textarea name="annotations" id="cart-notes" class="text ui-widget-content ui-corner-all" maxlength="{#$max_chars_cartnotes#}"></textarea>
+                                <div class="right"><small>Max. {#$max_chars_cartnotes#} characters</small></div>
+                            </fieldset>
+                        </form>
+                    </div>
+
                     <div id="dialog-paste-cart-group" title="Import Group">
                         <form>
                             <fieldset>
