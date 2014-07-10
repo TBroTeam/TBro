@@ -25,12 +25,14 @@ while (true) {
     if ($child_pid == -1)
     {
        // Error during waitpid!
+        printf("ERROR: Error during wait command\n");
     } else if ($child_pid == 0)
     {
        // No child finished
     } else 
     {
        // Child with pid $child_pid finished
+        printf("Notice: Child (PID:%d) finished\n", $child_pid);
     }  
       
     $pdo = pdo_connect();
