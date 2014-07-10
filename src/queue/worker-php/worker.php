@@ -24,8 +24,7 @@ while (true) {
     $child_pid = pcntl_wait($child_status, WNOHANG);
     if ($child_pid == -1)
     {
-       // Error during waitpid!
-        printf("ERROR: Error during wait command\n");
+       // 
     } else if ($child_pid == 0)
     {
        // No child finished
