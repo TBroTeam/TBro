@@ -20,6 +20,19 @@ $supported_programs = unserialize(SUPPORTED_PROGRAMS);
 $supported_programs_qmarks = implode(',', array_fill(0, count($supported_programs), '?'));
 
 while (true) {
+    // check if child processes are already terminated
+    $child_pid = pcntl_wait($child_status, WNOHANG);
+    if ($child_pid == -1)
+    {
+       // Error during waitpid!
+    } else if ($child_pid == 0)
+    {
+       // No child finished
+    } else 
+    {
+       // Child with pid $child_pid finished
+    }  
+      
     $pdo = pdo_connect();
     $stm_get_job = $pdo->prepare('SELECT * FROM request_job(?, ?, ARRAY[' . $supported_programs_qmarks . '])');
     $stm_get_job->execute(array_merge(array(MAX_FORKS, HOSTNAME), array_keys($supported_programs)));
