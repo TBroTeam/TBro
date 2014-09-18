@@ -29,6 +29,7 @@
         }
         $('#user-alias-textfield').text(alias);
         $('#user-description-textfield').text(description);
+        updateContainingCartsSection();
         });
 
         // "genome browser" graph
