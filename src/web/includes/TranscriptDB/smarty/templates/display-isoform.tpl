@@ -172,7 +172,7 @@
             <h4>Corresponding Unigene</h4>
             <table style="width:100%">
                 <tbody>
-                    <tr><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                    <tr><td><ul id="containing-carts-section"></ul></td></tr>
                 </tbody>
             </table>
             {#/if#}
@@ -265,11 +265,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <div id="myModal" class="reveal-modal">
-        <h2>This isoform is in the following carts:</h2>
-        <ul id="containing-carts-section"></ul>
-        <a class="close-reveal-modal">&#215;</a>
     </div>
     {#/block#}
