@@ -119,10 +119,10 @@
         });
         $('#containing-carts-section').empty();
         if (hits.length === 0) {
-        $('#containing-carts-section').append('<li style="font-size:1.5em">No carts yet...</li>');
+        $('#containing-carts-section').append('<li>No carts yet...</li>');
         } else {
         $.each(hits, function(id, attr) {
-        $('#containing-carts-section').append('<li style="font-size:1.5em"><a href="/graphs/' + attr + '">' + attr + '</a></li>');
+        $('#containing-carts-section').append('<li><a href="/graphs/' + attr + '">' + attr + '</a></li>');
         });
         }
         }
@@ -178,7 +178,7 @@
             </table>
             {#/if#}
             <h4>Containing Carts</h4>
-            <div class="large-12 columns panel">
+            <div class="large-12 columns">
                 <ul id="containing-carts-section"></ul>
             </div>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
