@@ -6,7 +6,10 @@
             <div id="predpeps"> </div>
             <div class="row">
                 <div class="large-12 columns panel">
-                    <h4>Predicted Peptides</h4>
+                    <div class="left"><h4>Predicted Peptides</h4></div><div class="right"><a 
+                            target="_blank" 
+                            href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastp&PAGE_TYPE=BlastSearch&QUERY=>{#foreach $predpeps as $predpep#}>{#$predpep.name#}%0A{#$predpep.residues#}%0A{#/foreach#}" 
+                            class="button">BLAST @ NCBI</a></div>
                     <div class="tabs" style="padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;"
 >
                         <ul>
