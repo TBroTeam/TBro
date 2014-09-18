@@ -6,9 +6,12 @@
             <div id="predpeps"> </div>
             <div class="row">
                 <div class="large-12 columns panel">
-                    <div class="left"><h4>Predicted Peptides</h4></div><div class="right"><a target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastp&PAGE_TYPE=BlastSearch&QUERY=>{#foreach $predpeps as $predpep#}>{#$predpep.name#}%0A{#$predpep.residues#}%0A{#/foreach#}" class="button">BLAST @ NCBI</a></div>
+                    <div class="row">
+                        <div class="left"><h4>Predicted Peptides</h4></div>
+                        <div class="right"><a target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastp&PAGE_TYPE=BlastSearch&QUERY=>{#foreach $predpeps as $predpep#}>{#$predpep.name#}%0A{#$predpep.residues#}%0A{#/foreach#}" class="button">BLAST @ NCBI</a></div>
+                    </div>
                     <div class="tabs" style="padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;"
->
+                         >
                         <ul>
                             {#foreach $predpeps as $predpep#}
                                 <li><p><a href="#{#$predpep.name|clean_id#}">{#$predpep.name#}</a></p></li>
@@ -74,21 +77,21 @@
                                                                     {#/if#}
                                                                 </span>
                                                             </td>
-                                                        <!--    <td>
-                                                                {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
-                                                                    <ul style="list-style: none">
-                                                                        {#foreach $interpro.dbxref as $dbxref#}
-                                                                            <li>{#dbxreflink dbxref=$dbxref#} </li>
-                                                                            {#/foreach#}
-                                                                    </ul>
-                                                                {#/if#}
-                                                            </td> -->
+                                                            <!--    <td>
+                                                            {#if isset($interpro.dbxref) && count($interpro.dbxref)>0 #}
+                                                                <ul style="list-style: none">
+                                                                {#foreach $interpro.dbxref as $dbxref#}
+                                                                    <li>{#dbxreflink dbxref=$dbxref#} </li>
+                                                                {#/foreach#}
+                                                        </ul>
+                                                            {#/if#}
+                                                        </td> -->
                                                         </tr>
                                                     {#/foreach#}
                                                 </tbody>
                                             </table>
                                             <script type="text/javascript">
-                                                $(document).ready(function() {
+                                                $(document).ready(function () {
                                                     $('#{#$predpep.uniquename|clean_id#} table.dataTable').dataTable();
                                                 });
 
