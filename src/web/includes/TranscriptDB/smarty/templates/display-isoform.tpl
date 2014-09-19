@@ -28,7 +28,19 @@
         }
         }
         $('#user-alias-textfield').text(alias);
+        if(alias === ""){
+            $('#user-alias-table').hide();
+        }
+        else{
+            $('#user-alias-table').show();
+        }
         $('#user-description-textfield').text(description);
+        if(description === ""){
+            $('#user-description-table').hide();
+        }
+        else{
+            $('#user-description-table').show();
+        }
         updateContainingCartsSection();
         });
 
@@ -182,7 +194,7 @@
                 <ul id="containing-carts-section"></ul>
             </div>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
-            <table style="width:100%">
+            <table style="width:100%" id="user-alias-table">
                 <tbody>
                     <tr>
                         <td id='user-alias-textfield'> </td>
@@ -190,7 +202,7 @@
                 </tbody> 
             </table>
             <h4>User Description <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
-            <table style="width:100%">
+            <table style="width:100%" id="user-description-table">
                 <tbody>
                     <tr>
                         <td id="user-description-textfield"></td>
