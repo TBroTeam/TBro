@@ -219,7 +219,7 @@
     <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
     <div class="row">
         <div class="large-12 columns panel">
-            <div class="left"><h4>Sequence</h4></div><div class="right"><a target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&QUERY=>{#$data.isoform.name#}%0A{#$data.isoform.residues#}" class="button">BLAST @ NCBI</a></div>
+            <div class="left"><h4>Sequence</h4></div><div class="right"><a target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&QUERY=>{#$data.isoform.name#}%0A{#$data.isoform.residues#}" class="button">blastn @ NCBI</a></div>
             <textarea style="height:100px;" id="sequence-isoform">>{#$data.isoform.name#}&#10;{#$data.isoform.residues#}</textarea>
         </div>
     </div>
