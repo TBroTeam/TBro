@@ -36,7 +36,20 @@
                     }
                 }
                 $('#user-alias-textfield').text(alias);
+                if (alias === "") {
+                    $('#user-alias-table').hide();
+                }
+                else {
+                    $('#user-alias-table').show();
+                }
                 $('#user-description-textfield').text(description);
+                if (description === "") {
+                    $('#user-description-table').hide();
+                }
+                else {
+                    $('#user-description-table').show();
+                }
+                updateContainingCartsSection();
             });
         });
 
@@ -52,17 +65,18 @@
         function updateContainingCartsSection() {
             var cfc = cart._getCartForContext();
             var hits = [];
-            $.each(cfc, function(key, attr) {
-                if (_.indexOf(attr.items, {#$data.unigene.feature_id#}) !== -1)
+            $.each(cfc, function (key, attr) {
+                if (_.indexOf(attr.items, {#$data.isoform.feature_id#}) !== -1)
                     hits.push(key);
             });
             $('#containing-carts-section').empty();
             if (hits.length === 0) {
-                $('#containing-carts-section').append('<li style="font-size:1.5em">No carts yet...</li>');
+                $('#containing-carts-table').hide();
             } else {
-                $.each(hits, function(id, attr) {
-                    $('#containing-carts-section').append('<li style="font-size:1.5em"><a href="/graphs/' + attr + '">' + attr + '</a></li>');
+                $.each(hits, function (id, attr) {
+                    $('#containing-carts-section').append('<tr><td><a href="/graphs/' + attr + '">' + attr + '</a></td></tr>');
                 });
+                $('#containing-carts-table').show();
             }
         }
 
@@ -107,13 +121,13 @@
                 </div>
             </div>
             <h4>Containing Carts</h4>
-            <table style="width:100%">
-                <tbody>
-                    <tr><td><a data-reveal-id="myModal" href="#" onclick="updateContainingCartsSection();">Show</a></td></tr>
+            <table style="width:100%" id="containing-carts-table">
+                <tbody id="containing-carts-section">
+                    
                 </tbody>
             </table>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
-            <table style="width:100%">
+            <table style="width:100%" id="user-alias-table">
                 <tbody>
                     <tr>
                         <td id='user-alias-textfield'> </td>
@@ -121,7 +135,7 @@
                 </tbody> 
             </table>
             <h4>User Description <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
-            <table style="width:100%">
+            <table style="width:100%" id="user-description-table">
                 <tbody>
                     <tr>
                         <td id="user-description-textfield"></td>
