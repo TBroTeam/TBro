@@ -131,12 +131,12 @@
             });
             $('#containing-carts-section').empty();
             if (hits.length === 0) {
-                $('#containing-carts-section').hide();
+                $('#containing-carts-table').hide();
             } else {
                 $.each(hits, function (id, attr) {
                     $('#containing-carts-section').append('<tr><td><a href="/graphs/' + attr + '">' + attr + '</a></td></tr>');
                 });
-                $('#containing-carts-section').show();
+                $('#containing-carts-table').show();
             }
         }
 
@@ -191,7 +191,7 @@
                 </table>
             {#/if#}
             <h4>Containing Carts</h4>
-            <table style="width:100%">
+            <table style="width:100%" id="containing-carts-table">
                 <tbody id="containing-carts-section">
                     
                 </tbody>
