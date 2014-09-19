@@ -66,7 +66,7 @@
             var cfc = cart._getCartForContext();
             var hits = [];
             $.each(cfc, function (key, attr) {
-                if (_.indexOf(attr.items, {#$data.isoform.feature_id#}) !== -1)
+                if (_.indexOf(attr.items, {#$data.unigene.feature_id#}) !== -1)
                     hits.push(key);
             });
             $('#containing-carts-section').empty();
