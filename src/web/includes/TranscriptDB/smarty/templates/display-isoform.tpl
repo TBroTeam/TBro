@@ -1,170 +1,171 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
-{#call_webservice path="details/isoform" data=["query1"=>$isoform_feature_id] assign='data'#}
+    {#call_webservice path="details/isoform" data=["query1"=>$isoform_feature_id] assign='data'#}
 
-<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
-<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
-<!-- use chrome frame if installed and user is using IE -->
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+    <!-- use chrome frame if installed and user is using IE -->
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <script type="text/javascript">
         var feature_id = '{#$data.isoform.feature_id#}';
 
-        $(document).ready(function() {
-        $('.tabs').tabs();
+        $(document).ready(function () {
+            $('.tabs').tabs();
 
-        $('#Cart').on('cartEvent', function(event) {
-        if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)) || ((event.eventData.action || '').match(/redraw/)))) {
-        return;
-        }
-        var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.isoform.feature_id#}'];
-        var alias = "";
-        var description = "";
-        if (typeof metadata !== 'undefined') {
-        if (typeof metadata.alias !== 'undefined') {
-        alias = metadata.alias;
-        }
-        if (typeof metadata.annotations !== 'undefined') {
-        description = metadata.annotations;
-        }
-        }
-        $('#user-alias-textfield').text(alias);
-        if(alias === ""){
-            $('#user-alias-table').hide();
-        }
-        else{
-            $('#user-alias-table').show();
-        }
-        $('#user-description-textfield').text(description);
-        if(description === ""){
-            $('#user-description-table').hide();
-        }
-        else{
-            $('#user-description-table').show();
-        }
-        updateContainingCartsSection();
-        });
+            $('#Cart').on('cartEvent', function (event) {
+                if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)) || ((event.eventData.action || '').match(/redraw/)))) {
+                    return;
+                }
+                var metadata = cart._getMetadataForContext(cart.currentContext)['{#$data.isoform.feature_id#}'];
+                var alias = "";
+                var description = "";
+                if (typeof metadata !== 'undefined') {
+                    if (typeof metadata.alias !== 'undefined') {
+                        alias = metadata.alias;
+                    }
+                    if (typeof metadata.annotations !== 'undefined') {
+                        description = metadata.annotations;
+                    }
+                }
+                $('#user-alias-textfield').text(alias);
+                if (alias === "") {
+                    $('#user-alias-table').hide();
+                }
+                else {
+                    $('#user-alias-table').show();
+                }
+                $('#user-description-textfield').text(description);
+                if (description === "") {
+                    $('#user-description-table').hide();
+                }
+                else {
+                    $('#user-description-table').show();
+                }
+                updateContainingCartsSection();
+            });
 
-        // "genome browser" graph
-        $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + feature_id, {
-        success: function(val) {
-        canvas = $('#canvas_isoform');
-        canvas.attr('width', canvas.parent().width() - 8);
-        if (val.tracks.length == 0)
-        return;
-        new CanvasXpress(
-        "canvas_isoform",
-        {
-        "tracks": val.tracks
-        },
-        {
-        graphType: 'Genome',
-        useFlashIE: true,
-        backgroundType: 'gradient',
-        backgroundGradient1Color: 'rgb(0,183,217)',
-        backgroundGradient2Color: 'rgb(4,112,174)',
-        oddColor: 'rgb(220,220,220)',
-        evenColor: 'rgb(250,250,250)',
-        missingDataColor: 'rgb(220,220,220)',
-        setMin: val.min,
-        setMax: val.max
-        }
-        );
-        }
-        });
+            // "genome browser" graph
+            $.ajax('{#$ServicePath#}/graphs/genome/isoform/' + feature_id, {
+                success: function (val) {
+                    canvas = $('#canvas_isoform');
+                    canvas.attr('width', canvas.parent().width() - 8);
+                    if (val.tracks.length == 0)
+                        return;
+                    new CanvasXpress(
+                            "canvas_isoform",
+                            {
+                                "tracks": val.tracks
+                            },
+                    {
+                        graphType: 'Genome',
+                        useFlashIE: true,
+                        backgroundType: 'gradient',
+                        backgroundGradient1Color: 'rgb(0,183,217)',
+                        backgroundGradient2Color: 'rgb(4,112,174)',
+                        oddColor: 'rgb(220,220,220)',
+                        evenColor: 'rgb(250,250,250)',
+                        missingDataColor: 'rgb(220,220,220)',
+                        setMin: val.min,
+                        setMax: val.max
+                    }
+                    );
+                }
+            });
 
-        $('.contains-tooltip').tooltip({
-        items: ".has-tooltip",
-        open: function(event, ui) {
-        ui.tooltip.css("max-width", "600px");
-        },
-        content: function() {
-        var element = $(this);
-        var tooltip = $("<table/>");
+            $('.contains-tooltip').tooltip({
+                items: ".has-tooltip",
+                open: function (event, ui) {
+                    ui.tooltip.css("max-width", "600px");
+                },
+                content: function () {
+                    var element = $(this);
+                    var tooltip = $("<table/>");
 
-        //build a table over all "data-" attributes.
-        $.each(this.attributes, function(key, attr) {
-        if (attr.name.substr(0, 5) == 'data-') {
-        var splitAt = attr.nodeValue.indexOf('|');
-        //everything left from the first | is row name
-        var name = attr.nodeValue.substr(0, splitAt);
-        //everything right of it is row value
-        var value = attr.nodeValue.substr(splitAt + 1);
-        if (value === '')
-        return; //skip empty values
-        $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
-        }
-        });
-        //apply styles
-        tooltip.foundation();
-        return tooltip;
-        }
-        });
+                    //build a table over all "data-" attributes.
+                    $.each(this.attributes, function (key, attr) {
+                        if (attr.name.substr(0, 5) == 'data-') {
+                            var splitAt = attr.nodeValue.indexOf('|');
+                            //everything left from the first | is row name
+                            var name = attr.nodeValue.substr(0, splitAt);
+                            //everything right of it is row value
+                            var value = attr.nodeValue.substr(splitAt + 1);
+                            if (value === '')
+                                return; //skip empty values
+                            $("<tr><td>" + name + "</td><td>" + value + "</td></tr>").appendTo(tooltip);
+                        }
+                    });
+                    //apply styles
+                    tooltip.foundation();
+                    return tooltip;
+                }
+            });
 
-        new Grouplist($('#button-isoform-addToCart-options'), cart, addSelectedToCart);
-        $('#button-isoform-addToCart-options-newcart').click(addSelectedToCart);
+            new Grouplist($('#button-isoform-addToCart-options'), cart, addSelectedToCart);
+            $('#button-isoform-addToCart-options-newcart').click(addSelectedToCart);
 
-        $('.isoform-header').draggable({
-        appendTo: "body",
-        helper: function() {
-        return $('<div>', {text: $('.isoform-header').text()}).addClass('beingDragged');
-        },
-        cursorAt: {top: 5, left: 5}
-        });
+            $('.isoform-header').draggable({
+                appendTo: "body",
+                helper: function () {
+                    return $('<div>', {text: $('.isoform-header').text()}).addClass('beingDragged');
+                },
+                cursorAt: {top: 5, left: 5}
+            });
 
         });
 
         function addSelectedToCart() {
-        var group = $(this).attr('data-value');
-        if (group === '#new#')
-        group = cart.addGroup();
-        cart.addItem({#$data.isoform.feature_id#}, {
-        groupname: group
-        });
+            var group = $(this).attr('data-value');
+            if (group === '#new#')
+                group = cart.addGroup();
+            cart.addItem({#$data.isoform.feature_id#}, {
+                groupname: group
+            });
         }
 
         function updateContainingCartsSection() {
-        var cfc = cart._getCartForContext();
-        var hits = [];
-        $.each(cfc, function(key, attr) {
-        if (_.indexOf(attr.items, {#$data.isoform.feature_id#}) !== -1)
-        hits.push(key);
-        });
-        $('#containing-carts-section').empty();
-        if (hits.length === 0) {
-        $('#containing-carts-section').append('<li>No carts yet...</li>');
-        } else {
-        $.each(hits, function(id, attr) {
-        $('#containing-carts-section').append('<li><a href="/graphs/' + attr + '">' + attr + '</a></li>');
-        });
-        }
+            var cfc = cart._getCartForContext();
+            var hits = [];
+            $.each(cfc, function (key, attr) {
+                if (_.indexOf(attr.items, {#$data.isoform.feature_id#}) !== -1)
+                    hits.push(key);
+            });
+            $('#containing-carts-section').empty();
+            if (hits.length === 0) {
+                $('#containing-carts-section').hide();
+            } else {
+                $.each(hits, function (id, attr) {
+                    $('#containing-carts-section').append('<tr><td><a href="/graphs/' + attr + '">' + attr + '</a></td></tr>');
+                });
+                $('#containing-carts-section').show();
+            }
         }
 
         function annotateElement() {
-        var id = {#$data.isoform.feature_id#};
-        var name = "{#$data.isoform.name#}";
-        var description = "";
+            var id = {#$data.isoform.feature_id#};
+            var name = "{#$data.isoform.name#}";
+            var description = "";
         {#if isset($data.isoform.description) #}
-        var description = "{#$data.isoform.description[0].value#}";
+            var description = "{#$data.isoform.description[0].value#}";
         {#/if#}
-        cart._getItemDetails([id], function(data) {
-        if (Object.keys(cart.metadata[cart.currentContext]).length >= cartlimits.max_annotations_per_context) {
-        if (typeof data[0].metadata.alias === 'undefined' && typeof data[0].metadata.annotations === 'undefined') {
-        $('#TooManyAnnotationsDialog').foundation('reveal', 'open');
-        return;
-        }
-        }
-        $("#dialog-edit-cart-item").data('id', id);
-        $("#dialog-edit-cart-item").data('name', name);
-        $("#dialog-edit-cart-item").data('description', description);
-        $('#item-alias').val(data[0].metadata.alias || '');
-        $('#item-annotations').val(data[0].metadata.annotations || '');
-        $("#dialog-edit-cart-item").dialog("open");
-        });
+            cart._getItemDetails([id], function (data) {
+                if (Object.keys(cart.metadata[cart.currentContext]).length >= cartlimits.max_annotations_per_context) {
+                    if (typeof data[0].metadata.alias === 'undefined' && typeof data[0].metadata.annotations === 'undefined') {
+                        $('#TooManyAnnotationsDialog').foundation('reveal', 'open');
+                        return;
+                    }
+                }
+                $("#dialog-edit-cart-item").data('id', id);
+                $("#dialog-edit-cart-item").data('name', name);
+                $("#dialog-edit-cart-item").data('description', description);
+                $('#item-alias').val(data[0].metadata.alias || '');
+                $('#item-annotations').val(data[0].metadata.annotations || '');
+                $("#dialog-edit-cart-item").dialog("open");
+            });
         }
 
     </script>
-    {#/block#}
-    {#block name='body'#}
+{#/block#}
+{#block name='body'#}
 
 
     <div class="row">
@@ -182,17 +183,19 @@
                 </div>
             </div>
             {#if isset($data.isoform.unigene)#}
-            <h4>Corresponding Unigene</h4>
-            <table style="width:100%">
-                <tbody>
-                    <tr><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
-                </tbody>
-            </table>
+                <h4>Corresponding Unigene</h4>
+                <table style="width:100%">
+                    <tbody>
+                        <tr><td><a href="{#$AppPath#}/details/byId/{#$data.isoform.unigene.feature_id#}">{#$data.isoform.unigene.uniquename#}</a></td></tr>
+                    </tbody>
+                </table>
             {#/if#}
             <h4>Containing Carts</h4>
-            <div class="large-12 columns">
-                <ul id="containing-carts-section"></ul>
-            </div>
+            <table style="width:100%">
+                <tbody id="containing-carts-section">
+                    
+                </tbody>
+            </table>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
             <table style="width:100%" id="user-alias-table">
                 <tbody>
@@ -214,18 +217,18 @@
 
     {#include file="display-components/synonym.tpl" feature=$data.isoform #}
     {#if isset($data.isoform.description) #}
-    <div class="row">
-        <div class="large-12 columns panel">
-            <h4>DB Description</h4>
-            <table style="width:100%">
-                <tbody>
-                    {#foreach $data.isoform.description as $description#}
-                    <tr><td>{#$description.value#}</td></tr>
-                    {#/foreach#}
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="large-12 columns panel">
+                <h4>DB Description</h4>
+                <table style="width:100%">
+                    <tbody>
+                        {#foreach $data.isoform.description as $description#}
+                            <tr><td>{#$description.value#}</td></tr>
+                        {#/foreach#}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     {#/if#}
     {#include file="display-components/publication.tpl" feature=$data.isoform #}
     <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
@@ -254,9 +257,9 @@
     <script type="text/javascript">addNavAnchor('plot', 'Expression Analysis');</script>
     <div class="row">
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
             {#include file="js/barplot.js"#}
-            populateBarplotSelectionBoxes({isoform: [{#$data.isoform.feature_id#}], unigene: [{#if isset($data.isoform.unigene)#}{#$data.isoform.unigene.feature_id#}{#/if#}]}, {type: "isoform"});
+                populateBarplotSelectionBoxes({isoform: [{#$data.isoform.feature_id#}], unigene: [{#if isset($data.isoform.unigene)#}{#$data.isoform.unigene.feature_id#}{#/if#}]}, {type: "isoform"});
             });
         </script>
         <div class="large-12 columns panel">
@@ -278,4 +281,4 @@
         </div>
     </div>
 
-    {#/block#}
+{#/block#}
