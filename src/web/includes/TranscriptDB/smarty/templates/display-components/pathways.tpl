@@ -94,7 +94,7 @@
                             }
                         }
                     });
-                    //       resultTable.on('click', 'a.open-close-details', openCloseDetails);
+                    resultTable.on('click', 'a.open-close-details', openCloseDetails);
                 } else {
                     resultTable.fnClearTable();
                     resultTable.fnAddData(pwData);
@@ -108,6 +108,21 @@
                     });
                     return url;
                 }
+
+                function openCloseDetails(event) {
+                    event.preventDefault();
+                    var row = $(this).parents("tr")[0];
+                    var dT = TableTools.fnGetInstance('pathway-table');
+                    dT.fnIsSelected(row) ? dT.fnDeselect(row) : dT.fnSelect(row);
+                    if (resultTable.fnIsOpen(row)) {
+                        resultTable.fnClose(row);
+                    } else {
+                        var aData = resultTable.fnGetData(row);
+                        resultTable.fnOpen(row, _.template($('#template_pathway_details').html())({
+                            hit: aData
+                        }), 'details');
+                    }
+                }
             }
 
 
@@ -115,24 +130,11 @@
         }
     </script>
     <div id="panel-pathways" class="large-12" style="display: none">
-        <script type="text/template"  id="template_pathway"> 
-            <tr>
-            <td> <%= pathway.definition %> </td>
-            <td> <a href="http://www.genome.jp/kegg-bin/show_pathway?map=map<%=id%>&multi_query=<% _.each(components, function(comp) { %><%=comp%>%0D%0A<% }); %>" target="_blank">
-            <%= id %> 
-            </a> </td>
-            <td> <%print(components.length);%> </td>
-            <td>
-            <a href="#" onclick="$('#pathway-details').show();$('#pathway-details').children().hide();$('#pathway-details-<%=id%>').toggle();"> Details </a>
-            </td>
-            </tr>
-        </script>
         <table id="pathway-table">
             <thead><tr><th>Pathway</th><th>Map</th><th>Components</th><th>Details</th></tr></thead>
         </table>
         <div style="clear:both"> &nbsp; </div>
         <script type="text/template" id="template_pathway_details">
-            <div style="display: none" id="pathway-details-<%=id%>">
             <h5>Details of <%= pathway.definition %> (<a href="http://www.genome.jp/kegg-bin/show_pathway?map=map<%=id%>&multi_query=<% _.each(components, function(comp) { %><%=comp%>%0D%0A<% }); %>" target="_blank">
             <%= id %> 
             </a>)</h5>
@@ -141,9 +143,6 @@
             <h6><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
             <ul><% _.each(comp_array[comp].features, function(value, key) { %><li> <a target="_blank" href="{#$AppPath#}/details/byId/<%=key%>"><%= value %></a> </li><% }) %></ul>
             <% }); %>
-            </tr>
         </script>
-        <div class="large-12 columns panel" id="pathway-details" style="display:none">
-        </div>
     </div>
 </div>
