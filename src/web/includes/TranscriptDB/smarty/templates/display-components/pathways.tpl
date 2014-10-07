@@ -91,16 +91,16 @@
                                     },
                                     cursorAt: {top: 5, left: 30}
                                 });
-                            } 
+                            }
                         }
                     });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
-		//    TODO clear table and add updated data
-                //    Not working at the moment (TableTools use old selection)
-                //    Drawback: Pathways are not updated on cart events.
-                //    resultTable.rows().remove().clear();
-                //    resultTable[0].fnAddData(pwData);
+                    //    TODO clear table and add updated data
+                    //    Not working at the moment (TableTools use old selection)
+                    //    Drawback: Pathways are not updated on cart events.
+                    //    resultTable.rows().remove().clear();
+                    //    resultTable[0].fnAddData(pwData);
                 }
 
                 function prepare_pathway_url(id, components) {
@@ -117,7 +117,6 @@
                     var row = $(this).parents("tr")[0];
                     var dT = TableTools.fnGetInstance("pathway-table");
                     dT.fnIsSelected(row) ? dT.fnDeselect(row) : dT.fnSelect(row);
-		    console.log(dT.fnGetSelectedData());
                     if (resultTable.fnIsOpen(row)) {
                         resultTable.fnClose(row);
                     } else {
@@ -137,14 +136,13 @@
         </table>
         <div style="clear:both"> &nbsp; </div>
         <script type="text/template" id="template_pathway_details">
-            <h5>Details of <%= pathway.definition %> (<a href="http://www.genome.jp/kegg-bin/show_pathway?map=map<%=id%>&multi_query=<% _.each(components, function(comp) { %><%=comp%>%0D%0A<% }); %>" target="_blank">
-            <%= id %> 
-            </a>)</h5>
+            <div>
             <% _.each(components, function(comp) { 
             comp_p="http://www.chem.qmul.ac.uk/iubmb/enzyme/EC"+comp.replace(/\./g, '/')+".html";%>
             <h6><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
             <ul><% _.each(comp_array[comp].features, function(value, key) { %><li> <a target="_blank" href="{#$AppPath#}/details/byId/<%=key%>"><%= value %></a> </li><% }) %></ul>
             <% }); %>
+        </div>
         </script>
     </div>
 </div>
