@@ -80,7 +80,6 @@
                             $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + prepare_pathway_url(aData.id, aData.components) + '">' + aData.id + '</a>');
                             $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
                             $(nRow).attr('data-id', aData.feature_id);
-                            console.log(aData.feature_id);
                             $(nRow).draggable({
                                 appendTo: "body",
                                 helper: function () {
@@ -89,7 +88,6 @@
                                     var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
                                     var selectedIDs = [];
                                     $.each(selectedItems, function (key, val) {
-                                        console.log(val);
                                         selectedIDs = _.union(selectedIDs, val.feature_id);
                                     });
                                     $(nRow).attr('data-id', selectedIDs);
