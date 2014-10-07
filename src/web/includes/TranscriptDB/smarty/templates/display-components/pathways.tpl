@@ -1,6 +1,10 @@
 <div id="pathways">
     <script>
         // called from mav.tpl
+        $(document).ready(function(){
+            new Grouplist($('#pathway-button-gdfx-addToCart-options'), cart, pathwayaddSelectedToCart);
+            $('#pathway-button-gdfx-addToCart-options-newcart').click(pathwayaddSelectedToCart); 
+        });
 
         function pathwayselectAll() {
 // fnSelectAll only for graphical selection
@@ -20,6 +24,21 @@
             var oSettings = oTable.fnSettings();
             oSettings._iDisplayLength = numOfEntries;
             oTable.fnDraw();
+        }
+        
+        function pathwayaddSelectedToCart() {
+            var group = $(this).attr('data-value');
+            var selectedIDs = [];
+            $.each(TableTools.fnGetInstance('pathway-table').fnGetSelectedData(), function (key, value) {
+                selectedIDs = _.union(selectedIDs, value.feature_id);
+            });
+            if (selectedIDs.length === 0)
+                return;
+            if (group === '#new#')
+                group = cart.addGroup();
+            cart.addItem(selectedIDs, {
+                groupname: group
+            });
         }
 
         function showPathwayInfo() {
@@ -112,9 +131,7 @@
                                         selectedIDs = _.union(selectedIDs, val.feature_id);
                                     });
                                     $(nRow).attr('data-id', selectedIDs);
-                                    if (selectedIDs.length > 1) {
-                                        helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
-                                    }
+                                    helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
                                     return helper;
                                 },
                                 cursorAt: {top: 5, left: 30}
