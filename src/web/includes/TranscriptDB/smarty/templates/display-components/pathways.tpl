@@ -137,9 +137,9 @@
                             appendTo: "body",
                             helper: "clone"
                         });
-                        $(".draggable-ids").bind("dragstart", function(event, ui) {
+                        $(".draggable-ids").bind("dragstart", function (event, ui) {
                             var numElements = ui.helper.attr("data-id").split(",").length;
-                            ui.helper.text("("+numElements+") "+ui.helper.text());
+                            ui.helper.text("(" + numElements + ") " + ui.helper.text());
                         });
                     }
                 }
@@ -150,6 +150,29 @@
         }
     </script>
     <div id="panel-pathways" class="large-12">
+        <div class="large-12 columns">        
+            <ul class="button-group even-3">
+                <li><button class="small button dropdown" id="pathway-show-entries-dropdown" data-dropdown="pathway-show-entries-dropdown-options"> Show Entries </button></li>
+                <li><button class="small button dropdown" data-dropdown="pathway-select-all-none-dropdown">Select</button></li>
+                <li><button class="small button dropdown" type="button" id="pathway-button-gdfx-addToCart" data-dropdown="pathway-button-gdfx-addToCart-options"> Store </button></li>
+            </ul>
+
+            <ul class="f-dropdown" id="pathway-show-entries-dropdown-options" data-dropdown-content>
+                <li onclick="pathwayfnNumOfEntries(10);"> 10 </li> 
+                <li onclick="pathwayfnNumOfEntries(20);"> 20 </li> 
+                <li onclick="pathwayfnNumOfEntries(50);"> 50 </li> 
+                <li onclick="pathwayfnNumOfEntries(100);"> 100 </li> 
+                <li onclick="pathwayfnNumOfEntries(1000);"> 1000 </li> 
+            </ul>
+            <ul id="pathway-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+                <li onclick="pathwayselectAll();" style="width:100%">All</li>
+                <!--<li onclick="pathwayselectAllVisible();" style="width:100%">All visible</li>-->
+                <li onclick="pathwayselectNone();" style="width:100%">None</li>
+            </ul>
+            <ul id="pathway-button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
+                <li id="pathway-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
+            </ul>
+        </div>
         <table id="pathway-table">
             <thead><tr><th>Pathway</th><th>Map</th><th>Components</th><th>Details</th></tr></thead>
         </table>
