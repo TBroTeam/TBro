@@ -32,7 +32,7 @@
             function getFeatureIDs(comps, seqids){
                 var ids = [];
                 $.each(comps, function(key, value){
-                    _.union(ids, seqids[value]);
+                    _.union(ids, Object.keys(seqids[value].features));
                 });
                 console.log(ids);
                 return ids+"";
