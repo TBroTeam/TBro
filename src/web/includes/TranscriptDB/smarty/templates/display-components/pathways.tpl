@@ -114,10 +114,8 @@
             </td>
             </tr>
         </script>
-        <table class="large-12 columns" id='pathway-table'>
+        <table id='pathway-table'>
             <thead><tr><th>Pathway</th><th>Map</th><th>Components</th><th>Details</th></tr></thead>
-            <tbody id="pathway-table-body">
-            </tbody>
         </table>
         <div style="clear:both"> &nbsp; </div>
         <script type="text/template"  id="template_pathway_details">
