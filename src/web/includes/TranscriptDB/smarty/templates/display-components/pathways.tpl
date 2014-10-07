@@ -133,7 +133,7 @@
                             appendTo: "body",
                             helper: "clone"
                         });
-                        $("#list").bind("drag", function(event, ui) {
+                        $(".draggable-id").bind("drag", function(event, ui) {
                             console.log(ui.helper.attr("data-id"));
                             ui.helper.css("background-color", "red");
                         });
