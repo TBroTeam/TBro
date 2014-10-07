@@ -101,10 +101,6 @@
 
                         }
                     });
-                    $(".draggable-id").draggable({
-                        appendTo: "body",
-                        helper: "clone"
-                    });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
                     //    TODO clear table and add updated data
@@ -133,6 +129,10 @@
                     } else {
                         var aData = resultTable.fnGetData(row);
                         resultTable.fnOpen(row, _.template($('#template_pathway_details').html())(aData), 'details');
+                        $(".draggable-id").draggable({
+                            appendTo: "body",
+                            helper: "clone"
+                        });
                     }
                 }
             }
