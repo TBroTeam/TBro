@@ -32,10 +32,9 @@
             function getFeatureIDs(comps, seqids){
                 var ids = [];
                 $.each(comps, function(key, value){
-                    _.union(ids, Object.keys(seqids[value].features));
+                    ids = _.union(ids, Object.keys(seqids[value].features));
                 });
-                console.log(ids);
-                return ids+"";
+                return ids;
             }
             function displayPwTable() {
                 if (!$.fn.DataTable.fnIsDataTable(resultTable.get()[0])) {
@@ -88,8 +87,9 @@
                                         var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
                                         TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
                                         var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
-                                        var selectedIDs = $.map(selectedItems, function (val) {
-                                            return val.feature_id;
+                                        var selectedIDs = [];
+                                        $.each(selectedItems, function (val) {
+                                            selectedIDs = _.union(selectedIDs, val.feature_id);
                                         });
                                         $(nRow).attr('data-id', selectedIDs);
                                         if (selectedIDs.length > 1) {
