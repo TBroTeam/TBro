@@ -103,8 +103,7 @@
                     });
                     $(".draggable-id").draggable({
                         appendTo: "body",
-                        helper: "clone",
-                        cursorAt: {top: 5, left: 30}
+                        helper: "clone"
                     });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
