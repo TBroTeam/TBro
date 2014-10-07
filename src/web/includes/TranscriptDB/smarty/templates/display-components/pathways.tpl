@@ -29,9 +29,9 @@
                     displayPwTable();
                 }
             });
-            function getFeatureIDs(comps, seqids){
+            function getFeatureIDs(comps, seqids) {
                 var ids = [];
-                $.each(comps, function(key, value){
+                $.each(comps, function (key, value) {
                     ids = _.union(ids, Object.keys(seqids[value].features));
                 });
                 return ids;
@@ -80,26 +80,26 @@
                             $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + prepare_pathway_url(aData.id, aData.components) + '">' + aData.id + '</a>');
                             $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
                             $(nRow).attr('data-id', aData.feature_id);
-                            if (aData.feature_id !== "-1") {
-                                $(nRow).draggable({
-                                    appendTo: "body",
-                                    helper: function () {
-                                        var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
-                                        TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
-                                        var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
-                                        var selectedIDs = [];
-                                        $.each(selectedItems, function (val) {
-                                            selectedIDs = _.union(selectedIDs, val.feature_id);
-                                        });
-                                        $(nRow).attr('data-id', selectedIDs);
-                                        if (selectedIDs.length > 1) {
-                                            helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
-                                        }
-                                        return helper;
-                                    },
-                                    cursorAt: {top: 5, left: 30}
-                                });
-                            }
+                            console.log(aData.feature_id);
+                            $(nRow).draggable({
+                                appendTo: "body",
+                                helper: function () {
+                                    var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                                    TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
+                                    var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
+                                    var selectedIDs = [];
+                                    $.each(selectedItems, function (val) {
+                                        selectedIDs = _.union(selectedIDs, val.feature_id);
+                                    });
+                                    $(nRow).attr('data-id', selectedIDs);
+                                    if (selectedIDs.length > 1) {
+                                        helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                                    }
+                                    return helper;
+                                },
+                                cursorAt: {top: 5, left: 30}
+                            });
+
                         }
                     });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
