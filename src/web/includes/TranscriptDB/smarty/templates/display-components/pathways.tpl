@@ -1,10 +1,12 @@
 <div id="pathways">
     <script>
         // called from mav.tpl
-        $(".draggable-id").draggable({
-            appendTo: "body",
-            helper: "clone",
-            cursorAt: {top: 5, left: 30}
+        $(document).ready(function () {
+            $(".draggable-id").draggable({
+                appendTo: "body",
+                helper: "clone",
+                cursorAt: {top: 5, left: 30}
+            });
         });
         function showPathwayInfo() {
             var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
