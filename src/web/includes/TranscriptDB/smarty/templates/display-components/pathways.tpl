@@ -88,7 +88,8 @@
                                     TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
                                     var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
                                     var selectedIDs = [];
-                                    $.each(selectedItems, function (val) {
+                                    $.each(selectedItems, function (key, val) {
+                                        console.log(val);
                                         selectedIDs = _.union(selectedIDs, val.feature_id);
                                     });
                                     $(nRow).attr('data-id', selectedIDs);
