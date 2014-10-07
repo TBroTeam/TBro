@@ -17,7 +17,7 @@
                     $.each(pw, function (key, value) {
                         var arguments = {
                             id: key,
-                            pathway: value,
+                            pathway: value.definition,
                             components: Object.keys(value.comps),
                             num_comp: Object.keys(value.comps).length,
                             comp_array: data.results.components,
@@ -29,7 +29,6 @@
                     displayPwTable();
                 }
             });
-
             function displayPwTable() {
                 if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
                     resultTable.dataTable({
@@ -71,8 +70,7 @@
                             }
                         ],
                         fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                         //   $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
-                         // <a href="http://www.genome.jp/kegg-bin/show_pathway?map=map<%=id%>&multi_query=<% _.each(components, function(comp) { %><%=comp%>%0D%0A<% }); %>" target="_blank">
+                            $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + prepare_pathway_url(aData.id, aData.components) + '">' + aData.id + '</a>');
                             $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
                             $(nRow).attr('data-id', aData.feature_id);
                             if (aData.feature_id !== -1) {
@@ -100,6 +98,14 @@
                 } else {
                     resultTable.fnClearTable();
                     resultTable.fnAddData(pwData);
+                }
+
+                function prepare_pathway_url(id, components) {
+                    var url = "http://www.genome.jp/kegg-bin/show_pathway?map=map";
+                    url += id + "&multi_query=";
+                    $.each(components, function (key, value) {
+                        url += value + "%D%0A";
+                    });
                 }
             }
 
