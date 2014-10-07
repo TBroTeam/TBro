@@ -133,9 +133,10 @@
                             appendTo: "body",
                             helper: "clone"
                         });
-                        $(".draggable-id").bind("drag", function(event, ui) {
-                            console.log(ui.helper.attr("data-id"));
-                            ui.helper.css("background-color", "red");
+                        $(".draggable-id").bind("dragstart", function(event, ui) {
+                            var numElements = ui.helper.attr("data-id").split(",").length;
+                            console.log(numElements);
+                            ui.helper.text("("+numElements+") "+ui.helper.text());
                         });
                     }
                 }
