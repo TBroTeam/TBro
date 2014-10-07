@@ -150,7 +150,7 @@
             <div class="large-12 column">
             <% _.each(components, function(comp) { 
             comp_p="http://www.chem.qmul.ac.uk/iubmb/enzyme/EC"+comp.replace(/\./g, '/')+".html";%>
-            <h6 data-id="<% Object.keys(comp_array[comp].features).join %>"><%prin%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
+            <h6 data-id="<% Object.keys(comp_array[comp].features).join %>"><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
             <ul><% _.each(comp_array[comp].features, function(value, key) { %><li> <a target="_blank" data-id=<%=key%> class="draggable-id" href="{#$AppPath#}/details/byId/<%=key%>"><%= value %></a> </li><% }) %></ul>
             <% }); %>
         </div>
