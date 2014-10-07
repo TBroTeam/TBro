@@ -22,13 +22,21 @@
                             num_comp: Object.keys(value.comps).length,
                             comp_array: data.results.components,
                             details: "Show",
-                            featureID: "-1" //TODO pass appropriate featureIDs
+                            featureID: getFeatureIDs(Object.keys(value.comps), data.results.components) //TODO pass appropriate featureIDs
                         };
                         pwData.push(arguments);
                     });
                     displayPwTable();
                 }
             });
+            function getFeatureIDs(comps, seqids){
+                var ids = [];
+                $.each(comps, function(key, value){
+                    _.union(ids, seqids[value]);
+                });
+                console.log(ids);
+                return ids+"";
+            }
             function displayPwTable() {
                 if (!$.fn.DataTable.fnIsDataTable(resultTable.get()[0])) {
                     resultTable.dataTable({
@@ -136,7 +144,7 @@
         </table>
         <div style="clear:both"> &nbsp; </div>
         <script type="text/template" id="template_pathway_details">
-            <div>
+            <div class="large-12 column">
             <% _.each(components, function(comp) { 
             comp_p="http://www.chem.qmul.ac.uk/iubmb/enzyme/EC"+comp.replace(/\./g, '/')+".html";%>
             <h6><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
