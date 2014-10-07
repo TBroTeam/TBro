@@ -118,9 +118,7 @@
                         resultTable.fnClose(row);
                     } else {
                         var aData = resultTable.fnGetData(row);
-                        resultTable.fnOpen(row, _.template($('#template_pathway_details').html())({
-                            hit: aData
-                        }), 'details');
+                        resultTable.fnOpen(row, _.template($('#template_pathway_details').html())(aData), 'details');
                     }
                 }
             }
