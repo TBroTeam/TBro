@@ -30,7 +30,6 @@
                 }
             });
             function displayPwTable() {
-		console.log($.fn.DataTable.fnIsDataTable(resultTable.get()[0]));
                 if (!$.fn.DataTable.fnIsDataTable(resultTable.get()[0])) {
                     resultTable.dataTable({
                         bLengthChange: false,
@@ -73,7 +72,7 @@
                         fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                             $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + prepare_pathway_url(aData.id, aData.components) + '">' + aData.id + '</a>');
                             $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
-/*                            $(nRow).attr('data-id', aData.feature_id);
+                            $(nRow).attr('data-id', aData.feature_id);
                             if (aData.feature_id !== "-1") {
                                 $(nRow).draggable({
                                     appendTo: "body",
@@ -92,12 +91,14 @@
                                     },
                                     cursorAt: {top: 5, left: 30}
                                 });
-                            } */
+                            } 
                         }
                     });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
-		//    console.log(resultTable);
+		//    TODO clear table and add updated data
+                //    Not working at the moment (TableTools use old selection)
+                //    Drawback: Pathways are not updated on cart events.
                 //    resultTable.rows().remove().clear();
                 //    resultTable[0].fnAddData(pwData);
                 }
