@@ -19,7 +19,7 @@
                             id: key,
                             pathway: value,
                             components: Object.keys(value.comps),
-                            num_comp: Object.keys(value.comps).length,
+                            num_comp: 1,//Object.keys(value.comps).length,
                             comp_array: data.results.components,
                             featureID: "-1" //TODO pass appropriate featureIDs
                         };
