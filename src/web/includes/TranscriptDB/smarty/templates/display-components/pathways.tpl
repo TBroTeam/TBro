@@ -1,13 +1,6 @@
 <div id="pathways">
     <script>
         // called from mav.tpl
-        $(document).ready(function () {
-            $(".draggable-id").draggable({
-                appendTo: "body",
-                helper: "clone",
-                cursorAt: {top: 5, left: 30}
-            });
-        });
         function showPathwayInfo() {
             var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
             $('#panel-pathways').show();
@@ -107,6 +100,11 @@
                             });
 
                         }
+                    });
+                    $(".draggable-id").draggable({
+                        appendTo: "body",
+                        helper: "clone",
+                        cursorAt: {top: 5, left: 30}
                     });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
