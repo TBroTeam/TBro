@@ -129,7 +129,11 @@
                     } else {
                         var aData = resultTable.fnGetData(row);
                         resultTable.fnOpen(row, _.template($('#template_pathway_details').html())(aData), 'details');
-                        $(".draggable-id .draggble-ids").draggable({
+                        $(".draggable-id").draggable({
+                            appendTo: "body",
+                            helper: "clone"
+                        });
+                        $(".draggable-ids").draggable({
                             appendTo: "body",
                             helper: "clone"
                         });
