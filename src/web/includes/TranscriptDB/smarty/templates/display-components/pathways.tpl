@@ -30,16 +30,17 @@
                 }
             });
             function displayPwTable() {
-                if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
+		console.log($.fn.DataTable.fnIsDataTable(resultTable.get()[0]));
+                if (!$.fn.DataTable.fnIsDataTable(resultTable.get()[0])) {
                     resultTable.dataTable({
                         bLengthChange: false,
-                        bPaginate: false,
-                        bDestroy: true,
+//                        bPaginate: false,
+//                        bDestroy: true,
                         bInfo: false,
                         aaSorting: [[2, 'desc']],
-                        sDom: 'T<"clear">lrtip',
+                        sDom: 'T<"clear">lfrtip',
                         aaData: pwData,
-                        // sPaginationType: "full_numbers",
+                        sPaginationType: "full_numbers",
                         bFilter: false,
                         oTableTools: {
                             aButtons: [],
@@ -72,8 +73,8 @@
                         fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                             $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + prepare_pathway_url(aData.id, aData.components) + '">' + aData.id + '</a>');
                             $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
-                            $(nRow).attr('data-id', aData.feature_id);
-                            if (aData.feature_id !== -1) {
+/*                            $(nRow).attr('data-id', aData.feature_id);
+                            if (aData.feature_id !== "-1") {
                                 $(nRow).draggable({
                                     appendTo: "body",
                                     helper: function () {
@@ -91,13 +92,14 @@
                                     },
                                     cursorAt: {top: 5, left: 30}
                                 });
-                            }
+                            } */
                         }
                     });
                     resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
-                    resultTable.fnClearTable();
-                    resultTable.fnAddData(pwData);
+		//    console.log(resultTable);
+                //    resultTable.rows().remove().clear();
+                //    resultTable[0].fnAddData(pwData);
                 }
 
                 function prepare_pathway_url(id, components) {
@@ -112,8 +114,9 @@
                 function openCloseDetails(event) {
                     event.preventDefault();
                     var row = $(this).parents("tr")[0];
-                    var dT = TableTools.fnGetInstance('pathway-table');
+                    var dT = TableTools.fnGetInstance("pathway-table");
                     dT.fnIsSelected(row) ? dT.fnDeselect(row) : dT.fnSelect(row);
+		    console.log(dT.fnGetSelectedData());
                     if (resultTable.fnIsOpen(row)) {
                         resultTable.fnClose(row);
                     } else {
