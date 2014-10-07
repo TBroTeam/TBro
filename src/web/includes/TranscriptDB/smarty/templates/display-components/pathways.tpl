@@ -25,76 +25,80 @@
                         };
                         pwData.push(arguments);
                     });
+                    displayPwTable();
                 }
             });
-            if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
-                resultTable.dataTable({
-                    bLengthChange: false,
-                    bPaginate: false,
-                    bDestroy: true,
-                    bInfo: false,
-                    aaSorting: [[2, 'desc']],
-                    sDom: 'T<"clear">lrtip',
-                    aaData: pwData,
-                    // sPaginationType: "full_numbers",
-                    bFilter: false,
-                    oTableTools: {
-                        aButtons: [],
-                        sRowSelect: "multi"
-                    },
-                    aoColumns: [
-                        {
-                            mData: "pathway",
-                            sTitle: "Pathway",
-                            bSortable: false
+
+            function displayPwTable() {
+                if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
+                    resultTable.dataTable({
+                        bLengthChange: false,
+                        bPaginate: false,
+                        bDestroy: true,
+                        bInfo: false,
+                        aaSorting: [[2, 'desc']],
+                        sDom: 'T<"clear">lrtip',
+                        aaData: pwData,
+                        // sPaginationType: "full_numbers",
+                        bFilter: false,
+                        oTableTools: {
+                            aButtons: [],
+                            sRowSelect: "multi"
                         },
-                        {
-                            mData: "id",
-                            sTitle: "Map",
-                            bSortable: true,
-                            bVisible: true
-                        },
-                        {
-                            mData: "num_comp",
-                            sTitle: "Components",
-                            bSortable: true
-                        },
-                        {
-                            mData: "details",
-                            sTitle: "Details",
-                            bSortable: false,
-                            sWidth: "45px"
-                        }
-                    ]/*,
-                    fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
-                        $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
-                        $(nRow).attr('data-id', aData.feature_id);
-                        if (aData.feature_id !== -1) {
-                            $(nRow).draggable({
-                                appendTo: "body",
-                                helper: function () {
-                                    var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
-                                    TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
-                                    var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
-                                    var selectedIDs = $.map(selectedItems, function (val) {
-                                        return val.feature_id;
-                                    });
-                                    $(nRow).attr('data-id', selectedIDs);
-                                    if (selectedIDs.length > 1) {
-                                        helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
-                                    }
-                                    return helper;
-                                },
-                                cursorAt: {top: 5, left: 30}
-                            });
-                        }
-                    } */
-                });
-         //       resultTable.on('click', 'a.open-close-details', openCloseDetails);
-            } else {
-                resultTable.fnClearTable();
-                resultTable.fnAddData(pwData);
+                        aoColumns: [
+                            {
+                                mData: "pathway",
+                                sTitle: "Pathway",
+                                bSortable: false
+                            },
+                            {
+                                mData: "id",
+                                sTitle: "Map",
+                                bSortable: true,
+                                bVisible: true
+                            },
+                            {
+                                mData: "num_comp",
+                                sTitle: "Components",
+                                bSortable: true
+                            },
+                            {
+                                mData: "details",
+                                sTitle: "Details",
+                                bSortable: false,
+                                sWidth: "45px"
+                            }
+                        ]/*,
+                         fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                         $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
+                         $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
+                         $(nRow).attr('data-id', aData.feature_id);
+                         if (aData.feature_id !== -1) {
+                         $(nRow).draggable({
+                         appendTo: "body",
+                         helper: function () {
+                         var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                         TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
+                         var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
+                         var selectedIDs = $.map(selectedItems, function (val) {
+                         return val.feature_id;
+                         });
+                         $(nRow).attr('data-id', selectedIDs);
+                         if (selectedIDs.length > 1) {
+                         helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                         }
+                         return helper;
+                         },
+                         cursorAt: {top: 5, left: 30}
+                         });
+                         }
+                         } */
+                    });
+                    //       resultTable.on('click', 'a.open-close-details', openCloseDetails);
+                } else {
+                    resultTable.fnClearTable();
+                    resultTable.fnAddData(pwData);
+                }
             }
 
 
