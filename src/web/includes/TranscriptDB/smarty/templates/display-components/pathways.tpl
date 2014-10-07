@@ -4,14 +4,22 @@
 
         function pathwayselectAll() {
 // fnSelectAll only for graphical selection
-            TableTools.fnGetInstance('pathway_results_table').fnSelectAll();
+            TableTools.fnGetInstance('pathway-table').fnSelectAll();
         }
         function pathwayselectAllVisible() {
 // fnSelectAll only for graphical selection
-            TableTools.fnGetInstance('pathway_results_table').fnSelect($('#pathway_results_table').dataTable().$('tr', {'filter': 'applied'}));
+            TableTools.fnGetInstance('pathway-table').fnSelect($('#pathway_results_table').dataTable().$('tr', {'filter': 'applied'}));
         }
         function pathwayselectNone() {
-            TableTools.fnGetInstance('pathway_results_table').fnSelectNone();
+            TableTools.fnGetInstance('pathway-table').fnSelectNone();
+        }
+
+        function pathwayfnNumOfEntries(numOfEntries) {
+            /* Get the DataTables object again - this is not a recreation, just a get of the object */
+            var oTable = $('#pathway-table').dataTable();
+            var oSettings = oTable.fnSettings();
+            oSettings._iDisplayLength = numOfEntries;
+            oTable.fnDraw();
         }
 
         function showPathwayInfo() {
