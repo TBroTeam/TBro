@@ -21,6 +21,7 @@
                             components: Object.keys(value.comps),
                             num_comp: Object.keys(value.comps).length,
                             comp_array: data.results.components,
+                            details: "Show",
                             featureID: "-1" //TODO pass appropriate featureIDs
                         };
                         pwData.push(arguments);
@@ -49,7 +50,7 @@
                             {
                                 mData: "pathway",
                                 sTitle: "Pathway",
-                                bSortable: false
+                                bSortable: true
                             },
                             {
                                 mData: "id",
@@ -68,31 +69,32 @@
                                 bSortable: false,
                                 sWidth: "45px"
                             }
-                        ]/*,
-                         fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                         $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
-                         $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
-                         $(nRow).attr('data-id', aData.feature_id);
-                         if (aData.feature_id !== -1) {
-                         $(nRow).draggable({
-                         appendTo: "body",
-                         helper: function () {
-                         var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
-                         TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
-                         var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
-                         var selectedIDs = $.map(selectedItems, function (val) {
-                         return val.feature_id;
-                         });
-                         $(nRow).attr('data-id', selectedIDs);
-                         if (selectedIDs.length > 1) {
-                         helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
-                         }
-                         return helper;
-                         },
-                         cursorAt: {top: 5, left: 30}
-                         });
-                         }
-                         } */
+                        ],
+                        fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                         //   $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
+                         // <a href="http://www.genome.jp/kegg-bin/show_pathway?map=map<%=id%>&multi_query=<% _.each(components, function(comp) { %><%=comp%>%0D%0A<% }); %>" target="_blank">
+                            $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
+                            $(nRow).attr('data-id', aData.feature_id);
+                            if (aData.feature_id !== -1) {
+                                $(nRow).draggable({
+                                    appendTo: "body",
+                                    helper: function () {
+                                        var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                                        TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
+                                        var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
+                                        var selectedIDs = $.map(selectedItems, function (val) {
+                                            return val.feature_id;
+                                        });
+                                        $(nRow).attr('data-id', selectedIDs);
+                                        if (selectedIDs.length > 1) {
+                                            helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                                        }
+                                        return helper;
+                                    },
+                                    cursorAt: {top: 5, left: 30}
+                                });
+                            }
+                        }
                     });
                     //       resultTable.on('click', 'a.open-close-details', openCloseDetails);
                 } else {
