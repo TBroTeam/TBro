@@ -22,7 +22,7 @@
                             num_comp: Object.keys(value.comps).length,
                             comp_array: data.results.components,
                             details: "Show",
-                            featureID: getFeatureIDs(Object.keys(value.comps), data.results.components) //TODO pass appropriate featureIDs
+                            feature_id: getFeatureIDs(Object.keys(value.comps), data.results.components) //TODO pass appropriate featureIDs
                         };
                         pwData.push(arguments);
                     });
