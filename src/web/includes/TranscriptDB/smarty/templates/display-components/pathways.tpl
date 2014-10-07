@@ -106,6 +106,7 @@
                     $.each(components, function (key, value) {
                         url += value + "%D%0A";
                     });
+                    return url;
                 }
             }
 
