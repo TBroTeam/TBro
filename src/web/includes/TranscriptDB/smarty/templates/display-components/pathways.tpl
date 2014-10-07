@@ -4,51 +4,101 @@
         function showPathwayInfo() {
             var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
             $('#panel-pathways').show();
+            var resultTable = $('#pathway-table');
+            var pwData;
             $.ajax('{#$ServicePath#}/listing/pathways', {
                 method: 'post',
                 data: {
                     parents: cartitems
                 },
-                success: function(data) {
+                success: function (data) {
+                    pwData = [];
                     var pw = data.results.pathways;
-                    var pw_table = $('#pathway-table-body');
-                    var details_panel = $('#pathway-details');
-                    pw_table.empty();
-                    details_panel.empty();
-                    console.log(pw_table);
-                    $.each(pw, function(key, value) {
+                    $.each(pw, function (key, value) {
                         var arguments = {
                             id: key,
                             pathway: value,
                             components: Object.keys(value.comps),
-                            comp_array: data.results.components
+                            num_comp: Object.keys(value.comps).length,
+                            comp_array: data.results.components,
+                            featureID: "-1" //TODO pass appropriate featureIDs
                         };
-                        var entry$ = _executePathwayTemplate$(arguments);
-                        var details$ = _executePathwayDetailsTemplate$(arguments);
-                        pw_table.append(entry$);
-                        details_panel.append(details$);
-                    });
-                    $('#pathway-table').dataTable({
-                        bLengthChange: false,
-                        bPaginate: false,
-                        bDestroy: true,
-                        bInfo: false,
-                        aaSorting: [[2,'desc'],[0,'asc']],
-                        sDom: 'T<"clear">lrtip',
-                        oTableTools: {
-                            aButtons: []
-                        }
+                        pwData.push(arguments);
                     });
                 }
             });
-            _executePathwayTemplate$ = function(args) {
-                var template$ = _.template($('#template_pathway').html(), args);
-                return template$;
-            };
-            _executePathwayDetailsTemplate$ = function(args) {
-                var template$ = _.template($('#template_pathway_details').html(), args);
-                return template$;
-            };
+            if (!$.fn.DataTable.fnIsDataTable(resultTable.get())) {
+                resultTable.dataTable({
+                    bLengthChange: false,
+                    bPaginate: false,
+                    bDestroy: true,
+                    bInfo: false,
+                    aaSorting: [[2, 'desc']],
+                    sDom: 'T<"clear">lrtip',
+                    aaData: pwData,
+                    // sPaginationType: "full_numbers",
+                    bFilter: false,
+                    oTableTools: {
+                        aButtons: [],
+                        sRowSelect: "multi"
+                    },
+                    aoColumns: [
+                        {
+                            mData: "pathway",
+                            sTitle: "Pathway",
+                            bSortable: false
+                        },
+                        {
+                            mData: "id",
+                            sTitle: "Map",
+                            bSortable: true,
+                            bVisible: true
+                        },
+                        {
+                            mData: "num_comp",
+                            sTitle: "Components",
+                            bSortable: true
+                        },
+                        {
+                            mData: "details",
+                            sTitle: "Details",
+                            bSortable: false,
+                            sWidth: "45px"
+                        }
+                    ],
+                    fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        $(nRow).find('td:eq(1)').html('<a target="_blank" href="' + options.prepare_feature_url(aData.def_firstword, options) + '">' + aData.def_firstword + '</a>');
+                        $(nRow).find('td:eq(3)').html('<a href="#" class="open-close-details"> Show </a>');
+                        $(nRow).attr('data-id', aData.feature_id);
+                        if (aData.feature_id !== -1) {
+                            $(nRow).draggable({
+                                appendTo: "body",
+                                helper: function () {
+                                    var helper = $(nRow).find('td:eq(0)').clone().addClass('beingDragged');
+                                    TableTools.fnGetInstance('pathway-table').fnSelect($(nRow));
+                                    var selectedItems = TableTools.fnGetInstance('pathway-table').fnGetSelectedData();
+                                    var selectedIDs = $.map(selectedItems, function (val) {
+                                        return val.feature_id;
+                                    });
+                                    $(nRow).attr('data-id', selectedIDs);
+                                    if (selectedIDs.length > 1) {
+                                        helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
+                                    }
+                                    return helper;
+                                },
+                                cursorAt: {top: 5, left: 30}
+                            });
+                        }
+                    }
+                });
+         //       resultTable.on('click', 'a.open-close-details', openCloseDetails);
+            } else {
+                resultTable.fnClearTable();
+                resultTable.fnAddData(pwData);
+            }
+
+
+
         }
     </script>
     <div id="panel-pathways" class="large-12" style="display: none">
