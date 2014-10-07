@@ -129,13 +129,12 @@
                     } else {
                         var aData = resultTable.fnGetData(row);
                         resultTable.fnOpen(row, _.template($('#template_pathway_details').html())(aData), 'details');
-                        $(".draggable-id").draggable({
+                        $(".draggable-id .draggble-ids").draggable({
                             appendTo: "body",
                             helper: "clone"
                         });
-                        $(".draggable-id").bind("dragstart", function(event, ui) {
+                        $(".draggable-ids").bind("dragstart", function(event, ui) {
                             var numElements = ui.helper.attr("data-id").split(",").length;
-                            console.log(numElements);
                             ui.helper.text("("+numElements+") "+ui.helper.text());
                         });
                     }
@@ -155,7 +154,7 @@
             <div class="large-12 column">
             <% _.each(components, function(comp) { 
             comp_p="http://www.chem.qmul.ac.uk/iubmb/enzyme/EC"+comp.replace(/\./g, '/')+".html";%>
-            <h6 class="draggable-id" data-id="<% print(Object.keys(comp_array[comp].features).join()) %>"><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
+            <h6 class="draggable-ids" data-id="<% print(Object.keys(comp_array[comp].features).join()) %>"><%print(comp_array[comp].definition);%><a href=<%print(comp_p);%> target="_blank"> EC:<%= comp %></a></h6>
             <ul><% _.each(comp_array[comp].features, function(value, key) { %><li> <a target="_blank" data-id=<%=key%> class="draggable-id" href="{#$AppPath#}/details/byId/<%=key%>"><%= value %></a> </li><% }) %></ul>
             <% }); %>
         </div>
