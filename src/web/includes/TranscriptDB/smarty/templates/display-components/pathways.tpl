@@ -1,6 +1,19 @@
 <div id="pathways">
     <script>
         // called from mav.tpl
+
+        function pathwayselectAll() {
+// fnSelectAll only for graphical selection
+            TableTools.fnGetInstance('pathway_results_table').fnSelectAll();
+        }
+        function pathwayselectAllVisible() {
+// fnSelectAll only for graphical selection
+            TableTools.fnGetInstance('pathway_results_table').fnSelect($('#pathway_results_table').dataTable().$('tr', {'filter': 'applied'}));
+        }
+        function pathwayselectNone() {
+            TableTools.fnGetInstance('pathway_results_table').fnSelectNone();
+        }
+
         function showPathwayInfo() {
             var cartitems = cart._getCartForContext()['{#$cartname#}']['items'] || [];
             $('#panel-pathways').show();
