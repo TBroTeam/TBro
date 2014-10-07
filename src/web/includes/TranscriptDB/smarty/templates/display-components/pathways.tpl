@@ -144,7 +144,7 @@
 
         }
     </script>
-    <div id="panel-pathways" class="large-12" style="display: none">
+    <div id="panel-pathways" class="large-12">
         <table id="pathway-table">
             <thead><tr><th>Pathway</th><th>Map</th><th>Components</th><th>Details</th></tr></thead>
         </table>
