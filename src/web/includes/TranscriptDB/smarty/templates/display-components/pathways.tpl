@@ -104,7 +104,7 @@
                     var url = "http://www.genome.jp/kegg-bin/show_pathway?map=map";
                     url += id + "&multi_query=";
                     $.each(components, function (key, value) {
-                        url += value + "%D%0A";
+                        url += value + "%0D%0A";
                     });
                     return url;
                 }
