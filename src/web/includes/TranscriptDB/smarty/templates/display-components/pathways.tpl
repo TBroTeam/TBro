@@ -94,7 +94,7 @@
                             }
                         }
                     });
-                    resultTable.on('click', 'a.open-close-details', openCloseDetails);
+                    resultTable.off('click', 'a.open-close-details').on('click', 'a.open-close-details', openCloseDetails);
                 } else {
                     resultTable.fnClearTable();
                     resultTable.fnAddData(pwData);
