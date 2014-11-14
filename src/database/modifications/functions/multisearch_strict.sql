@@ -17,7 +17,7 @@ CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, 
 	(SELECT f.name, f.feature_id, f.type_id, s.name AS synonym_name 
 		FROM synonym s JOIN feature_synonym fs ON (fs.synonym_id = s.synonym_id) JOIN feature f ON (fs.feature_id = f.feature_id)
 		WHERE s.name=ANY(_feature_names) AND f.organism_id = _organism_id AND f.dbxref_id = _release_id
-	LIMIT 500)) AS details LEFT JOIN (SELECT featureprop.feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) AS fp
+	LIMIT 500)) AS details LEFT JOIN (SELECT featureprop.feature_id, value FROM featureprop WHERE featureprop.type_id={PHPCONST('CV_ANNOTATION_DESC')}) AS fp
     ON details.feature_id=fp.feature_id;
 
      RETURN QUERY SELECT * FROM hits ORDER BY feature_id;
