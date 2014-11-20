@@ -26,10 +26,10 @@ exit($return_value);
  * ) */
 
 function execute_job($job) {
-    trigger_error(sprintf("starting job id: %d", $job['running_query_id']), E_USER_NOTICE);
+    trigger_error(sprintf("starting job id: %d", $job['query_id']), E_USER_NOTICE);
     global $die_on_timeout;
     global $job_id;
-    $job_id = $job['running_query_id'];
+    $job_id = $job['query_id'];
     $pdo = pdo_connect();
     $pdo->prepare('SELECT report_job_pid(?,?)')->execute(array($job_id, getmypid()));
     //intitalize "parameters" for the tick function
