@@ -107,7 +107,7 @@ switch ($page) {
             die();
         break;
     case 'details':
-        if (display_feature(requestVal('organism', '/^[0-9]+$/i', ''), requestVal('release', '/^[a-z0-9-_.]+$/', ''), requestVal('name', '/^[a-z0-9-_.]+$/', '')))
+        if (display_feature(requestVal('organism', '/^[0-9]+$/i', ''), requestVal('release', '/^[a-z0-9-_.]+$/i', ''), requestVal('name', '/^[a-z0-9-_.#|]+$/i', '')))
             die();
         break;
     case 'diffexpr':
