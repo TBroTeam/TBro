@@ -23,7 +23,7 @@ SELECT accession, path.definition, path.ec FROM dbxref,
             (SELECT * FROM feature_dbxref 
                 JOIN dbxref ON (dbxref.dbxref_id = feature_dbxref.dbxref_id) 
                 LEFT JOIN cvterm ON (cvterm.dbxref_id = dbxref.dbxref_id)
-                    WHERE feature_id=:isoform_id AND db_id=116
+                    WHERE feature_id=:isoform_id AND db_id=(SELECT db_id FROM db WHERE name='EC')
              ) AS x 
              WHERE r.object_id=x.cvterm_id
         ) AS rel
