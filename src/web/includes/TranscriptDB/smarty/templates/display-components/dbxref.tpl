@@ -32,7 +32,7 @@
                     </table>
 
 
-                    {#if (isset($pathway))#}
+                    {#if (isset($pathway) && count($pathway)>0)#}
                         <h6>Associated Pathways</h6>
                         <table style="width:100%">
                             <tbody>
