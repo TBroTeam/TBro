@@ -92,12 +92,12 @@ EOF;
         $stm->bindValue ('release', $release, \PDO::PARAM_STR);
         $stm->execute();
         
-
+        
         $lastcell_name = '';
         $data = array();
         $vars = array();
         $ids = array();
-        $smps = array();
+        $smps = array("ID", "name");
         $x = array();
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
@@ -105,31 +105,21 @@ EOF;
             if ($cell['feature_name'] != $lastcell_name) {
                 #featue-specific actions, only once per featue
                 $lastcell_name = $cell['feature_name'];
-                $data[] = array();
+                $data[] = array($cell['feature_id'], $cell['feature_name']);
                 $row = &$data[count($data) - 1];
-                $vars[] = $cell['feature_name'];
-                $ids[] = $cell['feature_id'];
             }
 
             if (count($data) == 1) {
                 #sample-specific actions, only executed for first var
                 $smps[] = $cell['biomaterial_name'];
-                $x['Tissue_Group'][] = $cell['parent_biomaterial_name'];
-                $x['Assay'][] = $cell['assay_name'];
-                $x['Analysis'][] = "${cell['analysis_name']} (${cell['analysis_id']})";
             }
 
             $row[] = floatval($cell['value']);
         }
 
         return array(
-            'x' => $x,
-            'y' => array(
-                'vars' => $vars,
-                'smps' => $smps,
-                'data' => $data,
-                'ids' => $ids
-            )
+            'header' => $smps,
+            'data' => $data
         );
     }
 
