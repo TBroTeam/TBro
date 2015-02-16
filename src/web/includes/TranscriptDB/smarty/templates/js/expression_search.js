@@ -2,65 +2,28 @@ var diffexpSelectedIDs = [];
 var lastQueryData;
 
 $(document).ready(function() {
-    var select_analysis = $('#expression-select-gdfx-analysis');
-    var select_conditionA = $('#expression-select-gdfx-conditionA');
-    var select_conditionB = $('#expression-select-gdfx-conditionB');
     var select_assay = $('#expression-select-gdfx-assay');
+    var select_analysis = $('#expression-select-gdfx-analysis');
+    var select_parent_biomaterial = $('#expression-select-gdfx-biomaterial');
+    var select_sample = $('#expression-select-gdfx-sample');
 
 
     //filteredSelect: select_conditionA => select_conditionB => select_analysis
 
-    new filteredSelect(select_conditionA, 'ba', {
+    new filteredSelect(select_analysis, 'analysis', {
         precedessorNode: select_assay
     });
 
-    new filteredSelect(select_conditionB, 'bb', {
-        precedessorNode: select_conditionA
+    new filteredSelect(select_parent_biomaterial, 'parent_biomaterial', {
+        precedessorNode: select_analysis
     });
 
-    var finalSelect = new filteredSelect(select_analysis, 'analysis', {
-        precedessorNode: select_conditionB
+    var finalSelect = new filteredSelect(select_sample, 'sample', {
+        precedessorNode: select_parent_biomaterial
     });
 
-
-    /*{#if isset($cartname)#}*/
-//if selected cart group changes (adding/removing items or context switch), update  filters accordingly
-    $('#Cart').on('cartEvent', function(event) {
-        if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
-            return;
-
-        var myItemEvent = new Date().getTime();
-        lastItemEvent = myItemEvent;
-
-        setTimeout(function() {
-
-            //if another itemEvent has happened in the last 100ms, skip.
-            if (lastItemEvent !== myItemEvent)
-                return;
-
-            var data = {
-                organism: organism.val(),
-                release: release.val()
-            };
-
-            var url = '{#$ServicePath#}/listing/filters_diffexp/forCart';
-
-            $.ajax(url, {
-                method: 'post',
-                data: data,
-                success: function(data) {
-                    new filteredSelect(select_assay, 'assay', {
-                        data: data
-                    }).refill();
-                    $('#expression-button-gdfx-table').prop('disabled', false);
-                }
-            });
-        }, 100);
-    });
-
-    /*{#else#}*/
     release.change(function() {
-        var url = '{#$ServicePath#}/listing/filters_diffexp/fullRelease';
+        var url = '{#$ServicePath#}/listing/filters_expression';
         var data = {
             organism: organism.val(),
             release: release.val()
@@ -76,7 +39,6 @@ $(document).ready(function() {
             }
         });
     });
-    /*{#/if#}*/
 
     var selectedItem;
     var dataTable;
@@ -287,24 +249,6 @@ $(document).ready(function() {
         }
 
     });
-
-//    new Groupselect($('#select-gdfx-cart'), cart);
-
-    //add selected to cart $('#select-gdfx-cart').val()
-//    $('#button-gdfx-addToCart').click(function() {
-//        var selectedItems = TableTools.fnGetInstance(dataTable[0]).fnGetSelectedData();
-//        var group = $('#select-gdfx-cart').val();
-//        if (group === '#new#')
-//            group = cart.addGroup();
-
-//        cart.addItem($.map(selectedItems, function(val) {
-//            return val.feature_id;
-//        }), {
-//            groupname: group
-//        });
-
-
-//    });
 
     //updates table displaying query details
     function update_query_details(data) {

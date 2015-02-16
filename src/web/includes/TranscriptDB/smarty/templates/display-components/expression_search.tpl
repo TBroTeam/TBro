@@ -115,10 +115,10 @@
                         <select id="expression-select-gdfx-analysis" size="12"></select>
                     </div>
                     <div class="large-3 columns">
-                        <select id="expression-select-gdfx-biomaterial" size="12"></select>
+                        <select id="expression-select-gdfx-biomaterial" size="12" multiple="multiple"></select>
                     </div>
                     <div class="large-3 columns">
-                        <select id="expression-select-gdfx-condition" size="12"></select>
+                        <select id="expression-select-gdfx-sample" size="12" multiple="multiple"></select>
                     </div>
                 </div>
         </div>
