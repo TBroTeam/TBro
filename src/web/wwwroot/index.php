@@ -113,7 +113,9 @@ switch ($page) {
     case 'diffexpr':
         $smarty->display('diffexpr.tpl');
         die();
-        break;
+    case 'expression':
+        $smarty->display('expression_search.tpl');
+        die();
     case 'graphs':
         $cartname = requestVal('query', sprintf('/%s/i', \webservices\cart\Sync::$regexCartName), '');
         $smarty->assign('cartname', $cartname);

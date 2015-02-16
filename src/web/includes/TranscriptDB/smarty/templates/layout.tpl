@@ -284,7 +284,7 @@
                             <ul class="dropdown" id="datanav">
                                 <li><a href='#'>Sequences</a></li>
                                 <li><a href='#'>Annotation</a></li>
-                                <li><a href='#'>Expression Counts</a></li>
+                                <li><a href='{#$AppPath#}/expression'>Expression Counts</a></li>
                                 <li><a href='{#$AppPath#}/diffexpr'>Differential Expressions</a></li>
                             </ul>
                         </li></ul>

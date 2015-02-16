@@ -13,6 +13,8 @@ RewriteRule ^graphs(?:/(.*))?$  index.php?page=graphs&query=$1 [L,NC,QSA]
 
 RewriteRule ^diffexpr(?:/(.*))?$  index.php?page=diffexpr&query=$1 [L,NC,QSA]
 
+RewriteRule ^expression(?:/(.*))?$  index.php?page=expression&query=$1 [L,NC,QSA]
+
 RewriteRule ^blast(?:/(.*))?$  index.php?page=blast&query=$1 [L,NC,QSA]
 
 RewriteRule ^blast_results(?:/(.*))?$  index.php?page=blast_results&job_uuid=$1 [L,NC,QSA]
