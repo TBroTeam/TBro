@@ -130,7 +130,7 @@ $(document).ready(function () {
                     bScrollCollapse: true,
                     bFilter: false,
                     bLengthChange: false,
-                    bPaginationType: "full_numbers",
+                    sPaginationType: "full_numbers",
                     sDom: 'T<"clear">lfrtip',
                     oTableTools: {
                         aButtons: [],

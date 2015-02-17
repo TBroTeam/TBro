@@ -28,38 +28,6 @@
         oSettings._iDisplayLength = numOfEntries;
         oTable.fnDraw();
     }
-    function expressionselectAll() {
-        if (typeof lastQueryData === 'undefined')
-            return;
-        var data = lastQueryData;
-        data.push({name: "currentContext",
-            value: organism.val() + '_' + release.val()
-        });
-
-        $.ajax('{#$ServicePath#}/listing/differential_expressions/getAllMatching', {
-            method: 'post',
-            data: data,
-            success: function (response) {
-                diffexpSelectedIDs = response;
-                // fnSelectAll only for graphical selection
-                TableTools.fnGetInstance('expression-diffexp_results').fnSelectAll();
-            }
-        });
-    }
-    function expressionselectAllVisible() {
-        // fnSelectAll only for graphical selection
-        TableTools.fnGetInstance('expression-diffexp_results').fnSelectAll();
-        diffexpSelectedIDs = $.map(TableTools.fnGetInstance('expression-diffexp_results').fnGetVisibleSelectedData(), function (val) {
-            return val.feature_id;
-        });
-    }
-    function expressionselectNone() {
-        diffexpSelectedIDs = [];
-        // fnSelectAll fnSelectNone only for graphical selection
-        TableTools.fnGetInstance('expression-diffexp_results').fnSelectAll();
-        TableTools.fnGetInstance('expression-diffexp_results').fnSelectNone();
-    }
-
 </script>
 
 <style type="text/css">
@@ -153,7 +121,7 @@
 <div class="row" id="expression-div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
         <div class="large-12">
-            <h4>Detailed Results</h4>
+            <h4>Results</h4>
         </div>
         <div class="large-12" id="expression-div-gdfxtable-columnselector" style="display:none">        
             <ul class="button-group even-4">
@@ -185,9 +153,8 @@
                 <li onclick="expressionfnShowHide(11);"><span id="expression-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="expression-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-                <li onclick="expressionselectAll();" style="width:100%">All</li>
-                <li onclick="expressionselectAllVisible();" style="width:100%">All visible</li>
-                <li onclick="expressionselectNone();" style="width:100%">None</li>
+                <li onclick="TableTools.fnGetInstance('expression-results').fnSelectAll();" style="width:100%">All</li>
+                <li onclick="TableTools.fnGetInstance('expression-results').fnSelectNone();" style="width:100%">None</li>
             </ul>
             <ul id="expression-button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
                 <li id="expression-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
