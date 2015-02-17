@@ -1,15 +1,15 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             //load statistical information
-            release.change(function() {
+            release.change(function () {
                 $.ajax({
                     url: "{#$ServicePath#}/details/statistical_information/" + organism.find(':selected').text() + "/" + release.val(),
                     dataType: "json",
-                    success: function(data) {
-                        $.each(data.results, function(key, val) {
-                            if(val === null)
+                    success: function (data) {
+                        $.each(data.results, function (key, val) {
+                            if (val === null)
                                 val = 0;
                             $('#stat_' + key).html(val);
                         });
@@ -30,9 +30,10 @@
         .btn2{
             background-color: #2E8DEF;
             border-color: #2070E0;
+            border-width: 5px;
         }
         .btn2:hover{
-            background-color: #2672EC;
+            border-color: #8C0095;
         }
         .btn3{
             background-color: #A700AE;
@@ -47,6 +48,35 @@
         }
         .btn4:hover{
             background-color: #5133AB;
+        }
+
+        .overlay-container {
+            position: relative; /* <-- Set as the reference for the positioned overlay */
+        }
+
+        .overlay-container .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0;
+           // background-color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+         //   font: 0/0 a; /* Remove the gap between inline(-block) elements */
+        }
+
+        .overlay-container .overlay:before {
+            content: ' ';
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+
+        .overlay-container .overlay span {
+          //  font: 16px/1 Arial, sans-serif; /* Reset the font property */
+            display: inline-block;
+            vertical-align: middle;
         }
     </style>
 {#/block#}
@@ -66,8 +96,11 @@
                     </a>
                 </div>
                 <div class="large-6 columns">
-                    <a class="large button expand btn2" href="{#$AppPath#}/blast" >
-                        <h4>Search by Homology</h4>
+                    <a class="large button expand btn2" style="padding-top: 0; padding-bottom: 0" href="{#$AppPath#}/blast" >
+                        <div class="overlay-container">
+                            <img src="{#$AppPath#}/img/wordclouds/cloud-homology.png" style="display: block"/>
+                            <div class="overlay"><span><h4>Homology<br>Search</h4></span></div>
+                        </div>
                     </a>
                 </div>
             </div>
