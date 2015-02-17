@@ -20,15 +20,6 @@
         });
     }
 
-    function expressionfnShowHide(iCol)
-    {
-        $('#expression-results').width("98%");
-        /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#expression-results').dataTable();
-        var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-        $('#expression-columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
-        oTable.fnSetColumnVis(iCol, bVis ? false : true);
-    }
     function expressionfnNumOfEntries(numOfEntries)
     {
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
@@ -165,9 +156,8 @@
             <h4>Detailed Results</h4>
         </div>
         <div class="large-12" id="expression-div-gdfxtable-columnselector" style="display:none">        
-            <ul class="button-group even-5">
+            <ul class="button-group even-4">
                 <li><button class="small button dropdown" id="expression-show-entries-dropdown" data-dropdown="expression-show-entries-dropdown-options"> Show Entries </button></li>
-                <li><button class="small button dropdown" data-dropdown="expression-show-hide-dropdown" data-options="is_hover:true">Show Columns</button></li>
                 <li><button class="small button dropdown" data-dropdown="expression-select-all-none-dropdown">Select</button></li>
                 <li><button class="small button dropdown" type="button" id="expression-button-gdfx-addToCart" data-dropdown="expression-button-gdfx-addToCart-options"> Store </button></li>
                 <li><button class="small button dropdown" id="expression-download-dropdown" data-dropdown="expression-download-dropdown-options"> Export </button></li>
