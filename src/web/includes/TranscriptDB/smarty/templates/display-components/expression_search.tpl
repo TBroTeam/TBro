@@ -182,8 +182,8 @@
                 <li onclick="expressionfnShowHide(11);"><span id="expression-columnCheckbox8" style="width: 15px;"/>&#10003;</span> pvaladj</li>
             </ul>
             <ul id="expression-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
-                <li onclick="TableTools.fnGetInstance('expression-results').fnSelectAll();" style="width:100%">All</li>
-                <li onclick="TableTools.fnGetInstance('expression-results').fnSelectNone();" style="width:100%">None</li>
+                <li onclick="$('#expression-results').dataTable().fnSelectAll();" style="width:100%">All</li>
+                <li onclick="$('#expression-results').dataTable().fnSelectNone();" style="width:100%">None</li>
             </ul>
             <ul id="expression-button-gdfx-addToCart-options" class="f-dropdown" data-dropdown-content>
                 <li id="expression-button-gdfx-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
