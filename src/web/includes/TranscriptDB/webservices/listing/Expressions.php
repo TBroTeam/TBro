@@ -3,6 +3,7 @@
 namespace webservices\listing;
 
 use \PDO as PDO;
+
 /**
  * returns Expression data for use in an expression table
  */
@@ -18,6 +19,8 @@ class Expressions extends \WebService {
         if (false)
             $db = new PDO();
 
+        if (!isset($_SESSION))
+            session_start();
 
         $analysis = $querydata['analysis']; //one or more analysises
         $assay = $querydata['assay']; //one or more assays
@@ -25,6 +28,10 @@ class Expressions extends \WebService {
         $organism = $querydata['organism'];
         $release = $querydata['release'];
         $constant = 'constant';
+
+        $metadata = array();
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$querydata['currentContext']])
+            $metadata = &$_SESSION['cart']['metadata'][$querydata['currentContext']];
 
         $query_values = array();
         $query_subqueries = array();
@@ -86,18 +93,18 @@ EOF;
 
         $stm = $db->prepare($query);
         foreach ($data_array as $key => $val)
-            $stm->bindValue ($key, $val, \PDO::PARAM_STR);
-        
-        $stm->bindValue ('organism', $organism, \PDO::PARAM_STR);
-        $stm->bindValue ('release', $release, \PDO::PARAM_STR);
+            $stm->bindValue($key, $val, \PDO::PARAM_STR);
+
+        $stm->bindValue('organism', $organism, \PDO::PARAM_STR);
+        $stm->bindValue('release', $release, \PDO::PARAM_STR);
         $stm->execute();
-        
-        
+
+
         $lastcell_name = '';
         $data = array();
         $vars = array();
         $ids = array();
-        $smps = array("ID", "name");
+        $smps = array("ID", "name", "alias");
         $x = array();
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
@@ -105,7 +112,12 @@ EOF;
             if ($cell['feature_name'] != $lastcell_name) {
                 #featue-specific actions, only once per featue
                 $lastcell_name = $cell['feature_name'];
-                $data[] = array($cell['feature_id'], $cell['feature_name']);
+                $user_alias = "";
+                if (array_key_exists($cell['feature_id'], $metadata)) {
+                    if (array_key_exists('alias', $metadata[$cell['feature_id']]))
+                        $user_alias = $metadata[$cell['feature_id']]['alias'];
+                }
+                $data[] = array($cell['feature_id'], $cell['feature_name'], $user_alias);
                 $row = &$data[count($data) - 1];
             }
 
