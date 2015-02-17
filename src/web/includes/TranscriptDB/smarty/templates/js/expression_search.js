@@ -52,18 +52,19 @@ $(document).ready(function () {
             }
         });
 
-        $.ajax('{#$ServicePath#}/listing/expressions', {
+        lastQueryData = {
+            organism: organism.val(),
+            release: release.val(),
+            assay: [selected.values[0].assay],
+            analysis: [selected.values[0].analysis],
+            biomaterial: $.map(selected.values, function (n) {
+                return n.sample
+            }),
+            currentContext: organism.val() + '_' + release.val()
+        };
+        $.ajax('{#$ServicePath#}/listing/expressions/fullRelease', {
             method: 'post',
-            data: {
-                organism: organism.val(),
-                release: release.val(),
-                assay: [selected.values[0].assay],
-                analysis: [selected.values[0].analysis],
-                biomaterial: $.map(selected.values, function (n) {
-                    return n.sample
-                }),
-                currentContext: organism.val() + '_' + release.val()
-            },
+            data: lastQueryData,
             success: function (data) {
                 var start = new Date().getTime();
                 addTable(data);
@@ -80,15 +81,9 @@ $(document).ready(function () {
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
         iframe.style.width = "0px";
-        var data = lastQueryData;
-        data.push({name: "currentContext",
-            value: organism.val() + '_' + release.val()
-        });
-        data = jQuery.grep(data, function (value) {
-            return value['name'] !== 'ids[]';
-        });
+        
         if (typeof lastQueryData !== 'undefined') {
-            iframe.src = "{#$ServicePath#}/listing/differential_expressions/releaseCsv" + "?" + $.param(data);
+            iframe.src = "{#$ServicePath#}/listing/expressions/releaseCsv" + "?" + $.param(lastQueryData);
             document.body.appendChild(iframe);
         }
     }

@@ -12,7 +12,7 @@ class Expressions extends \WebService {
     /**
      * @inheritDoc
      */
-    public function execute($querydata) {
+    public function fullRelease($querydata) {
         global $db;
 
 #UI hint
@@ -102,10 +102,7 @@ EOF;
 
         $lastcell_name = '';
         $data = array();
-        $vars = array();
-        $ids = array();
-        $smps = array("ID", "name", "alias");
-        $x = array();
+        $smps = array("ID", "name", "user_alias");
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
@@ -134,6 +131,46 @@ EOF;
             'data' => $data
         );
     }
+    
+    public function printCsv($expressions) {
+        // output header
+        echo "# Expression Results\n";
+        printf("# you can reach the feature details via %s/details/byId/<feature_id>\n", APPPATH);
+        
+        //output csv
+        $out = fopen('php://output', 'w');
+        fputcsv($out, $expressions["header"], "\t");
+        
+        foreach ($expressions["data"] as $key => $val){
+            fputcsv($out, $val, "\t");
+        }
+        
+        fclose($out);
+    }
+    
+    /**
+     * @inheritDoc
+     * Switches behaviour based on $querydata['query1']: "fullRelease" or "releaseCsv"
+     * @param Array $querydata
+     * @return Array
+     */
+    public function execute($querydata) {
+        if ($querydata['query1'] == 'fullRelease') {
+            return $this->fullRelease($querydata);
+        } elseif ($querydata['query1'] == 'releaseCsv') {
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private", false);
+            header("Content-Type: application/octet-stream");
+            header("Content-Disposition: attachment; filename=\"expressions_export.tsv\";");
+            header("Content-Transfer-Encoding: binary");
+            $this->printCsv($this->fullRelease($querydata));
+            //die or WebService->output will attach return value to output (in our case: null)
+            die();
+        }
+    }
+
 
 }
 
