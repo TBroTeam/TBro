@@ -13,7 +13,7 @@
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        cart.addItem($.map(selectedItems, function(val) {
+        cart.addItem($.map(selectedItems, function (val) {
             return val[0];
         }), {
             groupname: group
@@ -118,12 +118,15 @@
     </div>
 </form>
 
+<div class="loading alert-box" style="display:none;">
+    Please wait, loading!
+</div>
 <div class="row" id="expression-div-gdfxtable" style="display:none">
     <div class="large-12 column panel">
         <div class="large-12">
             <h4>Results</h4>
         </div>
-        <div class="large-12" id="expression-div-gdfxtable-columnselector" style="display:none">        
+        <div class="large-12" id="expression-div-gdfxtable-columnselector">        
             <ul class="button-group even-4">
                 <li><button class="small button dropdown" id="expression-show-entries-dropdown" data-dropdown="expression-show-entries-dropdown-options"> Show Entries </button></li>
                 <li><button class="small button dropdown" data-dropdown="expression-select-all-none-dropdown">Select</button></li>
@@ -165,7 +168,7 @@
         </div>
         <div class="large-12" style="padding-right: 4px;">
             <table id="expression-results">
-                
+
             </table>
         </div>
     </div>

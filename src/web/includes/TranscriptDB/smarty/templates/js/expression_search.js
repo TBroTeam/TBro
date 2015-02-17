@@ -46,8 +46,11 @@ $(document).ready(function () {
         var selected = finalSelect.filteredData();
 
         //show result table
-        $('#expression-div-gdfxtable').show();
-        $('#expression-div-gdfxtable-columnselector').show();
+        $.when($('#expression-div-gdfxtable').hide(500)).then(function () {
+            if (!$('#expression-div-gdfxtable').is(':visible')) {
+                $('.loading').show();
+            }
+        });
 
         $.ajax('{#$ServicePath#}/listing/expressions', {
             method: 'post',
@@ -67,10 +70,12 @@ $(document).ready(function () {
                 var end = new Date().getTime();
                 var time = end - start;
                 console.log('Execution time: ' + time);
+                $('.loading').hide();
+                $('#expression-div-gdfxtable').show();
             }
         });
     });
-    
+
     function download_csv() {
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
@@ -103,23 +108,25 @@ $(document).ready(function () {
         // y.vars = names
         // y.data = data
 
-        var tblColumns = $.map(data.header, function(n, i){return {sTitle: n, bVisible: i!==0}});
+        var tblColumns = $.map(data.header, function (n, i) {
+            return {sTitle: n, bVisible: i !== 0}
+        });
 
         var tblData = data.data;
-      //  for (var i = 0; i < val.y.data.length; i++) {
-      //      for (var j = 0; j < val.y.data[i].length; j++) {
-      //          val.y.data[i][j] = Math.round(val.y.data[i][j]);
-      //      }
-      //      var alias = "";
-      //      var meta = cart._getMetadataForContext()[val.y.ids[i]];
-      //      if (typeof meta !== 'undefined') {
-      //          if (typeof meta['alias'] !== 'undefined')
-      //              alias = meta['alias'];
-      //      }
-      //      var row = [val.y.ids[i], val.y.names[i], alias];
-      //      Array.prototype.push.apply(row, val.y.data[i]);
-      //      tblData.push(row);
-      //  }
+        //  for (var i = 0; i < val.y.data.length; i++) {
+        //      for (var j = 0; j < val.y.data[i].length; j++) {
+        //          val.y.data[i][j] = Math.round(val.y.data[i][j]);
+        //      }
+        //      var alias = "";
+        //      var meta = cart._getMetadataForContext()[val.y.ids[i]];
+        //      if (typeof meta !== 'undefined') {
+        //          if (typeof meta['alias'] !== 'undefined')
+        //              alias = meta['alias'];
+        //      }
+        //      var row = [val.y.ids[i], val.y.names[i], alias];
+        //      Array.prototype.push.apply(row, val.y.data[i]);
+        //      tblData.push(row);
+        //  }
 
 
         tbl.dataTable(
