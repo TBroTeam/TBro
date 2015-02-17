@@ -7,7 +7,6 @@ $(document).ready(function () {
     var select_parent_biomaterial = $('#expression-select-gdfx-biomaterial');
     var select_sample = $('#expression-select-gdfx-sample');
 
-
     //filteredSelect: select_conditionA => select_conditionB => select_analysis
 
     new filteredSelect(select_analysis, 'analysis', {
@@ -60,8 +59,15 @@ $(document).ready(function () {
             biomaterial: $.map(selected.values, function (n) {
                 return n.sample
             }),
-            currentContext: organism.val() + '_' + release.val()
+            currentContext: organism.val() + '_' + release.val(),
+            mainFilterAllType: $('#expressions_filter_all_type').val(),
+            mainFilterAllValue: $('#expressions_filter_all_value').val(),
+            mainFilterOneType: $('#expressions_filter_one_type').val(),
+            mainFilterOneValue: $('#expressions_filter_one_value').val(),
+            mainFilterMeanType: $('#expressions_filter_mean_type').val(),
+            mainFilterMeanValue: $('#expressions_filter_mean_value').val(),
         };
+        console.log(lastQueryData);
         $.ajax('{#$ServicePath#}/listing/expressions/fullRelease', {
             method: 'post',
             data: lastQueryData,
@@ -81,7 +87,7 @@ $(document).ready(function () {
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
         iframe.style.width = "0px";
-        
+
         if (typeof lastQueryData !== 'undefined') {
             iframe.src = "{#$ServicePath#}/listing/expressions/releaseCsv" + "?" + $.param(lastQueryData);
             document.body.appendChild(iframe);

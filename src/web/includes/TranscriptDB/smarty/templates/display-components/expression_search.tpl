@@ -93,12 +93,10 @@
 
 
             <table id="expression-filters" style="width:100%">
-                {#$i=5#}
-                {#foreach ['All','One','Mean'] as $filter_key#}
                     <tr>
-                        <th>{#$filter_key#}</th>
+                        <th>All</th>
                         <td>
-                            <select name="filter_column[{#$i#}][type]">
+                            <select id="expressions_filter_all_type">
                                 <option value="lt">&lt;</option>
                                 <option value="gt">&gt;</option>
                                 <option value="leq">&lt;=</option>
@@ -107,11 +105,39 @@
                             </select>
                         </td>
                         <td>
-                            <input name="filter_column[{#$i#}][value]" type="text" />
+                            <input id="expressions_filter_all_value" type="text" />
                         </td>
                     </tr>
-                    {#$i=$i+1#}
-                {#/foreach#}
+                    <tr>
+                        <th>One</th>
+                        <td>
+                            <select id="expressions_filter_one_type">
+                                <option value="lt">&lt;</option>
+                                <option value="gt">&gt;</option>
+                                <option value="leq">&lt;=</option>
+                                <option value="geq">&gt;=</option>
+                                <option value="eq">=</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input id="expressions_filter_one_value" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Mean</th>
+                        <td>
+                            <select id="expressions_filter_mean_type">
+                                <option value="lt">&lt;</option>
+                                <option value="gt">&gt;</option>
+                                <option value="leq">&lt;=</option>
+                                <option value="geq">&gt;=</option>
+                                <option value="eq">=</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input id="expressions_filter_mean_value" type="text" />
+                        </td>
+                    </tr>
             </table>
             <button class="right" type="button" id="expression-button-gdfx-table" value="table" disabled="disabled">Apply</button>
         </div>
