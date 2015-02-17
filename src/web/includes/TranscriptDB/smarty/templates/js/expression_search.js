@@ -139,6 +139,7 @@ $(document).ready(function () {
                     bLengthChange: false,
                     sPaginationType: "full_numbers",
                     sDom: 'T<"clear">lfrtip',
+                    bDestroy: true,
                     oTableTools: {
                         aButtons: [],
                         sRowSelect: "multi"
