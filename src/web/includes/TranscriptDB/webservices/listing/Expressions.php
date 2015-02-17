@@ -125,6 +125,8 @@ EOF;
 
             $row[] = floatval($cell['value']);
         }
+        
+        $data = $this->apply_main_filters($data, $querydata);
 
         return array(
             'header' => $smps,
@@ -132,6 +134,40 @@ EOF;
         );
     }
     
+    public function apply_main_filters($data, $querydata){
+        $result = array();
+        if(is_numeric($querydata['mainFilterAllValue'])){
+            switch ($querydata['mainFilterAllType']) {
+                case 'eq':
+                    foreach($data AS $index => $values){
+                        $valid = true;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n != $querydata['mainFilterAllValue']) 
+                                $valid = false;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'gt':
+                    array_push($where, sprintf('%s > ?', $keys[$key]));
+                    break;
+                case 'lt':
+                    array_push($where, sprintf('%s < ?', $keys[$key]));
+                    break;
+                case 'geq':
+                    array_push($where, sprintf('%s >= ?', $keys[$key]));
+                    break;
+                case 'leq':
+                    array_push($where, sprintf('%s <= ?', $keys[$key]));
+                    break;
+            }
+        }
+        return $result;
+    }
+
+
     public function printCsv($expressions) {
         // output header
         echo "# Expression Results\n";
