@@ -153,40 +153,6 @@
                 {#/foreach#}
             </table>
             <button class="right" type="button" id="expression-button-gdfx-table" value="table" disabled="disabled">Apply</button>
-
-
-        </div>
-
-        <div class="large-6 query_details  panel" style="display:none; float:right; width:49%" id="expression-query_details">
-            <div class="large-12 columns query_details" style="display:none">
-                <h4>Results Overview</h4>
-            </div>
-            <table style="width:100%" >
-                <tr>
-                    <td>Condition A</td>
-                    <td class='conditionA has-tooltip'></td>
-                </tr>
-                <tr>
-                    <td>Condition B</td>
-                    <td class='conditionB has-tooltip'></td>
-                </tr>
-                <tr>
-                    <td>Analysis</td>
-                    <td class='analysis has-tooltip'></td>
-                </tr>
-                <tr>
-                    <td>Organism</td>
-                    <td class='organism'></td>
-                </tr>
-                <tr>
-                    <td>Release</td>
-                    <td class='release'></td>
-                </tr>
-                <tr>
-                    <td>Hits</td>
-                    <td class='hits'></td>
-                </tr>
-            </table>
         </div>
     </div>
 </form>
@@ -239,25 +205,8 @@
             </ul>
         </div>
         <div class="large-12" style="padding-right: 4px;">
-            <table id="expression-diffexp_results">
-                <thead>  
-                    <tr>
-                        <th>Sequence ID</th>
-                        <th>DB Alias</th>
-                        <th>DB Description</th>
-                        <th>User Alias</th>
-                        <th>User Description</th>
-                        <th>baseMean</th>
-                        <th>baseMeanA</th>
-                        <th>baseMeanB</th>
-                        <th>foldChange</th>
-                        <th>log2foldChange</th>
-                        <th>pval</th>
-                        <th>pvaladj</th>
-                    </tr>
-                </thead>
-                <tbody style="white-space:nowrap"></tbody>
-                <tfoot></tfoot>
+            <table id="expression-results">
+                
             </table>
         </div>
     </div>

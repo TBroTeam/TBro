@@ -61,202 +61,9 @@ $(document).ready(function () {
                 })
             },
             success: function (data) {
-                console.log(data);
+                addTable(data);
             }
         });
-
-        if (typeof dataTable === "undefined") {
-            diffexpSelectedIDs = [];
-            //build server request filters
-            var serverParams = function (aoData) {
-                aoData.push({
-                    name: "organism",
-                    value: organism.val()
-                });
-                aoData.push({
-                    name: "release",
-                    value: release.val()
-                });
-                aoData.push({
-                    name: "analysis",
-                    value: selectedItem.analysis
-                });
-                aoData.push({
-                    name: "conditionA",
-                    value: selectedItem.conditionA
-                });
-                aoData.push({
-                    name: "conditionB",
-                    value: selectedItem.conditionB
-                });
-                aoData.push({name: "currentContext",
-                    value: organism.val() + '_' + release.val()
-                });
-                $.each($('#expression-diffexp_filters').serializeArray(), function () {
-                    aoData.push(this);
-                });
-                /*{#if isset($cart_ids)#}*/
-                $.each(cart._getCartForContext()['{#$cartname#}']['items'] || [], function () {
-                    aoData.push({
-                        name: 'ids[]',
-                        value: this
-                    });
-                });
-                /*{#/if#}*/
-            };
-            //dataTable options
-            var options = {
-                bLengthChange: false,
-                sPaginationType: "full_numbers",
-                sScrollX: "100%",
-                bScrollCollapse: true,
-                bFilter: false,
-                bProcessing: true,
-                bServerSide: true,
-                fnServerData: function (sSource, aoData, fnCallback, oSettings) {
-                    lastQueryData = aoData;
-                    oSettings.jqXHR = $.ajax({
-                        "dataType": 'json',
-                        "type": oSettings.sServerMethod,
-                        "url": sSource,
-                        "data": aoData,
-                        "success": function (data) {
-                            update_query_details(data);
-                            fnCallback(data);
-                        }
-                    });
-                },
-                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData.feature_id, aData.feature_name))
-                    $(nRow).attr('data-id', aData.feature_id);
-                    $(nRow).draggable({
-                        appendTo: "body",
-                        helper: function () {
-                            var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
-                            if (jQuery.inArray(aData.feature_id, diffexpSelectedIDs) === -1) {
-                                diffexpSelectedIDs.push(aData.feature_id);
-                                $(nRow).toggleClass('DTTT_selected');
-                            }
-                            $(nRow).attr('data-id', diffexpSelectedIDs);
-                            if (diffexpSelectedIDs.length > 1) {
-                                helper.html("<b>" + diffexpSelectedIDs.length + "</b> " + helper.text() + ", ...");
-                            }
-                            return helper;
-                        },
-                        cursorAt: {top: 5, left: 30}
-                    });
-                    $(nRow).on('click', function (event) {
-                        var aData = dataTable.fnGetData(this);
-                        var iId = aData.feature_id;
-                        if (jQuery.inArray(iId, diffexpSelectedIDs) === -1)
-                        {
-                            diffexpSelectedIDs[diffexpSelectedIDs.length++] = iId;
-                        }
-                        else
-                        {
-                            diffexpSelectedIDs = jQuery.grep(diffexpSelectedIDs, function (value) {
-                                return value !== iId;
-                            });
-                        }
-                        console.log(diffexpSelectedIDs);
-                        $(nRow).toggleClass('DTTT_selected');
-                        event.stopPropagation();
-                    });
-                    if (jQuery.inArray(aData.feature_id, diffexpSelectedIDs) !== -1)
-                    {
-                        $(nRow).addClass('DTTT_selected');
-                    }
-                },
-                sServerMethod: "POST",
-                sAjaxSource: "{#$ServicePath#}/listing/differential_expressions/fullRelease",
-                fnServerParams: serverParams,
-                aaSorting: [[11, "asc"]],
-                aoColumns: [
-                    {
-                        sType: "natural",
-                        mData: 'feature_name',
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "natural",
-                        mData: 'synonym_name',
-                        bVisible: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "natural",
-                        mData: 'db_description',
-                        bSortable: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "natural",
-                        mData: 'user_alias',
-                        bSortable: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "natural",
-                        mData: 'user_annotations',
-                        bSortable: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'baseMean',
-                        bVisible: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'baseMeanA',
-                        bVisible: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'baseMeanB',
-                        bVisible: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'foldChange',
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'log2foldChange',
-                        bVisible: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'pval',
-                        bVisible: false,
-                        sClass: "no-wrap"
-                    },
-                    {
-                        sType: "scientific",
-                        mData: 'pvaladj',
-                        sClass: "no-wrap"
-                    }
-
-                ],
-                sDom: 'T<"clear">lfrtip',
-                oTableTools: {
-                    sSwfPath: "{#$AppPath#}/swf/copy_csv_xls_pdf.swf",
-                    aButtons: [],
-                    sRowSelect: "multi"
-                }
-            };
-            //execute dataTable
-            dataTable = $('#expression-results').dataTable(options);
-        } else {
-            //table already exists, refresh table. if "selectedItem" has changed, this will load new data.
-            dataTable.fnReloadAjax();
-        }
-
     });
 
     //updates table displaying query details
@@ -343,7 +150,7 @@ $(document).ready(function () {
                     bScrollCollapse: true,
                     bFilter: false,
                     bInfo: false,
-                    bPaginate: false,
+                    bPaginate: true,
                     sDom: 'T<"clear">lfrtip',
                     oTableTools: {
                         aButtons: [],
@@ -356,8 +163,8 @@ $(document).ready(function () {
                             appendTo: "body",
                             helper: function () {
                                 var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
-                                TableTools.fnGetInstance('expression_table').fnSelect($(nRow));
-                                var selectedItems = TableTools.fnGetInstance('expression_table').fnGetSelectedData();
+                                TableTools.fnGetInstance('expression_results').fnSelect($(nRow));
+                                var selectedItems = TableTools.fnGetInstance('expression_results').fnGetSelectedData();
                                 var selectedIDs = $.map(selectedItems, function (val) {
                                     return val[0];
                                 });
@@ -371,8 +178,6 @@ $(document).ready(function () {
                         });
                     }
                 }
-
         );
     }
-
 });
