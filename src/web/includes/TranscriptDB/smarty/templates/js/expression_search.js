@@ -58,7 +58,8 @@ $(document).ready(function () {
                 analysis: [selected.values[0].analysis],
                 biomaterial: $.map(selected.values, function (n) {
                     return n.sample
-                })
+                }),
+                currentContext: organism.val() + '_' + release.val()
             },
             success: function (data) {
                 var start = new Date().getTime();
@@ -69,27 +70,7 @@ $(document).ready(function () {
             }
         });
     });
-
-    //updates table displaying query details
-    function update_query_details(data) {
-        var query_details = data.query_details;
-        var domQd = $('#expression-query_details');
-        var swapped = finalSelect.filteredData().values[0].dir !== 'ltr';
-        if (swapped) {
-            domQd.find('#expression-swappedWarning').show();
-        }
-        else {
-            domQd.find('#expression-swappedWarning').hide();
-        }
-        domQd.find('.conditionA').text(query_details.conditionA.name).data('metadata', query_details.conditionA);
-        domQd.find('.conditionB').text(query_details.conditionB.name).data('metadata', query_details.conditionB);
-        domQd.find('.analysis').text(query_details.analysis.name).data('metadata', query_details.analysis);
-        domQd.find('.organism').text(query_details.organism.name);
-        domQd.find('.release').text(query_details.release);
-        domQd.find('.hits').text(data.iTotalRecords);
-        $('.query_details').fadeIn(500);
-    }
-
+    
     function download_csv() {
         var iframe = document.createElement('iframe');
         iframe.style.height = "0px";
@@ -98,11 +79,6 @@ $(document).ready(function () {
         data.push({name: "currentContext",
             value: organism.val() + '_' + release.val()
         });
-        /*{#if isset($cartname)#}*/
-        data.push({name: "cartname",
-            value: '{#$cartname#}'
-        });
-        /*{#/if#}*/
         data = jQuery.grep(data, function (value) {
             return value['name'] !== 'ids[]';
         });

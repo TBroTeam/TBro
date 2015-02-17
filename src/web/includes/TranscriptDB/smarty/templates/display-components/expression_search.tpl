@@ -8,21 +8,23 @@
 
     function expressionaddSelectedToCart() {
         var group = $(this).attr('data-value');
-        if (diffexpSelectedIDs.length === 0)
+        var selectedItems = TableTools.fnGetInstance('expression-results').fnGetSelectedData();
+        if (selectedItems.length === 0)
             return;
         if (group === '#new#')
             group = cart.addGroup();
-        cart.addItem(diffexpSelectedIDs, {
+        cart.addItem($.map(selectedItems, function(val) {
+            return val[0];
+        }), {
             groupname: group
         });
-
     }
 
     function expressionfnShowHide(iCol)
     {
-        $('#expression-diffexp_results').width("98%");
+        $('#expression-results').width("98%");
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#expression-diffexp_results').dataTable();
+        var oTable = $('#expression-results').dataTable();
         var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
         $('#expression-columnCheckbox' + iCol).html(bVis ? '&emsp;' : '&#10003;');
         oTable.fnSetColumnVis(iCol, bVis ? false : true);
@@ -30,7 +32,7 @@
     function expressionfnNumOfEntries(numOfEntries)
     {
         /* Get the DataTables object again - this is not a recreation, just a get of the object */
-        var oTable = $('#expression-diffexp_results').dataTable();
+        var oTable = $('#expression-results').dataTable();
         var oSettings = oTable.fnSettings();
         oSettings._iDisplayLength = numOfEntries;
         oTable.fnDraw();
