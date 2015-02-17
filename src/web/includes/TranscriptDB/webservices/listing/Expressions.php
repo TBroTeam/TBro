@@ -138,7 +138,7 @@ EOF;
     public function apply_main_filters($data, $querydata){
         $result = $this->apply_main_all_filter($data, $querydata);
         $result = $this->apply_main_one_filter($result, $querydata);
-       // $result = $this->apply_main_mean_filter($result, $querydata);
+        $result = $this->apply_main_mean_filter($result, $querydata);
             
         return $result;
     }
@@ -289,65 +289,70 @@ EOF;
     
     public function apply_main_mean_filter($data, $querydata){
         $result = array();
-        if(is_numeric($querydata['mainFilterAllValue'])){
-            switch ($querydata['mainFilterAllType']) {
+        if(is_numeric($querydata['mainFilterMeanValue'])){
+            switch ($querydata['mainFilterMeanType']) {
                 case 'eq':
                     foreach($data AS $index => $values){
-                        $valid = true;
+                        $sum = 0;
+                        $len = 0;
                         foreach($values AS $i => $n){
                             if($i<3) continue;
-                            if($n != $querydata['mainFilterAllValue']) 
-                                $valid = false;
+                            $sum += $n;
+                            $len++;
                         }
-                        if($valid) 
+                        if($len>0 && $sum/$len == $querydata['mainFilterMeanValue']) 
                             array_push($result, $values);
                     }
                     break;
                 case 'gt':
                     foreach($data AS $index => $values){
-                        $valid = true;
+                        $sum = 0;
+                        $len = 0;
                         foreach($values AS $i => $n){
                             if($i<3) continue;
-                            if($n <= $querydata['mainFilterAllValue']) 
-                                $valid = false;
+                            $sum += $n;
+                            $len++;
                         }
-                        if($valid) 
+                        if($len>0 && $sum/$len > $querydata['mainFilterMeanValue']) 
                             array_push($result, $values);
                     }
                     break;
                 case 'lt':
                     foreach($data AS $index => $values){
-                        $valid = true;
+                        $sum = 0;
+                        $len = 0;
                         foreach($values AS $i => $n){
                             if($i<3) continue;
-                            if($n >= $querydata['mainFilterAllValue']) 
-                                $valid = false;
+                            $sum += $n;
+                            $len++;
                         }
-                        if($valid) 
+                        if($len>0 && $sum/$len < $querydata['mainFilterMeanValue']) 
                             array_push($result, $values);
                     }
                     break;
                 case 'geq':
                     foreach($data AS $index => $values){
-                        $valid = true;
+                        $sum = 0;
+                        $len = 0;
                         foreach($values AS $i => $n){
                             if($i<3) continue;
-                            if($n < $querydata['mainFilterAllValue']) 
-                                $valid = false;
+                            $sum += $n;
+                            $len++;
                         }
-                        if($valid) 
+                        if($len>0 && $sum/$len >= $querydata['mainFilterMeanValue']) 
                             array_push($result, $values);
                     }
                     break;
                 case 'leq':
                     foreach($data AS $index => $values){
-                        $valid = true;
+                        $sum = 0;
+                        $len = 0;
                         foreach($values AS $i => $n){
                             if($i<3) continue;
-                            if($n > $querydata['mainFilterAllValue']) 
-                                $valid = false;
+                            $sum += $n;
+                            $len++;
                         }
-                        if($valid) 
+                        if($len>0 && $sum/$len <= $querydata['mainFilterMeanValue']) 
                             array_push($result, $values);
                     }
                     break;
