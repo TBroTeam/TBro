@@ -133,7 +133,7 @@
 
             <table id="expression-filters" style="width:100%">
                 {#$i=5#}
-                {#foreach ['All','One'] as $filter_key#}
+                {#foreach ['All','One','Mean'] as $filter_key#}
                     <tr>
                         <th>{#$filter_key#}</th>
                         <td>

@@ -61,7 +61,11 @@ $(document).ready(function () {
                 })
             },
             success: function (data) {
+                var start = new Date().getTime();
                 addTable(data);
+                var end = new Date().getTime();
+                var time = end - start;
+                console.log('Execution time: ' + time);
             }
         });
     });
@@ -123,7 +127,7 @@ $(document).ready(function () {
         // y.vars = names
         // y.data = data
 
-        var tblColumns = $.map(data.header, function(n){return {sTitle: n}});
+        var tblColumns = $.map(data.header, function(n, i){return {sTitle: n, bVisible: i!==0}});
 
         var tblData = data.data;
       //  for (var i = 0; i < val.y.data.length; i++) {
@@ -149,22 +153,22 @@ $(document).ready(function () {
                     sScrollX: "100%",
                     bScrollCollapse: true,
                     bFilter: false,
-                    bInfo: false,
-                    bPaginate: true,
+                    bLengthChange: false,
+                    bPaginationType: "full_numbers",
                     sDom: 'T<"clear">lfrtip',
                     oTableTools: {
                         aButtons: [],
                         sRowSelect: "multi"
                     },
-                    fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                         $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData[0], aData[1]))
                         $(nRow).attr('data-id', aData[0]);
                         $(nRow).draggable({
                             appendTo: "body",
                             helper: function () {
                                 var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
-                                TableTools.fnGetInstance('expression_results').fnSelect($(nRow));
-                                var selectedItems = TableTools.fnGetInstance('expression_results').fnGetSelectedData();
+                                TableTools.fnGetInstance('expression-results').fnSelect($(nRow));
+                                var selectedItems = TableTools.fnGetInstance('expression-results').fnGetSelectedData();
                                 var selectedIDs = $.map(selectedItems, function (val) {
                                     return val[0];
                                 });
