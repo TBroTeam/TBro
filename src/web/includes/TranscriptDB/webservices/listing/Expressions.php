@@ -136,6 +136,14 @@ EOF;
     }
     
     public function apply_main_filters($data, $querydata){
+        $result = $this->apply_main_all_filter($data, $querydata);
+        $result = $this->apply_main_one_filter($result, $querydata);
+       // $result = $this->apply_main_mean_filter($result, $querydata);
+            
+        return $result;
+    }
+    
+    public function apply_main_all_filter($data, $querydata){
         $result = array();
         if(is_numeric($querydata['mainFilterAllValue'])){
             switch ($querydata['mainFilterAllType']) {
@@ -200,7 +208,154 @@ EOF;
                     }
                     break;
             }
+        } else {
+            $result = $data;
         }
+            
+        return $result;
+    }
+    
+    public function apply_main_one_filter($data, $querydata){
+        $result = array();
+        if(is_numeric($querydata['mainFilterOneValue'])){
+            switch ($querydata['mainFilterOneType']) {
+                case 'eq':
+                    foreach($data AS $index => $values){
+                        $valid = false;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n == $querydata['mainFilterOneValue']) 
+                                $valid = true;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'gt':
+                    foreach($data AS $index => $values){
+                        $valid = false;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n > $querydata['mainFilterOneValue']) 
+                                $valid = true;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'lt':
+                    foreach($data AS $index => $values){
+                        $valid = false;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n < $querydata['mainFilterOneValue']) 
+                                $valid = true;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'geq':
+                    foreach($data AS $index => $values){
+                        $valid = false;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n >= $querydata['mainFilterOneValue']) 
+                                $valid = true;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'leq':
+                    foreach($data AS $index => $values){
+                        $valid = false;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n <= $querydata['mainFilterOneValue']) 
+                                $valid = true;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+            }
+        } else {
+            $result = $data;
+        }
+            
+        return $result;
+    }
+    
+    public function apply_main_mean_filter($data, $querydata){
+        $result = array();
+        if(is_numeric($querydata['mainFilterAllValue'])){
+            switch ($querydata['mainFilterAllType']) {
+                case 'eq':
+                    foreach($data AS $index => $values){
+                        $valid = true;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n != $querydata['mainFilterAllValue']) 
+                                $valid = false;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'gt':
+                    foreach($data AS $index => $values){
+                        $valid = true;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n <= $querydata['mainFilterAllValue']) 
+                                $valid = false;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'lt':
+                    foreach($data AS $index => $values){
+                        $valid = true;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n >= $querydata['mainFilterAllValue']) 
+                                $valid = false;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'geq':
+                    foreach($data AS $index => $values){
+                        $valid = true;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n < $querydata['mainFilterAllValue']) 
+                                $valid = false;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'leq':
+                    foreach($data AS $index => $values){
+                        $valid = true;
+                        foreach($values AS $i => $n){
+                            if($i<3) continue;
+                            if($n > $querydata['mainFilterAllValue']) 
+                                $valid = false;
+                        }
+                        if($valid) 
+                            array_push($result, $values);
+                    }
+                    break;
+            }
+        } else {
+            $result = $data;
+        }
+            
         return $result;
     }
 
