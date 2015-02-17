@@ -79,6 +79,7 @@ $(document).ready(function () {
                 console.log('Execution time: ' + time);
                 $('.loading').hide();
                 $('#expression-div-gdfxtable').show();
+                $('#expression-results').dataTable().fnAdjustColumnSizing();
             }
         });
     });
