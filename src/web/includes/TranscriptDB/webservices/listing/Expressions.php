@@ -51,6 +51,7 @@ SELECT
   biomaterial.name AS biomaterial_name, 
   expressionresult.value, 
   parent_biomaterial.name AS parent_biomaterial_name,
+  parent_biomaterial.biomaterial_id AS parent_biomaterial_id,
   assay.name AS assay_name,
   analysis.analysis_id,
   analysis.name AS analysis_name
@@ -103,6 +104,7 @@ EOF;
         $lastcell_name = '';
         $data = array();
         $smps = array("ID", "name", "user_alias");
+        $parents = array(-1, -1, -1);
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
@@ -121,266 +123,364 @@ EOF;
             if (count($data) == 1) {
                 #sample-specific actions, only executed for first var
                 $smps[] = $cell['biomaterial_name'];
+                $parents[] = $cell['parent_biomaterial_id'];
             }
 
             $row[] = floatval($cell['value']);
         }
-        
-        if(is_numeric($querydata['mainFilterAllValue']) || is_numeric($querydata['mainFilterOneValue']) || is_numeric($querydata['mainFilterMeanValue']))
+
+        if (is_numeric($querydata['mainFilterAllValue']) || is_numeric($querydata['mainFilterOneValue']) || is_numeric($querydata['mainFilterMeanValue']))
             $data = $this->apply_main_filters($data, $querydata);
+
+        if (isset($querydata['biomaterialFilters']))
+            $data = $this->apply_biomaterial_filters($data, $parents, $querydata);
 
         return array(
             'header' => $smps,
             'data' => $data
         );
     }
-    
-    public function apply_main_filters($data, $querydata){
+
+    public function apply_main_filters($data, $querydata) {
         $result = $this->apply_main_all_filter($data, $querydata);
         $result = $this->apply_main_one_filter($result, $querydata);
         $result = $this->apply_main_mean_filter($result, $querydata);
-            
-        return $result;
-    }
-    
-    public function apply_main_all_filter($data, $querydata){
-        $result = array();
-        if(is_numeric($querydata['mainFilterAllValue'])){
-            switch ($querydata['mainFilterAllType']) {
-                case 'eq':
-                    foreach($data AS $index => $values){
-                        $valid = true;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n != $querydata['mainFilterAllValue']) 
-                                $valid = false;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'gt':
-                    foreach($data AS $index => $values){
-                        $valid = true;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n <= $querydata['mainFilterAllValue']) 
-                                $valid = false;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'lt':
-                    foreach($data AS $index => $values){
-                        $valid = true;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n >= $querydata['mainFilterAllValue']) 
-                                $valid = false;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'geq':
-                    foreach($data AS $index => $values){
-                        $valid = true;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n < $querydata['mainFilterAllValue']) 
-                                $valid = false;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'leq':
-                    foreach($data AS $index => $values){
-                        $valid = true;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n > $querydata['mainFilterAllValue']) 
-                                $valid = false;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-            }
-        } else {
-            $result = $data;
-        }
-            
-        return $result;
-    }
-    
-    public function apply_main_one_filter($data, $querydata){
-        $result = array();
-        if(is_numeric($querydata['mainFilterOneValue'])){
-            switch ($querydata['mainFilterOneType']) {
-                case 'eq':
-                    foreach($data AS $index => $values){
-                        $valid = false;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n == $querydata['mainFilterOneValue']) 
-                                $valid = true;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'gt':
-                    foreach($data AS $index => $values){
-                        $valid = false;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n > $querydata['mainFilterOneValue']) 
-                                $valid = true;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'lt':
-                    foreach($data AS $index => $values){
-                        $valid = false;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n < $querydata['mainFilterOneValue']) 
-                                $valid = true;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'geq':
-                    foreach($data AS $index => $values){
-                        $valid = false;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n >= $querydata['mainFilterOneValue']) 
-                                $valid = true;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'leq':
-                    foreach($data AS $index => $values){
-                        $valid = false;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            if($n <= $querydata['mainFilterOneValue']) 
-                                $valid = true;
-                        }
-                        if($valid) 
-                            array_push($result, $values);
-                    }
-                    break;
-            }
-        } else {
-            $result = $data;
-        }
-            
-        return $result;
-    }
-    
-    public function apply_main_mean_filter($data, $querydata){
-        $result = array();
-        if(is_numeric($querydata['mainFilterMeanValue'])){
-            switch ($querydata['mainFilterMeanType']) {
-                case 'eq':
-                    foreach($data AS $index => $values){
-                        $sum = 0;
-                        $len = 0;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            $sum += $n;
-                            $len++;
-                        }
-                        if($len>0 && $sum/$len == $querydata['mainFilterMeanValue']) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'gt':
-                    foreach($data AS $index => $values){
-                        $sum = 0;
-                        $len = 0;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            $sum += $n;
-                            $len++;
-                        }
-                        if($len>0 && $sum/$len > $querydata['mainFilterMeanValue']) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'lt':
-                    foreach($data AS $index => $values){
-                        $sum = 0;
-                        $len = 0;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            $sum += $n;
-                            $len++;
-                        }
-                        if($len>0 && $sum/$len < $querydata['mainFilterMeanValue']) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'geq':
-                    foreach($data AS $index => $values){
-                        $sum = 0;
-                        $len = 0;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            $sum += $n;
-                            $len++;
-                        }
-                        if($len>0 && $sum/$len >= $querydata['mainFilterMeanValue']) 
-                            array_push($result, $values);
-                    }
-                    break;
-                case 'leq':
-                    foreach($data AS $index => $values){
-                        $sum = 0;
-                        $len = 0;
-                        foreach($values AS $i => $n){
-                            if($i<3) continue;
-                            $sum += $n;
-                            $len++;
-                        }
-                        if($len>0 && $sum/$len <= $querydata['mainFilterMeanValue']) 
-                            array_push($result, $values);
-                    }
-                    break;
-            }
-        } else {
-            $result = $data;
-        }
-            
+
         return $result;
     }
 
+    public function apply_main_all_filter($data, $querydata) {
+        $result = array();
+        if (is_numeric($querydata['mainFilterAllValue'])) {
+            switch ($querydata['mainFilterAllType']) {
+                case 'eq':
+                    foreach ($data AS $index => $values) {
+                        $valid = true;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n != $querydata['mainFilterAllValue'])
+                                $valid = false;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'gt':
+                    foreach ($data AS $index => $values) {
+                        $valid = true;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n <= $querydata['mainFilterAllValue'])
+                                $valid = false;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'lt':
+                    foreach ($data AS $index => $values) {
+                        $valid = true;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n >= $querydata['mainFilterAllValue'])
+                                $valid = false;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'geq':
+                    foreach ($data AS $index => $values) {
+                        $valid = true;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n < $querydata['mainFilterAllValue'])
+                                $valid = false;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'leq':
+                    foreach ($data AS $index => $values) {
+                        $valid = true;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n > $querydata['mainFilterAllValue'])
+                                $valid = false;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+            }
+        } else {
+            $result = $data;
+        }
+
+        return $result;
+    }
+
+    public function apply_main_one_filter($data, $querydata) {
+        $result = array();
+        if (is_numeric($querydata['mainFilterOneValue'])) {
+            switch ($querydata['mainFilterOneType']) {
+                case 'eq':
+                    foreach ($data AS $index => $values) {
+                        $valid = false;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n == $querydata['mainFilterOneValue'])
+                                $valid = true;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'gt':
+                    foreach ($data AS $index => $values) {
+                        $valid = false;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n > $querydata['mainFilterOneValue'])
+                                $valid = true;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'lt':
+                    foreach ($data AS $index => $values) {
+                        $valid = false;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n < $querydata['mainFilterOneValue'])
+                                $valid = true;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'geq':
+                    foreach ($data AS $index => $values) {
+                        $valid = false;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n >= $querydata['mainFilterOneValue'])
+                                $valid = true;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'leq':
+                    foreach ($data AS $index => $values) {
+                        $valid = false;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            if ($n <= $querydata['mainFilterOneValue'])
+                                $valid = true;
+                        }
+                        if ($valid)
+                            array_push($result, $values);
+                    }
+                    break;
+            }
+        } else {
+            $result = $data;
+        }
+
+        return $result;
+    }
+
+    public function apply_main_mean_filter($data, $querydata) {
+        $result = array();
+        if (is_numeric($querydata['mainFilterMeanValue'])) {
+            switch ($querydata['mainFilterMeanType']) {
+                case 'eq':
+                    foreach ($data AS $index => $values) {
+                        $sum = 0;
+                        $len = 0;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            $sum += $n;
+                            $len++;
+                        }
+                        if ($len > 0 && $sum / $len == $querydata['mainFilterMeanValue'])
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'gt':
+                    foreach ($data AS $index => $values) {
+                        $sum = 0;
+                        $len = 0;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            $sum += $n;
+                            $len++;
+                        }
+                        if ($len > 0 && $sum / $len > $querydata['mainFilterMeanValue'])
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'lt':
+                    foreach ($data AS $index => $values) {
+                        $sum = 0;
+                        $len = 0;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            $sum += $n;
+                            $len++;
+                        }
+                        if ($len > 0 && $sum / $len < $querydata['mainFilterMeanValue'])
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'geq':
+                    foreach ($data AS $index => $values) {
+                        $sum = 0;
+                        $len = 0;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            $sum += $n;
+                            $len++;
+                        }
+                        if ($len > 0 && $sum / $len >= $querydata['mainFilterMeanValue'])
+                            array_push($result, $values);
+                    }
+                    break;
+                case 'leq':
+                    foreach ($data AS $index => $values) {
+                        $sum = 0;
+                        $len = 0;
+                        foreach ($values AS $i => $n) {
+                            if ($i < 3)
+                                continue;
+                            $sum += $n;
+                            $len++;
+                        }
+                        if ($len > 0 && $sum / $len <= $querydata['mainFilterMeanValue'])
+                            array_push($result, $values);
+                    }
+                    break;
+            }
+        } else {
+            $result = $data;
+        }
+
+        return $result;
+    }
+
+    public function apply_biomaterial_filters($data, $parents, $querydata) {
+        $result = $data;
+        foreach ($querydata['biomaterialFilters'] AS $bioid => $filter) {
+            $fil_results = array();
+            if (is_numeric($filter['value'])) {
+                $indices = array_keys($parents, $bioid);
+                if (count($indices > 0)) {
+                    switch ($filter['type']) {
+                        case 'eq':
+                            foreach ($result AS $index => $values) {
+                                $sum = 0;
+                                $len = 0;
+                                foreach ($indices AS $i) {
+                                    $sum += $values[$i];
+                                    $len++;
+                                }
+                                if ($len > 0 && $sum / $len == $filter['value'])
+                                    array_push($fil_results, $values);
+                            }
+                            $result = $fil_results;
+                            break;
+                        case 'gt':
+                            foreach ($result AS $index => $values) {
+                                $sum = 0;
+                                $len = 0;
+                                foreach ($indices AS $i) {
+                                    $sum += $values[$i];
+                                    $len++;
+                                }
+                                if ($len > 0 && $sum / $len > $filter['value'])
+                                    array_push($fil_results, $values);
+                            }
+                            $result = $fil_results;
+                            break;
+                        case 'lt':
+                            foreach ($result AS $index => $values) {
+                                $sum = 0;
+                                $len = 0;
+                                foreach ($indices AS $i) {
+                                    $sum += $values[$i];
+                                    $len++;
+                                }
+                                if ($len > 0 && $sum / $len < $filter['value'])
+                                    array_push($fil_results, $values);
+                            }
+                            $result = $fil_results;
+                            break;
+                        case 'geq':
+                            foreach ($result AS $index => $values) {
+                                $sum = 0;
+                                $len = 0;
+                                foreach ($indices AS $i) {
+                                    $sum += $values[$i];
+                                    $len++;
+                                }
+                                if ($len > 0 && $sum / $len >= $filter['value'])
+                                    array_push($fil_results, $values);
+                            }
+                            $result = $fil_results;
+                            break;
+                        case 'leq':
+                            foreach ($result AS $index => $values) {
+                                $sum = 0;
+                                $len = 0;
+                                foreach ($indices AS $i) {
+                                    $sum += $values[$i];
+                                    $len++;
+                                }
+                                if ($len > 0 && $sum / $len <= $filter['value'])
+                                    array_push($fil_results, $values);
+                            }
+                            $result = $fil_results;
+                            break;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
 
     public function printCsv($expressions) {
         // output header
         echo "# Expression Results\n";
         printf("# you can reach the feature details via %s/details/byId/<feature_id>\n", APPPATH);
-        
+
         //output csv
         $out = fopen('php://output', 'w');
         fputcsv($out, $expressions["header"], "\t");
-        
-        foreach ($expressions["data"] as $key => $val){
+
+        foreach ($expressions["data"] as $key => $val) {
             fputcsv($out, $val, "\t");
         }
-        
+
         fclose($out);
     }
-    
+
     /**
      * @inheritDoc
      * Switches behaviour based on $querydata['query1']: "fullRelease" or "releaseCsv"
@@ -403,7 +503,6 @@ EOF;
             die();
         }
     }
-
 
 }
 
