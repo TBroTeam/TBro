@@ -53,8 +53,7 @@ $(document).ready(function () {
         });
     });
 
-    var selectedItem;
-    var dataTable;
+    var expressionTable;
     $('#expression-button-gdfx-table').click(function () {
         var selected = finalSelect.filteredData();
 
@@ -132,13 +131,18 @@ $(document).ready(function () {
     $('#expression-query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
-
+    
     function addTable(data) {
         var tbl = $('#expression-results');
         // y.smps = tissues
         // y.vars = names
         // y.data = data
-
+        
+        if(typeof expressionTable !== 'undefined'){
+            expressionTable.fnDestroy();
+            tbl.empty();
+        }
+        
         var tblColumns = $.map(data.header, function (n, i) {
             return {sTitle: n, bVisible: i !== 0}
         });
@@ -160,7 +164,7 @@ $(document).ready(function () {
         //  }
 
 
-        tbl.dataTable(
+        expressionTable = tbl.dataTable(
                 {
                     aoColumns: tblColumns,
                     aaData: tblData,

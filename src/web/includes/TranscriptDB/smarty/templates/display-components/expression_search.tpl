@@ -211,7 +211,7 @@
                 <li id="expression-download_csv_button" > tsv </li> 
             </ul>
         </div>
-        <div class="large-12" style="padding-right: 4px;">
+        <div class="large-12" id="expression-results-div" style="padding-right: 4px;">
             <table id="expression-results">
 
             </table>
