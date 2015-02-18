@@ -21,6 +21,19 @@ $(document).ready(function () {
         precedessorNode: select_parent_biomaterial
     });
 
+    select_assay.change(update_biomaterial_filters);
+    select_analysis.change(update_biomaterial_filters);
+    
+    function update_biomaterial_filters() {
+        $('#biomaterial-expression-filters').empty();
+        $("#expression-select-gdfx-biomaterial option").each(function ()
+        {
+            var template = _.template($('#template_biomaterial_filter').html());
+            $('#biomaterial-expression-filters').append(template({name: $(this).text(), id: $(this).val()}));
+            // add $(this).val() to your list
+        });
+    }
+
     release.change(function () {
         var url = '{#$ServicePath#}/listing/filters_expression';
         var data = {
@@ -35,6 +48,7 @@ $(document).ready(function () {
                     data: data
                 }).refill();
                 $('#expression-button-gdfx-table').prop('disabled', false);
+                update_biomaterial_filters();
             }
         });
     });

@@ -30,11 +30,29 @@
     }
 </script>
 
+<script type="text/template"  id="template_biomaterial_filter"> 
+    <tr>
+                    <th><%= name %></th>
+                    <td>
+                        <select id="expressions_filter_mean_type_<%=id%>" class="biomaterial_filter" data-id="<%=id%>">
+                            <option value="lt">&lt;</option>
+                            <option value="gt">&gt;</option>
+                            <option value="leq">&lt;=</option>
+                            <option value="geq">&gt;=</option>
+                            <option value="eq">=</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id="expressions_filter_mean_value_<%=id%>" type="text" class="biomaterial_filter" data-id="<%=id%>"/>
+                    </td>
+                </tr>
+</script>
+
 <style type="text/css">
-    #expression-filters tr td, #expression-filters tr th {
+    #expression-filters tr td, #expression-filters tr th, #biomaterial-expression-filters tr td, #biomaterial-expression-filters tr th {
         padding: 1px !important;
     }
-    #expression-filters input {
+    #expression-filters input, #biomaterial-expression-filters input {
         margin: 0px !important;
     }
     .no-wrap {
@@ -87,57 +105,58 @@
 
     <div class="row">
         <div class="large-6 panel" style="float:left;  width:49%">
-            <div class="large-12 columns">
-                <h4>Filters</h4>
-            </div>
-
-
+            <h4>Filters</h4>
+            <h6>General</h6>
             <table id="expression-filters" style="width:100%">
-                    <tr>
-                        <th>All</th>
-                        <td>
-                            <select id="expressions_filter_all_type">
-                                <option value="lt">&lt;</option>
-                                <option value="gt">&gt;</option>
-                                <option value="leq">&lt;=</option>
-                                <option value="geq">&gt;=</option>
-                                <option value="eq">=</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input id="expressions_filter_all_value" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>One</th>
-                        <td>
-                            <select id="expressions_filter_one_type">
-                                <option value="lt">&lt;</option>
-                                <option value="gt">&gt;</option>
-                                <option value="leq">&lt;=</option>
-                                <option value="geq">&gt;=</option>
-                                <option value="eq">=</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input id="expressions_filter_one_value" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Mean</th>
-                        <td>
-                            <select id="expressions_filter_mean_type">
-                                <option value="lt">&lt;</option>
-                                <option value="gt">&gt;</option>
-                                <option value="leq">&lt;=</option>
-                                <option value="geq">&gt;=</option>
-                                <option value="eq">=</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input id="expressions_filter_mean_value" type="text" />
-                        </td>
-                    </tr>
+                <tr>
+                    <th>All</th>
+                    <td>
+                        <select id="expressions_filter_all_type">
+                            <option value="lt">&lt;</option>
+                            <option value="gt">&gt;</option>
+                            <option value="leq">&lt;=</option>
+                            <option value="geq">&gt;=</option>
+                            <option value="eq">=</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id="expressions_filter_all_value" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>One</th>
+                    <td>
+                        <select id="expressions_filter_one_type">
+                            <option value="lt">&lt;</option>
+                            <option value="gt">&gt;</option>
+                            <option value="leq">&lt;=</option>
+                            <option value="geq">&gt;=</option>
+                            <option value="eq">=</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id="expressions_filter_one_value" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Mean</th>
+                    <td>
+                        <select id="expressions_filter_mean_type">
+                            <option value="lt">&lt;</option>
+                            <option value="gt">&gt;</option>
+                            <option value="leq">&lt;=</option>
+                            <option value="geq">&gt;=</option>
+                            <option value="eq">=</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input id="expressions_filter_mean_value" type="text" />
+                    </td>
+                </tr>
+            </table>
+            <h6>Biomaterial (Mean)</h6>
+            <table id="biomaterial-expression-filters" style="width:100%">
+
             </table>
             <button class="right" type="button" id="expression-button-gdfx-table" value="table" disabled="disabled">Apply</button>
         </div>
