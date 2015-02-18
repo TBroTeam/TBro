@@ -36,7 +36,12 @@ class Expressions extends \WebService {
         $query_values = array();
         $query_subqueries = array();
         foreach (
-        array('analysis' => $analysis, 'assay' => $assay, 'biomaterial' => $biomaterial)
+        array('analysis' => $analysis, 'assay' => $assay, 'biomaterial' => $biomaterial, 'biomat' => $biomaterial)
+        AS $prefix => $values) {
+            $query_subqueries[$prefix] = implode(',', $values);
+        }
+        foreach (
+        array('bio' => $biomaterial)
         AS $prefix => $values) {
             for ($i = 0; $i < count($values); $i++) {
                 $query_values[$prefix][':' . $prefix . $i] = $values[$i];
@@ -50,104 +55,115 @@ FROM
   biomaterial, 
   biomaterial_relationship 
 WHERE 
-  biomaterial_id IN ({$query_subqueries['biomaterial']}) AND 
+  biomaterial_id IN ({$query_subqueries['bio']}) AND 
   biomaterial_id = subject_id 
 ORDER BY 
   1
 
 EOF;
-  
-  $biomats = array();
-  $parents = array();
-    $stm_biomaterials = $db->prepare($query_biomaterials);
-    foreach ($query_values['biomaterial'] as $key => $val)
+
+        $biomats = array();
+        $parents = array();
+        $stm_biomaterials = $db->prepare($query_biomaterials);
+        foreach ($query_values['bio'] as $key => $val)
             $stm_biomaterials->bindValue($key, $val, \PDO::PARAM_STR);
-    $stm_biomaterials->execute();
-    while (($cell = $stm_biomaterials->fetch(PDO::FETCH_ASSOC)) !== false) {
-        $biomats[] = $cell['biomaterial_name'];
-        $parents[] = $cell['parent_id'];
-    }
+        $stm_biomaterials->execute();
+        while (($cell = $stm_biomaterials->fetch(PDO::FETCH_ASSOC)) !== false) {
+            $biomats[] = $cell['biomaterial_name'];
+            $parents[] = $cell['parent_id'];
+        }
+
+        $bi = $biomats;
+        for ($i = 0; $i < count($bi); $i++) {
+            $bi[$i] = '"' . $biomats[$i] . '"' . " double precision";
+        }
+        $colnamespec = implode(',', $bi);
+
 
         $query = <<<EOF
 SELECT 
-  feature.feature_id AS feature_id,
-  feature.name AS feature_name, 
-  biomaterial.name AS biomaterial_name, 
-  expressionresult.value, 
-  parent_biomaterial.biomaterial_id AS parent_biomaterial_id
+  * 
 FROM 
-  expressionresult, 
-  biomaterial,
-  analysis,
-  feature, 
-  quantification,
-  acquisition,
-  assay,
-  biomaterial_relationship, 
-  biomaterial AS parent_biomaterial
-WHERE 
-  expressionresult.biomaterial_id IN ({$query_subqueries['biomaterial']}) AND
-  expressionresult.biomaterial_id = biomaterial.biomaterial_id AND
+  crosstab('
+    SELECT 
+      feature.feature_id AS feature_id,
+      feature.name AS feature_name,
+      biomaterial.name AS biomaterial_name, 
+      expressionresult.value
+    FROM 
+      expressionresult, 
+      biomaterial,
+      analysis,
+      feature, 
+      quantification,
+      acquisition,
+      assay,
+      biomaterial_relationship, 
+      biomaterial AS parent_biomaterial
+    WHERE 
+      expressionresult.biomaterial_id IN ({$query_subqueries['biomaterial']}) AND
+      expressionresult.biomaterial_id = biomaterial.biomaterial_id AND
   
-  expressionresult.feature_id = feature.feature_id AND
+      expressionresult.feature_id = feature.feature_id AND
   
-  expressionresult.analysis_id IN ({$query_subqueries['analysis']}) AND
-  expressionresult.analysis_id = analysis.analysis_id AND
+      expressionresult.analysis_id IN ({$query_subqueries['analysis']}) AND
+      expressionresult.analysis_id = analysis.analysis_id AND
   
-  expressionresult.quantification_id = quantification.quantification_id AND  
-  quantification.acquisition_id = acquisition.acquisition_id AND
-  acquisition.assay_id IN ({$query_subqueries['assay']}) AND
-  acquisition.assay_id = assay.assay_id AND
+      expressionresult.quantification_id = quantification.quantification_id AND  
+      quantification.acquisition_id = acquisition.acquisition_id AND
+      acquisition.assay_id IN ({$query_subqueries['assay']}) AND
+      acquisition.assay_id = assay.assay_id AND
   
-  biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND
-  biomaterial_relationship.object_id = parent_biomaterial.biomaterial_id AND 
+      biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND
+      biomaterial_relationship.object_id = parent_biomaterial.biomaterial_id AND
       
-  feature.organism_id=:organism AND 
-  feature.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')}  AND accession = :release)
- ORDER BY feature_name, biomaterial_name;
+      feature.organism_id={$organism} AND 
+      feature.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')}  AND accession = ''{$release}'')
+    ORDER BY 
+      feature_id, biomaterial_name
+  ', '
+    SELECT 
+      name 
+    FROM 
+      biomaterial 
+    WHERE 
+      biomaterial_id IN ({$query_subqueries['biomat']})
+  ')
+    AS 
+      ct(
+        "ID" int, 
+        "name" text, 
+        {$colnamespec}
+);
 
 EOF;
-  
+
         $data_array = array_merge(
-                $query_values['biomaterial'], $query_values['analysis'], $query_values['assay']
+                $query_values['biomaterial'], $query_values['analysis'], $query_values['assay'], $query_values['biomat']
         );
-
         $stm = $db->prepare($query);
-        foreach ($data_array as $key => $val)
-            $stm->bindValue($key, $val, \PDO::PARAM_STR);
 
-        $stm->bindValue('organism', $organism, \PDO::PARAM_STR);
-        $stm->bindValue('release', $release, \PDO::PARAM_STR);
+        //foreach ($data_array as $key => $val)
+        //   $stm->bindValue($key, $val, \PDO::PARAM_STR);
+        //$stm->bindValue('organism', $organism, \PDO::PARAM_STR);
+        //$stm->bindValue('release', $release, \PDO::PARAM_STR);
+
         $stm->execute();
-
 
         $lastcell_name = '';
         $data = array();
-        $smps = array("ID", "name", "user_alias");
-        // $parents = array_merge(array(-1, -1, -1), $parents);
-        $parents = array(-1, -1, -1);
+        $smps = array_merge(array("ID", "name"), $biomats, array("user_alias"));
+        $parents = array_merge(array(-1, -1, -1), $parents);
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
-            if ($cell['feature_name'] != $lastcell_name) {
-                #featue-specific actions, only once per featue
-                $lastcell_name = $cell['feature_name'];
-                $user_alias = "";
-                if (array_key_exists($cell['feature_id'], $metadata)) {
-                    if (array_key_exists('alias', $metadata[$cell['feature_id']]))
-                        $user_alias = $metadata[$cell['feature_id']]['alias'];
-                }
-                $data[] = array($cell['feature_id'], $cell['feature_name'], $user_alias);
-                $row = &$data[count($data) - 1];
+            $user_alias = "";
+            if (array_key_exists($cell['ID'], $metadata)) {
+                if (array_key_exists('alias', $metadata[$cell['ID']]))
+                    $user_alias = $metadata[$cell['ID']]['alias'];
             }
-
-            if (count($data) == 1) {
-                #sample-specific actions, only executed for first var
-                $smps[] = $cell['biomaterial_name'];
-                $parents[] = $cell['parent_biomaterial_id'];
-            }
-
-            $row[] = floatval($cell['value']);
+            $cell["user_alias"] = $user_alias;
+            $data[] = array_values($cell);
         }
 
         if (is_numeric($querydata['mainFilterAllValue']) || is_numeric($querydata['mainFilterOneValue']) || is_numeric($querydata['mainFilterMeanValue']))
