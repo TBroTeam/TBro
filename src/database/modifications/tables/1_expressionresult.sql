@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS expressionresult
 WITH (
   OIDS = FALSE
 );
+--NEWCMD--
+CREATE INDEX ON expressionresult (analysis_id);
+--NEWCMD--
+CREATE INDEX ON expressionresult (biomaterial_id);
+--NEWCMD--
+CREATE INDEX ON expressionresult (quantification_id);
+--NEWCMD--
+CREATE INDEX ON expressionresult (feature_id);
