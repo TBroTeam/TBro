@@ -108,6 +108,10 @@ $(document).ready(function () {
                 $('.loading').hide();
                 $('#expression-div-gdfxtable').show();
                 $('#expression-results').dataTable().fnAdjustColumnSizing();
+            },
+            error: function (data, err) {
+                $('.loading').hide();
+                alert("An error occured while loading data: "+err);
             }
         });
     });
