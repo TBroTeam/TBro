@@ -23,15 +23,18 @@ $(document).ready(function () {
 
     select_assay.change(update_biomaterial_filters);
     select_analysis.change(update_biomaterial_filters);
-    
+
     function update_biomaterial_filters() {
         $('#biomaterial-expression-filters').empty();
-        $("#expression-select-gdfx-biomaterial option").each(function ()
-        {
-            var template = _.template($('#template_biomaterial_filter').html());
-            $('#biomaterial-expression-filters').append(template({name: $(this).text(), id: $(this).val()}));
-            // add $(this).val() to your list
-        });
+        setTimeout(function () {
+            $("#expression-select-gdfx-biomaterial option").each(function ()
+            {
+                var template = _.template($('#template_biomaterial_filter').html());
+                $('#biomaterial-expression-filters').append(template({name: $(this).text(), id: $(this).val()}));
+                // add $(this).val() to your list
+            });
+        }, 1000);
+
     }
 
     release.change(function () {
@@ -111,7 +114,7 @@ $(document).ready(function () {
             },
             error: function (data, err) {
                 $('.loading').hide();
-                alert("An error occured while loading data: "+err);
+                alert("An error occured while loading data: " + err);
             }
         });
     });
@@ -135,18 +138,18 @@ $(document).ready(function () {
     $('#expression-query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
-    
+
     function addTable(data) {
         var tbl = $('#expression-results');
         // y.smps = tissues
         // y.vars = names
         // y.data = data
-        
-        if(typeof expressionTable !== 'undefined'){
+
+        if (typeof expressionTable !== 'undefined') {
             expressionTable.fnDestroy();
             tbl.empty();
         }
-        
+
         var tblColumns = $.map(data.header, function (n, i) {
             return {sTitle: n, bVisible: i !== 0}
         });
