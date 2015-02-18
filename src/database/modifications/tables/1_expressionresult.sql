@@ -1,4 +1,4 @@
-CREATE TABLE expressionresult
+CREATE TABLE IF NOT EXISTS expressionresult
 (
    expressionresult_id serial, 
    analysis_id integer NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE diffexpresult
+CREATE TABLE IF NOT EXISTS diffexpresult
 (
    diffexpresult_id serial, 
    analysis_id integer,
