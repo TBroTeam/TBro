@@ -50,7 +50,7 @@ SELECT
   feature.name AS feature_name, 
   biomaterial.name AS biomaterial_name, 
   expressionresult.value, 
-  parent_biomaterial.biomaterial_id AS parent_biomaterial_id,
+  parent_biomaterial.biomaterial_id AS parent_biomaterial_id
 FROM 
   expressionresult, 
   biomaterial,
