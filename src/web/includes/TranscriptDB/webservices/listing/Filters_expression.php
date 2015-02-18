@@ -42,16 +42,12 @@ SELECT analysis.analysis_id, analysis.name AS analysis_name, analysis.descriptio
   biomaterial.biomaterial_id, biomaterial.name AS biomaterial_name, biomaterial.description AS biomaterial_description, parent_biomaterial.biomaterial_id AS biomaterial_parent_id,
   parent_biomaterial.biomaterial_id AS parent_biomaterial_id, parent_biomaterial.name AS parent_biomaterial_name, parent_biomaterial.description AS parent_biomaterial_description 
  FROM
-(   SELECT DISTINCT
-            d.biomaterial_id, d.analysis_id, d.quantification_id, f.organism_id, f.dbxref_id, r.object_id AS parent_biomaterial_id
+(   SELECT *
         FROM 
-            expressionresult d, feature f, biomaterial_relationship r
+            materialized_view_expression_filter
         WHERE 
-            d.feature_id=f.feature_id 
-            AND r.subject_id=d.biomaterial_id 
-            AND r.type_id={$constant('CV_BIOMATERIAL_ISA')} 
-            AND f.organism_id=? 
-            AND f.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')}  AND accession = ?)
+            organism_id=? 
+            AND dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')}  AND accession = ?)
 )   AS map
         JOIN biomaterial ON (map.biomaterial_id=biomaterial.biomaterial_id)
         JOIN biomaterial parent_biomaterial ON (map.parent_biomaterial_id=parent_biomaterial.biomaterial_id)
