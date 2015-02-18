@@ -150,7 +150,7 @@ EOF;
         $lastcell_name = '';
         $data = array();
         $smps = array_merge(array("ID", "name"), $biomats, array("user_alias"));
-        $parents = array_merge(array(-1, -1, -1), $parents);
+        $parents = array_merge(array(-1, -1), $parents, array(-1));
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
