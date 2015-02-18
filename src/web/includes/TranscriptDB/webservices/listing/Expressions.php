@@ -43,6 +43,30 @@ class Expressions extends \WebService {
             }
             $query_subqueries[$prefix] = implode(',', array_keys($query_values[$prefix]));
         }
+        $query_biomaterials = <<<EOF
+SELECT 
+  name biomaterial_name, object_id parent_id 
+FROM 
+  biomaterial, 
+  biomaterial_relationship 
+WHERE 
+  biomaterial_id IN ({$query_subqueries['biomaterial']}) AND 
+  biomaterial_id = subject_id 
+ORDER BY 
+  1
+
+EOF;
+  
+  $biomats = array();
+  $parents = array();
+    $stm_biomaterials = $db->prepare($query_biomaterials);
+    foreach ($query_values['biomaterial'] as $key => $val)
+            $stm_biomaterials->bindValue($key, $val, \PDO::PARAM_STR);
+    $stm_biomaterials->execute();
+    while (($cell = $stm_biomaterials->fetch(PDO::FETCH_ASSOC)) !== false) {
+        $biomats[] = $cell['biomaterial_name'];
+        $parents[] = $cell['parent_id'];
+    }
 
         $query = <<<EOF
 SELECT 
@@ -83,7 +107,7 @@ WHERE
  ORDER BY feature_name, biomaterial_name;
 
 EOF;
-
+  
         $data_array = array_merge(
                 $query_values['biomaterial'], $query_values['analysis'], $query_values['assay']
         );
@@ -100,6 +124,7 @@ EOF;
         $lastcell_name = '';
         $data = array();
         $smps = array("ID", "name", "user_alias");
+        // $parents = array_merge(array(-1, -1, -1), $parents);
         $parents = array(-1, -1, -1);
         $row = null;
         //again, see http://canvasxpress.org/documentation.html#data !
