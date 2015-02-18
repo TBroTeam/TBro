@@ -391,7 +391,7 @@ EOF;
             $fil_results = array();
             if (is_numeric($filter['value'])) {
                 $indices = array_keys($parents, $bioid);
-                if (count($indices > 0)) {
+                if (count($indices) > 0) {
                     switch ($filter['type']) {
                         case 'eq':
                             foreach ($result AS $index => $values) {
