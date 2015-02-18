@@ -50,11 +50,7 @@ SELECT
   feature.name AS feature_name, 
   biomaterial.name AS biomaterial_name, 
   expressionresult.value, 
-  parent_biomaterial.name AS parent_biomaterial_name,
   parent_biomaterial.biomaterial_id AS parent_biomaterial_id,
-  assay.name AS assay_name,
-  analysis.analysis_id,
-  analysis.name AS analysis_name
 FROM 
   expressionresult, 
   biomaterial,
