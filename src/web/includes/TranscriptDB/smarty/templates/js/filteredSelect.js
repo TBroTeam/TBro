@@ -6,7 +6,7 @@
  * @param {String} filterProperty property this select works on
  * @param {Collection} options options
  * @param {jQuery} [options.precedessorNode] select this node depends on. either this value or options.data have to be set
- * @param {Array} [options.data] data as returned from web service /listing/filters/
+ * @param {Array} [options.data] data as returned from web service /listing/filters_expression
  * @param {function(obj)} [options.getDisplayString] returns value to be displayed
  */
 filteredSelect = function(jqNode, filterProperty, options){
