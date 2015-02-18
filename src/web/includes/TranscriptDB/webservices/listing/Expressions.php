@@ -138,9 +138,6 @@ FROM
 
 EOF;
 
-        $data_array = array_merge(
-                $query_values['biomaterial'], $query_values['analysis'], $query_values['assay'], $query_values['biomat']
-        );
         $stm = $db->prepare($query);
 
         //foreach ($data_array as $key => $val)
