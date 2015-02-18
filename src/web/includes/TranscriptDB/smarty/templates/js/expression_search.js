@@ -65,6 +65,20 @@ $(document).ready(function () {
             }
         });
 
+        var biomaterialFilters = {};
+        $("#biomaterial-expression-filters select").each(function ()
+        {
+            var id = $(this).attr("biomaterial-id");
+            var val = $(this).val();
+            biomaterialFilters[id] = {type: val};
+        });
+        $("#biomaterial-expression-filters input").each(function ()
+        {
+            var id = $(this).attr("biomaterial-id");
+            var val = $(this).val();
+            biomaterialFilters[id].value = val;
+        });
+
         lastQueryData = {
             organism: organism.val(),
             release: release.val(),
@@ -80,6 +94,7 @@ $(document).ready(function () {
             mainFilterOneValue: $('#expressions_filter_one_value').val(),
             mainFilterMeanType: $('#expressions_filter_mean_type').val(),
             mainFilterMeanValue: $('#expressions_filter_mean_value').val(),
+            biomaterialFilters: biomaterialFilters
         };
         console.log(lastQueryData);
         $.ajax('{#$ServicePath#}/listing/expressions/fullRelease', {

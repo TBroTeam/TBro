@@ -34,7 +34,7 @@
     <tr>
                     <th><%= name %></th>
                     <td>
-                        <select id="expressions_filter_mean_type_<%=id%>" class="biomaterial_filter" data-id="<%=id%>">
+                        <select id="expressions_filter_mean_type_<%=id%>" biomaterial-id="<%=id%>">
                             <option value="lt">&lt;</option>
                             <option value="gt">&gt;</option>
                             <option value="leq">&lt;=</option>
@@ -43,7 +43,7 @@
                         </select>
                     </td>
                     <td>
-                        <input id="expressions_filter_mean_value_<%=id%>" type="text" class="biomaterial_filter" data-id="<%=id%>"/>
+                        <input id="expressions_filter_mean_value_<%=id%>" type="text" biomaterial-id="<%=id%>"/>
                     </td>
                 </tr>
 </script>
