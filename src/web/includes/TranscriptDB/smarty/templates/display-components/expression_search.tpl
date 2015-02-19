@@ -78,7 +78,7 @@
                     <h4>Analysis</h4>
                 </div>
                 <div class="large-3 columns">
-                    <h4>Biomaterial</h4>
+                    <h4>Condition</h4>
                 </div>
 
                 <div class="large-3 columns">
@@ -154,7 +154,7 @@
                     </td>
                 </tr>
             </table>
-            <h6>Biomaterial (Mean)</h6>
+            <h6>Condition (Mean)</h6>
             <table id="biomaterial-expression-filters" style="width:100%">
 
             </table>
