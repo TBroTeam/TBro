@@ -3,14 +3,24 @@ var lastQueryData;
 
 $(document).ready(function () {
     var select_assay = $('#expression-select-gdfx-assay');
+    var select_acquisition = $('#expression-select-gdfx-acquisition');
+    var select_quantification = $('#expression-select-gdfx-quantification');
     var select_analysis = $('#expression-select-gdfx-analysis');
     var select_parent_biomaterial = $('#expression-select-gdfx-biomaterial');
     var select_sample = $('#expression-select-gdfx-sample');
 
     //filteredSelect: select_conditionA => select_conditionB => select_analysis
 
-    new filteredSelect(select_analysis, 'analysis', {
+    new filteredSelect(select_acquisition, 'acquisition', {
         precedessorNode: select_assay
+    });
+    
+    new filteredSelect(select_quantification, 'quantification', {
+        precedessorNode: select_acquisition
+    });
+
+    new filteredSelect(select_analysis, 'analysis', {
+        precedessorNode: select_quantification
     });
 
     new filteredSelect(select_parent_biomaterial, 'parent_biomaterial', {
@@ -85,7 +95,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     $('#expression-button-gdfx-table-export').click(function () {
         //show info
         $.when($('#expression-div-gdfxtable').hide(500)).then(function () {
