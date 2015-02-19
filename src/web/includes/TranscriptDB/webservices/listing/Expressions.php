@@ -12,7 +12,7 @@ class Expressions extends \WebService {
     /**
      * @inheritDoc
      */
-    public function fullRelease($querydata) {
+    public function fullRelease($querydata, $export) {
         set_time_limit(300);
         global $db;
 
@@ -110,16 +110,29 @@ EOF;
             if ($cell['feature_name'] != $lastcell_name) {
                 #featue-specific actions, only once per featue
                 if ($first && $lastcell_name != "") {
-                    echo "{\"header\":[\"" . implode("\",\"", $smps) . "\"],\"data\":[\n";
+                    if ($export) {
+                        // output header
+                        echo "# Expression Results\n";
+                        printf("# you can reach the feature details via %s/details/byId/<feature_id>\n", APPPATH);
+                        //output csv
+                        $out = fopen('php://output', 'w');
+                        fputcsv($out, $smps, "\t");
+                    } else {
+                        echo "{\"header\":[\"" . implode("\",\"", $smps) . "\"],\"data\":[\n";
+                    }
                     $first = false;
                 }
                 if (!$first && $this->passes_main_filters($row, $querydata) && $this->passes_biomaterial_filters($row, $parents, $querydata)) {
-                    if ($needcomma) {
+                    if ($needcomma && !$export) {
                         echo ",\n";
                     } else {
                         $needcomma = true;
                     }
-                    echo "[" . implode(",", $row) . "]";
+                    if ($export) {
+                        fputcsv($out, $row, "\t");
+                    } else {
+                        echo "[" . implode(",", $row) . "]";
+                    }
                 }
                 $lastcell_name = $cell['feature_name'];
                 $user_alias = "\"\"";
@@ -139,24 +152,22 @@ EOF;
             $row[] = floatval($cell['value']);
         }
         if ($this->passes_main_filters($row, $querydata) && $this->passes_biomaterial_filters($row, $parents, $querydata)) {
-            if ($needcomma) {
+            if ($needcomma && !$export) {
                 echo ",\n";
             }
-            echo "[" . implode(",", $row) . "]\n";
+            if ($export) {
+                fputcsv($out, $row, "\t", '');
+            } else {
+                echo "[" . implode(",", $row) . "]";
+            }
         }
-        echo "]}\n";
+        if ($export) {
+            fclose($out);
+        } else {
+            echo "]}\n";
+        }
+        //die or WebService->output will attach return value to output (in our case: null)
         die();
-
-        if (is_numeric($querydata['mainFilterAllValue']) || is_numeric($querydata['mainFilterOneValue']) || is_numeric($querydata['mainFilterMeanValue']))
-            $data = $this->apply_main_filters($data, $querydata);
-
-        if (isset($querydata['biomaterialFilters']))
-            $data = $this->apply_biomaterial_filters($data, $parents, $querydata);
-
-        return array(
-            'header' => $smps,
-            'data' => $data
-        );
     }
 
     public function passes_main_filters($data, $querydata) {
@@ -396,22 +407,6 @@ EOF;
         return true;
     }
 
-    public function printCsv($expressions) {
-        // output header
-        echo "# Expression Results\n";
-        printf("# you can reach the feature details via %s/details/byId/<feature_id>\n", APPPATH);
-
-        //output csv
-        $out = fopen('php://output', 'w');
-        fputcsv($out, $expressions["header"], "\t");
-
-        foreach ($expressions["data"] as $key => $val) {
-            fputcsv($out, $val, "\t");
-        }
-
-        fclose($out);
-    }
-
     /**
      * @inheritDoc
      * Switches behaviour based on $querydata['query1']: "fullRelease" or "releaseCsv"
@@ -420,7 +415,7 @@ EOF;
      */
     public function execute($querydata) {
         if ($querydata['query1'] == 'fullRelease') {
-            return $this->fullRelease($querydata);
+            return $this->fullRelease($querydata, false);
         } elseif ($querydata['query1'] == 'releaseCsv') {
             header("Pragma: public");
             header("Expires: 0");
@@ -429,10 +424,10 @@ EOF;
             header("Content-Type: application/octet-stream");
             header("Content-Disposition: attachment; filename=\"expressions_export.tsv\";");
             header("Content-Transfer-Encoding: binary");
-            $this->printCsv($this->fullRelease($querydata));
-            //die or WebService->output will attach return value to output (in our case: null)
-            die();
+            $this->fullRelease($querydata, true);
         }
+        //die or WebService->output will attach return value to output (in our case: null)
+        die();
     }
 
 }
