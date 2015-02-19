@@ -132,8 +132,8 @@ $(document).ready(function () {
         return {
             organism: organism.val(),
             release: release.val(),
-            assay: [selected.values[0].assay],
-            analysis: [selected.values[0].analysis],
+            quantification: selected.values[0].quantification,
+            analysis: selected.values[0].analysis,
             biomaterial: $.map(selected.values, function (n) {
                 return n.sample
             }),
