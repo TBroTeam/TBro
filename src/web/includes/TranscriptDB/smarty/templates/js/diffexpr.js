@@ -96,8 +96,8 @@ $(document).ready(function() {
         selectedItem = {
             conditionA: selected.values[0].dir === 'ltr' ? selected.values[0].ba : selected.values[0].bb,
             conditionB: selected.values[0].dir === 'ltr' ? selected.values[0].bb : selected.values[0].ba,
-            analysis: selected.values[0].analysis
-
+            analysis: selected.values[0].analysis,
+            quantification: selected.values[0].quantification
         };
         //show result table
         $('#{#$instance_name#}-div-gdfxtable').show();
@@ -119,6 +119,10 @@ $(document).ready(function() {
                 aoData.push({
                     name: "analysis",
                     value: selectedItem.analysis
+                });
+                aoData.push({
+                    name: "quantification",
+                    value: selectedItem.quantification
                 });
                 aoData.push({
                     name: "conditionA",
