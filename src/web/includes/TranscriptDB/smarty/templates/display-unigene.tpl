@@ -8,19 +8,19 @@
     <script type="text/javascript">
         var feature_id = '{#$data.unigene.feature_id#}';
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             new Grouplist($('#button-unigene-addToCart-options'), cart, addUnigeneToCart);
             $('#button-unigene-addToCart-options-newcart').click(addUnigeneToCart);
 
             $('.unigene-header').draggable({
                 appendTo: "body",
-                helper: function() {
+                helper: function () {
                     return $('<div>', {text: $('.unigene-header').text()}).addClass('beingDragged');
                 },
                 cursorAt: {top: 5, left: 5}
             });
 
-            $('#Cart').on('cartEvent', function(event) {
+            $('#Cart').on('cartEvent', function (event) {
                 if (!((event.eventData.action || '').match(/updateItem/) || ((event.eventData.action || '').match(/(add|remove)Item/)) || ((event.eventData.action || '').match(/redraw/)))) {
                     return;
                 }
@@ -87,7 +87,7 @@
         {#if isset($data.unigene.description) #}
             var description = "{#$data.unigene.description[0].value#}";
         {#/if#}
-            cart._getItemDetails([id], function(data) {
+            cart._getItemDetails([id], function (data) {
                 if (Object.keys(cart.metadata[cart.currentContext]).length >= cartlimits.max_annotations_per_context) {
                     if (typeof data[0].metadata.alias === 'undefined' && typeof data[0].metadata.annotations === 'undefined') {
                         $('#TooManyAnnotationsDialog').foundation('reveal', 'open');
@@ -123,7 +123,7 @@
             <h4>Containing Carts</h4>
             <table style="width:100%" id="containing-carts-table">
                 <tbody id="containing-carts-section">
-                    
+
                 </tbody>
             </table>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
@@ -160,15 +160,15 @@
     {#/if#}
     {#if (isset($data.unigene.isoforms) && count($data.unigene.isoforms)>0)#}
         <script type="text/javascript">
-        var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {
-            return $.extend({alias: ''}, elem);
-        });
-        $(document).ready(function() {
-            displayFeatureTable(isoform_data, {
-                // bPaginate: false,
-                // bFilter: false
+            var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function (elem) {
+                return $.extend({alias: ''}, elem);
             });
-        });
+            $(document).ready(function () {
+                displayFeatureTable(isoform_data, {
+                    // bPaginate: false,
+                    // bFilter: false
+                });
+            });
         </script>
         <div class="row">        
             <div class="large-12 columns panel">
@@ -182,15 +182,17 @@
         </div>
     {#/if#}
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
         {#include file="js/barplot.js"#}
-            var isoform_ids = _.map({#$data.unigene.isoforms|json_encode#}, function(elem) {
+            var isoform_ids = _.map({#$data.unigene.isoforms|json_encode#}, function (elem) {
                 return elem.feature_id;
             });
-            populateBarplotSelectionBoxes({
-                isoform: isoform_ids,
-                unigene: [{#$data.unigene.feature_id#}]
-            }, {type: "unigene"});
+            setTimeout(function () {
+                populateBarplotSelectionBoxes({
+                    isoform: isoform_ids,
+                    unigene: [{#$data.unigene.feature_id#}]
+                }, {type: "unigene"});
+            }, 800);
         });
     </script>
     <div class="row">

@@ -33,7 +33,7 @@ $(document).ready(function () {
                 $('#biomaterial-expression-filters').append(template({name: $(this).text(), id: $(this).val()}));
                 // add $(this).val() to your list
             });
-        }, 1000);
+        }, 800);
 
     }
 

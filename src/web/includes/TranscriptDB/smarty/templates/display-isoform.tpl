@@ -193,7 +193,7 @@
             <h4>Containing Carts</h4>
             <table style="width:100%" id="containing-carts-table">
                 <tbody id="containing-carts-section">
-                    
+
                 </tbody>
             </table>
             <h4>User Alias <a class="cart-button-rename" title="Change Annotation" onclick="annotateElement();" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a></h4>
@@ -259,7 +259,9 @@
         <script type="text/javascript">
             $(document).ready(function () {
             {#include file="js/barplot.js"#}
-                populateBarplotSelectionBoxes({isoform: [{#$data.isoform.feature_id#}], unigene: [{#if isset($data.isoform.unigene)#}{#$data.isoform.unigene.feature_id#}{#/if#}]}, {type: "isoform"});
+                setTimeout(function () {
+                    populateBarplotSelectionBoxes({isoform: [{#$data.isoform.feature_id#}], unigene: [{#if isset($data.isoform.unigene)#}{#$data.isoform.unigene.feature_id#}{#/if#}]}, {type: "isoform"});
+                }, 800);
             });
         </script>
         <div class="large-12 columns panel">
