@@ -24,7 +24,7 @@ class Expressions extends \WebService {
             session_start();
 
         $analysis = $querydata['analysis']; //one or more analysises
-        $assay = $querydata['assay']; //one or more assays
+        $quantification = $querydata['quantification']; //one or more assays
         $biomaterial = $querydata['biomaterial']; //one or more biomaterial samples
         $organism = $querydata['organism'];
         $release = $querydata['release'];
@@ -37,7 +37,7 @@ class Expressions extends \WebService {
         $query_values = array();
         $query_subqueries = array();
         foreach (
-        array('analysis' => $analysis, 'assay' => $assay, 'biomaterial' => $biomaterial)
+        array('biomaterial' => $biomaterial)
         AS $prefix => $values) {
             for ($i = 0; $i < count($values); $i++) {
                 $query_values[$prefix][':' . $prefix . $i] = $values[$i];
@@ -55,11 +55,7 @@ SELECT
 FROM 
   expressionresult, 
   biomaterial,
-  analysis,
   feature, 
-  quantification,
-  acquisition,
-  assay,
   biomaterial_relationship, 
   biomaterial AS parent_biomaterial
 WHERE 
@@ -68,13 +64,9 @@ WHERE
   
   expressionresult.feature_id = feature.feature_id AND
   
-  expressionresult.analysis_id IN ({$query_subqueries['analysis']}) AND
-  expressionresult.analysis_id = analysis.analysis_id AND
+  expressionresult.analysis_id = :analysis AND
   
-  expressionresult.quantification_id = quantification.quantification_id AND  
-  quantification.acquisition_id = acquisition.acquisition_id AND
-  acquisition.assay_id IN ({$query_subqueries['assay']}) AND
-  acquisition.assay_id = assay.assay_id AND
+  expressionresult.quantification_id = :quantification AND  
   
   biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND
   biomaterial_relationship.object_id = parent_biomaterial.biomaterial_id AND 
@@ -85,16 +77,14 @@ WHERE
 
 EOF;
 
-        $data_array = array_merge(
-                $query_values['biomaterial'], $query_values['analysis'], $query_values['assay']
-        );
-
         $stm = $db->prepare($query);
-        foreach ($data_array as $key => $val)
+        foreach ($query_values['biomaterial'] as $key => $val)
             $stm->bindValue($key, $val, \PDO::PARAM_STR);
 
         $stm->bindValue('organism', $organism, \PDO::PARAM_STR);
         $stm->bindValue('release', $release, \PDO::PARAM_STR);
+        $stm->bindValue('analysis', $analysis, \PDO::PARAM_STR);
+        $stm->bindValue('quantification', $quantification, \PDO::PARAM_STR);
         $stm->execute();
 
 
