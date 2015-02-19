@@ -3,6 +3,8 @@ var lastQueryData;
 
 $(document).ready(function() {
     var select_analysis = $('#{#$instance_name#}-select-gdfx-analysis');
+    var select_acquisition = $('#{#$instance_name#}-select-gdfx-acquisition');
+    var select_quantification = $('#{#$instance_name#}-select-gdfx-quantification');
     var select_conditionA = $('#{#$instance_name#}-select-gdfx-conditionA');
     var select_conditionB = $('#{#$instance_name#}-select-gdfx-conditionB');
     var select_assay = $('#{#$instance_name#}-select-gdfx-assay');
@@ -10,8 +12,16 @@ $(document).ready(function() {
 
     //filteredSelect: select_conditionA => select_conditionB => select_analysis
 
-    new filteredSelect(select_conditionA, 'ba', {
+    new filteredSelect(select_acquisition, 'acquisition', {
         precedessorNode: select_assay
+    });
+    
+    new filteredSelect(select_quantification, 'quantification', {
+        precedessorNode: select_acquisition
+    });
+    
+    new filteredSelect(select_conditionA, 'ba', {
+        precedessorNode: select_quantification
     });
 
     new filteredSelect(select_conditionB, 'bb', {
