@@ -138,10 +138,13 @@ EOF;
 
             $row[] = floatval($cell['value']);
         }
-        if ($needcomma) {
-            echo ",\n";
+        if ($this->passes_main_filters($row, $querydata)) {
+            if ($needcomma) {
+                echo ",\n";
+            }
+            echo "[" . implode(",", $row) . "]\n";
         }
-        echo "[" . implode(",", $row) . "]]}\n";
+        echo "]}\n";
         die();
 
         if (is_numeric($querydata['mainFilterAllValue']) || is_numeric($querydata['mainFilterOneValue']) || is_numeric($querydata['mainFilterMeanValue']))
