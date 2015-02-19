@@ -129,6 +129,7 @@ EOF;
                         $needcomma = true;
                     }
                     if ($export) {
+                        $row = str_replace('"', '', $row);
                         fputcsv($out, $row, "\t");
                     } else {
                         echo "[" . implode(",", $row) . "]";
@@ -156,6 +157,7 @@ EOF;
                 echo ",\n";
             }
             if ($export) {
+                $row = str_replace('"', '', $row);
                 fputcsv($out, $row, "\t", '');
             } else {
                 echo "[" . implode(",", $row) . "]";
