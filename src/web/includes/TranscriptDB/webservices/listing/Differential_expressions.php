@@ -148,6 +148,9 @@ class Differential_expressions extends \WebService {
 
         array_push($where, 'd.analysis_id = ?');
         array_push($arguments, $querydata['analysis']);
+        
+        array_push($where, 'd.quantification_id = ?');
+        array_push($arguments, $querydata['quantification']);
 
         array_push($where, 'd.biomateriala_id = ?');
         array_push($arguments, $querydata['conditionA']);
