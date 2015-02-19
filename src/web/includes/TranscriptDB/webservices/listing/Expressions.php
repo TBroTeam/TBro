@@ -113,7 +113,7 @@ EOF;
                     echo "{\"header\":[\"" . implode("\",\"", $smps) . "\"],\"data\":[\n";
                     $first = false;
                 }
-                if (!$first && $this->passes_main_filters($row, $querydata)) {
+                if (!$first && $this->passes_main_filters($row, $querydata) && $this->passes_biomaterial_filters($row, $parents, $querydata)) {
                     if ($needcomma) {
                         echo ",\n";
                     } else {
@@ -138,7 +138,7 @@ EOF;
 
             $row[] = floatval($cell['value']);
         }
-        if ($this->passes_main_filters($row, $querydata)) {
+        if ($this->passes_main_filters($row, $querydata) && $this->passes_biomaterial_filters($row, $parents, $querydata)) {
             if ($needcomma) {
                 echo ",\n";
             }
@@ -332,8 +332,7 @@ EOF;
         return false;
     }
 
-    public function apply_biomaterial_filters($data, $parents, $querydata) {
-        $result = $data;
+    public function passes_biomaterial_filters($data, $parents, $querydata) {
         foreach ($querydata['biomaterialFilters'] AS $bioid => $filter) {
             $fil_results = array();
             if (is_numeric($filter['value'])) {
@@ -341,75 +340,60 @@ EOF;
                 if (count($indices) > 0) {
                     switch ($filter['type']) {
                         case 'eq':
-                            foreach ($result AS $index => $values) {
-                                $sum = 0;
-                                $len = 0;
-                                foreach ($indices AS $i) {
-                                    $sum += $values[$i];
-                                    $len++;
-                                }
-                                if ($len > 0 && $sum / $len == $filter['value'])
-                                    array_push($fil_results, $values);
+                            $sum = 0;
+                            $len = 0;
+                            foreach ($indices AS $i) {
+                                $sum += $data[$i];
+                                $len++;
                             }
-                            $result = $fil_results;
+                            if ($sum / $len != $filter['value'])
+                                return false;
                             break;
                         case 'gt':
-                            foreach ($result AS $index => $values) {
-                                $sum = 0;
-                                $len = 0;
-                                foreach ($indices AS $i) {
-                                    $sum += $values[$i];
-                                    $len++;
-                                }
-                                if ($len > 0 && $sum / $len > $filter['value'])
-                                    array_push($fil_results, $values);
+                            $sum = 0;
+                            $len = 0;
+                            foreach ($indices AS $i) {
+                                $sum += $data[$i];
+                                $len++;
                             }
-                            $result = $fil_results;
+                            if ($sum / $len <= $filter['value'])
+                                return false;
                             break;
                         case 'lt':
-                            foreach ($result AS $index => $values) {
-                                $sum = 0;
-                                $len = 0;
-                                foreach ($indices AS $i) {
-                                    $sum += $values[$i];
-                                    $len++;
-                                }
-                                if ($len > 0 && $sum / $len < $filter['value'])
-                                    array_push($fil_results, $values);
+                            $sum = 0;
+                            $len = 0;
+                            foreach ($indices AS $i) {
+                                $sum += $data[$i];
+                                $len++;
                             }
-                            $result = $fil_results;
+                            if ($sum / $len >= $filter['value'])
+                                return false;
                             break;
                         case 'geq':
-                            foreach ($result AS $index => $values) {
-                                $sum = 0;
-                                $len = 0;
-                                foreach ($indices AS $i) {
-                                    $sum += $values[$i];
-                                    $len++;
-                                }
-                                if ($len > 0 && $sum / $len >= $filter['value'])
-                                    array_push($fil_results, $values);
+                            $sum = 0;
+                            $len = 0;
+                            foreach ($indices AS $i) {
+                                $sum += $data[$i];
+                                $len++;
                             }
-                            $result = $fil_results;
+                            if ($sum / $len < $filter['value'])
+                                return false;
                             break;
                         case 'leq':
-                            foreach ($result AS $index => $values) {
-                                $sum = 0;
-                                $len = 0;
-                                foreach ($indices AS $i) {
-                                    $sum += $values[$i];
-                                    $len++;
-                                }
-                                if ($len > 0 && $sum / $len <= $filter['value'])
-                                    array_push($fil_results, $values);
+                            $sum = 0;
+                            $len = 0;
+                            foreach ($indices AS $i) {
+                                $sum += $data[$i];
+                                $len++;
                             }
-                            $result = $fil_results;
+                            if ($sum / $len > $filter['value'])
+                                return false;
                             break;
                     }
                 }
             }
         }
-        return $result;
+        return true;
     }
 
     public function printCsv($expressions) {
