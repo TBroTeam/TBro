@@ -1,5 +1,8 @@
 var select_assay = $('#select-assay');
+var select_acquisition = $('#select-acquisition');
+var select_quantification = $('#select-quantification');
 var select_analysis = $('#select-analysis');
+var select_parent_biomaterial = $('#select-biomaterial');
 var select_tissues = $('#select-sample');
 
 var itemIDs;
@@ -7,11 +10,20 @@ var options;
 var lastData;
 
 //filteredSelect: select_assay => select_analysis => select_tissues
-new filteredSelect(select_analysis, 'analysis', {
+new filteredSelect(select_acquisition, 'acquisition', {
     precedessorNode: select_assay
 });
-new filteredSelect(select_tissues, 'sample', {
+new filteredSelect(select_quantification, 'quantification', {
+    precedessorNode: select_acquisition
+});
+new filteredSelect(select_analysis, 'analysis', {
+    precedessorNode: select_quantification
+});
+new filteredSelect(select_parent_biomaterial, 'parent_biomaterial', {
     precedessorNode: select_analysis
+});
+new filteredSelect(select_tissues, 'sample', {
+    precedessorNode: select_parent_biomaterial
 });
 
 function populateBarplotSelectionBoxes(items, opt) {
