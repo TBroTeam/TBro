@@ -157,7 +157,7 @@ EOF;
     }
 
     public function passes_main_filters($data, $querydata) {
-        return $this->passes_main_all_filter($data, $querydata) && $this->passes_main_one_filter($result, $querydata) && $this->passes_main_mean_filter($result, $querydata);
+        return $this->passes_main_all_filter($data, $querydata) && $this->passes_main_one_filter($data, $querydata) && $this->passes_main_mean_filter($data, $querydata);
     }
 
     public function passes_main_all_filter($data, $querydata) {
