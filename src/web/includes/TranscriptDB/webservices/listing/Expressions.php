@@ -13,6 +13,7 @@ class Expressions extends \WebService {
      * @inheritDoc
      */
     public function fullRelease($querydata) {
+        set_time_limit(300);
         global $db;
 
 #UI hint
