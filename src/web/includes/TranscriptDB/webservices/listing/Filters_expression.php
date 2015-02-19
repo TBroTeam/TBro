@@ -38,7 +38,9 @@ class Filters_expression extends \WebService {
 
         $query_get_filters = <<<EOF
 SELECT analysis.analysis_id, analysis.name AS analysis_name, analysis.description AS analysis_description, analysis.program AS analysis_program, analysis.programversion AS analysis_programversion, analysis.algorithm AS analysis_algorithm,
-  assay.assay_id, assay.name AS assay_name, assay.description AS assay_description, 
+  assay.assay_id, assay.name AS assay_name, assay.description AS assay_description,
+  acquisition.name AS acquisition_name, acquisition.acquisition_id,
+  quantification.name AS quantification_name, quantification.quantification_id,
   biomaterial.biomaterial_id, biomaterial.name AS biomaterial_name, biomaterial.description AS biomaterial_description, parent_biomaterial.biomaterial_id AS biomaterial_parent_id,
   parent_biomaterial.biomaterial_id AS parent_biomaterial_id, parent_biomaterial.name AS parent_biomaterial_name, parent_biomaterial.description AS parent_biomaterial_description 
  FROM
@@ -67,12 +69,16 @@ EOF;
 
             $data['data']['assay'][$filter['assay_id']] = self::getItem('assay', $filter);
             $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
+            $data['data']['acquisition'][$filter['acquisition_id']] = self::getItem('acquisition', $filter);
+            $data['data']['quantification'][$filter['quantification_id']] = self::getItem('quantification', $filter);
             $data['data']['parent_biomaterial'][$filter['parent_biomaterial_id']] = self::getItem('parent_biomaterial', $filter);
             $data['data']['sample'][$filter['biomaterial_id']] = self::getItem('biomaterial', $filter);
 
             $data['values'][] = array(
                 'assay' => $filter['assay_id'],
                 'analysis' => $filter['analysis_id'],
+                'acquisition' => $filter['acquisition_id'],
+                'quantification' => $filter['quantification_id'],
                 'parent_biomaterial' => $filter['parent_biomaterial_id'],
                 'sample' => $filter['biomaterial_id'],
             );
