@@ -158,6 +158,7 @@
             <table id="biomaterial-expression-filters" style="width:100%">
 
             </table>
+            <button class="right" type="button" id="expression-button-gdfx-table-export" value="table" disabled="disabled">Export</button>
             <button class="right" type="button" id="expression-button-gdfx-table" value="table" disabled="disabled">Apply</button>
         </div>
     </div>

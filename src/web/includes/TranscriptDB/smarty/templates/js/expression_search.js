@@ -51,6 +51,7 @@ $(document).ready(function () {
                     data: data
                 }).refill();
                 $('#expression-button-gdfx-table').prop('disabled', false);
+                $('#expression-button-gdfx-table-export').prop('disabled', false);
                 update_biomaterial_filters();
             }
         });
@@ -58,47 +59,13 @@ $(document).ready(function () {
 
     var expressionTable;
     $('#expression-button-gdfx-table').click(function () {
-        var selected = finalSelect.filteredData();
-
-        //show result table
+        //show loading badge
         $.when($('#expression-div-gdfxtable').hide(500)).then(function () {
             if (!$('#expression-div-gdfxtable').is(':visible')) {
                 $('.loading').show();
             }
         });
-
-        var biomaterialFilters = {};
-        $("#biomaterial-expression-filters select").each(function ()
-        {
-            var id = $(this).attr("biomaterial-id");
-            var val = $(this).val();
-            biomaterialFilters[id] = {type: val};
-        });
-        $("#biomaterial-expression-filters input").each(function ()
-        {
-            var id = $(this).attr("biomaterial-id");
-            var val = $(this).val();
-            biomaterialFilters[id].value = val;
-        });
-
-        lastQueryData = {
-            organism: organism.val(),
-            release: release.val(),
-            assay: [selected.values[0].assay],
-            analysis: [selected.values[0].analysis],
-            biomaterial: $.map(selected.values, function (n) {
-                return n.sample
-            }),
-            currentContext: organism.val() + '_' + release.val(),
-            mainFilterAllType: $('#expressions_filter_all_type').val(),
-            mainFilterAllValue: $('#expressions_filter_all_value').val(),
-            mainFilterOneType: $('#expressions_filter_one_type').val(),
-            mainFilterOneValue: $('#expressions_filter_one_value').val(),
-            mainFilterMeanType: $('#expressions_filter_mean_type').val(),
-            mainFilterMeanValue: $('#expressions_filter_mean_value').val(),
-            biomaterialFilters: biomaterialFilters
-        };
-        console.log(lastQueryData);
+        lastQueryData = getQueryData();
         $.ajax('{#$ServicePath#}/listing/expressions/fullRelease', {
             method: 'post',
             data: lastQueryData,
@@ -118,6 +85,58 @@ $(document).ready(function () {
             }
         });
     });
+    
+    $('#expression-button-gdfx-table-export').click(function () {
+        //show info
+        $.when($('#expression-div-gdfxtable').hide(500)).then(function () {
+            alert("It can take some time before the download dialog appears. Please be patient and do not repeatedly click the button.");
+        });
+        lastQueryData = getQueryData();
+        var iframe = document.createElement('iframe');
+        iframe.style.height = "0px";
+        iframe.style.width = "0px";
+
+        if (typeof lastQueryData !== 'undefined') {
+            iframe.src = "{#$ServicePath#}/listing/expressions/releaseCsv" + "?" + $.param(lastQueryData);
+            document.body.appendChild(iframe);
+        }
+    });
+
+    function getQueryData() {
+        var selected = finalSelect.filteredData();
+
+        var biomaterialFilters = {};
+        $("#biomaterial-expression-filters select").each(function ()
+        {
+            var id = $(this).attr("biomaterial-id");
+            var val = $(this).val();
+            biomaterialFilters[id] = {type: val};
+        });
+        $("#biomaterial-expression-filters input").each(function ()
+        {
+            var id = $(this).attr("biomaterial-id");
+            var val = $(this).val();
+            biomaterialFilters[id].value = val;
+        });
+
+        return {
+            organism: organism.val(),
+            release: release.val(),
+            assay: [selected.values[0].assay],
+            analysis: [selected.values[0].analysis],
+            biomaterial: $.map(selected.values, function (n) {
+                return n.sample
+            }),
+            currentContext: organism.val() + '_' + release.val(),
+            mainFilterAllType: $('#expressions_filter_all_type').val(),
+            mainFilterAllValue: $('#expressions_filter_all_value').val(),
+            mainFilterOneType: $('#expressions_filter_one_type').val(),
+            mainFilterOneValue: $('#expressions_filter_one_value').val(),
+            mainFilterMeanType: $('#expressions_filter_mean_type').val(),
+            mainFilterMeanValue: $('#expressions_filter_mean_value').val(),
+            biomaterialFilters: biomaterialFilters
+        };
+    }
 
     function download_csv() {
         var iframe = document.createElement('iframe');
