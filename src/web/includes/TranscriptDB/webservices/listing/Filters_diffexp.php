@@ -40,6 +40,8 @@ SELECT
     ba.name AS ba_name, ba_id, 
     bb.name AS bb_name, bb_id,
     analysis.name AS analysis_name, ids.analysis_id,
+    acquisition.name AS acquisition_name, acquisition.acquisition_id,
+    quantification.name AS quantification_name, quantification.quantification_id,
     assay.name AS assay_name, assay.description AS assay_description, assay.assay_id
 FROM
     materialized_view_diffexp_filter AS ids
@@ -56,18 +58,22 @@ EOF;
 
         $stm_get_filters = $db->prepare($query_get_filters);
 
-        $data = array();  
+        $data = array();
 
         $stm_get_filters->execute(array($organism, $release));
         while ($filter = $stm_get_filters->fetch(PDO::FETCH_ASSOC)) {
 
             $data['data']['analysis'][$filter['analysis_id']] = self::getItem('analysis', $filter);
+            $data['data']['acquisition'][$filter['acquisition_id']] = self::getItem('acquisition', $filter);
+            $data['data']['quantification'][$filter['quantification_id']] = self::getItem('quantification', $filter);
             $data['data']['ba'][$filter['ba_id']] = self::getItem('ba', $filter);
             $data['data']['ba'][$filter['bb_id']] = self::getItem('bb', $filter);
             $data['data']['assay'][$filter['assay_id']] = self::getItem('assay', $filter);
 
             $data['values'][] = array(
                 'analysis' => $filter['analysis_id'],
+                'acquisition' => $filter['acquisition_id'],
+                'quantification' => $filter['quantification_id'],
                 'ba' => $filter['ba_id'],
                 'bb' => $filter['bb_id'],
                 'assay' => $filter['assay_id'],
@@ -76,6 +82,8 @@ EOF;
             // add flip
             $data['values'][] = array(
                 'analysis' => $filter['analysis_id'],
+                'acquisition' => $filter['acquisition_id'],
+                'quantification' => $filter['quantification_id'],
                 'bb' => $filter['ba_id'],
                 'ba' => $filter['bb_id'],
                 'assay' => $filter['assay_id'],
