@@ -81,12 +81,10 @@ function populateBarplotSelectionBoxes(items, opt) {
 function getFilterData() {
     var data = {
         parents: itemIDs[options.type],
-        analysis: [],
-        assay: [],
+        analysis: select_analysis.find(':selected').val(),
+        quantification: select_quantification.find(':selected').val(),
         biomaterial: []
     };
-    data.analysis.push(select_analysis.find(':selected').val());
-    data.assay.push(select_assay.find(':selected').val());
     select_tissues.find(':selected').each(function () {
         data.biomaterial.push($(this).val());
     });

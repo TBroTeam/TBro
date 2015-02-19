@@ -20,15 +20,15 @@ class Quantifications extends \WebService {
 
 
         $parents = $querydata['parents']; //feature ids
-        $analysises = $querydata['analysis']; //one or more analysises
-        $assays = $querydata['assay']; //one or more assays
+        $analysises = $querydata['analysis']; //one analysises
+        $assays = $querydata['quantification']; //one quantification
         $biomaterials = $querydata['biomaterial']; //one or more biomaterial samples
 
 
         $query_values = array();
         $query_subqueries = array();
         foreach (
-        array('parent' => $parents, 'analysis' => $analysises, 'assay' => $assays, 'biomaterial' => $biomaterials)
+        array('parent' => $parents, 'biomaterial' => $biomaterials)
         AS $prefix => $values) {
             for ($i = 0; $i < count($values); $i++) {
                 $query_values[$prefix][':' . $prefix . $i] = $values[$i];
@@ -64,13 +64,12 @@ WHERE
   expressionresult.feature_id IN ({$query_subqueries['parent']}) AND    
   expressionresult.feature_id = feature.feature_id AND
   
-
-  expressionresult.analysis_id IN ({$query_subqueries['analysis']}) AND
+  expressionresult.analysis_id = :analysis AND
   expressionresult.analysis_id = analysis.analysis_id AND
   
   expressionresult.quantification_id = quantification.quantification_id AND  
+  expressionresult.quantification_id = :quantification AND  
   quantification.acquisition_id = acquisition.acquisition_id AND
-  acquisition.assay_id IN ({$query_subqueries['assay']}) AND
   acquisition.assay_id = assay.assay_id AND
   
   biomaterial.biomaterial_id = biomaterial_relationship.subject_id AND
@@ -80,12 +79,15 @@ WHERE
 EOF;
 
         $data_array = array_merge(
-                $query_values['biomaterial'], $query_values['parent'], $query_values['analysis'], $query_values['assay']
+                $query_values['biomaterial'], $query_values['parent']
         );
 
         $stm = $db->prepare($query);
         foreach ($data_array as $key => $val)
             $stm->bindValue ($key, $val, \PDO::PARAM_STR);
+        
+        $stm->bindValue ('analysis', $querydata['analysis'], \PDO::PARAM_STR);
+        $stm->bindValue ('quantification', $querydata['quantification'], \PDO::PARAM_STR);
         
         $stm->execute();
         
