@@ -102,21 +102,34 @@ EOF;
         $smps = array("ID", "name", "user_alias");
         $parents = array(-1, -1, -1);
         $row = null;
+        $first = true;
+        $needcomma = false;
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
             if ($cell['feature_name'] != $lastcell_name) {
                 #featue-specific actions, only once per featue
+                if ($first && $lastcell_name != "") {
+                    echo "{\"header\":[\"" . implode("\",\"", $smps) ."\"],\"data\":[\n";
+                    $first = false;
+                }
+                if (!$first) {
+                    if ($needcomma) {
+                        echo ",\n";
+                    } else {
+                        $needcomma = true;
+                    }
+                    echo "[" . implode(",", $row) . "]";
+                }
                 $lastcell_name = $cell['feature_name'];
-                $user_alias = "";
+                $user_alias = "\"\"";
                 if (array_key_exists($cell['feature_id'], $metadata)) {
                     if (array_key_exists('alias', $metadata[$cell['feature_id']]))
-                        $user_alias = $metadata[$cell['feature_id']]['alias'];
+                        $user_alias = "\"".$metadata[$cell['feature_id']]['alias']."\"";
                 }
-                $data[] = array($cell['feature_id'], $cell['feature_name'], $user_alias);
-                $row = &$data[count($data) - 1];
+                $row = array($cell['feature_id'], "\"".$cell['feature_name']."\"", $user_alias);
             }
 
-            if (count($data) == 1) {
+            if ($first) {
                 #sample-specific actions, only executed for first var
                 $smps[] = $cell['biomaterial_name'];
                 $parents[] = $cell['parent_biomaterial_id'];
@@ -124,6 +137,11 @@ EOF;
 
             $row[] = floatval($cell['value']);
         }
+        if ($needcomma) {
+            echo ",\n";
+        } 
+        echo "[" . implode(",", $row) . "]]}\n";
+        die();
 
         if (is_numeric($querydata['mainFilterAllValue']) || is_numeric($querydata['mainFilterOneValue']) || is_numeric($querydata['mainFilterMeanValue']))
             $data = $this->apply_main_filters($data, $querydata);
