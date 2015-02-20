@@ -2,9 +2,10 @@
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var featureid = {#$data.isoform.feature_id#};
         {#include file="js/feature_diffexp.js"#}
             setTimeout(function () {
-                populateDiffexpSelectionBoxes({#$data.isoform.feature_id#});
+                populateDiffexpSelectionBoxes();
             }, 800);
         });
     </script>
