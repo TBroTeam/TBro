@@ -1,7 +1,12 @@
 <div class="row">
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
         {#include file="js/feature_diffexp.js"#}
+            setTimeout(function () {
+                populateDiffexpSelectionBoxes({#$data.isoform.feature_id#});
+            }, 800);
+        });
     </script>
     <div id="tabs-diffexp-heatmap-selection" class="large-12 columns">
         <div class="row">
