@@ -53,11 +53,7 @@ EOF;
         $counter = 0;
 
         $data = array();
-        $vars = array();
-        $ids = array();
-        $smps = array();
-        $x = array();
-        $row = null;
+        $padj = array();
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
             if (!array_key_exists($cell['bioa'], $biomaterials)) {
@@ -71,8 +67,30 @@ EOF;
             }
             $values[$cell['bioa']][$cell['biob']] = array('pvaladj' => $cell['pvaladj'], 'log2foldchange' => $cell['log2foldchange']);
         }
+        
+        for($i=0; $i<$counter; $i++){
+            $data[$i] = array_fill(0, $counter, 'NA');
+            $padj[$i] = array_fill(0, $counter, -1);
+        }
+        
+        foreach($values AS $bioa => $val){
+            foreach($val AS $biob => $v){
+                $data[$biomaterials[$bioa]][$biomaterials[$biob]] = $v['log2foldchange'];
+                $data[$biomaterials[$biob]][$biomaterials[$bioa]] = -$v['log2foldchange'];
+                $padj[$biomaterials[$bioa]][$biomaterials[$biob]] = $v['pvaladj'];
+                $padj[$biomaterials[$biob]][$biomaterials[$bioa]] = $v['pvaladj'];
+            }
+        }
 
-        return array($biomaterials, $values);
+        return array(
+            'x' => array('Condition' => array_keys($biomaterials)),
+            'y' => array(
+                'vars' => array_keys($biomaterials),
+                'smps' => array_keys($biomaterials),
+                'data' => $data,
+                'padj' => $padj
+            )
+        );
     }
 
 }
