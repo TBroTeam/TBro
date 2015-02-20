@@ -1,4 +1,14 @@
 <div class="row">
+    <style type="text/css">
+        .tooltip{
+            margin:8px;
+            padding:8px;
+            border:1px solid blue;
+            background-color:yellow;
+            position: absolute;
+            z-index: 2;
+        }
+    </style>
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -59,6 +69,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="large-12 columns panel" id="diffexp-mouseover-info">
+            
         </div>
     </div>
 </div>

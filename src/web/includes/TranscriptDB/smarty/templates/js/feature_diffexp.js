@@ -86,13 +86,13 @@ $('#button-draw-diffexp-heatmap').click(function () {
                     zoomSamplesDisable: true,
                     zoomVariablesDisable: true,
                     missingDataColor: "rgb(100,100,100)"
-                    //    outlineBy: "Outline",
-                    //    outlineByData: "padj"
+                            //    outlineBy: "Outline",
+                            //    outlineByData: "padj"
                 }, {
-                        click: function (o, e, t) {
-                            console.log(o, e, t);
-                        }
-                    });
+                    click: function (o, e, t) {
+                        $('#diffexp-mouseover-info').text(o.x.Condition[0]+" vs "+o.x.Condition[1]+": "+o.y.data);
+                    }
+                });
 
                 canvas.data('canvasxpress', cx);
 
