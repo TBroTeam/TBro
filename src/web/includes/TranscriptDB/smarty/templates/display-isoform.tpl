@@ -272,6 +272,13 @@
 
     <div class="row">
         <div class="large-12 columns panel">
+            <h4>Differential Expression Analysis</h4>
+            {#include file="display-components/feature_diffexp.tpl"#}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns panel">
             <h4>Import information</h4>
             <table style="width:100%">
                 <tbody>
