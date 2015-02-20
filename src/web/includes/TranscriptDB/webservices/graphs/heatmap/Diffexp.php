@@ -54,6 +54,7 @@ EOF;
 
         $data = array();
         $padj = array();
+        $type = array();
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
             if (!array_key_exists($cell['bioa'], $biomaterials)) {
@@ -70,13 +71,24 @@ EOF;
         
         for($i=0; $i<$counter; $i++){
             $data[$i] = array_fill(0, $counter, 'NA');
-            $padj[$i] = array_fill(0, $counter, -1);
+            $padj[$i] = array_fill(0, $counter, 1);
+            $type[$i] = array_fill(0, $counter, 'NA');
         }
         
         foreach($values AS $bioa => $val){
             foreach($val AS $biob => $v){
-                $data[$biomaterials[$bioa]][$biomaterials[$biob]] = $v['log2foldchange'];
-                $data[$biomaterials[$biob]][$biomaterials[$bioa]] = -$v['log2foldchange'];
+                if($v['log2foldchange'] == "Infinity" || $v['log2foldchange'] == "-Infinity"){
+                    $data[$biomaterials[$bioa]][$biomaterials[$biob]] = 'NA';
+                    $data[$biomaterials[$biob]][$biomaterials[$bioa]] = 'NA';
+                    $type[$biomaterials[$bioa]][$biomaterials[$biob]] = ($v['log2foldchange'] == "Infinity" ? 'INF' : '-INF');
+                    $type[$biomaterials[$biob]][$biomaterials[$bioa]] = ($v['log2foldchange'] == "Infinity" ? '-INF' : 'INF');
+                }
+                else{
+                    $data[$biomaterials[$bioa]][$biomaterials[$biob]] = $v['log2foldchange'];
+                    $data[$biomaterials[$biob]][$biomaterials[$bioa]] = -$v['log2foldchange'];
+                    $type[$biomaterials[$bioa]][$biomaterials[$biob]] = 'NUM';
+                    $type[$biomaterials[$biob]][$biomaterials[$bioa]] = 'NUM';
+                }
                 $padj[$biomaterials[$bioa]][$biomaterials[$biob]] = $v['pvaladj'];
                 $padj[$biomaterials[$biob]][$biomaterials[$bioa]] = $v['pvaladj'];
             }
@@ -88,7 +100,9 @@ EOF;
                 'vars' => array_keys($biomaterials),
                 'smps' => array_keys($biomaterials),
                 'data' => $data,
-                'padj' => $padj
+                'cor' => $data,
+                'padj' => $padj,
+                'type' => $type
             )
         );
     }

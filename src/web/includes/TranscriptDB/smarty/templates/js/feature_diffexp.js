@@ -82,12 +82,17 @@ $('#button-draw-diffexp-heatmap').click(function () {
                             "y": val.y
                         },
                 {
-                    graphType: "Heatmap",
-                    showDataValues: true,
-                    graphOrientation: "vertical",
+                    graphType: "Correlation",
                     zoomSamplesDisable: true,
-                    zoomVariablesDisable: true
-                });
+                    zoomVariablesDisable: true,
+                    missingDataColor: "rgb(100,100,100)"
+                    //    outlineBy: "Outline",
+                    //    outlineByData: "padj"
+                }, {
+                        click: function (o, e, t) {
+                            console.log(o, e, t);
+                        }
+                    });
 
                 canvas.data('canvasxpress', cx);
 
