@@ -85,6 +85,7 @@ $('#button-draw-diffexp-heatmap').click(function () {
                     graphType: "Correlation",
                     zoomSamplesDisable: true,
                     zoomVariablesDisable: true,
+                    yAxisTitle: "log2foldchange",
                     missingDataColor: "rgb(100,100,100)"
                             //    outlineBy: "Outline",
                             //    outlineByData: "padj"
