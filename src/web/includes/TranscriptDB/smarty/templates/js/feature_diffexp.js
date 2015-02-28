@@ -90,7 +90,7 @@ $('#button-draw-diffexp-heatmap').click(function () {
                             //    outlineBy: "Outline",
                             //    outlineByData: "padj"
                 }, {
-                    click: function (o, e, t) {
+                    mousemove: function (o, e, t) {
                         $('#diffexp-mouseover-info').text(o.x.Condition[0]+" vs "+o.x.Condition[1]+": "+o.y.data);
                     }
                 });
