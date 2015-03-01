@@ -73,5 +73,9 @@
         <div class="large-12 columns panel" id="diffexp-mouseover-info">
             
         </div>
+        <div class="large-12 columns panel">
+            <label for="#diffexp-padj-filter">Filter by adjusted p-value</label><input id="diffexp-padj-filter"/>
+            
+        </div>
     </div>
 </div>

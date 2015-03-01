@@ -4,6 +4,7 @@ var select_quantification = $('#select-diffexp-quantification');
 var select_analysis = $('#select-diffexp-analysis');
 
 var options;
+var expdata;
 
 //filteredSelect: select_assay => select_analysis => select_tissues
 new filteredSelect(select_acquisition, 'acquisition', {
@@ -43,6 +44,24 @@ function getFilterData() {
     return data;
 }
 
+$('#diffexp-padj-filter').on("change", function () {
+    var cutoff = Number($('#diffexp-padj-filter').val());
+    var canvas = $('#diffexp-heatmap-canvas');
+    var cx = canvas.data('canvasxpress');
+    console.log(cx);
+    oldcor = cx.data.y.data;
+    cx.data.y.cor = [["NA","NA","NA"],["NA","NA","NA"],["NA","NA","NA"]];
+    for(var i=0; i<oldcor.length; i++){
+        for(var j=0; j<oldcor[i].length; j++){
+            if(Number(cx.data.y.padj[i][j]) <= cutoff){
+                cx.data.y.cor[i][j] = oldcor[i][j];
+            }
+        }
+    }
+    cx.redraw();
+    //canvas.data('canvasxpress', cx);
+});
+
 //display barplot
 $('#button-draw-diffexp-heatmap').click(function () {
     $('#diffexp-heatmap-panel').hide(200);
@@ -50,6 +69,7 @@ $('#button-draw-diffexp-heatmap').click(function () {
         method: 'post',
         data: getFilterData(),
         success: function (val) {
+            expdata = val;
             if (val.y.smps.length > 0) {
 
                 $('#diffexp-heatmap-panel').show(0);
@@ -91,7 +111,11 @@ $('#button-draw-diffexp-heatmap').click(function () {
                             //    outlineByData: "padj"
                 }, {
                     mousemove: function (o, e, t) {
-                        $('#diffexp-mouseover-info').text(o.x.Condition[0]+" vs "+o.x.Condition[1]+": "+o.y.data);
+                        var text = o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + o.y.data;
+                        if(o.x.Condition[0] != o.x.Condition[1]){
+                            text += " padj: " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj;
+                        }
+                        $('#diffexp-mouseover-info').text(text);
                     }
                 });
 
