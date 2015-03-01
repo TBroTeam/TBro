@@ -77,5 +77,8 @@
             <label for="#diffexp-padj-filter">Filter by adjusted p-value</label><input id="diffexp-padj-filter"/>
             
         </div>
+        <div class="large-12 columns" id="feature-diffexp-table-div">
+            
+        </div>
     </div>
 </div>

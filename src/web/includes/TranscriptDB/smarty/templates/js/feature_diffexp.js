@@ -121,7 +121,7 @@ $('#button-draw-diffexp-heatmap').click(function () {
 
                 canvas.data('canvasxpress', cx);
 
-                // addTable(parent, val);
+                addTable(val.table);
             } else {
                 alert("No differential expression data found for this feature/quantification/analysis combination.");
             }
@@ -131,33 +131,20 @@ $('#button-draw-diffexp-heatmap').click(function () {
 });
 
 // unused
-function addTable(parent, val) {
-    var tbl = $('<table id="expression_table"></table>');
+function addTable(table) {
+    var parent = $('#feature-diffexp-table-div');
+    var tbl = $('<table id="feature_diffexp_table"></table>');
     // y.smps = tissues
     // y.vars = names
     // y.data = data
 
-    var tblColumns = [{sTitle: 'id', bVisible: false}, {sTitle: 'ID'}, {sTitle: 'Alias'}];
-    for (var x = 0; x < val.y.smps.length; x++)
-        tblColumns.push({sTitle: val.y.smps[x]});
+    var tblColumns = [];
+    for (var x = 0; x < table.header.length; x++)
+        tblColumns.push({sTitle: table.header[x]});
 
-    var tblData = [];
-    for (var i = 0; i < val.y.data.length; i++) {
-        for (var j = 0; j < val.y.data[i].length; j++) {
-            val.y.data[i][j] = Math.round(val.y.data[i][j]);
-        }
-        var alias = "";
-        var meta = cart._getMetadataForContext()[val.y.ids[i]];
-        if (typeof meta !== 'undefined') {
-            if (typeof meta['alias'] !== 'undefined')
-                alias = meta['alias'];
-        }
-        var row = [val.y.ids[i], val.y.names[i], alias];
-        Array.prototype.push.apply(row, val.y.data[i]);
-        tblData.push(row);
-    }
+    var tblData = table.rows;
 
-
+    parent.empty();
     parent.append(tbl);
     tbl.dataTable(
             {
@@ -173,27 +160,6 @@ function addTable(parent, val) {
                     aButtons: [],
                     sRowSelect: "multi"
                 },
-                fnCreatedRow: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData[0], aData[1]))
-                    $(nRow).attr('data-id', aData[0]);
-                    $(nRow).draggable({
-                        appendTo: "body",
-                        helper: function () {
-                            var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
-                            TableTools.fnGetInstance('expression_table').fnSelect($(nRow));
-                            var selectedItems = TableTools.fnGetInstance('expression_table').fnGetSelectedData();
-                            var selectedIDs = $.map(selectedItems, function (val) {
-                                return val[0];
-                            });
-                            $(nRow).attr('data-id', selectedIDs);
-                            if (selectedIDs.length > 1) {
-                                helper.html("<b>" + selectedIDs.length + "</b> " + helper.text() + ", ...");
-                            }
-                            return helper;
-                        },
-                        cursorAt: {top: 5, left: 30}
-                    });
-                }
             }
 
     );
