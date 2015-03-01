@@ -50,11 +50,12 @@ $('#diffexp-padj-filter').on("change", function () {
     var cx = canvas.data('canvasxpress');
     console.log(cx);
     oldcor = cx.data.y.data;
-    cx.data.y.cor = [["NA","NA","NA"],["NA","NA","NA"],["NA","NA","NA"]];
     for(var i=0; i<oldcor.length; i++){
         for(var j=0; j<oldcor[i].length; j++){
             if(Number(cx.data.y.padj[i][j]) <= cutoff){
                 cx.data.y.cor[i][j] = oldcor[i][j];
+            } else {
+                cx.data.y.cor[i][j] = "NA";
             }
         }
     }
