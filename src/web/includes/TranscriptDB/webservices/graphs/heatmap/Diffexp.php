@@ -54,7 +54,8 @@ EOF;
         $data = array();
         $padj = array();
         $type = array();
-        $info = array();
+        $header = array('BiomaterialA', 'BiomaterialB', 'baseMean', 'baseMeanA', 'baseMeanB', 'foldChange', 'log2foldChange', 'p-value', 'p-adjusted', );
+        $rows = array();
         //again, see http://canvasxpress.org/documentation.html#data !
         while (($cell = $stm->fetch(PDO::FETCH_ASSOC)) !== false) {
             if (!array_key_exists($cell['bioa'], $biomaterials)) {
@@ -74,6 +75,7 @@ EOF;
                 'log2foldchange' => -$cell['log2foldchange'], 'foldchange' => 1/$cell['foldchange'],
                 'baseMean' => $cell['basemean'], 'baseMeanA' => $cell['basemeanb'], 'baseMeanB' => $cell['basemeana'],
                 'inverted' => TRUE);
+            $rows[] = array($cell['bioa'], $cell['biob'], $cell['basemean'], $cell['basemeana'], $cell['basemeanb'], $cell['foldchange'], $cell['log2foldchange'], $cell['pval'], $cell['pvaladj']);
         }
 
         for ($i = 0; $i < $counter; $i++) {
@@ -110,7 +112,11 @@ EOF;
                 'padj' => $padj,
                 'type' => $type
             ),
-            'values' => $values
+            'values' => $values,
+            'table' => array(
+                'header' => $header,
+                'rows' => $rows
+            )
         );
     }
 
