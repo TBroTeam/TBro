@@ -1,3 +1,5 @@
+<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
+<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
 <script type="text/javascript">
     {#if isset($cart_ids)#}
         {#include file="js/diffexpr.js" instance_name=$instance_name cart_ids=$cart_ids#}
@@ -6,7 +8,7 @@
     {#/if#}
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         new Grouplist($('#{#$instance_name#}-button-gdfx-addToCart-options'), cart, {#$instance_name#}addSelectedToCart);
         $('#{#$instance_name#}-button-gdfx-addToCart-options-newcart').click({#$instance_name#}addSelectedToCart);
     });
@@ -51,7 +53,7 @@
         $.ajax('{#$ServicePath#}/listing/differential_expressions/getAllMatching', {
             method: 'post',
             data: data,
-            success: function(response) {
+            success: function (response) {
                 diffexpSelectedIDs = response;
                 // fnSelectAll only for graphical selection
                 TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
@@ -61,7 +63,7 @@
     function {#$instance_name#}selectAllVisible() {
         // fnSelectAll only for graphical selection
         TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnSelectAll();
-        diffexpSelectedIDs = $.map(TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnGetVisibleSelectedData(), function(val) {
+        diffexpSelectedIDs = $.map(TableTools.fnGetInstance('{#$instance_name#}-diffexp_results').fnGetVisibleSelectedData(), function (val) {
             return val.feature_id;
         });
     }
@@ -280,6 +282,13 @@
                 <tbody style="white-space:nowrap"></tbody>
                 <tfoot></tfoot>
             </table>
+            <div class="large-12 columns">
+                <div class="button right" id="{#$instance_name#}-button-draw-maplot">Draw MAPlot</div>
+            </div>
+        </div>
+        <div class="large-12 columns">
+            <div style="width:100%" id="{#$instance_name#}-maplot-canvas-parent">
+            </div>
         </div>
     </div>
 </div>
