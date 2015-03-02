@@ -426,8 +426,10 @@ EOF;
         array_push($arguments2, $querydata['release']);
 
         $wherestr = implode(" AND \n", $where);
-        //$limit = "LIMIT 10000";
-        $limit = "";
+        
+        // Limit to avoid out of memory errors
+        $limit = "LIMIT 100000";
+        // $limit = "";
 
         $query2 = <<<EOF
 SELECT 
