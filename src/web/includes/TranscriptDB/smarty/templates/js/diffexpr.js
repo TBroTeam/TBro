@@ -381,6 +381,10 @@ $(document).ready(function () {
         $.ajax('{#$ServicePath#}/listing/differential_expressions/maPlot', {
             method: 'post',
             data: data,
+            error: function(jqXHR, textStatus, errorThrown){
+                alert("There was an error drawing the plot: " + textStatus + ". See console for details.")
+                console.log(textStatus, errorThrown);
+            }, 
             success: function (val) {
                 var parent = $("#{#$instance_name#}-maplot-canvas-parent");
 
