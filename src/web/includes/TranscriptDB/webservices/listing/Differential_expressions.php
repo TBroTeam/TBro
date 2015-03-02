@@ -138,8 +138,8 @@ class Differential_expressions extends \WebService {
         $arguments = array();
 
         $select = implode(",\n", array_map(function($key, $value) {
-                            return sprintf("%s AS %s", $key, $value);
-                        }, $keys, self::$columns));
+                    return sprintf("%s AS %s", $key, $value);
+                }, $keys, self::$columns));
 
         if ($apply_limit)
             $select.=', COUNT(*) OVER () AS cnt';
@@ -148,7 +148,7 @@ class Differential_expressions extends \WebService {
 
         array_push($where, 'd.analysis_id = ?');
         array_push($arguments, $querydata['analysis']);
-        
+
         array_push($where, 'd.quantification_id = ?');
         array_push($arguments, $querydata['quantification']);
 
@@ -355,8 +355,7 @@ EOF;
 
         return $ids;
     }
-    
-    
+
     public function getMAPlot($querydata) {
         global $db;
 
@@ -364,6 +363,11 @@ EOF;
         if (false)
             $db = new PDO();
 
+        $x = array();
+        $ids = array();
+        $coords = array();
+        $highlight = array();
+        $order = array();
         # Get IDs to highlight
         list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, false, false);
 
@@ -371,39 +375,89 @@ EOF;
         $stm_get_diffexpr->execute($arguments);
 
         $highids = array();
-        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)){
-            $highids[$row['feature_id']] = 1;
+        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
+            $highids[$row['feature_id']] = $row;
+            # Remove Inf values for now (maybe display on top or bottom later)
         }
-        
+
         # Get all info
         # unset ids to get all matching ids in organism_release_quantification_analysis combination
-        $querydata['ids'] = array();
-        list($query2, $arguments2) = $this->fullRelease_buildQuery($querydata, false, false, false);
+        $columns2 = array(
+            'd.baseMean' => '"baseMean"',
+            'd.log2foldChange' => '"log2foldChange"',
+            "f.feature_id" => 'feature_id',
+        );
+
+        $keys = array_keys($columns2);
+        $arguments2 = array();
+
+        $select = implode(",\n", array_map(function($key, $value) {
+                    return sprintf("%s AS %s", $key, $value);
+                }, $keys, $columns2));
+
+        $where = array();
+
+        $constant = 'constant';
+
+        array_push($where, 'd.analysis_id = ?');
+        array_push($arguments2, $querydata['analysis']);
+
+        array_push($where, 'd.quantification_id = ?');
+        array_push($arguments2, $querydata['quantification']);
+
+        array_push($where, 'd.biomateriala_id = ?');
+        array_push($arguments2, $querydata['conditionA']);
+
+        array_push($where, 'd.biomaterialb_id = ?');
+        array_push($arguments2, $querydata['conditionB']);
+
+        array_push($where, 'f.organism_id = ?');
+        array_push($arguments2, $querydata['organism']);
+
+        array_push($where, 'f.dbxref_id=(SELECT dbxref_id FROM dbxref WHERE db_id = ' . DB_ID_IMPORTS . ' AND accession = ?)');
+        array_push($arguments2, $querydata['release']);
+
+        $wherestr = implode(" AND \n", $where);
+        $limit = "LIMIT 10000";
+        $limit = "";
+
+        $query2 = <<<EOF
+SELECT 
+$select 
+FROM 
+	diffexpresult d 
+        JOIN feature f ON d.feature_id=f.feature_id 
+WHERE
+$wherestr
+$limit
+EOF;
+
 
         $stm_get_diffexpr2 = $db->prepare($query2);
         $stm_get_diffexpr2->execute($arguments2);
 
-        $x = array();
-        $ids = array();
-        $coords = array();
-        $highlight = array();
-        $order = array();
-        while ($row = $stm_get_diffexpr2->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stm_get_diffexpr2->fetch(PDO::FETCH_ASSOC)) {
             # Remove Inf values for now (maybe display on top or bottom later)
-            if(!is_numeric($row['log2foldChange'])){
+            if (!is_numeric($row['log2foldChange'])) {
                 continue;
             }
-            $ids[] = $row['feature_id'];
-            $coords[] = array($row['baseMean'], $row['log2foldChange']);
-            if(array_key_exists($row['feature_id'], $highids)){
-                $highlight[] = 1;
-                $order[] = 1;
-            } else {
+            if (!array_key_exists($row['feature_id'], $highids)) {
+                $ids[] = $row['feature_id'];
+                $coords[] = array($row['baseMean'], $row['log2foldChange']);
                 $highlight[] = 0;
                 $order[] = 2;
             }
         }
-
+        foreach ($highids AS $id => $row) {
+            if (!is_numeric($row['log2foldChange'])) {
+                continue;
+            }
+            $ids[] = $row['feature_id'];
+            $coords[] = array($row['baseMean'], $row['log2foldChange']);
+            $highlight[] = 1;
+            $order[] = 1;
+        }
+        //die();
         return array(
             'x' => $x,
             'y' => array(
