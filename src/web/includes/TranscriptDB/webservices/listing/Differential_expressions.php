@@ -389,6 +389,10 @@ EOF;
         $highlight = array();
         $order = array();
         while ($row = $stm_get_diffexpr2->fetch(PDO::FETCH_ASSOC)){
+            # Remove Inf values for now (maybe display on top or bottom later)
+            if(!is_numeric($row['log2foldChange'])){
+                continue;
+            }
             $ids[] = $row['feature_id'];
             $coords[] = array($row['baseMean'], $row['log2foldChange']);
             if(array_key_exists($row['feature_id'], $highids)){
@@ -396,19 +400,20 @@ EOF;
                 $order[] = 1;
             } else {
                 $highlight[] = 0;
-                $order[] = 0;
+                $order[] = 2;
             }
         }
 
         return array(
             'x' => $x,
             'y' => array(
-                'smps' => array('All', 'Filtered'),
+                'smps' => array('baseMean', 'log2foldChange'),
                 'vars' => $ids,
                 'data' => $coords
             ),
             'z' => array(
-                'highlight' => $highlight
+                'Highlight' => $highlight,
+                'Order' => $order
             )
         );
     }
