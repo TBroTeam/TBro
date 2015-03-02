@@ -364,6 +364,9 @@ EOF;
             $db = new PDO();
 
         $x = array();
+        $ids_high = array();
+        $coords_high = array();
+        $highlight_high = array();
         $ids = array();
         $coords = array();
         $highlight = array();
@@ -375,8 +378,14 @@ EOF;
 
         $highids = array();
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
-            $highids[$row['feature_id']] = $row;
+            $highids[$row['feature_id']] = 1;
             # Remove Inf values for now (maybe display on top or bottom later)
+            if (!is_numeric($row['log2foldChange'])) {
+                continue;
+            }
+            $ids_high[] = $row['feature_id'];
+            $coords_high[] = array($row['baseMean'], $row['log2foldChange']);
+            $highlight_high[] = 1;
         }
 
         # Get all info
@@ -444,29 +453,18 @@ EOF;
                 $ids[] = $row['feature_id'];
                 $coords[] = array($row['baseMean'], $row['log2foldChange']);
                 $highlight[] = 0;
-                $order[] = 2;
             }
-        }
-        foreach ($highids AS $id => $row) {
-            if (!is_numeric($row['log2foldChange'])) {
-                continue;
-            }
-            $ids[] = $row['feature_id'];
-            $coords[] = array($row['baseMean'], $row['log2foldChange']);
-            $highlight[] = 1;
-            $order[] = 1;
         }
         //die();
         return array(
             'x' => $x,
             'y' => array(
                 'smps' => array('baseMean', 'log2foldChange'),
-                'vars' => $ids,
-                'data' => $coords
+                'vars' => array_merge($ids, $ids_high),
+                'data' => array_merge($coords, $coords_high)
             ),
             'z' => array(
-                'Highlight' => $highlight,
-                'Order' => $order
+                'Highlight' => array_merge($highlight, $highlight_high)
             )
         );
     }
