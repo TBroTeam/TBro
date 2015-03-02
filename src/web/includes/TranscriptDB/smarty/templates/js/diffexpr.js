@@ -1,7 +1,7 @@
 var diffexpSelectedIDs = [];
 var lastQueryData;
 
-$(document).ready(function() {
+$(document).ready(function () {
     var select_analysis = $('#{#$instance_name#}-select-gdfx-analysis');
     var select_acquisition = $('#{#$instance_name#}-select-gdfx-acquisition');
     var select_quantification = $('#{#$instance_name#}-select-gdfx-quantification');
@@ -15,11 +15,11 @@ $(document).ready(function() {
     new filteredSelect(select_acquisition, 'acquisition', {
         precedessorNode: select_assay
     });
-    
+
     new filteredSelect(select_quantification, 'quantification', {
         precedessorNode: select_acquisition
     });
-    
+
     new filteredSelect(select_conditionA, 'ba', {
         precedessorNode: select_quantification
     });
@@ -35,14 +35,14 @@ $(document).ready(function() {
 
     /*{#if isset($cartname)#}*/
 //if selected cart group changes (adding/removing items or context switch), update  filters accordingly
-    $('#Cart').on('cartEvent', function(event) {
+    $('#Cart').on('cartEvent', function (event) {
         if (!((event.eventData.action || '').match(/(add|remove)Item/) && event.eventData.groupname !== '{#$cartname#}') && !(event.eventData.action === 'updateContext'))
             return;
 
         var myItemEvent = new Date().getTime();
         lastItemEvent = myItemEvent;
 
-        setTimeout(function() {
+        setTimeout(function () {
 
             //if another itemEvent has happened in the last 100ms, skip.
             if (lastItemEvent !== myItemEvent)
@@ -58,7 +58,7 @@ $(document).ready(function() {
             $.ajax(url, {
                 method: 'post',
                 data: data,
-                success: function(data) {
+                success: function (data) {
                     new filteredSelect(select_assay, 'assay', {
                         data: data
                     }).refill();
@@ -69,7 +69,7 @@ $(document).ready(function() {
     });
 
     /*{#else#}*/
-    release.change(function() {
+    release.change(function () {
         var url = '{#$ServicePath#}/listing/filters_diffexp/fullRelease';
         var data = {
             organism: organism.val(),
@@ -78,7 +78,7 @@ $(document).ready(function() {
         $.ajax(url, {
             method: 'post',
             data: data,
-            success: function(data) {
+            success: function (data) {
                 new filteredSelect(select_assay, 'assay', {
                     data: data
                 }).refill();
@@ -90,7 +90,7 @@ $(document).ready(function() {
 
     var selectedItem;
     var dataTable;
-    $('#{#$instance_name#}-button-gdfx-table').click(function() {
+    $('#{#$instance_name#}-button-gdfx-table').click(function () {
         var selected = finalSelect.filteredData();
         //conditionA and conditionB have to be re-ordered (are shown both directions but sotred internally only one diferction)
         selectedItem = {
@@ -107,7 +107,7 @@ $(document).ready(function() {
         if (typeof dataTable === "undefined") {
             diffexpSelectedIDs = [];
             //build server request filters
-            var serverParams = function(aoData) {
+            var serverParams = function (aoData) {
                 aoData.push({
                     name: "organism",
                     value: organism.val()
@@ -135,11 +135,11 @@ $(document).ready(function() {
                 aoData.push({name: "currentContext",
                     value: organism.val() + '_' + release.val()
                 });
-                $.each($('#{#$instance_name#}-diffexp_filters').serializeArray(), function() {
+                $.each($('#{#$instance_name#}-diffexp_filters').serializeArray(), function () {
                     aoData.push(this);
                 });
                 /*{#if isset($cart_ids)#}*/
-                $.each(cart._getCartForContext()['{#$cartname#}']['items'] || [], function() {
+                $.each(cart._getCartForContext()['{#$cartname#}']['items'] || [], function () {
                     aoData.push({
                         name: 'ids[]',
                         value: this
@@ -156,25 +156,25 @@ $(document).ready(function() {
                 bFilter: false,
                 bProcessing: true,
                 bServerSide: true,
-                fnServerData: function(sSource, aoData, fnCallback, oSettings) {
+                fnServerData: function (sSource, aoData, fnCallback, oSettings) {
                     lastQueryData = aoData;
                     oSettings.jqXHR = $.ajax({
                         "dataType": 'json',
                         "type": oSettings.sServerMethod,
                         "url": sSource,
                         "data": aoData,
-                        "success": function(data) {
+                        "success": function (data) {
                             update_query_details(data);
                             fnCallback(data);
                         }
                     });
                 },
-                fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $('td:first', nRow).html(sprintf('<a href="{#$AppPath#}/details/byId/%s" target=”_blank”>%s</a>', aData.feature_id, aData.feature_name))
                     $(nRow).attr('data-id', aData.feature_id);
                     $(nRow).draggable({
                         appendTo: "body",
-                        helper: function() {
+                        helper: function () {
                             var helper = $(nRow).find('td:first').clone().addClass('beingDragged');
                             if (jQuery.inArray(aData.feature_id, diffexpSelectedIDs) === -1) {
                                 diffexpSelectedIDs.push(aData.feature_id);
@@ -188,7 +188,7 @@ $(document).ready(function() {
                         },
                         cursorAt: {top: 5, left: 30}
                     });
-                    $(nRow).on('click', function(event) {
+                    $(nRow).on('click', function (event) {
                         var aData = dataTable.fnGetData(this);
                         var iId = aData.feature_id;
                         if (jQuery.inArray(iId, diffexpSelectedIDs) === -1)
@@ -197,7 +197,7 @@ $(document).ready(function() {
                         }
                         else
                         {
-                            diffexpSelectedIDs = jQuery.grep(diffexpSelectedIDs, function(value) {
+                            diffexpSelectedIDs = jQuery.grep(diffexpSelectedIDs, function (value) {
                                 return value !== iId;
                             });
                         }
@@ -353,7 +353,7 @@ $(document).ready(function() {
             value: '{#$cartname#}'
         });
         /*{#/if#}*/
-        data = jQuery.grep(data, function(value) {
+        data = jQuery.grep(data, function (value) {
             return value['name'] !== 'ids[]';
         });
         if (typeof lastQueryData !== 'undefined') {
@@ -370,5 +370,56 @@ $(document).ready(function() {
     $('#{#$instance_name#}-query_details').tooltip(metadata_tooltip_options({
         items: ".has-tooltip"
     }));
+
+    //display barplot
+    $('#{#$instance_name#}-button-draw-maplot').click(function () {
+        var data = lastQueryData;
+        data.push({name: "currentContext",
+            value: organism.val() + '_' + release.val()
+        });
+        $.ajax('{#$ServicePath#}/listing/differential_expressions/maPlot', {
+            method: 'post',
+            data: data,
+            success: function (val) {
+                var parent = $("#{#$instance_name#}-maplot-canvas-parent");
+
+                //if we already have an old canvas, we have to clean that up first
+                var canvas = $('#{#$instance_name#}-maplot-canvas');
+                var cx = canvas.data('canvasxpress');
+                if (cx != null) {
+                    cx.destroy();
+                    parent.empty();
+                }
+
+                canvas = $('<canvas id="{#$instance_name#}-maplot-canvas"></canvas>');
+                parent.append(canvas);
+                canvas.attr('width', parent.width() - 8);
+                canvas.attr('height', 500);
+
+                window.location.hash = "{#$instance_name#}-maplot-panel";
+
+                cx = new CanvasXpress(
+                        "{#$instance_name#}-maplot-canvas",
+                        {
+                            "x": val.x,
+                            "y": val.y,
+                            "z": val.z
+                        },
+                {
+                    graphType: "Scatter2D",
+                    colorBy: "Highlight",
+                    xAxisTransform: "log2",
+                    showIndicators: false
+                });
+
+                canvas.data('canvasxpress', cx);
+
+                groupByTissues();
+
+                addTable(parent, val);
+            }
+        });
+        return false;
+    });
 
 });
