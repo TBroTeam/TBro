@@ -102,6 +102,7 @@ $(document).ready(function () {
         //show result table
         $('#{#$instance_name#}-div-gdfxtable').show();
         $('#{#$instance_name#}-div-gdfxtable-columnselector').show();
+        $("#{#$instance_name#}-maplot-canvas-parent").empty();
 
 
         if (typeof dataTable === "undefined") {

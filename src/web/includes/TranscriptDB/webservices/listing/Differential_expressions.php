@@ -367,7 +367,6 @@ EOF;
         $ids = array();
         $coords = array();
         $highlight = array();
-        $order = array();
         # Get IDs to highlight
         list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, false, false);
 
@@ -418,7 +417,7 @@ EOF;
         array_push($arguments2, $querydata['release']);
 
         $wherestr = implode(" AND \n", $where);
-        $limit = "LIMIT 10000";
+        //$limit = "LIMIT 10000";
         $limit = "";
 
         $query2 = <<<EOF
