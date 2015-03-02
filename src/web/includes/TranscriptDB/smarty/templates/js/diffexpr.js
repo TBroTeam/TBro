@@ -407,6 +407,7 @@ $(document).ready(function () {
                 var y = {data: [], vars: []};
                 y.data = val.y.data.slice(1,1000);
                 y.vars = val.y.vars.slice(1,1000);
+                y.smps = val.y.smps;
 
                 cx = new CanvasXpress(
                         "{#$instance_name#}-maplot-canvas",
