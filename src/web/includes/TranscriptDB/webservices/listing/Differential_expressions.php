@@ -353,17 +353,64 @@ EOF;
         while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC))
             $ids[] = $row['feature_id'];
 
-        //list($service) = \WebService::factory('cart/sync');
-        //$service->execute(
-        //        array('currentContext' => $querydata['currentContext'],
-        //            'action' => array(
-        //                'action' => 'addItem',
-        //                'ids' => $ids,
-        //                'groupname' => $querydata['groupname']
-        //            )
-        //));
-
         return $ids;
+    }
+    
+    
+    public function getMAPlot($querydata) {
+        global $db;
+
+#UI hint
+        if (false)
+            $db = new PDO();
+
+        # Get IDs to highlight
+        list($query, $arguments) = $this->fullRelease_buildQuery($querydata, true, false, false);
+
+        $stm_get_diffexpr = $db->prepare($query);
+        $stm_get_diffexpr->execute($arguments);
+
+        $highids = array();
+        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)){
+            $highids[$row['feature_id']] = 1;
+        }
+        
+        # Get all info
+        # unset ids to get all matching ids in organism_release_quantification_analysis combination
+        $querydata['ids'] = array();
+        list($query2, $arguments2) = $this->fullRelease_buildQuery($querydata, false, false, false);
+
+        $stm_get_diffexpr2 = $db->prepare($query2);
+        $stm_get_diffexpr2->execute($arguments2);
+
+        $x = array();
+        $ids = array();
+        $coords = array();
+        $highlight = array();
+        $order = array();
+        while ($row = $stm_get_diffexpr2->fetch(PDO::FETCH_ASSOC)){
+            $ids[] = $row['feature_id'];
+            $coords[] = array($row['baseMean'], $row['log2foldChange']);
+            if(array_key_exists($row['feature_id'], $highids)){
+                $highlight[] = 1;
+                $order[] = 1;
+            } else {
+                $highlight[] = 0;
+                $order[] = 0;
+            }
+        }
+
+        return array(
+            'x' => $x,
+            'y' => array(
+                'smps' => array('All', 'Filtered'),
+                'vars' => $ids,
+                'data' => $coords
+            ),
+            'z' => array(
+                'highlight' => $highlight
+            )
+        );
     }
 
     /**
@@ -378,6 +425,8 @@ EOF;
             return $this->fullRelease($querydata);
         } elseif ($querydata['query1'] == 'getAllMatching') {
             return $this->getAllMatching($querydata);
+        } elseif ($querydata['query1'] == 'maPlot') {
+            return $this->getMAPlot($querydata);
         } elseif ($querydata['query1'] == 'releaseCsv') {
             header("Pragma: public");
             header("Expires: 0");
