@@ -397,12 +397,17 @@ $(document).ready(function () {
                 canvas.attr('height', 500);
 
                 window.location.hash = "{#$instance_name#}-maplot-panel";
+                
+                // initialize with reduced data to speed things up
+                var y = {data: [], vars: []};
+                y.data = val.y.data.slice(1,1000);
+                y.vars = val.y.vars.slice(1,1000);
 
                 cx = new CanvasXpress(
                         "{#$instance_name#}-maplot-canvas",
                         {
                             "x": val.x,
-                            "y": val.y,
+                            "y": y,
                             "z": val.z
                         },
                 {
@@ -413,10 +418,11 @@ $(document).ready(function () {
                 });
 
                 canvas.data('canvasxpress', cx);
-
-                groupByTissues();
-
-                addTable(parent, val);
+                
+                // now change the data to the full set and redraw
+                cx.data.y.data = val.y.data;
+                cx.data.y.vars = val.y.vars;
+                cx.redraw();
             }
         });
         return false;
