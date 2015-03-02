@@ -457,16 +457,24 @@ EOF;
                 $highlight[] = 0;
             }
         }
-        //die();
+        
+        $ids = array_merge($ids, $ids_high);
+        $coords = array_merge($coords, $coords_high);
+        $highlight = array_merge($highlight, $highlight_high);
+        // free some memory.
+        $ids_high = null;
+        $coords_high = null;
+        $highlight_high = null;
+                
         return array(
             'x' => $x,
             'y' => array(
                 'smps' => array('baseMean', 'log2foldChange'),
-                'vars' => array_merge($ids, $ids_high),
-                'data' => array_merge($coords, $coords_high)
+                'vars' => $ids,
+                'data' => $coords
             ),
             'z' => array(
-                'Highlight' => array_merge($highlight, $highlight_high)
+                'Highlight' => $highlight
             )
         );
     }
