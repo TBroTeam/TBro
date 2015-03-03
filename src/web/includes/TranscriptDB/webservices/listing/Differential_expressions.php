@@ -455,8 +455,8 @@ EOF;
             }
         }
         
-        $low = count($ids);
-        $high = count($ids_high);
+        $low = count($coords);
+        $high = count($coords_high);
         // $ids = array_merge($ids, $ids_high);
         $coords = array_merge($coords, $coords_high);
         // free some memory.
@@ -467,7 +467,7 @@ EOF;
         return array(
             'y' => array(
                 'smps' => array('baseMean', 'log2foldChange'),
-            //    'vars' => $ids,
+                'vars' => array_fill(0, $low+$high, 0),
                 'data' => $coords
             ),
             'z' => array(
