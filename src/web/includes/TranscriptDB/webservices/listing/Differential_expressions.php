@@ -363,10 +363,10 @@ EOF;
         if (false)
             $db = new PDO();
 
-        // $ids_high = array();
+        $ids_high = array();
         $coords_high = array();
         $highlight_high = array();
-        // $ids = array();
+        $ids = array();
         $coords = array();
         $highlight = array();
         # Get IDs to highlight
@@ -382,7 +382,7 @@ EOF;
             if (!is_numeric($row['log2foldChange'])) {
                 continue;
             }
-            // $ids_high[] = $row['feature_id'];
+            $ids_high[] = $row['feature_id'];
             $coords_high[] = array($row['baseMean'], $row['log2foldChange']);
         }
 
@@ -426,8 +426,8 @@ EOF;
         $wherestr = implode(" AND \n", $where);
         
         // Limit to avoid out of memory errors
-        //$limit = "LIMIT 100000";
-        $limit = "";
+        $limit = "LIMIT 100000";
+        // $limit = "";
 
         $query2 = <<<EOF
 SELECT 
@@ -450,24 +450,24 @@ EOF;
                 continue;
             }
             if (!array_key_exists($row['feature_id'], $highids)) {
-        //        $ids[] = $row['feature_id'];
+                $ids[] = $row['feature_id'];
                 $coords[] = array($row['baseMean'], $row['log2foldChange']);
             }
         }
         
-        $low = count($coords);
-        $high = count($coords_high);
-        // $ids = array_merge($ids, $ids_high);
+        $low = count($ids);
+        $high = count($ids_high);
+        $ids = array_merge($ids, $ids_high);
         $coords = array_merge($coords, $coords_high);
         // free some memory.
         $highids = null;
-        // $ids_high = null;
+        $ids_high = null;
         $coords_high = null;
                 
         return array(
             'y' => array(
                 'smps' => array('baseMean', 'log2foldChange'),
-                'vars' => array_fill(0, $low+$high, 0),
+                'vars' => $ids,
                 'data' => $coords
             ),
             'z' => array(
