@@ -426,8 +426,8 @@ EOF;
         $wherestr = implode(" AND \n", $where);
         
         // Limit to avoid out of memory errors
-        $limit = "LIMIT 100000";
-        // $limit = "";
+        //$limit = "LIMIT 100000";
+        $limit = "";
 
         $query2 = <<<EOF
 SELECT 
