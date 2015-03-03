@@ -35,7 +35,7 @@ class Sync extends \WebService {
         $stm_retrieve_cart->execute();
         if ($stm_retrieve_cart->rowCount() == 1) {
             $row = $stm_retrieve_cart->fetch(\PDO::FETCH_ASSOC);
-            $_SESSION['cart'] = unserialize($row['value']);
+            $_SESSION['cart'] = json_decode($row['value'], true);
         } else {
             $this->saveCart();
         }
@@ -75,7 +75,7 @@ class Sync extends \WebService {
             $db = new \PDO();
 
         $stm_save_cart = $db->prepare('UPDATE webuser_data SET value=:value WHERE  identity=:identity AND type_id=:type_cart');
-        $stm_save_cart->bindValue('value', serialize($_SESSION['cart']));
+        $stm_save_cart->bindValue('value', json_encode($_SESSION['cart']));
         $stm_save_cart->bindValue('type_cart', WEBUSER_CART);
         $stm_save_cart->bindValue('identity', $_SESSION['OpenID']);
         $stm_save_cart->execute();
@@ -83,7 +83,7 @@ class Sync extends \WebService {
             return;
 
         $stm_insert_cart = $db->prepare('INSERT INTO webuser_data (identity, type_id, value) VALUES (:identity, :type_cart, :value)');
-        $stm_insert_cart->bindValue('value', serialize($_SESSION['cart']));
+        $stm_insert_cart->bindValue('value', json_encode($_SESSION['cart']));
         $stm_insert_cart->bindValue('type_cart', WEBUSER_CART);
         $stm_insert_cart->bindValue('identity', $_SESSION['OpenID']);
         $stm_insert_cart->execute();
