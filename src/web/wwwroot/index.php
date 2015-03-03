@@ -70,7 +70,7 @@ try {
     $openid = new LightOpenID($_SERVER['HTTP_HOST']);
     if (!$openid->mode) {
         if (isset($_GET['login'])) {
-            $openid->identity = 'https://www.google.com/accounts/o8/id';
+            $openid->identity = 'https://openid.stackexchange.com';
             header('Location: ' . $openid->authUrl());
             die();
         }

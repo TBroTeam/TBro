@@ -235,7 +235,7 @@
                         </form>
                     {#else#}
                         <form action="?login" method="post">
-                            <button class="button large">Login with Google</button>
+                            <button class="button large">Login with StackExchange</button>
                         </form>
                     {#/if#}
                 </div>
