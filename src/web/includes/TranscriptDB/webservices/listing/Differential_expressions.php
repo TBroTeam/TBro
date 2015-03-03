@@ -363,7 +363,6 @@ EOF;
         if (false)
             $db = new PDO();
 
-        $x = array();
         $ids_high = array();
         $coords_high = array();
         $highlight_high = array();
@@ -385,7 +384,6 @@ EOF;
             }
             $ids_high[] = $row['feature_id'];
             $coords_high[] = array($row['baseMean'], $row['log2foldChange']);
-            $highlight_high[] = 1;
         }
 
         # Get all info
@@ -454,27 +452,26 @@ EOF;
             if (!array_key_exists($row['feature_id'], $highids)) {
                 $ids[] = $row['feature_id'];
                 $coords[] = array($row['baseMean'], $row['log2foldChange']);
-                $highlight[] = 0;
             }
         }
         
+        $low = count($ids);
+        $high = count($ids_high);
         $ids = array_merge($ids, $ids_high);
         $coords = array_merge($coords, $coords_high);
-        $highlight = array_merge($highlight, $highlight_high);
         // free some memory.
+        $highids = null;
         $ids_high = null;
         $coords_high = null;
-        $highlight_high = null;
                 
         return array(
-            'x' => $x,
             'y' => array(
                 'smps' => array('baseMean', 'log2foldChange'),
                 'vars' => $ids,
                 'data' => $coords
             ),
             'z' => array(
-                'Highlight' => $highlight
+                'Highlight' => array_merge(array_fill(0, $low, 0), array_fill(0, $high, 1))
             )
         );
     }
