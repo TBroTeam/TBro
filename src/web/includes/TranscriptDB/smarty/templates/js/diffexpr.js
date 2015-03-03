@@ -384,6 +384,7 @@ $(document).ready(function () {
             error: function(jqXHR, textStatus, errorThrown){
                 alert("There was an error drawing the plot: " + textStatus + ". See console for details.")
                 console.log(textStatus, errorThrown);
+                console.log(jqXHR);
             }, 
             success: function (val) {
                 var parent = $("#{#$instance_name#}-maplot-canvas-parent");
