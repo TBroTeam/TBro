@@ -2,7 +2,7 @@ CREATE TABLE webuser_data
 (
   identity character varying,
   type_id integer,
-  value json,
+  value jsonb,
   webuser_data_id serial NOT NULL,
   CONSTRAINT webuser_data_pkey PRIMARY KEY (webuser_data_id),
   CONSTRAINT webuser_data_cvterm_fkey FOREIGN KEY (type_id)
