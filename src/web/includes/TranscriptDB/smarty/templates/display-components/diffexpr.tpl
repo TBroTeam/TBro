@@ -1,5 +1,4 @@
-<!--[if lt IE 9]><script type="text/javascript" src="http://canvasxpress.org/js/flashcanvas.js"></script><![endif]-->
-<script type="text/javascript" src="http://canvasxpress.org/js/canvasXpress.min.js"></script>
+<script type="text/javascript" src="{#$AppPath#}/js/canvasXpress.min.js"></script>
 <script type="text/javascript">
     {#if isset($cart_ids)#}
         {#include file="js/diffexpr.js" instance_name=$instance_name cart_ids=$cart_ids#}
