@@ -7,7 +7,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
 
 //requiremend libs
 require_once 'TranscriptDB/WebService.php';
-require_once 'smarty/Smarty.class.php';
+require_once 'smarty/libs/Smarty.class.php';
 require_once 'lightopenid/openid.php';
 require_once 'TranscriptDB/db.php';
 
