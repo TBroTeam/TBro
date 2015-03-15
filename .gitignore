@@ -9,3 +9,4 @@ pdo_test.php
 db/tbro_demo_beta.sql
 queue_config.example.sql
 src/web/wwwroot/js/canvasXpress.min.js
+nbproject/
