@@ -1,3 +1,6 @@
 [submodule "src/shared/libs/smarty"]
 	path = src/shared/libs/smarty
 	url = https://github.com/smarty-php/smarty.git
+[submodule "src/web/wwwroot/js/canvasxpress"]
+	path = src/web/wwwroot/js/canvasxpress
+	url = https://github.com/TBroTeam/canvasxpress.git
