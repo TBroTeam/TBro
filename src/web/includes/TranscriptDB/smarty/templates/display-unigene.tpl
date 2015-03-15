@@ -1,7 +1,7 @@
 {#extends file='layout-with-cart.tpl'#}
 {#block name='head'#}
     {#call_webservice path="details/unigene" data=["query1"=>$unigene_feature_id] assign='data'#}
-    <script type="text/javascript" src="{#$AppPath#}/js/canvasXpress.min.js"></script>
+    <script type="text/javascript" src="{#$AppPath#}/js/canvasxpress/canvasxpress/js/canvasXpress.min.js"></script>
     <!-- use chrome frame if installed and user is using IE -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <script type="text/javascript">
