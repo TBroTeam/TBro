@@ -63,6 +63,7 @@ $('#diffexp-padj-filter').on("change", function () {
 //display barplot
 $('#button-draw-diffexp-heatmap').click(function () {
     $('#diffexp-heatmap-panel').hide(200);
+    $('#diffexp-padj-filter').val('');
     $.ajax('{#$ServicePath#}/graphs/heatmap/diffexp', {
         method: 'post',
         data: getFilterData(),
