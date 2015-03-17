@@ -46,20 +46,17 @@ function getFilterData() {
 
 $('#diffexp-padj-filter').on("change", function () {
     var cutoff = Number($('#diffexp-padj-filter').val());
-    var canvas = $('#diffexp-heatmap-canvas');
-    var cx = canvas.data('canvasxpress');
-    console.log(cx);
-    oldcor = cx.data.y.data;
-    for(var i=0; i<oldcor.length; i++){
-        for(var j=0; j<oldcor[i].length; j++){
-            if(Number(cx.data.y.padj[i][j]) <= cutoff){
-                cx.data.y.cor[i][j] = oldcor[i][j];
+    oldcor = expdata.y.data;
+    for (var i = 0; i < oldcor.length; i++) {
+        for (var j = 0; j < oldcor[i].length; j++) {
+            if (Number(expdata.y.padj[i][j]) <= cutoff) {
+                expdata.y.cor[i][j] = oldcor[i][j];
             } else {
-                cx.data.y.cor[i][j] = "NA";
+                expdata.y.cor[i][j] = "NA";
             }
         }
     }
-    cx.redraw();
+    redrawCorrelationPlot(expdata);
     //canvas.data('canvasxpress', cx);
 });
 
@@ -69,69 +66,71 @@ $('#button-draw-diffexp-heatmap').click(function () {
     $.ajax('{#$ServicePath#}/graphs/heatmap/diffexp', {
         method: 'post',
         data: getFilterData(),
-        success: function (val) {
-            expdata = val;
-            if (val.y.smps.length > 0) {
-
-                $('#diffexp-heatmap-panel').show(0);
-                var parent = $("#diffexp-heatmap-canvas-parent");
-
-                //if we already have an old canvas, we have to clean that up first
-                var canvas = $('#diffexp-heatmap-canvas');
-                var cx = canvas.data('canvasxpress');
-                if (cx != null) {
-                    cx.destroy();
-                    parent.empty();
-                }
-
-                canvas = $('<canvas id="diffexp-heatmap-canvas"></canvas>');
-                parent.append(canvas);
-                canvas.attr('width', parent.width() - 8);
-                canvas.attr('height', 500);
-
-                window.location.hash = "diffexp-heatmap-panel";
-
-                val.y.names = [];
-                for (var i = 0; i < val.y.data.length; i++) {
-                    val.y.names[i] = val.y.vars[i];
-                }
-
-                cx = new CanvasXpress(
-                        "diffexp-heatmap-canvas",
-                        {
-                            "x": val.x,
-                            "y": val.y
-                        },
-                {
-                    graphType: "Correlation",
-                    zoomSamplesDisable: true,
-                    zoomVariablesDisable: true,
-                    yAxisTitle: "log2foldchange",
-                    missingDataColor: "rgb(100,100,100)"
-                            //    outlineBy: "Outline",
-                            //    outlineByData: "padj"
-                }, {
-                    mousemove: function (o, e, t) {
-                        var text = o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + o.y.data;
-                        if(o.x.Condition[0] != o.x.Condition[1]){
-                            text += " padj: " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj;
-                        }
-                        $('#diffexp-mouseover-info').text(text);
-                    }
-                });
-
-                canvas.data('canvasxpress', cx);
-
-                addTable(val.table);
-            } else {
-                alert("No differential expression data found for this feature/quantification/analysis combination.");
-            }
-        }
+        success: redrawCorrelationPlot
     });
     return false;
 });
 
-// unused
+function redrawCorrelationPlot(val) {
+    expdata = val;
+    if (val.y.smps.length > 0) {
+
+        $('#diffexp-heatmap-panel').show(0);
+        var parent = $("#diffexp-heatmap-canvas-parent");
+
+        //if we already have an old canvas, we have to clean that up first
+        var canvas = $('#diffexp-heatmap-canvas');
+        var cx = canvas.data('canvasxpress');
+        if (cx != null) {
+            cx.destroy();
+            parent.empty();
+        }
+
+        canvas = $('<canvas id="diffexp-heatmap-canvas"></canvas>');
+        parent.append(canvas);
+        canvas.attr('width', parent.width() - 8);
+        canvas.attr('height', 500);
+
+        window.location.hash = "diffexp-heatmap-panel";
+
+        val.y.names = [];
+        for (var i = 0; i < val.y.data.length; i++) {
+            val.y.names[i] = val.y.vars[i];
+        }
+
+        cx = new CanvasXpress(
+                "diffexp-heatmap-canvas",
+                {
+                    "x": val.x,
+                    "y": val.y
+                },
+        {
+            graphType: "Correlation",
+            zoomSamplesDisable: true,
+            zoomVariablesDisable: true,
+            yAxisTitle: "log2foldchange",
+            missingDataColor: "rgb(100,100,100)"
+                    //    outlineBy: "Outline",
+                    //    outlineByData: "padj"
+        }, {
+            mousemove: function (o, e, t) {
+                var text = o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + o.y.data;
+                if (o.x.Condition[0] != o.x.Condition[1]) {
+                    text += " padj: " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj;
+                }
+                $('#diffexp-mouseover-info').text(text);
+            }
+        });
+
+        canvas.data('canvasxpress', cx);
+
+        addTable(val.table);
+    } else {
+        alert("No differential expression data found for this feature/quantification/analysis combination.");
+    }
+}
+
+
 function addTable(table) {
     var parent = $('#feature-diffexp-table-div');
     var tbl = $('<table id="feature_diffexp_table"></table>');
