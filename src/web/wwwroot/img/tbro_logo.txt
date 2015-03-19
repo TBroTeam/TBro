@@ -1,0 +1,8 @@
+The TBro Logo is a Remix of two openclipart images:
+1. https://openclipart.org/detail/23513/Cartoon%20tyrannosaurus%20rex by StudioFibonacci
+2. https://openclipart.org/detail/211407/Punching%20Fist by Sev
+As all images on openclipart.org they are in the public domain and free to be reused with modifications for any purpose.
+Thanks to the staff of openclipart.org and the artists who originally designed the components.
+
+The color was changed to blue to better fit in with the theme of the website.
+Remix created by Markus Ankenbrand.
