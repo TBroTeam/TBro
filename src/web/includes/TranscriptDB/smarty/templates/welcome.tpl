@@ -122,19 +122,27 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns panel">
+        <div class="row">
+            <div class="large-6 columns">
+                <table style="width:100%">
+                    <tr><th align="left">Homepage: </th><td><a href="http://tbroteam.github.io/TBro/">GitHub Pages</a></td></tr>
+                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/">Cannabis sativa transcriptome</a></td></tr>
+                    <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.org/en/latest/">Read the Docs</a></td></tr>
+                    <tr><th align="left">Code: </th><td><a href="https://github.com/TBroTeam/TBro">GitHub</a></td></tr>
+                </table>
 
             </div>
-            <div class="row">
-                <div class="large-6 columns">
-                    <a class="large button expand btn3" href="{#$AppPath#}/annotationsearch">
-                        <h4>Search by Annotation</h4>
-                    </a>
-                </div>
-                <div class="large-6 columns">
-                    <a class="large button expand btn4" href="{#$AppPath#}/diffexpr">
-                        <h4>Differential Expression</h4>
-                    </a>
-                </div>
+            <div class="large-6 columns">
+                <table style="width:100%">
+                    <tr><th align="left">Publication: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
+                    <tr><th align="left">Bugs: </th><td><a href="https://github.com/TBroTeam/TBro/issues">GitHub Issues</a></td></tr>
+                    <tr><th align="left">Example cart: </th><td>in preparation</td></tr>
+                </table>
             </div>
         </div>
     </div>
