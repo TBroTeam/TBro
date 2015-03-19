@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <!--meta name="viewport" content="width=device-width" /-->
-        <title>TBro &beta;</title>
+        <title>TBro {#$tbro_version#}</title>
 
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="{#$AppPath#}/css/foundation.min.css" />
@@ -262,7 +262,7 @@
         <nav class="top-bar" id="top">
             <ul class="title-area">
                 <li class="name">
-                    <h1><a href="{#$AppPath#}/">TBro &beta;</a></h1>
+                    <h1><a href="{#$AppPath#}/">TBro {#$tbro_version#}</a></h1>
                 </li>
             </ul>
             <section class="top-bar-section">
