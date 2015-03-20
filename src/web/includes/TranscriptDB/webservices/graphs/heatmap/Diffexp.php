@@ -72,7 +72,7 @@ EOF;
                 'baseMean' => $cell['basemean'], 'baseMeanA' => $cell['basemeana'], 'baseMeanB' => $cell['basemeanb'],
                 'inverted' => FALSE);
             $values[$cell['biob']][$cell['bioa']] = array('pvaladj' => $cell['pvaladj'], 'pval' => $cell['pval'],
-                'log2foldchange' => -$cell['log2foldchange'], 'foldchange' => 1/$cell['foldchange'],
+                'log2foldchange' => -$cell['log2foldchange'], 'foldchange' => ($cell['foldchange'] != 0 ? 1/$cell['foldchange'] : 'Infinity'),
                 'baseMean' => $cell['basemean'], 'baseMeanA' => $cell['basemeanb'], 'baseMeanB' => $cell['basemeana'],
                 'inverted' => TRUE);
             $rows[] = array($cell['bioa'], $cell['biob'], $cell['basemean'], $cell['basemeana'], $cell['basemeanb'], $cell['foldchange'], $cell['log2foldchange'], $cell['pval'], $cell['pvaladj']);
