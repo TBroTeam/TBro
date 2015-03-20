@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="large-12 columns panel">
+        <h3>Impressum Template</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns panel">
+        <h4>Example</h4>
+        <table>
+            <tbody>
+                <tr><th>Organization</th><td>Bla University</td></tr>
+                <tr><th>Address</th><td>Blub Town</td></tr>
+                <tr><th>Webmaster</th><td><a href="mailto:foo@bar.baz">foo@bar.baz</a></td></tr>
+            </tbody>
+        </table>
+        <h5>DISCLAIMER</h5>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns panel">
+        <h4>How to change this page</h4>
+        <div class="large-12 columns">
+            <ol>
+                <li>Create a file impressum.html or copy impressum.example.html anywhere in the filesystem of the webserver serving TBro.</li>
+                <li>Add content as you wish. 
+                    <ul>
+                        <li>Static html will be displayed, php will not be processed.</li>
+                        <li>Do not inclued html, head and body tags for the file will be included as part of the body of an existing html file (with navigation bar, etc).</li>
+                        <li>Javascript is working. <script type="text/javascript">console.log("js woring :-)");</script></li>
+                        <li>You can take advantage of Foundation 4 style classes.</li>
+                    </ul>
+                </li>
+                <li>Then set the value of IMPRESSUM_FILE in your TBro config.php to the full path to this file. </li>
+                <li>Make sure, that your webserver user (eg www-data) has read access to this file.</li>
+            </ol>
+        </div>
+        If you are running TBro as a Docker container you can do the following as root on your host machine after creating impressum.html:
+        <pre>
+cp impressum.html /var/lib/docker/aufs/mnt/$(docker inspect -f '{{.Id}}' TBro_official)/var/www/html/
+docker exec -i -t TBro_official bash -c "sed -i 's/impressum.example.html/impressum.html/' /etc/tbro/config.php"
+        </pre>
+    </div>
+</div>

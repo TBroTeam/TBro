@@ -270,6 +270,7 @@
                     <li class="has-dropdown"  id="quicknav-parent"><a href="#">Navigation</a>
                         <ul class="dropdown" id="quicknav">
                             <li><a href="{#$AppPath#}/">Home</a></li>
+                            <li><a href="{#$AppPath#}/impressum">Impressum</a></li>
                         </ul>
                     </li>
                     {#/block#}

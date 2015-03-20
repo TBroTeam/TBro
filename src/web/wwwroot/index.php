@@ -44,6 +44,8 @@ $smarty->assign('max_chars_user_description', MAX_CHARS_USER_DESCRIPTION);
 $smarty->assign('max_chars_cartname', MAX_CHARS_CARTNAME);
 $smarty->assign('max_chars_cartnotes', MAX_CHARS_CARTNOTES);
 
+$smarty->assign('impressum_file', IMPRESSUM_FILE);
+
 /**
  * returns $_REQUEST[$key] value if it matches $regexp, else return $defaultvalue
  * @param String $key
@@ -114,6 +116,9 @@ switch ($page) {
         break;
     case 'diffexpr':
         $smarty->display('diffexpr.tpl');
+        die();
+    case 'impressum':
+        $smarty->display('impressum.tpl');
         die();
     case 'expression':
         $smarty->display('expression_search.tpl');

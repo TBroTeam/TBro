@@ -46,6 +46,8 @@ define('MAX_CHARS_USER_DESCRIPTION', 1000);
 define('MAX_CHARS_CARTNAME', 100);
 define('MAX_CHARS_CARTNOTES', 1000);
 
+define('IMPRESSUM_FILE', 'impressum.example.html');
+
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))
 //    define('DEBUG', true);

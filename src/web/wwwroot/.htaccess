@@ -18,3 +18,5 @@ RewriteRule ^expression(?:/(.*))?$  index.php?page=expression&query=$1 [L,NC,QSA
 RewriteRule ^blast(?:/(.*))?$  index.php?page=blast&query=$1 [L,NC,QSA]
 
 RewriteRule ^blast_results(?:/(.*))?$  index.php?page=blast_results&job_uuid=$1 [L,NC,QSA]
+
+RewriteRule ^impressum$  index.php?page=impressum [L,NC,QSA]
