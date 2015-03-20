@@ -78,6 +78,27 @@
         display: inline-block;
         vertical-align: middle;
     }
+
+    .round-button {
+        width: 30%;
+        height: 0;
+        padding-bottom: 30%;
+        border-radius: 50%;
+        border: 2px solid #f5f5f5;
+        overflow: hidden;
+        background: #ffffff;
+        margin: auto;
+    }
+    .round-button:hover {
+        border-color: #565656;
+    }
+    .round-button img {
+        display: block;
+        width: 76%;
+        margin: auto;
+        height: auto;
+        vertical-align:middle;
+    }
 </style>
 {#/block#}
 {#block name='body'#}
@@ -96,9 +117,15 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-6 columns">
-                <a class="large button expand btn1" href="{#$AppPath#}/multisearch">
-                    <h4>Search by Name</h4>
-                </a>
+                <div class="round-button">
+                    <a href="{#$AppPath#}/multisearch">
+                        <img src="{#$AppPath#}/img/ownGlyphs/1.svg" style="padding-top: 12px;"/>
+                    </a>
+                </div>
+                <h4 align="center">Search by Name</h4>
+                <div align="center">
+                Using the name search, you can search directly for genes or isoforms using IDs or synonyms.
+                </div>
             </div>
             <div class="large-6 columns">
                 <a class="large button expand btn2" style="padding-top: 0; padding-bottom: 0" href="{#$AppPath#}/blast" >
