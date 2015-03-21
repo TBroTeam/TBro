@@ -117,36 +117,68 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-6 columns">
-                <div class="round-button">
-                    <a href="{#$AppPath#}/multisearch">
-                        <img src="{#$AppPath#}/img/ownGlyphs/1.svg" style="padding-top: 12px;"/>
-                    </a>
-                </div>
-                <h4 align="center">Search by Name</h4>
+                <a href="{#$AppPath#}/multisearch">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/1.svg" style="padding-top: 10%;"/>
+                    </div>
+                    <h4 align="center">Search by Name</h4>
+                </a>
                 <div align="center">
-                Using the name search, you can search directly for genes or isoforms using IDs or synonyms.
+                    Using the name search, you can search directly for genes or isoforms using IDs or synonyms.
                 </div>
             </div>
             <div class="large-6 columns">
-                <a class="large button expand btn2" style="padding-top: 0; padding-bottom: 0" href="{#$AppPath#}/blast" >
-                    <div class="overlay-container">
-                        <img src="{#$AppPath#}/img/wordclouds/cloud-homology.png" style="display: block"/>
-                        <div class="overlay"><span><h4>Homology<br>Search</h4></span></div>
+                <a href="{#$AppPath#}/blast" >
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/3.svg" style="padding-top: 38%;"/>
                     </div>
+                    <h4 align="center">Homology Search</h4>
                 </a>
+                <div align="center">
+                    Using the homology search, you can use BLAST to find isoforms with similar sequence.
+                </div>
             </div>
         </div>
+        <div class="row"><div class="large-12 columns" style="height:40px">&nbsp;</div></div>
         <div class="row">
             <div class="large-6 columns">
-                <a class="large button expand btn3" href="{#$AppPath#}/annotationsearch">
-                    <h4>Search by Annotation</h4>
+                <a href="{#$AppPath#}/annotationsearch">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/5.svg" style="padding-top: 44%;"/>
+                    </div>
+                    <h4 align="center">Annotation Search</h4>
                 </a>
+                <div align="center">
+                    Using the annotation search, you can search for different features like GO terms, descriptions and pathways.
+                </div>
             </div>
             <div class="large-6 columns">
-                <a class="large button expand btn4" href="{#$AppPath#}/diffexpr">
-                    <h4>Differential Expression</h4>
+                <a href="{#$AppPath#}/diffexpr">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/4.svg" style="padding-top: 38%;"/>
+                    </div>
+                    <h4 align="center">Differential Expression</h4>
                 </a>
+                <div align="center">
+                    Using the differential expression page, you can filter genes and isoforms by differential expression results in different experiments.
+                </div>
             </div>
+        </div>
+        <div class="row"><div class="large-12 columns" style="height:40px">&nbsp;</div></div>
+        <div class="row">
+            <div class="large-3 columns">&nbsp;</div>
+            <div class="large-6 columns">
+                <a href="{#$AppPath#}/expression">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/2.svg" style="padding-top: 5%;"/>
+                    </div>
+                    <h4 align="center">Expression Search</h4>
+                </a>
+                <div align="center">
+                    Using the expression search, you can filter genes and isoforms depending on their expression in different tissues or states.
+                </div>
+            </div>
+            <div class="large-3 columns">&nbsp;</div>
         </div>
     </div>
 </div>
