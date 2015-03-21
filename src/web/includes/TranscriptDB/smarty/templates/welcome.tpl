@@ -189,18 +189,20 @@
             <div class="large-6 columns">
                 <table style="width:100%">
                     <tr><th align="left">Homepage: </th><td><a href="http://tbroteam.github.io/TBro/">GitHub Pages</a></td></tr>
-                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/">Cannabis sativa transcriptome</a></td></tr>
+                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/"><i>Cannabis sativa</i></a></td></tr>
                     <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.org/en/latest/">Read the Docs</a></td></tr>
                     <tr><th align="left">Code: </th><td><a href="https://github.com/TBroTeam/TBro">GitHub</a></td></tr>
+                    <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
                 </table>
 
             </div>
             <div class="large-6 columns">
                 <table style="width:100%">
-                    <tr><th align="left">Publication: </th><td>in preparation</td></tr>
-                    <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
-                    <tr><th align="left">Bugs: </th><td><a href="https://github.com/TBroTeam/TBro/issues">GitHub Issues</a></td></tr>
                     <tr><th align="left">Example cart: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Publication: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Bugs: </th><td><a data-icon="octicon-issue-opened" href="https://github.com/TBroTeam/TBro/issues" class="github-button">Issue</a></td></tr>
+                    <tr><th align="left">Twitter: </th><td><a href="https://twitter.com/TBroTeam" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @TBroTeam</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></td></tr>
                 </table>
             </div>
         </div>
