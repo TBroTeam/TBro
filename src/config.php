@@ -49,8 +49,8 @@ define('MAX_CHARS_CARTNOTES', 1000);
 //path to your impressum.html file (relative to your index.php or absolute)
 define('IMPRESSUM_FILE', 'impressum.example.html');
 
-//google analytics id (if you don't want to use google analytics, just leave empty)
-define('GOOGLE_ANALYTICS_ID', '');
+//google analytics id (if you don't want to use google analytics, just leave commented)
+//define('GOOGLE_ANALYTICS_ID', '');
 
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))
