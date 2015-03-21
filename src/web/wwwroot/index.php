@@ -44,6 +44,10 @@ $smarty->assign('max_chars_user_description', MAX_CHARS_USER_DESCRIPTION);
 $smarty->assign('max_chars_cartname', MAX_CHARS_CARTNAME);
 $smarty->assign('max_chars_cartnotes', MAX_CHARS_CARTNOTES);
 
+if(!empty(GOOGLE_ANALYTICS_ID)){
+    $smarty->assign('google_analytics_id', GOOGLE_ANALYTICS_ID);
+}
+
 $smarty->assign('impressum_file', IMPRESSUM_FILE);
 
 /**
