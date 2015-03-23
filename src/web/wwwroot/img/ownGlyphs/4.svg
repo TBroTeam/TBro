@@ -14,7 +14,7 @@
    id="svg3082"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="2.svg">
+   sodipodi:docname="4.svg">
   <defs
      id="defs3084" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="183.25756"
-     inkscape:cy="-9.6866597"
+     inkscape:zoom="2.5840126"
+     inkscape:cx="-21.335949"
+     inkscape:cy="-85.02686"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -36,7 +36,7 @@
      fit-margin-bottom="0"
      inkscape:window-width="956"
      inkscape:window-height="1041"
-     inkscape:window-x="960"
+     inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0" />
   <metadata
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -66,8 +66,18 @@
          y="517.41986"
          x="164.36136"
          id="tspan4276"
-         sodipodi:role="line">log<tspan
-   id="tspan4278"
-   style="font-size:16.42355347px;baseline-shift:sub;fill:#b3b3b3">2</tspan>FC</tspan></text>
+         sodipodi:role="line">log FC</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Sans"
+       x="202.26891"
+       y="522.67554"
+       id="text2995"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2997"
+         x="202.26891"
+         y="522.67554"
+         style="font-size:16px">2</tspan></text>
   </g>
 </svg>
