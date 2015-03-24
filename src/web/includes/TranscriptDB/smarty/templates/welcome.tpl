@@ -9,15 +9,15 @@
                 dataType: "json",
                 success: function (data) {
                     $.each(data.results, function (key, val) {
-                        if (val === null)
-                            val = 0;
-                        $('#stat_' + key).html(val);
-                    });
-                }
+                            if (val === null)
+                                val = 0;
+                            $('#stat_' + key).html(val);
+                        });
+                    }
+                });
+                $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " - " + release.val() + ")</h4>");
             });
-            $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " - " + release.val() + ")</h4>");
         });
-    });
 </script>
 <style type="text/css">
     .btn1{
@@ -88,9 +88,11 @@
         overflow: hidden;
         background: #ffffff;
         margin: auto;
+        transition: all .2s ease-in-out;
     }
-    .round-button:hover {
+    a:hover > .round-button {
         border-color: #565656;
+        transform: scale(1.1);
     }
     .round-button img {
         display: block;
@@ -99,6 +101,7 @@
         height: auto;
         vertical-align:middle;
     }
+
 </style>
 {#/block#}
 {#block name='body'#}
@@ -202,7 +205,8 @@
                     <tr><th align="left">Publication: </th><td>in preparation</td></tr>
                     <tr><th align="left">Bugs: </th><td><a data-icon="octicon-issue-opened" href="https://github.com/TBroTeam/TBro/issues" class="github-button">Issue</a></td></tr>
                     <tr><th align="left">Twitter: </th><td><a href="https://twitter.com/TBroTeam" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @TBroTeam</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></td></tr>
+                            <script>!function (d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs')
+                                    ;</script></td></tr>
                 </table>
             </div>
         </div>
