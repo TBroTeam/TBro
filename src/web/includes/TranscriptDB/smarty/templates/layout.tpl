@@ -31,7 +31,8 @@
         <script>
             (function (i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date()
-            ; a = s.createElement(o),
+                    ;
+            a = s.createElement(o),
                     m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
             })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
                     ga('create', '{#$google_analytics_id#}', 'auto');
@@ -298,7 +299,17 @@
                                 <li><a href='{#$AppPath#}/expression'>Expression Counts</a></li>
                                 <li><a href='{#$AppPath#}/diffexpr'>Differential Expressions</a></li>
                             </ul>
-                        </li></ul>
+                        </li>
+                    </ul>
+                    {#if isset($google_analytics_id)#}
+                    <ul class="left" style="background:transparent">
+                        <li>
+                            <div style="color:white; font-size: 75%">
+                                &nbsp;&nbsp;This page uses<a href="https://www.google.com/analytics/" style="padding-left: 5px;">Google Analytics</a>
+                            </div>
+                        </li>
+                    </ul>
+                    {#/if#}
                     <ul class="right">
                         <li><div><label for="select_organism">Organism:</label></div></li>
                         <li><div><select id="select_organism" style="display:inline"></select></div></li>
