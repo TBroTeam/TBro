@@ -158,7 +158,7 @@
             <div class="large-6 columns">
                 <a href="{#$AppPath#}/diffexpr">
                     <div class="round-button">
-                        <img src="{#$AppPath#}/img/ownGlyphs/4.svg" style="padding-top: 38%;"/>
+                        <img src="{#$AppPath#}/img/ownGlyphs/4.svg" style="padding-top: 42%;"/>
                     </div>
                     <h4 align="center">Differential Expression</h4>
                 </a>
