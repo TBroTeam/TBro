@@ -9,15 +9,15 @@
                 dataType: "json",
                 success: function (data) {
                     $.each(data.results, function (key, val) {
-                        if (val === null)
-                            val = 0;
-                        $('#stat_' + key).html(val);
-                    });
-                }
+                            if (val === null)
+                                val = 0;
+                            $('#stat_' + key).html(val);
+                        });
+                    }
+                });
+                $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " - " + release.val() + ")</h4>");
             });
-            $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " - " + release.val() + ")</h4>");
         });
-    });
 </script>
 <style type="text/css">
     .btn1{
@@ -78,6 +78,30 @@
         display: inline-block;
         vertical-align: middle;
     }
+
+    .round-button {
+        width: 30%;
+        height: 0;
+        padding-bottom: 30%;
+        border-radius: 50%;
+        border: 2px solid #f5f5f5;
+        overflow: hidden;
+        background: #ffffff;
+        margin: auto;
+        transition: all .2s ease-in-out;
+    }
+    a:hover > .round-button {
+        border-color: #565656;
+        transform: scale(1.1);
+    }
+    .round-button img {
+        display: block;
+        width: 76%;
+        margin: auto;
+        height: auto;
+        vertical-align:middle;
+    }
+
 </style>
 {#/block#}
 {#block name='body'#}
@@ -96,30 +120,68 @@
     <div class="large-12 columns panel">
         <div class="row">
             <div class="large-6 columns">
-                <a class="large button expand btn1" href="{#$AppPath#}/multisearch">
-                    <h4>Search by Name</h4>
+                <a href="{#$AppPath#}/multisearch">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/1.svg" style="padding-top: 10%;"/>
+                    </div>
+                    <h4 align="center">Search by Name</h4>
                 </a>
+                <div align="center">
+                    Using the name search, you can search directly for genes or isoforms using IDs or synonyms.
+                </div>
             </div>
             <div class="large-6 columns">
-                <a class="large button expand btn2" style="padding-top: 0; padding-bottom: 0" href="{#$AppPath#}/blast" >
-                    <div class="overlay-container">
-                        <img src="{#$AppPath#}/img/wordclouds/cloud-homology.png" style="display: block"/>
-                        <div class="overlay"><span><h4>Homology<br>Search</h4></span></div>
+                <a href="{#$AppPath#}/blast" >
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/3.svg" style="padding-top: 38%;"/>
                     </div>
+                    <h4 align="center">Homology Search</h4>
                 </a>
+                <div align="center">
+                    Using the homology search, you can use BLAST to find isoforms with similar sequence.
+                </div>
             </div>
         </div>
+        <div class="row"><div class="large-12 columns" style="height:40px">&nbsp;</div></div>
         <div class="row">
             <div class="large-6 columns">
-                <a class="large button expand btn3" href="{#$AppPath#}/annotationsearch">
-                    <h4>Search by Annotation</h4>
+                <a href="{#$AppPath#}/annotationsearch">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/5.svg" style="padding-top: 44%;"/>
+                    </div>
+                    <h4 align="center">Annotation Search</h4>
                 </a>
+                <div align="center">
+                    Using the annotation search, you can search for different features like GO terms, descriptions and pathways.
+                </div>
             </div>
             <div class="large-6 columns">
-                <a class="large button expand btn4" href="{#$AppPath#}/diffexpr">
-                    <h4>Differential Expression</h4>
+                <a href="{#$AppPath#}/diffexpr">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/4.svg" style="padding-top: 42%;"/>
+                    </div>
+                    <h4 align="center">Differential Expression</h4>
                 </a>
+                <div align="center">
+                    Using the differential expression page, you can filter genes and isoforms by differential expression results in different experiments.
+                </div>
             </div>
+        </div>
+        <div class="row"><div class="large-12 columns" style="height:40px">&nbsp;</div></div>
+        <div class="row">
+            <div class="large-3 columns">&nbsp;</div>
+            <div class="large-6 columns">
+                <a href="{#$AppPath#}/expression">
+                    <div class="round-button">
+                        <img src="{#$AppPath#}/img/ownGlyphs/2.svg" style="padding-top: 5%;"/>
+                    </div>
+                    <h4 align="center">Expression Search</h4>
+                </a>
+                <div align="center">
+                    Using the expression search, you can filter genes and isoforms depending on their expression in different tissues or states.
+                </div>
+            </div>
+            <div class="large-3 columns">&nbsp;</div>
         </div>
     </div>
 </div>
@@ -130,18 +192,21 @@
             <div class="large-6 columns">
                 <table style="width:100%">
                     <tr><th align="left">Homepage: </th><td><a href="http://tbroteam.github.io/TBro/">GitHub Pages</a></td></tr>
-                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/">Cannabis sativa transcriptome</a></td></tr>
+                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/"><i>Cannabis sativa</i></a></td></tr>
                     <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.org/en/latest/">Read the Docs</a></td></tr>
                     <tr><th align="left">Code: </th><td><a href="https://github.com/TBroTeam/TBro">GitHub</a></td></tr>
+                    <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
                 </table>
 
             </div>
             <div class="large-6 columns">
                 <table style="width:100%">
-                    <tr><th align="left">Publication: </th><td>in preparation</td></tr>
-                    <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
-                    <tr><th align="left">Bugs: </th><td><a href="https://github.com/TBroTeam/TBro/issues">GitHub Issues</a></td></tr>
                     <tr><th align="left">Example cart: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Publication: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Bugs: </th><td><a data-icon="octicon-issue-opened" href="https://github.com/TBroTeam/TBro/issues" class="github-button">Issue</a></td></tr>
+                    <tr><th align="left">Twitter: </th><td><a href="https://twitter.com/TBroTeam" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @TBroTeam</a>
+                            <script>!function (d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs')
+                                    ;</script></td></tr>
                 </table>
             </div>
         </div>

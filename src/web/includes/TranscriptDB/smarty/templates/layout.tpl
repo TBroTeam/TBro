@@ -27,10 +27,23 @@
         <script type="text/javascript" src="{#$AppPath#}/js/jquery.webStorage.min.js"></script>
         <!--script type="text/javascript" src="{#$AppPath#}/js/json3.min.js"></script-->
 
+        {#if isset($google_analytics_id)#}
+        <script>
+            (function (i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date()
+                    ;
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+                    ga('create', '{#$google_analytics_id#}', 'auto');
+            ga('send', 'pageview');
+        </script>
+        {#/if#}
+
         <script type="text/javascript">
             var organism;
             var release;
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $(document).foundation();
 
 
@@ -59,9 +72,9 @@
                 $.ajax({
                     url: "{#$ServicePath#}/listing/organism_release",
                     dataType: "json",
-                    success: function(data) {
+                    success: function (data) {
                         organism.empty();
-                        $.each(data.results.organism, function() {
+                        $.each(data.results.organism, function () {
                             var option = $('<option/>').val(this.organism_id).text(this.organism_name);
                             if (this.organism_id == selected_organism_id) {
                                 option.attr('selected', 'selected');
@@ -74,7 +87,7 @@
                 });
 
                 //on organism change, update releases
-                organism.change(function() {
+                organism.change(function () {
                     $.webStorage.session().setItem('selected_organism_id', organism.val());
 
                     release.empty();
@@ -83,7 +96,7 @@
                         release.attr('disabled', 'disabled');
                         $('<option/>').val('').text('/').appendTo(release);
                     } else {
-                        $.each(rel_release[organism.val()], function() {
+                        $.each(rel_release[organism.val()], function () {
                             var option = $('<option/>').val(this.release).text(this.release);
                             if (this.release == selected_release) {
                                 option.attr('selected', 'selected');
@@ -95,7 +108,7 @@
                 });
 
                 //on release change, store for next page loaded
-                release.change(function() {
+                release.change(function () {
                     $.webStorage.session().setItem('selected_release', release.val());
                 });
 
@@ -104,23 +117,23 @@
                     position: {
                         my: "right top", at: "right bottom"
                     },
-                    source: function(request, response) {
+                    source: function (request, response) {
                         $.ajax({
                             url: "{#$ServicePath#}/listing/searchbox/",
                             data: {species: organism.val(), release: release.val(), term: request.term},
                             dataType: "json",
-                            success: function(data) {
+                            success: function (data) {
                                 response(data.results);
                             }
                         });
                     },
                     minLength: 2,
-                    select: function(event, ui) {
+                    select: function (event, ui) {
                         location.href = "{#$AppPath#}/details/byId/" + ui.item.id;
                     }
                 });
                 //render as link to allow open in background & co
-                $("#search_unigene").data("ui-autocomplete")._renderItem = function(ul, item) {
+                $("#search_unigene").data("ui-autocomplete")._renderItem = function (ul, item) {
                     var li = $("<li>")
                             .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:100px'>" + item.type + "</span>" + item.name + "</a>")
                             .appendTo(ul);
@@ -138,7 +151,7 @@
             //adds an anchor to the document where this is called, adds link to #quicknav
             function addNavAnchor(name, linktext) {
                 //manipulate DOM when page loading has finished
-                $(document).ready(function() {
+                $(document).ready(function () {
                     if ($('#quicknav-pageheader').length == 0) {
                         $('#quicknav').append('<li class="divider" id="quicknav-pageheader"></li><li><a>on this page</a></li><li class="divider"></li>');
                     }
@@ -241,9 +254,9 @@
             }
         </style>
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 //elements with class position will be positioned  based on their attributes. see http://jqueryui.com/position/
-                $('.position').each(function() {
+                $('.position').each(function () {
                     var that = $(this);
                     var my = that.attr('data-my');
                     var at = that.attr('data-at');
@@ -254,25 +267,26 @@
             });
         </script>
 
-    {#block name='head'#}{#/block#}
+        {#block name='head'#}{#/block#}
 
-</head>
-<body>
-    <div class="fixed">
-        <nav class="top-bar" id="top">
-            <ul class="title-area">
-                <li class="name">
-                    <h1><a href="{#$AppPath#}/">TBro {#$tbro_version#}</a></h1>
-                </li>
-            </ul>
-            <section class="top-bar-section">
-                <ul class="left">{#block name='header-nav'#}
-                    <li class="has-dropdown"  id="quicknav-parent"><a href="#">Navigation</a>
-                        <ul class="dropdown" id="quicknav">
-                            <li><a href="{#$AppPath#}/">Home</a></li>
-                        </ul>
+    </head>
+    <body>
+        <div class="fixed">
+            <nav class="top-bar" id="top">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="{#$AppPath#}/">TBro {#$tbro_version#}</a></h1>
                     </li>
-                    {#/block#}
+                </ul>
+                <section class="top-bar-section">
+                    <ul class="left">{#block name='header-nav'#}
+                        <li class="has-dropdown"  id="quicknav-parent"><a href="#">Navigation</a>
+                            <ul class="dropdown" id="quicknav">
+                                <li><a href="{#$AppPath#}/">Home</a></li>
+                                <li><a href="{#$AppPath#}/impressum">Impressum</a></li>
+                            </ul>
+                        </li>
+                        {#/block#}
                         <li class="has-dropdown"  id="searchnav-parent"><a href="#">Search</a>
                             <ul class="dropdown" id="searchnav">
                                 <li><a href='{#$AppPath#}/multisearch'>Search by Name</a></li>
@@ -282,12 +296,20 @@
                         </li>
                         <li class="has-dropdown"  id="datanav-parent"><a href="#">Data</a>
                             <ul class="dropdown" id="datanav">
-                                <li><a href='#'>Sequences</a></li>
-                                <li><a href='#'>Annotation</a></li>
                                 <li><a href='{#$AppPath#}/expression'>Expression Counts</a></li>
                                 <li><a href='{#$AppPath#}/diffexpr'>Differential Expressions</a></li>
                             </ul>
-                        </li></ul>
+                        </li>
+                    </ul>
+                    {#if isset($google_analytics_id)#}
+                    <ul class="left" style="background:transparent">
+                        <li>
+                            <div style="color:white; font-size: 75%">
+                                &nbsp;&nbsp;This page uses<a href="https://www.google.com/analytics/" style="padding-left: 5px;">Google Analytics</a>
+                            </div>
+                        </li>
+                    </ul>
+                    {#/if#}
                     <ul class="right">
                         <li><div><label for="select_organism">Organism:</label></div></li>
                         <li><div><select id="select_organism" style="display:inline"></select></div></li>
@@ -303,10 +325,12 @@
             </nav>
         </div>
         <div class="row large-12 columns" style="padding: 0px;">
-        {#block name='body'#}{#/block#}
-    </div>
+            {#block name='body'#}{#/block#}
+        </div>
 
-    <div class="modal"><!-- Placeholder to block page when busy --></div>
-</body>
+        <div class="modal"><!-- Placeholder to block page when busy --></div>
+        <!-- Code to render GitHub buttons -->
+        <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+    </body>
 </html>
 

@@ -72,7 +72,8 @@ EOF;
                 'baseMean' => $cell['basemean'], 'baseMeanA' => $cell['basemeana'], 'baseMeanB' => $cell['basemeanb'],
                 'inverted' => FALSE);
             $values[$cell['biob']][$cell['bioa']] = array('pvaladj' => $cell['pvaladj'], 'pval' => $cell['pval'],
-                'log2foldchange' => -$cell['log2foldchange'], 'foldchange' => 1/$cell['foldchange'],
+                'log2foldchange' => (is_numeric($cell['log2foldchange']) ? -$cell['log2foldchange'] : ($cell['log2foldchange'] == 'Infinity' ? '-Infinity' : 'Infinity')), 
+                'foldchange' => ($cell['foldchange'] != 0 ? 1/$cell['foldchange'] : 'Infinity'),
                 'baseMean' => $cell['basemean'], 'baseMeanA' => $cell['basemeanb'], 'baseMeanB' => $cell['basemeana'],
                 'inverted' => TRUE);
             $rows[] = array($cell['bioa'], $cell['biob'], $cell['basemean'], $cell['basemeana'], $cell['basemeanb'], $cell['foldchange'], $cell['log2foldchange'], $cell['pval'], $cell['pvaladj']);
@@ -86,7 +87,7 @@ EOF;
 
         foreach ($values AS $bioa => $val) {
             foreach ($val AS $biob => $v) {
-                if ($v['log2foldchange'] == "Infinity" || $v['log2foldchange'] == "-Infinity") {
+                if (!is_numeric($v['log2foldchange'])) {
                     $data[$biomaterials[$bioa]][$biomaterials[$biob]] = 'NA';
                     $data[$biomaterials[$biob]][$biomaterials[$bioa]] = 'NA';
                     $type[$biomaterials[$bioa]][$biomaterials[$biob]] = ($v['log2foldchange'] == "Infinity" ? 'INF' : '-INF');

@@ -115,11 +115,20 @@ function redrawCorrelationPlot(val) {
                     //    outlineByData: "padj"
         }, {
             mousemove: function (o, e, t) {
-                var text = o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + o.y.data;
+                var text = "<h6>" + o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + o.y.data + "</h6><br/><table>";
                 if (o.x.Condition[0] != o.x.Condition[1]) {
-                    text += " padj: " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj;
+                    console.log(expdata.values[o.x.Condition[0]][o.x.Condition[1]]);
+                    text += "<tr><th> log2foldchange </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].log2foldchange + "</td></tr>";
+                    text += "<tr><th> p-value adjusted </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj + "</td></tr>";
+                    text += "<tr><th> p-value </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pval + "</td></tr>";
+                    text += "<tr><th> baseMean </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMean + "</td></tr>";
+                    text += "<tr><th> baseMeanA </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMeanA + "</td></tr>";
+                    text += "<tr><th> baseMeanB </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMeanB + "</td></tr>";
+                    text += "<tr><th> foldchange </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].foldchange + "</td></tr>";
+                    text += "<tr><th> inverted </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].inverted + "</td></tr>";
                 }
-                $('#diffexp-mouseover-info').text(text);
+                text += "</table>";
+                $('#diffexp-mouseover-info').html(text);
             }
         });
 
