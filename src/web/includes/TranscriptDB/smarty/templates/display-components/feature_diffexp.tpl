@@ -12,7 +12,11 @@
     <script type="text/javascript" src="{#$AppPath#}/js/feature/filteredSelect.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var featureid = {#$data.isoform.feature_id#};
+            {#if isset($data.isoform.feature_id) #}
+                var featureid = {#$data.isoform.feature_id#};
+            {#else#}
+                var featureid = {#$data.unigene.feature_id#};
+            {#/if#}
         {#include file="js/feature_diffexp.js"#}
             setTimeout(function () {
                 populateDiffexpSelectionBoxes();
