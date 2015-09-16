@@ -203,6 +203,13 @@
 
     <div class="row">
         <div class="large-12 columns panel">
+            <h4>Differential Expression Analysis</h4>
+            {#include file="display-components/feature_diffexp.tpl"#}
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="large-12 columns panel">
             <h5>Imported into TBro: {#$data.unigene.timelastmodified#}</h5>
         </div>
     </div>
