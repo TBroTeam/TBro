@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS multisearch(_organism_id int, _release_name varchar, _feature_names varchar[]);
+DROP FUNCTION IF EXISTS multisearch_strict(_organism_id int, _release_name varchar, _feature_names varchar[]);
 --NEWCMD--
-CREATE OR REPLACE FUNCTION multisearch(_organism_id int, _release_name varchar, _feature_names varchar[])
+CREATE OR REPLACE FUNCTION multisearch_strict(_organism_id int, _release_name varchar, _feature_names varchar[])
  RETURNS TABLE(feature_name varchar, feature_id int, type_id int, synonym_name varchar, description text)
  LANGUAGE plpgsql AS $$
  DECLARE
