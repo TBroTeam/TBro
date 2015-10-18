@@ -299,7 +299,9 @@
                 <li style="clear:both" class="large-12 cartItem" data-id="<%=item.feature_id%>">
                 <div class="left">
                 <span class="displayname">
+                <% if(typeof item.metadata !== 'undefined' && typeof item.metadata.alias !== 'undefined'){print('<b>');} %>
                 <%= (item.metadata && item.metadata.alias) || item.name || item.feature_id %>
+                <% if(typeof item.metadata !== 'undefined' && typeof item.metadata.alias !== 'undefined'){print('<b>');} %>
                 </span>
                 </div>
                 <div class="right">
