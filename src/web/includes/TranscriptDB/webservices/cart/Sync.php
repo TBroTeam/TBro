@@ -21,7 +21,7 @@ class Sync extends \WebService {
      * @return nothing
      */
     private function loadCart() {
-        if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID']))
+        if ((!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID'])) && !defined(DEFAULT_CART_OPENID))
             return;
 
         global $db;
@@ -30,7 +30,11 @@ class Sync extends \WebService {
 
         $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart FOR UPDATE');
         $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
-        $stm_retrieve_cart->bindValue('identity', $_SESSION['OpenID']);
+        if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID'])){
+            $stm_retrieve_cart->bindValue('identity', DEFAULT_CART_OPENID);
+        } else {
+            $stm_retrieve_cart->bindValue('identity', $_SESSION['OpenID']);
+        }
 
         $stm_retrieve_cart->execute();
         if ($stm_retrieve_cart->rowCount() == 1) {
