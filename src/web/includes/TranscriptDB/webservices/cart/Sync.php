@@ -28,11 +28,14 @@ class Sync extends \WebService {
         if (false)
             $db = new \PDO();
 
-        $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart FOR UPDATE');
-        $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
+        $stm_retrieve_cart;
         if (!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID'])){
+            $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart');
+            $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
             $stm_retrieve_cart->bindValue('identity', DEFAULT_CART_OPENID);
         } else {
+            $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart FOR UPDATE');
+            $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
             $stm_retrieve_cart->bindValue('identity', $_SESSION['OpenID']);
         }
 
