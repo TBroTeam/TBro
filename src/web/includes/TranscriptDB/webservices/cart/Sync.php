@@ -21,7 +21,7 @@ class Sync extends \WebService {
      * @return nothing
      */
     private function loadCart() {
-        if ((!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID'])) && !defined(DEFAULT_CART_OPENID))
+        if ((!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID'])) && !defined('DEFAULT_CART_OPENID'))
             return;
 
         global $db;
