@@ -450,7 +450,7 @@ Cart.prototype.addItem = function(ids, options) {
         });
         if (group.length > itemsToShow) {
             if (full_placeholder.length === 0) {
-                full_placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = \'/graphs/' + options.groupname + '\'"></li>');
+                full_placeholder = $('<li class="cartFullText" style="clear:both" onclick="window.location = '+appPath+'\'/graphs/' + options.groupname + '\'"></li>');
                 full_placeholder.css('cursor', 'pointer');
                 group$.find('.elements').append(full_placeholder)
             }

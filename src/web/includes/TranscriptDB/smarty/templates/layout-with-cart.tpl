@@ -13,6 +13,7 @@
             max_items_per_cart: {#$max_items_per_cart#},
             max_annotations_per_context: {#$max_annotations_per_context#}
         };
+        var appPath = '{#$AppPath#}';
         /*
          function openPasteDialog(event){
          event.preventDefault();
