@@ -63,5 +63,6 @@ define('IMPRESSUM_FILE', 'impressum.example.html');
 //error_reporting(E_ALL );
 //ini_set('display_errors', '1');
 
-
+//Title on the welcome page (html allowed)
+define('INSTANCE_TITLE', '<span style="color: #2ba6cb">T</span>ranscriptome <span style="color: #2ba6cb">Bro</span>wser');
 ?>
