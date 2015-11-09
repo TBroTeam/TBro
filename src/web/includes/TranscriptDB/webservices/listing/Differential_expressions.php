@@ -385,6 +385,25 @@ EOF;
             $ids_high[] = $row['feature_id'];
             $coords_high[] = array($row['baseMean'], $row['log2foldChange']);
         }
+        
+        # Get IDs in cart (medium highlight)
+        list($query, $arguments) = $this->fullRelease_buildQuery($querydata, false, false, false);
+
+        $stm_get_diffexpr = $db->prepare($query);
+        $stm_get_diffexpr->execute($arguments);
+
+        $cartids = array();
+        while ($row = $stm_get_diffexpr->fetch(PDO::FETCH_ASSOC)) {
+            $cartids[$row['feature_id']] = 1;
+            # Remove Inf values for now (maybe display on top or bottom later)
+            if (!is_numeric($row['log2foldChange'])) {
+                continue;
+            }
+            if (!array_key_exists($row['feature_id'], $highids)){
+                $ids_cart[] = $row['feature_id'];
+                $coords_cart[] = array($row['baseMean'], $row['log2foldChange']);
+            }
+        }
 
         # Get all info
         # unset ids to get all matching ids in organism_release_quantification_analysis combination
@@ -449,7 +468,7 @@ EOF;
             if (!is_numeric($row['log2foldChange'])) {
                 continue;
             }
-            if (!array_key_exists($row['feature_id'], $highids)) {
+            if (!array_key_exists($row['feature_id'], $highids) && !array_key_exists($row['feature_id'], $cartids)) {
                 $ids[] = $row['feature_id'];
                 $coords[] = array($row['baseMean'], $row['log2foldChange']);
             }
@@ -457,12 +476,16 @@ EOF;
         
         $low = count($ids);
         $high = count($ids_high);
-        $ids = array_merge($ids, $ids_high);
-        $coords = array_merge($coords, $coords_high);
+        $cart = count($ids_cart);
+        $ids = array_merge($ids, $ids_cart, $ids_high);
+        $coords = array_merge($coords, $coords_cart, $coords_high);
         // free some memory.
         $highids = null;
+        $cartids = null;
         $ids_high = null;
         $coords_high = null;
+        $ids_cart = null;
+        $coords_cart = null;
                 
         return array(
             'y' => array(
@@ -471,7 +494,7 @@ EOF;
                 'data' => $coords
             ),
             'z' => array(
-                'Highlight' => array_merge(array_fill(0, $low, 0), array_fill(0, $high, 1))
+                'Status' => array_merge(array_fill(0, $low, 'Background'), array_fill(0, $cart, 'In cart, filteres not passed'), array_fill(0, $high, 'In cart, filters passed'))
             )
         );
     }
