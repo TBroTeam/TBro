@@ -301,7 +301,7 @@
                 <div class="left">
                 <span class="displayname">
                 <% if(typeof item.metadata !== 'undefined' && item.metadata.alias){print('<b>');} %>
-                <%= (item.metadata && item.metadata.alias) || item.name || item.feature_id %>
+                <%= (item.metadata && item.metadata.alias) || item.alias || item.name || item.feature_id %>
                 <% if(typeof item.metadata !== 'undefined' && item.metadata.alias){print('<b>');} %>
                 </span>
                 </div>
