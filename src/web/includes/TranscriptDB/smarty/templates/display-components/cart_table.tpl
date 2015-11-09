@@ -19,7 +19,7 @@
         if (typeof dataTable === "undefined") {
             var cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
                 {mData: 'name', bSortable: true, sClass: "no-wrap"},
-                {mData: 'alias', bSortable: true, sClass: "no-wrap", bVisible: false},
+                {mData: 'alias', bSortable: true, sClass: "no-wrap"},
                 {mData: 'description', bSortable: true, sClass: "no-wrap"},
                 {mData: 'user_alias', bSortable: true, sClass: "no-wrap"},
                 {mData: 'user_annotations', bSortable: true, sClass: "no-wrap"},
@@ -28,7 +28,7 @@
             if (data.length > 1000) {
                 cols = [{mData: 'type', bSortable: false, sClass: "no-wrap", sWidth: "10px"},
                     {mData: 'name', bSortable: false, sClass: "no-wrap"},
-                    {mData: 'alias', bSortable: false, sClass: "no-wrap", bVisible: false},
+                    {mData: 'alias', bSortable: false, sClass: "no-wrap"},
                     {mData: 'description', bSortable: false, sClass: "no-wrap"},
                     {mData: 'user_alias', bSortable: false, sClass: "no-wrap"},
                     {mData: 'user_annotations', bSortable: false, sClass: "no-wrap"},
@@ -71,7 +71,7 @@
                 sPaginationType: "full_numbers",
                 aoColumns: cols,
                 fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    $(nRow).find('td:eq(5)').append(
+                    $(nRow).find('td:eq(6)').append(
                             '<a target="_blank"  title="Goto Details Page" href="{#$AppPath#}/details/byId/' + aData.feature_id + '"><img src="{#$AppPath#}/img/mimiGlyphs/47.png"/> </a>' +
                             '<a class="cart-button-rename" title="Change Annotation" onclick="annotateElement(' + aData.feature_id + ', \'' + aData.name + '\', \'' + aData.description + '\');" href="#"><img class="cart-button-edit" src="{#$AppPath#}/img/mimiGlyphs/39.png"/> </a>' +
                             '<a class="cart-button-delete" title="Delete from Cart" onclick="deleteElement(' + aData.feature_id + ');" href="#"><img src="{#$AppPath#}/img/mimiGlyphs/51.png"/> </a>' +
