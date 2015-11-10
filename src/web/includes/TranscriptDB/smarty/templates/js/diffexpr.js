@@ -86,6 +86,7 @@ $(document).ready(function () {
             }
         });
     });
+    release.change();
     /*{#/if#}*/
 
     var selectedItem;
