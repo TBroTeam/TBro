@@ -151,6 +151,9 @@ function drawBarplot() {
                 showDataValues: true,
                 // plotByVariable: true,
                 graphOrientation: "vertical"
+                // does not work on barplots (only scatter plots)
+                //setMinY: 0,
+                //setMinX: 0
             });
 
             canvas.data('canvasxpress', cx);
