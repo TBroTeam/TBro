@@ -365,6 +365,8 @@ EOF;
 
         $ids_high = array();
         $coords_high = array();
+        $ids_cart = array();
+        $coords_cart = array();
         $highlight_high = array();
         $ids = array();
         $coords = array();
@@ -494,7 +496,10 @@ EOF;
                 'data' => $coords
             ),
             'z' => array(
-                'Status' => array_merge(array_fill(0, $low, 'Background'), array_fill(0, $cart, 'In cart, filteres not passed'), array_fill(0, $high, 'In cart, filters passed'))
+                'Status' => array_merge(
+                    ($low > 0 ? array_fill(0, $low, $legend_low) : array()),
+                    ($cart > 0 ? array_fill(0, $cart, $legend_cart) : array()),
+                    ($high > 0 ? array_fill(0, $high, $legend_high) : array()))
             )
         );
     }
