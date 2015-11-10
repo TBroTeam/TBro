@@ -488,6 +488,14 @@ EOF;
         $coords_high = null;
         $ids_cart = null;
         $coords_cart = null;
+
+        $legend_low = "not in cart";
+        $legend_cart = "filters not passed";
+        $legend_high = "filters passed";
+        if($low > 0){
+            $legend_cart .= " (in cart)";
+            $legend_high .= " (in cart)";
+        }
                 
         return array(
             'y' => array(
