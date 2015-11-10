@@ -39,25 +39,33 @@ class Sync extends \WebService {
         } else {
             $this->saveCart();
         }
-
-        // keep this only for a short while to convert carts to incorporate the new format (cartname->items,notes)
-        if (!array_key_exists('cartorder', $_SESSION['cart'])) {
-            $_SESSION['cart']['cartorder'] = array();
+    }
+ 
+    /**
+     * Loads default cart from database (if possible), otherwise returns empty cart.
+     * @global \PDO $db
+     * @return nothing
+     */
+    private function loadDefaultCart() {
+        if ((!isset($_SESSION['OpenID']) || empty($_SESSION['OpenID'])) && !defined('DEFAULT_CART_OPENID')){
+            $_SESSION['cart'] = array('metadata' => array(), 'carts' => array(), 'cartorder' => array());
+            return;
         }
-        foreach (array_keys($_SESSION['cart']['carts']) as $context) {
-            foreach (array_keys($_SESSION['cart']['carts'][$context]) as $name) {
-                if (!array_key_exists('items', $_SESSION['cart']['carts'][$context][$name])) {
-                    $items = $_SESSION['cart']['carts'][$context][$name];
-                    $_SESSION['cart']['carts'][$context][$name] = array('items' => $items, 'notes' => '', 'created' => time(), 'modified' => time());
-                }
-                if (!array_key_exists('created', $_SESSION['cart']['carts'][$context][$name])) {
-                    $_SESSION['cart']['carts'][$context][$name]['created'] = time();
-                    $_SESSION['cart']['carts'][$context][$name]['modified'] = time();
-                }
-            }
-            if (!array_key_exists($context, $_SESSION['cart']['cartorder']) || empty($_SESSION['cart']['cartorder'][$context])) {
-                $_SESSION['cart']['cartorder'][$context] = array_keys($_SESSION['cart']['carts'][$context]);
-            }
+
+        global $db;
+        if (false)
+            $db = new \PDO();
+
+        $stm_retrieve_cart = $db->prepare('SELECT value FROM webuser_data WHERE identity=:identity AND type_id=:type_cart');
+        $stm_retrieve_cart->bindValue('type_cart', WEBUSER_CART);
+        $stm_retrieve_cart->bindValue('identity', DEFAULT_CART_OPENID);
+
+        $stm_retrieve_cart->execute();
+        if ($stm_retrieve_cart->rowCount() == 1) {
+            $row = $stm_retrieve_cart->fetch(\PDO::FETCH_ASSOC);
+            $_SESSION['cart'] = json_decode($row['value'], true);
+        } else {
+            $_SESSION['cart'] = array('metadata' => array(), 'carts' => array(), 'cartorder' => array());
         }
     }
 
@@ -127,7 +135,7 @@ class Sync extends \WebService {
     public function syncActions($parms, $currentContext) {
         //prepare empty values
         if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = array('metadata' => array(), 'carts' => array(), 'cartorder' => array());
+            $this->loadDefaultCart();
         }
         if (!isset($_SESSION['cart']['carts'][$currentContext]))
             $_SESSION['cart']['carts'][$currentContext] = array();

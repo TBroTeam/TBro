@@ -108,10 +108,10 @@
 <div class="row">
     <div class="large-12 columns panel">
         <div class="large-10 columns">
-            <h1 style="line-height: 2"> <span style="color: #2ba6cb">T</span>ranscriptome <span style="color: #2ba6cb">Bro</span>wser {#$tbro_version#}  </h1>
+            <h1 style="line-height: 2"> {#$instance_title#}  </h1>
         </div>
         <div class="large-2 columns">
-            <img src="{#$AppPath#}/img/tbro_logo.svg"/>
+            <img src="{#$AppPath#}/img/instance_logo"/>
         </div>
     </div>
 </div>

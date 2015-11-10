@@ -15,6 +15,7 @@ $(document).ready(function() {
     release.on('change', function() {
         cart.updateContext(organism.val() + '_' + release.val());
     });
+    cart.updateContext(organism.val() + '_' + release.val());
 
 
     setInterval(function() {

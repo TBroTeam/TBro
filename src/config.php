@@ -52,11 +52,17 @@ define('IMPRESSUM_FILE', 'impressum.example.html');
 //google analytics id (if you don't want to use google analytics, just leave commented)
 //define('GOOGLE_ANALYTICS_ID', '');
 
+//OpenID for default carts. The carts of this OpenID user are provided for all users that are not logged in
+//No not-logged-in user can alter those carts persistently - this can only be done by the OpenID user (when logged in)
+//Leave this commented out if you do not want to provide default carts for not-logged-in users
+//define('DEFAULT_CART_OPENID', '');
+
 //uncomment for debugging
 //if (isset($_REQUEST['DEBUG']))
 //    define('DEBUG', true);
 //error_reporting(E_ALL );
 //ini_set('display_errors', '1');
 
-
+//Title on the welcome page (html allowed)
+define('INSTANCE_TITLE', '<span style="color: #2ba6cb">T</span>ranscriptome <span style="color: #2ba6cb">Bro</span>wser');
 ?>

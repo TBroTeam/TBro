@@ -86,6 +86,7 @@ $(document).ready(function () {
             }
         });
     });
+    release.change();
     /*{#/if#}*/
 
     var selectedItem;
@@ -419,10 +420,11 @@ $(document).ready(function () {
                         },
                 {
                     graphType: "Scatter2D",
-                    colorBy: "Highlight",
+                    colorBy: "Status",
                     xAxisTransform: "log2",
                     showIndicators: false,
-                    sizes: [2, 4, 6, 8]
+                    sizes: [2, 4, 6, 8],
+                    legendPosition: "bottom"
                 });
 
                 canvas.data('canvasxpress', cx);

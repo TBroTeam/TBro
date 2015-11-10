@@ -90,11 +90,11 @@ class Features extends \WebService {
             $query = <<<EOF
         SELECT raw.*, fp.value AS description FROM (SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
-    SELECT s.name 
-    FROM feature_synonym fs, synonym s 
-    WHERE fs.feature_id=feature.feature_id 
-    AND s.synonym_id=fs.synonym_id 
-    AND s.type_id=(SELECT type_id FROM cvterm c WHERE name='symbol' LIMIT 1)
+    SELECT string_agg(synonym.name,', ')
+    FROM feature_synonym AS fs, synonym
+    WHERE feature.feature_id=fs.feature_id
+    AND synonym.synonym_id=fs.synonym_id
+    GROUP BY fs.feature_id
     LIMIT 1
     ),'') AS alias
     FROM feature
@@ -107,11 +107,11 @@ EOF;
             $query = <<<EOF
     SELECT
     feature.feature_id, feature.name, dbxref.accession AS dataset, organism.common_name AS organism, type_id, COALESCE((
-    SELECT s.name 
-    FROM feature_synonym fs, synonym s 
-    WHERE fs.feature_id=feature.feature_id 
-    AND s.synonym_id=fs.synonym_id 
-    AND s.type_id=(SELECT type_id FROM cvterm WHERE name='symbol' LIMIT 1)
+    SELECT string_agg(synonym.name,', ')
+    FROM feature_synonym AS fs, synonym
+    WHERE feature.feature_id=fs.feature_id
+    AND synonym.synonym_id=fs.synonym_id
+    GROUP BY fs.feature_id
     LIMIT 1
     ),'') AS alias
     FROM feature
