@@ -98,44 +98,36 @@
     <div class="row">
         <div class="large-12 columns panel">
             <div class="row">
-                <div class="large-2 columns">
+                <div class="large-3 columns">
                     <h4>Experiment</h4>
                 </div>
-                <div class="large-2 columns">
-                    <h4>Acquisition</h4>
-                </div>
-                <div class="large-2 columns">
-                    <h4>Quantification</h4>
-                </div>
-                <div class="large-2 columns">
+                <div class="large-3 columns">
                     <h4>Condition A</h4>
                 </div>
-                <div class="large-2 columns">
+                <div class="large-3 columns">
                     <h4>Condition B</h4>
                 </div>
 
-                <div class="large-2 columns">
+                <div class="large-3 columns">
                     <h4>Analysis</h4>
                 </div>
             </div>
             <form id="{#$instance_name#}-diffexp_filters">
                 <div class="row">
-                    <div class="large-2 columns">
-                        <select id="{#$instance_name#}-select-gdfx-assay" size="12"></select>
+                    <div class="large-3 columns">
+                        <select id="{#$instance_name#}-select-gdfx-assay" size="1"></select>
+                        <h4>Acquisition</h4>
+                        <select id="{#$instance_name#}-select-gdfx-acquisition" size="1"></select>
+                        <h4>Quantification</h4>
+                        <select id="{#$instance_name#}-select-gdfx-quantification" size="1"></select>
                     </div>
-                    <div class="large-2 columns">
-                        <select id="{#$instance_name#}-select-gdfx-acquisition" size="12"></select>
-                    </div>
-                    <div class="large-2 columns">
-                        <select id="{#$instance_name#}-select-gdfx-quantification" size="12"></select>
-                    </div>
-                    <div class="large-2 columns">
+                    <div class="large-3 columns">
                         <select id="{#$instance_name#}-select-gdfx-conditionA" size="12"></select>
                     </div>
-                    <div class="large-2 columns">
+                    <div class="large-3 columns">
                         <select id="{#$instance_name#}-select-gdfx-conditionB" size="12"></select>
                     </div>
-                    <div class="large-2 columns">
+                    <div class="large-3 columns">
                         <select id="{#$instance_name#}-select-gdfx-analysis" size="12"></select>
                     </div>
                 </div>
