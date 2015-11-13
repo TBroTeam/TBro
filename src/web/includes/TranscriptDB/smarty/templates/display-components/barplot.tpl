@@ -8,13 +8,13 @@
     <div id="tabs-graphs-selection" class="large-12 columns">
         <div class="row">
             <div class="large-4 columns">
-                <h4>Experiment</h4>
+                <h5>Experiment</h5>
             </div>
             <div class="large-4 columns">
-                <h4>Condition</h4>
+                <h5>Condition</h5>
             </div>
             <div class="large-4 columns">
-                <h4>Sample</h4>
+                <h5>Sample</h5>
             </div>
         </div>
     </div>
@@ -24,13 +24,13 @@
                 <div class="large-4 columns">
                     <select id="select-assay" size="1" onclick="$('#button-draw-plot').addClass('alert');
                             $('#button-draw-plot').text('Update');"></select>
-                    <h4>Acquisition</h4>
+                    <h5>Acquisition</h5>
                     <select id="select-acquisition" size="1" onclick="$('#button-draw-plot').addClass('alert');
                             $('#button-draw-plot').text('Update');"></select>
-                    <h4>Quantification</h4>
+                    <h5>Quantification</h5>
                     <select id="select-quantification" size="1" onclick="$('#button-draw-plot').addClass('alert');
                             $('#button-draw-plot').text('Update');"></select>
-                    <h4>Analysis</h4>
+                    <h5>Analysis</h5>
                     <select id="select-analysis" size="1" onclick="$('#button-draw-plot').addClass('alert');
                             $('#button-draw-plot').text('Update');"></select>
                 </div>

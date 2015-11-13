@@ -26,16 +26,16 @@
     <div id="tabs-diffexp-heatmap-selection" class="large-12 columns">
         <div class="row">
             <div class="large-3 columns">
-                <h4>Experiment</h4>
+                <h5>Experiment</h5>
             </div>
             <div class="large-3 columns">
-                <h4>Acquisition</h4>
+                <h5>Acquisition</h5>
             </div>
             <div class="large-3 columns">
-                <h4>Quantification</h4>
+                <h5>Quantification</h5>
             </div>
             <div class="large-3 columns">
-                <h4>Analysis</h4>
+                <h5>Analysis</h5>
             </div>
         </div>
     </div>
