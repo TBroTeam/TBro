@@ -78,7 +78,7 @@
         <div class="large-12 columns panel" id="diffexp-mouseover-info">
             
         </div>
-        <div class="large-12 columns panel" id="feature-diffexp-table-div">
+        <div class="large-12 columns panel" id="feature-diffexp-table-div" style="display:none">
             
         </div>
     </div>
