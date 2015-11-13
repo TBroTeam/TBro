@@ -57,7 +57,10 @@
             </div>
             <div class="row">&nbsp;</div>
             <div class="row">
-                <div class="right large-2 columns">
+                <div class="large-10 columns">
+                    <label for="#diffexp-padj-filter">Filter by adjusted p-value</label><input id="diffexp-padj-filter"/>
+                </div>
+                <div class="large-2 columns">
                     <div class="button expand" id="button-draw-diffexp-heatmap"> Draw </div>
                 </div>
             </div>
@@ -73,10 +76,6 @@
             </div>
         </div>
         <div class="large-12 columns panel" id="diffexp-mouseover-info">
-            
-        </div>
-        <div class="large-12 columns panel">
-            <label for="#diffexp-padj-filter">Filter by adjusted p-value</label><input id="diffexp-padj-filter"/>
             
         </div>
         <div class="large-12 columns panel" id="feature-diffexp-table-div">
