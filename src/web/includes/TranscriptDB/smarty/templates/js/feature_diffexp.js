@@ -115,17 +115,16 @@ function redrawCorrelationPlot(val) {
                     //    outlineByData: "padj"
         }, {
             mousemove: function (o, e, t) {
-                var text = "<h6>" + o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + o.y.data + "</h6><br/><table>";
+                var text = "<h6>" + o.x.Condition[0] + " vs " + o.x.Condition[1] + ": " + Math.round(o.y.data * 1000) / 1000 + "</h6><br/><table>";
                 if (o.x.Condition[0] != o.x.Condition[1]) {
-                    console.log(expdata.values[o.x.Condition[0]][o.x.Condition[1]]);
-                    text += "<tr><th> log2foldchange </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].log2foldchange + "</td></tr>";
-                    text += "<tr><th> p-value adjusted </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj + "</td></tr>";
-                    text += "<tr><th> p-value </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].pval + "</td></tr>";
-                    text += "<tr><th> baseMean </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMean + "</td></tr>";
-                    text += "<tr><th> baseMeanA </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMeanA + "</td></tr>";
-                    text += "<tr><th> baseMeanB </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMeanB + "</td></tr>";
-                    text += "<tr><th> foldchange </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].foldchange + "</td></tr>";
-                    text += "<tr><th> inverted </th><td> " + expdata.values[o.x.Condition[0]][o.x.Condition[1]].inverted + "</td></tr>";
+                    text += "<tr><th> log2foldchange </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].log2foldchange * 1000) / 1000 + "</td></tr>";
+                    text += "<tr><th> p-value adjusted </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].pvaladj * 100000) / 100000 + "</td></tr>";
+                    text += "<tr><th> p-value </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].pval * 100000) / 100000 + "</td></tr>";
+                    text += "<tr><th> baseMean </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMean * 1000) / 1000 + "</td></tr>";
+                    text += "<tr><th> baseMeanA </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMeanA * 1000) / 1000 + "</td></tr>";
+                    text += "<tr><th> baseMeanB </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].baseMeanB * 1000) / 1000 + "</td></tr>";
+                    text += "<tr><th> foldchange </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].foldchange * 1000) / 1000 + "</td></tr>";
+                    text += "<tr><th> inverted </th><td> " + Math.round(expdata.values[o.x.Condition[0]][o.x.Condition[1]].inverted * 1000) / 1000 + "</td></tr>";
                 }
                 text += "</table>";
                 $('#diffexp-mouseover-info').html(text);
