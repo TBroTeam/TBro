@@ -69,17 +69,16 @@
     <div class="large-12 columns" id="diffexp-heatmap-panel" name="diffexp-heatmap-panel" style="display:none">
         <div class="large-12 columns panel">
             <div class="row">
-                <div class="large-12 columns">
+                <div class="large-7 columns">
                     <div style="width:100%" id="diffexp-heatmap-canvas-parent">
                     </div>
                 </div>
+                <div class="large-5 columns" id="diffexp-mouseover-info">
+            
+                </div>
             </div>
         </div>
-        <div class="large-12 columns panel" id="diffexp-mouseover-info">
-            
-        </div>
         <div class="large-12 columns panel" id="feature-diffexp-table-div" style="display:none">
-            
         </div>
     </div>
 </div>
