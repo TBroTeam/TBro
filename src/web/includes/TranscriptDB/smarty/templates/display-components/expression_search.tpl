@@ -71,43 +71,31 @@
     <div class="row">
         <div class="large-12 columns panel">
             <div class="row">
-                <div class="large-2 columns">
+                <div class="large-4 columns">
                     <h4>Experiment</h4>
                 </div>
-                <div class="large-2 columns">
-                    <h4>Acquisition</h4>
-                </div>
-                <div class="large-2 columns">
-                    <h4>Quantification</h4>
-                </div>
-                <div class="large-2 columns">
-                    <h4>Analysis</h4>
-                </div>
-                <div class="large-2 columns">
+                <div class="large-4 columns">
                     <h4>Condition</h4>
                 </div>
-                <div class="large-2 columns">
+                <div class="large-4 columns">
                     <h4>Sample</h4>
                 </div>
             </div>
             <form id="expression-diffexp_filters">
                 <div class="row">
-                    <div class="large-2 columns">
-                        <select id="expression-select-gdfx-assay" size="12"></select>
+                    <div class="large-4 columns">
+                        <select id="expression-select-gdfx-assay" size="1"></select>
+                        <h4>Acquisition</h4>
+                        <select id="expression-select-gdfx-acquisition" size="1"></select>
+                        <h4>Quantification</h4>
+                        <select id="expression-select-gdfx-quantification" size="1"></select>
+                        <h4>Analysis</h4>
+                        <select id="expression-select-gdfx-analysis" size="1"></select>
                     </div>
-                    <div class="large-2 columns">
-                        <select id="expression-select-gdfx-acquisition" size="12"></select>
-                    </div>
-                    <div class="large-2 columns">
-                        <select id="expression-select-gdfx-quantification" size="12"></select>
-                    </div>
-                    <div class="large-2 columns">
-                        <select id="expression-select-gdfx-analysis" size="12"></select>
-                    </div>
-                    <div class="large-2 columns">
+                    <div class="large-4 columns">
                         <select id="expression-select-gdfx-biomaterial" size="12" multiple="multiple"></select>
                     </div>
-                    <div class="large-2 columns">
+                    <div class="large-4 columns">
                         <select id="expression-select-gdfx-sample" size="12" multiple="multiple"></select>
                     </div>
                 </div>

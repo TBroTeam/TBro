@@ -65,4 +65,5 @@ define('IMPRESSUM_FILE', 'impressum.example.html');
 
 //Title on the welcome page (html allowed)
 define('INSTANCE_TITLE', '<span style="color: #2ba6cb">T</span>ranscriptome <span style="color: #2ba6cb">Bro</span>wser');
+define('LOGO_URL', APPPATH.'/img/tbro_logo.svg');
 ?>

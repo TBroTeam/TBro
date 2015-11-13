@@ -111,7 +111,7 @@
             <h1 style="line-height: 2"> {#$instance_title#}  </h1>
         </div>
         <div class="large-2 columns">
-            <img src="{#$AppPath#}/img/instance_logo"/>
+            <img src="{#$logo_url#}"/>
         </div>
     </div>
 </div>
