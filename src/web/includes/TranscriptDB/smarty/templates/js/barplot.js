@@ -135,7 +135,7 @@ function drawBarplot() {
                 val.y.names[i] = val.y.vars[i];
                 var meta = cart._getMetadataForContext()[val.y.ids[i]];
                 if (typeof meta !== 'undefined') {
-                    if (typeof meta['alias'] !== 'undefined')
+                    if (meta['alias'])
                         val.y.vars[i] = meta['alias'];
                 }
             }
@@ -194,7 +194,7 @@ function drawHeatmap() {
                 val.y.names[i] = val.y.vars[i];
                 var meta = cart._getMetadataForContext()[val.y.ids[i]];
                 if (typeof meta !== 'undefined') {
-                    if (typeof meta['alias'] !== 'undefined')
+                    if (meta['alias'])
                         val.y.vars[i] = meta['alias'];
                 }
             }
@@ -240,7 +240,7 @@ function addTable(parent, val) {
         var alias = "";
         var meta = cart._getMetadataForContext()[val.y.ids[i]];
         if (typeof meta !== 'undefined') {
-            if (typeof meta['alias'] !== 'undefined')
+            if (meta['alias'])
                 alias = meta['alias'];
         }
         var row = [val.y.ids[i], val.y.names[i], alias];
