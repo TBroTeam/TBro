@@ -192,7 +192,7 @@
             <div class="large-6 columns">
                 <table style="width:100%">
                     <tr><th align="left">Homepage: </th><td><a href="http://tbroteam.github.io/TBro/">GitHub Pages</a></td></tr>
-                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/">Venus Flytrap</a></td></tr>
+                    <!-- tr><th align="left">Demo: </th><td><a href="http://tbro.carnivorom.com/">Venus Flytrap</a></td></tr> -->
                     <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.org/en/latest/">Read the Docs</a></td></tr>
                     <tr><th align="left">Code: </th><td><a href="https://github.com/TBroTeam/TBro">GitHub</a></td></tr>
                     <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
