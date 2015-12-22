@@ -421,6 +421,8 @@ $(document).ready(function () {
                 {
                     graphType: "Scatter2D",
                     colorBy: "Status",
+                    colorScheme: "user",
+                    colors: ["rgb(240,0,0)", "rgb(0,240,0)", "rgb(0,0,240)"],
                     xAxisTransform: "log2",
                     showIndicators: false,
                     sizes: [2, 4, 6, 8],
