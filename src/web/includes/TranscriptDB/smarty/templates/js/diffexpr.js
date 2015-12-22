@@ -440,8 +440,7 @@ $(document).ready(function () {
                 var legend_table = $('#{#$instance_name#}-legend-diffexp_results');
                 legend_table.empty();
                 $.each(cx.legendColors, function(key, value){
-                    legend_table.append($('<tr><td>'+key+'</td><td>'+value+'</td></tr>'));
-                    console.log(key + ": " + value);
+                    legend_table.append($('<tr><td><div style="border: 1px solid #000000;width:20px;height:20px;border-radius:20px;background:'+value+';"></div></td><td>'+key+'</td></tr>'));
                 });
             }
         });
