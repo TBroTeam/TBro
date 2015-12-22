@@ -435,6 +435,14 @@ $(document).ready(function () {
                 cx.data.y.data = val.y.data;
                 cx.data.y.vars = val.y.vars;
                 cx.redraw();
+                
+                // manually create legend
+                var legend_table = $('#{#$instance_name#}-legend-diffexp_results');
+                legend_table.empty();
+                $.each(cx.legendColors, function(key, value){
+                    legend_table.append($('<tr><td>'+key+'</td><td>'+value+'</td></tr>'));
+                    console.log(key + ": " + value);
+                });
             }
         });
         return false;
