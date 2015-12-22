@@ -4,6 +4,9 @@ namespace webservices\listing;
 
 use \PDO as PDO;
 
+// Increase memory limit to 256M to avoid out of memory errors.
+ini_set('memory_limit','256M');
+
 /**
  * Web Service.
  * Returns Differential Expressions for dataTable Server-Side processing.
