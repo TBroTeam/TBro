@@ -426,7 +426,7 @@ $(document).ready(function () {
                     xAxisTransform: "log2",
                     showIndicators: false,
                     sizes: [2, 4, 6, 8],
-                    legendPosition: "bottom"
+                    showLegend: false
                 });
 
                 canvas.data('canvasxpress', cx);
