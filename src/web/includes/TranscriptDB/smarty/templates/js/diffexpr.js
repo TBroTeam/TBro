@@ -439,9 +439,12 @@ $(document).ready(function () {
                 // manually create legend
                 var legend_table = $('#{#$instance_name#}-legend-diffexp_results');
                 legend_table.empty();
-                $.each(cx.legendColors, function(key, value){
-                    legend_table.append($('<tr><td><div style="border: 1px solid #000000;width:20px;height:20px;border-radius:20px;background:'+value+';"></div></td><td>'+key+'</td></tr>'));
-                });
+                // Delay drawing of legend (otherwise cx.legendColors might not yet be set)
+                setTimeout(function(){
+                    $.each(cx.legendColors, function(key, value){
+                        legend_table.append($('<tr><td><div style="border: 1px solid #000000;width:20px;height:20px;border-radius:20px;background:'+value+';"></div></td><td>'+key+'</td></tr>'));
+                    });
+                }, 1000);
             }
         });
         return false;
