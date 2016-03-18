@@ -23,6 +23,13 @@ class Mapman_contains extends \WebService {
         $species = $querydata['species'];
         $release = $querydata['release'];
 
+        $ids = array();
+        $ids_query = "";
+        if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
+            $ids = $querydata['ids'];
+            $ids_query = 'AND relationship.object_id IN (' . implode(',', array_fill(0, count($ids), '?')) . ')';
+        }
+
         $term = sprintf('%%%s%%', trim($querydata['term']));
 
         $query_get_features = <<<EOF
@@ -34,18 +41,19 @@ SELECT relationship.object_id AS feature_id FROM featureprop,
             AND object_id IN (SELECT feature_id 
 		FROM feature 
 		WHERE feature.type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')})
-		AND feature.organism_id =:species
+		AND feature.organism_id =?
 		AND feature.dbxref_id = 
 		(SELECT dbxref_id 
 			FROM dbxref 
 			WHERE db_id={$constant('DB_ID_IMPORTS')} 
-			AND accession=:release 
+			AND accession=? 
 			LIMIT 1
 		)
             )
         ) AS relationship
 	WHERE featureprop.feature_id=relationship.subject_id
-	AND featureprop.value LIKE :term
+	AND featureprop.value LIKE ?
+        {$ids_query}
 EOF;
         
 //        $query = "SELECT name FROM feature WHERE id=?";
@@ -56,11 +64,7 @@ EOF;
 
         $data = array('results' => array());
 
-        $stm_get_features->execute(array(
-            'term' => $term,
-            'species' => $species,
-            'release' => $release
-        ));
+        $stm_get_features->execute(array_merge(array($species, $release, $term), $ids));
         
         while ($row = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = $row['feature_id'];
