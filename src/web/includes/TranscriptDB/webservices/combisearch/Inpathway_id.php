@@ -24,6 +24,13 @@ class Inpathway_id extends \WebService {
         $release = $querydata['release'];
 
         $pathwayid = trim($querydata['term']);
+        
+        $ids = array();
+        $ids_query = "";
+        if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
+            $ids = $querydata['ids'];
+            $ids_query = 'AND feature.feature_id IN (' . implode(',', array_fill(0, count($ids), '?')) . ')';
+        }
 
         $query_get_features = <<<EOF
                 
@@ -33,16 +40,16 @@ class Inpathway_id extends \WebService {
 			(SELECT object_id FROM cvterm_relationship,
 				(SELECT * FROM cvterm, 
 					(SELECT * from dbxref 
-					WHERE db_id=(SELECT db_id FROM db WHERE name='KEGG' LIMIT 1) AND accession=:pathwayid ) AS dbx
+					WHERE db_id=(SELECT db_id FROM db WHERE name='KEGG' LIMIT 1) AND accession=? ) AS dbx
 				WHERE cvterm.dbxref_id=dbx.dbxref_id) AS cvt
 			WHERE cvterm_relationship.subject_id=cvt.cvterm_id) AS obj
 		WHERE cvterm.cvterm_id=obj.object_id) AS dbxr
 	WHERE feature_dbxref.dbxref_id=dbxr.dbxref_id) AS fdbx
 WHERE feature.feature_id=fdbx.feature_id 
-AND organism_id=:species
+AND organism_id=?
 AND type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')})
-AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)
-
+AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=? LIMIT 1)
+{$ids_query}
 EOF;
         
 //        $query = "SELECT name FROM feature WHERE id=?";
@@ -53,11 +60,7 @@ EOF;
 
         $data = array('results' => array());
 
-        $stm_get_features->execute(array(
-            'pathwayid' => $pathwayid,
-            'species' => $species,
-            'release' => $release
-        ));
+        $stm_get_features->execute(array_merge(array($pathwayid, $species, $release), $ids));
         
         while ($row = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = $row['feature_id'];
