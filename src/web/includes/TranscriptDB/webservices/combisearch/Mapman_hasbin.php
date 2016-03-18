@@ -23,6 +23,13 @@ class Mapman_hasbin extends \WebService {
         $species = $querydata['species'];
         $release = $querydata['release'];
 
+        $ids = array();
+        $ids_query = "";
+        if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
+            $ids = $querydata['ids'];
+            $ids_query = 'AND object_id IN (' . implode(',', array_fill(0, count($ids), '?')) . ')';
+        }
+
         $term = trim($querydata['term']);
 
         $query_get_features = <<<EOF
@@ -35,12 +42,12 @@ SELECT object_id AS feature_id FROM cvterm,
 		AND object_id IN (SELECT feature_id 
 			FROM feature 
 			WHERE feature.type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')})
-			AND feature.organism_id = :species
+			AND feature.organism_id = ?
 			AND feature.dbxref_id = 
 			(SELECT dbxref_id 
 				FROM dbxref 
 				WHERE db_id= {$constant('DB_ID_IMPORTS')} 
-				AND accession= :release 
+				AND accession= ? 
 				LIMIT 1
 				)
 			)
@@ -48,7 +55,8 @@ SELECT object_id AS feature_id FROM cvterm,
 		WHERE relationship.subject_id=feature_dbxref.feature_id
 	) AS feature_dbxref_rel
 	WHERE cvterm.dbxref_id=feature_dbxref_rel.dbxref_id
-	AND cvterm.name= :term
+	AND cvterm.name= ?
+        {$ids_query}
 EOF;
         
 //        $query = "SELECT name FROM feature WHERE id=?";
@@ -59,11 +67,7 @@ EOF;
 
         $data = array('results' => array());
 
-        $stm_get_features->execute(array(
-            'term' => $term,
-            'species' => $species,
-            'release' => $release
-        ));
+        $stm_get_features->execute(array_merge(array($species, $release, $term), $ids));
         
         while ($row = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = $row['feature_id'];
