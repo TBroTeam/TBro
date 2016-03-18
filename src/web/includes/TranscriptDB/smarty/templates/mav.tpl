@@ -124,6 +124,7 @@
                 <li><a href="#tabs-graphs">Expression Analysis</a></li>
                 <li><a href="#tabs-diffexp">Diff. Expression Analysis</a></li>
                 <li><a href="#tabs-pathways">Pathway Analysis</a></li>
+                <li><a href="#tabs-search">Search</a></li>
                 <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
@@ -160,6 +161,9 @@
             </div>
             <div id="tabs-pathways">
                 {#include file="display-components/pathways.tpl"#}
+            </div>
+            <div id="tabs-search">
+                Placeholder
             </div>
             <div id="tabs-wordcloud" style="display: none">
                 <button class="button" onclick="drawCloud('gos');">Draw GO wordclouds</button> 
