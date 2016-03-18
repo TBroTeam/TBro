@@ -40,7 +40,7 @@ class Inpathway_id extends \WebService {
 	WHERE feature_dbxref.dbxref_id=dbxr.dbxref_id) AS fdbx
 WHERE feature.feature_id=fdbx.feature_id 
 AND organism_id=:species
-AND type_id={$constant('CV_ISOFORM')}
+AND type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')})
 AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)
 
 EOF;
