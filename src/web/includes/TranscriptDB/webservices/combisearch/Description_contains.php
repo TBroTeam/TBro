@@ -26,7 +26,7 @@ class Description_contains extends \WebService {
         $ids_query = "";
         if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
             $ids = $querydata['ids'];
-            $ids_query = 'AND feature.feature_id in (' . implode(',', array_fill(0, count($ids), '?')) . ')';
+            $ids_query = 'AND feature.feature_id IN (' . implode(',', array_fill(0, count($ids), '?')) . ')';
         }
         $term = sprintf('%%%s%%', trim($querydata['term']));
 
