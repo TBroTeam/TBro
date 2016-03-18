@@ -22,19 +22,25 @@ class Description_contains extends \WebService {
 
         $species = $querydata['species'];
         $release = $querydata['release'];
-
+        $ids = array();
+        $ids_query = "";
+        if (isset($querydata['ids']) && count($querydata['ids']) > 0) {
+            $ids = $querydata['ids'];
+            $ids_query = 'AND feature.feature_id in (' . implode(',', array_fill(0, count($ids), '?')) . ')';
+        }
         $term = sprintf('%%%s%%', trim($querydata['term']));
 
         $query_get_features = <<<EOF
            
-SELECT featureprop.feature_id 
-    FROM 
+SELECT featureprop.feature_id
+    FROM
         featureprop,
-        (SELECT feature_id FROM feature WHERE feature.type_id={$constant('CV_ISOFORM')} AND feature.organism_id = :species AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)) as feature        
-    WHERE 
-        featureprop.type_id={$constant('CV_ANNOTATION_DESC')} 
-        AND featureprop.value LIKE :term
+        (SELECT feature_id FROM feature WHERE feature.type_id={$constant('CV_ISOFORM')} AND feature.organism_id = ? AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=? LIMIT 1)) as feature
+    WHERE
+        featureprop.type_id={$constant('CV_ANNOTATION_DESC')}
+        AND featureprop.value LIKE ?
         AND featureprop.feature_id = feature.feature_id
+        {$ids_query}
 EOF;
         
 //        $query = "SELECT name FROM feature WHERE id=?";
@@ -45,11 +51,7 @@ EOF;
 
         $data = array('results' => array());
 
-        $stm_get_features->execute(array(
-            'term' => $term,
-            'species' => $species,
-            'release' => $release
-        ));
+        $stm_get_features->execute(array_merge(array($species, $release, $term), $ids));
         
         while ($row = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = $row['feature_id'];
