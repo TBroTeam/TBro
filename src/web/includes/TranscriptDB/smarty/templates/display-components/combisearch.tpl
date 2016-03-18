@@ -306,7 +306,7 @@
             <ul id="select-terms-dropdown-options" class="f-dropdown medium" data-dropdown-content></ul>
         </div>
         <div class="large-4 column">
-            <a id="start-combisearch" class="button large"/>Start Search</a>
+            <a id="start-combisearch" style="color: #ffffff" class="button large"/>Start Search</a>
         </div>
     </div>
     <div class="row">
