@@ -34,7 +34,7 @@ SELECT object_id AS feature_id FROM cvterm,
 		WHERE type_id={$constant('CV_ANNOTATION_MAPMAN_RELATIONSHIP')}
 		AND object_id IN (SELECT feature_id 
 			FROM feature 
-			WHERE feature.type_id={$constant('CV_ISOFORM')} 
+			WHERE feature.type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')})
 			AND feature.organism_id = :species
 			AND feature.dbxref_id = 
 			(SELECT dbxref_id 
