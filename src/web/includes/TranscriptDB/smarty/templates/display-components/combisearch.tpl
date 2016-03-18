@@ -48,6 +48,7 @@
                     return {
                         species: organism.val(),
                         release: release.val(),
+                        {#if isset($cart)#}ids: cart.carts[cart.currentContext]["{#$cart#}"].items,{#/if#}
                         term: $(this).find('input.GO').val()
                     };
                 }
