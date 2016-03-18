@@ -38,7 +38,7 @@ SELECT feature.feature_id FROM feature,
 		WHERE featureloc.feature_id = fi.feature_id) AS fp 
 	WHERE featureloc.feature_id=fp.srcfeature_id) as fl
 WHERE feature.feature_id = fl.srcfeature_id
-AND feature.type_id={$constant('CV_ISOFORM')} 
+AND feature.type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')})
 AND feature.organism_id = :species 
 AND feature.dbxref_id = 
 	(SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)
