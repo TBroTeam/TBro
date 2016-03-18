@@ -163,7 +163,7 @@
                 {#include file="display-components/pathways.tpl"#}
             </div>
             <div id="tabs-search">
-                {#include file="display-components/combisearch.tpl"#}
+                {#include file="display-components/combisearch.tpl" cart=$cartname#}
             </div>
             <div id="tabs-wordcloud" style="display: none">
                 <button class="button" onclick="drawCloud('gos');">Draw GO wordclouds</button> 
