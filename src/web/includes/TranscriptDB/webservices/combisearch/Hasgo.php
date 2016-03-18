@@ -31,7 +31,7 @@ SELECT fd.feature_id
 FROM 
 	feature_dbxref fd,
 	(SELECT dbxref_id FROM dbxref WHERE dbxref.db_id = (SELECT db_id FROM db WHERE db.name = 'GO' LIMIT 1) AND trim(LEADING '0' FROM dbxref.accession) = trim(LEADING '0' FROM :accession)) AS dbxref,
-	(SELECT feature_id FROM feature WHERE feature.type_id={$constant('CV_ISOFORM')} AND feature.organism_id = :species AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)) as feature
+	(SELECT feature_id FROM feature WHERE feature.type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')}) AND feature.organism_id = :species AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=:release LIMIT 1)) as feature
 WHERE 
 feature.feature_id = fd.feature_id
 AND fd.dbxref_id = dbxref.dbxref_id
