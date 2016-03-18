@@ -124,7 +124,7 @@
                 <li><a href="#tabs-graphs">Expression Analysis</a></li>
                 <li><a href="#tabs-diffexp">Diff. Expression Analysis</a></li>
                 <li><a href="#tabs-pathways">Pathway Analysis</a></li>
-                <li><a href="#tabs-search">Search</a></li>
+                <li><a href="#tabs-search">Search by Annotation</a></li>
                 <!-- <li><a href="#tabs-wordcloud">Annotation Wordcloud</a></li> -->
             </ul>
             <div id="tabs-overview">
