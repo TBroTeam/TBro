@@ -274,6 +274,7 @@
                 <tfoot></tfoot>
             </table>
             <div class="large-12 columns">
+                <div class="left"><table id="{#$instance_name#}-legend-diffexp_results"></table></div>
                 <div class="button right" id="{#$instance_name#}-button-draw-maplot">Draw MAPlot</div>
             </div>
         </div>

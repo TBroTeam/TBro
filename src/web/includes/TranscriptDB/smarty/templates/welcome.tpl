@@ -12,12 +12,25 @@
                             if (val === null)
                                 val = 0;
                             $('#stat_' + key).html(val);
-                        });
-                    }
-                });
-                $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " - " + release.val() + ")</h4>");
+                    });
+                }
+            });
+            $('#stat_release_header').html('<h4>Statistics (' + organism.find(':selected').text() + " - " + release.val() + ")</h4>");
+        });
+    
+        $('#defaultCartExportButton').click(function(){
+            $.ajax({
+                url: "{#$ServicePath#}/cart/DefaultCart",
+                dataType: "json",
+                success: function (data) {
+                    var dialog = $('#dialog-copy-all-carts');
+                    dialog.data('data', data);
+                    dialog.dialog('open');
+                }
             });
         });
+    });
+
 </script>
 <style type="text/css">
     .btn1{
@@ -192,7 +205,7 @@
             <div class="large-6 columns">
                 <table style="width:100%">
                     <tr><th align="left">Homepage: </th><td><a href="http://tbroteam.github.io/TBro/">GitHub Pages</a></td></tr>
-                    <tr><th align="left">Demo: </th><td><a href="http://wbbi011.biozentrum.uni-wuerzburg.de/tbro/"><i>Cannabis sativa</i></a></td></tr>
+                    <!-- tr><th align="left">Demo: </th><td><a href="http://tbro.carnivorom.com/">Venus Flytrap</a></td></tr> -->
                     <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.org/en/latest/">Read the Docs</a></td></tr>
                     <tr><th align="left">Code: </th><td><a href="https://github.com/TBroTeam/TBro">GitHub</a></td></tr>
                     <tr><th align="left">Docker: </th><td><a href="https://registry.hub.docker.com/repos/tbroteam/">Docker Hub</a></td></tr>
@@ -201,7 +214,7 @@
             </div>
             <div class="large-6 columns">
                 <table style="width:100%">
-                    <tr><th align="left">Example cart: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Example cart: </th><td><a id="defaultCartExportButton">Export</a></td></tr>
                     <tr><th align="left">Publication: </th><td>in preparation</td></tr>
                     <tr><th align="left">Bugs: </th><td><a data-icon="octicon-issue-opened" href="https://github.com/TBroTeam/TBro/issues" class="github-button">Issue</a></td></tr>
                     <tr><th align="left">Twitter: </th><td><a href="https://twitter.com/TBroTeam" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @TBroTeam</a>

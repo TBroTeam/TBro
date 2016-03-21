@@ -421,10 +421,12 @@ $(document).ready(function () {
                 {
                     graphType: "Scatter2D",
                     colorBy: "Status",
+                    //colorScheme: "user",
+                    //colors: ["rgb(240,0,0)", "rgb(0,240,0)", "rgb(0,0,240)"],
                     xAxisTransform: "log2",
                     showIndicators: false,
                     sizes: [2, 4, 6, 8],
-                    legendPosition: "bottom"
+                    showLegend: false
                 });
 
                 canvas.data('canvasxpress', cx);
@@ -433,6 +435,16 @@ $(document).ready(function () {
                 cx.data.y.data = val.y.data;
                 cx.data.y.vars = val.y.vars;
                 cx.redraw();
+                
+                // manually create legend
+                var legend_table = $('#{#$instance_name#}-legend-diffexp_results');
+                legend_table.empty();
+                // Delay drawing of legend (otherwise cx.legendColors might not yet be set)
+                setTimeout(function(){
+                    $.each(cx.legendColors, function(key, value){
+                        legend_table.append($('<tr><td><div style="border: 1px solid #000000;width:20px;height:20px;border-radius:20px;background:'+value+';"></div></td><td>'+key+'</td></tr>'));
+                    });
+                }, 1000);
             }
         });
         return false;

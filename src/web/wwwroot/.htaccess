@@ -1,4 +1,5 @@
 RewriteEngine On
+Options -MultiViews
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^js/feature/(.*).js$    index.php?page=js&js=$1 [L,NC,QSA]
 

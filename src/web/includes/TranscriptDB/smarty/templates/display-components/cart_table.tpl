@@ -148,22 +148,22 @@
                 cart.addItem(_.intersection(selectedIDs, allFilteredIDs), {groupname: groupname});
             });
 
-            new Grouplist($('#button-features-addToCart-options'), cart, addSelectedToOtherCart);
-            $('#button-features-addToCart-options-newcart').click(addSelectedToOtherCart);
+            new Grouplist($('#cart-button-features-addToCart-options'), cart, addSelectedToOtherCart);
+            $('#cart-button-features-addToCart-options-newcart').click(addSelectedToOtherCart);
 
-            $("#input-filter-carttable").focus(function() {
+            $("#cart-input-filter-carttable").focus(function() {
                 if ($(this).val() === 'Filter') {
                     $(this).val("");
                     $(this).attr("style", "color: black");
                 }
             });
-            $("#input-filter-carttable").blur(function() {
+            $("#cart-input-filter-carttable").blur(function() {
                 if ($(this).val() === '') {
                     $(this).val("Filter");
                     $(this).attr("style", "color: lightgrey");
                 }
             });
-            $("#input-filter-carttable").keyup(function(e) {
+            $("#cart-input-filter-carttable").keyup(function(e) {
                 // only if "Enter" key pressed.
                 if (e.keyCode === 13) {
                     fnFilterCart();
@@ -218,7 +218,7 @@
 
     function fnFilterCart() {
         var oTable = $('#carttable').dataTable();
-        oTable.fnFilter($("#input-filter-carttable").val());
+        oTable.fnFilter($("#cart-input-filter-carttable").val());
     }
 
     function addSelectedToOtherCart() {
@@ -308,6 +308,56 @@
         TableTools.fnGetInstance('carttable').fnSelectAll();
         TableTools.fnGetInstance('carttable').fnSelectNone();
     }
+
+    function getIsoformsForUnigenes(selected) {
+        var ids = cart._getCartForContext()['{#$cartname#}']['items'] || [];
+        if(selected){
+            ids = _.intersection(selectedIDs, allFilteredIDs);
+        }
+        if (ids.length === 0)
+            return;
+        $.ajax({
+            "dataType": 'json',
+            "type": "POST",
+            "url": "{#$ServicePath#}/listing/Isoforms",
+            "data": {
+                "terms": ids
+            },
+            "success": function(result) {
+                var iso_ids = [];
+                if(typeof result["isoforms"] !== "undefined"){
+                    $.each(result["isoforms"], function(key, value){
+                        iso_ids.push(value.feature_id);
+                    });
+                }
+                cart.addItem(iso_ids, {
+                    groupname: "{#$cartname#}"
+                });
+            }
+        });
+    }
+
+    function getUnigenesForIsoforms(selected) {
+        var ids = cart._getCartForContext()['{#$cartname#}']['items'] || [];
+        if(selected){
+            ids = _.intersection(selectedIDs, allFilteredIDs);
+        }
+        if (ids.length === 0)
+            return;
+        $.ajax({
+            "dataType": 'json',
+            "type": "POST",
+            "url": "{#$ServicePath#}/listing/Unigenes",
+            "data": {
+                "terms": ids
+            },
+            "success": function(result) {
+                cart.addItem(result["unigenes"], {
+                    groupname: "{#$cartname#}"
+                });
+            }
+        });
+    }
 </script>
 
 <style>
@@ -336,31 +386,32 @@
         <h4>Items</h4>
     </div>
     <div class="large-9 columns">        
-        <ul class="button-group even-5">
-            <li><button class="small button dropdown" id="show-entries-dropdown" data-dropdown="show-entries-dropdown-options"> Entries </button></li>
-            <li><button class="small button dropdown" data-dropdown="select-all-none-dropdown">Select</button></li>
-            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="delete-dropdown">Delete</button></li>
-            <li><button class="small button dropdown" type="button" id="button-features-addToCart" data-dropdown="button-features-addToCart-options"> Store </button></li>
-            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="export-dropdown">Export</button></li>
+        <ul class="button-group even-6">
+            <li><button class="small button dropdown" id="cart-show-entries-dropdown" data-dropdown="cart-show-entries-dropdown-options"> Entries </button></li>
+            <li><button class="small button dropdown" data-dropdown="cart-select-all-none-dropdown">Select</button></li>
+            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="cart-delete-dropdown">Delete</button></li>
+            <li><button class="small button dropdown" type="button" id="cart-button-features-addToCart" data-dropdown="cart-button-features-addToCart-options"> Store </button></li>
+            <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="cart-export-dropdown">Export</button></li>
+            <li><button class="small button dropdown" data-dropdown="cart-add-dropdown">Add</button></li>
         </ul>
 
-        <ul class="f-dropdown" id="show-entries-dropdown-options" data-dropdown-content>
+        <ul class="f-dropdown" id="cart-show-entries-dropdown-options" data-dropdown-content>
             <li onclick="fnNumOfEntriesCart(10);"> 10 </li> 
             <li onclick="fnNumOfEntriesCart(20);"> 20 </li> 
             <li onclick="fnNumOfEntriesCart(50);"> 50 </li> 
             <li onclick="fnNumOfEntriesCart(100);"> 100 </li> 
             <li onclick="fnNumOfEntriesCart(1000);"> 1000 </li> 
         </ul>
-        <ul id="select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
+        <ul id="cart-select-all-none-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="selectAll();" style="width:100%">All</li>
             <li onclick="selectAllVisible();" style="width:100%">All visible</li>
             <li onclick="selectNone();" style="width:100%">None</li>
         </ul>
-        <ul id="delete-dropdown" class="f-dropdown" data-dropdown-content>
+        <ul id="cart-delete-dropdown" class="f-dropdown" data-dropdown-content>
             <li onclick="removeSelectedFromCart();" class="selectedItemsCount">Selected</li>
             <li onclick="removeAllFromCart();">All</li>
         </ul>
-        <ul id="export-dropdown" class="f-dropdown" data-dropdown-content>
+        <ul id="cart-export-dropdown" class="f-dropdown" data-dropdown-content>
             <li><b class="selectedItemsCount"> Selected </b></li>
             <li onclick="exportSelected('{#$ServicePath#}/listing/Cart_table', {exportTsv: true, currentContext: cart.currentContext});" style="width:100%">Cart (tsv)</li>
             <li onclick="exportSelected('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
@@ -368,15 +419,20 @@
             <li><b> All </b></li>            
             <li onclick="exportAll('{#$ServicePath#}/listing/Cart_table', {exportTsv: true, currentContext: cart.currentContext});" style="width:100%">Cart (tsv)</li>
             <li onclick="exportAll('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
-            <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>                   
-
+            <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
         </ul>
-        <ul id="button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
-            <li id="button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
+        <ul id="cart-button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
+            <li id="cart-button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
+        </ul>
+        <ul id="cart-add-dropdown" class="f-dropdown" data-dropdown-content>
+            <li id="add-corresponding-unigenes-for-selection" onclick="getUnigenesForIsoforms(true)">Unigenes for selection</li>
+            <li id="add-corresponding-unigenes-for-all" onclick="getUnigenesForIsoforms(false)">Unigenes for all</li>
+            <li id="add-corresponding-isoforms-for-selection" onclick="getIsoformsForUnigenes(true)">Isoforms for Selection</li>
+            <li id="add-corresponding-isoforms-for-all" onclick="getIsoformsForUnigenes(false)">Isoforms for all</li>
         </ul>
     </div>
     <div class="large-3 columns" style="padding-top: 6px">
-        <input id="input-filter-carttable" value="Filter" style="color: lightgray">
+        <input id="cart-input-filter-carttable" value="Filter" style="color: lightgray">
     </div>
     <div  class="large-12 column" id="placeholder-unsortable" style="display: none; color: red">
         Attention: This cart is large (>1000 entries) therefore column sorting is disabled!

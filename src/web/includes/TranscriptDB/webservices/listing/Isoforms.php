@@ -28,14 +28,21 @@ class Isoforms extends \WebService {
             foreach ($_SESSION['cart']['metadata'] as $meta)
                 $metadata = $metadata + $meta;
         }
+        
+        $feature_ids = array();
+        if (isset($querydata['query1']) && !empty($querydata['query1']))
+            $feature_ids[] = $querydata['query1'];
 
-        $param_unigene_feature_id = $querydata['query1']; #1.01_comp214244_c0
+        if (isset($querydata['terms']))
+            $feature_ids = array_merge($feature_ids, $querydata['terms']);
+
+        $place_holders = implode(',', array_fill(0, count($feature_ids), '?'));
 
         $query_get_isoforms = <<<EOF
 SELECT details.*, fp.value AS description FROM (SELECT isoform.uniquename, isoform.feature_id, isoform.name 
     FROM feature AS isoform, feature_relationship
     WHERE 
-    feature_relationship.object_id = :unigene_feature_id
+    feature_relationship.object_id IN ($place_holders)
     AND isoform.feature_id = feature_relationship.subject_id    
     AND isoform.type_id = {$constant('CV_ISOFORM')}) AS details 
         LEFT JOIN (SELECT feature_id, value FROM featureprop WHERE featureprop.type_id={$constant('CV_ANNOTATION_DESC')}) AS fp
@@ -43,11 +50,10 @@ SELECT details.*, fp.value AS description FROM (SELECT isoform.uniquename, isofo
 EOF;
 
         $stm_get_isoforms = $db->prepare($query_get_isoforms);
-        $stm_get_isoforms->bindValue('unigene_feature_id', $param_unigene_feature_id);
 
-        $data = array('results' => array());
+        $data = array();
 
-        $stm_get_isoforms->execute();
+        $stm_get_isoforms->execute($feature_ids);
         while ($isoform = $stm_get_isoforms->fetch(PDO::FETCH_ASSOC)) {
             // add user annotations
             $user_alias = '';
