@@ -336,6 +336,28 @@
             }
         });
     }
+
+    function getUnigenesForIsoforms(selected) {
+        var ids = cart._getCartForContext()['{#$cartname#}']['items'] || [];
+        if(selected){
+            ids = _.intersection(selectedIDs, allFilteredIDs);
+        }
+        if (ids.length === 0)
+            return;
+        $.ajax({
+            "dataType": 'json',
+            "type": "POST",
+            "url": "{#$ServicePath#}/listing/Unigenes",
+            "data": {
+                "terms": ids
+            },
+            "success": function(result) {
+                cart.addItem(result["unigenes"], {
+                    groupname: "{#$cartname#}"
+                });
+            }
+        });
+    }
 </script>
 
 <style>
