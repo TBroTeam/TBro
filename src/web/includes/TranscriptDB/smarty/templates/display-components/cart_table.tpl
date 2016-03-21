@@ -316,7 +316,6 @@
         }
         if (ids.length === 0)
             return;
-        console.log(ids);
         $.ajax({
             "dataType": 'json',
             "type": "POST",
@@ -325,7 +324,13 @@
                 "terms": ids
             },
             "success": function(result) {
-                console.log(results);
+                var iso_ids = [];
+                $.each(result["isoforms"], function(key, value){
+                    iso_ids.push(value.feature_id);
+                });
+                cart.addItem(iso_ids, {
+                    groupname: "{#$cartname#}"
+                });
             }
         });
     }
