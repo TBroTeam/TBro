@@ -325,9 +325,11 @@
             },
             "success": function(result) {
                 var iso_ids = [];
-                $.each(result["isoforms"], function(key, value){
-                    iso_ids.push(value.feature_id);
-                });
+                if(typeof result["isoforms"] !== "undefined"){
+                    $.each(result["isoforms"], function(key, value){
+                        iso_ids.push(value.feature_id);
+                    });
+                }
                 cart.addItem(iso_ids, {
                     groupname: "{#$cartname#}"
                 });
