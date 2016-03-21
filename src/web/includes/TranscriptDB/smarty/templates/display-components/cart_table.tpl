@@ -308,6 +308,27 @@
         TableTools.fnGetInstance('carttable').fnSelectAll();
         TableTools.fnGetInstance('carttable').fnSelectNone();
     }
+
+    function getIsoformsForUnigenes(selected) {
+        var ids = cart._getCartForContext()['{#$cartname#}']['items'] || [];
+        if(selected){
+            ids = _.intersection(selectedIDs, allFilteredIDs);
+        }
+        if (ids.length === 0)
+            return;
+        console.log(ids);
+        $.ajax({
+            "dataType": 'json',
+            "type": "POST",
+            "url": "{#$ServicePath#}/listing/Isoforms",
+            "data": {
+                "terms": ids
+            },
+            "success": function(result) {
+                console.log(results);
+            }
+        });
+    }
 </script>
 
 <style>
