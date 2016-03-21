@@ -336,12 +336,13 @@
         <h4>Items</h4>
     </div>
     <div class="large-9 columns">        
-        <ul class="button-group even-5">
+        <ul class="button-group even-6">
             <li><button class="small button dropdown" id="cart-show-entries-dropdown" data-dropdown="cart-show-entries-dropdown-options"> Entries </button></li>
             <li><button class="small button dropdown" data-dropdown="cart-select-all-none-dropdown">Select</button></li>
             <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="cart-delete-dropdown">Delete</button></li>
             <li><button class="small button dropdown" type="button" id="cart-button-features-addToCart" data-dropdown="cart-button-features-addToCart-options"> Store </button></li>
             <li><button class="small button dropdown" onclick="updateSelectedCount();" data-dropdown="cart-export-dropdown">Export</button></li>
+            <li><button class="small button dropdown" data-dropdown="cart-add-dropdown">Add</button></li>
         </ul>
 
         <ul class="f-dropdown" id="cart-show-entries-dropdown-options" data-dropdown-content>
@@ -368,11 +369,16 @@
             <li><b> All </b></li>            
             <li onclick="exportAll('{#$ServicePath#}/listing/Cart_table', {exportTsv: true, currentContext: cart.currentContext});" style="width:100%">Cart (tsv)</li>
             <li onclick="exportAll('{#$ServicePath#}/export/fasta');" style="width:100%">Nucleotides (fasta)</li>
-            <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>                   
-
+            <li onclick="exportAll('{#$ServicePath#}/export/peptides');" style="width:100%">Peptides (fasta)</li>
         </ul>
         <ul id="cart-button-features-addToCart-options" class="f-dropdown" data-dropdown-content>
             <li id="cart-button-features-addToCart-options-newcart" class="keep" data-value="#new#">new</li>
+        </ul>
+        <ul id="cart-add-dropdown" class="f-dropdown" data-dropdown-content>
+            <li id="add-corresponding-unigenes-for-selection" onclick="getUnigenesForIsoforms(true)">Unigenes for selection</li>
+            <li id="add-corresponding-unigenes-for-all" onclick="getUnigenesForIsoforms(false)">Unigenes for all</li>
+            <li id="add-corresponding-isoforms-for-selection" onclick="getIsoformsForUnigenes(true)">Isoforms for Selection</li>
+            <li id="add-corresponding-isoforms-for-all" onclick="getIsoformsForUnigenes(false)">Isoforms for all</li>
         </ul>
     </div>
     <div class="large-3 columns" style="padding-top: 6px">
