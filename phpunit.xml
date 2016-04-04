@@ -1,7 +1,7 @@
-<phpunit>
+<phpunit bootstrap="test/php/setupFixtures.php">
   <testsuites>
     <testsuite name="php">
-      <directory>test</directory>
+        <directory>test/php</directory>
     </testsuite>
   </testsuites>
 </phpunit>
