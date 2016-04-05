@@ -11,3 +11,4 @@ queue_config.example.sql
 src/web/wwwroot/js/canvasXpress.min.js
 nbproject/
 vendor/
+test/php/config.php
