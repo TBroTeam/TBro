@@ -2,8 +2,6 @@
 <?php
 define('DEBUG', false);
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/home/s202139/git/web/includes');
-
 require_once __DIR__ . '/config.php';
 
 require_once __DIR__ . '/db.php';
