@@ -13,3 +13,6 @@ addons:
 
 before_script:
   - cp test/php/.travis.config.php test/php/config.php
+
+after_success:
+  - travis_retry php vendor/bin/coveralls -v
