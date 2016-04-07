@@ -5,7 +5,8 @@
         "phryneas/logged-pdo": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.3"
+        "phpunit/phpunit": "^5.3",
+        "satooshi/php-coveralls": "^1.0"
     },
     "autoload": {
         "psr-4": { "": "src/web/includes/TranscriptDB/",
