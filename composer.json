@@ -12,7 +12,7 @@
                    "webservices\\": "src/web/includes/TranscriptDB/webservices"
         }
     },
-    "include-path": ["src/web/includes/"],
+    "include-path": ["src/web/includes/", "src/shared/libs/"],
     "license": "MIT",
     "authors": [
         {
