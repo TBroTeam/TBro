@@ -4,6 +4,11 @@
         <directory>test/php</directory>
     </testsuite>
   </testsuites>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">src/web/includes/TranscriptDB/webservices</directory>
+    </whitelist>
+  </filter>
   <logging>
       <log type="coverage-clover" target="test/php/clover.xml"/>
   </logging>
