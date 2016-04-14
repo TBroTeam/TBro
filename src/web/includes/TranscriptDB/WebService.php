@@ -18,7 +18,9 @@ abstract class WebService {
      * @param Array $dataArray
      */
     public static function output($dataArray) {
-        echo json_encode($dataArray, defined('JSON_PRETTY_PRINT')?JSON_PRETTY_PRINT:0);
+        if(!is_null($dataArray)){
+            echo json_encode($dataArray, defined('JSON_PRETTY_PRINT')?JSON_PRETTY_PRINT:0);
+        }
     }
 
     /**
