@@ -20,7 +20,7 @@ class Searchbox extends \WebService {
         $species = $querydata['species'];
         $import = $querydata['release'];
 
-        $term = trim($querydata['term']) . '%';
+        $term = '%' . trim($querydata['term']) . '%';
 
 
 #UI hint
