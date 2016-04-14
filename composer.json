@@ -1,0 +1,27 @@
+{
+    "name": "tbroteam/tbro",
+    "description": "TBro",
+    "require": {
+        "phryneas/logged-pdo": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.3",
+        "satooshi/php-coveralls": "^1.0"
+    },
+    "autoload": {
+        "psr-4": { "": "src/web/includes/TranscriptDB/",
+                   "webservices\\": "src/web/includes/TranscriptDB/webservices"
+        }
+    },
+    "include-path": ["src/web/includes/", "src/shared/libs/", "src/queue/server/ajax"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Markus Ankenbrand",
+            "email": "markus@ankenbrand.me"
+        },
+        {
+            "name": "Lorenz Weber"
+        }
+    ]
+}
