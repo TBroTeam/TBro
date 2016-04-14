@@ -4,16 +4,7 @@ namespace webservices\export;
 
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../../db/cvterms.php';
-
-/**
- * Override header() in current namespace for testing
- *
- * @return void
- */
-function header($text)
-{
-    # do nothing
-}
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'overload_header_function.php';
 
 /**
  * @backupGlobals disabled
