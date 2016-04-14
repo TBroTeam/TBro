@@ -55,14 +55,26 @@ UNION
         AND feature.organism_id = ?
         AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
         AND feature.type_id=cvterm.cvterm_id    
-    LIMIT 20)
+    LIMIT 20
+)
+UNION
+    (SELECT featureprop.value AS name, feature.feature_id, 'description' AS type
+    FROM featureprop, feature
+    WHERE
+        featureprop.feature_id = feature.feature_id
+        AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
+        AND featureprop.value LIKE ?
+        AND feature.organism_id = ?
+        AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
+    LIMIT 20
+)
 EOF;
 
         $stm_get_features = $db->prepare($query_get_features);
 
         $data = array('results' => array());
 
-        $stm_get_features->execute(array($import, $term, $species, $import, $term, $species));
+        $stm_get_features->execute(array($import, $term, $species, $import, $term, $species, $import, $term, $species));
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = array('name' => $feature['name']
                 , 'type' => $feature['type']
