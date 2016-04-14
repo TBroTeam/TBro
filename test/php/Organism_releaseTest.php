@@ -5,7 +5,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . '../db/cvterms.php';
 /**
  * @backupGlobals disabled
  */
-class OrganismsTest extends PHPUnit_Framework_TestCase
+class Organism_releaseTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {
