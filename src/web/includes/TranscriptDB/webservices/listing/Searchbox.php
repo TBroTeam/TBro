@@ -66,7 +66,7 @@ class Searchbox extends \WebService {
         AND synonym.synonym_id = feature_synonym.synonym_id
         AND feature.organism_id = ?
         AND synonym.type_id=cvterm.cvterm_id
-    LIMIT 20
+    LIMIT 10
 )
 UNION 
     (SELECT feature.name, feature.feature_id, cvterm.name AS type
@@ -77,7 +77,7 @@ UNION
         AND feature.organism_id = ?
         AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
         AND feature.type_id=cvterm.cvterm_id    
-    LIMIT 20
+    LIMIT 10
 )
 UNION
     (SELECT featureprop.value AS name, feature.feature_id, 'description' AS type
@@ -88,7 +88,7 @@ UNION
         AND featureprop.value ILIKE ?
         AND feature.organism_id = ?
         AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
-    LIMIT 20
+    LIMIT 10
 )
 EOF;
 
