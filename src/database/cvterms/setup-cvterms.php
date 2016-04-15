@@ -123,7 +123,8 @@ $cvterms = array(
     array('name' => 'standard', 'cv' => 'local'),
     array('name' => 'techreport', 'cv' => 'local'),
     array('name' => 'unpublished', 'cv' => 'local'),
-    array('name' => 'preprint', 'cv' => 'local')
+    array('name' => 'preprint', 'cv' => 'local'),
+    array('name' => 'fullname', 'cv' => 'local')
 );
 
 
