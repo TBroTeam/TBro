@@ -4,6 +4,7 @@ namespace webservices\listing;
 
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../../db/cvterms.php';
+require_once __DIR__ . '/overload_session_start_function.php';
 
 /**
  * @backupGlobals disabled
