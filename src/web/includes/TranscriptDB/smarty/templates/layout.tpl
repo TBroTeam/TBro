@@ -127,7 +127,8 @@
                             }
                         });
                     },
-                    minLength: 2,
+                    minLength: 3,
+                    delay: 500,
                     select: function (event, ui) {
                         location.href = "{#$AppPath#}/details/byId/" + ui.item.id;
                     }
