@@ -22,6 +22,28 @@ class Searchbox extends \WebService {
 
         $term = '%' . trim($querydata['term']) . '%';
 
+        if (!isset($_SESSION))
+            session_start();
+
+        $data = array('results' => array());
+
+        $metadata = array();
+        $currentContext = $species . '_' . $import;
+        if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$currentContext])
+            $metadata = &$_SESSION['cart']['metadata'][$currentContext];
+
+        foreach($metadata as $featureid => $md){
+            if(in_array('alias', $md) && strpos($md['alias'], $querydata['term']) === FALSE){
+                $data['results'][] = array('name' => $md['alias']
+                    , 'type' => 'user alias'
+                    , 'id' => $featureid);
+            }
+            if(in_array('annotations', $md) && strpos($md['annotations'], $querydata['term']) === FALSE){
+                $data['results'][] = array('name' => $md['annotations']
+                    , 'type' => 'user description'
+                    , 'id' => $featureid);
+            }
+        }
 
 #UI hint
         if (false)
@@ -71,8 +93,6 @@ UNION
 EOF;
 
         $stm_get_features = $db->prepare($query_get_features);
-
-        $data = array('results' => array());
 
         $stm_get_features->execute(array($import, $term, $species, $import, $term, $species, $import, $term, $species));
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
