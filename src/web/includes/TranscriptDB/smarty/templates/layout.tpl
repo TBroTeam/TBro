@@ -136,7 +136,7 @@
                 //render as link to allow open in background & co
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function (ul, item) {
                     var li = $("<li>")
-                            .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:100px'>" + item.type + "</span>" + item.name + "</a>")
+                            .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:130px'>" + item.type + "</span>" + item.name + "</a>")
                             .appendTo(ul);
                     return li;
                 };
