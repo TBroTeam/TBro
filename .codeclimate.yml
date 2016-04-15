@@ -1,4 +1,17 @@
+engines:
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+ratings:
+  paths:
+  - src/web/includes/TranscriptDB/webservices
+  - "**.php"
 exclude_paths:
   - test/**/*
   - doc/**/*
   - vendor/**/*
+
