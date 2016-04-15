@@ -61,7 +61,7 @@ class Searchbox extends \WebService {
         cvterm
     WHERE 
         feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
-        AND synonym.name LIKE ?
+        AND synonym.name ILIKE ?
         AND feature_synonym.feature_id = feature.feature_id
         AND synonym.synonym_id = feature_synonym.synonym_id
         AND feature.organism_id = ?
@@ -73,7 +73,7 @@ UNION
     FROM feature, cvterm
     WHERE 
         feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
-        AND feature.name LIKE ?        
+        AND feature.name ILIKE ?
         AND feature.organism_id = ?
         AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
         AND feature.type_id=cvterm.cvterm_id    
@@ -85,7 +85,7 @@ UNION
     WHERE
         featureprop.feature_id = feature.feature_id
         AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
-        AND featureprop.value LIKE ?
+        AND featureprop.value ILIKE ?
         AND feature.organism_id = ?
         AND (feature.type_id = {$constant('CV_UNIGENE')} OR feature.type_id = {$constant('CV_ISOFORM')})
     LIMIT 20
