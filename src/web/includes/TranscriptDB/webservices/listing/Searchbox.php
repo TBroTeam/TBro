@@ -33,12 +33,12 @@ class Searchbox extends \WebService {
             $metadata = &$_SESSION['cart']['metadata'][$currentContext];
 
         foreach($metadata as $featureid => $md){
-            if(in_array('alias', $md) && strpos($md['alias'], $querydata['term']) === FALSE){
+            if(strpos($md['alias'], $querydata['term']) !== FALSE){
                 $data['results'][] = array('name' => $md['alias']
                     , 'type' => 'user alias'
                     , 'id' => $featureid);
             }
-            if(in_array('annotations', $md) && strpos($md['annotations'], $querydata['term']) === FALSE){
+            if(strpos($md['annotations'], $querydata['term']) !== FALSE){
                 $data['results'][] = array('name' => $md['annotations']
                     , 'type' => 'user description'
                     , 'id' => $featureid);
