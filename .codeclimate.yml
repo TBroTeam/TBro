@@ -6,6 +6,8 @@ engines:
     config:
       languages:
       - php
+  phpmd:
+    enabled: true
 ratings:
   paths:
   - src/web/includes/TranscriptDB/webservices
