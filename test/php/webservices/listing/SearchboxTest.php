@@ -19,7 +19,7 @@ class SearchboxTest extends \PHPUnit_Framework_TestCase
         $results = $results["results"];
         usort($results, array($this, "cmp"));
         $this->assertEquals(6, count($results));
-        $this->assertEquals(array('name'=>'retinoblastoma-related protein', 'type'=>'description', 'id'=>1099), $results[0]);
+        $this->assertEquals(array('hit'=>'retinoblastoma-related protein', 'type'=>'description', 'id'=>1099, 'name'=>'gi|351628378|gb|JP481261.1|'), $results[0]);
     }
     
     private function cmp($a, $b)
