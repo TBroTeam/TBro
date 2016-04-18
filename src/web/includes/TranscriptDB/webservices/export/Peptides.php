@@ -36,7 +36,7 @@ class Peptides extends \WebService {
             $feature_ids = array_merge($feature_ids, $querydata['terms']);
 
         if (count($feature_ids) == 0) {
-            die();
+            return null;
         }
 
         $place_holders = implode(',', array_fill(0, count($feature_ids), '?'));
@@ -65,7 +65,7 @@ EOF;
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             printf(">%s REF=%s START=%s END=%s STRAND=%s\n%s\n", $row['pepid'], $row['seqid'], $row['fmin'], $row['fmax'], $row['strand'], $row['residues']);
         }
-        die();
+        return null;
     }
 
 }

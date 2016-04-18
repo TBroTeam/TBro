@@ -1,11 +1,14 @@
 <?php
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . '../db/cvterms.php';
+
+namespace webservices\listing;
+
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../../db/cvterms.php';
 
 /**
  * @backupGlobals disabled
  */
-class OrganismsTest extends PHPUnit_Framework_TestCase
+class Organism_releaseTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {

@@ -31,7 +31,7 @@ $smarty->right_delimiter = '#}';
 require_once('TranscriptDB/webservices/cart/Sync.php');
 $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
 
-$smarty->assign('tbro_version', '0.9.0');
+$smarty->assign('tbro_version', '1.0.0');
 $smarty->assign('instance_title', INSTANCE_TITLE);
 $smarty->assign('logo_url', LOGO_URL);
 

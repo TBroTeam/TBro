@@ -55,9 +55,6 @@ EOF;
         while ($row = $stm->fetch(\PDO::FETCH_ASSOC)) {
             printf(">%s\n%s\n", $row['name'], $row['residues']);
         }
-        die();
+        return null;
     }
-
 }
-
-?>
