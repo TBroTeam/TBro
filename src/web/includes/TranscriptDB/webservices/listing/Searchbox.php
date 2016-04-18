@@ -70,7 +70,7 @@ class Searchbox extends \WebService {
     LIMIT 10
 )
 UNION 
-    (SELECT feature.name, feature.feature_id, cvterm.name AS type, '' AS hit
+    (SELECT '' AS hit, feature.feature_id, cvterm.name AS type, feature.name
     FROM feature, cvterm
     WHERE 
         feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
