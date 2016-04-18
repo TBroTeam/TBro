@@ -51,9 +51,10 @@ class Searchbox extends \WebService {
 
         $query_get_features = <<<EOF
     (SELECT 
-        synonym.name, 
+        synonym.name AS hit,
         feature_synonym.feature_id, 
-        cvterm.name AS type
+        cvterm.name AS type,
+        feature.name AS name
     FROM 
         feature_synonym, 
         synonym, 
@@ -69,7 +70,7 @@ class Searchbox extends \WebService {
     LIMIT 10
 )
 UNION 
-    (SELECT feature.name, feature.feature_id, cvterm.name AS type
+    (SELECT feature.name, feature.feature_id, cvterm.name AS type, '' AS hit
     FROM feature, cvterm
     WHERE 
         feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id = {$constant('DB_ID_IMPORTS')} AND accession = ?)
@@ -80,7 +81,7 @@ UNION
     LIMIT 10
 )
 UNION
-    (SELECT featureprop.value AS name, feature.feature_id, 'description' AS type
+    (SELECT featureprop.value AS hit, feature.feature_id, 'description' AS type, feature.name AS name
     FROM featureprop, feature
     WHERE
         featureprop.feature_id = feature.feature_id
@@ -97,6 +98,7 @@ EOF;
         $stm_get_features->execute(array($import, $term, $species, $import, $term, $species, $import, $term, $species));
         while ($feature = $stm_get_features->fetch(PDO::FETCH_ASSOC)) {
             $data['results'][] = array('name' => $feature['name']
+                , 'hit' => $feature['hit']
                 , 'type' => $feature['type']
                 , 'id' => $feature['feature_id']);
         }
