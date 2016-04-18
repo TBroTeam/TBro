@@ -32,17 +32,34 @@ class Searchbox extends \WebService {
         if (isset($_SESSION['cart']) && $_SESSION['cart']['metadata'][$currentContext])
             $metadata = &$_SESSION['cart']['metadata'][$currentContext];
 
+        $ids_with_metadata = array();
         foreach($metadata as $featureid => $md){
             if(strpos($md['alias'], $querydata['term']) !== FALSE){
-                $data['results'][] = array('name' => $md['alias']
+                $data['results'][] = array('hit' => $md['alias']
                     , 'type' => 'user alias'
-                    , 'id' => $featureid);
+                    , 'id' => $featureid
+                    , 'name' => '');
+                $ids_with_metadata[$featureid] = 1;
             }
             if(strpos($md['annotations'], $querydata['term']) !== FALSE){
-                $data['results'][] = array('name' => $md['annotations']
+                $data['results'][] = array('hit' => $md['annotations']
                     , 'type' => 'user description'
-                    , 'id' => $featureid);
+                    , 'id' => $featureid
+                    , 'name' => '');
+                $ids_with_metadata[$featureid] = 1;
             }
+        }
+        $ids_with_metadata = array_keys($ids_with_metadata);
+        $names = array();
+        if(count($ids_with_metadata) > 0){
+            list($service) = \WebService::factory('details/features');
+            $results = ($service->execute(array('terms' => $ids_with_metadata, 'no_description' => 1)));
+            foreach($results["results"] AS $result){
+                $names[$result['feature_id']] = $result['name'];
+            }
+        }
+        foreach ($data['results'] AS &$res){
+            $res['name'] = $names[$res['id']];
         }
 
 #UI hint
