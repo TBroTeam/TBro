@@ -130,14 +130,23 @@
                     minLength: 3,
                     delay: 500,
                     select: function (event, ui) {
-                        location.href = "{#$AppPath#}/details/byId/" + ui.item.id;
+                        // nothing to do (follow link via a)
+                        // do not try to use this function, it will not work properly as the _renderItem function does not return separate list items
                     }
                 });
                 //render as link to allow open in background & co
                 $("#search_unigene").data("ui-autocomplete")._renderItem = function (ul, item) {
-                    var li = $("<li>")
-                            .append("<a href='{#$AppPath#}/details/byId/" + item.id + "'><span style='display:inline-block; width:130px'>" + item.type + "</span>" + item.name + "</a>")
-                            .appendTo(ul);
+                    var li = ul.find('#quick-search-li');
+                    var table = ul.find('#quick-search-table');
+                    if(table.length === 0){
+                        li = $("<li id='quick-search-li'>").appendTo(ul);
+                        table = $("<table id='quick-search-table'>").appendTo(li);
+                    }
+                    var tr = $("<tr>")
+                            .append("<td><a href='{#$AppPath#}/details/byId/" + item.id + "'>" + item.type + "</a></td>" +
+                            "<td><a href='{#$AppPath#}/details/byId/" + item.id + "'>" + item.name + "</a></td>" +
+                            "<td><a href='{#$AppPath#}/details/byId/" + item.id + "'>" + item.hit + "</a></td>")
+                            .appendTo(table);
                     return li;
                 };
             });
