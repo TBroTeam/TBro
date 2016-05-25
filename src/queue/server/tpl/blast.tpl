@@ -108,9 +108,7 @@
 
                     <div class="large-12 columns">
                         <label for="blastform-query">FASTA sequence(s):</label>
-                        <textarea id="blastform-query" name="query" style="width:100%; height:200px; white-space: nowrap;">
-
-                        </textarea>
+                        <textarea id="blastform-query" name="query" style="width:100%; height:200px; white-space: pre-line;"></textarea>
                     </div>
                 </div>
                 <ul class="large-block-grid-5">
