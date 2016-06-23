@@ -206,7 +206,7 @@
                 <table style="width:100%">
                     <tr><th align="left">Homepage: </th><td><a href="http://tbroteam.github.io/TBro/" target="_blank">GitHub Pages</a></td></tr>
                     <!-- tr><th align="left">Demo: </th><td><a href="http://tbro.carnivorom.com/" target="_blank">Venus Flytrap</a></td></tr> -->
-                    <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.org/en/latest/" target="_blank">Read the Docs</a></td></tr>
+                    <tr><th align="left">Tutorial: </th><td><a href="//tbro-tutorial.readthedocs.io/en/latest/" target="_blank">Read the Docs</a></td></tr>
                     <tr><th align="left">Code: </th><td><a href="https://github.com/TBroTeam/TBro" target="_blank">GitHub</a></td></tr>
                     <tr><th align="left">Docker: </th><td><a href="https://hub.docker.com/u/tbroteam/" target="_blank">Docker Hub</a></td></tr>
                 </table>
