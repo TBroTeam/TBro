@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class LoggedPDO\PDO | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li class="active"><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-LoggedPDO.PDO.html">PDO</a></li>
+				<li><a href="class-LoggedPDO.PDOStatement.html">PDOStatement</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-LoggedPDO.html" title="Summary of LoggedPDO"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class PDO</h1>
+
+
+	<div class="description">
+	
+<p>Class extending the php PDO Class for logging purpose</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+			<a href="class-PDO.html"><span>PDO</span></a>
+			
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>LoggedPDO\PDO</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-LoggedPDO.html">LoggedPDO</a><br />
+		
+
+				<b>Uses:</b>
+				Log.php simple usage: &lt;code&gt; require_once 'loggedPDO/PDO.php'; $logger =
+Log::factory('console', '', 'PDO'); $pdo = new \LoggedPDO\PDO($connstr,
+DB_USERNAME, DB_PASSWORD, null, $logger); &lt;/code&gt; users of a firebug
+logger might alternatively like the Log_firebugJSON class &lt;code&gt;
+require_once 'loggedPDO/Log_firebugJSON.php'; $logger = Log::factory('console',
+'', 'PDO'); &lt;/code&gt; {@inheritdoc}<br />
+		<b>Located at</b> <a href="source-class-LoggedPDO.PDO.html#40-191" title="Go to source code">src/shared/libs/loggedPDO/PDO.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#82-98" title="Go to source code">__construct</a>( <span>Log <var>$dsn</var></span>, <span>mixed <var>$username</var> = <span class="php-keyword1">null</span></span>, <span>mixed <var>$password</var> = <span class="php-keyword1">null</span></span>, <span>mixed <var>$options</var> = <span class="php-keyword1">null</span></span>, <span>Log <var>$log</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dsn</var></dt>
+					<dd><code>Log</code><br>$log a PEAR Log object that will be used for logging</dd>
+					<dt><var>$username</var></dt>
+					<dd></dd>
+					<dt><var>$password</var></dt>
+					<dd></dd>
+					<dt><var>$options</var></dt>
+					<dd></dd>
+					<dt><var>$log</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><code><a href="class-Exception.html">Exception</a></code></code><br>if there is no PEAR Log object specified<br />
+				</div>
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-PDO.html#___construct">PDO::__construct()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prepare" id="_prepare">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prepare">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#100-108" title="Go to source code">prepare</a>( <span>mixed <var>$statement</var></span>, <span>mixed <var>$driver_options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-PDO.html#_prepare">PDO::prepare()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="query" id="_query">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_query">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#110-121" title="Go to source code">query</a>( <span>mixed <var>$statement</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-PDO.html#_query">PDO::query()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="exec" id="_exec">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_exec">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#123-131" title="Go to source code">exec</a>( <span>mixed <var>$statement</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-PDO.html#_exec">PDO::exec()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getLogger" id="_getLogger">
+
+		<td class="attributes"><code>
+			 public 
+			Log
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getLogger">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#133-139" title="Go to source code">getLogger</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns the assigned PEAR logger</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the assigned PEAR logger</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Log</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="log" id="_log">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_log">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#141-173" title="Go to source code">log</a>( <span>type <var>$query</var></span>, <span>type <var>$time</var></span>, <span>type <var>$params</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Log a query.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Log a query.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$query</var></dt>
+					<dd><code>type</code><br>$query Logged Query</dd>
+					<dt><var>$time</var></dt>
+					<dd><code>type</code><br>$time Time used by query</dd>
+					<dt><var>$params</var></dt>
+					<dd><code>type</code><br>$params Params, only if $log_replace_params is true</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getFullTime" id="_getFullTime">
+
+		<td class="attributes"><code>
+			 public 
+			float
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getFullTime">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#175-181" title="Go to source code">getFullTime</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get time spent by all logged querys until now.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get time spent by all logged querys until now.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>float</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getQueryCount" id="_getQueryCount">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getQueryCount">#</a>
+		<code><a href="source-class-LoggedPDO.PDO.html#183-189" title="Go to source code">getQueryCount</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get count of querys executed until now.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get count of querys executed until now.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+	<table class="summary inherited">
+	<caption>Methods inherited from <a href="class-PDO.html#methods">PDO</a></caption>
+	<tr>
+		<td><code>
+			<a href="class-PDO.html#___sleep">__sleep()</a>, 
+			<a href="class-PDO.html#___wakeup">__wakeup()</a>, 
+			<a href="class-PDO.html#_beginTransaction">beginTransaction()</a>, 
+			<a href="class-PDO.html#_commit">commit()</a>, 
+			<a href="class-PDO.html#_errorCode">errorCode()</a>, 
+			<a href="class-PDO.html#_errorInfo">errorInfo()</a>, 
+			<a href="class-PDO.html#_getAttribute">getAttribute()</a>, 
+			<a href="class-PDO.html#_getAvailableDrivers">getAvailableDrivers()</a>, 
+			<a href="class-PDO.html#_inTransaction">inTransaction()</a>, 
+			<a href="class-PDO.html#_lastInsertId">lastInsertId()</a>, 
+			<a href="class-PDO.html#_quote">quote()</a>, 
+			<a href="class-PDO.html#_rollBack">rollBack()</a>, 
+			<a href="class-PDO.html#_setAttribute">setAttribute()</a>
+		</code></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary inherited">
+	<caption>Constants inherited from <a href="class-PDO.html#constants">PDO</a></caption>
+	<tr>
+		<td><code>
+			<a href="class-PDO.html#ATTR_AUTOCOMMIT"><b>ATTR_AUTOCOMMIT</b></a>, 
+			<a href="class-PDO.html#ATTR_CASE"><b>ATTR_CASE</b></a>, 
+			<a href="class-PDO.html#ATTR_CLIENT_VERSION"><b>ATTR_CLIENT_VERSION</b></a>, 
+			<a href="class-PDO.html#ATTR_CONNECTION_STATUS"><b>ATTR_CONNECTION_STATUS</b></a>, 
+			<a href="class-PDO.html#ATTR_CURSOR"><b>ATTR_CURSOR</b></a>, 
+			<a href="class-PDO.html#ATTR_CURSOR_NAME"><b>ATTR_CURSOR_NAME</b></a>, 
+			<a href="class-PDO.html#ATTR_DEFAULT_FETCH_MODE"><b>ATTR_DEFAULT_FETCH_MODE</b></a>, 
+			<a href="class-PDO.html#ATTR_DRIVER_NAME"><b>ATTR_DRIVER_NAME</b></a>, 
+			<a href="class-PDO.html#ATTR_EMULATE_PREPARES"><b>ATTR_EMULATE_PREPARES</b></a>, 
+			<a href="class-PDO.html#ATTR_ERRMODE"><b>ATTR_ERRMODE</b></a>, 
+			<a href="class-PDO.html#ATTR_FETCH_CATALOG_NAMES"><b>ATTR_FETCH_CATALOG_NAMES</b></a>, 
+			<a href="class-PDO.html#ATTR_FETCH_TABLE_NAMES"><b>ATTR_FETCH_TABLE_NAMES</b></a>, 
+			<a href="class-PDO.html#ATTR_MAX_COLUMN_LEN"><b>ATTR_MAX_COLUMN_LEN</b></a>, 
+			<a href="class-PDO.html#ATTR_ORACLE_NULLS"><b>ATTR_ORACLE_NULLS</b></a>, 
+			<a href="class-PDO.html#ATTR_PERSISTENT"><b>ATTR_PERSISTENT</b></a>, 
+			<a href="class-PDO.html#ATTR_PREFETCH"><b>ATTR_PREFETCH</b></a>, 
+			<a href="class-PDO.html#ATTR_SERVER_INFO"><b>ATTR_SERVER_INFO</b></a>, 
+			<a href="class-PDO.html#ATTR_SERVER_VERSION"><b>ATTR_SERVER_VERSION</b></a>, 
+			<a href="class-PDO.html#ATTR_STATEMENT_CLASS"><b>ATTR_STATEMENT_CLASS</b></a>, 
+			<a href="class-PDO.html#ATTR_STRINGIFY_FETCHES"><b>ATTR_STRINGIFY_FETCHES</b></a>, 
+			<a href="class-PDO.html#ATTR_TIMEOUT"><b>ATTR_TIMEOUT</b></a>, 
+			<a href="class-PDO.html#CASE_LOWER"><b>CASE_LOWER</b></a>, 
+			<a href="class-PDO.html#CASE_NATURAL"><b>CASE_NATURAL</b></a>, 
+			<a href="class-PDO.html#CASE_UPPER"><b>CASE_UPPER</b></a>, 
+			<a href="class-PDO.html#CURSOR_FWDONLY"><b>CURSOR_FWDONLY</b></a>, 
+			<a href="class-PDO.html#CURSOR_SCROLL"><b>CURSOR_SCROLL</b></a>, 
+			<a href="class-PDO.html#ERRMODE_EXCEPTION"><b>ERRMODE_EXCEPTION</b></a>, 
+			<a href="class-PDO.html#ERRMODE_SILENT"><b>ERRMODE_SILENT</b></a>, 
+			<a href="class-PDO.html#ERRMODE_WARNING"><b>ERRMODE_WARNING</b></a>, 
+			<a href="class-PDO.html#ERR_NONE"><b>ERR_NONE</b></a>, 
+			<a href="class-PDO.html#FETCH_ASSOC"><b>FETCH_ASSOC</b></a>, 
+			<a href="class-PDO.html#FETCH_BOTH"><b>FETCH_BOTH</b></a>, 
+			<a href="class-PDO.html#FETCH_BOUND"><b>FETCH_BOUND</b></a>, 
+			<a href="class-PDO.html#FETCH_CLASS"><b>FETCH_CLASS</b></a>, 
+			<a href="class-PDO.html#FETCH_CLASSTYPE"><b>FETCH_CLASSTYPE</b></a>, 
+			<a href="class-PDO.html#FETCH_COLUMN"><b>FETCH_COLUMN</b></a>, 
+			<a href="class-PDO.html#FETCH_FUNC"><b>FETCH_FUNC</b></a>, 
+			<a href="class-PDO.html#FETCH_GROUP"><b>FETCH_GROUP</b></a>, 
+			<a href="class-PDO.html#FETCH_INTO"><b>FETCH_INTO</b></a>, 
+			<a href="class-PDO.html#FETCH_KEY_PAIR"><b>FETCH_KEY_PAIR</b></a>, 
+			<a href="class-PDO.html#FETCH_LAZY"><b>FETCH_LAZY</b></a>, 
+			<a href="class-PDO.html#FETCH_NAMED"><b>FETCH_NAMED</b></a>, 
+			<a href="class-PDO.html#FETCH_NUM"><b>FETCH_NUM</b></a>, 
+			<a href="class-PDO.html#FETCH_OBJ"><b>FETCH_OBJ</b></a>, 
+			<a href="class-PDO.html#FETCH_ORI_ABS"><b>FETCH_ORI_ABS</b></a>, 
+			<a href="class-PDO.html#FETCH_ORI_FIRST"><b>FETCH_ORI_FIRST</b></a>, 
+			<a href="class-PDO.html#FETCH_ORI_LAST"><b>FETCH_ORI_LAST</b></a>, 
+			<a href="class-PDO.html#FETCH_ORI_NEXT"><b>FETCH_ORI_NEXT</b></a>, 
+			<a href="class-PDO.html#FETCH_ORI_PRIOR"><b>FETCH_ORI_PRIOR</b></a>, 
+			<a href="class-PDO.html#FETCH_ORI_REL"><b>FETCH_ORI_REL</b></a>, 
+			<a href="class-PDO.html#FETCH_PROPS_LATE"><b>FETCH_PROPS_LATE</b></a>, 
+			<a href="class-PDO.html#FETCH_SERIALIZE"><b>FETCH_SERIALIZE</b></a>, 
+			<a href="class-PDO.html#FETCH_UNIQUE"><b>FETCH_UNIQUE</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_COMPRESS"><b>MYSQL_ATTR_COMPRESS</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_DIRECT_QUERY"><b>MYSQL_ATTR_DIRECT_QUERY</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_FOUND_ROWS"><b>MYSQL_ATTR_FOUND_ROWS</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_IGNORE_SPACE"><b>MYSQL_ATTR_IGNORE_SPACE</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_INIT_COMMAND"><b>MYSQL_ATTR_INIT_COMMAND</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_LOCAL_INFILE"><b>MYSQL_ATTR_LOCAL_INFILE</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_SSL_CA"><b>MYSQL_ATTR_SSL_CA</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_SSL_CAPATH"><b>MYSQL_ATTR_SSL_CAPATH</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_SSL_CERT"><b>MYSQL_ATTR_SSL_CERT</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_SSL_CIPHER"><b>MYSQL_ATTR_SSL_CIPHER</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_SSL_KEY"><b>MYSQL_ATTR_SSL_KEY</b></a>, 
+			<a href="class-PDO.html#MYSQL_ATTR_USE_BUFFERED_QUERY"><b>MYSQL_ATTR_USE_BUFFERED_QUERY</b></a>, 
+			<a href="class-PDO.html#NULL_EMPTY_STRING"><b>NULL_EMPTY_STRING</b></a>, 
+			<a href="class-PDO.html#NULL_NATURAL"><b>NULL_NATURAL</b></a>, 
+			<a href="class-PDO.html#NULL_TO_STRING"><b>NULL_TO_STRING</b></a>, 
+			<a href="class-PDO.html#PARAM_BOOL"><b>PARAM_BOOL</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_ALLOC"><b>PARAM_EVT_ALLOC</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_EXEC_POST"><b>PARAM_EVT_EXEC_POST</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_EXEC_PRE"><b>PARAM_EVT_EXEC_PRE</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_FETCH_POST"><b>PARAM_EVT_FETCH_POST</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_FETCH_PRE"><b>PARAM_EVT_FETCH_PRE</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_FREE"><b>PARAM_EVT_FREE</b></a>, 
+			<a href="class-PDO.html#PARAM_EVT_NORMALIZE"><b>PARAM_EVT_NORMALIZE</b></a>, 
+			<a href="class-PDO.html#PARAM_INPUT_OUTPUT"><b>PARAM_INPUT_OUTPUT</b></a>, 
+			<a href="class-PDO.html#PARAM_INT"><b>PARAM_INT</b></a>, 
+			<a href="class-PDO.html#PARAM_LOB"><b>PARAM_LOB</b></a>, 
+			<a href="class-PDO.html#PARAM_NULL"><b>PARAM_NULL</b></a>, 
+			<a href="class-PDO.html#PARAM_STMT"><b>PARAM_STMT</b></a>, 
+			<a href="class-PDO.html#PARAM_STR"><b>PARAM_STR</b></a>, 
+			<a href="class-PDO.html#PGSQL_ATTR_DISABLE_NATIVE_PREPARED_STATEMENT"><b>PGSQL_ATTR_DISABLE_NATIVE_PREPARED_STATEMENT</b></a>, 
+			<a href="class-PDO.html#PGSQL_TRANSACTION_ACTIVE"><b>PGSQL_TRANSACTION_ACTIVE</b></a>, 
+			<a href="class-PDO.html#PGSQL_TRANSACTION_IDLE"><b>PGSQL_TRANSACTION_IDLE</b></a>, 
+			<a href="class-PDO.html#PGSQL_TRANSACTION_INERROR"><b>PGSQL_TRANSACTION_INERROR</b></a>, 
+			<a href="class-PDO.html#PGSQL_TRANSACTION_INTRANS"><b>PGSQL_TRANSACTION_INTRANS</b></a>, 
+			<a href="class-PDO.html#PGSQL_TRANSACTION_UNKNOWN"><b>PGSQL_TRANSACTION_UNKNOWN</b></a>
+		</code></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="log" id="$log">
+		<td class="attributes"><code>
+			public  
+			Log
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LoggedPDO.PDO.html#63-67" title="Go to source code"><var>$log</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$log" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>PEAR Log object that will be used for logging</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>PEAR Log object that will be used for logging</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="LOG_QUERY" id="$LOG_QUERY">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LoggedPDO.PDO.html#70" title="Go to source code"><var>$LOG_QUERY</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">&quot;query&quot;</span></code></td>
+		<td class="description"><div>
+			<a href="#$LOG_QUERY" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="LOG_TIME" id="$LOG_TIME">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LoggedPDO.PDO.html#71" title="Go to source code"><var>$LOG_TIME</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">&quot;time&quot;</span></code></td>
+		<td class="description"><div>
+			<a href="#$LOG_TIME" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="LOG_TYPE" id="$LOG_TYPE">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LoggedPDO.PDO.html#72" title="Go to source code"><var>$LOG_TYPE</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">&quot;method&quot;</span></code></td>
+		<td class="description"><div>
+			<a href="#$LOG_TYPE" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="LOG_PARAMS" id="$LOG_PARAMS">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LoggedPDO.PDO.html#73" title="Go to source code"><var>$LOG_PARAMS</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">&quot;parameters&quot;</span></code></td>
+		<td class="description"><div>
+			<a href="#$LOG_PARAMS" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="log_replace_params" id="$log_replace_params">
+		<td class="attributes"><code>
+			public  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LoggedPDO.PDO.html#75-80" title="Go to source code"><var>$log_replace_params</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">true</span></code></td>
+		<td class="description"><div>
+			<a href="#$log_replace_params" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>If true, parameters will be inserted into query for logging. If false, query
+and parameters will be logged separately.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>If true, parameters will be inserted into query for logging. If false, query
+and parameters will be logged separately.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

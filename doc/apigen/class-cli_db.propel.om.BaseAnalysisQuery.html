@@ -1,0 +1,3413 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseAnalysisQuery | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseAnalysisQuery</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a query for the 'analysis' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+ModelCriteria
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseAnalysisQuery</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#20-677" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseAnalysisQuery.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#83-93" title="Go to source code">__construct</a>( <span>string <var>$dbName</var> = <span class="php-quote">'cli_db'</span></span>, <span>string <var>$modelName</var> = <span class="php-quote">'cli_db\\propel\\Analysis'</span></span>, <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BaseAnalysisQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BaseAnalysisQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbName</var></dt>
+					<dd><code>string</code><br>$dbName The dabase name</dd>
+					<dt><var>$modelName</var></dt>
+					<dd><code>string</code><br>$modelName The phpName of a model, e.g. 'Book'</dd>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias for the model in this query, e.g. 'b'</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			 public static
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#95-117" title="Go to source code">create</a>( <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>|Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns a new AnalysisQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a new AnalysisQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias of a model in the query</dd>
+					<dt><var>$criteria</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>|Criteria</code><br>$criteria Optional Criteria to build the query from</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPk" id="_findPk">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>|<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPk">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#119-153" title="Go to source code">findPk</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+<pre>
+<span class="php-var">$obj</span>  = <span
+class="php-var">$c</span>-&gt;findPk(<span class="php-num">12</span>, <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>|<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByAnalysisId" id="_findOneByAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findOneByAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#155-167" title="Go to source code">findOneByAnalysisId</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkSimple" id="_findPkSimple">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkSimple">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#169-199" title="Go to source code">findPkSimple</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkComplex" id="_findPkComplex">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>|<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkComplex">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#201-218" title="Go to source code">findPkComplex</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>|<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPks" id="_findPks">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPks">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#220-242" title="Go to source code">findPks</a>( <span>array <var>$keys</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys Primary keys to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>[]</code>|mixed</code><br>the list of results, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKey" id="_filterByPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#244-255" title="Go to source code">filterByPrimaryKey</a>( <span>mixed <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by primary key</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by primary key</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKeys" id="_filterByPrimaryKeys">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKeys">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#257-268" title="Go to source code">filterByPrimaryKeys</a>( <span>array <var>$keys</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a list of primary keys</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a list of primary keys</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys The list of primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByAnalysisId" id="_filterByAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#270-310" title="Go to source code">filterByAnalysisId</a>( <span>mixed <var>$analysisId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the analysis_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the analysis_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByAnalysisId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE analysis_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByAnalysisId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE analysis_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByAnalysisId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE analysis_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByAnalysisId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE analysis_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$analysisId</var></dt>
+					<dd><code>mixed</code><br>$analysisId The value to use as filter. Use scalar values for equality. Use
+array values for in_array() equivalent. Use associative array('min' =&gt;
+$minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByName" id="_filterByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#312-339" title="Go to source code">filterByName</a>( <span>string <var>$name</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the name column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE name = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE name LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByDescription" id="_filterByDescription">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#341-368" title="Go to source code">filterByDescription</a>( <span>string <var>$description</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the description column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the description column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByDescription(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE description = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByDescription(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE description LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$description</var></dt>
+					<dd><code>string</code><br>$description The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByProgram" id="_filterByProgram">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#370-397" title="Go to source code">filterByProgram</a>( <span>string <var>$program</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the program column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the program column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByProgram(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE program = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByProgram(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE program LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$program</var></dt>
+					<dd><code>string</code><br>$program The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByProgramversion" id="_filterByProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#399-426" title="Go to source code">filterByProgramversion</a>( <span>string <var>$programversion</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the programversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the programversion column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByProgramversion(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE programversion = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByProgramversion(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE programversion LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$programversion</var></dt>
+					<dd><code>string</code><br>$programversion The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByAlgorithm" id="_filterByAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#428-455" title="Go to source code">filterByAlgorithm</a>( <span>string <var>$algorithm</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the algorithm column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the algorithm column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByAlgorithm(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE algorithm = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByAlgorithm(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE algorithm LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$algorithm</var></dt>
+					<dd><code>string</code><br>$algorithm The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySourcename" id="_filterBySourcename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#457-484" title="Go to source code">filterBySourcename</a>( <span>string <var>$sourcename</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the sourcename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the sourcename column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterBySourcename(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE sourcename = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterBySourcename(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE sourcename LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourcename</var></dt>
+					<dd><code>string</code><br>$sourcename The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySourceversion" id="_filterBySourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#486-513" title="Go to source code">filterBySourceversion</a>( <span>string <var>$sourceversion</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the sourceversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the sourceversion column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterBySourceversion(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE sourceversion = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterBySourceversion(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE sourceversion LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourceversion</var></dt>
+					<dd><code>string</code><br>$sourceversion The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySourceuri" id="_filterBySourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#515-542" title="Go to source code">filterBySourceuri</a>( <span>string <var>$sourceuri</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the sourceuri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the sourceuri column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterBySourceuri(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE sourceuri = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterBySourceuri(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE sourceuri LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourceuri</var></dt>
+					<dd><code>string</code><br>$sourceuri The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTimeexecuted" id="_filterByTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#544-585" title="Go to source code">filterByTimeexecuted</a>( <span>mixed <var>$timeexecuted</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the timeexecuted column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the timeexecuted column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTimeexecuted(<span
+class="php-quote">'2011-03-14'</span>); <span
+class="php-comment">// WHERE timeexecuted = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTimeexecuted(<span
+class="php-quote">'now'</span>); <span
+class="php-comment">// WHERE timeexecuted = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTimeexecuted(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span
+class="php-quote">'yesterday'</span>)); <span
+class="php-comment">// WHERE timeexecuted &gt; '2011-03-13'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeexecuted</var></dt>
+					<dd><code>mixed</code><br>$timeexecuted The value to use as filter. Values can be integers (unix
+timestamps), DateTime objects, or strings. Empty strings are treated as NULL.
+Use scalar values for equality. Use array values for in_array() equivalent. Use
+associative array('min' =&gt; $minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByQuantification" id="_filterByQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#587-609" title="Go to source code">filterByQuantification</a>( <span><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code>|PropelObjectCollection <var>$quantification</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Quantification object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Quantification object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$quantification</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code>|PropelObjectCollection</code><br>$quantification the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinQuantification" id="_joinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#611-641" title="Go to source code">joinQuantification</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useQuantificationQuery" id="_useQuantificationQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.QuantificationQuery.html">cli_db\propel\QuantificationQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useQuantificationQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#643-659" title="Go to source code">useQuantificationQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Quantification relation Quantification object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Quantification relation Quantification object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.QuantificationQuery.html">cli_db\propel\QuantificationQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prune" id="_prune">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prune">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#661-675" title="Go to source code">prune</a>( <span><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code> <var>$analysis</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exclude object from result</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exclude object from result</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$analysis</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>$analysis Object to remove from the list of results</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="orderByAnalysisId" id="m_orderByAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#25" title="Go to source code">orderByAnalysisId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the analysis_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the analysis_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByName" id="m_orderByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#26" title="Go to source code">orderByName</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByDescription" id="m_orderByDescription">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#27" title="Go to source code">orderByDescription</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the description column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the description column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByProgram" id="m_orderByProgram">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#28" title="Go to source code">orderByProgram</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the program column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the program column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByProgramversion" id="m_orderByProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#29" title="Go to source code">orderByProgramversion</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the programversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the programversion column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByAlgorithm" id="m_orderByAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#30" title="Go to source code">orderByAlgorithm</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the algorithm column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the algorithm column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderBySourcename" id="m_orderBySourcename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderBySourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#31" title="Go to source code">orderBySourcename</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the sourcename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the sourcename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderBySourceversion" id="m_orderBySourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderBySourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#32" title="Go to source code">orderBySourceversion</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the sourceversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the sourceversion column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderBySourceuri" id="m_orderBySourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderBySourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#33" title="Go to source code">orderBySourceuri</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the sourceuri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the sourceuri column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTimeexecuted" id="m_orderByTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#34" title="Go to source code">orderByTimeexecuted</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the timeexecuted column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the timeexecuted column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByAnalysisId" id="m_groupByAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#36" title="Go to source code">groupByAnalysisId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the analysis_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the analysis_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByName" id="m_groupByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#37" title="Go to source code">groupByName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the name column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByDescription" id="m_groupByDescription">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#38" title="Go to source code">groupByDescription</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the description column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the description column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByProgram" id="m_groupByProgram">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#39" title="Go to source code">groupByProgram</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the program column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the program column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByProgramversion" id="m_groupByProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#40" title="Go to source code">groupByProgramversion</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the programversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the programversion column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByAlgorithm" id="m_groupByAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#41" title="Go to source code">groupByAlgorithm</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the algorithm column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the algorithm column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupBySourcename" id="m_groupBySourcename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupBySourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#42" title="Go to source code">groupBySourcename</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the sourcename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the sourcename column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupBySourceversion" id="m_groupBySourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupBySourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#43" title="Go to source code">groupBySourceversion</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the sourceversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the sourceversion column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupBySourceuri" id="m_groupBySourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupBySourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#44" title="Go to source code">groupBySourceuri</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the sourceuri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the sourceuri column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTimeexecuted" id="m_groupByTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#45" title="Go to source code">groupByTimeexecuted</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the timeexecuted column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the timeexecuted column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoin" id="m_leftJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#47" title="Go to source code">leftJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoin" id="m_rightJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#48" title="Go to source code">rightJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoin" id="m_innerJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#49" title="Go to source code">innerJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinQuantification" id="m_leftJoinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#51" title="Go to source code">leftJoinQuantification</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinQuantification" id="m_rightJoinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#52" title="Go to source code">rightJoinQuantification</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinQuantification" id="m_innerJoinQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#53" title="Go to source code">innerJoinQuantification</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Quantification relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Quantification relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisQuery.html">cli_db\propel\AnalysisQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOne" id="m_findOne">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOne">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#55" title="Go to source code">findOne</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis matching the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis matching the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneOrCreate" id="m_findOneOrCreate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneOrCreate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#56" title="Go to source code">findOneOrCreate</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis matching the query, or a new Analysis object
+populated from the query conditions when no match is found</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis matching the query, or a new Analysis object
+populated from the query conditions when no match is found</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByName" id="m_findOneByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#58" title="Go to source code">findOneByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByDescription" id="m_findOneByDescription">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#59" title="Go to source code">findOneByDescription</a>( <span>string <var>$description</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the description column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the description column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$description</var></dt>
+					<dd><code>string</code><br>$description</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByProgram" id="m_findOneByProgram">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#60" title="Go to source code">findOneByProgram</a>( <span>string <var>$program</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the program column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the program column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$program</var></dt>
+					<dd><code>string</code><br>$program</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByProgramversion" id="m_findOneByProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#61" title="Go to source code">findOneByProgramversion</a>( <span>string <var>$programversion</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the programversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the programversion column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$programversion</var></dt>
+					<dd><code>string</code><br>$programversion</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByAlgorithm" id="m_findOneByAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#62" title="Go to source code">findOneByAlgorithm</a>( <span>string <var>$algorithm</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the algorithm column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the algorithm column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$algorithm</var></dt>
+					<dd><code>string</code><br>$algorithm</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneBySourcename" id="m_findOneBySourcename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneBySourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#63" title="Go to source code">findOneBySourcename</a>( <span>string <var>$sourcename</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the sourcename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the sourcename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourcename</var></dt>
+					<dd><code>string</code><br>$sourcename</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneBySourceversion" id="m_findOneBySourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneBySourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#64" title="Go to source code">findOneBySourceversion</a>( <span>string <var>$sourceversion</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the sourceversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the sourceversion column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourceversion</var></dt>
+					<dd><code>string</code><br>$sourceversion</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneBySourceuri" id="m_findOneBySourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneBySourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#65" title="Go to source code">findOneBySourceuri</a>( <span>string <var>$sourceuri</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the sourceuri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the sourceuri column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourceuri</var></dt>
+					<dd><code>string</code><br>$sourceuri</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTimeexecuted" id="m_findOneByTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#66" title="Go to source code">findOneByTimeexecuted</a>( <span>string <var>$timeexecuted</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Analysis filtered by the timeexecuted column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Analysis filtered by the timeexecuted column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeexecuted</var></dt>
+					<dd><code>string</code><br>$timeexecuted</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByAnalysisId" id="m_findByAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#68" title="Go to source code">findByAnalysisId</a>( <span>integer <var>$analysis_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the analysis_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the analysis_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$analysis_id</var></dt>
+					<dd><code>integer</code><br>$analysis_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByName" id="m_findByName">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#69" title="Go to source code">findByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByDescription" id="m_findByDescription">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#70" title="Go to source code">findByDescription</a>( <span>string <var>$description</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the description column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the description column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$description</var></dt>
+					<dd><code>string</code><br>$description</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByProgram" id="m_findByProgram">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#71" title="Go to source code">findByProgram</a>( <span>string <var>$program</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the program column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the program column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$program</var></dt>
+					<dd><code>string</code><br>$program</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByProgramversion" id="m_findByProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#72" title="Go to source code">findByProgramversion</a>( <span>string <var>$programversion</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the programversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the programversion column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$programversion</var></dt>
+					<dd><code>string</code><br>$programversion</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByAlgorithm" id="m_findByAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#73" title="Go to source code">findByAlgorithm</a>( <span>string <var>$algorithm</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the algorithm column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the algorithm column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$algorithm</var></dt>
+					<dd><code>string</code><br>$algorithm</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findBySourcename" id="m_findBySourcename">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findBySourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#74" title="Go to source code">findBySourcename</a>( <span>string <var>$sourcename</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the sourcename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the sourcename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourcename</var></dt>
+					<dd><code>string</code><br>$sourcename</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findBySourceversion" id="m_findBySourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findBySourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#75" title="Go to source code">findBySourceversion</a>( <span>string <var>$sourceversion</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the sourceversion column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the sourceversion column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourceversion</var></dt>
+					<dd><code>string</code><br>$sourceversion</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findBySourceuri" id="m_findBySourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findBySourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#76" title="Go to source code">findBySourceuri</a>( <span>string <var>$sourceuri</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the sourceuri column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the sourceuri column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sourceuri</var></dt>
+					<dd><code>string</code><br>$sourceuri</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTimeexecuted" id="m_findByTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysisQuery.html#77" title="Go to source code">findByTimeexecuted</a>( <span>string <var>$timeexecuted</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Analysis objects filtered by the timeexecuted column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Analysis objects filtered by the timeexecuted column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeexecuted</var></dt>
+					<dd><code>string</code><br>$timeexecuted</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

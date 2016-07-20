@@ -1,0 +1,5756 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseFeatureQuery | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseFeatureQuery</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a query for the 'feature' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+ModelCriteria
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseFeatureQuery</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#26-1324" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseFeatureQuery.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#125-135" title="Go to source code">__construct</a>( <span>string <var>$dbName</var> = <span class="php-quote">'cli_db'</span></span>, <span>string <var>$modelName</var> = <span class="php-quote">'cli_db\\propel\\Feature'</span></span>, <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BaseFeatureQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BaseFeatureQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbName</var></dt>
+					<dd><code>string</code><br>$dbName The dabase name</dd>
+					<dt><var>$modelName</var></dt>
+					<dd><code>string</code><br>$modelName The phpName of a model, e.g. 'Book'</dd>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias for the model in this query, e.g. 'b'</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			 public static
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#137-159" title="Go to source code">create</a>( <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>|Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns a new FeatureQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a new FeatureQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias of a model in the query</dd>
+					<dt><var>$criteria</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>|Criteria</code><br>$criteria Optional Criteria to build the query from</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPk" id="_findPk">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>|<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPk">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#161-195" title="Go to source code">findPk</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+<pre>
+<span class="php-var">$obj</span>  = <span
+class="php-var">$c</span>-&gt;findPk(<span class="php-num">12</span>, <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>|<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByFeatureId" id="_findOneByFeatureId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findOneByFeatureId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#197-209" title="Go to source code">findOneByFeatureId</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkSimple" id="_findPkSimple">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkSimple">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#211-241" title="Go to source code">findPkSimple</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkComplex" id="_findPkComplex">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>|<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkComplex">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#243-260" title="Go to source code">findPkComplex</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>|<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPks" id="_findPks">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPks">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#262-284" title="Go to source code">findPks</a>( <span>array <var>$keys</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys Primary keys to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a>[]</code>|mixed</code><br>the list of results, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKey" id="_filterByPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#286-297" title="Go to source code">filterByPrimaryKey</a>( <span>mixed <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by primary key</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by primary key</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKeys" id="_filterByPrimaryKeys">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKeys">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#299-310" title="Go to source code">filterByPrimaryKeys</a>( <span>array <var>$keys</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a list of primary keys</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a list of primary keys</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys The list of primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureId" id="_filterByFeatureId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#312-352" title="Go to source code">filterByFeatureId</a>( <span>mixed <var>$featureId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the feature_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the feature_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByFeatureId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE feature_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByFeatureId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE feature_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByFeatureId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE feature_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByFeatureId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE feature_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureId</var></dt>
+					<dd><code>mixed</code><br>$featureId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByDbxrefId" id="_filterByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#354-396" title="Go to source code">filterByDbxrefId</a>( <span>mixed <var>$dbxrefId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the dbxref_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE dbxref_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE dbxref_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE dbxref_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE dbxref_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxrefId</var></dt>
+					<dd><code>mixed</code><br>$dbxrefId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseFeatureQuery.html#_filterByDbxref">cli_db\propel\om\BaseFeatureQuery::filterByDbxref()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByOrganismId" id="_filterByOrganismId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByOrganismId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#398-440" title="Go to source code">filterByOrganismId</a>( <span>mixed <var>$organismId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the organism_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the organism_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByOrganismId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE organism_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByOrganismId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE organism_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByOrganismId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE organism_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByOrganismId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE organism_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$organismId</var></dt>
+					<dd><code>mixed</code><br>$organismId The value to use as filter. Use scalar values for equality. Use
+array values for in_array() equivalent. Use associative array('min' =&gt;
+$minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseFeatureQuery.html#_filterByOrganism">cli_db\propel\om\BaseFeatureQuery::filterByOrganism()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByName" id="_filterByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#442-469" title="Go to source code">filterByName</a>( <span>string <var>$name</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the name column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE name = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE name LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByUniquename" id="_filterByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#471-498" title="Go to source code">filterByUniquename</a>( <span>string <var>$uniquename</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the uniquename column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByUniquename(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE uniquename = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByUniquename(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE uniquename LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uniquename</var></dt>
+					<dd><code>string</code><br>$uniquename The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByResidues" id="_filterByResidues">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByResidues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#500-527" title="Go to source code">filterByResidues</a>( <span>string <var>$residues</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the residues column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the residues column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByResidues(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE residues = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByResidues(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE residues LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$residues</var></dt>
+					<dd><code>string</code><br>$residues The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySeqlen" id="_filterBySeqlen">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySeqlen">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#529-569" title="Go to source code">filterBySeqlen</a>( <span>mixed <var>$seqlen</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the seqlen column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the seqlen column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterBySeqlen(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE seqlen = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterBySeqlen(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE seqlen IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterBySeqlen(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE seqlen &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterBySeqlen(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE seqlen &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$seqlen</var></dt>
+					<dd><code>mixed</code><br>$seqlen The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByMd5checksum" id="_filterByMd5checksum">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByMd5checksum">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#571-598" title="Go to source code">filterByMd5checksum</a>( <span>string <var>$md5checksum</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the md5checksum column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the md5checksum column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByMd5checksum(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE md5checksum = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByMd5checksum(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE md5checksum LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$md5checksum</var></dt>
+					<dd><code>string</code><br>$md5checksum The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTypeId" id="_filterByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#600-642" title="Go to source code">filterByTypeId</a>( <span>mixed <var>$typeId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the type_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE type_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE type_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE type_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE type_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$typeId</var></dt>
+					<dd><code>mixed</code><br>$typeId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseFeatureQuery.html#_filterByCvterm">cli_db\propel\om\BaseFeatureQuery::filterByCvterm()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByIsAnalysis" id="_filterByIsAnalysis">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByIsAnalysis">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#644-669" title="Go to source code">filterByIsAnalysis</a>( <span>boolean|string <var>$isAnalysis</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the is_analysis column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the is_analysis column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByIsAnalysis(<span
+class="php-keyword1">true</span>); <span
+class="php-comment">// WHERE is_analysis = true</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsAnalysis(<span
+class="php-quote">'yes'</span>); <span
+class="php-comment">// WHERE is_analysis = true</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$isAnalysis</var></dt>
+					<dd><code>boolean|string</code><br>$isAnalysis The value to use as filter. Non-boolean arguments are converted
+using the following rules: * 1, '1', 'true', 'on', and 'yes' are converted to
+boolean true * 0, '0', 'false', 'off', and 'no' are converted to boolean false
+Check on string values is case insensitive (so 'FaLsE' is seen as 'false').</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByIsObsolete" id="_filterByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#671-696" title="Go to source code">filterByIsObsolete</a>( <span>boolean|string <var>$isObsolete</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the is_obsolete column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-keyword1">true</span>); <span
+class="php-comment">// WHERE is_obsolete = true</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-quote">'yes'</span>); <span
+class="php-comment">// WHERE is_obsolete = true</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$isObsolete</var></dt>
+					<dd><code>boolean|string</code><br>$isObsolete The value to use as filter. Non-boolean arguments are converted
+using the following rules: * 1, '1', 'true', 'on', and 'yes' are converted to
+boolean true * 0, '0', 'false', 'off', and 'no' are converted to boolean false
+Check on string values is case insensitive (so 'FaLsE' is seen as 'false').</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTimeaccessioned" id="_filterByTimeaccessioned">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTimeaccessioned">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#698-739" title="Go to source code">filterByTimeaccessioned</a>( <span>mixed <var>$timeaccessioned</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the timeaccessioned column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the timeaccessioned column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTimeaccessioned(<span
+class="php-quote">'2011-03-14'</span>); <span
+class="php-comment">// WHERE timeaccessioned = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTimeaccessioned(<span
+class="php-quote">'now'</span>); <span
+class="php-comment">// WHERE timeaccessioned = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTimeaccessioned(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span
+class="php-quote">'yesterday'</span>)); <span
+class="php-comment">// WHERE timeaccessioned &gt; '2011-03-13'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeaccessioned</var></dt>
+					<dd><code>mixed</code><br>$timeaccessioned The value to use as filter. Values can be integers (unix
+timestamps), DateTime objects, or strings. Empty strings are treated as NULL.
+Use scalar values for equality. Use array values for in_array() equivalent. Use
+associative array('min' =&gt; $minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTimelastmodified" id="_filterByTimelastmodified">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTimelastmodified">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#741-782" title="Go to source code">filterByTimelastmodified</a>( <span>mixed <var>$timelastmodified</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the timelastmodified column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the timelastmodified column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTimelastmodified(<span
+class="php-quote">'2011-03-14'</span>); <span
+class="php-comment">// WHERE timelastmodified = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTimelastmodified(<span
+class="php-quote">'now'</span>); <span
+class="php-comment">// WHERE timelastmodified = '2011-03-14'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTimelastmodified(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span
+class="php-quote">'yesterday'</span>)); <span
+class="php-comment">// WHERE timelastmodified &gt; '2011-03-13'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timelastmodified</var></dt>
+					<dd><code>mixed</code><br>$timelastmodified The value to use as filter. Values can be integers (unix
+timestamps), DateTime objects, or strings. Empty strings are treated as NULL.
+Use scalar values for equality. Use array values for in_array() equivalent. Use
+associative array('min' =&gt; $minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByDbxref" id="_filterByDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#784-808" title="Go to source code">filterByDbxref</a>( <span><code><a href="class-cli_db.propel.Dbxref.html">cli_db\propel\Dbxref</a></code>|PropelObjectCollection <var>$dbxref</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Dbxref object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Dbxref object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxref</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Dbxref.html">cli_db\propel\Dbxref</a></code>|PropelObjectCollection</code><br>$dbxref The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinDbxref" id="_joinDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#810-840" title="Go to source code">joinDbxref</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Dbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Dbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useDbxrefQuery" id="_useDbxrefQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.DbxrefQuery.html">cli_db\propel\DbxrefQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useDbxrefQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#842-858" title="Go to source code">useDbxrefQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Dbxref relation Dbxref object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Dbxref relation Dbxref object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.DbxrefQuery.html">cli_db\propel\DbxrefQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByOrganism" id="_filterByOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#860-884" title="Go to source code">filterByOrganism</a>( <span><code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code>|PropelObjectCollection <var>$organism</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Organism object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Organism object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$organism</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Organism.html">cli_db\propel\Organism</a></code>|PropelObjectCollection</code><br>$organism The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinOrganism" id="_joinOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#886-916" title="Go to source code">joinOrganism</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Organism relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Organism relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useOrganismQuery" id="_useOrganismQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.OrganismQuery.html">cli_db\propel\OrganismQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useOrganismQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#918-934" title="Go to source code">useOrganismQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Organism relation Organism object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Organism relation Organism object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.OrganismQuery.html">cli_db\propel\OrganismQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByCvterm" id="_filterByCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#936-960" title="Go to source code">filterByCvterm</a>( <span><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|PropelObjectCollection <var>$cvterm</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Cvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Cvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|PropelObjectCollection</code><br>$cvterm The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinCvterm" id="_joinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#962-992" title="Go to source code">joinCvterm</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useCvtermQuery" id="_useCvtermQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useCvtermQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#994-1010" title="Go to source code">useCvtermQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Cvterm relation Cvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Cvterm relation Cvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureCvterm" id="_filterByFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1012-1034" title="Go to source code">filterByFeatureCvterm</a>( <span><code><a href="class-cli_db.propel.FeatureCvterm.html">cli_db\propel\FeatureCvterm</a></code>|PropelObjectCollection <var>$featureCvterm</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureCvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureCvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureCvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureCvterm.html">cli_db\propel\FeatureCvterm</a></code>|PropelObjectCollection</code><br>$featureCvterm the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureCvterm" id="_joinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1036-1066" title="Go to source code">joinFeatureCvterm</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureCvtermQuery" id="_useFeatureCvtermQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureCvtermQuery.html">cli_db\propel\FeatureCvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureCvtermQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1068-1084" title="Go to source code">useFeatureCvtermQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureCvterm relation FeatureCvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureCvterm relation FeatureCvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureCvtermQuery.html">cli_db\propel\FeatureCvtermQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureDbxref" id="_filterByFeatureDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1086-1108" title="Go to source code">filterByFeatureDbxref</a>( <span><code><a href="class-cli_db.propel.FeatureDbxref.html">cli_db\propel\FeatureDbxref</a></code>|PropelObjectCollection <var>$featureDbxref</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureDbxref object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureDbxref object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureDbxref</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureDbxref.html">cli_db\propel\FeatureDbxref</a></code>|PropelObjectCollection</code><br>$featureDbxref the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureDbxref" id="_joinFeatureDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1110-1140" title="Go to source code">joinFeatureDbxref</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureDbxrefQuery" id="_useFeatureDbxrefQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureDbxrefQuery.html">cli_db\propel\FeatureDbxrefQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureDbxrefQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1142-1158" title="Go to source code">useFeatureDbxrefQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureDbxref relation FeatureDbxref object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureDbxref relation FeatureDbxref object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureDbxrefQuery.html">cli_db\propel\FeatureDbxrefQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeaturePub" id="_filterByFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1160-1182" title="Go to source code">filterByFeaturePub</a>( <span><code><a href="class-cli_db.propel.FeaturePub.html">cli_db\propel\FeaturePub</a></code>|PropelObjectCollection <var>$featurePub</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeaturePub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeaturePub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featurePub</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeaturePub.html">cli_db\propel\FeaturePub</a></code>|PropelObjectCollection</code><br>$featurePub the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeaturePub" id="_joinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1184-1214" title="Go to source code">joinFeaturePub</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeaturePubQuery" id="_useFeaturePubQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeaturePubQuery.html">cli_db\propel\FeaturePubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeaturePubQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1216-1232" title="Go to source code">useFeaturePubQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeaturePub relation FeaturePub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeaturePub relation FeaturePub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeaturePubQuery.html">cli_db\propel\FeaturePubQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureSynonym" id="_filterByFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1234-1256" title="Go to source code">filterByFeatureSynonym</a>( <span><code><a href="class-cli_db.propel.FeatureSynonym.html">cli_db\propel\FeatureSynonym</a></code>|PropelObjectCollection <var>$featureSynonym</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureSynonym object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureSynonym object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureSynonym</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureSynonym.html">cli_db\propel\FeatureSynonym</a></code>|PropelObjectCollection</code><br>$featureSynonym the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureSynonym" id="_joinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1258-1288" title="Go to source code">joinFeatureSynonym</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureSynonymQuery" id="_useFeatureSynonymQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureSynonymQuery.html">cli_db\propel\FeatureSynonymQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureSynonymQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1290-1306" title="Go to source code">useFeatureSynonymQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureSynonym relation FeatureSynonym object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureSynonym relation FeatureSynonym object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureSynonymQuery.html">cli_db\propel\FeatureSynonymQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prune" id="_prune">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prune">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#1308-1322" title="Go to source code">prune</a>( <span><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code> <var>$feature</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exclude object from result</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exclude object from result</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$feature</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br>$feature Object to remove from the list of results</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="orderByFeatureId" id="m_orderByFeatureId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByFeatureId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#31" title="Go to source code">orderByFeatureId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the feature_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the feature_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByDbxrefId" id="m_orderByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#32" title="Go to source code">orderByDbxrefId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the dbxref_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByOrganismId" id="m_orderByOrganismId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByOrganismId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#33" title="Go to source code">orderByOrganismId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the organism_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the organism_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByName" id="m_orderByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#34" title="Go to source code">orderByName</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByUniquename" id="m_orderByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#35" title="Go to source code">orderByUniquename</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the uniquename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByResidues" id="m_orderByResidues">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByResidues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#36" title="Go to source code">orderByResidues</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the residues column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the residues column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderBySeqlen" id="m_orderBySeqlen">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderBySeqlen">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#37" title="Go to source code">orderBySeqlen</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the seqlen column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the seqlen column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByMd5checksum" id="m_orderByMd5checksum">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByMd5checksum">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#38" title="Go to source code">orderByMd5checksum</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the md5checksum column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the md5checksum column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTypeId" id="m_orderByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#39" title="Go to source code">orderByTypeId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByIsAnalysis" id="m_orderByIsAnalysis">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByIsAnalysis">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#40" title="Go to source code">orderByIsAnalysis</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the is_analysis column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the is_analysis column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByIsObsolete" id="m_orderByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#41" title="Go to source code">orderByIsObsolete</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTimeaccessioned" id="m_orderByTimeaccessioned">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTimeaccessioned">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#42" title="Go to source code">orderByTimeaccessioned</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the timeaccessioned column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the timeaccessioned column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTimelastmodified" id="m_orderByTimelastmodified">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTimelastmodified">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#43" title="Go to source code">orderByTimelastmodified</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the timelastmodified column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the timelastmodified column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByFeatureId" id="m_groupByFeatureId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByFeatureId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#45" title="Go to source code">groupByFeatureId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the feature_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the feature_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByDbxrefId" id="m_groupByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#46" title="Go to source code">groupByDbxrefId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the dbxref_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByOrganismId" id="m_groupByOrganismId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByOrganismId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#47" title="Go to source code">groupByOrganismId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the organism_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the organism_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByName" id="m_groupByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#48" title="Go to source code">groupByName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the name column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByUniquename" id="m_groupByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#49" title="Go to source code">groupByUniquename</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the uniquename column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByResidues" id="m_groupByResidues">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByResidues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#50" title="Go to source code">groupByResidues</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the residues column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the residues column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupBySeqlen" id="m_groupBySeqlen">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupBySeqlen">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#51" title="Go to source code">groupBySeqlen</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the seqlen column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the seqlen column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByMd5checksum" id="m_groupByMd5checksum">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByMd5checksum">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#52" title="Go to source code">groupByMd5checksum</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the md5checksum column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the md5checksum column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTypeId" id="m_groupByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#53" title="Go to source code">groupByTypeId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the type_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByIsAnalysis" id="m_groupByIsAnalysis">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByIsAnalysis">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#54" title="Go to source code">groupByIsAnalysis</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the is_analysis column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the is_analysis column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByIsObsolete" id="m_groupByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#55" title="Go to source code">groupByIsObsolete</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the is_obsolete column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTimeaccessioned" id="m_groupByTimeaccessioned">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTimeaccessioned">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#56" title="Go to source code">groupByTimeaccessioned</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the timeaccessioned column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the timeaccessioned column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTimelastmodified" id="m_groupByTimelastmodified">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTimelastmodified">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#57" title="Go to source code">groupByTimelastmodified</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the timelastmodified column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the timelastmodified column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoin" id="m_leftJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#59" title="Go to source code">leftJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoin" id="m_rightJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#60" title="Go to source code">rightJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoin" id="m_innerJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#61" title="Go to source code">innerJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinDbxref" id="m_leftJoinDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#63" title="Go to source code">leftJoinDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Dbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Dbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinDbxref" id="m_rightJoinDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#64" title="Go to source code">rightJoinDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Dbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Dbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinDbxref" id="m_innerJoinDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#65" title="Go to source code">innerJoinDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Dbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Dbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinOrganism" id="m_leftJoinOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#67" title="Go to source code">leftJoinOrganism</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Organism relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Organism relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinOrganism" id="m_rightJoinOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#68" title="Go to source code">rightJoinOrganism</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Organism relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Organism relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinOrganism" id="m_innerJoinOrganism">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinOrganism">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#69" title="Go to source code">innerJoinOrganism</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Organism relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Organism relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinCvterm" id="m_leftJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#71" title="Go to source code">leftJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinCvterm" id="m_rightJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#72" title="Go to source code">rightJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinCvterm" id="m_innerJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#73" title="Go to source code">innerJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureCvterm" id="m_leftJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#75" title="Go to source code">leftJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureCvterm" id="m_rightJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#76" title="Go to source code">rightJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureCvterm" id="m_innerJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#77" title="Go to source code">innerJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureDbxref" id="m_leftJoinFeatureDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#79" title="Go to source code">leftJoinFeatureDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureDbxref" id="m_rightJoinFeatureDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#80" title="Go to source code">rightJoinFeatureDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureDbxref" id="m_innerJoinFeatureDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#81" title="Go to source code">innerJoinFeatureDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeaturePub" id="m_leftJoinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#83" title="Go to source code">leftJoinFeaturePub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeaturePub" id="m_rightJoinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#84" title="Go to source code">rightJoinFeaturePub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeaturePub" id="m_innerJoinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#85" title="Go to source code">innerJoinFeaturePub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureSynonym" id="m_leftJoinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#87" title="Go to source code">leftJoinFeatureSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureSynonym" id="m_rightJoinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#88" title="Go to source code">rightJoinFeatureSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureSynonym" id="m_innerJoinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#89" title="Go to source code">innerJoinFeatureSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOne" id="m_findOne">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOne">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#91" title="Go to source code">findOne</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature matching the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature matching the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneOrCreate" id="m_findOneOrCreate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneOrCreate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#92" title="Go to source code">findOneOrCreate</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature matching the query, or a new Feature object
+populated from the query conditions when no match is found</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature matching the query, or a new Feature object
+populated from the query conditions when no match is found</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByDbxrefId" id="m_findOneByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#94" title="Go to source code">findOneByDbxrefId</a>( <span>integer <var>$dbxref_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the dbxref_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxref_id</var></dt>
+					<dd><code>integer</code><br>$dbxref_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByOrganismId" id="m_findOneByOrganismId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByOrganismId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#95" title="Go to source code">findOneByOrganismId</a>( <span>integer <var>$organism_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the organism_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the organism_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$organism_id</var></dt>
+					<dd><code>integer</code><br>$organism_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByName" id="m_findOneByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#96" title="Go to source code">findOneByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByUniquename" id="m_findOneByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#97" title="Go to source code">findOneByUniquename</a>( <span>string <var>$uniquename</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the uniquename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uniquename</var></dt>
+					<dd><code>string</code><br>$uniquename</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByResidues" id="m_findOneByResidues">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByResidues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#98" title="Go to source code">findOneByResidues</a>( <span>string <var>$residues</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the residues column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the residues column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$residues</var></dt>
+					<dd><code>string</code><br>$residues</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneBySeqlen" id="m_findOneBySeqlen">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneBySeqlen">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#99" title="Go to source code">findOneBySeqlen</a>( <span>integer <var>$seqlen</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the seqlen column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the seqlen column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$seqlen</var></dt>
+					<dd><code>integer</code><br>$seqlen</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByMd5checksum" id="m_findOneByMd5checksum">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByMd5checksum">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#100" title="Go to source code">findOneByMd5checksum</a>( <span>string <var>$md5checksum</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the md5checksum column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the md5checksum column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$md5checksum</var></dt>
+					<dd><code>string</code><br>$md5checksum</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTypeId" id="m_findOneByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#101" title="Go to source code">findOneByTypeId</a>( <span>integer <var>$type_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type_id</var></dt>
+					<dd><code>integer</code><br>$type_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByIsAnalysis" id="m_findOneByIsAnalysis">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByIsAnalysis">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#102" title="Go to source code">findOneByIsAnalysis</a>( <span>boolean <var>$is_analysis</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the is_analysis column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the is_analysis column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_analysis</var></dt>
+					<dd><code>boolean</code><br>$is_analysis</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByIsObsolete" id="m_findOneByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#103" title="Go to source code">findOneByIsObsolete</a>( <span>boolean <var>$is_obsolete</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_obsolete</var></dt>
+					<dd><code>boolean</code><br>$is_obsolete</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTimeaccessioned" id="m_findOneByTimeaccessioned">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTimeaccessioned">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#104" title="Go to source code">findOneByTimeaccessioned</a>( <span>string <var>$timeaccessioned</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the timeaccessioned column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the timeaccessioned column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeaccessioned</var></dt>
+					<dd><code>string</code><br>$timeaccessioned</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTimelastmodified" id="m_findOneByTimelastmodified">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTimelastmodified">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#105" title="Go to source code">findOneByTimelastmodified</a>( <span>string <var>$timelastmodified</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Feature filtered by the timelastmodified column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Feature filtered by the timelastmodified column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timelastmodified</var></dt>
+					<dd><code>string</code><br>$timelastmodified</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByFeatureId" id="m_findByFeatureId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByFeatureId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#107" title="Go to source code">findByFeatureId</a>( <span>integer <var>$feature_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the feature_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the feature_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$feature_id</var></dt>
+					<dd><code>integer</code><br>$feature_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByDbxrefId" id="m_findByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#108" title="Go to source code">findByDbxrefId</a>( <span>integer <var>$dbxref_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the dbxref_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxref_id</var></dt>
+					<dd><code>integer</code><br>$dbxref_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByOrganismId" id="m_findByOrganismId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByOrganismId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#109" title="Go to source code">findByOrganismId</a>( <span>integer <var>$organism_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the organism_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the organism_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$organism_id</var></dt>
+					<dd><code>integer</code><br>$organism_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByName" id="m_findByName">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#110" title="Go to source code">findByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByUniquename" id="m_findByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#111" title="Go to source code">findByUniquename</a>( <span>string <var>$uniquename</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the uniquename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uniquename</var></dt>
+					<dd><code>string</code><br>$uniquename</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByResidues" id="m_findByResidues">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByResidues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#112" title="Go to source code">findByResidues</a>( <span>string <var>$residues</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the residues column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the residues column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$residues</var></dt>
+					<dd><code>string</code><br>$residues</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findBySeqlen" id="m_findBySeqlen">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findBySeqlen">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#113" title="Go to source code">findBySeqlen</a>( <span>integer <var>$seqlen</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the seqlen column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the seqlen column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$seqlen</var></dt>
+					<dd><code>integer</code><br>$seqlen</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByMd5checksum" id="m_findByMd5checksum">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByMd5checksum">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#114" title="Go to source code">findByMd5checksum</a>( <span>string <var>$md5checksum</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the md5checksum column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the md5checksum column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$md5checksum</var></dt>
+					<dd><code>string</code><br>$md5checksum</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTypeId" id="m_findByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#115" title="Go to source code">findByTypeId</a>( <span>integer <var>$type_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type_id</var></dt>
+					<dd><code>integer</code><br>$type_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByIsAnalysis" id="m_findByIsAnalysis">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByIsAnalysis">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#116" title="Go to source code">findByIsAnalysis</a>( <span>boolean <var>$is_analysis</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the is_analysis column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the is_analysis column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_analysis</var></dt>
+					<dd><code>boolean</code><br>$is_analysis</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByIsObsolete" id="m_findByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#117" title="Go to source code">findByIsObsolete</a>( <span>boolean <var>$is_obsolete</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_obsolete</var></dt>
+					<dd><code>boolean</code><br>$is_obsolete</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTimeaccessioned" id="m_findByTimeaccessioned">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTimeaccessioned">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#118" title="Go to source code">findByTimeaccessioned</a>( <span>string <var>$timeaccessioned</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the timeaccessioned column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the timeaccessioned column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeaccessioned</var></dt>
+					<dd><code>string</code><br>$timeaccessioned</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTimelastmodified" id="m_findByTimelastmodified">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTimelastmodified">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseFeatureQuery.html#119" title="Go to source code">findByTimelastmodified</a>( <span>string <var>$timelastmodified</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Feature objects filtered by the timelastmodified column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Feature objects filtered by the timelastmodified column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timelastmodified</var></dt>
+					<dd><code>string</code><br>$timelastmodified</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

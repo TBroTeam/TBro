@@ -1,0 +1,3664 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseAnalysis | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseAnalysis</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a row from the 'analysis' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+BaseObject
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseAnalysis</span></b>			
+			 implements 
+<span>Persistent</span>
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseAnalysis.html#24-1710" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseAnalysis.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="applyDefaultValues" id="_applyDefaultValues">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_applyDefaultValues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#145-153" title="Go to source code">applyDefaultValues</a>( )</code>
+
+		<div class="description short">
+			
+<p>Applies default values to this object. This method should be called from the
+object's constructor (or equivalent initialization method).</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Applies default values to this object. This method should be called from the
+object's constructor (or equivalent initialization method).</p>
+
+
+
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#___construct">cli_db\propel\om\BaseAnalysis::__construct()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#155-163" title="Go to source code">__construct</a>( )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BaseAnalysis object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BaseAnalysis object.</p>
+
+
+
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						applyDefaults()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAnalysisId" id="_getAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#165-173" title="Go to source code">getAnalysisId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [analysis_id] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [analysis_id] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getName" id="_getName">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#175-183" title="Go to source code">getName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [name] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [name] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getDescription" id="_getDescription">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#185-193" title="Go to source code">getDescription</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [description] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [description] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getProgram" id="_getProgram">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#195-203" title="Go to source code">getProgram</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [program] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [program] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getProgramversion" id="_getProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#205-213" title="Go to source code">getProgramversion</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [programversion] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [programversion] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAlgorithm" id="_getAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#215-223" title="Go to source code">getAlgorithm</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [algorithm] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [algorithm] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getSourcename" id="_getSourcename">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getSourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#225-233" title="Go to source code">getSourcename</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [sourcename] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [sourcename] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getSourceversion" id="_getSourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getSourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#235-243" title="Go to source code">getSourceversion</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [sourceversion] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [sourceversion] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getSourceuri" id="_getSourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getSourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#245-253" title="Go to source code">getSourceuri</a>( )</code>
+
+		<div class="description short">
+			
+<p>Get the [sourceuri] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [sourceuri] column value.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTimeexecuted" id="_getTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#255-288" title="Go to source code">getTimeexecuted</a>( <span>string <var>$format</var> = <span class="php-quote">'Y-m-d H:i:s'</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Get the [optionally formatted] temporal [timeexecuted] column value.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Get the [optionally formatted] temporal [timeexecuted] column value.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$format</var></dt>
+					<dd><code>string</code><br>$format The date/time format string (either date()-style or strftime()-style).
+If format is null, then the raw DateTime object will be returned.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Formatted date/time value as string or DateTime object (if format is null), null
+if column is null<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if unable to parse/validate the date/time value.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setAnalysisId" id="_setAnalysisId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setAnalysisId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#290-309" title="Go to source code">setAnalysisId</a>( <span>integer <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [analysis_id] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [analysis_id] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>integer</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setName" id="_setName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#311-330" title="Go to source code">setName</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [name] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [name] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDescription" id="_setDescription">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDescription">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#332-351" title="Go to source code">setDescription</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [description] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [description] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setProgram" id="_setProgram">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setProgram">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#353-372" title="Go to source code">setProgram</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [program] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [program] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setProgramversion" id="_setProgramversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setProgramversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#374-393" title="Go to source code">setProgramversion</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [programversion] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [programversion] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setAlgorithm" id="_setAlgorithm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setAlgorithm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#395-414" title="Go to source code">setAlgorithm</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [algorithm] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [algorithm] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setSourcename" id="_setSourcename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setSourcename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#416-435" title="Go to source code">setSourcename</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [sourcename] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [sourcename] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setSourceversion" id="_setSourceversion">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setSourceversion">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#437-456" title="Go to source code">setSourceversion</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [sourceversion] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [sourceversion] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setSourceuri" id="_setSourceuri">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setSourceuri">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#458-477" title="Go to source code">setSourceuri</a>( <span>string <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Set the value of [sourceuri] column.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Set the value of [sourceuri] column.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>string</code><br>$v new value</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setTimeexecuted" id="_setTimeexecuted">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setTimeexecuted">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#479-500" title="Go to source code">setTimeexecuted</a>( <span>mixed <var>$v</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets the value of [timeexecuted] column to a normalized version of the
+date/time value specified.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets the value of [timeexecuted] column to a normalized version of the
+date/time value specified.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$v</var></dt>
+					<dd><code>mixed</code><br>$v string, integer (timestamp), or DateTime value. Empty strings are treated as
+null.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hasOnlyDefaultValues" id="_hasOnlyDefaultValues">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_hasOnlyDefaultValues">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#502-514" title="Go to source code">hasOnlyDefaultValues</a>( )</code>
+
+		<div class="description short">
+			
+<p>Indicates whether the columns in this object are only set to default
+values.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Indicates whether the columns in this object are only set to default
+values.</p>
+
+<p>This method can be used in conjunction with isModified() to indicate whether
+an object is both modified _and_ has some values set which are non-default.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>Whether the columns in this object are only been set with default values.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hydrate" id="_hydrate">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_hydrate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#516-557" title="Go to source code">hydrate</a>( <span>array <var>$row</var></span>, <span>integer <var>$startcol</var> = <span class="php-num">0</span></span>, <span>boolean <var>$rehydrate</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Hydrates (populates) the object variables with values from the database
+resultset.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Hydrates (populates) the object variables with values from the database
+resultset.</p>
+
+<p>An offset (0-based "start column") is specified so that objects can be
+hydrated with a subset of the columns in the resultset rows. This is needed, for
+example, for results of JOIN queries where the resultset row includes columns
+from two or more tables.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$row</var></dt>
+					<dd><code>array</code><br>$row The row returned by PDOStatement-&gt;fetch(PDO::FETCH_NUM)</dd>
+					<dt><var>$startcol</var></dt>
+					<dd><code>integer</code><br>$startcol 0-based offset column which indicates which restultset column to start
+with.</dd>
+					<dt><var>$rehydrate</var></dt>
+					<dd><code>boolean</code><br>$rehydrate Whether this object is being re-hydrated from the database.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>next starting column<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- Any caught Exception will be rewrapped as a PropelException.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="ensureConsistency" id="_ensureConsistency">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_ensureConsistency">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#559-575" title="Go to source code">ensureConsistency</a>( )</code>
+
+		<div class="description short">
+			
+<p>Checks and repairs the internal consistency of the object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Checks and repairs the internal consistency of the object.</p>
+
+<p>This method is executed after an already-instantiated object is re-hydrated
+from the database. It exists to check any foreign keys to make sure that the
+objects related to the current object are correct based on foreign key.</p>
+
+<p>You can override this method in the stub class, but you should always invoke
+the base method from the overridden method (i.e. parent::ensureConsistency()),
+in case your model changes.</p>
+
+
+
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="reload" id="_reload">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_reload">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#577-617" title="Go to source code">reload</a>( <span>boolean <var>$deep</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Reloads this object from datastore based on primary key and (optionally)
+resets all associated objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Reloads this object from datastore based on primary key and (optionally)
+resets all associated objects.</p>
+
+<p>This will only work if the object has been saved and has a valid primary key
+set.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$deep</var></dt>
+					<dd><code>boolean</code><br>$deep (optional) Whether to also de-associated any related objects.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con (optional) The PropelPDO connection to use.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if this object is deleted, unsaved or doesn't have pk match in db<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="delete" id="_delete">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_delete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#619-656" title="Go to source code">delete</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Removes this object from datastore and sets delete attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Removes this object from datastore and sets delete attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+					<code><code><a href="class-Exception.html">Exception</a></code></code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						BaseObject::setDeleted()<br />
+						BaseObject::isDeleted()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="save" id="_save">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_save">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#658-710" title="Go to source code">save</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Persists this object to the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Persists this object to the database.</p>
+
+<p>If the object is new, it inserts it; otherwise an update is performed. All
+modified related objects will also be persisted in the doSave() method. This
+method wraps all precipitate database operations in a single transaction.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>The number of rows affected by this insert/update and any referring fk objects'
+save() operations.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+					<code><code><a href="class-Exception.html">Exception</a></code></code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_doSave">cli_db\propel\om\BaseAnalysis::doSave()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doSave" id="_doSave">
+
+		<td class="attributes"><code>
+			 protected 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doSave">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#712-762" title="Go to source code">doSave</a>( <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Performs the work of inserting or updating the row in the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Performs the work of inserting or updating the row in the database.</p>
+
+<p>If the object is new, it inserts it; otherwise an update is performed. All
+related objects are also updated in this method.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>The number of rows affected by this insert/update and any referring fk objects'
+save() operations.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_save">cli_db\propel\om\BaseAnalysis::save()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doInsert" id="_doInsert">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doInsert">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#764-873" title="Go to source code">doInsert</a>( <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Insert the row in the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Insert the row in the database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_doSave">cli_db\propel\om\BaseAnalysis::doSave()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doUpdate" id="_doUpdate">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doUpdate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#875-887" title="Go to source code">doUpdate</a>( <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Update the row in the database.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Update the row in the database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_doSave">cli_db\propel\om\BaseAnalysis::doSave()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getValidationFailures" id="_getValidationFailures">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getValidationFailures">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#895-905" title="Go to source code">getValidationFailures</a>( )</code>
+
+		<div class="description short">
+			
+<p>Gets any ValidationFailed objects that resulted from last call to
+validate().</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets any ValidationFailed objects that resulted from last call to
+validate().</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br>ValidationFailed[]<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_validate">cli_db\propel\om\BaseAnalysis::validate()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="validate" id="_validate">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_validate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#907-930" title="Go to source code">validate</a>( <span>mixed <var>$columns</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Validates the objects modified field values and all objects related to this
+table.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Validates the objects modified field values and all objects related to this
+table.</p>
+
+<p>If $columns is either a column name or an array of column names only those
+columns are validated.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$columns</var></dt>
+					<dd><code>mixed</code><br>$columns Column name or an array of column names.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br>Whether all columns pass validation.<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_doValidate">cli_db\propel\om\BaseAnalysis::doValidate()</a></code></code><br />
+						<code><code><a href="class-cli_db.propel.om.BaseAnalysis.html#_getValidationFailures">cli_db\propel\om\BaseAnalysis::getValidationFailures()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doValidate" id="_doValidate">
+
+		<td class="attributes"><code>
+			 protected 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doValidate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#932-969" title="Go to source code">doValidate</a>( <span>array <var>$columns</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>This function performs the validation work for complex object models.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>This function performs the validation work for complex object models.</p>
+
+<p>In addition to checking the current object, all related objects will also be
+validated. If all pass then <code>&lt;span
+class="php-keyword1"&gt;true&lt;/span&gt;</code> is returned; otherwise an
+aggreagated array of ValidationFailed objects will be returned.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$columns</var></dt>
+					<dd><code>array</code><br>$columns Array of column names to validate.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br><code>&lt;span class="php-keyword1"&gt;true&lt;/span&gt;</code> if all
+validations pass; array of <code>ValidationFailed</code> objets otherwise.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getByName" id="_getByName">
+
+		<td class="attributes"><code>
+			 public 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#971-987" title="Go to source code">getByName</a>( <span>string <var>$name</var></span>, <span>string <var>$type</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span> )</code>
+
+		<div class="description short">
+			
+<p>Retrieves a field from the object by name passed in as a string.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Retrieves a field from the object by name passed in as a string.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name name</dd>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type The type of fieldname the $name is of: one of the class type constants
+BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME BasePeer::TYPE_COLNAME,
+BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. Defaults to BasePeer::TYPE_PHPNAME</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Value of field.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getByPosition" id="_getByPosition">
+
+		<td class="attributes"><code>
+			 public 
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getByPosition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#989-1033" title="Go to source code">getByPosition</a>( <span>integer <var>$pos</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Retrieves a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Retrieves a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pos</var></dt>
+					<dd><code>integer</code><br>$pos position in xml schema</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>mixed</code><br>Value of field at $pos<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="toArray" id="_toArray">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_toArray">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1035-1076" title="Go to source code">toArray</a>( <span>string <var>$keyType</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span>, <span>boolean <var>$includeLazyLoadColumns</var> = <span class="php-keyword1">true</span></span>, <span>array <var>$alreadyDumpedObjects</var> = <span class="php-keyword1">array</span>()</span>, <span>boolean <var>$includeForeignObjects</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exports the object as an array.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exports the object as an array.</p>
+
+<p>You can specify the key type of the array by passing one of the class type
+constants.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keyType</var></dt>
+					<dd><code>string</code><br>$keyType (optional) One of the class type constants BasePeer::TYPE_PHPNAME,
+BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME,
+BasePeer::TYPE_NUM. Defaults to BasePeer::TYPE_PHPNAME.</dd>
+					<dt><var>$includeLazyLoadColumns</var></dt>
+					<dd><code>boolean</code><br>$includeLazyLoadColumns (optional) Whether to include lazy loaded columns.
+Defaults to true.</dd>
+					<dt><var>$alreadyDumpedObjects</var></dt>
+					<dd><code>array</code><br>$alreadyDumpedObjects List of objects to skip to avoid recursion</dd>
+					<dt><var>$includeForeignObjects</var></dt>
+					<dd><code>boolean</code><br>$includeForeignObjects (optional) Whether to include hydrated related objects.
+Default to FALSE.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br>an associative array containing the field names (as keys) and field values<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setByName" id="_setByName">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1078-1094" title="Go to source code">setByName</a>( <span>string <var>$name</var></span>, <span>mixed <var>$value</var></span>, <span>string <var>$type</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a field from the object by name passed in as a string.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a field from the object by name passed in as a string.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name peer name</dd>
+					<dt><var>$value</var></dt>
+					<dd><code>mixed</code><br>$value field value</dd>
+					<dt><var>$type</var></dt>
+					<dd><code>string</code><br>$type The type of fieldname the $name is of: one of the class type constants
+BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME BasePeer::TYPE_COLNAME,
+BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. Defaults to BasePeer::TYPE_PHPNAME</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setByPosition" id="_setByPosition">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setByPosition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1096-1138" title="Go to source code">setByPosition</a>( <span>integer <var>$pos</var></span>, <span>mixed <var>$value</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a field from the object by Position as specified in the xml schema.
+Zero-based.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pos</var></dt>
+					<dd><code>integer</code><br>$pos position in xml schema</dd>
+					<dt><var>$value</var></dt>
+					<dd><code>mixed</code><br>$value field value</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="fromArray" id="_fromArray">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_fromArray">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1140-1171" title="Go to source code">fromArray</a>( <span>array <var>$arr</var></span>, <span>string <var>$keyType</var> = cli_db\propel\om\BasePeer::TYPE_PHPNAME</span> )</code>
+
+		<div class="description short">
+			
+<p>Populates the object using an array.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Populates the object using an array.</p>
+
+<p>This is particularly useful when populating an object from one of the request
+arrays (e.g. $_POST). This method goes through the column names, checking to see
+whether a matching key exists in populated array. If so the setByName() method
+is called for that column.</p>
+
+<p>You can specify the key type of the array by additionally passing one of the
+class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME,
+BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. The
+default key type is the column's BasePeer::TYPE_PHPNAME</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$arr</var></dt>
+					<dd><code>array</code><br>$arr An array to populate the object from.</dd>
+					<dt><var>$keyType</var></dt>
+					<dd><code>string</code><br>$keyType The type of keys the array uses.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="buildCriteria" id="_buildCriteria">
+
+		<td class="attributes"><code>
+			 public 
+			Criteria
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildCriteria">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1173-1194" title="Go to source code">buildCriteria</a>( )</code>
+
+		<div class="description short">
+			
+<p>Build a Criteria object containing the values of all modified columns in this
+object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Build a Criteria object containing the values of all modified columns in this
+object.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Criteria</code><br>The Criteria object containing all modified values.<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="buildPkeyCriteria" id="_buildPkeyCriteria">
+
+		<td class="attributes"><code>
+			 public 
+			Criteria
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildPkeyCriteria">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1196-1210" title="Go to source code">buildPkeyCriteria</a>( )</code>
+
+		<div class="description short">
+			
+<p>Builds a Criteria object containing the primary key for this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Builds a Criteria object containing the primary key for this object.</p>
+
+<p>Unlike buildCriteria() this method includes the primary key values regardless
+of whether or not they have been modified.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Criteria</code><br>The Criteria object containing value(s) for primary key(s).<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPrimaryKey" id="_getPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1212-1219" title="Go to source code">getPrimaryKey</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns the primary key for this object (row).</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the primary key for this object (row).</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setPrimaryKey" id="_setPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1221-1230" title="Go to source code">setPrimaryKey</a>( <span>integer <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Generic method to set the primary key (analysis_id column).</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Generic method to set the primary key (analysis_id column).</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>integer</code><br>$key Primary key.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isPrimaryKeyNull" id="_isPrimaryKeyNull">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isPrimaryKeyNull">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1232-1240" title="Go to source code">isPrimaryKeyNull</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns true if the primary key for this object is null.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns true if the primary key for this object is null.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="copyInto" id="_copyInto">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_copyInto">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1242-1286" title="Go to source code">copyInto</a>( <span>object <var>$copyObj</var></span>, <span>boolean <var>$deepCopy</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$makeNew</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets contents of passed object to values from current object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets contents of passed object to values from current object.</p>
+
+<p>If desired, this method can also make copies of all associated (fkey
+referrers) objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$copyObj</var></dt>
+					<dd><code>object</code><br>$copyObj An object of Analysis (or compatible) type.</dd>
+					<dt><var>$deepCopy</var></dt>
+					<dd><code>boolean</code><br>$deepCopy Whether to also copy all rows that refer (by fkey) to the current row.</dd>
+					<dt><var>$makeNew</var></dt>
+					<dd><code>boolean</code><br>$makeNew Whether to reset autoincrement PKs and make the object new.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="copy" id="_copy">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_copy">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1288-1308" title="Go to source code">copy</a>( <span>boolean <var>$deepCopy</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Makes a copy of this object that will be inserted as a new row in table when
+saved. It creates a new object filling in the simple attributes, but skipping
+any primary keys that are defined for the table.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Makes a copy of this object that will be inserted as a new row in table when
+saved. It creates a new object filling in the simple attributes, but skipping
+any primary keys that are defined for the table.</p>
+
+<p>If desired, this method can also make copies of all associated (fkey
+referrers) objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$deepCopy</var></dt>
+					<dd><code>boolean</code><br>$deepCopy Whether to also copy all rows that refer (by fkey) to the current row.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>Clone of current object.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPeer" id="_getPeer">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.AnalysisPeer.html">cli_db\propel\AnalysisPeer</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPeer">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1310-1326" title="Go to source code">getPeer</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns a peer instance associated with this om.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a peer instance associated with this om.</p>
+
+<p>Since Peer classes are not to have any instance attributes, this method
+returns the same instance for all member of this class. The method could
+therefore be static, but this would prevent one from overriding the
+behavior.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.AnalysisPeer.html">cli_db\propel\AnalysisPeer</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initRelation" id="_initRelation">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initRelation">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1329-1342" title="Go to source code">initRelation</a>( <span>string <var>$relationName</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes a collection based on the name of a relation. Avoids crafting an
+'init[$relationName]s' method name that wouldn't work when
+StandardEnglishPluralizer is used.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes a collection based on the name of a relation. Avoids crafting an
+'init[$relationName]s' method name that wouldn't work when
+StandardEnglishPluralizer is used.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationName</var></dt>
+					<dd><code>string</code><br>$relationName The name of the relation to initialize</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearQuantifications" id="_clearQuantifications">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearQuantifications">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1344-1359" title="Go to source code">clearQuantifications</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears out the collQuantifications collection</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears out the collQuantifications collection</p>
+
+<p>This does not modify the database; however, it will remove any associated
+objects, causing them to be refetched by subsequent calls to accessor
+method.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						addQuantifications()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="resetPartialQuantifications" id="_resetPartialQuantifications">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_resetPartialQuantifications">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1361-1369" title="Go to source code">resetPartialQuantifications</a>( <span>mixed <var>$v</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>reset is the collQuantifications collection loaded partially</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>reset is the collQuantifications collection loaded partially</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="initQuantifications" id="_initQuantifications">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_initQuantifications">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1371-1390" title="Go to source code">initQuantifications</a>( <span>boolean <var>$overrideExisting</var> = <span class="php-keyword1">true</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes the collQuantifications collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes the collQuantifications collection.</p>
+
+<p>By default this just sets the collQuantifications collection to an empty
+array (like clearcollQuantifications()); however, you may wish to override this
+method in your stub class to provide setting appropriate to your application --
+for example, setting the initial array to the values stored in database.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$overrideExisting</var></dt>
+					<dd><code>boolean</code><br>$overrideExisting If set to true, the method call initializes the collection
+even if it is not empty</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getQuantifications" id="_getQuantifications">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getQuantifications">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1392-1448" title="Go to source code">getQuantifications</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Gets an array of Quantification objects which contain a foreign key that
+references this object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets an array of Quantification objects which contain a foreign key that
+references this object.</p>
+
+<p>If the $criteria is not null, it is used to always fetch the results from the
+database. Otherwise the results are fetched from the database the first time,
+then cached. Next time the same method is called without $criteria, the cached
+collection is returned. If this Analysis is new, it will return an empty
+collection or the current collection; the criteria is ignored on a new
+object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code></code><br>List of Quantification objects<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setQuantifications" id="_setQuantifications">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setQuantifications">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1450-1479" title="Go to source code">setQuantifications</a>( <span>PropelCollection <var>$quantifications</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Sets a collection of Quantification objects related by a one-to-many
+relationship to the current object. It will also schedule objects for deletion
+based on a diff between old objects (aka persisted) and new objects from the
+given Propel collection.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Sets a collection of Quantification objects related by a one-to-many
+relationship to the current object. It will also schedule objects for deletion
+based on a diff between old objects (aka persisted) and new objects from the
+given Propel collection.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$quantifications</var></dt>
+					<dd><code>PropelCollection</code><br>$quantifications A Propel collection.</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con Optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="countQuantifications" id="_countQuantifications">
+
+		<td class="attributes"><code>
+			 public 
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_countQuantifications">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1481-1512" title="Go to source code">countQuantifications</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$distinct</var> = <span class="php-keyword1">false</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns the number of related Quantification objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the number of related Quantification objects.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria</dd>
+					<dt><var>$distinct</var></dt>
+					<dd><code>boolean</code><br>$distinct</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer</code><br>Count of related Quantification objects.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addQuantification" id="_addQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1514-1532" title="Go to source code">addQuantification</a>( <span><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code> <var>$l</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Method called to associate a Quantification object to this object through the
+Quantification foreign key attribute.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Method called to associate a Quantification object to this object through the
+Quantification foreign key attribute.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$l</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code></code><br>$l Quantification</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doAddQuantification" id="_doAddQuantification">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doAddQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1534-1541" title="Go to source code">doAddQuantification</a>( <span><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code> <var>$quantification</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$quantification</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code></code><br>$quantification The quantification object to add.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeQuantification" id="_removeQuantification">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeQuantification">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1543-1560" title="Go to source code">removeQuantification</a>( <span><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code> <var>$quantification</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$quantification</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a></code></code><br>$quantification The quantification object to remove.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Analysis.html">cli_db\propel\Analysis</a></code></code><br>The current object (for fluent API support)<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getQuantificationsJoinAcquisition" id="_getQuantificationsJoinAcquisition">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getQuantificationsJoinAcquisition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1563-1585" title="Go to source code">getQuantificationsJoinAcquisition</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Analysis is new, it will return an
+empty collection; or if this Analysis has previously been saved, it will
+retrieve related Quantifications from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Analysis is new, it will return an
+empty collection; or if this Analysis has previously been saved, it will
+retrieve related Quantifications from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Analysis.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code></code><br>List of Quantification objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getQuantificationsJoinContact" id="_getQuantificationsJoinContact">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getQuantificationsJoinContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1588-1610" title="Go to source code">getQuantificationsJoinContact</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Analysis is new, it will return an
+empty collection; or if this Analysis has previously been saved, it will
+retrieve related Quantifications from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Analysis is new, it will return an
+empty collection; or if this Analysis has previously been saved, it will
+retrieve related Quantifications from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Analysis.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code></code><br>List of Quantification objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getQuantificationsJoinProtocol" id="_getQuantificationsJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getQuantificationsJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1613-1635" title="Go to source code">getQuantificationsJoinProtocol</a>( <span>Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$join_behavior</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Analysis is new, it will return an
+empty collection; or if this Analysis has previously been saved, it will
+retrieve related Quantifications from storage.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>If this collection has already been initialized with an identical criteria,
+it returns the collection. Otherwise if this Analysis is new, it will return an
+empty collection; or if this Analysis has previously been saved, it will
+retrieve related Quantifications from storage.</p>
+
+<p>This method is protected by default in order to keep the public api
+reasonable. You can provide public methods for those you actually need in
+Analysis.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$criteria</var></dt>
+					<dd><code>Criteria</code><br>$criteria optional Criteria object to narrow the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con optional connection object</dd>
+					<dt><var>$join_behavior</var></dt>
+					<dd><code>string</code><br>$join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code></code><br>List of Quantification objects<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clear" id="_clear">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1637-1660" title="Go to source code">clear</a>( )</code>
+
+		<div class="description short">
+			
+<p>Clears the current object and sets all attributes to their default values</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Clears the current object and sets all attributes to their default values</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clearAllReferences" id="_clearAllReferences">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clearAllReferences">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1662-1688" title="Go to source code">clearAllReferences</a>( <span>boolean <var>$deep</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Resets all references to other model objects or collections of model
+objects.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Resets all references to other model objects or collections of model
+objects.</p>
+
+<p>This method is a user-space workaround for PHP's inability to garbage collect
+objects with circular references (even in PHP 5.3). This is currently necessary
+when using Propel in certain daemon or large-volumne/high-memory operations.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$deep</var></dt>
+					<dd><code>boolean</code><br>$deep Whether to also clear the references on all referrer objects.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__toString" id="___toString">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___toString">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1690-1698" title="Go to source code">__toString</a>( )</code>
+
+		<div class="description short">
+			
+<p>return the string representation of this object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>return the string representation of this object</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="isAlreadyInSave" id="_isAlreadyInSave">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_isAlreadyInSave">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseAnalysis.html#1700-1708" title="Go to source code">isAlreadyInSave</a>( )</code>
+
+		<div class="description short">
+			
+<p>return true is the object is in saving state</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>return true is the object is in saving state</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="PEER" id="PEER">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name"><code>
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#33-36" title="Go to source code"><b>PEER</b></a>
+		</code></td>
+		<td class="value"><code><span class="php-quote">'cli_db\\propel\\AnalysisPeer'</span></code></td>
+		<td class="description"><div>
+			<a href="#PEER" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Peer class name</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Peer class name</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="peer" id="$peer">
+		<td class="attributes"><code>
+			protected static 
+			<code><a href="class-cli_db.propel.AnalysisPeer.html">cli_db\propel\AnalysisPeer</a></code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#38-44" title="Go to source code"><var>$peer</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$peer" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The Peer class. Instance provides a convenient way of calling static methods
+on a class that calling code may not be able to identify.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The Peer class. Instance provides a convenient way of calling static methods
+on a class that calling code may not be able to identify.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="startCopy" id="$startCopy">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#46-50" title="Go to source code"><var>$startCopy</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$startCopy" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The flag var to prevent infinit loop in deep copy</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The flag var to prevent infinit loop in deep copy</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="analysis_id" id="$analysis_id">
+		<td class="attributes"><code>
+			protected  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#52-56" title="Go to source code"><var>$analysis_id</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$analysis_id" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the analysis_id field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the analysis_id field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="name" id="$name">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#58-62" title="Go to source code"><var>$name</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$name" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the name field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the name field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="description" id="$description">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#64-68" title="Go to source code"><var>$description</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$description" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the description field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the description field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="program" id="$program">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#70-74" title="Go to source code"><var>$program</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$program" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the program field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the program field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="programversion" id="$programversion">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#76-80" title="Go to source code"><var>$programversion</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$programversion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the programversion field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the programversion field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="algorithm" id="$algorithm">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#82-86" title="Go to source code"><var>$algorithm</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$algorithm" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the algorithm field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the algorithm field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="sourcename" id="$sourcename">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#88-92" title="Go to source code"><var>$sourcename</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$sourcename" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the sourcename field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the sourcename field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="sourceversion" id="$sourceversion">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#94-98" title="Go to source code"><var>$sourceversion</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$sourceversion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the sourceversion field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the sourceversion field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="sourceuri" id="$sourceuri">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#100-104" title="Go to source code"><var>$sourceuri</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$sourceuri" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the sourceuri field.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the sourceuri field.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="timeexecuted" id="$timeexecuted">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#106-111" title="Go to source code"><var>$timeexecuted</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$timeexecuted" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>The value for the timeexecuted field. Note: this column has a database
+default value of: (expression) now()</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>The value for the timeexecuted field. Note: this column has a database
+default value of: (expression) now()</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collQuantifications" id="$collQuantifications">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Quantification.html">cli_db\propel\Quantification</a>[]</code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#113-116" title="Go to source code"><var>$collQuantifications</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collQuantifications" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Collection to store aggregation of Quantification objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Collection to store aggregation of Quantification objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="collQuantificationsPartial" id="$collQuantificationsPartial">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#117" title="Go to source code"><var>$collQuantificationsPartial</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$collQuantificationsPartial" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="alreadyInSave" id="$alreadyInSave">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#119-124" title="Go to source code"><var>$alreadyInSave</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$alreadyInSave" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Flag to prevent endless save loop, if this object is referenced by another
+object which falls in this transaction.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Flag to prevent endless save loop, if this object is referenced by another
+object which falls in this transaction.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="alreadyInValidation" id="$alreadyInValidation">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#126-131" title="Go to source code"><var>$alreadyInValidation</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$alreadyInValidation" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Flag to prevent endless validation loop, if this object is referenced by
+another object which falls in this transaction.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Flag to prevent endless validation loop, if this object is referenced by
+another object which falls in this transaction.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="alreadyInClearAllReferencesDeep" id="$alreadyInClearAllReferencesDeep">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#133-137" title="Go to source code"><var>$alreadyInClearAllReferencesDeep</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$alreadyInClearAllReferencesDeep" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Flag to prevent endless clearAllReferences($deep=true) loop, if this object
+is referenced</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Flag to prevent endless clearAllReferences($deep=true) loop, if this object
+is referenced</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="quantificationsScheduledForDeletion" id="$quantificationsScheduledForDeletion">
+		<td class="attributes"><code>
+			protected  
+			PropelObjectCollection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#139-143" title="Go to source code"><var>$quantificationsScheduledForDeletion</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$quantificationsScheduledForDeletion" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>An array of objects scheduled for deletion.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="validationFailures" id="$validationFailures">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cli_db.propel.om.BaseAnalysis.html#889-893" title="Go to source code"><var>$validationFailures</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>()</code></td>
+		<td class="description"><div>
+			<a href="#$validationFailures" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>Array of ValidationFailed objects.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Array of ValidationFailed objects.</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

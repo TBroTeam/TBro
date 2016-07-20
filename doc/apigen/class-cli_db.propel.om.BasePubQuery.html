@@ -1,0 +1,6730 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BasePubQuery | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BasePubQuery</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a query for the 'pub' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+ModelCriteria
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BasePubQuery</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BasePubQuery.html#28-1520" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BasePubQuery.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#143-153" title="Go to source code">__construct</a>( <span>string <var>$dbName</var> = <span class="php-quote">'cli_db'</span></span>, <span>string <var>$modelName</var> = <span class="php-quote">'cli_db\\propel\\Pub'</span></span>, <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BasePubQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BasePubQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbName</var></dt>
+					<dd><code>string</code><br>$dbName The dabase name</dd>
+					<dt><var>$modelName</var></dt>
+					<dd><code>string</code><br>$modelName The phpName of a model, e.g. 'Book'</dd>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias for the model in this query, e.g. 'b'</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			 public static
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#155-177" title="Go to source code">create</a>( <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>|Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns a new PubQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a new PubQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias of a model in the query</dd>
+					<dt><var>$criteria</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>|Criteria</code><br>$criteria Optional Criteria to build the query from</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPk" id="_findPk">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>|<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPk">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#179-213" title="Go to source code">findPk</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+<pre>
+<span class="php-var">$obj</span>  = <span
+class="php-var">$c</span>-&gt;findPk(<span class="php-num">12</span>, <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>|<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByPubId" id="_findOneByPubId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findOneByPubId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#215-227" title="Go to source code">findOneByPubId</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkSimple" id="_findPkSimple">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkSimple">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#229-259" title="Go to source code">findPkSimple</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkComplex" id="_findPkComplex">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>|<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkComplex">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#261-278" title="Go to source code">findPkComplex</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>|<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPks" id="_findPks">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPks">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#280-302" title="Go to source code">findPks</a>( <span>array <var>$keys</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys Primary keys to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a>[]</code>|mixed</code><br>the list of results, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKey" id="_filterByPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#304-315" title="Go to source code">filterByPrimaryKey</a>( <span>mixed <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by primary key</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by primary key</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKeys" id="_filterByPrimaryKeys">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKeys">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#317-328" title="Go to source code">filterByPrimaryKeys</a>( <span>array <var>$keys</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a list of primary keys</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a list of primary keys</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys The list of primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubId" id="_filterByPubId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#330-370" title="Go to source code">filterByPubId</a>( <span>mixed <var>$pubId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the pub_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the pub_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByPubId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE pub_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByPubId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE pub_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByPubId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE pub_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByPubId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE pub_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubId</var></dt>
+					<dd><code>mixed</code><br>$pubId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTitle" id="_filterByTitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#372-399" title="Go to source code">filterByTitle</a>( <span>string <var>$title</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the title column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the title column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTitle(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE title = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByTitle(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE title LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$title</var></dt>
+					<dd><code>string</code><br>$title The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByVolumetitle" id="_filterByVolumetitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByVolumetitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#401-428" title="Go to source code">filterByVolumetitle</a>( <span>string <var>$volumetitle</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the volumetitle column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the volumetitle column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByVolumetitle(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE volumetitle = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByVolumetitle(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE volumetitle LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$volumetitle</var></dt>
+					<dd><code>string</code><br>$volumetitle The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByVolume" id="_filterByVolume">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByVolume">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#430-457" title="Go to source code">filterByVolume</a>( <span>string <var>$volume</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the volume column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the volume column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByVolume(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE volume = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByVolume(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE volume LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$volume</var></dt>
+					<dd><code>string</code><br>$volume The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySeriesName" id="_filterBySeriesName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySeriesName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#459-486" title="Go to source code">filterBySeriesName</a>( <span>string <var>$seriesName</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the series_name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the series_name column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterBySeriesName(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE series_name = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterBySeriesName(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE series_name LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$seriesName</var></dt>
+					<dd><code>string</code><br>$seriesName The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByIssue" id="_filterByIssue">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByIssue">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#488-515" title="Go to source code">filterByIssue</a>( <span>string <var>$issue</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the issue column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the issue column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByIssue(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE issue = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByIssue(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE issue LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$issue</var></dt>
+					<dd><code>string</code><br>$issue The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPyear" id="_filterByPyear">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPyear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#517-544" title="Go to source code">filterByPyear</a>( <span>string <var>$pyear</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the pyear column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the pyear column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByPyear(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE pyear = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByPyear(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE pyear LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pyear</var></dt>
+					<dd><code>string</code><br>$pyear The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPages" id="_filterByPages">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPages">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#546-573" title="Go to source code">filterByPages</a>( <span>string <var>$pages</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the pages column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the pages column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByPages(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE pages = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByPages(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE pages LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pages</var></dt>
+					<dd><code>string</code><br>$pages The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByMiniref" id="_filterByMiniref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByMiniref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#575-602" title="Go to source code">filterByMiniref</a>( <span>string <var>$miniref</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the miniref column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the miniref column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByMiniref(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE miniref = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByMiniref(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE miniref LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$miniref</var></dt>
+					<dd><code>string</code><br>$miniref The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByUniquename" id="_filterByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#604-631" title="Go to source code">filterByUniquename</a>( <span>string <var>$uniquename</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the uniquename column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByUniquename(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE uniquename = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByUniquename(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE uniquename LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uniquename</var></dt>
+					<dd><code>string</code><br>$uniquename The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByTypeId" id="_filterByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#633-675" title="Go to source code">filterByTypeId</a>( <span>mixed <var>$typeId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the type_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE type_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE type_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE type_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByTypeId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE type_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$typeId</var></dt>
+					<dd><code>mixed</code><br>$typeId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BasePubQuery.html#_filterByCvterm">cli_db\propel\om\BasePubQuery::filterByCvterm()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByIsObsolete" id="_filterByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#677-702" title="Go to source code">filterByIsObsolete</a>( <span>boolean|string <var>$isObsolete</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the is_obsolete column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-keyword1">true</span>); <span
+class="php-comment">// WHERE is_obsolete = true</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-quote">'yes'</span>); <span
+class="php-comment">// WHERE is_obsolete = true</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$isObsolete</var></dt>
+					<dd><code>boolean|string</code><br>$isObsolete The value to use as filter. Non-boolean arguments are converted
+using the following rules: * 1, '1', 'true', 'on', and 'yes' are converted to
+boolean true * 0, '0', 'false', 'off', and 'no' are converted to boolean false
+Check on string values is case insensitive (so 'FaLsE' is seen as 'false').</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPublisher" id="_filterByPublisher">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPublisher">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#704-731" title="Go to source code">filterByPublisher</a>( <span>string <var>$publisher</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the publisher column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the publisher column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByPublisher(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE publisher = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByPublisher(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE publisher LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$publisher</var></dt>
+					<dd><code>string</code><br>$publisher The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubplace" id="_filterByPubplace">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubplace">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#733-760" title="Go to source code">filterByPubplace</a>( <span>string <var>$pubplace</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the pubplace column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the pubplace column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByPubplace(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE pubplace = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByPubplace(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE pubplace LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubplace</var></dt>
+					<dd><code>string</code><br>$pubplace The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByCvterm" id="_filterByCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#762-786" title="Go to source code">filterByCvterm</a>( <span><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|PropelObjectCollection <var>$cvterm</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Cvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Cvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|PropelObjectCollection</code><br>$cvterm The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinCvterm" id="_joinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#788-818" title="Go to source code">joinCvterm</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useCvtermQuery" id="_useCvtermQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useCvtermQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#820-836" title="Go to source code">useCvtermQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Cvterm relation Cvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Cvterm relation Cvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureCvterm" id="_filterByFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#838-860" title="Go to source code">filterByFeatureCvterm</a>( <span><code><a href="class-cli_db.propel.FeatureCvterm.html">cli_db\propel\FeatureCvterm</a></code>|PropelObjectCollection <var>$featureCvterm</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureCvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureCvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureCvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureCvterm.html">cli_db\propel\FeatureCvterm</a></code>|PropelObjectCollection</code><br>$featureCvterm the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureCvterm" id="_joinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#862-892" title="Go to source code">joinFeatureCvterm</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureCvtermQuery" id="_useFeatureCvtermQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureCvtermQuery.html">cli_db\propel\FeatureCvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureCvtermQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#894-910" title="Go to source code">useFeatureCvtermQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureCvterm relation FeatureCvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureCvterm relation FeatureCvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureCvtermQuery.html">cli_db\propel\FeatureCvtermQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureCvtermPub" id="_filterByFeatureCvtermPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureCvtermPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#912-934" title="Go to source code">filterByFeatureCvtermPub</a>( <span><code><a href="class-cli_db.propel.FeatureCvtermPub.html">cli_db\propel\FeatureCvtermPub</a></code>|PropelObjectCollection <var>$featureCvtermPub</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureCvtermPub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureCvtermPub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureCvtermPub</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureCvtermPub.html">cli_db\propel\FeatureCvtermPub</a></code>|PropelObjectCollection</code><br>$featureCvtermPub the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureCvtermPub" id="_joinFeatureCvtermPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureCvtermPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#936-966" title="Go to source code">joinFeatureCvtermPub</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureCvtermPubQuery" id="_useFeatureCvtermPubQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureCvtermPubQuery.html">cli_db\propel\FeatureCvtermPubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureCvtermPubQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#968-984" title="Go to source code">useFeatureCvtermPubQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureCvtermPub relation FeatureCvtermPub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureCvtermPub relation FeatureCvtermPub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureCvtermPubQuery.html">cli_db\propel\FeatureCvtermPubQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeaturePub" id="_filterByFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#986-1008" title="Go to source code">filterByFeaturePub</a>( <span><code><a href="class-cli_db.propel.FeaturePub.html">cli_db\propel\FeaturePub</a></code>|PropelObjectCollection <var>$featurePub</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeaturePub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeaturePub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featurePub</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeaturePub.html">cli_db\propel\FeaturePub</a></code>|PropelObjectCollection</code><br>$featurePub the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeaturePub" id="_joinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1010-1040" title="Go to source code">joinFeaturePub</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeaturePubQuery" id="_useFeaturePubQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeaturePubQuery.html">cli_db\propel\FeaturePubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeaturePubQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1042-1058" title="Go to source code">useFeaturePubQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeaturePub relation FeaturePub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeaturePub relation FeaturePub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeaturePubQuery.html">cli_db\propel\FeaturePubQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureSynonym" id="_filterByFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1060-1082" title="Go to source code">filterByFeatureSynonym</a>( <span><code><a href="class-cli_db.propel.FeatureSynonym.html">cli_db\propel\FeatureSynonym</a></code>|PropelObjectCollection <var>$featureSynonym</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureSynonym object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureSynonym object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureSynonym</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureSynonym.html">cli_db\propel\FeatureSynonym</a></code>|PropelObjectCollection</code><br>$featureSynonym the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureSynonym" id="_joinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1084-1114" title="Go to source code">joinFeatureSynonym</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureSynonymQuery" id="_useFeatureSynonymQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureSynonymQuery.html">cli_db\propel\FeatureSynonymQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureSynonymQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1116-1132" title="Go to source code">useFeatureSynonymQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureSynonym relation FeatureSynonym object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureSynonym relation FeatureSynonym object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureSynonymQuery.html">cli_db\propel\FeatureSynonymQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubDbxref" id="_filterByPubDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1134-1156" title="Go to source code">filterByPubDbxref</a>( <span><code><a href="class-cli_db.propel.PubDbxref.html">cli_db\propel\PubDbxref</a></code>|PropelObjectCollection <var>$pubDbxref</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related PubDbxref object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related PubDbxref object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubDbxref</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.PubDbxref.html">cli_db\propel\PubDbxref</a></code>|PropelObjectCollection</code><br>$pubDbxref the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubDbxref" id="_joinPubDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1158-1188" title="Go to source code">joinPubDbxref</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the PubDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the PubDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubDbxrefQuery" id="_usePubDbxrefQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubDbxrefQuery.html">cli_db\propel\PubDbxrefQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubDbxrefQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1190-1206" title="Go to source code">usePubDbxrefQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the PubDbxref relation PubDbxref object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the PubDbxref relation PubDbxref object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubDbxrefQuery.html">cli_db\propel\PubDbxrefQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubRelationshipRelatedByObjectId" id="_filterByPubRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1208-1230" title="Go to source code">filterByPubRelationshipRelatedByObjectId</a>( <span><code><a href="class-cli_db.propel.PubRelationship.html">cli_db\propel\PubRelationship</a></code>|PropelObjectCollection <var>$pubRelationship</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related PubRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related PubRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubRelationship</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.PubRelationship.html">cli_db\propel\PubRelationship</a></code>|PropelObjectCollection</code><br>$pubRelationship the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubRelationshipRelatedByObjectId" id="_joinPubRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1232-1262" title="Go to source code">joinPubRelationshipRelatedByObjectId</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the PubRelationshipRelatedByObjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the PubRelationshipRelatedByObjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubRelationshipRelatedByObjectIdQuery" id="_usePubRelationshipRelatedByObjectIdQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubRelationshipQuery.html">cli_db\propel\PubRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubRelationshipRelatedByObjectIdQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1264-1280" title="Go to source code">usePubRelationshipRelatedByObjectIdQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the PubRelationshipRelatedByObjectId relation PubRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the PubRelationshipRelatedByObjectId relation PubRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubRelationshipQuery.html">cli_db\propel\PubRelationshipQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubRelationshipRelatedBySubjectId" id="_filterByPubRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1282-1304" title="Go to source code">filterByPubRelationshipRelatedBySubjectId</a>( <span><code><a href="class-cli_db.propel.PubRelationship.html">cli_db\propel\PubRelationship</a></code>|PropelObjectCollection <var>$pubRelationship</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related PubRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related PubRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubRelationship</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.PubRelationship.html">cli_db\propel\PubRelationship</a></code>|PropelObjectCollection</code><br>$pubRelationship the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubRelationshipRelatedBySubjectId" id="_joinPubRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1306-1336" title="Go to source code">joinPubRelationshipRelatedBySubjectId</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the PubRelationshipRelatedBySubjectId
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the PubRelationshipRelatedBySubjectId
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubRelationshipRelatedBySubjectIdQuery" id="_usePubRelationshipRelatedBySubjectIdQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubRelationshipQuery.html">cli_db\propel\PubRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubRelationshipRelatedBySubjectIdQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1338-1354" title="Go to source code">usePubRelationshipRelatedBySubjectIdQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the PubRelationshipRelatedBySubjectId relation PubRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the PubRelationshipRelatedBySubjectId relation PubRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubRelationshipQuery.html">cli_db\propel\PubRelationshipQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubauthor" id="_filterByPubauthor">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubauthor">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1356-1378" title="Go to source code">filterByPubauthor</a>( <span><code><a href="class-cli_db.propel.Pubauthor.html">cli_db\propel\Pubauthor</a></code>|PropelObjectCollection <var>$pubauthor</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Pubauthor object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Pubauthor object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubauthor</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Pubauthor.html">cli_db\propel\Pubauthor</a></code>|PropelObjectCollection</code><br>$pubauthor the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubauthor" id="_joinPubauthor">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubauthor">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1380-1410" title="Go to source code">joinPubauthor</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Pubauthor relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Pubauthor relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubauthorQuery" id="_usePubauthorQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubauthorQuery.html">cli_db\propel\PubauthorQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubauthorQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1412-1428" title="Go to source code">usePubauthorQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Pubauthor relation Pubauthor object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Pubauthor relation Pubauthor object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubauthorQuery.html">cli_db\propel\PubauthorQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubprop" id="_filterByPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1430-1452" title="Go to source code">filterByPubprop</a>( <span><code><a href="class-cli_db.propel.Pubprop.html">cli_db\propel\Pubprop</a></code>|PropelObjectCollection <var>$pubprop</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Pubprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Pubprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubprop</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Pubprop.html">cli_db\propel\Pubprop</a></code>|PropelObjectCollection</code><br>$pubprop the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubprop" id="_joinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1454-1484" title="Go to source code">joinPubprop</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubpropQuery" id="_usePubpropQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubpropQuery.html">cli_db\propel\PubpropQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubpropQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1486-1502" title="Go to source code">usePubpropQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Pubprop relation Pubprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Pubprop relation Pubprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubpropQuery.html">cli_db\propel\PubpropQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prune" id="_prune">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prune">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#1504-1518" title="Go to source code">prune</a>( <span><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code> <var>$pub</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exclude object from result</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exclude object from result</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pub</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br>$pub Object to remove from the list of results</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="orderByPubId" id="m_orderByPubId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByPubId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#33" title="Go to source code">orderByPubId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the pub_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the pub_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTitle" id="m_orderByTitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#34" title="Go to source code">orderByTitle</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the title column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the title column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByVolumetitle" id="m_orderByVolumetitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByVolumetitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#35" title="Go to source code">orderByVolumetitle</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the volumetitle column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the volumetitle column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByVolume" id="m_orderByVolume">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByVolume">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#36" title="Go to source code">orderByVolume</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the volume column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the volume column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderBySeriesName" id="m_orderBySeriesName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderBySeriesName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#37" title="Go to source code">orderBySeriesName</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the series_name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the series_name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByIssue" id="m_orderByIssue">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByIssue">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#38" title="Go to source code">orderByIssue</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the issue column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the issue column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByPyear" id="m_orderByPyear">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByPyear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#39" title="Go to source code">orderByPyear</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the pyear column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the pyear column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByPages" id="m_orderByPages">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByPages">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#40" title="Go to source code">orderByPages</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the pages column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the pages column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByMiniref" id="m_orderByMiniref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByMiniref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#41" title="Go to source code">orderByMiniref</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the miniref column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the miniref column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByUniquename" id="m_orderByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#42" title="Go to source code">orderByUniquename</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the uniquename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByTypeId" id="m_orderByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#43" title="Go to source code">orderByTypeId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByIsObsolete" id="m_orderByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#44" title="Go to source code">orderByIsObsolete</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByPublisher" id="m_orderByPublisher">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByPublisher">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#45" title="Go to source code">orderByPublisher</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the publisher column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the publisher column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByPubplace" id="m_orderByPubplace">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByPubplace">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#46" title="Go to source code">orderByPubplace</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the pubplace column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the pubplace column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByPubId" id="m_groupByPubId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByPubId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#48" title="Go to source code">groupByPubId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the pub_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the pub_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTitle" id="m_groupByTitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#49" title="Go to source code">groupByTitle</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the title column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the title column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByVolumetitle" id="m_groupByVolumetitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByVolumetitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#50" title="Go to source code">groupByVolumetitle</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the volumetitle column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the volumetitle column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByVolume" id="m_groupByVolume">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByVolume">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#51" title="Go to source code">groupByVolume</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the volume column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the volume column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupBySeriesName" id="m_groupBySeriesName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupBySeriesName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#52" title="Go to source code">groupBySeriesName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the series_name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the series_name column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByIssue" id="m_groupByIssue">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByIssue">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#53" title="Go to source code">groupByIssue</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the issue column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the issue column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByPyear" id="m_groupByPyear">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByPyear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#54" title="Go to source code">groupByPyear</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the pyear column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the pyear column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByPages" id="m_groupByPages">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByPages">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#55" title="Go to source code">groupByPages</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the pages column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the pages column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByMiniref" id="m_groupByMiniref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByMiniref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#56" title="Go to source code">groupByMiniref</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the miniref column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the miniref column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByUniquename" id="m_groupByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#57" title="Go to source code">groupByUniquename</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the uniquename column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByTypeId" id="m_groupByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#58" title="Go to source code">groupByTypeId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the type_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByIsObsolete" id="m_groupByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#59" title="Go to source code">groupByIsObsolete</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the is_obsolete column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByPublisher" id="m_groupByPublisher">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByPublisher">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#60" title="Go to source code">groupByPublisher</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the publisher column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the publisher column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByPubplace" id="m_groupByPubplace">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByPubplace">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#61" title="Go to source code">groupByPubplace</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the pubplace column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the pubplace column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoin" id="m_leftJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#63" title="Go to source code">leftJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoin" id="m_rightJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#64" title="Go to source code">rightJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoin" id="m_innerJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#65" title="Go to source code">innerJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinCvterm" id="m_leftJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#67" title="Go to source code">leftJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinCvterm" id="m_rightJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#68" title="Go to source code">rightJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinCvterm" id="m_innerJoinCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#69" title="Go to source code">innerJoinCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Cvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Cvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureCvterm" id="m_leftJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#71" title="Go to source code">leftJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureCvterm" id="m_rightJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#72" title="Go to source code">rightJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureCvterm" id="m_innerJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#73" title="Go to source code">innerJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureCvtermPub" id="m_leftJoinFeatureCvtermPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureCvtermPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#75" title="Go to source code">leftJoinFeatureCvtermPub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureCvtermPub" id="m_rightJoinFeatureCvtermPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureCvtermPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#76" title="Go to source code">rightJoinFeatureCvtermPub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureCvtermPub" id="m_innerJoinFeatureCvtermPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureCvtermPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#77" title="Go to source code">innerJoinFeatureCvtermPub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvtermPub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeaturePub" id="m_leftJoinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#79" title="Go to source code">leftJoinFeaturePub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeaturePub" id="m_rightJoinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#80" title="Go to source code">rightJoinFeaturePub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeaturePub" id="m_innerJoinFeaturePub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeaturePub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#81" title="Go to source code">innerJoinFeaturePub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeaturePub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeaturePub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureSynonym" id="m_leftJoinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#83" title="Go to source code">leftJoinFeatureSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureSynonym" id="m_rightJoinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#84" title="Go to source code">rightJoinFeatureSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureSynonym" id="m_innerJoinFeatureSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#85" title="Go to source code">innerJoinFeatureSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureSynonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureSynonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubDbxref" id="m_leftJoinPubDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#87" title="Go to source code">leftJoinPubDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the PubDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the PubDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubDbxref" id="m_rightJoinPubDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#88" title="Go to source code">rightJoinPubDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the PubDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the PubDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubDbxref" id="m_innerJoinPubDbxref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubDbxref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#89" title="Go to source code">innerJoinPubDbxref</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the PubDbxref relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the PubDbxref relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubRelationshipRelatedByObjectId" id="m_leftJoinPubRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#91" title="Go to source code">leftJoinPubRelationshipRelatedByObjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the
+PubRelationshipRelatedByObjectId relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the
+PubRelationshipRelatedByObjectId relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubRelationshipRelatedByObjectId" id="m_rightJoinPubRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#92" title="Go to source code">rightJoinPubRelationshipRelatedByObjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the
+PubRelationshipRelatedByObjectId relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the
+PubRelationshipRelatedByObjectId relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubRelationshipRelatedByObjectId" id="m_innerJoinPubRelationshipRelatedByObjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubRelationshipRelatedByObjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#93" title="Go to source code">innerJoinPubRelationshipRelatedByObjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the
+PubRelationshipRelatedByObjectId relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the
+PubRelationshipRelatedByObjectId relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubRelationshipRelatedBySubjectId" id="m_leftJoinPubRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#95" title="Go to source code">leftJoinPubRelationshipRelatedBySubjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the
+PubRelationshipRelatedBySubjectId relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the
+PubRelationshipRelatedBySubjectId relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubRelationshipRelatedBySubjectId" id="m_rightJoinPubRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#96" title="Go to source code">rightJoinPubRelationshipRelatedBySubjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the
+PubRelationshipRelatedBySubjectId relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the
+PubRelationshipRelatedBySubjectId relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubRelationshipRelatedBySubjectId" id="m_innerJoinPubRelationshipRelatedBySubjectId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubRelationshipRelatedBySubjectId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#97" title="Go to source code">innerJoinPubRelationshipRelatedBySubjectId</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the
+PubRelationshipRelatedBySubjectId relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the
+PubRelationshipRelatedBySubjectId relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubauthor" id="m_leftJoinPubauthor">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubauthor">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#99" title="Go to source code">leftJoinPubauthor</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pubauthor relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pubauthor relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubauthor" id="m_rightJoinPubauthor">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubauthor">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#100" title="Go to source code">rightJoinPubauthor</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pubauthor relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pubauthor relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubauthor" id="m_innerJoinPubauthor">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubauthor">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#101" title="Go to source code">innerJoinPubauthor</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Pubauthor relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Pubauthor relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubprop" id="m_leftJoinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#103" title="Go to source code">leftJoinPubprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubprop" id="m_rightJoinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#104" title="Go to source code">rightJoinPubprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubprop" id="m_innerJoinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#105" title="Go to source code">innerJoinPubprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOne" id="m_findOne">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOne">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#107" title="Go to source code">findOne</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub matching the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub matching the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneOrCreate" id="m_findOneOrCreate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneOrCreate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#108" title="Go to source code">findOneOrCreate</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub matching the query, or a new Pub object populated from
+the query conditions when no match is found</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub matching the query, or a new Pub object populated from
+the query conditions when no match is found</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTitle" id="m_findOneByTitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#110" title="Go to source code">findOneByTitle</a>( <span>string <var>$title</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the title column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the title column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$title</var></dt>
+					<dd><code>string</code><br>$title</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByVolumetitle" id="m_findOneByVolumetitle">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByVolumetitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#111" title="Go to source code">findOneByVolumetitle</a>( <span>string <var>$volumetitle</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the volumetitle column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the volumetitle column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$volumetitle</var></dt>
+					<dd><code>string</code><br>$volumetitle</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByVolume" id="m_findOneByVolume">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByVolume">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#112" title="Go to source code">findOneByVolume</a>( <span>string <var>$volume</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the volume column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the volume column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$volume</var></dt>
+					<dd><code>string</code><br>$volume</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneBySeriesName" id="m_findOneBySeriesName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneBySeriesName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#113" title="Go to source code">findOneBySeriesName</a>( <span>string <var>$series_name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the series_name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the series_name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$series_name</var></dt>
+					<dd><code>string</code><br>$series_name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByIssue" id="m_findOneByIssue">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByIssue">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#114" title="Go to source code">findOneByIssue</a>( <span>string <var>$issue</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the issue column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the issue column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$issue</var></dt>
+					<dd><code>string</code><br>$issue</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByPyear" id="m_findOneByPyear">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByPyear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#115" title="Go to source code">findOneByPyear</a>( <span>string <var>$pyear</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the pyear column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the pyear column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pyear</var></dt>
+					<dd><code>string</code><br>$pyear</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByPages" id="m_findOneByPages">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByPages">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#116" title="Go to source code">findOneByPages</a>( <span>string <var>$pages</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the pages column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the pages column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pages</var></dt>
+					<dd><code>string</code><br>$pages</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByMiniref" id="m_findOneByMiniref">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByMiniref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#117" title="Go to source code">findOneByMiniref</a>( <span>string <var>$miniref</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the miniref column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the miniref column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$miniref</var></dt>
+					<dd><code>string</code><br>$miniref</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByUniquename" id="m_findOneByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#118" title="Go to source code">findOneByUniquename</a>( <span>string <var>$uniquename</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the uniquename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uniquename</var></dt>
+					<dd><code>string</code><br>$uniquename</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByTypeId" id="m_findOneByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#119" title="Go to source code">findOneByTypeId</a>( <span>integer <var>$type_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type_id</var></dt>
+					<dd><code>integer</code><br>$type_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByIsObsolete" id="m_findOneByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#120" title="Go to source code">findOneByIsObsolete</a>( <span>boolean <var>$is_obsolete</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_obsolete</var></dt>
+					<dd><code>boolean</code><br>$is_obsolete</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByPublisher" id="m_findOneByPublisher">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByPublisher">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#121" title="Go to source code">findOneByPublisher</a>( <span>string <var>$publisher</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the publisher column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the publisher column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$publisher</var></dt>
+					<dd><code>string</code><br>$publisher</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByPubplace" id="m_findOneByPubplace">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByPubplace">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#122" title="Go to source code">findOneByPubplace</a>( <span>string <var>$pubplace</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Pub filtered by the pubplace column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Pub filtered by the pubplace column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubplace</var></dt>
+					<dd><code>string</code><br>$pubplace</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByPubId" id="m_findByPubId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByPubId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#124" title="Go to source code">findByPubId</a>( <span>integer <var>$pub_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the pub_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the pub_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pub_id</var></dt>
+					<dd><code>integer</code><br>$pub_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTitle" id="m_findByTitle">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#125" title="Go to source code">findByTitle</a>( <span>string <var>$title</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the title column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the title column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$title</var></dt>
+					<dd><code>string</code><br>$title</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByVolumetitle" id="m_findByVolumetitle">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByVolumetitle">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#126" title="Go to source code">findByVolumetitle</a>( <span>string <var>$volumetitle</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the volumetitle column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the volumetitle column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$volumetitle</var></dt>
+					<dd><code>string</code><br>$volumetitle</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByVolume" id="m_findByVolume">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByVolume">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#127" title="Go to source code">findByVolume</a>( <span>string <var>$volume</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the volume column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the volume column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$volume</var></dt>
+					<dd><code>string</code><br>$volume</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findBySeriesName" id="m_findBySeriesName">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findBySeriesName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#128" title="Go to source code">findBySeriesName</a>( <span>string <var>$series_name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the series_name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the series_name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$series_name</var></dt>
+					<dd><code>string</code><br>$series_name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByIssue" id="m_findByIssue">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByIssue">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#129" title="Go to source code">findByIssue</a>( <span>string <var>$issue</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the issue column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the issue column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$issue</var></dt>
+					<dd><code>string</code><br>$issue</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByPyear" id="m_findByPyear">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByPyear">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#130" title="Go to source code">findByPyear</a>( <span>string <var>$pyear</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the pyear column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the pyear column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pyear</var></dt>
+					<dd><code>string</code><br>$pyear</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByPages" id="m_findByPages">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByPages">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#131" title="Go to source code">findByPages</a>( <span>string <var>$pages</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the pages column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the pages column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pages</var></dt>
+					<dd><code>string</code><br>$pages</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByMiniref" id="m_findByMiniref">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByMiniref">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#132" title="Go to source code">findByMiniref</a>( <span>string <var>$miniref</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the miniref column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the miniref column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$miniref</var></dt>
+					<dd><code>string</code><br>$miniref</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByUniquename" id="m_findByUniquename">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByUniquename">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#133" title="Go to source code">findByUniquename</a>( <span>string <var>$uniquename</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the uniquename column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the uniquename column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$uniquename</var></dt>
+					<dd><code>string</code><br>$uniquename</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByTypeId" id="m_findByTypeId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByTypeId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#134" title="Go to source code">findByTypeId</a>( <span>integer <var>$type_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the type_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the type_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type_id</var></dt>
+					<dd><code>integer</code><br>$type_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByIsObsolete" id="m_findByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#135" title="Go to source code">findByIsObsolete</a>( <span>boolean <var>$is_obsolete</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_obsolete</var></dt>
+					<dd><code>boolean</code><br>$is_obsolete</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByPublisher" id="m_findByPublisher">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByPublisher">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#136" title="Go to source code">findByPublisher</a>( <span>string <var>$publisher</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the publisher column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the publisher column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$publisher</var></dt>
+					<dd><code>string</code><br>$publisher</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByPubplace" id="m_findByPubplace">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByPubplace">#</a>
+		<code><a href="source-class-cli_db.propel.om.BasePubQuery.html#137" title="Go to source code">findByPubplace</a>( <span>string <var>$pubplace</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Pub objects filtered by the pubplace column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Pub objects filtered by the pubplace column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubplace</var></dt>
+					<dd><code>string</code><br>$pubplace</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

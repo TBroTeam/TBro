@@ -1,0 +1,5755 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class cli_db\propel\om\BaseCvtermQuery | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li class="active"><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li class="active"><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-cli_db.propel.om.BaseAcquisition.html">BaseAcquisition</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionPeer.html">BaseAcquisitionPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAcquisitionQuery.html">BaseAcquisitionQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysis.html">BaseAnalysis</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisPeer.html">BaseAnalysisPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAnalysisQuery.html">BaseAnalysisQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssay.html">BaseAssay</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterial.html">BaseAssayBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialPeer.html">BaseAssayBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayBiomaterialQuery.html">BaseAssayBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayPeer.html">BaseAssayPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseAssayQuery.html">BaseAssayQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterial.html">BaseBiomaterial</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialPeer.html">BaseBiomaterialPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialprop.html">BaseBiomaterialprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropPeer.html">BaseBiomaterialpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialpropQuery.html">BaseBiomaterialpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialQuery.html">BaseBiomaterialQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationship.html">BaseBiomaterialRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipPeer.html">BaseBiomaterialRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseBiomaterialRelationshipQuery.html">BaseBiomaterialRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContact.html">BaseContact</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactPeer.html">BaseContactPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseContactQuery.html">BaseContactQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCv.html">BaseCv</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvPeer.html">BaseCvPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvQuery.html">BaseCvQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvterm.html">BaseCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseCvtermPeer.html">BaseCvtermPeer</a></li>
+				<li class="active"><a href="class-cli_db.propel.om.BaseCvtermQuery.html">BaseCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDb.html">BaseDb</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbPeer.html">BaseDbPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbQuery.html">BaseDbQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxref.html">BaseDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefPeer.html">BaseDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseDbxrefQuery.html">BaseDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeature.html">BaseFeature</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvterm.html">BaseFeatureCvterm</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxref.html">BaseFeatureCvtermDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefPeer.html">BaseFeatureCvtermDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermDbxrefQuery.html">BaseFeatureCvtermDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPeer.html">BaseFeatureCvtermPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermprop.html">BaseFeatureCvtermprop</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropPeer.html">BaseFeatureCvtermpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermpropQuery.html">BaseFeatureCvtermpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPub.html">BaseFeatureCvtermPub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubPeer.html">BaseFeatureCvtermPubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermPubQuery.html">BaseFeatureCvtermPubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureCvtermQuery.html">BaseFeatureCvtermQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxref.html">BaseFeatureDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefPeer.html">BaseFeatureDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureDbxrefQuery.html">BaseFeatureDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePeer.html">BaseFeaturePeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePub.html">BaseFeaturePub</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubPeer.html">BaseFeaturePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeaturePubQuery.html">BaseFeaturePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureQuery.html">BaseFeatureQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonym.html">BaseFeatureSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymPeer.html">BaseFeatureSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseFeatureSynonymQuery.html">BaseFeatureSynonymQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganism.html">BaseOrganism</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismPeer.html">BaseOrganismPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseOrganismQuery.html">BaseOrganismQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocol.html">BaseProtocol</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolPeer.html">BaseProtocolPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseProtocolQuery.html">BaseProtocolQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePub.html">BasePub</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthor.html">BasePubauthor</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorPeer.html">BasePubauthorPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubauthorQuery.html">BasePubauthorQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxref.html">BasePubDbxref</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefPeer.html">BasePubDbxrefPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubDbxrefQuery.html">BasePubDbxrefQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubPeer.html">BasePubPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubprop.html">BasePubprop</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropPeer.html">BasePubpropPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubpropQuery.html">BasePubpropQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubQuery.html">BasePubQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationship.html">BasePubRelationship</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipPeer.html">BasePubRelationshipPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BasePubRelationshipQuery.html">BasePubRelationshipQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantification.html">BaseQuantification</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationPeer.html">BaseQuantificationPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseQuantificationQuery.html">BaseQuantificationQuery</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonym.html">BaseSynonym</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymPeer.html">BaseSynonymPeer</a></li>
+				<li><a href="class-cli_db.propel.om.BaseSynonymQuery.html">BaseSynonymQuery</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-cli_db.propel.om.html" title="Summary of cli_db\propel\om"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class BaseCvtermQuery</h1>
+
+
+	<div class="description">
+	
+<p>Base class that represents a query for the 'cvterm' table.</p>
+
+	</div>
+
+	<dl class="tree">
+		<dd style="padding-left:0px">
+ModelCriteria
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>cli_db\propel\om\BaseCvtermQuery</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		<b>Abstract</b><br />
+		
+		<b>Namespace:</b> <a href="namespace-cli_db.html">cli_db</a>\<a href="namespace-cli_db.propel.html">propel</a>\<a href="namespace-cli_db.propel.om.html">om</a><br />
+		<b>Package:</b> propel\generator\cli\db\om<br />
+
+		<b>Located at</b> <a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#31-1489" title="Go to source code">src/cli/db/propel-classes/cli_db/om/BaseCvtermQuery.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#126-136" title="Go to source code">__construct</a>( <span>string <var>$dbName</var> = <span class="php-quote">'cli_db'</span></span>, <span>string <var>$modelName</var> = <span class="php-quote">'cli_db\\propel\\Cvterm'</span></span>, <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Initializes internal state of BaseCvtermQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Initializes internal state of BaseCvtermQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbName</var></dt>
+					<dd><code>string</code><br>$dbName The dabase name</dd>
+					<dt><var>$modelName</var></dt>
+					<dd><code>string</code><br>$modelName The phpName of a model, e.g. 'Book'</dd>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias for the model in this query, e.g. 'b'</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="create" id="_create">
+
+		<td class="attributes"><code>
+			 public static
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_create">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#138-160" title="Go to source code">create</a>( <span>string <var>$modelAlias</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>|Criteria <var>$criteria</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns a new CvtermQuery object.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns a new CvtermQuery object.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$modelAlias</var></dt>
+					<dd><code>string</code><br>$modelAlias The alias of a model in the query</dd>
+					<dt><var>$criteria</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>|Criteria</code><br>$criteria Optional Criteria to build the query from</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPk" id="_findPk">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPk">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#162-196" title="Go to source code">findPk</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key. Propel uses the instance pool to skip the
+database if the object exists. Go fast if the query is untouched.</p>
+
+<pre>
+<span class="php-var">$obj</span>  = <span
+class="php-var">$c</span>-&gt;findPk(<span class="php-num">12</span>, <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByCvtermId" id="_findOneByCvtermId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findOneByCvtermId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#198-210" title="Go to source code">findOneByCvtermId</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Alias of findPk to use instance pooling</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkSimple" id="_findPkSimple">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkSimple">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#212-242" title="Go to source code">findPkSimple</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key using raw SQL to go fast. Bypass doSelect() and
+the object formatter by using generated code.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br>A model object, or null if the key is not found<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPkComplex" id="_findPkComplex">
+
+		<td class="attributes"><code>
+			 protected 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPkComplex">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#244-261" title="Go to source code">findPkComplex</a>( <span>mixed <var>$key</var></span>, <span>PropelPDO <var>$con</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Find object by primary key.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find object by primary key.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con A connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>|<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a>[]</code>|mixed</code><br>the result, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findPks" id="_findPks">
+
+		<td class="attributes"><code>
+			 public 
+			PropelObjectCollection|<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a>[]</code>|mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_findPks">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#263-285" title="Go to source code">findPks</a>( <span>array <var>$keys</var></span>, <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Find objects by primary key</p>
+
+<pre>
+<span class="php-var">$objs</span> = <span
+class="php-var">$c</span>-&gt;findPks(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">56</span>, <span class="php-num">832</span>), <span
+class="php-var">$con</span>);
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys Primary keys to use for the query</dd>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con an optional connection object</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>PropelObjectCollection|<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a>[]</code>|mixed</code><br>the list of results, formatted by the current formatter<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKey" id="_filterByPrimaryKey">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKey">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#287-298" title="Go to source code">filterByPrimaryKey</a>( <span>mixed <var>$key</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by primary key</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by primary key</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$key</var></dt>
+					<dd><code>mixed</code><br>$key Primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPrimaryKeys" id="_filterByPrimaryKeys">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPrimaryKeys">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#300-311" title="Go to source code">filterByPrimaryKeys</a>( <span>array <var>$keys</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a list of primary keys</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a list of primary keys</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$keys</var></dt>
+					<dd><code>array</code><br>$keys The list of primary key to use for the query</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByCvtermId" id="_filterByCvtermId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByCvtermId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#313-353" title="Go to source code">filterByCvtermId</a>( <span>mixed <var>$cvtermId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the cvterm_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the cvterm_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByCvtermId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE cvterm_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByCvtermId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE cvterm_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByCvtermId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE cvterm_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByCvtermId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE cvterm_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvtermId</var></dt>
+					<dd><code>mixed</code><br>$cvtermId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByCvId" id="_filterByCvId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByCvId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#355-397" title="Go to source code">filterByCvId</a>( <span>mixed <var>$cvId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the cv_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the cv_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByCvId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE cv_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByCvId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE cv_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByCvId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE cv_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByCvId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE cv_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvId</var></dt>
+					<dd><code>mixed</code><br>$cvId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><code><a href="class-cli_db.propel.om.BaseCvtermQuery.html#_filterByCv">cli_db\propel\om\BaseCvtermQuery::filterByCv()</a></code></code><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByName" id="_filterByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#399-426" title="Go to source code">filterByName</a>( <span>string <var>$name</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the name column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE name = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByName(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE name LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name The value to use as filter. Accepts wildcards (* and % trigger a LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByDefinition" id="_filterByDefinition">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByDefinition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#428-455" title="Go to source code">filterByDefinition</a>( <span>string <var>$definition</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the definition column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the definition column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByDefinition(<span
+class="php-quote">'fooValue'</span>);   <span
+class="php-comment">// WHERE definition = 'fooValue'</span>
+<span
+class="php-var">$query</span>-&gt;filterByDefinition(<span
+class="php-quote">'%fooValue%'</span>); <span
+class="php-comment">// WHERE definition LIKE '%fooValue%'</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$definition</var></dt>
+					<dd><code>string</code><br>$definition The value to use as filter. Accepts wildcards (* and % trigger a
+LIKE)</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByDbxrefId" id="_filterByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#457-497" title="Go to source code">filterByDbxrefId</a>( <span>mixed <var>$dbxrefId</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the dbxref_id column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE dbxref_id = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE dbxref_id IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE dbxref_id &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByDbxrefId(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE dbxref_id &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxrefId</var></dt>
+					<dd><code>mixed</code><br>$dbxrefId The value to use as filter. Use scalar values for equality. Use array
+values for in_array() equivalent. Use associative array('min' =&gt; $minValue,
+'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByIsObsolete" id="_filterByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#499-539" title="Go to source code">filterByIsObsolete</a>( <span>mixed <var>$isObsolete</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the is_obsolete column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE is_obsolete = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE is_obsolete IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE is_obsolete &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsObsolete(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE is_obsolete &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$isObsolete</var></dt>
+					<dd><code>mixed</code><br>$isObsolete The value to use as filter. Use scalar values for equality. Use
+array values for in_array() equivalent. Use associative array('min' =&gt;
+$minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByIsRelationshiptype" id="_filterByIsRelationshiptype">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByIsRelationshiptype">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#541-581" title="Go to source code">filterByIsRelationshiptype</a>( <span>mixed <var>$isRelationshiptype</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query on the is_relationshiptype column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query on the is_relationshiptype column</p>
+
+<p>Example usage:</p>
+
+<pre>
+<span class="php-var">$query</span>-&gt;filterByIsRelationshiptype(<span
+class="php-num">1234</span>); <span
+class="php-comment">// WHERE is_relationshiptype = 1234</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsRelationshiptype(<span
+class="php-keyword1">array</span>(<span class="php-num">12</span>, <span
+class="php-num">34</span>)); <span
+class="php-comment">// WHERE is_relationshiptype IN (12, 34)</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsRelationshiptype(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'min'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE is_relationshiptype &gt;= 12</span>
+<span
+class="php-var">$query</span>-&gt;filterByIsRelationshiptype(<span
+class="php-keyword1">array</span>(<span
+class="php-quote">'max'</span> =&gt; <span class="php-num">12</span>)); <span
+class="php-comment">// WHERE is_relationshiptype &lt;= 12</span>
+</pre>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$isRelationshiptype</var></dt>
+					<dd><code>mixed</code><br>$isRelationshiptype The value to use as filter. Use scalar values for equality.
+Use array values for in_array() equivalent. Use associative array('min' =&gt;
+$minValue, 'max' =&gt; $maxValue) for intervals.</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByCv" id="_filterByCv">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByCv">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#583-607" title="Go to source code">filterByCv</a>( <span><code><a href="class-cli_db.propel.Cv.html">cli_db\propel\Cv</a></code>|PropelObjectCollection <var>$cv</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Cv object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Cv object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cv</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Cv.html">cli_db\propel\Cv</a></code>|PropelObjectCollection</code><br>$cv The related object(s) to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinCv" id="_joinCv">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinCv">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#609-639" title="Go to source code">joinCv</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Cv relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Cv relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useCvQuery" id="_useCvQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvQuery.html">cli_db\propel\CvQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useCvQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#641-657" title="Go to source code">useCvQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Cv relation Cv object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Cv relation Cv object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvQuery.html">cli_db\propel\CvQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByBiomaterialRelationship" id="_filterByBiomaterialRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByBiomaterialRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#659-681" title="Go to source code">filterByBiomaterialRelationship</a>( <span><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>|PropelObjectCollection <var>$biomaterialRelationship</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related BiomaterialRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related BiomaterialRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialRelationship</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.BiomaterialRelationship.html">cli_db\propel\BiomaterialRelationship</a></code>|PropelObjectCollection</code><br>$biomaterialRelationship the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinBiomaterialRelationship" id="_joinBiomaterialRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinBiomaterialRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#683-713" title="Go to source code">joinBiomaterialRelationship</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useBiomaterialRelationshipQuery" id="_useBiomaterialRelationshipQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useBiomaterialRelationshipQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#715-731" title="Go to source code">useBiomaterialRelationshipQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the BiomaterialRelationship relation BiomaterialRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the BiomaterialRelationship relation BiomaterialRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialRelationshipQuery.html">cli_db\propel\BiomaterialRelationshipQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByBiomaterialprop" id="_filterByBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#733-755" title="Go to source code">filterByBiomaterialprop</a>( <span><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code>|PropelObjectCollection <var>$biomaterialprop</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Biomaterialprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Biomaterialprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$biomaterialprop</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Biomaterialprop.html">cli_db\propel\Biomaterialprop</a></code>|PropelObjectCollection</code><br>$biomaterialprop the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinBiomaterialprop" id="_joinBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#757-787" title="Go to source code">joinBiomaterialprop</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Biomaterialprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Biomaterialprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useBiomaterialpropQuery" id="_useBiomaterialpropQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.BiomaterialpropQuery.html">cli_db\propel\BiomaterialpropQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useBiomaterialpropQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#789-805" title="Go to source code">useBiomaterialpropQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Biomaterialprop relation Biomaterialprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Biomaterialprop relation Biomaterialprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.BiomaterialpropQuery.html">cli_db\propel\BiomaterialpropQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByContact" id="_filterByContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#807-829" title="Go to source code">filterByContact</a>( <span><code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code>|PropelObjectCollection <var>$contact</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Contact object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Contact object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$contact</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Contact.html">cli_db\propel\Contact</a></code>|PropelObjectCollection</code><br>$contact the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinContact" id="_joinContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#831-861" title="Go to source code">joinContact</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Contact relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Contact relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useContactQuery" id="_useContactQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.ContactQuery.html">cli_db\propel\ContactQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useContactQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#863-879" title="Go to source code">useContactQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::LEFT_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Contact relation Contact object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Contact relation Contact object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.ContactQuery.html">cli_db\propel\ContactQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeature" id="_filterByFeature">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeature">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#881-903" title="Go to source code">filterByFeature</a>( <span><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>|PropelObjectCollection <var>$feature</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Feature object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Feature object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$feature</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Feature.html">cli_db\propel\Feature</a></code>|PropelObjectCollection</code><br>$feature the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeature" id="_joinFeature">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeature">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#905-935" title="Go to source code">joinFeature</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Feature relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Feature relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureQuery" id="_useFeatureQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#937-953" title="Go to source code">useFeatureQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Feature relation Feature object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Feature relation Feature object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureQuery.html">cli_db\propel\FeatureQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureCvterm" id="_filterByFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#955-977" title="Go to source code">filterByFeatureCvterm</a>( <span><code><a href="class-cli_db.propel.FeatureCvterm.html">cli_db\propel\FeatureCvterm</a></code>|PropelObjectCollection <var>$featureCvterm</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureCvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureCvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureCvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureCvterm.html">cli_db\propel\FeatureCvterm</a></code>|PropelObjectCollection</code><br>$featureCvterm the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureCvterm" id="_joinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#979-1009" title="Go to source code">joinFeatureCvterm</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureCvtermQuery" id="_useFeatureCvtermQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureCvtermQuery.html">cli_db\propel\FeatureCvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureCvtermQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1011-1027" title="Go to source code">useFeatureCvtermQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureCvterm relation FeatureCvterm object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureCvterm relation FeatureCvterm object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureCvtermQuery.html">cli_db\propel\FeatureCvtermQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByFeatureCvtermprop" id="_filterByFeatureCvtermprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByFeatureCvtermprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1029-1051" title="Go to source code">filterByFeatureCvtermprop</a>( <span><code><a href="class-cli_db.propel.FeatureCvtermprop.html">cli_db\propel\FeatureCvtermprop</a></code>|PropelObjectCollection <var>$featureCvtermprop</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related FeatureCvtermprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related FeatureCvtermprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$featureCvtermprop</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.FeatureCvtermprop.html">cli_db\propel\FeatureCvtermprop</a></code>|PropelObjectCollection</code><br>$featureCvtermprop the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinFeatureCvtermprop" id="_joinFeatureCvtermprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinFeatureCvtermprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1053-1083" title="Go to source code">joinFeatureCvtermprop</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvtermprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the FeatureCvtermprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useFeatureCvtermpropQuery" id="_useFeatureCvtermpropQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.FeatureCvtermpropQuery.html">cli_db\propel\FeatureCvtermpropQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useFeatureCvtermpropQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1085-1101" title="Go to source code">useFeatureCvtermpropQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the FeatureCvtermprop relation FeatureCvtermprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the FeatureCvtermprop relation FeatureCvtermprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.FeatureCvtermpropQuery.html">cli_db\propel\FeatureCvtermpropQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByProtocol" id="_filterByProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1103-1125" title="Go to source code">filterByProtocol</a>( <span><code><a href="class-cli_db.propel.Protocol.html">cli_db\propel\Protocol</a></code>|PropelObjectCollection <var>$protocol</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Protocol object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Protocol object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$protocol</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Protocol.html">cli_db\propel\Protocol</a></code>|PropelObjectCollection</code><br>$protocol the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinProtocol" id="_joinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1127-1157" title="Go to source code">joinProtocol</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useProtocolQuery" id="_useProtocolQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.ProtocolQuery.html">cli_db\propel\ProtocolQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useProtocolQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1159-1175" title="Go to source code">useProtocolQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Protocol relation Protocol object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Protocol relation Protocol object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.ProtocolQuery.html">cli_db\propel\ProtocolQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPub" id="_filterByPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1177-1199" title="Go to source code">filterByPub</a>( <span><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>|PropelObjectCollection <var>$pub</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Pub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Pub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pub</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Pub.html">cli_db\propel\Pub</a></code>|PropelObjectCollection</code><br>$pub the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPub" id="_joinPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1201-1231" title="Go to source code">joinPub</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Pub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Pub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubQuery" id="_usePubQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1233-1249" title="Go to source code">usePubQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Pub relation Pub object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Pub relation Pub object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubQuery.html">cli_db\propel\PubQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubRelationship" id="_filterByPubRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1251-1273" title="Go to source code">filterByPubRelationship</a>( <span><code><a href="class-cli_db.propel.PubRelationship.html">cli_db\propel\PubRelationship</a></code>|PropelObjectCollection <var>$pubRelationship</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related PubRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related PubRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubRelationship</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.PubRelationship.html">cli_db\propel\PubRelationship</a></code>|PropelObjectCollection</code><br>$pubRelationship the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubRelationship" id="_joinPubRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1275-1305" title="Go to source code">joinPubRelationship</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the PubRelationship relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the PubRelationship relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubRelationshipQuery" id="_usePubRelationshipQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubRelationshipQuery.html">cli_db\propel\PubRelationshipQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubRelationshipQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1307-1323" title="Go to source code">usePubRelationshipQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the PubRelationship relation PubRelationship object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the PubRelationship relation PubRelationship object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubRelationshipQuery.html">cli_db\propel\PubRelationshipQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterByPubprop" id="_filterByPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterByPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1325-1347" title="Go to source code">filterByPubprop</a>( <span><code><a href="class-cli_db.propel.Pubprop.html">cli_db\propel\Pubprop</a></code>|PropelObjectCollection <var>$pubprop</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Pubprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Pubprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$pubprop</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Pubprop.html">cli_db\propel\Pubprop</a></code>|PropelObjectCollection</code><br>$pubprop the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinPubprop" id="_joinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1349-1379" title="Go to source code">joinPubprop</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="usePubpropQuery" id="_usePubpropQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.PubpropQuery.html">cli_db\propel\PubpropQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_usePubpropQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1381-1397" title="Go to source code">usePubpropQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Pubprop relation Pubprop object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Pubprop relation Pubprop object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.PubpropQuery.html">cli_db\propel\PubpropQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="filterBySynonym" id="_filterBySynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_filterBySynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1399-1421" title="Go to source code">filterBySynonym</a>( <span><code><a href="class-cli_db.propel.Synonym.html">cli_db\propel\Synonym</a></code>|PropelObjectCollection <var>$synonym</var></span>, <span>string <var>$comparison</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Filter the query by a related Synonym object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Filter the query by a related Synonym object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$synonym</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Synonym.html">cli_db\propel\Synonym</a></code>|PropelObjectCollection</code><br>$synonym the related object to use as filter</dd>
+					<dt><var>$comparison</var></dt>
+					<dd><code>string</code><br>$comparison Operator to use for the column comparison, defaults to
+Criteria::EQUAL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code>PropelException</code><br>- if the provided filter is invalid.<br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="joinSynonym" id="_joinSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_joinSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1423-1453" title="Go to source code">joinSynonym</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a JOIN clause to the query using the Synonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a JOIN clause to the query using the Synonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="useSynonymQuery" id="_useSynonymQuery">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.SynonymQuery.html">cli_db\propel\SynonymQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_useSynonymQuery">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1455-1471" title="Go to source code">useSynonymQuery</a>( <span>string <var>$relationAlias</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$joinType</var> = cli_db\propel\om\Criteria::INNER_JOIN</span> )</code>
+
+		<div class="description short">
+			
+<p>Use the Synonym relation Synonym object</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Use the Synonym relation Synonym object</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>string</code><br>$relationAlias optional alias for the relation, to be used as main alias in the
+secondary query</dd>
+					<dt><var>$joinType</var></dt>
+					<dd><code>string</code><br>$joinType Accepted values are null, 'left join', 'right join', 'inner join'</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.SynonymQuery.html">cli_db\propel\SynonymQuery</a></code></code><br>A secondary query class using the current class as primary query<br />
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						useQuery()<br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prune" id="_prune">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prune">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#1473-1487" title="Go to source code">prune</a>( <span><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code> <var>$cvterm</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Exclude object from result</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Exclude object from result</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvterm</var></dt>
+					<dd><code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br>$cvterm Object to remove from the list of results</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br>The current query, for fluid interface<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="orderByCvtermId" id="m_orderByCvtermId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByCvtermId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#36" title="Go to source code">orderByCvtermId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the cvterm_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the cvterm_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByCvId" id="m_orderByCvId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByCvId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#37" title="Go to source code">orderByCvId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the cv_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the cv_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByName" id="m_orderByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#38" title="Go to source code">orderByName</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByDefinition" id="m_orderByDefinition">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByDefinition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#39" title="Go to source code">orderByDefinition</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the definition column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the definition column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByDbxrefId" id="m_orderByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#40" title="Go to source code">orderByDbxrefId</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the dbxref_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByIsObsolete" id="m_orderByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#41" title="Go to source code">orderByIsObsolete</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="orderByIsRelationshiptype" id="m_orderByIsRelationshiptype">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_orderByIsRelationshiptype">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#42" title="Go to source code">orderByIsRelationshiptype</a>( <span>mixed <var>$order</var> = cli_db\propel\om\Criteria::ASC</span> )</code>
+
+		<div class="description short">
+			
+<p>Order by the is_relationshiptype column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Order by the is_relationshiptype column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$order</var></dt>
+					<dd><code>mixed</code><br>$order</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByCvtermId" id="m_groupByCvtermId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByCvtermId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#44" title="Go to source code">groupByCvtermId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the cvterm_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the cvterm_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByCvId" id="m_groupByCvId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByCvId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#45" title="Go to source code">groupByCvId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the cv_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the cv_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByName" id="m_groupByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#46" title="Go to source code">groupByName</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the name column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByDefinition" id="m_groupByDefinition">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByDefinition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#47" title="Go to source code">groupByDefinition</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the definition column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the definition column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByDbxrefId" id="m_groupByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#48" title="Go to source code">groupByDbxrefId</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the dbxref_id column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByIsObsolete" id="m_groupByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#49" title="Go to source code">groupByIsObsolete</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the is_obsolete column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="groupByIsRelationshiptype" id="m_groupByIsRelationshiptype">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_groupByIsRelationshiptype">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#50" title="Go to source code">groupByIsRelationshiptype</a>( )</code>
+
+		<div class="description short">
+			
+<p>Group by the is_relationshiptype column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Group by the is_relationshiptype column</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoin" id="m_leftJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#52" title="Go to source code">leftJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoin" id="m_rightJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#53" title="Go to source code">rightJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoin" id="m_innerJoin">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoin">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#54" title="Go to source code">innerJoin</a>( <span>mixed <var>$relation</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relation</var></dt>
+					<dd><code>mixed</code><br>$relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinCv" id="m_leftJoinCv">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinCv">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#56" title="Go to source code">leftJoinCv</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cv relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Cv relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinCv" id="m_rightJoinCv">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinCv">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#57" title="Go to source code">rightJoinCv</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cv relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Cv relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinCv" id="m_innerJoinCv">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinCv">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#58" title="Go to source code">innerJoinCv</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Cv relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Cv relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinBiomaterialRelationship" id="m_leftJoinBiomaterialRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinBiomaterialRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#60" title="Go to source code">leftJoinBiomaterialRelationship</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinBiomaterialRelationship" id="m_rightJoinBiomaterialRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinBiomaterialRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#61" title="Go to source code">rightJoinBiomaterialRelationship</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinBiomaterialRelationship" id="m_innerJoinBiomaterialRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinBiomaterialRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#62" title="Go to source code">innerJoinBiomaterialRelationship</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the BiomaterialRelationship
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinBiomaterialprop" id="m_leftJoinBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#64" title="Go to source code">leftJoinBiomaterialprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Biomaterialprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Biomaterialprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinBiomaterialprop" id="m_rightJoinBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#65" title="Go to source code">rightJoinBiomaterialprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Biomaterialprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Biomaterialprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinBiomaterialprop" id="m_innerJoinBiomaterialprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinBiomaterialprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#66" title="Go to source code">innerJoinBiomaterialprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Biomaterialprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Biomaterialprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinContact" id="m_leftJoinContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#68" title="Go to source code">leftJoinContact</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Contact relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Contact relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinContact" id="m_rightJoinContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#69" title="Go to source code">rightJoinContact</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Contact relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Contact relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinContact" id="m_innerJoinContact">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinContact">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#70" title="Go to source code">innerJoinContact</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Contact relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Contact relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeature" id="m_leftJoinFeature">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeature">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#72" title="Go to source code">leftJoinFeature</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Feature relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Feature relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeature" id="m_rightJoinFeature">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeature">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#73" title="Go to source code">rightJoinFeature</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Feature relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Feature relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeature" id="m_innerJoinFeature">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeature">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#74" title="Go to source code">innerJoinFeature</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Feature relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Feature relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureCvterm" id="m_leftJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#76" title="Go to source code">leftJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureCvterm" id="m_rightJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#77" title="Go to source code">rightJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureCvterm" id="m_innerJoinFeatureCvterm">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureCvterm">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#78" title="Go to source code">innerJoinFeatureCvterm</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvterm relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvterm relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinFeatureCvtermprop" id="m_leftJoinFeatureCvtermprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinFeatureCvtermprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#80" title="Go to source code">leftJoinFeatureCvtermprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvtermprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the FeatureCvtermprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinFeatureCvtermprop" id="m_rightJoinFeatureCvtermprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinFeatureCvtermprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#81" title="Go to source code">rightJoinFeatureCvtermprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvtermprop
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the FeatureCvtermprop
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinFeatureCvtermprop" id="m_innerJoinFeatureCvtermprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinFeatureCvtermprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#82" title="Go to source code">innerJoinFeatureCvtermprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvtermprop
+relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the FeatureCvtermprop
+relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinProtocol" id="m_leftJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#84" title="Go to source code">leftJoinProtocol</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinProtocol" id="m_rightJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#85" title="Go to source code">rightJoinProtocol</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinProtocol" id="m_innerJoinProtocol">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinProtocol">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#86" title="Go to source code">innerJoinProtocol</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Protocol relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Protocol relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPub" id="m_leftJoinPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#88" title="Go to source code">leftJoinPub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPub" id="m_rightJoinPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#89" title="Go to source code">rightJoinPub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPub" id="m_innerJoinPub">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPub">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#90" title="Go to source code">innerJoinPub</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Pub relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Pub relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubRelationship" id="m_leftJoinPubRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#92" title="Go to source code">leftJoinPubRelationship</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the PubRelationship relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the PubRelationship relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubRelationship" id="m_rightJoinPubRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#93" title="Go to source code">rightJoinPubRelationship</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the PubRelationship relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the PubRelationship relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubRelationship" id="m_innerJoinPubRelationship">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubRelationship">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#94" title="Go to source code">innerJoinPubRelationship</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the PubRelationship relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the PubRelationship relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinPubprop" id="m_leftJoinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#96" title="Go to source code">leftJoinPubprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinPubprop" id="m_rightJoinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#97" title="Go to source code">rightJoinPubprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinPubprop" id="m_innerJoinPubprop">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinPubprop">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#98" title="Go to source code">innerJoinPubprop</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Pubprop relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Pubprop relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="leftJoinSynonym" id="m_leftJoinSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_leftJoinSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#100" title="Go to source code">leftJoinSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a LEFT JOIN clause to the query using the Synonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a LEFT JOIN clause to the query using the Synonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rightJoinSynonym" id="m_rightJoinSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_rightJoinSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#101" title="Go to source code">rightJoinSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Synonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a RIGHT JOIN clause to the query using the Synonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="innerJoinSynonym" id="m_innerJoinSynonym">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_innerJoinSynonym">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#102" title="Go to source code">innerJoinSynonym</a>( <span>mixed <var>$relationAlias</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Adds a INNER JOIN clause to the query using the Synonym relation</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Adds a INNER JOIN clause to the query using the Synonym relation</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$relationAlias</var></dt>
+					<dd><code>mixed</code><br>$relationAlias</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.CvtermQuery.html">cli_db\propel\CvtermQuery</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOne" id="m_findOne">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOne">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#104" title="Go to source code">findOne</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm matching the query</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm matching the query</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneOrCreate" id="m_findOneOrCreate">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneOrCreate">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#105" title="Go to source code">findOneOrCreate</a>( <span>PropelPDO <var>$con</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm matching the query, or a new Cvterm object populated
+from the query conditions when no match is found</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm matching the query, or a new Cvterm object populated
+from the query conditions when no match is found</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$con</var></dt>
+					<dd><code>PropelPDO</code><br>$con</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByCvId" id="m_findOneByCvId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByCvId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#107" title="Go to source code">findOneByCvId</a>( <span>integer <var>$cv_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm filtered by the cv_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm filtered by the cv_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cv_id</var></dt>
+					<dd><code>integer</code><br>$cv_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByName" id="m_findOneByName">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#108" title="Go to source code">findOneByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByDefinition" id="m_findOneByDefinition">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByDefinition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#109" title="Go to source code">findOneByDefinition</a>( <span>string <var>$definition</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm filtered by the definition column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm filtered by the definition column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$definition</var></dt>
+					<dd><code>string</code><br>$definition</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByDbxrefId" id="m_findOneByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#110" title="Go to source code">findOneByDbxrefId</a>( <span>integer <var>$dbxref_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm filtered by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm filtered by the dbxref_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxref_id</var></dt>
+					<dd><code>integer</code><br>$dbxref_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByIsObsolete" id="m_findOneByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#111" title="Go to source code">findOneByIsObsolete</a>( <span>integer <var>$is_obsolete</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm filtered by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm filtered by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_obsolete</var></dt>
+					<dd><code>integer</code><br>$is_obsolete</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findOneByIsRelationshiptype" id="m_findOneByIsRelationshiptype">
+
+		<td class="attributes"><code>
+			 public 
+			<code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findOneByIsRelationshiptype">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#112" title="Go to source code">findOneByIsRelationshiptype</a>( <span>integer <var>$is_relationshiptype</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return the first Cvterm filtered by the is_relationshiptype column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return the first Cvterm filtered by the is_relationshiptype column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_relationshiptype</var></dt>
+					<dd><code>integer</code><br>$is_relationshiptype</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-cli_db.propel.Cvterm.html">cli_db\propel\Cvterm</a></code></code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByCvtermId" id="m_findByCvtermId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByCvtermId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#114" title="Go to source code">findByCvtermId</a>( <span>integer <var>$cvterm_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the cvterm_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the cvterm_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cvterm_id</var></dt>
+					<dd><code>integer</code><br>$cvterm_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByCvId" id="m_findByCvId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByCvId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#115" title="Go to source code">findByCvId</a>( <span>integer <var>$cv_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the cv_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the cv_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$cv_id</var></dt>
+					<dd><code>integer</code><br>$cv_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByName" id="m_findByName">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByName">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#116" title="Go to source code">findByName</a>( <span>string <var>$name</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the name column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the name column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code>string</code><br>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByDefinition" id="m_findByDefinition">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByDefinition">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#117" title="Go to source code">findByDefinition</a>( <span>string <var>$definition</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the definition column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the definition column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$definition</var></dt>
+					<dd><code>string</code><br>$definition</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByDbxrefId" id="m_findByDbxrefId">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByDbxrefId">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#118" title="Go to source code">findByDbxrefId</a>( <span>integer <var>$dbxref_id</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the dbxref_id column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the dbxref_id column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dbxref_id</var></dt>
+					<dd><code>integer</code><br>$dbxref_id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByIsObsolete" id="m_findByIsObsolete">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByIsObsolete">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#119" title="Go to source code">findByIsObsolete</a>( <span>integer <var>$is_obsolete</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the is_obsolete column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the is_obsolete column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_obsolete</var></dt>
+					<dd><code>integer</code><br>$is_obsolete</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="findByIsRelationshiptype" id="m_findByIsRelationshiptype">
+
+		<td class="attributes"><code>
+			 public 
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_findByIsRelationshiptype">#</a>
+		<code><a href="source-class-cli_db.propel.om.BaseCvtermQuery.html#120" title="Go to source code">findByIsRelationshiptype</a>( <span>integer <var>$is_relationshiptype</var> = </span> )</code>
+
+		<div class="description short">
+			
+<p>Return Cvterm objects filtered by the is_relationshiptype column</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Return Cvterm objects filtered by the is_relationshiptype column</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$is_relationshiptype</var></dt>
+					<dd><code>integer</code><br>$is_relationshiptype</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="generator" content="ApiGen 2.8.0" />
+
+	<title>Class LightOpenID | tbro</title>
+
+	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
+	<script type="text/javascript" src="elementlist.js?3615646999"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li><a href="namespace-cli_db.html">cli_db<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.html">propel<span></span></a>
+						<ul>
+				<li><a href="namespace-cli_db.propel.map.html">map</a>
+						</li>
+				<li><a href="namespace-cli_db.propel.om.html">om</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-cli_import.html">cli_import</a>
+						</li>
+				<li><a href="namespace-LoggedPDO.html">LoggedPDO</a>
+						</li>
+				<li class="active"><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+				<li><a href="namespace-webservices.html">webservices<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.cart.html">cart</a>
+						</li>
+				<li><a href="namespace-webservices.combisearch.html">combisearch</a>
+						</li>
+				<li><a href="namespace-webservices.details.html">details<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.html">annotations<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.details.annotations.feature.html">feature</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-webservices.graphs.html">graphs<span></span></a>
+						<ul>
+				<li><a href="namespace-webservices.graphs.barplot.html">barplot</a>
+						</li>
+				<li><a href="namespace-webservices.graphs.genome.html">genome</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-webservices.listing.html">listing</a>
+						</li>
+				<li><a href="namespace-webservices.queue.html">queue</a>
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr />
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-Console_CommandLine_Action_ExtendedHelp.html">Console_CommandLine_Action_ExtendedHelp</a></li>
+				<li class="active"><a href="class-LightOpenID.html">LightOpenID</a></li>
+				<li><a href="class-Log_firebugJSON.html">Log_firebugJSON</a></li>
+				<li><a href="class-WebService.html">WebService</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-CLI_Command.html">CLI_Command</a></li>
+			</ul>
+
+
+
+
+			<h3>Functions</h3>
+			<ul>
+				<li><a href="function-acquire_database.html">acquire_database</a></li>
+				<li><a href="function-cli_error_handler.html">cli_error_handler</a></li>
+				<li><a href="function-connect_queue_db.html" class="invalid">connect_queue_db</a></li>
+				<li><a href="function-create_job.html">create_job</a></li>
+				<li><a href="function-display_feature.html">display_feature</a></li>
+				<li><a href="function-display_feature_by_id.html">display_feature_by_id</a></li>
+				<li><a href="function-display_isoform_by_id.html">display_isoform_by_id</a></li>
+				<li><a href="function-display_unigene_by_id.html">display_unigene_by_id</a></li>
+				<li><a href="function-download.html">download</a></li>
+				<li><a href="function-execute_command.html">execute_command</a></li>
+				<li><a href="function-execute_job.html">execute_job</a></li>
+				<li><a href="function-execute_query_dir.html">execute_query_dir</a></li>
+				<li><a href="function-get_db_connection.html">get_db_connection</a></li>
+				<li><a href="function-get_job_results.html">get_job_results</a></li>
+				<li><a href="function-get_program_databases.html">get_program_databases</a></li>
+				<li><a href="function-myErrorHandler.html">myErrorHandler</a></li>
+				<li><a href="function-pdo_connect.html">pdo_connect</a></li>
+				<li><a href="function-report_results_cleanup.html">report_results_cleanup</a></li>
+				<li><a href="function-requestVal.html">requestVal</a></li>
+				<li><a href="function-smarty_function_call_webservice.html">smarty_function_call_webservice</a></li>
+				<li><a href="function-smarty_function_dbxreflink.html">smarty_function_dbxreflink</a></li>
+				<li><a href="function-smarty_function_interprolink.html">smarty_function_interprolink</a></li>
+				<li><a href="function-smarty_function_publink.html">smarty_function_publink</a></li>
+				<li><a href="function-smarty_modifier_clean_id.html">smarty_modifier_clean_id</a></li>
+				<li><a href="function-split_fasta.html">split_fasta</a></li>
+				<li><a href="function-unzip.html">unzip</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" class="text" />
+		<input type="submit" value="Search" />
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-None.html" title="Summary of None"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class LightOpenID</h1>
+
+
+	<div class="description">
+	
+<p>This class provides a simple interface for OpenID (1.1 and 2.0)
+authentication. Supports Yadis discovery. The authentication process is
+stateless/dumb.</p>
+
+<p>Usage: Sign-on with OpenID is a two step process: Step one is authentication
+with the provider:</p>
+
+<pre>
+<span class="php-var">$openid</span> = <span
+class="php-keyword1">new</span> LightOpenID(<span
+class="php-quote">'my-host.example.org'</span>);
+<span
+class="php-var">$openid</span>-&gt;identity = <span
+class="php-quote">'ID supplied by user'</span>;
+<span
+class="php-keyword2">header</span>(<span
+class="php-quote">'Location: '</span> . <span
+class="php-var">$openid</span>-&gt;authUrl());
+</pre>
+
+<p>The provider then sends various parameters via GET, one of them is
+openid_mode. Step two is verification:</p>
+
+<pre>
+<span class="php-var">$openid</span> = <span
+class="php-keyword1">new</span> LightOpenID(<span
+class="php-quote">'my-host.example.org'</span>);
+<span
+class="php-keyword1">if</span> (<span
+class="php-var">$openid</span>-&gt;mode) {
+    <span
+class="php-keyword1">echo</span> <span
+class="php-var">$openid</span>-&gt;validate() ? <span
+class="php-quote">'Logged in.'</span> : <span
+class="php-quote">'Failed'</span>;
+}
+</pre>
+
+<p>Change the 'my-host.example.org' to your domain name. Do NOT use
+$_SERVER['HTTP_HOST'] for that, unless you know what you are doing.</p>
+
+<p>Optionally, you can set $returnUrl and $realm (or $trustRoot, which is an
+alias). The default values for those are: $openid-&gt;realm =
+(!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+$openid-&gt;returnUrl = $openid-&gt;realm . $_SERVER['REQUEST_URI']; If you
+don't know their meaning, refer to any openid tutorial, or specification. Or
+just guess.</p>
+
+<p>AX and SREG extensions are supported. To use them, specify
+$openid-&gt;required and/or $openid-&gt;optional before calling
+$openid-&gt;authUrl(). These are arrays, with values being AX schema paths (the
+'path' part of the URL). For example: $openid-&gt;required =
+array('namePerson/friendly', 'contact/email'); $openid-&gt;optional =
+array('namePerson/first'); If the server supports only SREG or OpenID 1.1, these
+are automaticaly mapped to SREG names, so that user doesn't have to know
+anything about the server.</p>
+
+<p>To get the values, use $openid-&gt;getAttributes().</p>
+
+<p>The library requires PHP &gt;= 5.1.2 with curl or http/https stream wrappers
+enabled.</p>
+
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		
+
+				<b>Copyright:</b>
+				Copyright (c) 2010, Mewp<br />
+				<b>License:</b>
+				<a href="http://www.opensource.org/licenses/mit-license.php">MIT</a><br />
+				<b>Author:</b>
+				Mewp<br />
+		<b>Located at</b> <a href="source-class-LightOpenID.html#2-831" title="Go to source code">src/web/includes/lightopenid/openid.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-LightOpenID.html#74-96" title="Go to source code">__construct</a>( <span>mixed <var>$host</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__set" id="___set">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___set">#</a>
+		<code><a href="source-class-LightOpenID.html#98-118" title="Go to source code">__set</a>( <span>mixed <var>$name</var></span>, <span>mixed <var>$value</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__get" id="___get">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___get">#</a>
+		<code><a href="source-class-LightOpenID.html#120-134" title="Go to source code">__get</a>( <span>mixed <var>$name</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="hostExists" id="_hostExists">
+
+		<td class="attributes"><code>
+			 public 
+			true,
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_hostExists">#</a>
+		<code><a href="source-class-LightOpenID.html#136-155" title="Go to source code">hostExists</a>( <span>mixed <var>$url</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Checks if the server specified in the url exists.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Checks if the server specified in the url exists.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$url</var></dt>
+					<dd><code>mixed</code><br>$url url to check</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>true,</code><br>if the server exists; false otherwise<br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="request_curl" id="_request_curl">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_request_curl">#</a>
+		<code><a href="source-class-LightOpenID.html#157-233" title="Go to source code">request_curl</a>( <span>mixed <var>$url</var></span>, <span>mixed <var>$method</var> = <span class="php-quote">'GET'</span></span>, <span>mixed <var>$params</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$update_claimed_id</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="parse_header_array" id="_parse_header_array">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_parse_header_array">#</a>
+		<code><a href="source-class-LightOpenID.html#235-263" title="Go to source code">parse_header_array</a>( <span>mixed <var>$array</var></span>, <span>mixed <var>$update_claimed_id</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="request_streams" id="_request_streams">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_request_streams">#</a>
+		<code><a href="source-class-LightOpenID.html#265-353" title="Go to source code">request_streams</a>( <span>mixed <var>$url</var></span>, <span>mixed <var>$method</var> = <span class="php-quote">'GET'</span></span>, <span>mixed <var>$params</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$update_claimed_id</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="request" id="_request">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_request">#</a>
+		<code><a href="source-class-LightOpenID.html#355-363" title="Go to source code">request</a>( <span>mixed <var>$url</var></span>, <span>mixed <var>$method</var> = <span class="php-quote">'GET'</span></span>, <span>mixed <var>$params</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$update_claimed_id</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="build_url" id="_build_url">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_build_url">#</a>
+		<code><a href="source-class-LightOpenID.html#365-382" title="Go to source code">build_url</a>( <span>mixed <var>$url</var></span>, <span>mixed <var>$parts</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="htmlTag" id="_htmlTag">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_htmlTag">#</a>
+		<code><a href="source-class-LightOpenID.html#384-395" title="Go to source code">htmlTag</a>( <span>mixed <var>$content</var></span>, <span>mixed <var>$tag</var></span>, <span>mixed <var>$attrName</var></span>, <span>mixed <var>$attrValue</var></span>, <span>mixed <var>$valueName</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Helper function used to scan for &lt;meta&gt;/&lt;link&gt; tags and extract
+information from them</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Helper function used to scan for &lt;meta&gt;/&lt;link&gt; tags and extract
+information from them</p>
+
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="discover" id="_discover">
+
+		<td class="attributes"><code>
+			 public 
+			String
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_discover">#</a>
+		<code><a href="source-class-LightOpenID.html#397-541" title="Go to source code">discover</a>( <span>mixed <var>$url</var></span> )</code>
+
+		<div class="description short">
+			
+<p>Performs Yadis and HTML discovery. Normally not used.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Performs Yadis and HTML discovery. Normally not used.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$url</var></dt>
+					<dd><code>mixed</code><br>$url Identity URL.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>String</code><br>OP Endpoint (i.e. OpenID provider address).<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><code><a href="class-ErrorException.html">ErrorException</a></code></code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="sregParams" id="_sregParams">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_sregParams">#</a>
+		<code><a href="source-class-LightOpenID.html#543-568" title="Go to source code">sregParams</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="axParams" id="_axParams">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_axParams">#</a>
+		<code><a href="source-class-LightOpenID.html#570-607" title="Go to source code">axParams</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="authUrl_v1" id="_authUrl_v1">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_authUrl_v1">#</a>
+		<code><a href="source-class-LightOpenID.html#609-628" title="Go to source code">authUrl_v1</a>( <span>mixed <var>$immediate</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="authUrl_v2" id="_authUrl_v2">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_authUrl_v2">#</a>
+		<code><a href="source-class-LightOpenID.html#630-660" title="Go to source code">authUrl_v2</a>( <span>mixed <var>$immediate</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="authUrl" id="_authUrl">
+
+		<td class="attributes"><code>
+			 public 
+			String
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_authUrl">#</a>
+		<code><a href="source-class-LightOpenID.html#662-677" title="Go to source code">authUrl</a>( <span>String <var>$immediate</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+<p>Returns authentication url. Usually, you want to redirect your user to
+it.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns authentication url. Usually, you want to redirect your user to
+it.</p>
+
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$immediate</var></dt>
+					<dd><code>String</code><br>$select_identifier Whether to request OP to select identity for an user in
+OpenID 2. Does not affect OpenID 1.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>String</code><br>The authentication url.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><code><a href="class-ErrorException.html">ErrorException</a></code></code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="validate" id="_validate">
+
+		<td class="attributes"><code>
+			 public 
+			Bool
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_validate">#</a>
+		<code><a href="source-class-LightOpenID.html#679-744" title="Go to source code">validate</a>( )</code>
+
+		<div class="description short">
+			
+<p>Performs OpenID verification with the OP.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Performs OpenID verification with the OP.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Bool</code><br>Whether the verification was successful.<br />
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><code><a href="class-ErrorException.html">ErrorException</a></code></code><br />
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAxAttributes" id="_getAxAttributes">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAxAttributes">#</a>
+		<code><a href="source-class-LightOpenID.html#746-791" title="Go to source code">getAxAttributes</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getSregAttributes" id="_getSregAttributes">
+
+		<td class="attributes"><code>
+			 protected 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getSregAttributes">#</a>
+		<code><a href="source-class-LightOpenID.html#793-810" title="Go to source code">getSregAttributes</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAttributes" id="_getAttributes">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAttributes">#</a>
+		<code><a href="source-class-LightOpenID.html#812-830" title="Go to source code">getAttributes</a>( )</code>
+
+		<div class="description short">
+			
+<p>Gets AX/SREG attributes provided by OP. should be used only after successful
+validaton. Note that it does not guarantee that any of the required/optional
+parameters will be present, or that there will be no other attributes besides
+those specified. In other words. OP may provide whatever information it wants
+to.<br />
+* SREG names will be mapped to AX names.<br />
+* @return Array Array of attributes with keys being the AX schema names, e.g.
+'contact/email'</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Gets AX/SREG attributes provided by OP. should be used only after successful
+validaton. Note that it does not guarantee that any of the required/optional
+parameters will be present, or that there will be no other attributes besides
+those specified. In other words. OP may provide whatever information it wants
+to. * SREG names will be mapped to AX names. * @return Array Array of attributes
+with keys being the AX schema names, e.g. 'contact/email'</p>
+
+
+
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<a href="http://www.axschema.org/types/">http://www.axschema.org/types/</a><br />
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="returnUrl" id="$returnUrl">
+		<td class="attributes"><code>
+			public  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#52-53" title="Go to source code"><var>$returnUrl</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$returnUrl" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="required" id="$required">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#53-54" title="Go to source code"><var>$required</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>()
+     </code></td>
+		<td class="description"><div>
+			<a href="#$required" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="optional" id="$optional">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#54-55" title="Go to source code"><var>$optional</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>()
+     </code></td>
+		<td class="description"><div>
+			<a href="#$optional" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="verify_peer" id="$verify_peer">
+		<td class="attributes"><code>
+			public  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#55-56" title="Go to source code"><var>$verify_peer</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span>
+     </code></td>
+		<td class="description"><div>
+			<a href="#$verify_peer" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="capath" id="$capath">
+		<td class="attributes"><code>
+			public  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#56-57" title="Go to source code"><var>$capath</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span>
+     </code></td>
+		<td class="description"><div>
+			<a href="#$capath" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="cainfo" id="$cainfo">
+		<td class="attributes"><code>
+			public  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#57-58" title="Go to source code"><var>$cainfo</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span>
+     </code></td>
+		<td class="description"><div>
+			<a href="#$cainfo" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="data" id="$data">
+		<td class="attributes"><code>
+			public  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#58" title="Go to source code"><var>$data</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$data" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="server" id="$server">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#60" title="Go to source code"><var>$server</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$server" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="version" id="$version">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#60" title="Go to source code"><var>$version</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$version" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="trustRoot" id="$trustRoot">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#60" title="Go to source code"><var>$trustRoot</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$trustRoot" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="aliases" id="$aliases">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#60" title="Go to source code"><var>$aliases</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$aliases" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="identifier_select" id="$identifier_select">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#60-61" title="Go to source code"><var>$identifier_select</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span>
+        </code></td>
+		<td class="description"><div>
+			<a href="#$identifier_select" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="ax" id="$ax">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#61" title="Go to source code"><var>$ax</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$ax" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="sreg" id="$sreg">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#61" title="Go to source code"><var>$sreg</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">false</span></code></td>
+		<td class="description"><div>
+			<a href="#$sreg" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="setup_url" id="$setup_url">
+		<td class="attributes"><code>
+			protected  
+			mixed
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#61" title="Go to source code"><var>$setup_url</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$setup_url" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="headers" id="$headers">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#61" title="Go to source code"><var>$headers</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>()</code></td>
+		<td class="description"><div>
+			<a href="#$headers" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="ax_to_sreg" id="$ax_to_sreg">
+		<td class="attributes"><code>
+			protected static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-LightOpenID.html#62-72" title="Go to source code"><var>$ax_to_sreg</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">array</span>(
+    <span class="php-quote">'namePerson/friendly'</span>     =&gt; <span class="php-quote">'nickname'</span>,
+    <span class="php-quote">'contact/email'</span>           =&gt; <span class="php-quote">'email'</span>,
+    <span class="php-quote">'namePerson'</span>              =&gt; <span class="php-quote">'fullname'</span>,
+    <span class="php-quote">'birthDate'</span>               =&gt; <span class="php-quote">'dob'</span>,
+    <span class="php-quote">'person/gender'</span>           =&gt; <span class="php-quote">'gender'</span>,
+    <span class="php-quote">'contact/postalCode/home'</span> =&gt; <span class="php-quote">'postcode'</span>,
+    <span class="php-quote">'contact/country/home'</span>    =&gt; <span class="php-quote">'country'</span>,
+    <span class="php-quote">'pref/language'</span>           =&gt; <span class="php-quote">'language'</span>,
+    <span class="php-quote">'pref/timezone'</span>           =&gt; <span class="php-quote">'timezone'</span>,
+    )</code></td>
+		<td class="description"><div>
+			<a href="#$ax_to_sreg" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		tbro API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+	</div>
+</div>
+</div>
+</body>
+</html>
