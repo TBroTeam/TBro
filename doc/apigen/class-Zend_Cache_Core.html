@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Zend_Cache_Core</title>
+
+	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li>
+					<a href="namespace-cli_db.html">
+						cli_db<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-cli_db.propel.html">
+						propel<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-cli_db.propel.map.html">
+						map					</a>
+
+						</li>
+				<li>
+					<a href="namespace-cli_db.propel.om.html">
+						om					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-cli_import.html">
+						cli_import					</a>
+
+						</li>
+				<li>
+					<a href="namespace-LoggedPDO.html">
+						LoggedPDO					</a>
+
+						</li>
+				<li class="active">
+					<a href="namespace-None.html">
+						None					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.html">
+						webservices<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.cart.html">
+						cart					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.combisearch.html">
+						combisearch					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.details.html">
+						details<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.details.annotations.html">
+						annotations<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.details.annotations.feature.html">
+						feature					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-webservices.export.html">
+						export					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.graphs.html">
+						graphs<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.graphs.barplot.html">
+						barplot					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.graphs.genome.html">
+						genome					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.graphs.heatmap.html">
+						heatmap					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-webservices.listing.html">
+						listing<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.listing.wordcloud.html">
+						wordcloud					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-webservices.queue.html">
+						queue					</a>
+
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-CommandLineComplete.html">CommandLineComplete</a></li>
+				<li><a href="class-Console_CommandLine_Action_ExtendedHelp.html">Console_CommandLine_Action_ExtendedHelp</a></li>
+				<li><a href="class-EC2PathwayMapping.html">EC2PathwayMapping</a></li>
+				<li><a href="class-ECInformation.html">ECInformation</a></li>
+				<li><a href="class-LightOpenID.html">LightOpenID</a></li>
+				<li><a href="class-Log_firebugJSON.html">Log_firebugJSON</a></li>
+				<li><a href="class-PathwayInformation.html">PathwayInformation</a></li>
+				<li><a href="class-Smarty.html">Smarty</a></li>
+				<li><a href="class-Smarty_CacheResource.html">Smarty_CacheResource</a></li>
+				<li><a href="class-Smarty_CacheResource_Apc.html">Smarty_CacheResource_Apc</a></li>
+				<li><a href="class-Smarty_CacheResource_Custom.html">Smarty_CacheResource_Custom</a></li>
+				<li><a href="class-Smarty_CacheResource_KeyValueStore.html">Smarty_CacheResource_KeyValueStore</a></li>
+				<li><a href="class-Smarty_CacheResource_Memcache.html">Smarty_CacheResource_Memcache</a></li>
+				<li><a href="class-Smarty_CacheResource_Mysql.html">Smarty_CacheResource_Mysql</a></li>
+				<li><a href="class-Smarty_Config_Source.html">Smarty_Config_Source</a></li>
+				<li><a href="class-Smarty_Data.html">Smarty_Data</a></li>
+				<li><a href="class-Smarty_Internal_CacheResource_File.html">Smarty_Internal_CacheResource_File</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Append.html">Smarty_Internal_Compile_Append</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Assign.html">Smarty_Internal_Compile_Assign</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Block.html">Smarty_Internal_Compile_Block</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Blockclose.html">Smarty_Internal_Compile_Blockclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Break.html">Smarty_Internal_Compile_Break</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Call.html">Smarty_Internal_Compile_Call</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Capture.html">Smarty_Internal_Compile_Capture</a></li>
+				<li><a href="class-Smarty_Internal_Compile_CaptureClose.html">Smarty_Internal_Compile_CaptureClose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Config_Load.html">Smarty_Internal_Compile_Config_Load</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Continue.html">Smarty_Internal_Compile_Continue</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Debug.html">Smarty_Internal_Compile_Debug</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Else.html">Smarty_Internal_Compile_Else</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Elseif.html">Smarty_Internal_Compile_Elseif</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Eval.html">Smarty_Internal_Compile_Eval</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Extends.html">Smarty_Internal_Compile_Extends</a></li>
+				<li><a href="class-Smarty_Internal_Compile_For.html">Smarty_Internal_Compile_For</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Forclose.html">Smarty_Internal_Compile_Forclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Foreach.html">Smarty_Internal_Compile_Foreach</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Foreachclose.html">Smarty_Internal_Compile_Foreachclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Foreachelse.html">Smarty_Internal_Compile_Foreachelse</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Forelse.html">Smarty_Internal_Compile_Forelse</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Function.html">Smarty_Internal_Compile_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Functionclose.html">Smarty_Internal_Compile_Functionclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_If.html">Smarty_Internal_Compile_If</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Ifclose.html">Smarty_Internal_Compile_Ifclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Include.html">Smarty_Internal_Compile_Include</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Include_Php.html">Smarty_Internal_Compile_Include_Php</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Insert.html">Smarty_Internal_Compile_Insert</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Ldelim.html">Smarty_Internal_Compile_Ldelim</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Nocache.html">Smarty_Internal_Compile_Nocache</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Nocacheclose.html">Smarty_Internal_Compile_Nocacheclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Block_Plugin.html">Smarty_Internal_Compile_Private_Block_Plugin</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Function_Plugin.html">Smarty_Internal_Compile_Private_Function_Plugin</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Modifier.html">Smarty_Internal_Compile_Private_Modifier</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Object_Block_Function.html">Smarty_Internal_Compile_Private_Object_Block_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Object_Function.html">Smarty_Internal_Compile_Private_Object_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Print_Expression.html">Smarty_Internal_Compile_Private_Print_Expression</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Registered_Block.html">Smarty_Internal_Compile_Private_Registered_Block</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Registered_Function.html">Smarty_Internal_Compile_Private_Registered_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Special_Variable.html">Smarty_Internal_Compile_Private_Special_Variable</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Rdelim.html">Smarty_Internal_Compile_Rdelim</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Section.html">Smarty_Internal_Compile_Section</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Sectionclose.html">Smarty_Internal_Compile_Sectionclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Sectionelse.html">Smarty_Internal_Compile_Sectionelse</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Setfilter.html">Smarty_Internal_Compile_Setfilter</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Setfilterclose.html">Smarty_Internal_Compile_Setfilterclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_While.html">Smarty_Internal_Compile_While</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Whileclose.html">Smarty_Internal_Compile_Whileclose</a></li>
+				<li><a href="class-Smarty_Internal_CompileBase.html">Smarty_Internal_CompileBase</a></li>
+				<li><a href="class-Smarty_Internal_Config_File_Compiler.html">Smarty_Internal_Config_File_Compiler</a></li>
+				<li><a href="class-Smarty_Internal_Configfilelexer.html">Smarty_Internal_Configfilelexer</a></li>
+				<li><a href="class-Smarty_Internal_Configfileparser.html">Smarty_Internal_Configfileparser</a></li>
+				<li><a href="class-Smarty_Internal_Data.html">Smarty_Internal_Data</a></li>
+				<li><a href="class-Smarty_Internal_Debug.html">Smarty_Internal_Debug</a></li>
+				<li><a href="class-Smarty_Internal_Filter_Handler.html">Smarty_Internal_Filter_Handler</a></li>
+				<li><a href="class-Smarty_Internal_Function_Call_Handler.html">Smarty_Internal_Function_Call_Handler</a></li>
+				<li><a href="class-Smarty_Internal_Get_Include_Path.html">Smarty_Internal_Get_Include_Path</a></li>
+				<li><a href="class-Smarty_Internal_Nocache_Insert.html">Smarty_Internal_Nocache_Insert</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Eval.html">Smarty_Internal_Resource_Eval</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Extends.html">Smarty_Internal_Resource_Extends</a></li>
+				<li><a href="class-Smarty_Internal_Resource_File.html">Smarty_Internal_Resource_File</a></li>
+				<li><a href="class-Smarty_Internal_Resource_PHP.html">Smarty_Internal_Resource_PHP</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Registered.html" class="deprecated">Smarty_Internal_Resource_Registered</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Stream.html">Smarty_Internal_Resource_Stream</a></li>
+				<li><a href="class-Smarty_Internal_Resource_String.html">Smarty_Internal_Resource_String</a></li>
+				<li><a href="class-Smarty_Internal_SmartyTemplateCompiler.html">Smarty_Internal_SmartyTemplateCompiler</a></li>
+				<li><a href="class-Smarty_Internal_Template.html">Smarty_Internal_Template</a></li>
+				<li><a href="class-Smarty_Internal_TemplateBase.html">Smarty_Internal_TemplateBase</a></li>
+				<li><a href="class-Smarty_Internal_TemplateCompilerBase.html">Smarty_Internal_TemplateCompilerBase</a></li>
+				<li><a href="class-Smarty_Internal_Templatelexer.html">Smarty_Internal_Templatelexer</a></li>
+				<li><a href="class-Smarty_Internal_Templateparser.html">Smarty_Internal_Templateparser</a></li>
+				<li><a href="class-Smarty_Internal_Utility.html">Smarty_Internal_Utility</a></li>
+				<li><a href="class-Smarty_Internal_Write_File.html">Smarty_Internal_Write_File</a></li>
+				<li><a href="class-Smarty_Resource.html">Smarty_Resource</a></li>
+				<li><a href="class-Smarty_Resource_Custom.html">Smarty_Resource_Custom</a></li>
+				<li><a href="class-Smarty_Resource_Extendsall.html">Smarty_Resource_Extendsall</a></li>
+				<li><a href="class-Smarty_Resource_Mysql.html">Smarty_Resource_Mysql</a></li>
+				<li><a href="class-Smarty_Resource_Mysqls.html">Smarty_Resource_Mysqls</a></li>
+				<li><a href="class-Smarty_Resource_Recompiled.html">Smarty_Resource_Recompiled</a></li>
+				<li><a href="class-Smarty_Resource_Uncompiled.html">Smarty_Resource_Uncompiled</a></li>
+				<li><a href="class-Smarty_Security.html">Smarty_Security</a></li>
+				<li><a href="class-Smarty_Template_Cached.html">Smarty_Template_Cached</a></li>
+				<li><a href="class-Smarty_Template_Compiled.html">Smarty_Template_Compiled</a></li>
+				<li><a href="class-Smarty_Template_Source.html">Smarty_Template_Source</a></li>
+				<li><a href="class-Smarty_Variable.html">Smarty_Variable</a></li>
+				<li><a href="class-SmartyBC.html">SmartyBC</a></li>
+				<li><a href="class-TP_yyStackEntry.html">TP_yyStackEntry</a></li>
+				<li><a href="class-TP_yyToken.html">TP_yyToken</a></li>
+				<li><a href="class-TPC_yyStackEntry.html">TPC_yyStackEntry</a></li>
+				<li><a href="class-TPC_yyToken.html">TPC_yyToken</a></li>
+				<li><a href="class-transdecoderToProteinTable.html">transdecoderToProteinTable</a></li>
+				<li><a href="class-Undefined_Smarty_Variable.html">Undefined_Smarty_Variable</a></li>
+				<li><a href="class-updateMaterializedViews.html">updateMaterializedViews</a></li>
+				<li><a href="class-WebService.html">WebService</a></li>
+				<li><a href="class-Zend_Cache.html">Zend_Cache</a></li>
+				<li><a href="class-Zend_Cache_Backend.html">Zend_Cache_Backend</a></li>
+				<li><a href="class-Zend_Cache_Backend_Apc.html">Zend_Cache_Backend_Apc</a></li>
+				<li><a href="class-Zend_Cache_Backend_BlackHole.html">Zend_Cache_Backend_BlackHole</a></li>
+				<li><a href="class-Zend_Cache_Backend_File.html">Zend_Cache_Backend_File</a></li>
+				<li><a href="class-Zend_Cache_Backend_Libmemcached.html">Zend_Cache_Backend_Libmemcached</a></li>
+				<li><a href="class-Zend_Cache_Backend_Memcached.html">Zend_Cache_Backend_Memcached</a></li>
+				<li><a href="class-Zend_Cache_Backend_Sqlite.html">Zend_Cache_Backend_Sqlite</a></li>
+				<li><a href="class-Zend_Cache_Backend_Static.html">Zend_Cache_Backend_Static</a></li>
+				<li><a href="class-Zend_Cache_Backend_Test.html">Zend_Cache_Backend_Test</a></li>
+				<li><a href="class-Zend_Cache_Backend_TwoLevels.html">Zend_Cache_Backend_TwoLevels</a></li>
+				<li><a href="class-Zend_Cache_Backend_WinCache.html">Zend_Cache_Backend_WinCache</a></li>
+				<li><a href="class-Zend_Cache_Backend_Xcache.html">Zend_Cache_Backend_Xcache</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendPlatform.html">Zend_Cache_Backend_ZendPlatform</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendServer.html">Zend_Cache_Backend_ZendServer</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendServer_Disk.html">Zend_Cache_Backend_ZendServer_Disk</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendServer_ShMem.html">Zend_Cache_Backend_ZendServer_ShMem</a></li>
+				<li class="active"><a href="class-Zend_Cache_Core.html">Zend_Cache_Core</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Capture.html">Zend_Cache_Frontend_Capture</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Class.html">Zend_Cache_Frontend_Class</a></li>
+				<li><a href="class-Zend_Cache_Frontend_File.html">Zend_Cache_Frontend_File</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Function.html">Zend_Cache_Frontend_Function</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Output.html">Zend_Cache_Frontend_Output</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Page.html">Zend_Cache_Frontend_Page</a></li>
+				<li><a href="class-Zend_Cache_Manager.html">Zend_Cache_Manager</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-CLI_Command.html">CLI_Command</a></li>
+				<li><a href="class-Zend_Cache_Backend_ExtendedInterface.html">Zend_Cache_Backend_ExtendedInterface</a></li>
+				<li><a href="class-Zend_Cache_Backend_Interface.html">Zend_Cache_Backend_Interface</a></li>
+			</ul>
+
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-SmartyCompilerException.html">SmartyCompilerException</a></li>
+				<li><a href="class-SmartyException.html">SmartyException</a></li>
+				<li><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></li>
+				<li><a href="class-Zend_Exception.html">Zend_Exception</a></li>
+			</ul>
+
+
+			<h3>Functions</h3>
+			<ul>
+				<li><a href="function-acquire_database.html">acquire_database</a></li>
+				<li><a href="function-cli_error_handler.html">cli_error_handler</a></li>
+				<li><a href="function-connect_queue_db.html" class="invalid">connect_queue_db</a></li>
+				<li><a href="function-create_job.html">create_job</a></li>
+				<li><a href="function-display_feature.html">display_feature</a></li>
+				<li><a href="function-display_feature_by_id.html">display_feature_by_id</a></li>
+				<li><a href="function-display_isoform_by_id.html">display_isoform_by_id</a></li>
+				<li><a href="function-display_unigene_by_id.html">display_unigene_by_id</a></li>
+				<li><a href="function-download.html">download</a></li>
+				<li><a href="function-execute_command.html">execute_command</a></li>
+				<li><a href="function-execute_job.html">execute_job</a></li>
+				<li><a href="function-execute_query_dir.html">execute_query_dir</a></li>
+				<li><a href="function-get_db_connection.html">get_db_connection</a></li>
+				<li><a href="function-get_job_results.html">get_job_results</a></li>
+				<li><a href="function-get_program_databases.html">get_program_databases</a></li>
+				<li><a href="function-myErrorHandler.html">myErrorHandler</a></li>
+				<li><a href="function-pdo_connect.html">pdo_connect</a></li>
+				<li><a href="function-report_results_cleanup.html">report_results_cleanup</a></li>
+				<li><a href="function-requestVal.html">requestVal</a></li>
+				<li><a href="function-require_command_option.html">require_command_option</a></li>
+				<li><a href="function-smarty_block_textformat.html">smarty_block_textformat</a></li>
+				<li><a href="function-smarty_function_call_webservice.html">smarty_function_call_webservice</a></li>
+				<li><a href="function-smarty_function_counter.html">smarty_function_counter</a></li>
+				<li><a href="function-smarty_function_cycle.html">smarty_function_cycle</a></li>
+				<li><a href="function-smarty_function_dbxreflink.html">smarty_function_dbxreflink</a></li>
+				<li><a href="function-smarty_function_escape_special_chars.html" class="invalid">smarty_function_escape_special_chars</a></li>
+				<li><a href="function-smarty_function_fetch.html">smarty_function_fetch</a></li>
+				<li><a href="function-smarty_function_html_checkboxes.html">smarty_function_html_checkboxes</a></li>
+				<li><a href="function-smarty_function_html_checkboxes_output.html">smarty_function_html_checkboxes_output</a></li>
+				<li><a href="function-smarty_function_html_image.html">smarty_function_html_image</a></li>
+				<li><a href="function-smarty_function_html_options.html">smarty_function_html_options</a></li>
+				<li><a href="function-smarty_function_html_options_optgroup.html">smarty_function_html_options_optgroup</a></li>
+				<li><a href="function-smarty_function_html_options_optoutput.html">smarty_function_html_options_optoutput</a></li>
+				<li><a href="function-smarty_function_html_radios.html">smarty_function_html_radios</a></li>
+				<li><a href="function-smarty_function_html_radios_output.html">smarty_function_html_radios_output</a></li>
+				<li><a href="function-smarty_function_html_select_date.html">smarty_function_html_select_date</a></li>
+				<li><a href="function-smarty_function_html_select_time.html">smarty_function_html_select_time</a></li>
+				<li><a href="function-smarty_function_html_table.html">smarty_function_html_table</a></li>
+				<li><a href="function-smarty_function_html_table_cycle.html">smarty_function_html_table_cycle</a></li>
+				<li><a href="function-smarty_function_mailto.html">smarty_function_mailto</a></li>
+				<li><a href="function-smarty_function_math.html">smarty_function_math</a></li>
+				<li><a href="function-smarty_function_publink.html">smarty_function_publink</a></li>
+				<li><a href="function-smarty_function_publinkshort.html">smarty_function_publinkshort</a></li>
+				<li><a href="function-smarty_literal_compiler_param.html">smarty_literal_compiler_param</a></li>
+				<li><a href="function-smarty_make_timestamp.html">smarty_make_timestamp</a></li>
+				<li><a href="function-smarty_mb_from_unicode.html">smarty_mb_from_unicode</a></li>
+				<li><a href="function-smarty_mb_str_replace.html">smarty_mb_str_replace</a></li>
+				<li><a href="function-smarty_mb_to_unicode.html">smarty_mb_to_unicode</a></li>
+				<li><a href="function-smarty_mb_wordwrap.html">smarty_mb_wordwrap</a></li>
+				<li><a href="function-smarty_modifier_capitalize.html">smarty_modifier_capitalize</a></li>
+				<li><a href="function-smarty_modifier_clean_id.html">smarty_modifier_clean_id</a></li>
+				<li><a href="function-smarty_modifier_date_format.html">smarty_modifier_date_format</a></li>
+				<li><a href="function-smarty_modifier_debug_print_var.html">smarty_modifier_debug_print_var</a></li>
+				<li><a href="function-smarty_modifier_escape.html">smarty_modifier_escape</a></li>
+				<li><a href="function-smarty_modifier_go_section.html">smarty_modifier_go_section</a></li>
+				<li><a href="function-smarty_modifier_regex_replace.html">smarty_modifier_regex_replace</a></li>
+				<li><a href="function-smarty_modifier_replace.html">smarty_modifier_replace</a></li>
+				<li><a href="function-smarty_modifier_spacify.html">smarty_modifier_spacify</a></li>
+				<li><a href="function-smarty_modifier_truncate.html">smarty_modifier_truncate</a></li>
+				<li><a href="function-smarty_modifiercompiler_cat.html">smarty_modifiercompiler_cat</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_characters.html">smarty_modifiercompiler_count_characters</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_paragraphs.html">smarty_modifiercompiler_count_paragraphs</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_sentences.html">smarty_modifiercompiler_count_sentences</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_words.html">smarty_modifiercompiler_count_words</a></li>
+				<li><a href="function-smarty_modifiercompiler_default.html">smarty_modifiercompiler_default</a></li>
+				<li><a href="function-smarty_modifiercompiler_escape.html">smarty_modifiercompiler_escape</a></li>
+				<li><a href="function-smarty_modifiercompiler_from_charset.html">smarty_modifiercompiler_from_charset</a></li>
+				<li><a href="function-smarty_modifiercompiler_indent.html">smarty_modifiercompiler_indent</a></li>
+				<li><a href="function-smarty_modifiercompiler_lower.html">smarty_modifiercompiler_lower</a></li>
+				<li><a href="function-smarty_modifiercompiler_noprint.html">smarty_modifiercompiler_noprint</a></li>
+				<li><a href="function-smarty_modifiercompiler_string_format.html">smarty_modifiercompiler_string_format</a></li>
+				<li><a href="function-smarty_modifiercompiler_strip.html">smarty_modifiercompiler_strip</a></li>
+				<li><a href="function-smarty_modifiercompiler_strip_tags.html">smarty_modifiercompiler_strip_tags</a></li>
+				<li><a href="function-smarty_modifiercompiler_to_charset.html">smarty_modifiercompiler_to_charset</a></li>
+				<li><a href="function-smarty_modifiercompiler_unescape.html">smarty_modifiercompiler_unescape</a></li>
+				<li><a href="function-smarty_modifiercompiler_upper.html">smarty_modifiercompiler_upper</a></li>
+				<li><a href="function-smarty_modifiercompiler_wordwrap.html">smarty_modifiercompiler_wordwrap</a></li>
+				<li><a href="function-smarty_outputfilter_trimwhitespace.html">smarty_outputfilter_trimwhitespace</a></li>
+				<li><a href="function-smarty_php_tag.html">smarty_php_tag</a></li>
+				<li><a href="function-smarty_variablefilter_htmlspecialchars.html">smarty_variablefilter_htmlspecialchars</a></li>
+				<li><a href="function-smartyAutoload.html">smartyAutoload</a></li>
+				<li><a href="function-split_fasta.html">split_fasta</a></li>
+				<li><a href="function-unzip.html">unzip</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-None.html" title="Summary of None"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Zend_Cache_Core</h1>
+
+
+
+
+
+	<div>
+		<h4>Direct known subclasses</h4>
+			<a href="class-Zend_Cache_Frontend_Capture.html">Zend_Cache_Frontend_Capture</a>, 
+			<a href="class-Zend_Cache_Frontend_Class.html">Zend_Cache_Frontend_Class</a>, 
+			<a href="class-Zend_Cache_Frontend_File.html">Zend_Cache_Frontend_File</a>, 
+			<a href="class-Zend_Cache_Frontend_Function.html">Zend_Cache_Frontend_Function</a>, 
+			<a href="class-Zend_Cache_Frontend_Output.html">Zend_Cache_Frontend_Output</a>, 
+			<a href="class-Zend_Cache_Frontend_Page.html">Zend_Cache_Frontend_Page</a>
+	</div>
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> Zend\Cache<br>
+
+				<b>Copyright:</b>
+				Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)<br>
+				<b>License:</b>
+				<a href="http://framework.zend.com/license/new-bsd">New BSD License</a><br>
+			<b>Located at</b> <a href="source-class-Zend_Cache_Core.html#23-765" title="Go to source code">shared/libs/Zend/Cache/Core.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#130-150" title="Go to source code">__construct</a>( <span>array|Zend_Config <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Constructor</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Constructor</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$options</var></dt>
+					<dd>Associative array of options or Zend_Config instance</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setConfig" id="_setConfig">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-Zend_Cache_Core.html">Zend_Cache_Core</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setConfig">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#152-165" title="Go to source code">setConfig</a>( <span>Zend_Config <var>$config</var></span> )</code>
+
+		<div class="description short">
+			<p>Set options using an instance of type Zend_Config</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set options using an instance of type Zend_Config</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$config</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Core.html">Zend_Cache_Core</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBackend" id="_setBackend">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBackend">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#167-189" title="Go to source code">setBackend</a>( <span><code><a href="class-Zend_Cache_Backend.html">Zend_Cache_Backend</a></code> <var>$backendObject</var></span> )</code>
+
+		<div class="description short">
+			<p>Set the backend</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set the backend</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$backendObject</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBackend" id="_getBackend">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-Zend_Cache_Backend.html">Zend_Cache_Backend</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBackend">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#191-199" title="Go to source code">getBackend</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the backend</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the backend</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Backend.html">Zend_Cache_Backend</a></code><br>backend object
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setOption" id="_setOption">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setOption">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#201-227" title="Go to source code">setOption</a>( <span>string <var>$name</var></span>, <span>mixed <var>$value</var></span> )</code>
+
+		<div class="description short">
+			<p>Public frontend to set an option</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Public frontend to set an option</p>
+
+<p>There is an additional validation (relatively to the protected _setOption method)</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd>Name of the option</dd>
+					<dt><var>$value</var></dt>
+					<dd>Value of the option</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOption" id="_getOption">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOption">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#229-251" title="Go to source code">getOption</a>( <span>string <var>$name</var></span> )</code>
+
+		<div class="description short">
+			<p>Public frontend to get an option value</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Public frontend to get an option value</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd>Name of the option</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed<br>option value
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLifetime" id="_setLifetime">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLifetime">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#272-286" title="Go to source code">setLifetime</a>( <span>integer <var>$newLifetime</var></span> )</code>
+
+		<div class="description short">
+			<p>Force a new lifetime</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Force a new lifetime</p>
+
+<p>The new value is set for the core/frontend but for the backend too (directive)</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$newLifetime</var></dt>
+					<dd>New lifetime (in seconds)</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="load" id="_load">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed|false
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_load">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#288-316" title="Go to source code">load</a>( <span>string <var>$id</var></span>, <span>boolean <var>$doNotTestCacheValidity</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$doNotUnserialize</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			<p>Test if a cache is available for the given id and (if yes) return it (false else)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Test if a cache is available for the given id and (if yes) return it (false else)</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>Cache id</dd>
+					<dt><var>$doNotTestCacheValidity</var></dt>
+					<dd>If set to true, the cache validity won't be tested</dd>
+					<dt><var>$doNotUnserialize</var></dt>
+					<dd>Do not serialize (even if automatic_serialization is true) => for internal use</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed|false<br>Cached datas
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="test" id="_test">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer|false
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_test">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#318-335" title="Go to source code">test</a>( <span>string <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Test if a cache is available for the given id</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Test if a cache is available for the given id</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>Cache id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer|false<br>Last modified time of cache entry if it is available, false otherwise
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="save" id="_save">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_save">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#337-413" title="Go to source code">save</a>( <span>mixed <var>$data</var></span>, <span>string <var>$id</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$tags</var> = <span class="php-keyword1">array</span>()</span>, <span>integer <var>$specificLifetime</var> = <span class="php-keyword1">false</span></span>, <span>integer <var>$priority</var> = <span class="php-num">8</span></span> )</code>
+
+		<div class="description short">
+			<p>Save some data in a cache</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Save some data in a cache</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$data</var></dt>
+					<dd>Data to put in cache (can be another type than string if automatic_serialization is on)</dd>
+					<dt><var>$id</var></dt>
+					<dd>Cache id (if not set, the last cache id will be used)</dd>
+					<dt><var>$tags</var></dt>
+					<dd>Cache tags</dd>
+					<dt><var>$specificLifetime</var></dt>
+					<dd>If != false, set a specific lifetime for this cache record (null => infinite lifetime)</dd>
+					<dt><var>$priority</var></dt>
+					<dd>integer between 0 (very low priority) and 10 (maximum priority) used by some particular backends</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>True if no problem
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="remove" id="_remove">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_remove">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#415-431" title="Go to source code">remove</a>( <span>string <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Remove a cache</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Remove a cache</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>Cache id to remove</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>True if ok
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="clean" id="_clean">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_clean">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#433-466" title="Go to source code">clean</a>( <span>string <var>$mode</var> = <span class="php-quote">'all'</span></span>, <span>array|string <var>$tags</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Clean cache entries</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Clean cache entries</p>
+
+<p>Available modes are :
+'all' (default)  => remove all cache entries ($tags is not used)
+'old'            => remove too old cache entries ($tags is not used)
+'matchingTag'    => remove cache entries matching all given tags ($tags can be an array of strings or a single string)
+'notMatchingTag' => remove cache entries not matching one of the given tags ($tags can be an array of strings or a single string)
+'matchingAnyTag' => remove cache entries matching any given tags ($tags can be an array of strings or a single string)</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$mode</var></dt>
+					<dd></dd>
+					<dt><var>$tags</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>True if ok
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getIdsMatchingTags" id="_getIdsMatchingTags">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getIdsMatchingTags">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#468-499" title="Go to source code">getIdsMatchingTags</a>( <span>array <var>$tags</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Return an array of stored cache ids which match given tags</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return an array of stored cache ids which match given tags</p>
+
+<p>In case of multiple tags, a logical AND is made between tags</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$tags</var></dt>
+					<dd>array of tags</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>array of matching cache ids (string)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getIdsNotMatchingTags" id="_getIdsNotMatchingTags">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getIdsNotMatchingTags">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#501-532" title="Go to source code">getIdsNotMatchingTags</a>( <span>array <var>$tags</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Return an array of stored cache ids which don't match given tags</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return an array of stored cache ids which don't match given tags</p>
+
+<p>In case of multiple tags, a logical OR is made between tags</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$tags</var></dt>
+					<dd>array of tags</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>array of not matching cache ids (string)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getIdsMatchingAnyTags" id="_getIdsMatchingAnyTags">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getIdsMatchingAnyTags">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#534-565" title="Go to source code">getIdsMatchingAnyTags</a>( <span>array <var>$tags</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Return an array of stored cache ids which match any given tags</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return an array of stored cache ids which match any given tags</p>
+
+<p>In case of multiple tags, a logical OR is made between tags</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$tags</var></dt>
+					<dd>array of tags</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>array of matching any cache ids (string)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getIds" id="_getIds">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getIds">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#567-592" title="Go to source code">getIds</a>( )</code>
+
+		<div class="description short">
+			<p>Return an array of stored cache ids</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return an array of stored cache ids</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>array of stored cache ids (string)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTags" id="_getTags">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getTags">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#594-608" title="Go to source code">getTags</a>( )</code>
+
+		<div class="description short">
+			<p>Return an array of stored tags</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return an array of stored tags</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>array of stored tags (string)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getFillingPercentage" id="_getFillingPercentage">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getFillingPercentage">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#610-621" title="Go to source code">getFillingPercentage</a>( )</code>
+
+		<div class="description short">
+			<p>Return the filling percentage of the backend storage</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return the filling percentage of the backend storage</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer<br>integer between 0 and 100
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getMetadatas" id="_getMetadatas">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getMetadatas">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#623-641" title="Go to source code">getMetadatas</a>( <span>string <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Return an array of metadatas for the given cache id</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return an array of metadatas for the given cache id</p>
+
+<p>The array will include these keys :
+- expire : the expire timestamp
+- tags : a string array of tags
+- mtime : timestamp of last modification time</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>cache id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>array of metadatas (false if the cache id is not found)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="touch" id="_touch">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_touch">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#643-659" title="Go to source code">touch</a>( <span>string <var>$id</var></span>, <span>integer <var>$extraLifetime</var></span> )</code>
+
+		<div class="description short">
+			<p>Give (if possible) an extra lifetime to the given cache id</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Give (if possible) an extra lifetime to the given cache id</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>cache id</dd>
+					<dt><var>$extraLifetime</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true if ok
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_validateIdOrTag" id="__validateIdOrTag">
+
+		<td class="attributes"><code>
+			 protected static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__validateIdOrTag">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#661-681" title="Go to source code">_validateIdOrTag</a>( <span>string <var>$string</var></span> )</code>
+
+		<div class="description short">
+			<p>Validate a cache id or a tag (security, reliable filenames, reserved prefixes...)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Validate a cache id or a tag (security, reliable filenames, reserved prefixes...)</p>
+
+<p>Throw an exception if a problem is found</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$string</var></dt>
+					<dd>Cache id or tag</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_validateTagsArray" id="__validateTagsArray">
+
+		<td class="attributes"><code>
+			 protected static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__validateTagsArray">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#683-701" title="Go to source code">_validateTagsArray</a>( <span>array <var>$tags</var></span> )</code>
+
+		<div class="description short">
+			<p>Validate a tags array (security, reliable filenames, reserved prefixes...)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Validate a tags array (security, reliable filenames, reserved prefixes...)</p>
+
+<p>Throw an exception if a problem is found</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$tags</var></dt>
+					<dd>Array of tags</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_loggerSanity" id="__loggerSanity">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__loggerSanity">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#703-728" title="Go to source code">_loggerSanity</a>( )</code>
+
+		<div class="description short">
+			<p>Make sure if we enable logging that the Zend_Log class
+is available.
+Create a default log object if none is set.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Make sure if we enable logging that the Zend_Log class
+is available.
+Create a default log object if none is set.</p>
+
+
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_log" id="__log">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__log">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#730-747" title="Go to source code">_log</a>( <span>string <var>$message</var></span>, <span> <var>$priority</var> = <span class="php-num">4</span></span> )</code>
+
+		<div class="description short">
+			<p>Log a message at the WARN (4) priority.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Log a message at the WARN (4) priority.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+					<dt><var>$priority</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_id" id="__id">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__id">#</a>
+		<code><a href="source-class-Zend_Cache_Core.html#749-763" title="Go to source code">_id</a>( <span>string <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Make and return a cache id</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Make and return a cache id</p>
+
+<p>Checks 'cache_id_prefix' and returns new id with prefix or simply the id if null</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd>Cache id</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Cache id (with or without prefix)
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary constants" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="BACKEND_NOT_SUPPORTS_TAG" id="BACKEND_NOT_SUPPORTS_TAG">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Zend_Cache_Core.html#30-33" title="Go to source code"><b>BACKEND_NOT_SUPPORTS_TAG</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Messages</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Messages</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#BACKEND_NOT_SUPPORTS_TAG" class="anchor">#</a>
+				<code><span class="php-quote">'tags are not supported by the current backend'</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="BACKEND_NOT_IMPLEMENTS_EXTENDED_IF" id="BACKEND_NOT_IMPLEMENTS_EXTENDED_IF">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Zend_Cache_Core.html#34" title="Go to source code"><b>BACKEND_NOT_IMPLEMENTS_EXTENDED_IF</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#BACKEND_NOT_IMPLEMENTS_EXTENDED_IF" class="anchor">#</a>
+				<code><span class="php-quote">'Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available'</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="_backend" id="$_backend">
+		<td class="attributes"><code>
+			protected  
+			<code><a href="class-Zend_Cache_Backend_Interface.html">Zend_Cache_Backend_Interface</a></code>
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Zend_Cache_Core.html#36-41" title="Go to source code"><var>$_backend</var></a>
+
+			<div class="description short">
+				<p>Backend Object</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Backend Object</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$_backend" class="anchor">#</a>
+				<code><span class="php-keyword1">null</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="_options" id="$_options">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Zend_Cache_Core.html#43-93" title="Go to source code"><var>$_options</var></a>
+
+			<div class="description short">
+				<p>Available options</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Available options</p>
+
+<p>====> (boolean) write_control :
+- Enable / disable write control (the cache is read just after writing to detect corrupt entries)
+- Enable write control will lightly slow the cache writing but not the cache reading
+Write control can detect some corrupt cache files but maybe it's not a perfect control</p>
+
+<p>====> (boolean) caching :
+- Enable / disable caching
+(can be very useful for the debug of cached scripts)</p>
+
+<p>=====> (string) cache_id_prefix :
+- prefix for cache ids (namespace)</p>
+
+<p>====> (boolean) automatic_serialization :
+- Enable / disable automatic serialization
+- It can be used to save directly datas which aren't strings (but it's slower)</p>
+
+<p>====> (int) automatic_cleaning_factor :
+- Disable / Tune the automatic cleaning process
+- The automatic cleaning process destroy too old (for the given life time) cache files when a new cache file is written : 0               => no automatic cache cleaning 1               => systematic cache cleaning x (integer) > 1 => automatic cleaning randomly 1 times on x cache write</p>
+
+<p>====> (int) lifetime :
+- Cache lifetime (in seconds)
+- If null, the cache is valid forever.</p>
+
+<p>====> (boolean) logging :
+- If set to true, logging is activated (but the system is slower)</p>
+
+<p>====> (boolean) ignore_user_abort
+- If set to true, the core will set the ignore_user_abort PHP flag inside the save() method to avoid cache corruptions in some cases (default false)</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$_options" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+    <span class="php-quote">'write_control'</span>             =&gt; <span class="php-keyword1">true</span>,
+    <span class="php-quote">'caching'</span>                   =&gt; <span class="php-keyword1">true</span>,
+    <span class="php-quote">'cache_id_prefix'</span>           =&gt; <span class="php-keyword1">null</span>,
+    <span class="php-quote">'automatic_serialization'</span>   =&gt; <span class="php-keyword1">false</span>,
+    <span class="php-quote">'automatic_cleaning_factor'</span> =&gt; <span class="php-num">10</span>,
+    <span class="php-quote">'lifetime'</span>                  =&gt; <span class="php-num">3600</span>,
+    <span class="php-quote">'logging'</span>                   =&gt; <span class="php-keyword1">false</span>,
+    <span class="php-quote">'logger'</span>                    =&gt; <span class="php-keyword1">null</span>,
+    <span class="php-quote">'ignore_user_abort'</span>         =&gt; <span class="php-keyword1">false</span>
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="_directivesList" id="$_directivesList">
+		<td class="attributes"><code>
+			protected static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Zend_Cache_Core.html#95-100" title="Go to source code"><var>$_directivesList</var></a>
+
+			<div class="description short">
+				<p>Array of options which have to be transfered to backend</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Array of options which have to be transfered to backend</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$_directivesList" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(<span class="php-quote">'lifetime'</span>, <span class="php-quote">'logging'</span>, <span class="php-quote">'logger'</span>)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="_specificOptions" id="$_specificOptions">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Zend_Cache_Core.html#102-107" title="Go to source code"><var>$_specificOptions</var></a>
+
+			<div class="description short">
+				<p>Not used for the core, just a sort a hint to get a common setOption() method (for the core and for frontends)</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Not used for the core, just a sort a hint to get a common setOption() method (for the core and for frontends)</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$_specificOptions" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>()</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="_extendedBackend" id="$_extendedBackend">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Zend_Cache_Core.html#116-121" title="Go to source code"><var>$_extendedBackend</var></a>
+
+			<div class="description short">
+				<p>True if the backend implements Zend_Cache_Backend_ExtendedInterface</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>True if the backend implements Zend_Cache_Backend_ExtendedInterface</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$_extendedBackend" class="anchor">#</a>
+				<code><span class="php-keyword1">false</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="_backendCapabilities" id="$_backendCapabilities">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Zend_Cache_Core.html#123-128" title="Go to source code"><var>$_backendCapabilities</var></a>
+
+			<div class="description short">
+				<p>Array of capabilities of the backend (only if it implements Zend_Cache_Backend_ExtendedInterface)</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Array of capabilities of the backend (only if it implements Zend_Cache_Backend_ExtendedInterface)</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$_backendCapabilities" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>()</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

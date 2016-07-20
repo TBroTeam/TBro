@@ -1,0 +1,2879 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Smarty_Internal_Configfileparser</title>
+
+	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li>
+					<a href="namespace-cli_db.html">
+						cli_db<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-cli_db.propel.html">
+						propel<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-cli_db.propel.map.html">
+						map					</a>
+
+						</li>
+				<li>
+					<a href="namespace-cli_db.propel.om.html">
+						om					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-cli_import.html">
+						cli_import					</a>
+
+						</li>
+				<li>
+					<a href="namespace-LoggedPDO.html">
+						LoggedPDO					</a>
+
+						</li>
+				<li class="active">
+					<a href="namespace-None.html">
+						None					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.html">
+						webservices<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.cart.html">
+						cart					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.combisearch.html">
+						combisearch					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.details.html">
+						details<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.details.annotations.html">
+						annotations<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.details.annotations.feature.html">
+						feature					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-webservices.export.html">
+						export					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.graphs.html">
+						graphs<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.graphs.barplot.html">
+						barplot					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.graphs.genome.html">
+						genome					</a>
+
+						</li>
+				<li>
+					<a href="namespace-webservices.graphs.heatmap.html">
+						heatmap					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-webservices.listing.html">
+						listing<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-webservices.listing.wordcloud.html">
+						wordcloud					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-webservices.queue.html">
+						queue					</a>
+
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-CommandLineComplete.html">CommandLineComplete</a></li>
+				<li><a href="class-Console_CommandLine_Action_ExtendedHelp.html">Console_CommandLine_Action_ExtendedHelp</a></li>
+				<li><a href="class-EC2PathwayMapping.html">EC2PathwayMapping</a></li>
+				<li><a href="class-ECInformation.html">ECInformation</a></li>
+				<li><a href="class-LightOpenID.html">LightOpenID</a></li>
+				<li><a href="class-Log_firebugJSON.html">Log_firebugJSON</a></li>
+				<li><a href="class-PathwayInformation.html">PathwayInformation</a></li>
+				<li><a href="class-Smarty.html">Smarty</a></li>
+				<li><a href="class-Smarty_CacheResource.html">Smarty_CacheResource</a></li>
+				<li><a href="class-Smarty_CacheResource_Apc.html">Smarty_CacheResource_Apc</a></li>
+				<li><a href="class-Smarty_CacheResource_Custom.html">Smarty_CacheResource_Custom</a></li>
+				<li><a href="class-Smarty_CacheResource_KeyValueStore.html">Smarty_CacheResource_KeyValueStore</a></li>
+				<li><a href="class-Smarty_CacheResource_Memcache.html">Smarty_CacheResource_Memcache</a></li>
+				<li><a href="class-Smarty_CacheResource_Mysql.html">Smarty_CacheResource_Mysql</a></li>
+				<li><a href="class-Smarty_Config_Source.html">Smarty_Config_Source</a></li>
+				<li><a href="class-Smarty_Data.html">Smarty_Data</a></li>
+				<li><a href="class-Smarty_Internal_CacheResource_File.html">Smarty_Internal_CacheResource_File</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Append.html">Smarty_Internal_Compile_Append</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Assign.html">Smarty_Internal_Compile_Assign</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Block.html">Smarty_Internal_Compile_Block</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Blockclose.html">Smarty_Internal_Compile_Blockclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Break.html">Smarty_Internal_Compile_Break</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Call.html">Smarty_Internal_Compile_Call</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Capture.html">Smarty_Internal_Compile_Capture</a></li>
+				<li><a href="class-Smarty_Internal_Compile_CaptureClose.html">Smarty_Internal_Compile_CaptureClose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Config_Load.html">Smarty_Internal_Compile_Config_Load</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Continue.html">Smarty_Internal_Compile_Continue</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Debug.html">Smarty_Internal_Compile_Debug</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Else.html">Smarty_Internal_Compile_Else</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Elseif.html">Smarty_Internal_Compile_Elseif</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Eval.html">Smarty_Internal_Compile_Eval</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Extends.html">Smarty_Internal_Compile_Extends</a></li>
+				<li><a href="class-Smarty_Internal_Compile_For.html">Smarty_Internal_Compile_For</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Forclose.html">Smarty_Internal_Compile_Forclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Foreach.html">Smarty_Internal_Compile_Foreach</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Foreachclose.html">Smarty_Internal_Compile_Foreachclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Foreachelse.html">Smarty_Internal_Compile_Foreachelse</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Forelse.html">Smarty_Internal_Compile_Forelse</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Function.html">Smarty_Internal_Compile_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Functionclose.html">Smarty_Internal_Compile_Functionclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_If.html">Smarty_Internal_Compile_If</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Ifclose.html">Smarty_Internal_Compile_Ifclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Include.html">Smarty_Internal_Compile_Include</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Include_Php.html">Smarty_Internal_Compile_Include_Php</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Insert.html">Smarty_Internal_Compile_Insert</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Ldelim.html">Smarty_Internal_Compile_Ldelim</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Nocache.html">Smarty_Internal_Compile_Nocache</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Nocacheclose.html">Smarty_Internal_Compile_Nocacheclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Block_Plugin.html">Smarty_Internal_Compile_Private_Block_Plugin</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Function_Plugin.html">Smarty_Internal_Compile_Private_Function_Plugin</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Modifier.html">Smarty_Internal_Compile_Private_Modifier</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Object_Block_Function.html">Smarty_Internal_Compile_Private_Object_Block_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Object_Function.html">Smarty_Internal_Compile_Private_Object_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Print_Expression.html">Smarty_Internal_Compile_Private_Print_Expression</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Registered_Block.html">Smarty_Internal_Compile_Private_Registered_Block</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Registered_Function.html">Smarty_Internal_Compile_Private_Registered_Function</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Private_Special_Variable.html">Smarty_Internal_Compile_Private_Special_Variable</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Rdelim.html">Smarty_Internal_Compile_Rdelim</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Section.html">Smarty_Internal_Compile_Section</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Sectionclose.html">Smarty_Internal_Compile_Sectionclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Sectionelse.html">Smarty_Internal_Compile_Sectionelse</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Setfilter.html">Smarty_Internal_Compile_Setfilter</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Setfilterclose.html">Smarty_Internal_Compile_Setfilterclose</a></li>
+				<li><a href="class-Smarty_Internal_Compile_While.html">Smarty_Internal_Compile_While</a></li>
+				<li><a href="class-Smarty_Internal_Compile_Whileclose.html">Smarty_Internal_Compile_Whileclose</a></li>
+				<li><a href="class-Smarty_Internal_CompileBase.html">Smarty_Internal_CompileBase</a></li>
+				<li><a href="class-Smarty_Internal_Config_File_Compiler.html">Smarty_Internal_Config_File_Compiler</a></li>
+				<li><a href="class-Smarty_Internal_Configfilelexer.html">Smarty_Internal_Configfilelexer</a></li>
+				<li class="active"><a href="class-Smarty_Internal_Configfileparser.html">Smarty_Internal_Configfileparser</a></li>
+				<li><a href="class-Smarty_Internal_Data.html">Smarty_Internal_Data</a></li>
+				<li><a href="class-Smarty_Internal_Debug.html">Smarty_Internal_Debug</a></li>
+				<li><a href="class-Smarty_Internal_Filter_Handler.html">Smarty_Internal_Filter_Handler</a></li>
+				<li><a href="class-Smarty_Internal_Function_Call_Handler.html">Smarty_Internal_Function_Call_Handler</a></li>
+				<li><a href="class-Smarty_Internal_Get_Include_Path.html">Smarty_Internal_Get_Include_Path</a></li>
+				<li><a href="class-Smarty_Internal_Nocache_Insert.html">Smarty_Internal_Nocache_Insert</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Eval.html">Smarty_Internal_Resource_Eval</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Extends.html">Smarty_Internal_Resource_Extends</a></li>
+				<li><a href="class-Smarty_Internal_Resource_File.html">Smarty_Internal_Resource_File</a></li>
+				<li><a href="class-Smarty_Internal_Resource_PHP.html">Smarty_Internal_Resource_PHP</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Registered.html" class="deprecated">Smarty_Internal_Resource_Registered</a></li>
+				<li><a href="class-Smarty_Internal_Resource_Stream.html">Smarty_Internal_Resource_Stream</a></li>
+				<li><a href="class-Smarty_Internal_Resource_String.html">Smarty_Internal_Resource_String</a></li>
+				<li><a href="class-Smarty_Internal_SmartyTemplateCompiler.html">Smarty_Internal_SmartyTemplateCompiler</a></li>
+				<li><a href="class-Smarty_Internal_Template.html">Smarty_Internal_Template</a></li>
+				<li><a href="class-Smarty_Internal_TemplateBase.html">Smarty_Internal_TemplateBase</a></li>
+				<li><a href="class-Smarty_Internal_TemplateCompilerBase.html">Smarty_Internal_TemplateCompilerBase</a></li>
+				<li><a href="class-Smarty_Internal_Templatelexer.html">Smarty_Internal_Templatelexer</a></li>
+				<li><a href="class-Smarty_Internal_Templateparser.html">Smarty_Internal_Templateparser</a></li>
+				<li><a href="class-Smarty_Internal_Utility.html">Smarty_Internal_Utility</a></li>
+				<li><a href="class-Smarty_Internal_Write_File.html">Smarty_Internal_Write_File</a></li>
+				<li><a href="class-Smarty_Resource.html">Smarty_Resource</a></li>
+				<li><a href="class-Smarty_Resource_Custom.html">Smarty_Resource_Custom</a></li>
+				<li><a href="class-Smarty_Resource_Extendsall.html">Smarty_Resource_Extendsall</a></li>
+				<li><a href="class-Smarty_Resource_Mysql.html">Smarty_Resource_Mysql</a></li>
+				<li><a href="class-Smarty_Resource_Mysqls.html">Smarty_Resource_Mysqls</a></li>
+				<li><a href="class-Smarty_Resource_Recompiled.html">Smarty_Resource_Recompiled</a></li>
+				<li><a href="class-Smarty_Resource_Uncompiled.html">Smarty_Resource_Uncompiled</a></li>
+				<li><a href="class-Smarty_Security.html">Smarty_Security</a></li>
+				<li><a href="class-Smarty_Template_Cached.html">Smarty_Template_Cached</a></li>
+				<li><a href="class-Smarty_Template_Compiled.html">Smarty_Template_Compiled</a></li>
+				<li><a href="class-Smarty_Template_Source.html">Smarty_Template_Source</a></li>
+				<li><a href="class-Smarty_Variable.html">Smarty_Variable</a></li>
+				<li><a href="class-SmartyBC.html">SmartyBC</a></li>
+				<li><a href="class-TP_yyStackEntry.html">TP_yyStackEntry</a></li>
+				<li><a href="class-TP_yyToken.html">TP_yyToken</a></li>
+				<li><a href="class-TPC_yyStackEntry.html">TPC_yyStackEntry</a></li>
+				<li><a href="class-TPC_yyToken.html">TPC_yyToken</a></li>
+				<li><a href="class-transdecoderToProteinTable.html">transdecoderToProteinTable</a></li>
+				<li><a href="class-Undefined_Smarty_Variable.html">Undefined_Smarty_Variable</a></li>
+				<li><a href="class-updateMaterializedViews.html">updateMaterializedViews</a></li>
+				<li><a href="class-WebService.html">WebService</a></li>
+				<li><a href="class-Zend_Cache.html">Zend_Cache</a></li>
+				<li><a href="class-Zend_Cache_Backend.html">Zend_Cache_Backend</a></li>
+				<li><a href="class-Zend_Cache_Backend_Apc.html">Zend_Cache_Backend_Apc</a></li>
+				<li><a href="class-Zend_Cache_Backend_BlackHole.html">Zend_Cache_Backend_BlackHole</a></li>
+				<li><a href="class-Zend_Cache_Backend_File.html">Zend_Cache_Backend_File</a></li>
+				<li><a href="class-Zend_Cache_Backend_Libmemcached.html">Zend_Cache_Backend_Libmemcached</a></li>
+				<li><a href="class-Zend_Cache_Backend_Memcached.html">Zend_Cache_Backend_Memcached</a></li>
+				<li><a href="class-Zend_Cache_Backend_Sqlite.html">Zend_Cache_Backend_Sqlite</a></li>
+				<li><a href="class-Zend_Cache_Backend_Static.html">Zend_Cache_Backend_Static</a></li>
+				<li><a href="class-Zend_Cache_Backend_Test.html">Zend_Cache_Backend_Test</a></li>
+				<li><a href="class-Zend_Cache_Backend_TwoLevels.html">Zend_Cache_Backend_TwoLevels</a></li>
+				<li><a href="class-Zend_Cache_Backend_WinCache.html">Zend_Cache_Backend_WinCache</a></li>
+				<li><a href="class-Zend_Cache_Backend_Xcache.html">Zend_Cache_Backend_Xcache</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendPlatform.html">Zend_Cache_Backend_ZendPlatform</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendServer.html">Zend_Cache_Backend_ZendServer</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendServer_Disk.html">Zend_Cache_Backend_ZendServer_Disk</a></li>
+				<li><a href="class-Zend_Cache_Backend_ZendServer_ShMem.html">Zend_Cache_Backend_ZendServer_ShMem</a></li>
+				<li><a href="class-Zend_Cache_Core.html">Zend_Cache_Core</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Capture.html">Zend_Cache_Frontend_Capture</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Class.html">Zend_Cache_Frontend_Class</a></li>
+				<li><a href="class-Zend_Cache_Frontend_File.html">Zend_Cache_Frontend_File</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Function.html">Zend_Cache_Frontend_Function</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Output.html">Zend_Cache_Frontend_Output</a></li>
+				<li><a href="class-Zend_Cache_Frontend_Page.html">Zend_Cache_Frontend_Page</a></li>
+				<li><a href="class-Zend_Cache_Manager.html">Zend_Cache_Manager</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-CLI_Command.html">CLI_Command</a></li>
+				<li><a href="class-Zend_Cache_Backend_ExtendedInterface.html">Zend_Cache_Backend_ExtendedInterface</a></li>
+				<li><a href="class-Zend_Cache_Backend_Interface.html">Zend_Cache_Backend_Interface</a></li>
+			</ul>
+
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-SmartyCompilerException.html">SmartyCompilerException</a></li>
+				<li><a href="class-SmartyException.html">SmartyException</a></li>
+				<li><a href="class-Zend_Cache_Exception.html">Zend_Cache_Exception</a></li>
+				<li><a href="class-Zend_Exception.html">Zend_Exception</a></li>
+			</ul>
+
+
+			<h3>Functions</h3>
+			<ul>
+				<li><a href="function-acquire_database.html">acquire_database</a></li>
+				<li><a href="function-cli_error_handler.html">cli_error_handler</a></li>
+				<li><a href="function-connect_queue_db.html" class="invalid">connect_queue_db</a></li>
+				<li><a href="function-create_job.html">create_job</a></li>
+				<li><a href="function-display_feature.html">display_feature</a></li>
+				<li><a href="function-display_feature_by_id.html">display_feature_by_id</a></li>
+				<li><a href="function-display_isoform_by_id.html">display_isoform_by_id</a></li>
+				<li><a href="function-display_unigene_by_id.html">display_unigene_by_id</a></li>
+				<li><a href="function-download.html">download</a></li>
+				<li><a href="function-execute_command.html">execute_command</a></li>
+				<li><a href="function-execute_job.html">execute_job</a></li>
+				<li><a href="function-execute_query_dir.html">execute_query_dir</a></li>
+				<li><a href="function-get_db_connection.html">get_db_connection</a></li>
+				<li><a href="function-get_job_results.html">get_job_results</a></li>
+				<li><a href="function-get_program_databases.html">get_program_databases</a></li>
+				<li><a href="function-myErrorHandler.html">myErrorHandler</a></li>
+				<li><a href="function-pdo_connect.html">pdo_connect</a></li>
+				<li><a href="function-report_results_cleanup.html">report_results_cleanup</a></li>
+				<li><a href="function-requestVal.html">requestVal</a></li>
+				<li><a href="function-require_command_option.html">require_command_option</a></li>
+				<li><a href="function-smarty_block_textformat.html">smarty_block_textformat</a></li>
+				<li><a href="function-smarty_function_call_webservice.html">smarty_function_call_webservice</a></li>
+				<li><a href="function-smarty_function_counter.html">smarty_function_counter</a></li>
+				<li><a href="function-smarty_function_cycle.html">smarty_function_cycle</a></li>
+				<li><a href="function-smarty_function_dbxreflink.html">smarty_function_dbxreflink</a></li>
+				<li><a href="function-smarty_function_escape_special_chars.html" class="invalid">smarty_function_escape_special_chars</a></li>
+				<li><a href="function-smarty_function_fetch.html">smarty_function_fetch</a></li>
+				<li><a href="function-smarty_function_html_checkboxes.html">smarty_function_html_checkboxes</a></li>
+				<li><a href="function-smarty_function_html_checkboxes_output.html">smarty_function_html_checkboxes_output</a></li>
+				<li><a href="function-smarty_function_html_image.html">smarty_function_html_image</a></li>
+				<li><a href="function-smarty_function_html_options.html">smarty_function_html_options</a></li>
+				<li><a href="function-smarty_function_html_options_optgroup.html">smarty_function_html_options_optgroup</a></li>
+				<li><a href="function-smarty_function_html_options_optoutput.html">smarty_function_html_options_optoutput</a></li>
+				<li><a href="function-smarty_function_html_radios.html">smarty_function_html_radios</a></li>
+				<li><a href="function-smarty_function_html_radios_output.html">smarty_function_html_radios_output</a></li>
+				<li><a href="function-smarty_function_html_select_date.html">smarty_function_html_select_date</a></li>
+				<li><a href="function-smarty_function_html_select_time.html">smarty_function_html_select_time</a></li>
+				<li><a href="function-smarty_function_html_table.html">smarty_function_html_table</a></li>
+				<li><a href="function-smarty_function_html_table_cycle.html">smarty_function_html_table_cycle</a></li>
+				<li><a href="function-smarty_function_mailto.html">smarty_function_mailto</a></li>
+				<li><a href="function-smarty_function_math.html">smarty_function_math</a></li>
+				<li><a href="function-smarty_function_publink.html">smarty_function_publink</a></li>
+				<li><a href="function-smarty_function_publinkshort.html">smarty_function_publinkshort</a></li>
+				<li><a href="function-smarty_literal_compiler_param.html">smarty_literal_compiler_param</a></li>
+				<li><a href="function-smarty_make_timestamp.html">smarty_make_timestamp</a></li>
+				<li><a href="function-smarty_mb_from_unicode.html">smarty_mb_from_unicode</a></li>
+				<li><a href="function-smarty_mb_str_replace.html">smarty_mb_str_replace</a></li>
+				<li><a href="function-smarty_mb_to_unicode.html">smarty_mb_to_unicode</a></li>
+				<li><a href="function-smarty_mb_wordwrap.html">smarty_mb_wordwrap</a></li>
+				<li><a href="function-smarty_modifier_capitalize.html">smarty_modifier_capitalize</a></li>
+				<li><a href="function-smarty_modifier_clean_id.html">smarty_modifier_clean_id</a></li>
+				<li><a href="function-smarty_modifier_date_format.html">smarty_modifier_date_format</a></li>
+				<li><a href="function-smarty_modifier_debug_print_var.html">smarty_modifier_debug_print_var</a></li>
+				<li><a href="function-smarty_modifier_escape.html">smarty_modifier_escape</a></li>
+				<li><a href="function-smarty_modifier_go_section.html">smarty_modifier_go_section</a></li>
+				<li><a href="function-smarty_modifier_regex_replace.html">smarty_modifier_regex_replace</a></li>
+				<li><a href="function-smarty_modifier_replace.html">smarty_modifier_replace</a></li>
+				<li><a href="function-smarty_modifier_spacify.html">smarty_modifier_spacify</a></li>
+				<li><a href="function-smarty_modifier_truncate.html">smarty_modifier_truncate</a></li>
+				<li><a href="function-smarty_modifiercompiler_cat.html">smarty_modifiercompiler_cat</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_characters.html">smarty_modifiercompiler_count_characters</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_paragraphs.html">smarty_modifiercompiler_count_paragraphs</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_sentences.html">smarty_modifiercompiler_count_sentences</a></li>
+				<li><a href="function-smarty_modifiercompiler_count_words.html">smarty_modifiercompiler_count_words</a></li>
+				<li><a href="function-smarty_modifiercompiler_default.html">smarty_modifiercompiler_default</a></li>
+				<li><a href="function-smarty_modifiercompiler_escape.html">smarty_modifiercompiler_escape</a></li>
+				<li><a href="function-smarty_modifiercompiler_from_charset.html">smarty_modifiercompiler_from_charset</a></li>
+				<li><a href="function-smarty_modifiercompiler_indent.html">smarty_modifiercompiler_indent</a></li>
+				<li><a href="function-smarty_modifiercompiler_lower.html">smarty_modifiercompiler_lower</a></li>
+				<li><a href="function-smarty_modifiercompiler_noprint.html">smarty_modifiercompiler_noprint</a></li>
+				<li><a href="function-smarty_modifiercompiler_string_format.html">smarty_modifiercompiler_string_format</a></li>
+				<li><a href="function-smarty_modifiercompiler_strip.html">smarty_modifiercompiler_strip</a></li>
+				<li><a href="function-smarty_modifiercompiler_strip_tags.html">smarty_modifiercompiler_strip_tags</a></li>
+				<li><a href="function-smarty_modifiercompiler_to_charset.html">smarty_modifiercompiler_to_charset</a></li>
+				<li><a href="function-smarty_modifiercompiler_unescape.html">smarty_modifiercompiler_unescape</a></li>
+				<li><a href="function-smarty_modifiercompiler_upper.html">smarty_modifiercompiler_upper</a></li>
+				<li><a href="function-smarty_modifiercompiler_wordwrap.html">smarty_modifiercompiler_wordwrap</a></li>
+				<li><a href="function-smarty_outputfilter_trimwhitespace.html">smarty_outputfilter_trimwhitespace</a></li>
+				<li><a href="function-smarty_php_tag.html">smarty_php_tag</a></li>
+				<li><a href="function-smarty_variablefilter_htmlspecialchars.html">smarty_variablefilter_htmlspecialchars</a></li>
+				<li><a href="function-smartyAutoload.html">smartyAutoload</a></li>
+				<li><a href="function-split_fasta.html">split_fasta</a></li>
+				<li><a href="function-unzip.html">unzip</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-None.html" title="Summary of None"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Smarty_Internal_Configfileparser</h1>
+
+
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		
+
+			<b>Located at</b> <a href="source-class-Smarty_Internal_Configfileparser.html#87-920" title="Go to source code">shared/libs/smarty/libs/sysplugins/smarty_internal_configfileparser.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#97-103" title="Go to source code">__construct</a>( <span> <var>$lex</var></span>, <span> <var>$compiler</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="instance" id="_instance">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			&amp;
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_instance">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#104-110" title="Go to source code">instance</a>( <span> <var>$new_instance</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="Trace" id="_Trace">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_Trace">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#282-291" title="Go to source code">Trace</a>( <span> <var>$TraceFILE</var></span>, <span> <var>$zTracePrompt</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="PrintTrace" id="_PrintTrace">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_PrintTrace">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#293-297" title="Go to source code">PrintTrace</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="tokenName" id="_tokenName">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_tokenName">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#340-350" title="Go to source code">tokenName</a>( <span> <var>$tokenType</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_destructor" id="_yy_destructor">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_destructor">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#352-357" title="Go to source code">yy_destructor</a>( <span> <var>$yymajor</var></span>, <span> <var>$yypminor</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_pop_parser_stack" id="_yy_pop_parser_stack">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_pop_parser_stack">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#359-374" title="Go to source code">yy_pop_parser_stack</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__destruct" id="___destruct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___destruct">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#376-384" title="Go to source code">__destruct</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_get_expected_tokens" id="_yy_get_expected_tokens">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_get_expected_tokens">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#386-452" title="Go to source code">yy_get_expected_tokens</a>( <span> <var>$token</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_is_expected_token" id="_yy_is_expected_token">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_is_expected_token">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#454-523" title="Go to source code">yy_is_expected_token</a>( <span> <var>$token</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_find_shift_action" id="_yy_find_shift_action">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_find_shift_action">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#525-557" title="Go to source code">yy_find_shift_action</a>( <span> <var>$iLookAhead</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_find_reduce_action" id="_yy_find_reduce_action">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_find_reduce_action">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#559-580" title="Go to source code">yy_find_reduce_action</a>( <span> <var>$stateno</var></span>, <span> <var>$iLookAhead</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_shift" id="_yy_shift">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_shift">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#582-615" title="Go to source code">yy_shift</a>( <span> <var>$yyNewState</var></span>, <span> <var>$yyMajor</var></span>, <span> <var>$yypMinor</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r0" id="_yy_r0">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r0">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#667-669" title="Go to source code">yy_r0</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r1" id="_yy_r1">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r1">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#672-674" title="Go to source code">yy_r1</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r4" id="_yy_r4">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r4">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#677-680" title="Go to source code">yy_r4</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r5" id="_yy_r5">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r5">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#683-688" title="Go to source code">yy_r5</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r6" id="_yy_r6">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r6">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#691-693" title="Go to source code">yy_r6</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r7" id="_yy_r7">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r7">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#696-698" title="Go to source code">yy_r7</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r8" id="_yy_r8">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r8">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#701-703" title="Go to source code">yy_r8</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r9" id="_yy_r9">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r9">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#706-708" title="Go to source code">yy_r9</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r10" id="_yy_r10">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r10">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#711-713" title="Go to source code">yy_r10</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r11" id="_yy_r11">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r11">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#716-718" title="Go to source code">yy_r11</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r12" id="_yy_r12">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r12">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#721-723" title="Go to source code">yy_r12</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r13" id="_yy_r13">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r13">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#726-728" title="Go to source code">yy_r13</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r14" id="_yy_r14">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r14">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#731-733" title="Go to source code">yy_r14</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r15" id="_yy_r15">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r15">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#736-738" title="Go to source code">yy_r15</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r16" id="_yy_r16">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r16">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#741-743" title="Go to source code">yy_r16</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_r17" id="_yy_r17">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_r17">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#746-748" title="Go to source code">yy_r17</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_reduce" id="_yy_reduce">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_reduce">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#753-792" title="Go to source code">yy_reduce</a>( <span> <var>$yyruleno</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_parse_failed" id="_yy_parse_failed">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_parse_failed">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#794-802" title="Go to source code">yy_parse_failed</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_syntax_error" id="_yy_syntax_error">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_syntax_error">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#804-812" title="Go to source code">yy_syntax_error</a>( <span> <var>$yymajor</var></span>, <span> <var>$TOKEN</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="yy_accept" id="_yy_accept">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_yy_accept">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#814-829" title="Go to source code">yy_accept</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="doParse" id="_doParse">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_doParse">#</a>
+		<code><a href="source-class-Smarty_Internal_Configfileparser.html#831-919" title="Go to source code">doParse</a>( <span> <var>$yymajor</var></span>, <span> <var>$yytokenvalue</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary constants" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="TPC_OPENB" id="TPC_OPENB">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#182" title="Go to source code"><b>TPC_OPENB</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_OPENB" class="anchor">#</a>
+				<code><span class="php-num">1</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_SECTION" id="TPC_SECTION">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#183" title="Go to source code"><b>TPC_SECTION</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_SECTION" class="anchor">#</a>
+				<code><span class="php-num">2</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_CLOSEB" id="TPC_CLOSEB">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#184" title="Go to source code"><b>TPC_CLOSEB</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_CLOSEB" class="anchor">#</a>
+				<code><span class="php-num">3</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_DOT" id="TPC_DOT">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#185" title="Go to source code"><b>TPC_DOT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_DOT" class="anchor">#</a>
+				<code><span class="php-num">4</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_ID" id="TPC_ID">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#186" title="Go to source code"><b>TPC_ID</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_ID" class="anchor">#</a>
+				<code><span class="php-num">5</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_EQUAL" id="TPC_EQUAL">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#187" title="Go to source code"><b>TPC_EQUAL</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_EQUAL" class="anchor">#</a>
+				<code><span class="php-num">6</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_FLOAT" id="TPC_FLOAT">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#188" title="Go to source code"><b>TPC_FLOAT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_FLOAT" class="anchor">#</a>
+				<code><span class="php-num">7</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_INT" id="TPC_INT">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#189" title="Go to source code"><b>TPC_INT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_INT" class="anchor">#</a>
+				<code><span class="php-num">8</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_BOOL" id="TPC_BOOL">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#190" title="Go to source code"><b>TPC_BOOL</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_BOOL" class="anchor">#</a>
+				<code><span class="php-num">9</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_SINGLE_QUOTED_STRING" id="TPC_SINGLE_QUOTED_STRING">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#191" title="Go to source code"><b>TPC_SINGLE_QUOTED_STRING</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_SINGLE_QUOTED_STRING" class="anchor">#</a>
+				<code><span class="php-num">10</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_DOUBLE_QUOTED_STRING" id="TPC_DOUBLE_QUOTED_STRING">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#192" title="Go to source code"><b>TPC_DOUBLE_QUOTED_STRING</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_DOUBLE_QUOTED_STRING" class="anchor">#</a>
+				<code><span class="php-num">11</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_TRIPPLE_QUOTES" id="TPC_TRIPPLE_QUOTES">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#193" title="Go to source code"><b>TPC_TRIPPLE_QUOTES</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_TRIPPLE_QUOTES" class="anchor">#</a>
+				<code><span class="php-num">12</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_TRIPPLE_TEXT" id="TPC_TRIPPLE_TEXT">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#194" title="Go to source code"><b>TPC_TRIPPLE_TEXT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_TRIPPLE_TEXT" class="anchor">#</a>
+				<code><span class="php-num">13</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_TRIPPLE_QUOTES_END" id="TPC_TRIPPLE_QUOTES_END">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#195" title="Go to source code"><b>TPC_TRIPPLE_QUOTES_END</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_TRIPPLE_QUOTES_END" class="anchor">#</a>
+				<code><span class="php-num">14</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_NAKED_STRING" id="TPC_NAKED_STRING">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#196" title="Go to source code"><b>TPC_NAKED_STRING</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_NAKED_STRING" class="anchor">#</a>
+				<code><span class="php-num">15</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_OTHER" id="TPC_OTHER">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#197" title="Go to source code"><b>TPC_OTHER</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_OTHER" class="anchor">#</a>
+				<code><span class="php-num">16</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_NEWLINE" id="TPC_NEWLINE">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#198" title="Go to source code"><b>TPC_NEWLINE</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_NEWLINE" class="anchor">#</a>
+				<code><span class="php-num">17</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="TPC_COMMENTSTART" id="TPC_COMMENTSTART">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#199" title="Go to source code"><b>TPC_COMMENTSTART</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#TPC_COMMENTSTART" class="anchor">#</a>
+				<code><span class="php-num">18</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_NO_ACTION" id="YY_NO_ACTION">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#200" title="Go to source code"><b>YY_NO_ACTION</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_NO_ACTION" class="anchor">#</a>
+				<code><span class="php-num">60</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_ACCEPT_ACTION" id="YY_ACCEPT_ACTION">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#201" title="Go to source code"><b>YY_ACCEPT_ACTION</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_ACCEPT_ACTION" class="anchor">#</a>
+				<code><span class="php-num">59</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_ERROR_ACTION" id="YY_ERROR_ACTION">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#202" title="Go to source code"><b>YY_ERROR_ACTION</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_ERROR_ACTION" class="anchor">#</a>
+				<code><span class="php-num">58</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_SZ_ACTTAB" id="YY_SZ_ACTTAB">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#204" title="Go to source code"><b>YY_SZ_ACTTAB</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_SZ_ACTTAB" class="anchor">#</a>
+				<code><span class="php-num">38</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_SHIFT_USE_DFLT" id="YY_SHIFT_USE_DFLT">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#217" title="Go to source code"><b>YY_SHIFT_USE_DFLT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_SHIFT_USE_DFLT" class="anchor">#</a>
+				<code>-<span class="php-num">8</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_SHIFT_MAX" id="YY_SHIFT_MAX">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#218" title="Go to source code"><b>YY_SHIFT_MAX</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_SHIFT_MAX" class="anchor">#</a>
+				<code><span class="php-num">19</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_REDUCE_USE_DFLT" id="YY_REDUCE_USE_DFLT">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#223" title="Go to source code"><b>YY_REDUCE_USE_DFLT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_REDUCE_USE_DFLT" class="anchor">#</a>
+				<code>-<span class="php-num">21</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YY_REDUCE_MAX" id="YY_REDUCE_MAX">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#224" title="Go to source code"><b>YY_REDUCE_MAX</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YY_REDUCE_MAX" class="anchor">#</a>
+				<code><span class="php-num">10</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYNOCODE" id="YYNOCODE">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#273" title="Go to source code"><b>YYNOCODE</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYNOCODE" class="anchor">#</a>
+				<code><span class="php-num">29</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYSTACKDEPTH" id="YYSTACKDEPTH">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#274" title="Go to source code"><b>YYSTACKDEPTH</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYSTACKDEPTH" class="anchor">#</a>
+				<code><span class="php-num">100</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYNSTATE" id="YYNSTATE">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#275" title="Go to source code"><b>YYNSTATE</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYNSTATE" class="anchor">#</a>
+				<code><span class="php-num">36</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYNRULE" id="YYNRULE">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#276" title="Go to source code"><b>YYNRULE</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYNRULE" class="anchor">#</a>
+				<code><span class="php-num">22</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYERRORSYMBOL" id="YYERRORSYMBOL">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#277" title="Go to source code"><b>YYERRORSYMBOL</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYERRORSYMBOL" class="anchor">#</a>
+				<code><span class="php-num">19</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYERRSYMDT" id="YYERRSYMDT">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#278" title="Go to source code"><b>YYERRSYMDT</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYERRSYMDT" class="anchor">#</a>
+				<code><span class="php-quote">'yy0'</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="YYFALLBACK" id="YYFALLBACK">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Smarty_Internal_Configfileparser.html#279" title="Go to source code"><b>YYFALLBACK</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#YYFALLBACK" class="anchor">#</a>
+				<code><span class="php-num">0</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="successful" id="$successful">
+		<td class="attributes"><code>
+			public  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#92" title="Go to source code"><var>$successful</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$successful" class="anchor">#</a>
+				<code><span class="php-keyword1">true</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="retvalue" id="$retvalue">
+		<td class="attributes"><code>
+			public  
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#93" title="Go to source code"><var>$retvalue</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$retvalue" class="anchor">#</a>
+				<code><span class="php-num">0</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yy_action" id="$yy_action">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#205-210" title="Go to source code"><var>$yy_action</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yy_action" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+ <span class="php-comment">/*     0 */</span>    <span class="php-num">29</span>,   <span class="php-num">30</span>,   <span class="php-num">34</span>,   <span class="php-num">33</span>,   <span class="php-num">24</span>,   <span class="php-num">13</span>,   <span class="php-num">19</span>,   <span class="php-num">25</span>,   <span class="php-num">35</span>,   <span class="php-num">21</span>,
+ <span class="php-comment">/*    10 */</span>    <span class="php-num">59</span>,    <span class="php-num">8</span>,    <span class="php-num">3</span>,    <span class="php-num">1</span>,   <span class="php-num">20</span>,   <span class="php-num">12</span>,   <span class="php-num">14</span>,   <span class="php-num">31</span>,   <span class="php-num">20</span>,   <span class="php-num">12</span>,
+ <span class="php-comment">/*    20 */</span>    <span class="php-num">15</span>,   <span class="php-num">17</span>,   <span class="php-num">23</span>,   <span class="php-num">18</span>,   <span class="php-num">27</span>,   <span class="php-num">26</span>,    <span class="php-num">4</span>,    <span class="php-num">5</span>,    <span class="php-num">6</span>,   <span class="php-num">32</span>,
+ <span class="php-comment">/*    30 */</span>     <span class="php-num">2</span>,   <span class="php-num">11</span>,   <span class="php-num">28</span>,   <span class="php-num">22</span>,   <span class="php-num">16</span>,    <span class="php-num">9</span>,    <span class="php-num">7</span>,   <span class="php-num">10</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yy_lookahead" id="$yy_lookahead">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#211-216" title="Go to source code"><var>$yy_lookahead</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yy_lookahead" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+ <span class="php-comment">/*     0 */</span>     <span class="php-num">7</span>,    <span class="php-num">8</span>,    <span class="php-num">9</span>,   <span class="php-num">10</span>,   <span class="php-num">11</span>,   <span class="php-num">12</span>,    <span class="php-num">5</span>,   <span class="php-num">27</span>,   <span class="php-num">15</span>,   <span class="php-num">16</span>,
+ <span class="php-comment">/*    10 */</span>    <span class="php-num">20</span>,   <span class="php-num">21</span>,   <span class="php-num">23</span>,   <span class="php-num">23</span>,   <span class="php-num">17</span>,   <span class="php-num">18</span>,   <span class="php-num">13</span>,   <span class="php-num">14</span>,   <span class="php-num">17</span>,   <span class="php-num">18</span>,
+ <span class="php-comment">/*    20 */</span>    <span class="php-num">15</span>,    <span class="php-num">2</span>,   <span class="php-num">17</span>,    <span class="php-num">4</span>,   <span class="php-num">25</span>,   <span class="php-num">26</span>,    <span class="php-num">6</span>,    <span class="php-num">3</span>,    <span class="php-num">3</span>,   <span class="php-num">14</span>,
+ <span class="php-comment">/*    30 */</span>    <span class="php-num">23</span>,    <span class="php-num">1</span>,   <span class="php-num">24</span>,   <span class="php-num">17</span>,    <span class="php-num">2</span>,   <span class="php-num">25</span>,   <span class="php-num">22</span>,   <span class="php-num">25</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yy_shift_ofst" id="$yy_shift_ofst">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#219-222" title="Go to source code"><var>$yy_shift_ofst</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yy_shift_ofst" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+ <span class="php-comment">/*     0 */</span>    -<span class="php-num">8</span>,    <span class="php-num">1</span>,    <span class="php-num">1</span>,    <span class="php-num">1</span>,   -<span class="php-num">7</span>,   -<span class="php-num">3</span>,   -<span class="php-num">3</span>,   <span class="php-num">30</span>,   -<span class="php-num">8</span>,   -<span class="php-num">8</span>,
+ <span class="php-comment">/*    10 */</span>    -<span class="php-num">8</span>,   <span class="php-num">19</span>,    <span class="php-num">5</span>,    <span class="php-num">3</span>,   <span class="php-num">15</span>,   <span class="php-num">16</span>,   <span class="php-num">24</span>,   <span class="php-num">25</span>,   <span class="php-num">32</span>,   <span class="php-num">20</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yy_reduce_ofst" id="$yy_reduce_ofst">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#225-228" title="Go to source code"><var>$yy_reduce_ofst</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yy_reduce_ofst" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+ <span class="php-comment">/*     0 */</span>   -<span class="php-num">10</span>,   -<span class="php-num">1</span>,   -<span class="php-num">1</span>,   -<span class="php-num">1</span>,  -<span class="php-num">20</span>,   <span class="php-num">10</span>,   <span class="php-num">12</span>,    <span class="php-num">8</span>,   <span class="php-num">14</span>,    <span class="php-num">7</span>,
+ <span class="php-comment">/*    10 */</span>   -<span class="php-num">11</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyExpectedTokens" id="$yyExpectedTokens">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#229-266" title="Go to source code"><var>$yyExpectedTokens</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyExpectedTokens" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+    <span class="php-comment">/* 0 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 1 */</span> <span class="php-keyword1">array</span>(<span class="php-num">5</span>, <span class="php-num">17</span>, <span class="php-num">18</span>, ),
+    <span class="php-comment">/* 2 */</span> <span class="php-keyword1">array</span>(<span class="php-num">5</span>, <span class="php-num">17</span>, <span class="php-num">18</span>, ),
+    <span class="php-comment">/* 3 */</span> <span class="php-keyword1">array</span>(<span class="php-num">5</span>, <span class="php-num">17</span>, <span class="php-num">18</span>, ),
+    <span class="php-comment">/* 4 */</span> <span class="php-keyword1">array</span>(<span class="php-num">7</span>, <span class="php-num">8</span>, <span class="php-num">9</span>, <span class="php-num">10</span>, <span class="php-num">11</span>, <span class="php-num">12</span>, <span class="php-num">15</span>, <span class="php-num">16</span>, ),
+    <span class="php-comment">/* 5 */</span> <span class="php-keyword1">array</span>(<span class="php-num">17</span>, <span class="php-num">18</span>, ),
+    <span class="php-comment">/* 6 */</span> <span class="php-keyword1">array</span>(<span class="php-num">17</span>, <span class="php-num">18</span>, ),
+    <span class="php-comment">/* 7 */</span> <span class="php-keyword1">array</span>(<span class="php-num">1</span>, ),
+    <span class="php-comment">/* 8 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 9 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 10 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 11 */</span> <span class="php-keyword1">array</span>(<span class="php-num">2</span>, <span class="php-num">4</span>, ),
+    <span class="php-comment">/* 12 */</span> <span class="php-keyword1">array</span>(<span class="php-num">15</span>, <span class="php-num">17</span>, ),
+    <span class="php-comment">/* 13 */</span> <span class="php-keyword1">array</span>(<span class="php-num">13</span>, <span class="php-num">14</span>, ),
+    <span class="php-comment">/* 14 */</span> <span class="php-keyword1">array</span>(<span class="php-num">14</span>, ),
+    <span class="php-comment">/* 15 */</span> <span class="php-keyword1">array</span>(<span class="php-num">17</span>, ),
+    <span class="php-comment">/* 16 */</span> <span class="php-keyword1">array</span>(<span class="php-num">3</span>, ),
+    <span class="php-comment">/* 17 */</span> <span class="php-keyword1">array</span>(<span class="php-num">3</span>, ),
+    <span class="php-comment">/* 18 */</span> <span class="php-keyword1">array</span>(<span class="php-num">2</span>, ),
+    <span class="php-comment">/* 19 */</span> <span class="php-keyword1">array</span>(<span class="php-num">6</span>, ),
+    <span class="php-comment">/* 20 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 21 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 22 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 23 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 24 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 25 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 26 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 27 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 28 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 29 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 30 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 31 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 32 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 33 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 34 */</span> <span class="php-keyword1">array</span>(),
+    <span class="php-comment">/* 35 */</span> <span class="php-keyword1">array</span>(),
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yy_default" id="$yy_default">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#267-272" title="Go to source code"><var>$yy_default</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yy_default" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+ <span class="php-comment">/*     0 */</span>    <span class="php-num">44</span>,   <span class="php-num">37</span>,   <span class="php-num">41</span>,   <span class="php-num">40</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">36</span>,   <span class="php-num">39</span>,   <span class="php-num">44</span>,
+ <span class="php-comment">/*    10 */</span>    <span class="php-num">44</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,   <span class="php-num">58</span>,
+ <span class="php-comment">/*    20 */</span>    <span class="php-num">55</span>,   <span class="php-num">54</span>,   <span class="php-num">57</span>,   <span class="php-num">56</span>,   <span class="php-num">50</span>,   <span class="php-num">45</span>,   <span class="php-num">43</span>,   <span class="php-num">42</span>,   <span class="php-num">38</span>,   <span class="php-num">46</span>,
+ <span class="php-comment">/*    30 */</span>    <span class="php-num">47</span>,   <span class="php-num">52</span>,   <span class="php-num">51</span>,   <span class="php-num">49</span>,   <span class="php-num">48</span>,   <span class="php-num">53</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyFallback" id="$yyFallback">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#280-281" title="Go to source code"><var>$yyFallback</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyFallback" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyTraceFILE" id="$yyTraceFILE">
+		<td class="attributes"><code>
+			public static 
+			
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#299" title="Go to source code"><var>$yyTraceFILE</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyTraceFILE" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyTracePrompt" id="$yyTracePrompt">
+		<td class="attributes"><code>
+			public static 
+			
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#300" title="Go to source code"><var>$yyTracePrompt</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyTracePrompt" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyidx" id="$yyidx">
+		<td class="attributes"><code>
+			public  
+			
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#301" title="Go to source code"><var>$yyidx</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyidx" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyerrcnt" id="$yyerrcnt">
+		<td class="attributes"><code>
+			public  
+			
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#302" title="Go to source code"><var>$yyerrcnt</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyerrcnt" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yystack" id="$yystack">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#303" title="Go to source code"><var>$yystack</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yystack" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>()</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyTokenName" id="$yyTokenName">
+		<td class="attributes"><code>
+			public  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#305-313" title="Go to source code"><var>$yyTokenName</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyTokenName" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+  <span class="php-quote">'$'</span>,             <span class="php-quote">'OPENB'</span>,         <span class="php-quote">'SECTION'</span>,       <span class="php-quote">'CLOSEB'</span>,
+  <span class="php-quote">'DOT'</span>,           <span class="php-quote">'ID'</span>,            <span class="php-quote">'EQUAL'</span>,         <span class="php-quote">'FLOAT'</span>,
+  <span class="php-quote">'INT'</span>,           <span class="php-quote">'BOOL'</span>,          <span class="php-quote">'SINGLE_QUOTED_STRING'</span>,  <span class="php-quote">'DOUBLE_QUOTED_STRING'</span>,
+  <span class="php-quote">'TRIPPLE_QUOTES'</span>,  <span class="php-quote">'TRIPPLE_TEXT'</span>,  <span class="php-quote">'TRIPPLE_QUOTES_END'</span>,  <span class="php-quote">'NAKED_STRING'</span>,
+  <span class="php-quote">'OTHER'</span>,         <span class="php-quote">'NEWLINE'</span>,       <span class="php-quote">'COMMENTSTART'</span>,  <span class="php-quote">'error'</span>,
+  <span class="php-quote">'start'</span>,         <span class="php-quote">'global_vars'</span>,   <span class="php-quote">'sections'</span>,      <span class="php-quote">'var_list'</span>,
+  <span class="php-quote">'section'</span>,       <span class="php-quote">'newline'</span>,       <span class="php-quote">'var'</span>,           <span class="php-quote">'value'</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyRuleName" id="$yyRuleName">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#315-338" title="Go to source code"><var>$yyRuleName</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyRuleName" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+ <span class="php-comment">/*   0 */</span> <span class="php-quote">&quot;start ::= global_vars sections&quot;</span>,
+ <span class="php-comment">/*   1 */</span> <span class="php-quote">&quot;global_vars ::= var_list&quot;</span>,
+ <span class="php-comment">/*   2 */</span> <span class="php-quote">&quot;sections ::= sections section&quot;</span>,
+ <span class="php-comment">/*   3 */</span> <span class="php-quote">&quot;sections ::=&quot;</span>,
+ <span class="php-comment">/*   4 */</span> <span class="php-quote">&quot;section ::= OPENB SECTION CLOSEB newline var_list&quot;</span>,
+ <span class="php-comment">/*   5 */</span> <span class="php-quote">&quot;section ::= OPENB DOT SECTION CLOSEB newline var_list&quot;</span>,
+ <span class="php-comment">/*   6 */</span> <span class="php-quote">&quot;var_list ::= var_list newline&quot;</span>,
+ <span class="php-comment">/*   7 */</span> <span class="php-quote">&quot;var_list ::= var_list var&quot;</span>,
+ <span class="php-comment">/*   8 */</span> <span class="php-quote">&quot;var_list ::=&quot;</span>,
+ <span class="php-comment">/*   9 */</span> <span class="php-quote">&quot;var ::= ID EQUAL value&quot;</span>,
+ <span class="php-comment">/*  10 */</span> <span class="php-quote">&quot;value ::= FLOAT&quot;</span>,
+ <span class="php-comment">/*  11 */</span> <span class="php-quote">&quot;value ::= INT&quot;</span>,
+ <span class="php-comment">/*  12 */</span> <span class="php-quote">&quot;value ::= BOOL&quot;</span>,
+ <span class="php-comment">/*  13 */</span> <span class="php-quote">&quot;value ::= SINGLE_QUOTED_STRING&quot;</span>,
+ <span class="php-comment">/*  14 */</span> <span class="php-quote">&quot;value ::= DOUBLE_QUOTED_STRING&quot;</span>,
+ <span class="php-comment">/*  15 */</span> <span class="php-quote">&quot;value ::= TRIPPLE_QUOTES TRIPPLE_TEXT TRIPPLE_QUOTES_END&quot;</span>,
+ <span class="php-comment">/*  16 */</span> <span class="php-quote">&quot;value ::= TRIPPLE_QUOTES TRIPPLE_QUOTES_END&quot;</span>,
+ <span class="php-comment">/*  17 */</span> <span class="php-quote">&quot;value ::= NAKED_STRING&quot;</span>,
+ <span class="php-comment">/*  18 */</span> <span class="php-quote">&quot;value ::= OTHER&quot;</span>,
+ <span class="php-comment">/*  19 */</span> <span class="php-quote">&quot;newline ::= NEWLINE&quot;</span>,
+ <span class="php-comment">/*  20 */</span> <span class="php-quote">&quot;newline ::= COMMENTSTART NEWLINE&quot;</span>,
+ <span class="php-comment">/*  21 */</span> <span class="php-quote">&quot;newline ::= COMMENTSTART NAKED_STRING NEWLINE&quot;</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyRuleInfo" id="$yyRuleInfo">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#617-640" title="Go to source code"><var>$yyRuleInfo</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyRuleInfo" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">20</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">2</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">21</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">22</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">2</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">22</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">0</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">24</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">5</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">24</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">6</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">23</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">2</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">23</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">2</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">23</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">0</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">26</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">3</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">3</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">2</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">27</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">25</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">1</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">25</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">2</span> ),
+  <span class="php-keyword1">array</span>( <span class="php-quote">'lhs'</span> =&gt; <span class="php-num">25</span>, <span class="php-quote">'rhs'</span> =&gt; <span class="php-num">3</span> ),
+)</code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="yyReduceMap" id="$yyReduceMap">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Smarty_Internal_Configfileparser.html#642-665" title="Go to source code"><var>$yyReduceMap</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$yyReduceMap" class="anchor">#</a>
+				<code><span class="php-keyword1">array</span>(
+    <span class="php-num">0</span> =&gt; <span class="php-num">0</span>,
+    <span class="php-num">2</span> =&gt; <span class="php-num">0</span>,
+    <span class="php-num">3</span> =&gt; <span class="php-num">0</span>,
+    <span class="php-num">19</span> =&gt; <span class="php-num">0</span>,
+    <span class="php-num">20</span> =&gt; <span class="php-num">0</span>,
+    <span class="php-num">21</span> =&gt; <span class="php-num">0</span>,
+    <span class="php-num">1</span> =&gt; <span class="php-num">1</span>,
+    <span class="php-num">4</span> =&gt; <span class="php-num">4</span>,
+    <span class="php-num">5</span> =&gt; <span class="php-num">5</span>,
+    <span class="php-num">6</span> =&gt; <span class="php-num">6</span>,
+    <span class="php-num">7</span> =&gt; <span class="php-num">7</span>,
+    <span class="php-num">8</span> =&gt; <span class="php-num">8</span>,
+    <span class="php-num">9</span> =&gt; <span class="php-num">9</span>,
+    <span class="php-num">10</span> =&gt; <span class="php-num">10</span>,
+    <span class="php-num">11</span> =&gt; <span class="php-num">11</span>,
+    <span class="php-num">12</span> =&gt; <span class="php-num">12</span>,
+    <span class="php-num">13</span> =&gt; <span class="php-num">13</span>,
+    <span class="php-num">14</span> =&gt; <span class="php-num">14</span>,
+    <span class="php-num">15</span> =&gt; <span class="php-num">15</span>,
+    <span class="php-num">16</span> =&gt; <span class="php-num">16</span>,
+    <span class="php-num">17</span> =&gt; <span class="php-num">17</span>,
+    <span class="php-num">18</span> =&gt; <span class="php-num">17</span>,
+)</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
