@@ -48,8 +48,8 @@
             }
 
             function openGADialog() {
-                var dialog = $('#dialog-google-analytics');
-                dialog.dialog("open");
+                var dia = $('#dialog-google-analytics');
+                dia.dialog({width: 800});
             }
 
             (function (i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
