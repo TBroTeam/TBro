@@ -36,7 +36,7 @@
             if (document.cookie.indexOf(disableStr + '=true') > -1) {
                 window[disableStr] = true;
                 $('document').ready(function () {
-                    $('#google-analytics-info').html('Google Analytics is disabled for you');
+                    $('#google-analytics-info').html('<a href="https://www.google.com/intl/en_en/analytics/">Google Analytics</a> is disabled for you');
                 });
             }
 
@@ -44,7 +44,7 @@
             function gaOptout() {
                 document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
                 window[disableStr] = true;
-                $('#google-analytics-info').html('Google Analytics is disabled for you');
+                $('#google-analytics-info').html('<a href="https://www.google.com/intl/en_en/analytics/">Google Analytics</a> is disabled for you');
             }
 
             function openGADialog() {
