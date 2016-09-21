@@ -340,7 +340,7 @@
                     <ul class="left" style="background:transparent">
                         <li>
                             <div id="google-analytics-info" style="color:white; font-size: 75%">
-                                &nbsp;&nbsp;This page uses<a href="https://www.google.com/analytics/" style="padding-left: 5px;">Google Analytics</a> <a onclick="openGADialog()">click for more info and opt-out</a>
+                                &nbsp;&nbsp;This page uses<a onclick="openGADialog()" style="padding-left: 5px;">Google Analytics (info/opt-out)</a>
                             </div>
                         </li>
                     </ul>
