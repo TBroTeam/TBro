@@ -214,6 +214,23 @@ $cvterms_output .= <<<EOF
 ?>
 EOF;
 
+$const_custom_annotation_type_cv = 'custom_annotation_type';
+$stm = $db->prepare("SELECT cv_id FROM cv WHERE name=?");
+$stm->execute(array($const_custom_annotation_type_cv));
+if ($stm->rowCount() == 0) {
+    $stm = $db->prepare("INSERT INTO cv (name) VALUES (?) RETURNING cv_id");
+    $stm->execute(array($const_custom_annotation_type_cv));
+}
+$const_custom_annotation_type_cvid = $stm->fetchColumn();
+unset($stm);
+
+$cvterms_output .= <<<EOF
+<?php
+        define('CUSTOM_ANNOTATION_TYPE_CV', '$const_custom_annotation_type_cv');
+        define('CUSTOM_ANNOTATION_TYPE_CV_ID', '$const_custom_annotation_type_cvid');
+?>
+EOF;
+
 
 file_put_contents($outfilename, $cvterms_output);
 ?>
