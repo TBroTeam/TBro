@@ -6,9 +6,9 @@ use \PDO;
 require_once ROOT . 'classes/AbstractImporter.php';
 
 /**
- * importer for textual descriptions
+ * importer for custom textual descriptions
  */
-class Importer_Annotations_Description extends AbstractImporter {
+class Importer_Annotations_Custom extends AbstractImporter {
 
     /**
      * @inheritDoc
@@ -87,10 +87,32 @@ EOF
      */
     public static function CLI_longHelp() {
         return <<<EOF
+Add custom annotation of a given type (--annotation_type) to isoforms/unigenes
 Tab-Separated file with column 1: feature_id and column 2: feature description
    
 \033[0;31mThis import requires a successful Sequence ID Import!\033[0m
 EOF;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function CLI_getCommand(\Console_CommandLine $parser) {
+        $command = parent::CLI_getCommand($parser);
+        $command->addOption('annotation_type', array(
+            'short_name' => '-a',
+            'long_name' => '--annotation_type',
+            'description' => 'name of the custom annotation type'
+        ));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function CLI_checkRequiredOpts(\Console_CommandLine_Result $command) {
+        parent::CLI_checkRequiredOpts($command);
+        $options = $command->options;
+        AbstractImporter::dieOnMissingArg($options, 'annotation_type');
     }
 
     /**
