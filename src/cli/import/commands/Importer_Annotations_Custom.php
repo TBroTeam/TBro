@@ -83,6 +83,26 @@ EOF
     }
 
     /**
+     * @param $term string custom annotation type cvterm
+     * @return int cvterm_id of the custom annotation type (inserted if not exists)
+     */
+    private static function get_annotation_type_cvterm($term){
+        global $db;
+        $stm = $db->prepare("SELECT cvterm_id FROM cvterm WHERE name=? AND cv_id=?");
+        $stm->execute(array($term, CUSTOM_ANNOTATION_TYPE_CV_ID));
+        if ($stm->rowCount() == 0) {
+            $stm_insert_dbxref = $db->prepare('INSERT INTO dbxref (db_id, accession) VALUES (1, concat(\'transcript_db:cat:\', ?::varchar)) RETURNING dbxref_id');
+            $stm_insert_dbxref->execute(array($term));
+            $dbxref_id = $stm_insert_dbxref->fetchColumn();
+            $stm = $db->prepare("INSERT INTO cvterm (name, is_obsolete, is_relationshiptype, cv_id, dbxref_id) VALUES (?, 0, 0, ?, ?) RETURNING cvterm_id");
+            $stm->execute(array($term, CUSTOM_ANNOTATION_TYPE_CV_ID, $dbxref_id));
+        }
+        $cvterm_id = $stm->fetchColumn();
+        unset($stm);
+        return $cvterm_id;
+    }
+
+    /**
      * @inheritDoc
      */
     public static function CLI_longHelp() {
