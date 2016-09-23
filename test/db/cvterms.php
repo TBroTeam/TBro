@@ -289,4 +289,7 @@ define ('CV_ANNOTATION_MAPMAN_RELATIONSHIP', '45842');
 ?><?php
         define('DB_NAME_IMPORTS', 'local_imports');
         define('DB_ID_IMPORTS', '193');
+?><?php
+        define('CUSTOM_ANNOTATION_TYPE_CV', 'custom_annotation_type');
+        define('CUSTOM_ANNOTATION_TYPE_CV_ID', '19');
 ?>
