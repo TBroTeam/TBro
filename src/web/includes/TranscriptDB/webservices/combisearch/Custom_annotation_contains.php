@@ -36,7 +36,7 @@ class Custom_annotation_contains extends \WebService {
            
 SELECT featureprop.feature_id
     FROM
-        featureprop, cvterm
+        featureprop, cvterm,
         (SELECT feature_id FROM feature WHERE feature.type_id IN ({$constant('CV_ISOFORM')}, {$constant('CV_UNIGENE')}) AND feature.organism_id = ? AND feature.dbxref_id = (SELECT dbxref_id FROM dbxref WHERE db_id={$constant('DB_ID_IMPORTS')} AND accession=? LIMIT 1)) as feature
     WHERE
         featureprop.type_id = cvterm.cvterm_id
