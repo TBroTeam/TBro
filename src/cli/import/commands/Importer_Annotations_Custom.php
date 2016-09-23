@@ -6,7 +6,7 @@ use \PDO;
 require_once ROOT . 'classes/AbstractImporter.php';
 
 /**
- * importer for custom textual descriptions
+ * importer for custom textual annotations
  */
 class Importer_Annotations_Custom extends AbstractImporter {
 
@@ -79,7 +79,7 @@ EOF
             $db->rollback();
             throw $error;
         }
-        return array(LINES_IMPORTED => $lines_imported, 'descriptions_added' => $descriptions_added);
+        return array(LINES_IMPORTED => $lines_imported, 'custom_annotations_added' => $descriptions_added);
     }
 
     /**
