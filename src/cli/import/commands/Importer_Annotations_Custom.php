@@ -15,7 +15,7 @@ class Importer_Annotations_Custom extends AbstractImporter {
      * @param String $separator defaults to TAB
      */
     static function import($options, $separator = "\t") {
-
+        $cvterm_id = self::get_annotation_type_cvterm_id($options['annotation_type']);
         $filename = $options['file'];
         $lines_total = trim(`wc -l $filename | cut -d' ' -f1`);
         self::setLineCount($lines_total);
@@ -51,7 +51,7 @@ SELECT feature_id, type_id, rank, description FROM new_values
 WHERE NOT EXISTS (SELECT 1 FROM upsert up WHERE up.feature_id = new_values.feature_id)
 EOF
 );
-            $statement_insert_featureprop->bindValue('type_id', CV_ANNOTATION_DESC, PDO::PARAM_INT);
+            $statement_insert_featureprop->bindValue('type_id', $cvterm_id, PDO::PARAM_INT);
             $statement_insert_featureprop->bindParam('uniquename', $param_feature_uniq, PDO::PARAM_STR);
             $statement_insert_featureprop->bindParam('description', $description, PDO::PARAM_STR);
             $statement_insert_featureprop->bindValue('organism', DB_ORGANISM_ID, PDO::PARAM_INT);
@@ -86,7 +86,7 @@ EOF
      * @param $term string custom annotation type cvterm
      * @return int cvterm_id of the custom annotation type (inserted if not exists)
      */
-    private static function get_annotation_type_cvterm($term){
+    private static function get_annotation_type_cvterm_id($term){
         global $db;
         $stm = $db->prepare("SELECT cvterm_id FROM cvterm WHERE name=? AND cv_id=?");
         $stm->execute(array($term, CUSTOM_ANNOTATION_TYPE_CV_ID));
