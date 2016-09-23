@@ -229,6 +229,20 @@
             </div>
         </div>
     {#/if#}
+    {#if isset($data.isoform.custom_annotations) #}
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Custom Annotations</h4>
+            <table style="width:100%">
+                <tbody>
+                {#foreach $data.isoform.custom_annotations as $ca#}
+                <tr><th>{#$ca.name#}</th><td>{#$ca.value#}</td></tr>
+                {#/foreach#}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {#/if#}
     {#include file="display-components/publication.tpl" feature=$data.isoform #}
     <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
     <div class="row">
