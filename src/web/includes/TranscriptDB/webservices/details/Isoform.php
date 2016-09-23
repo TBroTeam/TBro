@@ -52,6 +52,21 @@ EOF;
         $stm_get_desc = $db->prepare($query_get_desc);
         $stm_get_desc->bindParam('isoform_id', $param_isoform_id);
 
+//all custom annotations
+        $query_get_custom = <<<EOF
+SELECT
+  cvterm.name, featureprop.value
+FROM
+  featureprop, cvterm
+WHERE
+  featureprop.feature_id = :isoform_id AND
+  cvterm.cvterm_id = featureprop.type_id AND
+  cvterm.cv_id = {$constant('CUSTOM_ANNOTATION_TYPE_CV_ID')}
+EOF;
+
+        $stm_get_custom = $db->prepare($query_get_custom);
+        $stm_get_custom->bindParam('isoform_id', $param_isoform_id);
+
 //parent unigene
         $query_get_unigene = <<<EOF
 SELECT unigene.*
@@ -81,6 +96,12 @@ EOF;
             //add all descriptions to array $isoform['description']
             while ($desc = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
                 $isoform['description'][] = $desc;
+            }
+
+            $stm_get_custom->execute();
+            //add all custom annotations to array $isoform['custom_annotations']
+            while ($custom = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
+                $isoform['custom_annotations'][] = $custom;
             }
 
             $return['isoform'] = &$isoform;
