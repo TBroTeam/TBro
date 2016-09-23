@@ -41,8 +41,8 @@ SELECT featureprop.feature_id
     WHERE
         featureprop.type_id = cvterm.cvterm_id
         AND cvterm.cv_id = {$constant('CUSTOM_ANNOTATION_TYPE_CV_ID')}
-        AND cvterm.name = ?
         AND featureprop.value LIKE ?
+        AND cvterm.name = ?
         AND featureprop.feature_id = feature.feature_id
         {$ids_query}
 EOF;
