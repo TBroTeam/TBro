@@ -126,7 +126,7 @@ EOF;
      * @inheritDoc
      */
     public static function CLI_commandName() {
-        return 'annotation_description';
+        return 'annotation_custom';
     }
 
 }
