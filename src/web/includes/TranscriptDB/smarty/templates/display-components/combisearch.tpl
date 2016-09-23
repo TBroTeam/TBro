@@ -106,6 +106,20 @@
                         term: $(this).find('input.term').val()
                     };
                 }
+            },
+            customAnnotationContains: {
+                name: 'Custom Annotation Contains',
+                webservice: '{#$ServicePath#}/combisearch/custom_annotation_contains/',
+                template_search: '#template_search_custom_annotation_contains',
+                fnPrepareData: function() {
+                    return {
+                        species: organism.val(),
+                        release: release.val(),
+                        {#if isset($cart)#}ids: cart.carts[cart.currentContext]["{#$cart#}"].items,{#/if#}
+                        term: $(this).find('input.term').val(),
+                        type: $(this).find('input.type').val()
+                    };
+                }
             }
         };
 
@@ -292,6 +306,21 @@
     <div class="large-4 columns">
     <input type="text" class="term" style="margin:0px"/>
     </div>
+    </div>
+</script>
+<script type="text/template" id="template_search_custom_annotation_contains">
+    <div class="row">
+        <div class="large-6 columns">
+            Custom Annotation
+        </div>
+        <div class="large-1 columns" style="text-align: right">Type:</div>
+        <div class="large-2 columns">
+            <input type="text" class="type" style="margin:0px"/>
+        </div>
+        <div class="large-1 columns" style="text-align: right">Term:</div>
+        <div class="large-2 columns">
+            <input type="text" class="term" style="margin:0px"/>
+        </div>
     </div>
 </script>
 
