@@ -100,7 +100,7 @@ EOF;
 
             $stm_get_custom->execute();
             //add all custom annotations to array $isoform['custom_annotations']
-            while ($custom = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
+            while ($custom = $stm_get_custom->fetch(PDO::FETCH_ASSOC)) {
                 $isoform['custom_annotations'][] = $custom;
             }
 
