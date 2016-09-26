@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var autocomplete_pw;
+    var autocomplete_cat;
     $(document).ready(function() {
         //different allowed search methods
         var searchNodes = {
@@ -140,6 +141,12 @@
             }
         });
 
+        $.ajax('{#$ServicePath#}/listing/CustomAnnotationTypes', {
+            success: function(val) {
+                autocomplete_cat = val.results;
+            }
+        });
+
         $('#start-combisearch').click(function() {
             //gui animationi
             $.when($('.results').hide(500)).then(function() {
@@ -207,6 +214,7 @@
 
         function refreshAutocomplete() {
             $(".pathwayName").autocomplete({source: autocomplete_pw});
+            $(".customAnnotation").autocomplete({source: autocomplete_cat});
         }
     });
 </script>
@@ -315,7 +323,7 @@
         </div>
         <div class="large-1 columns" style="text-align: right">Type:</div>
         <div class="large-2 columns">
-            <input type="text" class="type" style="margin:0px"/>
+            <input type="text" class="type customAnnotation" style="margin:0px"/>
         </div>
         <div class="large-1 columns" style="text-align: right">Term:</div>
         <div class="large-2 columns">
