@@ -161,6 +161,7 @@
                 var searchNode = $(this).data('searchNode');
                 return $.ajax(searchNode.webservice, {
                     data: searchNode.fnPrepareData.call(this),
+                    type: 'POST',
                     dataType: 'JSON',
                     success: function(data) {
                         var results = $.map(data.results, function(value, index) {
