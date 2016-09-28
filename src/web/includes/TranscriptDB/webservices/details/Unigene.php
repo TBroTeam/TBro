@@ -52,6 +52,21 @@ EOF;
         $stm_get_desc = $db->prepare($query_get_desc);
         $stm_get_desc->bindParam('unigene_id', $param_unigene_feature_id);
 
+        //all custom annotations
+        $query_get_custom = <<<EOF
+SELECT
+  cvterm.name, featureprop.value
+FROM
+  featureprop, cvterm
+WHERE
+  featureprop.feature_id = :unigene_id AND
+  cvterm.cvterm_id = featureprop.type_id AND
+  cvterm.cv_id = {$constant('CUSTOM_ANNOTATION_TYPE_CV_ID')}
+EOF;
+
+        $stm_get_custom = $db->prepare($query_get_custom);
+        $stm_get_custom->bindParam('unigene_id', $param_unigene_feature_id);
+
         
         $return = array();
 
@@ -67,6 +82,11 @@ EOF;
             //add all descriptions to array $unigene['description']
             while ($desc = $stm_get_desc->fetch(PDO::FETCH_ASSOC)) {
                 $return['unigene']['description'][] = $desc;
+            }
+            $stm_get_custom->execute();
+            //add all custom annotations to array $unigene['custom_annotations']
+            while ($custom = $stm_get_custom->fetch(PDO::FETCH_ASSOC)) {
+                $return['unigene']['custom_annotations'][] = $custom;
             }
         }
 
