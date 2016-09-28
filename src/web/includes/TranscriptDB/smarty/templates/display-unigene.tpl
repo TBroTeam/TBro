@@ -157,6 +157,20 @@
             </div>
         </div>
     {#/if#}
+    {#if isset($data.unigene.custom_annotations) #}
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h4>Custom Annotations</h4>
+            <table style="width:100%">
+                <tbody>
+                {#foreach $data.unigene.custom_annotations as $ca#}
+                <tr><th>{#$ca.name#}</th><td>{#$ca.value#}</td></tr>
+                {#/foreach#}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {#/if#}
     {#if (isset($data.unigene.isoforms) && count($data.unigene.isoforms)>0)#}
         <script type="text/javascript">
             var isoform_data = _.map({#$data.unigene.isoforms|json_encode#}, function (elem) {
