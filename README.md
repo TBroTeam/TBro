@@ -7,5 +7,7 @@ A public instance of TBro with the Venus Flytrap transcriptome: [http://tbro.car
 ## Host your own instance
 Docker images are available: [https://hub.docker.com/u/tbroteam/]()
 ## Changes
+### 1.1.0 <2016-09-28 Mo>
+ - Add custom annotations
 ### 1.0.0 <2016-04-18 Mo>
  - First stable release
