@@ -229,6 +229,7 @@
             </div>
         </div>
     {#/if#}
+    {#include file="display-components/publication.tpl" feature=$data.isoform #}
     {#if isset($data.isoform.custom_annotations) #}
     <div class="row">
         <div class="large-12 columns panel">
@@ -243,7 +244,6 @@
         </div>
     </div>
     {#/if#}
-    {#include file="display-components/publication.tpl" feature=$data.isoform #}
     <script type="text/javascript">addNavAnchor('sequence-annotation', 'Sequence Annotation');</script>
     <div class="row">
         <div class="large-12 columns panel">
