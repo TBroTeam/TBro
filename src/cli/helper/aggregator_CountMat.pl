@@ -7,11 +7,11 @@ aggregator_CountMat - Produces a matrix of transcript expression counts combined
 =head1 SYNOPSIS
 
   aggragator_CountMat: Builds a count matrix for transcript quantification values. Different experiments' and/or programs' expression quantification outputs can be used.
-  
-  aggregator_CountMat.pl --in_RSEM <Rresult1 Rresult2> --labels_RSEM <Rlabel1 Rlabel2> --in_eXpress <eresult1 eresult2> --labels_eXpress <elabel1 elabel2> --out <filename> 
+
+  aggregator_CountMat.pl --in_RSEM <Rresult1 Rresult2> --labels_RSEM <Rlabel1 Rlabel2> --in_eXpress <eresult1 eresult2> --labels_eXpress <elabel1 elabel2> --out <filename>
 
   --help     Show this scripts help information.
-     
+
 
 =head1 OPTIONS
 
@@ -23,8 +23,8 @@ aggregator_CountMat - Produces a matrix of transcript expression counts combined
 
 =item B<--in_RSEM|--input_RSEM>
 
-	File or list of files (separated by "space") of RSEM's "sampleX.isoforms.results" or 
-	"sampleX.genes.results". Do NOT mix genes and isoforms (will result in error "Transcript 
+	File or list of files (separated by "space") of RSEM's "sampleX.isoforms.results" or
+	"sampleX.genes.results". Do NOT mix genes and isoforms (will result in error "Transcript
 	"ID" doesn't exist in file "filename").
 
 =item B<--label_RSEM>
@@ -33,15 +33,23 @@ aggregator_CountMat - Produces a matrix of transcript expression counts combined
 
 =item B<--in_eXpress|--input_eXpress>
 
-	File or list of files (separated by "space") of eXpress's output "results.xprs". 
+	File or list of files (separated by "space") of eXpress's output "results.xprs".
 
 =item B<--label_eXpress>
 
 	Name for each experiment given in --in_eXpress (same order). If not given, labels equal inputfile-names
 
+=item B<--in_sailfish|--input_sailfish>
+
+	File or list of files (separated by "space") of sailfish's output "results.tsv".
+
+=item B<--label_sailfish>
+
+	Name for each experiment given in --in_sailfish (same order). If not given, labels equal inputfile-names
+
 =item B<--out|--output>
 
-	Name for Outputfile: Contains the count matrix of transcript expression values 
+	Name for Outputfile: Contains the count matrix of transcript expression values
 	from different experiments and/or programs.
 
 =back
@@ -69,12 +77,12 @@ my $out = '';
 ## or if usage was explicitly requested.
 GetOptions(	'help|?' 											=> \$help,
 						'--in_RSEM|input_RSEM=s{,}' 	=> \@in_RSEM,
-						'label_RSEM=s{,}' 						=> \@label_RSEM, 
+						'label_RSEM=s{,}' 						=> \@label_RSEM,
 						'--in_sailfish|input_sailfish=s{,}' 	=> \@in_sailfish,
-						'label_sailfish=s{,}' 						=> \@label_sailfish, 
+						'label_sailfish=s{,}' 						=> \@label_sailfish,
 						'--in_eXpress|input_eXpress=s{,}' => \@in_eXpress,
 						'label_eXpress=s{,}' 					=> \@label_eXpress,
-						'--out|output=s' 							=> \$out 
+						'--out|output=s' 							=> \$out
 					) or pod2usage(-verbose => 1 );
 pod2usage(-verbose => 1) if $help;
 $out or die "Outputname required\nUse --help for more information\n";
@@ -89,17 +97,17 @@ if (@label_RSEM){	#Die if label and input are of different length
 if (@label_sailfish){	#Die if label and input are of different length
 	unless (@label_sailfish==@in_sailfish){
 		die "Different number of eXpress-inputfiles and eXpress-labels\n";
-	} 
+	}
 } else {  #If no labels specified, set labels to inputfiles
 	(@label_sailfish)=(@in_sailfish);
-} 
+}
 if (@label_eXpress){	#Die if label and input are of different length
 	unless (@label_eXpress==@in_eXpress){
 		die "Different number of eXpress-inputfiles and eXpress-labels\n";
-	} 
+	}
 } else {  #If no labels specified, set labels to inputfiles
 	(@label_eXpress)=(@in_eXpress);
-} 
+}
 
 
 ##Set connection between Files and Labels
