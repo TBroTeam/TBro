@@ -215,7 +215,7 @@
             <div class="large-6 columns">
                 <table style="width:100%">
                     <tr><th align="left">Example cart: </th><td><a id="defaultCartExportButton">Export</a></td></tr>
-                    <tr><th align="left">Publication: </th><td>in preparation</td></tr>
+                    <tr><th align="left">Publication: </th><td><a href="https://dx.doi.org/10.1093/database/baw146" target="_blank">10.1093/database/baw146</a></td></tr>
                     <tr><th align="left">Bugs: </th><td><a data-icon="octicon-issue-opened" href="https://github.com/TBroTeam/TBro/issues" target="_blank" class="github-button">Issue</a></td></tr>
                     <tr><th align="left">Twitter: </th><td><a href="https://twitter.com/TBroTeam" target="_blank" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @TBroTeam</a>
                             <script>!function (d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs')
