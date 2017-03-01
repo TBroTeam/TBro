@@ -7,6 +7,9 @@ require_once ROOT . 'classes/Importer_Annotations_Dbxref.php';
 
 class Importer_Annotations_MapMan extends Importer_Annotations_Dbxref {
 
+    private static $dbxrefs = array();
+    private static $cvterms = array();
+
     /**
      * @inheritDoc
      */
@@ -97,27 +100,7 @@ EOF
              */
             $stm_link_dbxref = $db->prepare('INSERT INTO feature_dbxref (feature_id, dbxref_id) VALUES (?,?)');
 
-            /**
-             * get dbxref id. if non-existant, create
-             * parameters: :dbname, :accession
-             * returns: dbxref_id
-             */
-            $stm_try_insert_dbxref_id = $db->prepare("SELECT * FROM get_or_insert_dbxref(:dbname, :accession)");
 
-            /**
-             * get cvterm_id. if non-existant, create
-             * parameters: name, definition, dbxref_id dbxref_id, dbxref_id
-             * returns: cvterm_id
-             */
-            $stm_try_insert_cvterm = $db->prepare(<<<EOF
-WITH new_row AS (
-	INSERT INTO cvterm (name, definition, cv_id, dbxref_id) SELECT ?,?,(SELECT cv_id FROM cv WHERE name='local'),? WHERE NOT EXISTS (SELECT 1 FROM cvterm WHERE dbxref_id = ?) RETURNING cvterm_id
-)
-SELECT cvterm_id FROM new_row
-UNION
-SELECT cvterm_id FROM cvterm WHERE dbxref_id = ?;   
-EOF
-            );
             /**
              * insert cvtermprop if non-existant with these values
              * parameters: cvterm_id, type_id, value, cvterm_id, type_id, cvterm_id, type_id, value
@@ -129,8 +112,6 @@ INSERT INTO cvtermprop (cvterm_id, type_id, value, rank) SELECT ?,?,?, COALESCE(
 
 EOF
             );
-            $dbxrefs = array();
-            $cvterms = array();
 
             $file = fopen($filename, 'r');
             //skip header line
@@ -139,27 +120,11 @@ EOF
                 //if..elseif..else: check which section we are in
                 // header, looks like <BINCODE>\t<H_DESC>
                 if (count($line) == 2) {
-                    $stm_try_insert_dbxref_id->execute(array(
-                        // parameters: :dbname, :accession
-                        // returns: dbxref_id
-                        self::$db_name,
-                        $line[0]
-                    ));
-                    $dbxref_id = $stm_try_insert_dbxref_id->fetchColumn();
-                    $dbxrefs[$line[0]] = $dbxref_id;
-                    $stm_try_insert_cvterm->execute(array(
-                        // parameters: name, definition, dbxref_id dbxref_id, dbxref_id
-                        // returns: cvterm_id
-                        $line[0],
-                        $line[1],
-                        $dbxref_id,
-                        $dbxref_id,
-                        $dbxref_id
-                    ));
-                    $cvterms[$line[0]] = $stm_try_insert_cvterm->fetchColumn();
+                    self::try_insert_dbxref_cvterm($line[0], $line[1]);
                 } else if (count($line) == 5) {
                     //mapping, looks like <BINCODE>, <H_DESC>, <srcfeature_name>, <feature_description>, "T"
                     if ($line[4] == 'T') {
+                        self::try_insert_dbxref_cvterm($line[0], $line[1]);
                         $stm_get_parentfeature->execute(array(
                             ':object_name' => $line[2],
                             ':organism_id' => DB_ORGANISM_ID,
@@ -192,13 +157,14 @@ EOF
                         $stm_link_dbxref->execute(array(
                             // parameters: feature_id, cvterm_id
                             $feature_id,
-                            $dbxrefs[$line[0]]
+                            self::$dbxrefs[$line[0]]
                         ));
                     } else
                     //footer, looks like: <BINCODE>, <H_DESC>, <CHEM>, <C_DESC>, "M"
                     if ($line[4] == 'M') {
+                        self::try_insert_dbxref_cvterm($line[0], $line[1]);
                         $val = sprintf("%s\t%s", $line[2], $line[3]);
-                        $cvterm_id = $cvterms[$line[0]];
+                        $cvterm_id = self::$cvterms[$line[0]];
                         $stm_try_insert_cvtermprop->execute(array(
                             //cvterm_id, type_id, value, cvterm_id, type_id, cvterm_id, type_id, value
                             $cvterm_id,
@@ -234,6 +200,53 @@ EOF
         return <<<EOF
    \033[0;31mThis import requires a successful Sequence ID Import!\033[0m
 EOF;
+    }
+
+    private static function try_insert_dbxref_cvterm($bincode, $desc){
+        global $db;
+        /**
+         * get dbxref id. if non-existant, create
+         * parameters: :dbname, :accession
+         * returns: dbxref_id
+         */
+        $stm_try_insert_dbxref_id = $db->prepare("SELECT * FROM get_or_insert_dbxref(:dbname, :accession)");
+        /**
+         * get cvterm_id. if non-existant, create
+         * parameters: name, definition, dbxref_id dbxref_id, dbxref_id
+         * returns: cvterm_id
+         */
+        $stm_try_insert_cvterm = $db->prepare(<<<EOF
+WITH new_row AS (
+	INSERT INTO cvterm (name, definition, cv_id, dbxref_id) SELECT ?,?,(SELECT cv_id FROM cv WHERE name='local'),? WHERE NOT EXISTS (SELECT 1 FROM cvterm WHERE dbxref_id = ?) RETURNING cvterm_id
+)
+SELECT cvterm_id FROM new_row
+UNION
+SELECT cvterm_id FROM cvterm WHERE dbxref_id = ?;   
+EOF
+        );
+        if(!array_key_exists($bincode, self::$dbxrefs)){
+            $stm_try_insert_dbxref_id->execute(array(
+                // parameters: :dbname, :accession
+                // returns: dbxref_id
+                self::$db_name,
+                $bincode
+            ));
+            $dbxref_id = $stm_try_insert_dbxref_id->fetchColumn();
+            self::$dbxrefs[$bincode] = $dbxref_id;
+        }
+        $dbxref_id = self::$dbxrefs[$bincode];
+        if(!array_key_exists($bincode, self::$cvterms)){
+            $stm_try_insert_cvterm->execute(array(
+                // parameters: name, definition, dbxref_id dbxref_id, dbxref_id
+                // returns: cvterm_id
+                $bincode,
+                $desc,
+                $dbxref_id,
+                $dbxref_id,
+                $dbxref_id
+            ));
+            self::$cvterms[$bincode] = $stm_try_insert_cvterm->fetchColumn();
+        }
     }
 
 }
