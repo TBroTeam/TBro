@@ -31,7 +31,7 @@ $smarty->right_delimiter = '#}';
 require_once('TranscriptDB/webservices/cart/Sync.php');
 $smarty->assign('regexCartName', \webservices\cart\Sync::$regexCartName);
 
-$smarty->assign('tbro_version', '1.1.1');
+$smarty->assign('tbro_version', '1.1.2');
 $smarty->assign('instance_title', INSTANCE_TITLE);
 $smarty->assign('logo_url', LOGO_URL);
 
@@ -75,7 +75,7 @@ if (isset($_GET['logout'])) {
     header('Location: ' . preg_replace('/([?&])logout(=[^&]+)?(&|$)/', '$1', $redir_url));
     die();
 }
-//standard LightOpenID login code, see LightOpenID documentation 
+//standard LightOpenID login code, see LightOpenID documentation
 try {
     $openid = new LightOpenID($_SERVER['HTTP_HOST']);
     if (!$openid->mode) {
@@ -155,7 +155,7 @@ function display_feature($organism, $release, $name) {
 
     global $db;
     $stm = $db->prepare(<<<EOF
-SELECT feature_id 
+SELECT feature_id
     FROM feature JOIN dbxref ON (feature.dbxref_id = dbxref.dbxref_id)
     WHERE organism_id = ? AND accession=? AND name=?
 EOF
