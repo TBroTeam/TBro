@@ -116,7 +116,7 @@ EOF
             $file = fopen($filename, 'r');
             //skip header line
             fgets($file);
-            while (($line = fgetcsv($file, 0, "\t")) != false) {
+            while (($line = fgetcsv($file, 0, "\t", "'")) != false) {
                 //if..elseif..else: check which section we are in
                 // header, looks like <BINCODE>\t<H_DESC>
                 if (count($line) == 2) {
