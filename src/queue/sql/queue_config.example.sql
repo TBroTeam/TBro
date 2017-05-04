@@ -9,6 +9,7 @@ INSERT INTO programs (name) VALUES
 ('tblastx');
 
 -- database files available. name is the name it will be referenced by, md5 is the zip file's sum, download_uri specifies where the file can be retreived
+-- Important: the name column needs to equal the basename of the blast database files inside the zip file (name without .p?? or .n??)
 INSERT INTO database_files
 (name, md5, download_uri) VALUES
 ('13_test.fasta', '81b096cd80be252fd7633d39b08d53d2', 'http://wbbi170/httpdocs/server/downloads/13_test.fasta.zip'),
