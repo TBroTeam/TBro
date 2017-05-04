@@ -17,6 +17,8 @@ INSERT INTO database_files
 
 -- contains information which program is available for which program.
 -- additionally, 'availability_filter' can be used to e.g. restrict use for a organism-release combination
+-- the availability filter has the format {organism_id}_{release}
+-- you need a separate line for each organism/release combination
 INSERT INTO program_database_relationships
 (programname, database_name, availability_filter) VALUES
 ('blastn','13_test.fasta', '13_test'),
