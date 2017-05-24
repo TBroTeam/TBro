@@ -173,6 +173,7 @@ class Sync extends \WebService {
                 $cont = explode('_', $currentContext, 2);
                 $results = ($service->execute(array('species' => $cont[0], 'release' => $cont[1])));
                 // convert ids to int
+                $parms['ids'] = json_decode($parms['ids'], true);
                 foreach ($parms['ids'] as $key => $id)
                     $parms['ids'][$key] = intval($id);
                 // only keep ids that belong to this context
