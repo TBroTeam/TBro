@@ -11,6 +11,10 @@ If you use TBro please cite this publication: [![DOI](https://img.shields.io/bad
 > Ankenbrand MJ, Weber L, Becker D, Förster F, and Bemm F. "TBro: Visualization and Management of de Novo Transcriptomes." Database 2016 (October 18, 2016): baw146. doi:10.1093/database/baw146.
  
 ## Changes
+### next release
+ - Fix `max_input_vars` issue (#54)
+ - Add smartBLAST button for proteins (#52)
+
 ### 1.1.2 <2017-03-01 We>
  - Improve MapMan importer
 
