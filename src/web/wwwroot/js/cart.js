@@ -404,7 +404,7 @@ Cart.prototype.addItem = function(ids, options) {
                 addToDOM.call(that, aItemDetails);
             $.when(that.sync({
                 action: 'addItem',
-                ids: missingIds,
+                ids: JSON.stringify(missingIds),
                 groupname: options.groupname
             }, options)).then(function() {
                 dfd.resolve()
