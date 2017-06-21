@@ -60,7 +60,7 @@ class Importer_Expressions extends AbstractImporter {
                 $statement_get_biomaterial_id->execute(array($biomaterial_names[$i]));
                 $biomaterial_ids[$i] = $statement_get_biomaterial_id->fetchColumn();
                 if (!$biomaterial_ids[$i]) {
-                    throw new \ErrorException('Biomaterial with this name not defined');
+                    throw new \ErrorException('Biomaterial with this name not defined: '.$biomaterial_names[$i]);
                 }
             }
 
