@@ -46,6 +46,11 @@ define('MAX_CHARS_USER_DESCRIPTION', 1000);
 define('MAX_CHARS_CARTNAME', 100);
 define('MAX_CHARS_CARTNOTES', 1000);
 
+//perform a check that each isoform/unigene belongs to the given organism/release before adding to cart
+//in general this check is a good idea but the implementation is very time/memory consuming when there are lots of (100k+) features in the database
+//see https://github.com/TBroTeam/TBro/issues/59
+define('CHECK_ITEMS_ON_ADD', TRUE);
+
 //path to your impressum.html file (relative to your index.php or absolute)
 define('IMPRESSUM_FILE', 'impressum.example.html');
 
