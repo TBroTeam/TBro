@@ -168,16 +168,21 @@ class Sync extends \WebService {
                     $currentCart[$parms['groupname']] = array('notes' => '', 'items' => array(), 'created' => time(), 'modified' => time());
                     array_unshift($cartorder, $parms['groupname']);
                 }
-                // get all feature ids of the context to check before adding
-                list($service) = \WebService::factory('listing/features');
-                $cont = explode('_', $currentContext, 2);
-                $results = ($service->execute(array('species' => $cont[0], 'release' => $cont[1])));
                 // convert ids to int
                 $parms['ids'] = json_decode($parms['ids'], true);
                 foreach ($parms['ids'] as $key => $id)
                     $parms['ids'][$key] = intval($id);
-                // only keep ids that belong to this context
-                $ids_context = array_intersect($parms['ids'], $results['results']);
+                $ids_context = $parms['ids'];
+
+                if(defined('CHECK_ITEMS_ON_ADD') && CHECK_ITEMS_ON_ADD){
+                    // get all feature ids of the context to check before adding
+                    list($service) = \WebService::factory('listing/features');
+                    $cont = explode('_', $currentContext, 2);
+                    $results = ($service->execute(array('species' => $cont[0], 'release' => $cont[1])));
+                    // only keep ids that belong to this context
+                    $ids_context = array_intersect($parms['ids'], $results['results']);
+                }
+
                 $ids_old = array_intersect($ids_context, $currentCart[$parms['groupname']]['items']);
                 if (count($currentCart[$parms['groupname']]['items']) + count($ids_context) - count($ids_old) > MAX_ITEMS_PER_CART) {
                     die("Too many items already in cart!");
